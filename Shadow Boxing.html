@@ -37,6 +37,32 @@
       text-align: center;
       font-size: 1.7rem;
     }
+    .names {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+    }
+    .name-field {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .name-field label {
+      opacity: 0.75;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 0.75rem;
+    }
+    .name-field input {
+      padding: 4px 6px;
+      border-radius: 6px;
+      border: 1px solid #444;
+      background: #111;
+      color: #f5f5f5;
+      font-size: 0.9rem;
+    }
     .scoreboard {
       display: flex;
       justify-content: space-between;
@@ -128,13 +154,25 @@
   <div class="game">
     <h1>Shadow Boxing</h1>
 
+    <!-- Custom player names -->
+    <div class="names">
+      <div class="name-field">
+        <label for="playerANameInput">Player A name</label>
+        <input id="playerANameInput" type="text" value="Player A" />
+      </div>
+      <div class="name-field">
+        <label for="playerBNameInput">Player B name</label>
+        <input id="playerBNameInput" type="text" value="Player B" />
+      </div>
+    </div>
+
     <div class="scoreboard">
       <div>
-        <div class="label">Player A streak</div>
+        <div class="label"><span id="labelAName">Player A</span> streak</div>
         <div class="value" id="streakA">0</div>
       </div>
       <div>
-        <div class="label">Player B streak</div>
+        <div class="label"><span id="labelBName">Player B</span> streak</div>
         <div class="value" id="streakB">0</div>
       </div>
     </div>
@@ -142,7 +180,9 @@
     <div class="status">
       <div>
         <div class="big-status" id="statusTitle">Player A attacks first</div>
-        <div id="statusText">Player A: choose an attack direction. Then pass the device to Player B.</div>
+        <div id="statusText">
+          Player A: choose an attack direction. Then pass the device to Player B.
+        </div>
       </div>
     </div>
 
@@ -178,6 +218,7 @@
   </div>
 
   <script>
+    // Game state
     let attacker = 'A';
     let defender = 'B';
     let streakA = 0;
@@ -185,6 +226,11 @@
     let currentAttack = null;
     let roundResolved = false;
 
+    // Player names
+    let playerAName = 'Player A';
+    let playerBName = 'Player B';
+
+    // DOM references
     const streakAEl = document.getElementById('streakA');
     const streakBEl = document.getElementById('streakB');
     const statusTitleEl = document.getElementById('statusTitle');
@@ -195,10 +241,42 @@
     const defenderLabel = document.getElementById('defenderLabel');
     const nextRoundBtn = document.getElementById('nextRoundBtn');
 
+    const playerANameInput = document.getElementById('playerANameInput');
+    const playerBNameInput = document.getElementById('playerBNameInput');
+    const labelANameEl = document.getElementById('labelAName');
+    const labelBNameEl = document.getElementById('labelBName');
+
+    function getPlayerName(code) {
+      return code === 'A' ? playerAName : playerBName;
+    }
+
     function updateScoreboard() {
       streakAEl.textContent = streakA;
       streakBEl.textContent = streakB;
     }
+
+    function applyNames() {
+      const a = playerANameInput.value.trim() || 'Player A';
+      const b = playerBNameInput.value.trim() || 'Player B';
+      playerAName = a;
+      playerBName = b;
+      labelANameEl.textContent = a;
+      labelBNameEl.textContent = b;
+
+      // Update current status line to use names
+      if (!roundResolved && !currentAttack) {
+        // Beginning of a round: attacker choosing
+        statusTitleEl.textContent = `${getPlayerName(attacker)} attacks`;
+        statusTextEl.textContent =
+          `${getPlayerName(attacker)}: choose an attack direction. Then pass the device to ${getPlayerName(defender)}.`;
+      }
+    }
+
+    // Apply names whenever inputs change (on blur + Enter)
+    playerANameInput.addEventListener('change', applyNames);
+    playerBNameInput.addEventListener('change', applyNames);
+    playerANameInput.addEventListener('blur', applyNames);
+    playerBNameInput.addEventListener('blur', applyNames);
 
     function directionEmoji(dir) {
       switch (dir) {
@@ -216,8 +294,9 @@
       attackerSection.style.display = 'none';
       defenderSection.style.display = 'block';
 
-      statusTitleEl.textContent = `Pass to Player ${defender}`;
-      statusTextEl.textContent = `Player ${defender}: choose your move. Don't peek at Player ${attacker}'s choice.`;
+      statusTitleEl.textContent = `Pass to ${getPlayerName(defender)}`;
+      statusTextEl.textContent =
+        `${getPlayerName(defender)}: choose your move. Don't peek at ${getPlayerName(attacker)}'s choice.`;
     }
 
     function chooseDefense(dir) {
@@ -241,16 +320,16 @@
 
         updateScoreboard();
 
-        statusTitleEl.textContent = `Hit! Player ${loser} matched the attack.`;
+        statusTitleEl.textContent = `Hit! ${getPlayerName(loser)} matched the attack.`;
         statusTextEl.textContent =
           `Attack: ${directionEmoji(currentAttack)}  •  Defense: ${directionEmoji(dir)}. ` +
-          `Player ${loser}'s streak is now ${loser === 'A' ? streakA : streakB}.`;
+          `${getPlayerName(loser)}'s streak is now ${loser === 'A' ? streakA : streakB}.`;
 
         // Check for game over (3 losses in a row)
         if (streakA >= 3 || streakB >= 3) {
-          statusTitleEl.textContent = `💥 Player ${loser} is out!`;
+          statusTitleEl.textContent = `💥 ${getPlayerName(loser)} is out!`;
           statusTextEl.textContent =
-            `Player ${loser} lost 3 rounds in a row. Player ${winner} wins the game.`;
+            `${getPlayerName(loser)} lost 3 rounds in a row. ${getPlayerName(winner)} wins the game.`;
           roundResolved = true;
           nextRoundBtn.disabled = true;
           attackerSection.style.display = 'none';
@@ -263,11 +342,11 @@
         nextRoundBtn.disabled = false;
 
       } else {
-        // Dodge: roles swap, streak of defender resets (already handled since no loss added)
-        statusTitleEl.textContent = `Dodge! Player ${defender} becomes the attacker.`;
+        // Dodge: roles swap
+        statusTitleEl.textContent = `Dodge! ${getPlayerName(defender)} becomes the attacker.`;
         statusTextEl.textContent =
           `Attack: ${directionEmoji(currentAttack)}  •  Defense: ${directionEmoji(dir)}. ` +
-          `New attacker: Player ${defender}.`;
+          `New attacker: ${getPlayerName(defender)}.`;
 
         const oldAttacker = attacker;
         attacker = defender;
@@ -289,12 +368,12 @@
       attackerSection.style.display = 'block';
       defenderSection.style.display = 'none';
 
-      attackerLabel.textContent = `Player ${attacker} attack`;
-      defenderLabel.textContent = `Player ${defender} move`;
+      attackerLabel.textContent = `${getPlayerName(attacker)} attack`;
+      defenderLabel.textContent = `${getPlayerName(defender)} move`;
 
-      statusTitleEl.textContent = `Player ${attacker} attacks`;
+      statusTitleEl.textContent = `${getPlayerName(attacker)} attacks`;
       statusTextEl.textContent =
-        `Player ${attacker}: choose an attack direction. Then pass the device to Player ${defender}.`;
+        `${getPlayerName(attacker)}: choose an attack direction. Then pass the device to ${getPlayerName(defender)}.`;
     }
 
     function resetGame() {
@@ -310,15 +389,15 @@
       defenderSection.style.display = 'none';
       nextRoundBtn.disabled = true;
 
-      attackerLabel.textContent = `Attacker choice`;
-      defenderLabel.textContent = `Defender move`;
-      statusTitleEl.textContent = `Player A attacks first`;
+      applyNames(); // reapply labels + initial status with current names
+      attackerLabel.textContent = 'Attacker choice';
+      defenderLabel.textContent = 'Defender move';
+
+      statusTitleEl.textContent = `${playerAName} attacks first`;
       statusTextEl.textContent =
-        `Player A: choose an attack direction. Then pass the device to Player B.`;
+        `${playerAName}: choose an attack direction. Then pass the device to ${playerBName}.`;
     }
 
-    // Initialize
-    updateScoreboard();
     // Keyboard controls: use arrow keys for directions
     document.addEventListener('keydown', (event) => {
       const key = event.key;
@@ -353,8 +432,12 @@
       }
     });
 
-    // Initialize
-    updateScoreboard();  
-</script>
+    // Initial setup
+    updateScoreboard();
+    applyNames();
+    statusTitleEl.textContent = `${playerAName} attacks first`;
+    statusTextEl.textContent =
+      `${playerAName}: choose an attack direction. Then pass the device to ${playerBName}.`;
+  </script>
 </body>
 </html>
