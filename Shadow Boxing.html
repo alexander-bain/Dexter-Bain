@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NWK1FEEP7N"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3THX5NYY2B"></script>
   <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -497,7 +497,9 @@
           Shadow Boxing
           <span class="title-badge">Dex Edition</span>
         </h1>
-        <p class="subtitle">Match directions, rack up points, and try to out-think your opponent&nbsp;— or the computer.</p>
+        <p class="subtitle">
+          Pick directions, fake out your opponent, and be the first to hit the target score.
+        </p>
       </div>
 
       <div class="mode-toggle" aria-label="Game mode">
@@ -533,16 +535,16 @@
 
           <div class="controls-row">
             <div class="round-info">
-              <span>Round <strong id="round-number">1</strong> of <strong id="round-total">10</strong></span>
+              <span>Round <strong id="round-number">1</strong></span>
               <span id="turn-indicator">It's Player 1's turn.</span>
             </div>
 
             <div class="primary-actions">
-              <select id="round-select" class="select-input">
-                <option value="5">Best of 5</option>
-                <option value="10" selected>Best of 10</option>
-                <option value="15">Best of 15</option>
-                <option value="20">Best of 20</option>
+              <select id="target-select" class="select-input">
+                <option value="3">First to 3</option>
+                <option value="5" selected>First to 5</option>
+                <option value="7">First to 7</option>
+                <option value="10">First to 10</option>
               </select>
               <button id="new-match-btn" class="btn btn-primary" type="button">
                 <span>New Match</span>
@@ -608,25 +610,24 @@
 
           <div class="round-summary">
             <span>Match mode: <span class="highlight" id="summary-mode">2 players</span></span>
-            <span>Target rounds: <span class="highlight" id="summary-rounds">10</span></span>
-            <span>First to: <span class="highlight" id="summary-first-to">6</span> points wins.</span>
+            <span>Winning score: <span class="highlight" id="summary-target">5</span> points.</span>
+            <span>Current turn: <span class="highlight" id="summary-turn">Player 1</span></span>
           </div>
 
           <div>
             <div class="mini-label">How scoring works</div>
             <p class="mini-text">
-              Each round, <span class="highlight">Player 1</span> chooses a direction first.
-              In 2-player mode, Player 2 chooses next. In Vs Computer mode, the computer “thinks”
-              for a moment and then picks a random direction.
+              Each round, <span class="highlight">both players pick a direction</span>. Whoever's turn it is (the
+              “shooter”) scores a point if the directions match.
             </p>
             <p class="mini-text">
-              If both choose the <span class="highlight">same direction</span>, Player 1 scores.
-              If they choose <span class="highlight">different directions</span>, Player 2 (or the computer) scores.
+              If the directions <span class="highlight">don't match</span>, nobody scores and the turn
+              <span class="highlight">switches to the other player</span>. First one to the target score wins.
             </p>
           </div>
 
           <div class="footer-note">
-            Tip: In Vs Computer mode, watch the “thinking…” delay. The machine is faking it. 😉
+            Tip: In Vs Computer mode, the “thinking…” delay is just for drama. The machine is faking it. 😉
           </div>
         </div>
       </section>
@@ -639,12 +640,13 @@
     let isComputerThinking = false;   // prevent double input while computer "thinks"
     const moves = ["left", "right", "up", "down"];
 
-    let totalRounds = 10;
+    let targetScore = 5;
     let currentRound = 1;
     let p1Score = 0;
     let p2Score = 0;
     let p1Move = null;
     let p2Move = null;
+    let shooter = 1; // 1 = Player 1's turn, 2 = Player 2 / Computer's turn
 
     // --- Elements ---
     const modeHumanBtn = document.getElementById("mode-human");
@@ -657,10 +659,9 @@
     const p2NameLabel = document.getElementById("p2-name-label");
 
     const roundNumberEl = document.getElementById("round-number");
-    const roundTotalEl = document.getElementById("round-total");
-    const roundSelect = document.getElementById("round-select");
-
     const turnIndicatorEl = document.getElementById("turn-indicator");
+    const targetSelect = document.getElementById("target-select");
+
     const statusEl = document.getElementById("status");
     const lastResultEl = document.getElementById("last-result");
 
@@ -672,8 +673,8 @@
     const p2PillEl = document.getElementById("p2-pill");
 
     const summaryModeEl = document.getElementById("summary-mode");
-    const summaryRoundsEl = document.getElementById("summary-rounds");
-    const summaryFirstToEl = document.getElementById("summary-first-to");
+    const summaryTargetEl = document.getElementById("summary-target");
+    const summaryTurnEl = document.getElementById("summary-turn");
 
     const newMatchBtn = document.getElementById("new-match-btn");
     const resetBtn = document.getElementById("reset-btn");
@@ -691,13 +692,18 @@
     function updateNameLabels() {
       p1NameLabel.textContent = getPlayer1Name();
       p2NameLabel.textContent = getPlayer2Name();
+      updateTurnSummary();
     }
 
     function updateRoundSummary() {
       summaryModeEl.textContent = vsComputer ? "You vs Computer" : "2 players";
-      summaryRoundsEl.textContent = totalRounds;
-      const firstTo = Math.floor(totalRounds / 2) + 1;
-      summaryFirstToEl.textContent = firstTo;
+      summaryTargetEl.textContent = targetScore;
+      updateTurnSummary();
+    }
+
+    function updateTurnSummary() {
+      const shooterName = shooter === 1 ? getPlayer1Name() : getPlayer2Name();
+      summaryTurnEl.textContent = shooterName;
     }
 
     function updateScoreboard() {
@@ -731,13 +737,17 @@
     }
 
     function setTurnIndicatorForNewRound() {
-      const p1Name = getPlayer1Name();
-      const p2Name = getPlayer2Name();
+      const shooterName = shooter === 1 ? getPlayer1Name() : getPlayer2Name();
       if (vsComputer) {
-        turnIndicatorEl.textContent = `Round ${currentRound}: ${p1Name} picks first, then the computer thinks.`;
+        if (shooter === 1) {
+          turnIndicatorEl.textContent = `Round ${currentRound}: It's ${shooterName}'s turn.`;
+        } else {
+          turnIndicatorEl.textContent = `Round ${currentRound}: It's the computer's turn.`;
+        }
       } else {
-        turnIndicatorEl.textContent = `Round ${currentRound}: ${p1Name} picks first, then ${p2Name}.`;
+        turnIndicatorEl.textContent = `Round ${currentRound}: It's ${shooterName}'s turn.`;
       }
+      updateTurnSummary();
     }
 
     function startNewMatch() {
@@ -746,12 +756,12 @@
       currentRound = 1;
       p1Move = null;
       p2Move = null;
+      shooter = 1;
       lastResultEl.textContent = "";
       lastResultEl.className = "last-result";
       statusEl.textContent = vsComputer ? "You vs the computer" : "2-player mode";
       updateScoreboard();
       roundNumberEl.textContent = currentRound;
-      roundTotalEl.textContent = totalRounds;
       resetMovesUI();
       setButtonsDisabled(false);
       setTurnIndicatorForNewRound();
@@ -766,11 +776,10 @@
     }
 
     function endMatchIfFinished() {
-      const firstTo = Math.floor(totalRounds / 2) + 1;
       const p1Name = getPlayer1Name();
       const p2Name = getPlayer2Name();
 
-      if (p1Score >= firstTo || p2Score >= firstTo || currentRound > totalRounds) {
+      if (p1Score >= targetScore || p2Score >= targetScore) {
         setButtonsDisabled(true);
 
         if (p1Score > p2Score) {
@@ -794,21 +803,27 @@
       const p1Name = getPlayer1Name();
       const p2Name = getPlayer2Name();
 
-      // Scoring rule:
-      //  - Same direction: Player 1 scores
-      //  - Different directions: Player 2 / Computer scores
-      let text = "";
       if (p1Move === p2Move) {
-        p1Score += 1;
-        lastResultEl.className = "last-result hit";
-        text = `${p1Name} scores! Both chose ${p1Move.toUpperCase()}.`;
+        // Hit: shooter scores
+        const directionText = p1Move.toUpperCase();
+        if (shooter === 1) {
+          p1Score += 1;
+          lastResultEl.className = "last-result hit";
+          lastResultEl.textContent = `${p1Name} scores! Both chose ${directionText}.`;
+        } else {
+          p2Score += 1;
+          lastResultEl.className = "last-result hit";
+          lastResultEl.textContent = `${p2Name} scores! Both chose ${directionText}.`;
+        }
+        // Shooter keeps the turn on a hit
       } else {
-        p2Score += 1;
+        // Miss: nobody scores; turn switches
         lastResultEl.className = "last-result miss";
-        text = `${p2Name} scores! ${p1Name} chose ${p1Move.toUpperCase()}, ${p2Name} chose ${p2Move.toUpperCase()}.`;
+        const nextShooter = shooter === 1 ? p2Name : p1Name;
+        lastResultEl.textContent = `Miss! ${p1Name} chose ${p1Move.toUpperCase()}, ${p2Name} chose ${p2Move.toUpperCase()}. Turn passes to ${nextShooter}.`;
+        shooter = shooter === 1 ? 2 : 1;
       }
 
-      lastResultEl.textContent = text;
       updateScoreboard();
 
       // Prepare next round
@@ -842,13 +857,12 @@
           : `${p1Name} picked ${direction.toUpperCase()}. Waiting for ${p2Name}.`;
 
         resetMovesUI();
-        // Highlight P1 choice
         moveButtons
           .filter(btn => btn.dataset.direction === direction)
           .forEach(btn => btn.classList.add("selected"));
 
         if (vsComputer) {
-          // Fake "thinking" delay 1–2 seconds
+          // Fake "thinking" delay 1–2 seconds for the computer's move
           isComputerThinking = true;
           setButtonsDisabled(true);
 
@@ -863,7 +877,7 @@
             resolveRound();
           }, delay);
         } else {
-          // 2-player mode: wait for P2
+          // 2-player mode: wait for Player 2
           turnIndicatorEl.textContent = `Round ${currentRound}: ${p2Name} picks now.`;
         }
 
@@ -892,7 +906,6 @@
       statusEl.textContent = "2-player mode";
       summaryModeEl.textContent = "2 players";
 
-      // Reset match state (keep scores? we'll reset for predictability)
       startNewMatch();
       updateNameLabels();
     });
@@ -924,9 +937,8 @@
       }
     });
 
-    roundSelect.addEventListener("change", () => {
-      totalRounds = parseInt(roundSelect.value, 10) || 10;
-      roundTotalEl.textContent = totalRounds;
+    targetSelect.addEventListener("change", () => {
+      targetScore = parseInt(targetSelect.value, 10) || 5;
       updateRoundSummary();
       startNewMatch();
     });
@@ -949,8 +961,7 @@
 
     // --- Initial setup ---
     (function init() {
-      totalRounds = parseInt(roundSelect.value, 10) || 10;
-      roundTotalEl.textContent = totalRounds;
+      targetScore = parseInt(targetSelect.value, 10) || 5;
       updateNameLabels();
       updateRoundSummary();
       updateScoreboard();
