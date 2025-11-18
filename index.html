@@ -510,6 +510,17 @@
       color: #5d6377;
       text-align: right;
     }
+
+    /* On touch devices, don't keep a stuck hover/active look in 2-player mode */
+    @media (hover: none) {
+      .move-button:hover:not(:disabled) {
+        border-color: #25293b;
+      }
+      .move-button:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.6);
+      }
+    }
   </style>
 </head>
 <body>
@@ -939,6 +950,9 @@
       // --- TWO-PLAYER MODE ---
       // First click of the round = shooter, second = defender
       if (p1Move === null && p2Move === null) {
+        // Clear any lingering visual state on touch devices
+        resetMovesUI();
+
         if (shooter === 1) {
           p1Move = direction;
         } else {
@@ -949,7 +963,7 @@
         const defenderName = shooter === 1 ? p2Name : p1Name;
         statusEl.textContent = `${shooterName} picked. ${defenderName} picks now.`;
         turnIndicatorEl.textContent = `Round ${currentRound}: ${defenderName} to respond.`;
-        // ✅ No highlighting here in 2-player mode so Player B doesn't see the exact direction.
+        // No .selected class in 2-player mode so Player 2 can't see the exact pick.
         return;
       }
 
