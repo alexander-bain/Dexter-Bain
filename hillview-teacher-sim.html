@@ -624,11 +624,12 @@
       </aside>
     </div>
   </div>
-
   <script>
     // ===============================
     // Core config
     // ===============================
+    const API_BASE = "https://dexter-bain.onrender.com/api/hillview-sim";
+
     const MONTHS = [
       "August",
       "September",
@@ -648,307 +649,6 @@
     const SCORE_MAX = 100;
     const SCORE_START = 50;
 
-    const scenarios = [
-      // 11 scenarios, in order by month
-      {
-        id: "phones",
-        label: "Phone Problem",
-        prompt: "Group work in August. A cluster of students is secretly texting and filming a TikTok. Others are watching instead of working. One kid shrugs: “You never care about phones.”",
-        options: [
-          {
-            text: "Collect every phone and announce strict zero tolerance.",
-            effects: { learning: 4, likability: -3 },
-            nuance: "Clear boundary, but feels sudden and harsh."
-          },
-          {
-            text: "Ignore it and hope they refocus.",
-            effects: { learning: -4, likability: 1 },
-            nuance: "Short-term calm, long-term loss of authority."
-          },
-          {
-            text: "Pause, restate phone rules, warn once, then apply small predictable consequences.",
-            effects: { learning: 6, likability: 4 },
-            nuance: "Balances structure and fairness if you follow through."
-          },
-          {
-            text: "Stop class and have students quickly design phone rules, then vote and adopt them.",
-            effects: { learning: 3, likability: 6 },
-            nuance: "High buy-in, but you burn some instructional time."
-          }
-        ]
-      },
-      {
-        id: "late_work",
-        label: "Late Work Pile",
-        prompt: "September. Chronic missing-work kids bring huge stacks of late assignments. On-time students want extra credit. Everyone wants a deal, and grades are due soon.",
-        options: [
-          {
-            text: "Accept everything for full credit and move on.",
-            effects: { learning: 1, likability: 3 },
-            nuance: "Reduces stress but undermines deadlines and effort."
-          },
-          {
-            text: "Refuse all late work. Deadlines are deadlines.",
-            effects: { learning: -3, likability: -5 },
-            nuance: "Sends a message, but feels rigid and unforgiving."
-          },
-          {
-            text: "Take late work for partial credit plus a short planning reflection.",
-            effects: { learning: 7, likability: 3 },
-            nuance: "Teaches responsibility while honoring effort."
-          },
-          {
-            text: "Hold one “amnesty day” where everyone can revise or submit missing work up to a grade cap.",
-            effects: { learning: 6, likability: 5 },
-            nuance: "Boosts learning and hope, but increases grading load."
-          }
-        ]
-      },
-      {
-        id: "parent_email",
-        label: "Spicy Parent Email",
-        prompt: "October. A long parent email claims you’re “targeting” their child and CCs admin and counselor. You remember events differently. They want an immediate explanation.",
-        options: [
-          {
-            text: "Reply right away defending every decision in detail.",
-            effects: { learning: 0, likability: -3 },
-            nuance: "May escalate and sound defensive."
-          },
-          {
-            text: "Wait several days to respond so they cool off.",
-            effects: { learning: -1, likability: -3 },
-            nuance: "Feels unresponsive and erodes trust."
-          },
-          {
-            text: "Acknowledge concerns and suggest a meeting with you, the student, and counselor.",
-            effects: { learning: 4, likability: 5 },
-            nuance: "Collaborative and student-centered."
-          },
-          {
-            text: "Forward it to admin and ask them to handle it.",
-            effects: { learning: 1, likability: 1 },
-            nuance: "Protects your time but distances you from the family relationship."
-          }
-        ]
-      },
-      {
-        id: "group_project",
-        label: "Group Project Drama",
-        prompt: "November. One student says they’re doing all the work. Another group has two loud leaders drowning everyone out. Presentations are next week.",
-        options: [
-          {
-            text: "Tell groups to sort it out on their own.",
-            effects: { learning: -3, likability: -1 },
-            nuance: "Some will, many won’t. Quiet students lose out."
-          },
-          {
-            text: "Reshuffle groups into more balanced teams.",
-            effects: { learning: 4, likability: 0 },
-            nuance: "Can help, but disrupts existing dynamics."
-          },
-          {
-            text: "Use private peer evaluations that affect individual grades and meet briefly with struggling groups.",
-            effects: { learning: 7, likability: 3 },
-            nuance: "High accountability and support, extra work for you."
-          },
-          {
-            text: "Teach quick norms for roles, then offer optional conflict-mediation time during work.",
-            effects: { learning: 6, likability: 4 },
-            nuance: "Builds collaboration skills and stabilizes many groups."
-          }
-        ]
-      },
-      {
-        id: "sub_plan",
-        label: "Sub Plans While Sick",
-        prompt: "December. You’ll be out two days mid-unit. You can leave easy work for the sub or push to keep the unit moving without you.",
-        options: [
-          {
-            text: "Leave easy worksheets and a low-stress activity.",
-            effects: { learning: 1, likability: 4 },
-            nuance: "Protects the sub and kids, but you lose momentum."
-          },
-          {
-            text: "Write detailed plans and expect full lessons to run.",
-            effects: { learning: 5, likability: 0 },
-            nuance: "Some learning continues, but execution is shaky."
-          },
-          {
-            text: "Assign a clear independent project that extends recent learning.",
-            effects: { learning: 7, likability: 3 },
-            nuance: "Keeps kids thinking with manageable structure."
-          },
-          {
-            text: "Record short lesson videos with guided notes and check-in questions.",
-            effects: { learning: 8, likability: 2 },
-            nuance: "Strong continuity, high effort while you’re sick."
-          }
-        ]
-      },
-      {
-        id: "behavior",
-        label: "Escalating Comments",
-        prompt: "January. Two students trade personal digs during discussion. One looks ready to cry. The room is laughing and buzzing.",
-        options: [
-          {
-            text: "Call them out in front of the class and demand a public apology.",
-            effects: { learning: -1, likability: -2 },
-            nuance: "May stop it, but adds shame and doesn’t teach skills."
-          },
-          {
-            text: "Ignore it and keep the lesson moving.",
-            effects: { learning: -5, likability: -5 },
-            nuance: "Targeted student feels unsafe; climate suffers."
-          },
-          {
-            text: "Pause, name what you see, reset respect norms, and check in privately with both afterward.",
-            effects: { learning: 5, likability: 7 },
-            nuance: "Protects safety and relationships."
-          },
-          {
-            text: "Send both students to the office immediately.",
-            effects: { learning: 1, likability: -3 },
-            nuance: "Short-term control, little long-term learning."
-          }
-        ]
-      },
-      {
-        id: "grading",
-        label: "Big Test Results",
-        prompt: "February. A major assessment comes back with very low and very high scores. Students are buzzing about fairness and grades.",
-        options: [
-          {
-            text: "Curve scores so most land near a B and move on.",
-            effects: { learning: 1, likability: 3 },
-            nuance: "Short-term relief, weaker feedback signal."
-          },
-          {
-            text: "Keep scores as-is with no retakes or corrections.",
-            effects: { learning: 2, likability: -3 },
-            nuance: "Clear line, but limited chance to grow."
-          },
-          {
-            text: "Offer corrections or retakes that require explaining mistakes and showing new understanding.",
-            effects: { learning: 8, likability: 4 },
-            nuance: "Strong for learning, more grading for you."
-          },
-          {
-            text: "Explain the purpose of the assessment and offer help sessions for anyone who wants support.",
-            effects: { learning: 6, likability: 5 },
-            nuance: "Adds clarity and support; not all will attend."
-          }
-        ]
-      },
-      {
-        id: "quiet_student",
-        label: "Quiet Student",
-        prompt: "March. A student almost never speaks in discussion but writes thoughtfully. Group mates often talk over them.",
-        options: [
-          {
-            text: "Cold-call them more so they “get used to” speaking.",
-            effects: { learning: 1, likability: -3 },
-            nuance: "Can raise anxiety and harm trust."
-          },
-          {
-            text: "Ignore it; their written work is fine.",
-            effects: { learning: 0, likability: -1 },
-            nuance: "Safe, but misses a growth chance."
-          },
-          {
-            text: "Check in privately and offer options (chat posts, small groups, written contributions) while slowly building voice.",
-            effects: { learning: 5, likability: 7 },
-            nuance: "Respects their needs and expands participation."
-          },
-          {
-            text: "Make them discussion leader for a day.",
-            effects: { learning: 2, likability: -1 },
-            nuance: "Works for some, but can be a forced spotlight."
-          }
-        ]
-      },
-      {
-        id: "homework",
-        label: "Homework Complaints",
-        prompt: "April. Students say homework is “pointless” and they’re overloaded with sports and activities. Your homework policy is fuzzy.",
-        options: [
-          {
-            text: "Drop homework completely and keep all practice in class.",
-            effects: { learning: -1, likability: 6 },
-            nuance: "Kids cheer, but some lose extra practice."
-          },
-          {
-            text: "Assign more homework to build grit.",
-            effects: { learning: 2, likability: -6 },
-            nuance: "Helps a few; burns many out."
-          },
-          {
-            text: "Set a clear, short weekly homework plan that directly supports upcoming lessons.",
-            effects: { learning: 7, likability: 4 },
-            nuance: "Predictable, purposeful workload."
-          },
-          {
-            text: "Make all homework optional challenge work with no penalty.",
-            effects: { learning: 4, likability: 5 },
-            nuance: "Great for motivated kids, less help for strugglers."
-          }
-        ]
-      },
-      {
-        id: "identity",
-        label: "Hurtful Joke",
-        prompt: "May. A student makes a joke about another student’s background that leans on stereotypes. Some laugh; the targeted student goes quiet.",
-        options: [
-          {
-            text: "Brush it off as “kids being kids” and move on.",
-            effects: { learning: -4, likability: -7 },
-            nuance: "Signals that harmful jokes are tolerated."
-          },
-          {
-            text: "Scold the student publicly and give detention.",
-            effects: { learning: 1, likability: -3 },
-            nuance: "Shows the line matters, but doesn’t build understanding."
-          },
-          {
-            text: "Pause, name why the comment isn’t okay, focus on impact over intent, and reset norms briefly.",
-            effects: { learning: 5, likability: 6 },
-            nuance: "Models inclusive community in real time."
-          },
-          {
-            text: "Address it privately later with the student who joked and check in with the target.",
-            effects: { learning: 3, likability: 5 },
-            nuance: "Supports both students; less whole-class learning."
-          }
-        ]
-      },
-      {
-        id: "field_trip",
-        label: "Field Trip Decision",
-        prompt: "June. You can take a local field trip that perfectly matches your unit. It requires extra planning and might push you off the pacing guide.",
-        options: [
-          {
-            text: "Skip the trip and stick tightly to the pacing guide.",
-            effects: { learning: 3, likability: 0 },
-            nuance: "Predictable but not very memorable."
-          },
-          {
-            text: "Do the trip and drop a later unit to make room.",
-            effects: { learning: 4, likability: 6 },
-            nuance: "Deep, memorable learning but less coverage later."
-          },
-          {
-            text: "Take the trip and streamline surrounding lessons to hit essentials.",
-            effects: { learning: 7, likability: 5 },
-            nuance: "Best of both worlds, but more planning effort."
-          },
-          {
-            text: "Offer the trip as an optional weekend event.",
-            effects: { learning: 3, likability: 3 },
-            nuance: "Fun for those who go; equity concerns for those who can’t."
-          }
-        ]
-      }
-    ];
-
     // ===============================
     // Game state
     // ===============================
@@ -965,8 +665,8 @@
       lastLikabilityDelta: 0,
       lastStudentsDelta: 0,
       history: [],
-      shuffledScenarios: [],
       currentScenario: null,
+      usedScenarioIds: [],
       awaitingNextMonth: false
     };
 
@@ -1017,15 +717,6 @@
     // ===============================
     // Helpers
     // ===============================
-    function shuffleArray(arr) {
-      const copy = arr.slice();
-      for (let i = copy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-      }
-      return copy;
-    }
-
     function clamp(num, min, max) {
       return Math.max(min, Math.min(max, num));
     }
@@ -1061,210 +752,12 @@
       return `${-delta} student left your class.`;
     }
 
-    // ===============================
-    // Fake "LLM" text + scoring
-    // ===============================
-    function fakeLLMGenerateScenarioText(baseScenario) {
-      return baseScenario.prompt;
-    }
-
-    function analyzeCustomResponse(text) {
-      const lower = text.toLowerCase();
-      let learning = 0;
-      let likability = 0;
-      let catastrophic = false;
-
-      // Hard catastrophic detection for stuff like “run them over with my car”
-      const violentPatterns = [
-        /run (them|the students|the kids|my class|students|kids) over/,
-        /run.*over.*(student|students|kid|kids|class)/,
-        /kill/,
-        /murder/,
-        /shoot/,
-        /stab/,
-        /burn/,
-        /set.*on fire/,
-        /light.*on fire/,
-        /hit/,
-        /punch/,
-        /beat up/,
-        /hurt.*(student|students|kid|kids|child|children)/
-      ];
-      const vehicleWords = ["car", "truck", "bus", "van"];
-
-      const violentHit = violentPatterns.some(re => re.test(lower));
-      const vehicleHit = vehicleWords.some(w => lower.includes(w));
-
-      if (violentHit || (violentHit && vehicleHit)) {
-        catastrophic = true;
-        learning = -25;
-        likability = -35;
-        return {
-          learning,
-          likability,
-          catastrophic,
-          explanation:
-            "This response is extremely unsafe and would never be acceptable in a real classroom. Physical harm or threats would trigger immediate intervention from admin and families."
-        };
-      }
-
-      const structureWords = ["expectation", "routine", "clear rule", "rules", "plan", "structure", "boundaries", "consequence"];
-      const empathyWords = ["listen", "hear you", "understand", "feel", "check in", "together", "safe", "support"];
-      const reflectionWords = ["reflect", "reflection", "why it happened", "next time", "improve", "plan ahead"];
-      const repairWords = ["apologize", "restore", "repair", "make it right"];
-      const punitiveWords = ["detention", "punish", "zero", "automatic fail", "embarrass", "publicly shame"];
-      const vagueWords = ["idk", "no idea", "whatever", "don't care", "do nothing"];
-
-      function countMatches(words) {
-        return words.reduce((count, w) => (lower.includes(w) ? count + 1 : count), 0);
-      }
-
-      const sCount = countMatches(structureWords);
-      const eCount = countMatches(empathyWords);
-      const rCount = countMatches(reflectionWords);
-      const repCount = countMatches(repairWords);
-      const pCount = countMatches(punitiveWords);
-      const vCount = countMatches(vagueWords);
-
-      learning += sCount * 2;
-      if (sCount > 0) {
-        learning += 1;
-      }
-
-      learning += rCount * 3;
-      likability += eCount * 3;
-      likability += repCount * 2;
-
-      learning -= pCount * 1;
-      likability -= pCount * 2;
-
-      learning -= vCount * 2;
-      likability -= vCount * 2;
-
-      if (lower.includes("hillview")) {
-        learning += 1;
-        likability += 1;
-      }
-
-      if (text.length < 10) {
-        learning -= 3;
-        likability -= 3;
-      } else if (text.length > 400) {
-        learning -= 2;
-      }
-
-      learning = clamp(learning, -18, 18);
-      likability = clamp(likability, -18, 18);
-
-      let explanation = "";
-      if (learning > 0 || likability > 0) {
-        explanation =
-          "Your response shows some structure, care, and reflection. That usually helps both learning and relationships.";
-      } else if (learning < 0 || likability < 0) {
-        explanation =
-          "Your response raises concerns about clarity, fairness, or emotional safety. Students might feel confused or unsupported.";
-      } else {
-        explanation =
-          "Your response is pretty neutral; it doesn’t show a clear plan that would strongly help or harm.";
-      }
-
-      return { learning, likability, catastrophic, explanation };
-    }
-
-    function evaluateDecision({ scenario, choiceIndex, customText }) {
-      let learningDelta = 0;
-      let likabilityDelta = 0;
-      let explanation = "";
-      let catastrophic = false;
-
-      if (choiceIndex !== null) {
-        const opt = scenario.options[choiceIndex];
-        learningDelta = opt.effects.learning;
-        likabilityDelta = opt.effects.likability;
-        explanation = opt.nuance;
-      } else {
-        const analysis = analyzeCustomResponse(customText);
-        learningDelta = analysis.learning;
-        likabilityDelta = analysis.likability;
-        explanation = analysis.explanation;
-        catastrophic = analysis.catastrophic;
-      }
-
-      // Scale by difficulty and add some noise, unless catastrophic
-      if (!catastrophic) {
-        learningDelta = learningDelta / state.difficultyMultiplier;
-        likabilityDelta = likabilityDelta / state.difficultyMultiplier;
-
-        const wiggleL = Math.floor(Math.random() * 5) - 2; // -2..+2
-        const wiggleR = Math.floor(Math.random() * 5) - 2;
-
-        learningDelta = Math.round(learningDelta + wiggleL);
-        likabilityDelta = Math.round(likabilityDelta + wiggleR);
-      } else {
-        // Catastrophic stays brutal
-        learningDelta = Math.min(learningDelta, -20);
-        likabilityDelta = Math.min(likabilityDelta, -30);
-      }
-
-      learningDelta = clamp(learningDelta, -20, 20);
-      likabilityDelta = clamp(likabilityDelta, -20, 20);
-
-      // Student movement based on how bad/good things went
-      let studentsDelta = 0;
-      const worstDelta = Math.min(learningDelta, likabilityDelta);
-      const bestDelta = Math.max(learningDelta, likabilityDelta);
-
-      if (catastrophic || worstDelta <= -18) {
-        studentsDelta = -Math.max(5, Math.round(state.classSize * 0.4));
-      } else if (worstDelta <= -12) {
-        studentsDelta = -4;
-      } else if (worstDelta <= -6) {
-        studentsDelta = -2;
-      } else if (bestDelta >= 12) {
-        studentsDelta = 2;
-      } else if (bestDelta >= 6) {
-        studentsDelta = 1;
-      }
-
-      return {
-        learningDelta,
-        likabilityDelta,
-        studentsDelta,
-        catastrophic,
-        explanation
-      };
-    }
-
-    function buildCommentary(learningDelta, likabilityDelta, studentsDelta, explanation, catastrophic) {
-      let headline;
-      const avgDelta = (learningDelta + likabilityDelta) / 2;
-
-      if (catastrophic) {
-        headline =
-          "Massive failure. This would be a crisis in a real school. Safety and professionalism are non-negotiable.";
-      } else if (avgDelta >= 12) {
-        headline = "Huge win. Students learn a lot and mostly feel good about you.";
-      } else if (avgDelta >= 6) {
-        headline = "Strong move overall. There are trade-offs, but the benefits are clear.";
-      } else if (avgDelta >= 2) {
-        headline = "Decent choice. Helpful, with room to tighten up your approach.";
-      } else if (avgDelta > -2) {
-        headline = "Pretty neutral. It doesn’t move things much either way.";
-      } else if (avgDelta > -8) {
-        headline =
-          "This has real costs. Some students will feel less supported or less clear about what you expect.";
-      } else {
-        headline = "Tough outcome. Trust, safety, or learning would take a major hit.";
-      }
-
-      const studentNote =
-        studentsDelta < 0
-          ? ` As a result, ${-studentsDelta} student${-studentsDelta === 1 ? "" : "s"} left your class.`
-          : studentsDelta > 0
-          ? ` Word spreads; ${studentsDelta} new student${studentsDelta === 1 ? "" : "s"} join your class.`
-          : "";
-
-      return `${headline} ${explanation}${studentNote}`;
+    function appendLogEntry(entry) {
+      const div = document.createElement("div");
+      div.className = "log-item";
+      div.innerHTML = `<strong>${entry.monthLabel}:</strong> ${entry.headline}`;
+      logContainer.appendChild(div);
+      logContainer.scrollTop = logContainer.scrollHeight;
     }
 
     // ===============================
@@ -1300,52 +793,13 @@
       difficultyLabel.textContent = difficultyLabelFromMultiplier(state.difficultyMultiplier);
     }
 
-    function appendLogEntry(entry) {
-      const div = document.createElement("div");
-      div.className = "log-item";
-      div.innerHTML = `<strong>${entry.monthLabel}:</strong> ${entry.summary}`;
-      logContainer.appendChild(div);
-      logContainer.scrollTop = logContainer.scrollHeight;
-    }
-
-    function renderScenario() {
-      const scenario = state.currentScenario;
-      if (!scenario) return;
-
-      const monthLabel = MONTHS[state.round - 1] || `Month ${state.round}`;
-      roundLabel.textContent = `${monthLabel} · ${state.round} of ${state.maxRounds}`;
-      scenarioTextEl.textContent = fakeLLMGenerateScenarioText(scenario);
-
-      optionsContainer.innerHTML = "";
-      scenario.options.forEach((opt, index) => {
-        const btn = document.createElement("button");
-        btn.className = "option-btn";
-        btn.textContent = opt.text;
-        btn.dataset.index = String(index);
-        btn.addEventListener("click", () => {
-          document.querySelectorAll(".option-btn").forEach(b => b.classList.remove("selected"));
-          btn.classList.add("selected");
-          feedbackText.textContent =
-            "Option selected. You can still edit or replace it with your own written response.";
-          feedbackText.classList.remove("error-text");
-        });
-        optionsContainer.appendChild(btn);
-      });
-
-      customInput.value = "";
-      feedbackText.textContent = "Pick an option or write your own response.";
-      feedbackText.classList.remove("error-text");
-
-      state.awaitingNextMonth = false;
-      submitBtn.textContent = "Submit & see outcome";
-    }
-
     function showStartScreen() {
       startScreen.style.display = "flex";
       scenarioContainer.style.display = "none";
       restartBtn.style.display = "none";
       panelTitleLabel.textContent = "Setup";
-      panelSubtitleLabel.textContent = "Choose your class size. Learning and likability both start at 50 / 100.";
+      panelSubtitleLabel.textContent =
+        "Choose your class size. Learning and likability both start at 50 / 100.";
       endScreen.style.display = "none";
     }
 
@@ -1354,7 +808,8 @@
       scenarioContainer.style.display = "block";
       restartBtn.style.display = "inline-block";
       panelTitleLabel.textContent = "Live Scenario";
-      panelSubtitleLabel.textContent = "Make a choice and see how your scores and class change.";
+      panelSubtitleLabel.textContent =
+        "The AI generates a situation. You decide what to do.";
       endScreen.style.display = "none";
     }
 
@@ -1421,6 +876,121 @@
     }
 
     // ===============================
+    // API calls
+    // ===============================
+    async function fetchScenarioForCurrentMonth() {
+      const month = MONTHS[state.round - 1];
+      scenarioTextEl.textContent =
+        "Asking the AI to come up with a new Hillview situation for this month…";
+      optionsContainer.innerHTML = "";
+      customInput.value = "";
+      feedbackText.textContent = "The AI is thinking about your classroom…";
+      feedbackText.classList.remove("error-text");
+      submitBtn.disabled = true;
+
+      try {
+        const res = await fetch(`${API_BASE}/scenario`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            month,
+            round: state.round,
+            stats: {
+              learningScore: state.learningScore,
+              likabilityScore: state.likabilityScore,
+              studentsRemaining: state.studentsRemaining,
+              classSize: state.classSize
+            },
+            usedScenarioIds: state.usedScenarioIds
+          })
+        });
+
+        if (!res.ok) throw new Error("Scenario API error");
+        const data = await res.json();
+
+        state.currentScenario = {
+          id: data.id,
+          title: data.title || month,
+          prompt: data.prompt,
+          options: Array.isArray(data.options) ? data.options : []
+        };
+
+        if (data.id && !state.usedScenarioIds.includes(data.id)) {
+          state.usedScenarioIds.push(data.id);
+        }
+
+        renderScenario();
+      } catch (err) {
+        console.error(err);
+        scenarioTextEl.textContent =
+          "The AI couldn't be reached right now. Try again in a bit, or reload the page.";
+        optionsContainer.innerHTML = "";
+      } finally {
+        submitBtn.disabled = false;
+      }
+    }
+
+    async function callEvaluateAPI(choicePayload) {
+      const month = MONTHS[state.round - 1];
+
+      const res = await fetch(`${API_BASE}/evaluate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          scenarioId: state.currentScenario.id,
+          month,
+          round: state.round,
+          classSize: state.classSize,
+          stats: {
+            learningScore: state.learningScore,
+            likabilityScore: state.likabilityScore,
+            studentsRemaining: state.studentsRemaining
+          },
+          choice: choicePayload
+        })
+      });
+
+      if (!res.ok) throw new Error("Evaluate API error");
+      return res.json();
+    }
+
+    // ===============================
+    // Scenario render
+    // ===============================
+    function renderScenario() {
+      const scenario = state.currentScenario;
+      if (!scenario) return;
+
+      const monthLabel = MONTHS[state.round - 1] || `Month ${state.round}`;
+      roundLabel.textContent = `${monthLabel} · ${state.round} of ${state.maxRounds}`;
+      scenarioTextEl.textContent =
+        scenario.prompt || "The AI forgot to send a prompt. Oops.";
+
+      optionsContainer.innerHTML = "";
+      (scenario.options || []).forEach((opt, index) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.textContent = opt.text;
+        btn.dataset.optionId = opt.id || `opt-${index + 1}`;
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".option-btn").forEach(b => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          feedbackText.textContent =
+            "Option selected. You can still edit or replace it with your own written response.";
+          feedbackText.classList.remove("error-text");
+        });
+        optionsContainer.appendChild(btn);
+      });
+
+      customInput.value = "";
+      feedbackText.textContent = "Pick an option or write your own response.";
+      feedbackText.classList.remove("error-text");
+
+      state.awaitingNextMonth = false;
+      submitBtn.textContent = "Submit & see outcome";
+    }
+
+    // ===============================
     // Game lifecycle
     // ===============================
     function resetGame() {
@@ -1435,8 +1005,8 @@
       state.lastLikabilityDelta = 0;
       state.lastStudentsDelta = 0;
       state.history = [];
-      state.shuffledScenarios = scenarios.slice(); // fixed order for now (month = scenario)
       state.currentScenario = null;
+      state.usedScenarioIds = [];
       state.awaitingNextMonth = false;
 
       classMetaText.textContent = `${state.classSize} students · ${difficultyLabelFromMultiplier(
@@ -1459,8 +1029,8 @@
       state.lastLikabilityDelta = 0;
       state.lastStudentsDelta = 0;
       state.history = [];
-      state.shuffledScenarios = scenarios.slice(); // month = index
       state.currentScenario = null;
+      state.usedScenarioIds = [];
       state.awaitingNextMonth = false;
 
       classMetaText.textContent = `${state.classSize} students · ${difficultyLabelFromMultiplier(
@@ -1470,7 +1040,7 @@
       logContainer.innerHTML = "";
       appendLogEntry({
         monthLabel: "Setup",
-        summary: `New year: ${state.classSize} students. Learning and likability start at 50 / 100.`
+        headline: `New year: ${state.classSize} students. Learning and likability start at 50 / 100.`
       });
 
       nextRound();
@@ -1484,103 +1054,103 @@
         renderEndScreen();
         return;
       }
-
-      state.currentScenario = state.shuffledScenarios[state.round - 1];
-      renderScenario();
+      fetchScenarioForCurrentMonth();
       updateStatsUI();
     }
 
-    function handleSubmitClick() {
-      // First click: evaluate; second click: advance
+    // ===============================
+    // Submit flow
+    // ===============================
+    async function handleSubmitClick() {
       if (!state.currentScenario) return;
 
       if (!state.awaitingNextMonth) {
-        // Evaluate decision
         const selectedBtn = document.querySelector(".option-btn.selected");
         const rawCustom = customInput.value.trim();
 
-        let choiceIndex = null;
-        let customText = null;
-
+        let choicePayload;
         if (rawCustom) {
-          customText = rawCustom;
-        } else if (selectedBtn) {
-          choiceIndex = parseInt(selectedBtn.dataset.index, 10);
+          choicePayload = { type: "custom", customText: rawCustom };
+        } else if (selectedBtn && selectedBtn.dataset.optionId) {
+          choicePayload = { type: "option", optionId: selectedBtn.dataset.optionId };
         } else {
-          feedbackText.textContent = "Pick an option or write your own response before submitting.";
+          feedbackText.textContent =
+            "Pick an option or write your own response before submitting.";
           feedbackText.classList.add("error-text");
           return;
         }
 
-        const evalResult = evaluateDecision({
-          scenario: state.currentScenario,
-          choiceIndex,
-          customText
-        });
-
-        // Update scores
-        state.learningScore = clamp(
-          state.learningScore + evalResult.learningDelta,
-          SCORE_MIN,
-          SCORE_MAX
-        );
-        state.likabilityScore = clamp(
-          state.likabilityScore + evalResult.likabilityDelta,
-          SCORE_MIN,
-          SCORE_MAX
-        );
-        state.lastLearningDelta = evalResult.learningDelta;
-        state.lastLikabilityDelta = evalResult.likabilityDelta;
-
-        // Update students
-        const newStudents = clamp(
-          state.studentsRemaining + evalResult.studentsDelta,
-          0,
-          state.classSize + 10
-        );
-        state.lastStudentsDelta = newStudents - state.studentsRemaining;
-        state.studentsRemaining = newStudents;
-        state.maxStudents = Math.max(state.maxStudents, state.studentsRemaining);
-
-        const monthLabel = MONTHS[state.round - 1] || `Month ${state.round}`;
-        const commentary = buildCommentary(
-          evalResult.learningDelta,
-          evalResult.likabilityDelta,
-          state.lastStudentsDelta,
-          evalResult.explanation,
-          evalResult.catastrophic
-        );
-
-        const summary =
-          `Learning ${evalResult.learningDelta >= 0 ? "+" : ""}${evalResult.learningDelta}, ` +
-          `Likability ${evalResult.likabilityDelta >= 0 ? "+" : ""}${evalResult.likabilityDelta}, ` +
-          `Students ${state.lastStudentsDelta >= 0 ? "+" : ""}${state.lastStudentsDelta}. ` +
-          commentary;
-
-        state.history.push({
-          round: state.round,
-          monthLabel,
-          scenarioId: state.currentScenario.id,
-          choiceIndex,
-          usedCustom: !!customText,
-          learningDelta: evalResult.learningDelta,
-          likabilityDelta: evalResult.likabilityDelta,
-          studentsDelta: state.lastStudentsDelta,
-          commentary
-        });
-
-        appendLogEntry({ monthLabel, summary });
-        feedbackText.textContent = summary;
+        submitBtn.disabled = true;
         feedbackText.classList.remove("error-text");
+        feedbackText.textContent =
+          "The AI is grading your move and updating your class…";
 
-        updateStatsUI();
+        try {
+          const result = await callEvaluateAPI(choicePayload);
 
-        // Now wait for explicit "next month" click
-        state.awaitingNextMonth = true;
-        submitBtn.textContent =
-          state.round >= state.maxRounds ? "See final report" : "Go to next month";
+          // Update scores
+          state.learningScore = clamp(
+            state.learningScore + (result.learningDelta || 0),
+            SCORE_MIN,
+            SCORE_MAX
+          );
+          state.likabilityScore = clamp(
+            state.likabilityScore + (result.likabilityDelta || 0),
+            SCORE_MIN,
+            SCORE_MAX
+          );
+          state.lastLearningDelta = result.learningDelta || 0;
+          state.lastLikabilityDelta = result.likabilityDelta || 0;
+
+          // Students
+          const deltaStudents = result.studentsDelta || 0;
+          const newStudents = clamp(
+            state.studentsRemaining + deltaStudents,
+            0,
+            state.classSize + 10
+          );
+          state.lastStudentsDelta = newStudents - state.studentsRemaining;
+          state.studentsRemaining = newStudents;
+          state.maxStudents = Math.max(state.maxStudents, state.studentsRemaining);
+
+          const monthLabel = MONTHS[state.round - 1] || `Month ${state.round}`;
+          const commentary =
+            result.commentary || "The AI forgot to explain this decision.";
+          const headline =
+            result.logHeadline ||
+            `Learning ${state.lastLearningDelta >= 0 ? "+" : ""}${state.lastLearningDelta}, ` +
+              `Likability ${state.lastLikabilityDelta >= 0 ? "+" : ""}${state.lastLikabilityDelta}, ` +
+              `Students ${state.lastStudentsDelta >= 0 ? "+" : ""}${state.lastStudentsDelta}.`;
+
+          state.history.push({
+            round: state.round,
+            monthLabel,
+            scenarioId: state.currentScenario.id,
+            choicePayload,
+            learningDelta: state.lastLearningDelta,
+            likabilityDelta: state.lastLikabilityDelta,
+            studentsDelta: state.lastStudentsDelta,
+            commentary
+          });
+
+          appendLogEntry({ monthLabel, headline });
+          feedbackText.textContent = commentary;
+          feedbackText.classList.remove("error-text");
+
+          updateStatsUI();
+
+          state.awaitingNextMonth = true;
+          submitBtn.textContent =
+            state.round >= state.maxRounds ? "See final report" : "Go to next month";
+        } catch (err) {
+          console.error(err);
+          feedbackText.textContent =
+            "The AI couldn't grade that move right now. Try again or reload the page.";
+          feedbackText.classList.add("error-text");
+        } finally {
+          submitBtn.disabled = false;
+        }
       } else {
-        // Move to next month or end screen
         state.awaitingNextMonth = false;
         submitBtn.textContent = "Submit & see outcome";
 
@@ -1610,5 +1180,5 @@
     // Init
     resetGame();
   </script>
-</body>
+  </body>
 </html>
