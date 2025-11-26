@@ -120,7 +120,9 @@ app.post("/api/hillview-sim/scenario", async (req, res) => {
     }
 
     const scenario = {
-      id: scenarioJson.id || `scenario-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      id:
+        scenarioJson.id ||
+        `scenario-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       title: scenarioJson.title || `${month} Situation`,
       prompt: scenarioJson.prompt || "A situation at Hillview Middle School.",
       options: Array.isArray(scenarioJson.options)
@@ -131,7 +133,7 @@ app.post("/api/hillview-sim/scenario", async (req, res) => {
         : [],
     };
 
-    // 2) Generate a cartoon scenario image using DALL·E 3
+    // 2) Generate a cartoon scenario image using gpt-image-1
     let imageUrl = null;
     try {
       const imgPrompt = [
@@ -145,7 +147,7 @@ app.post("/api/hillview-sim/scenario", async (req, res) => {
       ].join(" ");
 
       const imageResult = await openai.images.generate({
-        model: "dall-e-3",
+        model: "gpt-image-1",
         prompt: imgPrompt,
         size: "1024x576",
         n: 1,
@@ -201,8 +203,7 @@ app.post("/api/hillview-sim/evaluate", async (req, res) => {
   } = stats || {};
 
   // Hard filter on clearly violent/harmful answers before involving GPT
-  const rawText =
-    choice?.type === "custom" ? (choice.customText || "") : "";
+  const rawText = choice?.type === "custom" ? choice.customText || "" : "";
   const lower = rawText.toLowerCase();
   const violentPatterns = [
     /run (them|the students|the kids|my class|students|kids) over/,
@@ -217,7 +218,7 @@ app.post("/api/hillview-sim/evaluate", async (req, res) => {
     /hit/,
     /punch/,
     /beat up/,
-    /hurt.*(student|students|kid|kids|child|children)/
+    /hurt.*(student|students|kid|kids|child|children)/,
   ];
   const isCatastrophic = violentPatterns.some((re) => re.test(lower));
 
@@ -253,7 +254,7 @@ app.post("/api/hillview-sim/evaluate", async (req, res) => {
         ].join(" ");
 
         const imgRes = await openai.images.generate({
-          model: "dall-e-3",
+          model: "gpt-image-1",
           prompt: imgPrompt,
           size: "1024x576",
           n: 1,
@@ -326,25 +327,44 @@ app.post("/api/hillview-sim/evaluate", async (req, res) => {
       }
 
       learningDelta = clamp(addNoise(evalJson.learningDelta ?? 0, 2), -20, 20);
-      likabilityDelta = clamp(addNoise(evalJson.likabilityDelta ?? 0, 2), -20, 20);
+      likabilityDelta = clamp(
+        addNoise(evalJson.likabilityDelta ?? 0, 2),
+        -20,
+        20
+      );
       studentsDelta = clamp(evalJson.studentsDelta ?? 0, -10, 10);
-      commentary = evalJson.commentary || "The AI forgot to explain this decision.";
+      commentary =
+        evalJson.commentary || "The AI forgot to explain this decision.";
       logHeadline =
         evalJson.logHeadline ||
         `Learning ${learningDelta >= 0 ? "+" : ""}${learningDelta}, ` +
           `Likability ${likabilityDelta >= 0 ? "+" : ""}${likabilityDelta}, ` +
           `Students ${studentsDelta >= 0 ? "+" : ""}${studentsDelta}.`;
 
-      // Recap image based on imagePrompt
+      // Recap image based on imagePrompt + a quick summary of the choice
       if (evalJson.imagePrompt) {
         try {
+          // Build a choice summary for the image model
+          let choiceSummary = "";
+          if (choice?.type === "custom") {
+            choiceSummary = `Teacher chose a custom response: "${(choice.customText || "").slice(
+              0,
+              200
+            )}"`;
+          } else if (choice?.type === "option" && choice.optionId) {
+            choiceSummary = `Teacher chose option id "${choice.optionId}".`;
+          }
+
+          const imgPrompt = [
+            "Cartoon-style illustration, middle school classroom at Hillview Middle School.",
+            evalJson.imagePrompt,
+            choiceSummary,
+            "Flat colors, clean lines, slightly exaggerated expressions. No text in the image."
+          ].join(" ");
+
           const imgRes = await openai.images.generate({
-            model: "dall-e-3",
-            prompt: [
-              "Cartoon-style illustration, middle school classroom at Hillview Middle School.",
-              evalJson.imagePrompt,
-              "Flat colors, clean lines, slightly exaggerated expressions. No text in the image."
-            ].join(" "),
+            model: "gpt-image-1",
+            prompt: imgPrompt,
             size: "1024x576",
             n: 1,
           });
