@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Dexter's Digital Magic</title>
+  <style>
+    :root {
+      --purple: #a855f7;
+      --cyan: #22d3ee;
+      --gold: #fbbf24;
+      --green: #22c55e;
+      --pink: #f472b6;
+      --bg: #05060a;
+      --card: #0d0f1a;
+      --border: rgba(168,85,247,0.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: #f0f0f0;
+      font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      padding: 20px 16px 60px;
+    }
+
+    .stars {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image:
+        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 60%, rgba(255,255,255,0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 10% 80%, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.25) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 15%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 85%, rgba(255,255,255,0.2) 0%, transparent 100%);
+    }
+
+    .wrap { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+
+    header { text-align: center; padding: 32px 0 40px; }
+
+    .sparkle { font-size: 2rem; animation: spin 4s linear infinite; display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    h1 {
+      font-size: clamp(2rem, 7vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, var(--purple), var(--cyan), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 24px rgba(168,85,247,0.5));
+      margin: 8px 0;
+    }
+
+    .tagline {
+      color: #888;
+      font-size: 0.95rem;
+      margin-top: 6px;
+    }
+
+    .trick-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 36px;
+    }
+
+    .trick-nav button {
+      background: rgba(168,85,247,0.12);
+      border: 1px solid var(--border);
+      color: #ccc;
+      padding: 7px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      transition: all 0.2s;
+    }
+
+    .trick-nav button:hover, .trick-nav button.active {
+      background: rgba(168,85,247,0.3);
+      border-color: var(--purple);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(168,85,247,0.4);
+    }
+
+    .trick {
+      display: none;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 24px;
+      box-shadow: 0 0 40px rgba(168,85,247,0.08);
+      animation: fadeIn 0.4s ease;
+    }
+
+    .trick.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .trick-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #666;
+      margin-bottom: 6px;
+    }
+
+    .trick-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .trick-desc {
+      color: #aaa;
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .step {
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .step.active { display: block; }
+
+    .step-text {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 18px;
+      color: #ddd;
+    }
+
+    .step-text em {
+      color: var(--cyan);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    .step-text strong {
+      color: var(--gold);
+    }
+
+    input[type="number"], input[type="text"] {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(168,85,247,0.35);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1.3rem;
+      padding: 10px 16px;
+      width: 100%;
+      max-width: 200px;
+      text-align: center;
+      outline: none;
+      display: block;
+      margin: 0 auto 18px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 12px rgba(168,85,247,0.35);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 11px 26px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 700;
+      transition: all 0.15s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--purple), #7c3aed);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(168,85,247,0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 28px rgba(168,85,247,0.5);
+    }
+
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(168,85,247,0.4);
+      color: #aaa;
+    }
+
+    .btn-ghost:hover { border-color: var(--purple); color: #fff; }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .reveal-box {
+      display: none;
+      text-align: center;
+      padding: 28px 20px;
+      border-radius: 16px;
+      border: 1px solid rgba(168,85,247,0.3);
+      background: rgba(168,85,247,0.07);
+      margin-top: 20px;
+      animation: revealPop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    @keyframes revealPop {
+      from { transform: scale(0.8); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    .reveal-box.show { display: block; }
+
+    .reveal-number {
+      font-size: clamp(3rem, 12vw, 5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(251,191,36,0.6));
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .reveal-label {
+      color: #aaa;
+      font-size: 0.88rem;
+    }
+
+    .thinking {
+      text-align: center;
+      color: var(--purple);
+      font-size: 1rem;
+      padding: 20px;
+      display: none;
+    }
+
+    .thinking.show { display: block; }
+
+    .dot-anim::after {
+      content: '';
+      animation: dots 1.5s infinite;
+    }
+
+    @keyframes dots {
+      0%   { content: ''; }
+      25%  { content: '.'; }
+      50%  { content: '..'; }
+      75%  { content: '...'; }
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 340px;
+      margin: 0 auto 20px;
+    }
+
+    .magic-card {
+      aspect-ratio: 2/3;
+      border-radius: 10px;
+      border: 2px solid rgba(168,85,247,0.3);
+      background: linear-gradient(135deg, #1a0a2e, #0d0f1a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .magic-card:hover {
+      border-color: var(--purple);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(168,85,247,0.3);
+    }
+
+    .magic-card.selected {
+      border-color: var(--gold);
+      box-shadow: 0 0 20px rgba(251,191,36,0.4);
+      transform: scale(1.05);
+    }
+
+    .magic-card .card-back {
+      font-size: 2rem;
+    }
+
+    .magic-card .card-face {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      font-size: 1.3rem;
+    }
+
+    .magic-card.flipped .card-back { display: none; }
+    .magic-card.flipped .card-face { display: flex; }
+
+    .sealed-prediction {
+      border: 2px dashed var(--gold);
+      border-radius: 14px;
+      padding: 16px 20px;
+      text-align: center;
+      margin-bottom: 24px;
+      background: rgba(251,191,36,0.04);
+      position: relative;
+    }
+
+    .sealed-prediction .lock { font-size: 1.5rem; margin-bottom: 4px; }
+
+    .sealed-prediction .pred-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #888;
+      margin-bottom: 4px;
+    }
+
+    .sealed-prediction .pred-text {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 1.1rem;
+      filter: blur(6px);
+      transition: filter 0.8s ease;
+    }
+
+    .sealed-prediction.revealed .pred-text { filter: blur(0); }
+
+    .progress-bar-wrap {
+      background: rgba(255,255,255,0.06);
+      border-radius: 999px;
+      height: 6px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    .emoji-big { font-size: 3rem; display: block; margin-bottom: 8px; }
+
+    .confetti-text {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--green);
+      text-shadow: 0 0 16px rgba(34,197,94,0.6);
+    }
+
+    .glitch {
+      animation: glitch 0.3s steps(2) 3;
+    }
+
+    @keyframes glitch {
+      0%   { transform: translateX(0); color: var(--pink); }
+      25%  { transform: translateX(-3px); }
+      50%  { transform: translateX(3px); color: var(--cyan); }
+      75%  { transform: translateX(-2px); }
+      100% { transform: translateX(0); color: inherit; }
+    }
+
+    .number-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      max-width: 320px;
+      margin: 0 auto 20px;
+    }
+
+    .num-cell {
+      aspect-ratio: 1;
+      border-radius: 8px;
+      border: 1px solid rgba(168,85,247,0.25);
+      background: rgba(255,255,255,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .num-cell:hover { border-color: var(--purple); background: rgba(168,85,247,0.12); }
+    .num-cell.picked { background: rgba(168,85,247,0.25); border-color: var(--purple); color: var(--purple); font-weight: 700; }
+    .num-cell.highlight { background: rgba(34,197,94,0.2); border-color: var(--green); color: var(--green); }
+
+    .reset-btn {
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: #666;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      display: block;
+      text-align: center;
+      width: 100%;
+    }
+
+    .reset-btn:hover { color: #aaa; }
+
+    .word-choices {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin: 16px 0 20px;
+    }
+
+    .word-btn {
+      padding: 9px 18px;
+      border-radius: 10px;
+      border: 1px solid rgba(168,85,247,0.3);
+      background: rgba(168,85,247,0.07);
+      color: #ccc;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .word-btn:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: rgba(34,211,238,0.08);
+    }
+
+    .word-btn.picked {
+      border-color: var(--pink);
+      color: var(--pink);
+      background: rgba(244,114,182,0.1);
+      box-shadow: 0 0 12px rgba(244,114,182,0.3);
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .back-link a {
+      color: #555;
+      font-size: 0.82rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .back-link a:hover { color: #aaa; }
+
+    @media (max-width: 480px) {
+      .trick { padding: 22px 16px; }
+      .card-grid { max-width: 280px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <div class="wrap">
+    <header>
+      <div class="sparkle">✦</div>
+      <h1>Dexter's Digital Magic</h1>
+      <p class="tagline">Five tricks. Zero explanations. Pure impossibility.</p>
+    </header>
+
+    <div class="trick-nav">
+      <button class="active" onclick="showTrick(0)">🔮 The Prophecy</button>
+      <button onclick="showTrick(1)">🧠 Mind Reader</button>
+      <button onclick="showTrick(2)">🃏 Card Force</button>
+      <button onclick="showTrick(3)">📖 The Tutorial</button>
+      <button onclick="showTrick(4)">🎯 Number Sniper</button>
+    </div>
+
+    <!-- TRICK 1: The Prophecy (1089 trick disguised) -->
+    <div class="trick active" id="trick-0">
+      <div class="trick-label">Trick 01 · Prediction</div>
+      <h2 class="trick-title" style="color: var(--gold)">The Prophecy</h2>
+      <p class="trick-desc">Before you do anything, I've already written your answer down. Follow the steps — then see if I was right.</p>
+
+      <div class="sealed-prediction" id="t1-seal">
+        <div class="lock">🔒</div>
+        <div class="pred-label">My prediction — written before you started</div>
+        <div class="pred-text" id="t1-pred-text">1089</div>
+      </div>
+
+      <div class="progress-bar-wrap"><div class="progress-bar" id="t1-progress"></div></div>
+
+      <div class="step active" id="t1-s1">
+        <p class="step-text">Think of any <em>3-digit number</em> where the first digit is larger than the last.<br><br><strong>Example: 731, 852, 964…</strong> anything works — it's your choice.</p>
+        <input type="number" id="t1-input" placeholder="e.g. 731" min="100" max="999" />
+        <div class="btn-row"><button class="btn btn-primary" onclick="t1Step2()">Next →</button></div>
+      </div>
+
+      <div class="step" id="t1-s2">
+        <p class="step-text" id="t1-s2-text"></p>
+        <div class="btn-row"><button class="btn btn-primary" onclick="t1Step3()">Done ✓</button></div>
+      </div>
+
+      <div class="step" id="t1-s3">
+        <p class="step-text" id="t1-s3-text"></p>
+        <div class="btn-row"><button class="btn btn-primary" onclick="t1Step4()">Done ✓</button></div>
+      </div>
+
+      <div class="step" id="t1-s4">
+        <p class="step-text" id="t1-s4-text"></p>
+        <div class="btn-row"><button class="btn btn-primary" onclick="t1Reveal()">🔓 Unlock Prediction</button></div>
+      </div>
+
+      <div class="reveal-box" id="t1-reveal">
+        <span class="emoji-big">🤯</span>
+        <div class="reveal-number">1089</div>
+        <div class="reveal-label">Exactly as predicted. Every single time.</div>
+      </div>
+
+      <button class="reset-btn" onclick="resetTrick(0)">↺ Try again with a different number</button>
+    </div>
+
+    <!-- TRICK 2: Mind Reader (digital root / always 9) -->
+    <div class="trick" id="trick-1">
+      <div class="trick-label">Trick 02 · Mind Reading</div>
+      <h2 class="trick-title" style="color: var(--cyan)">The Mind Reader</h2>
+      <p class="trick-desc">Think freely. I'll follow your thoughts from the inside.</p>
+
+      <div class="step active" id="t2-s1">
+        <p class="step-text">Pick <em>any number</em> between 1 and 99. Don't tell me.<br><br>Got it? Good. Now <strong>add the two digits together.</strong><br><br>For example: if you picked 47, add 4 + 7 = 11</p>
+        <div class="btn-row"><button class="btn btn-primary" onclick="t2Step2()">Done →</button></div>
+      </div>
+
+      <div class="step" id="t2-s2">
+        <p class="step-text"><strong>Subtract that sum</strong> from your original number.<br><br>So if you had 47 and got 11, you'd do 47 − 11 = 36</p>
+        <div class="btn-row"><button class="btn btn-primary" onclick="t2Step3()">Done →</button></div>
+      </div>
+
+      <div class="step" id="t2-s3">
+        <p class="step-text">You have a new number. If it has <em>two digits</em>, add them together again.<br><br>If it's already one digit, keep it.</p>
+        <div class="btn-row"><button class="btn btn-primary" onclick="t2Step4()">Done →</button></div>
+      </div>
+
+      <div class="step" id="t2-s4">
+        <p class="step-text"><strong>Multiply</strong> your number by 2.<br><br>Then <strong>subtract 9.</strong></p>
+        <div class="btn-row"><button class="btn btn-primary" onclick="t2Step5()">Done →</button></div>
+      </div>
+
+      <div class="step" id="t2-s5">
+        <p class="step-text">One last step. <strong>Add 9</strong> to whatever you have.</p>
+        <div class="thinking show" id="t2-thinking">
+          <span class="dot-anim">Connecting to your mind</span>
+        </div>
+        <div class="btn-row" style="justify-content:center">
+          <button class="btn btn-primary" onclick="t2Reveal()">Read My Mind 🔮</button>
+        </div>
+      </div>
+
+      <div class="reveal-box" id="t2-reveal">
+        <span class="emoji-big">🧠</span>
+        <div class="reveal-number">9</div>
+        <div class="reveal-label">Your number is… <strong style="color:var(--cyan)">nine</strong>. It's always nine.<br><br><span style="color:#666;font-size:0.8rem">Don't ask me how I know. I always know.</span></div>
+      </div>
+
+      <button class="reset-btn" onclick="resetTrick(1)">↺ Try with a different starting number</button>
+    </div>
+
+    <!-- TRICK 3: Card Force -->
+    <div class="trick" id="trick-2">
+      <div class="trick-label">Trick 03 · Forced Choice</div>
+      <h2 class="trick-title" style="color: var(--pink)">The Card Force</h2>
+      <p class="trick-desc">Pick any card. You have complete freedom. I promise I won't interfere.</p>
+
+      <div class="step active" id="t3-s1">
+        <p class="step-text">I'm going to show you six playing cards.<br>Pick whichever one calls to you. <em>Totally your choice.</em></p>
+
+        <div class="card-grid" id="t3-cards"></div>
+
+        <div class="thinking" id="t3-thinking"></div>
+        <div class="reveal-box" id="t3-reveal">
+          <span class="emoji-big">🃏</span>
+          <div class="reveal-number" id="t3-reveal-card" style="font-size:2.5rem"></div>
+          <div class="reveal-label" id="t3-reveal-text"></div>
+        </div>
+      </div>
+
+      <button class="reset-btn" onclick="resetTrick(2)">↺ Shuffle and try again</button>
+    </div>
+
+    <!-- TRICK 4: The Tutorial That Isn't -->
+    <div class="trick" id="trick-3">
+      <div class="trick-label">Trick 04 · Misdirection</div>
+      <h2 class="trick-title" style="color: var(--green)">The Tutorial</h2>
+      <p class="trick-desc">I'm going to explain exactly how a magic trick works. No secrets. Full transparency.</p>
+
+      <div class="step active" id="t4-s1">
+        <p class="step-text">Alright. I'll show you how the classic "number doubling" trick works.<br><br>The secret is that we always use a <em>starting number of 5</em>, and then…</p>
+        <div class="btn-row"><button class="btn btn-primary" onclick="t4Step2()">Continue →</button></div>
+      </div>
+
+      <div class="step" id="t4-s2">
+        <p class="step-text">Wait — I need you to pick a number first so I can demonstrate.<br><br>Choose any number between <em>1 and 10</em>:</p>
+        <input type="number" id="t4-input" placeholder="1–10" min="1" max="10" />
+        <div class="btn-row"><button class="btn btn-primary" onclick="t4Step3()">OK →</button></div>
+      </div>
+
+      <div class="step" id="t4-s3">
+        <p class="step-text" id="t4-s3-text"></p>
+        <div class="btn-row"><button class="btn btn-primary" onclick="t4Step4()">Done →</button></div>
+      </div>
+
+      <div class="step" id="t4-s4">
+        <p class="step-text" id="t4-s4-text"></p>
+        <div class="btn-row"><button class="btn btn-primary" onclick="t4Step5()">Done →</button></div>
+      </div>
+
+      <div class="step" id="t4-s5">
+        <p class="step-text">Now… I know I said I was going to explain the trick.<br><br>But actually—<br><br><em>what's your number right now?</em></p>
+        <input type="number" id="t4-final-input" placeholder="Enter it" />
+        <div class="btn-row"><button class="btn btn-primary" onclick="t4Reveal()">Tell me →</button></div>
+      </div>
+
+      <div class="reveal-box" id="t4-reveal">
+        <span class="emoji-big">😮</span>
+        <div class="confetti-text" id="t4-reveal-text"></div>
+        <div class="reveal-label" style="margin-top:10px;color:#666">I was supposed to explain the trick. Instead, I did it to you. Sorry.</div>
+      </div>
+
+      <button class="reset-btn" onclick="resetTrick(3)">↺ Try with a different number</button>
+    </div>
+
+    <!-- TRICK 5: Number Sniper (grid forcing) -->
+    <div class="trick" id="trick-4">
+      <div class="trick-label">Trick 05 · Impossible</div>
+      <h2 class="trick-title" style="color: var(--purple)">Number Sniper</h2>
+      <p class="trick-desc">I've already picked a number in this grid. Follow the instructions — and let's see if you land on it.</p>
+
+      <div class="step active" id="t5-s1">
+        <p class="step-text">Here's a grid of numbers 1–25. My target is hidden inside it.<br><br>Think of a <em>row</em> (1–5) and a <em>column</em> (1–5). That's your cell.</p>
+
+        <div class="number-grid" id="t5-grid"></div>
+
+        <p class="step-text" style="margin-top:4px;font-size:0.88rem;color:#888">Tap/click a number to select it.</p>
+        <div class="thinking" id="t5-thinking"></div>
+
+        <div class="btn-row" style="margin-top:8px"><button class="btn btn-primary" onclick="t5Reveal()" id="t5-btn" disabled>Reveal My Target 🎯</button></div>
+      </div>
+
+      <div class="reveal-box" id="t5-reveal">
+        <span class="emoji-big" id="t5-emoji">🎯</span>
+        <div class="reveal-number" id="t5-reveal-num"></div>
+        <div class="reveal-label" id="t5-reveal-text"></div>
+      </div>
+
+      <button class="reset-btn" onclick="resetTrick(4)">↺ Try again</button>
+    </div>
+
+    <div class="back-link"><a href="/">← Back to DexterBain.com</a></div>
+  </div>
+
+  <script>
+    // ─── Navigation ───────────────────────────────────────────────────────────
+    function showTrick(n) {
+      document.querySelectorAll('.trick').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.trick-nav button').forEach(b => b.classList.remove('active'));
+      document.getElementById('trick-' + n).classList.add('active');
+      document.querySelectorAll('.trick-nav button')[n].classList.add('active');
+    }
+
+    function setStep(prefix, n) {
+      document.querySelectorAll(`[id^="${prefix}-s"]`).forEach(s => s.classList.remove('active'));
+      const el = document.getElementById(`${prefix}-s${n}`);
+      if (el) el.classList.add('active');
+    }
+
+    function setProgress(id, pct) {
+      const el = document.getElementById(id);
+      if (el) el.style.width = pct + '%';
+    }
+
+    // ─── TRICK 1: The Prophecy (1089) ────────────────────────────────────────
+    let t1Num = 0, t1Rev = 0, t1Diff = 0;
+
+    function t1Step2() {
+      const v = parseInt(document.getElementById('t1-input').value);
+      if (!v || v < 100 || v > 999) { alert('Please enter a 3-digit number where the first digit is larger than the last (e.g. 731)'); return; }
+      const d = String(v).split('').map(Number);
+      if (d[0] <= d[2]) { alert('The first digit must be larger than the last digit. Try something like 731 or 852.'); return; }
+      t1Num = v;
+      const digits = String(v).split('').map(Number);
+      const reversed = digits.reverse().join('');
+      t1Rev = parseInt(reversed);
+      setProgress('t1-progress', 33);
+      document.getElementById('t1-s2-text').innerHTML =
+        `Good. Now <strong>reverse the digits</strong> of your number.<br><br>` +
+        `If you picked ${v}, the reverse is <em>${reversed}</em>.<br><br>` +
+        `Now <strong>subtract the smaller from the larger.</strong><br><em>${v} − ${reversed} = ?</em>`;
+      setStep('t1', 2);
+    }
+
+    function t1Step3() {
+      t1Diff = Math.abs(t1Num - t1Rev);
+      setProgress('t1-progress', 66);
+      const diffStr = String(t1Diff).padStart(3, '0');
+      const revDiff = diffStr.split('').reverse().join('');
+      document.getElementById('t1-s3-text').innerHTML =
+        `Now <strong>reverse the digits</strong> of your answer.<br><br>` +
+        `Your answer was <em>${t1Diff}</em>. The reverse is <em>${revDiff}</em>.<br><br>` +
+        `Got it?`;
+      setStep('t1', 3);
+    }
+
+    function t1Step4() {
+      const diffStr = String(t1Diff).padStart(3, '0');
+      const revDiff = parseInt(diffStr.split('').reverse().join(''));
+      const final = t1Diff + revDiff;
+      setProgress('t1-progress', 90);
+      document.getElementById('t1-s4-text').innerHTML =
+        `Last step: <strong>Add those two numbers together.</strong><br><br>` +
+        `<em>${t1Diff} + ${revDiff} = ?</em><br><br>` +
+        `Remember that number. Ready to unlock my prediction?`;
+      setStep('t1', 4);
+    }
+
+    function t1Reveal() {
+      setProgress('t1-progress', 100);
+      document.getElementById('t1-seal').classList.add('revealed');
+      document.getElementById('t1-reveal').classList.add('show');
+      setStep('t1', 99);
+    }
+
+    // ─── TRICK 2: Mind Reader ──────────────────────────────────────────────────
+    function t2Step2() { setStep('t2', 2); }
+    function t2Step3() { setStep('t2', 3); }
+    function t2Step4() { setStep('t2', 4); }
+    function t2Step5() { setStep('t2', 5); }
+
+    function t2Reveal() {
+      const t = document.getElementById('t2-thinking');
+      t.classList.add('show');
+      setTimeout(() => {
+        t.classList.remove('show');
+        document.getElementById('t2-reveal').classList.add('show');
+      }, 2200);
+    }
+
+    // ─── TRICK 3: Card Force ──────────────────────────────────────────────────
+    const allCards = [
+      { face: '🂡', name: 'Ace of Spades', suit: '♠' },
+      { face: '🂮', name: 'King of Spades', suit: '♠' },
+      { face: '🂭', name: 'Queen of Hearts', suit: '♥' },
+      { face: '🂻', name: 'Jack of Diamonds', suit: '♦' },
+      { face: '🃁', name: 'Ace of Clubs', suit: '♣' },
+      { face: '🂷', name: '7 of Spades', suit: '♠' },
+      { face: '🃍', name: 'King of Diamonds', suit: '♦' },
+      { face: '🂽', name: 'Queen of Spades', suit: '♠' },
+    ];
+    const TARGET_CARD = allCards[0]; // Ace of Spades — we force this
+    const EMOJIS_BY_SUIT = { '♠': '♠️', '♥': '♥️', '♦': '♦️', '♣': '♣️' };
+
+    let t3Picked = null;
+
+    function buildCards() {
+      const grid = document.getElementById('t3-cards');
+      grid.innerHTML = '';
+      // Always put target at index 2 (position the user's eye is drawn to after scanning)
+      const pool = [...allCards].filter(c => c !== TARGET_CARD);
+      // Pick 5 random others
+      const others = pool.sort(() => Math.random() - 0.5).slice(0, 5);
+      const display = [...others.slice(0,2), TARGET_CARD, ...others.slice(2,5)];
+
+      display.forEach((card, i) => {
+        const div = document.createElement('div');
+        div.className = 'magic-card';
+        div.innerHTML = `<div class="card-back">🂠</div><div class="card-face">${card.suit}<br><span style="font-size:0.9rem">${card.name.split(' ')[0]}</span></div>`;
+        div.onclick = () => pickCard(card, div);
+        grid.appendChild(div);
+      });
+    }
+
+    function pickCard(card, el) {
+      if (t3Picked) return;
+      t3Picked = card;
+      el.classList.add('selected');
+      const thinking = document.getElementById('t3-thinking');
+      thinking.innerHTML = '<span class="dot-anim">Scanning your neural signature</span>';
+      thinking.classList.add('show');
+
+      setTimeout(() => {
+        // Flip all cards
+        document.querySelectorAll('.magic-card').forEach(c => c.classList.add('flipped'));
+      }, 800);
+
+      setTimeout(() => {
+        thinking.classList.remove('show');
+        const reveal = document.getElementById('t3-reveal');
+        const revCard = document.getElementById('t3-reveal-card');
+        const revText = document.getElementById('t3-reveal-text');
+
+        // No matter what they picked, we always know the target
+        revCard.textContent = card.name.includes('Ace') ? '🂡' : card.suit + ' ' + card.name.split(' ')[0];
+        revCard.textContent = card.suit + ' ' + card.name;
+
+        if (card === TARGET_CARD) {
+          revText.innerHTML = `You chose the <strong style="color:var(--gold)">${card.name}</strong>.<br><br>Exactly the card I knew you'd pick. I always know.`;
+        } else {
+          // They picked a different card — we reveal the target was also them somehow
+          revText.innerHTML = `You chose the <strong style="color:var(--gold)">${card.name}</strong>.<br><br>Interesting. Out of all the cards… that one.<br><br><span style="color:#666;font-size:0.8rem">Were you really free to choose? I wonder.</span>`;
+        }
+
+        reveal.classList.add('show');
+      }, 2000);
+    }
+
+    buildCards();
+
+    // ─── TRICK 4: The Tutorial That Isn't ────────────────────────────────────
+    let t4Secret = 0;
+
+    function t4Step2() { setStep('t4', 2); }
+
+    function t4Step3() {
+      const v = parseInt(document.getElementById('t4-input').value);
+      if (!v || v < 1 || v > 10) { alert('Pick a number between 1 and 10.'); return; }
+      t4Secret = v;
+      document.getElementById('t4-s3-text').innerHTML =
+        `Right, so you've got <em>${v}</em>. In the trick, we'd normally tell you to…<br><br>` +
+        `Actually wait — first, <strong>multiply it by 3.</strong>`;
+      setStep('t4', 3);
+    }
+
+    function t4Step4() {
+      document.getElementById('t4-s4-text').innerHTML =
+        `Okay. Now <strong>add 12</strong> to that.<br><br>` +
+        `Then <strong>divide by 3.</strong><br><br>` +
+        `…I know this feels like I'm explaining something. I'm not.`;
+      setStep('t4', 4);
+    }
+
+    function t4Step5() { setStep('t4', 5); }
+
+    function t4Reveal() {
+      const final = parseInt(document.getElementById('t4-final-input').value);
+      if (isNaN(final)) { alert('Enter your number.'); return; }
+      const expected = t4Secret + 4;
+      const revealEl = document.getElementById('t4-reveal');
+      const textEl = document.getElementById('t4-reveal-text');
+
+      if (final === expected) {
+        textEl.innerHTML = `You said <span style="color:var(--gold)">${final}</span>. That's exactly what I expected.<br><br>You started with ${t4Secret}. I knew you'd end on ${expected}.`;
+      } else {
+        textEl.innerHTML = `You said <span style="color:var(--gold)">${final}</span>.<br><br>Hmm. Did you do the math correctly? You started with ${t4Secret} — the answer should be ${expected}.<br><br><span style="color:#888;font-size:0.85rem">Check your work. (It's a math trick. You did the math.)</span>`;
+      }
+
+      revealEl.classList.add('show');
+      setStep('t4', 99);
+    }
+
+    // ─── TRICK 5: Number Sniper ───────────────────────────────────────────────
+    let t5Selected = null;
+    const T5_TARGET = 13; // always try to force to this, but we're honest either way
+
+    function buildGrid() {
+      const grid = document.getElementById('t5-grid');
+      grid.innerHTML = '';
+      for (let i = 1; i <= 25; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'num-cell';
+        cell.textContent = i;
+        cell.onclick = () => selectCell(i, cell);
+        grid.appendChild(cell);
+      }
+    }
+
+    function selectCell(n, el) {
+      if (t5Selected !== null) return;
+      t5Selected = n;
+      el.classList.add('picked');
+      document.getElementById('t5-btn').disabled = false;
+      document.getElementById('t5-thinking').innerHTML = `<span class="dot-anim">Locking in on number ${n}</span>`;
+      document.getElementById('t5-thinking').classList.add('show');
+    }
+
+    function t5Reveal() {
+      document.getElementById('t5-thinking').classList.remove('show');
+      const revealEl = document.getElementById('t5-reveal');
+      const numEl = document.getElementById('t5-reveal-num');
+      const textEl = document.getElementById('t5-reveal-text');
+      const emojiEl = document.getElementById('t5-emoji');
+
+      numEl.textContent = t5Selected;
+      numEl.classList.add('glitch');
+
+      // Highlight the selected cell
+      document.querySelectorAll('.num-cell').forEach((c, i) => {
+        if (i + 1 === t5Selected) c.classList.add('highlight');
+      });
+
+      const messages = [
+        `That's the one. Row ${Math.ceil(t5Selected/5)}, column ${((t5Selected-1)%5)+1}.<br>I had my eye on that number from the start.`,
+        `${t5Selected}. I knew the moment you hesitated over the grid.`,
+        `Out of 25 numbers — you chose ${t5Selected}. And I was already waiting there.`,
+      ];
+
+      emojiEl.textContent = '🎯';
+      textEl.innerHTML = messages[t5Selected % messages.length] + `<br><br><span style="color:#555;font-size:0.8rem">How? Your eye goes to the same place mine does. That's the secret.</span>`;
+      revealEl.classList.add('show');
+      setStep('t5', 99);
+    }
+
+    buildGrid();
+
+    // ─── Reset ────────────────────────────────────────────────────────────────
+    function resetTrick(n) {
+      const trick = document.getElementById('trick-' + n);
+      if (n === 0) {
+        document.getElementById('t1-input').value = '';
+        document.getElementById('t1-reveal').classList.remove('show');
+        document.getElementById('t1-seal').classList.remove('revealed');
+        setProgress('t1-progress', 0);
+        setStep('t1', 1);
+        t1Num = 0; t1Rev = 0; t1Diff = 0;
+      } else if (n === 1) {
+        document.getElementById('t2-reveal').classList.remove('show');
+        document.getElementById('t2-thinking').classList.remove('show');
+        setStep('t2', 1);
+      } else if (n === 2) {
+        t3Picked = null;
+        document.getElementById('t3-reveal').classList.remove('show');
+        document.getElementById('t3-thinking').classList.remove('show');
+        buildCards();
+      } else if (n === 3) {
+        document.getElementById('t4-input').value = '';
+        document.getElementById('t4-final-input').value = '';
+        document.getElementById('t4-reveal').classList.remove('show');
+        setStep('t4', 1);
+        t4Secret = 0;
+      } else if (n === 4) {
+        t5Selected = null;
+        document.getElementById('t5-reveal').classList.remove('show');
+        document.getElementById('t5-thinking').classList.remove('show');
+        document.getElementById('t5-btn').disabled = true;
+        buildGrid();
+        setStep('t5', 1);
+      }
+    }
+  </script>
+</body>
+</html>
