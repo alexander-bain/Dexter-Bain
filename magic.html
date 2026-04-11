@@ -684,9 +684,14 @@
       <p class="trick-desc">Stop the counter whenever you want. Completely random. I'll tell you a story — and somehow, your number will be in it.</p>
 
       <div class="step active" id="t6-s1">
-        <p class="step-text">Hit <em>Start</em>, wait as long as you want, then hit <em>Stop</em>. Whatever number you land on — that's yours.</p>
+        <p class="step-text">Read the story below. Hit <em>Start</em>, wait as long as you want, then hit <em>Stop</em>. Your number will already be in the sentence.</p>
 
-        <div style="text-align:center; margin: 20px 0;">
+        <div style="border:1px solid rgba(168,85,247,0.2); border-radius:14px; padding:18px 16px; margin-bottom:20px; background:rgba(255,255,255,0.02);">
+          <p id="t6-story" style="line-height:2.1; font-size:0.95rem;"></p>
+          <p id="t6-landed" style="margin-top:14px; font-size:0.8rem; color:#555; text-align:center; min-height:1.2em;"></p>
+        </div>
+
+        <div style="text-align:center; margin: 16px 0 20px;">
           <div id="t6-counter" style="
             font-size: clamp(3.5rem, 16vw, 6rem);
             font-weight: 900;
@@ -695,7 +700,7 @@
             line-height: 1;
             margin-bottom: 20px;
             transition: color 0.1s;
-          ">0</div>
+          ">–</div>
           <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
             <button class="btn btn-primary" id="t6-start-btn" onclick="t6Start()">▶ Start</button>
             <button class="btn" id="t6-stop-btn" onclick="t6Stop()" style="
@@ -706,15 +711,6 @@
               pointer-events: none;
             ">■ Stop</button>
           </div>
-        </div>
-
-        <div class="reveal-box" id="t6-reveal" style="text-align:left;">
-          <div style="text-align:center; margin-bottom:16px;">
-            <span style="font-size:1.8rem">📖</span>
-            <div style="font-size:1.1rem; font-weight:800; color:var(--gold); margin-top:6px;" id="t6-landed"></div>
-          </div>
-          <p id="t6-story" style="line-height:1.9; font-size:0.95rem; color:#ccc;"></p>
-          <p style="margin-top:16px; font-size:0.78rem; color:#555; text-align:center;">Your number was already written into the story. It always is.</p>
         </div>
       </div>
 
@@ -977,7 +973,7 @@
     buildGrid();
 
     // ─── TRICK 6: The Time Sentence ───────────────────────────────────────────
-    let t6Count = 0, t6Interval = null, t6Running = false;
+    let t6Count = 0, t6Interval = null, t6Running = false, t6Stopped = false;
 
     const T6_DATA = {
        5: "high five",
@@ -1002,21 +998,84 @@
      100: "full century"
     };
 
-    function t6Highlight(text, match) {
-      return text === match
-        ? `<span style="background:rgba(168,85,247,0.3);color:#fff;padding:2px 7px;border-radius:5px;font-weight:700;box-shadow:0 0 10px rgba(168,85,247,0.5)">${text}</span>`
-        : `<span style="color:#888">${text}</span>`;
+    const T6_STORY_PARTS = [
+      { key:  5, text: "high five" },
+      { key: 10, text: "Ten Commandments" },
+      { key: 15, text: "fifteen minutes of fame" },
+      { key: 20, text: "twenty questions" },
+      { key: 25, text: "quarter" },
+      { key: 30, text: "thirty days" },
+      { key: 35, text: "speed limit" },
+      { key: 40, text: "forty days" },
+      { key: 45, text: "45 rpm record" },
+      { key: 50, text: "half century" },
+      { key: 55, text: "double nickel" },
+      { key: 60, text: "sixty seconds" },
+      { key: 65, text: "retirement age" },
+      { key: 70, text: "seventy years" },
+      { key: 75, text: "three quarters" },
+      { key: 80, text: "eighty years" },
+      { key: 85, text: "mid eighties" },
+      { key: 90, text: "ninety degrees" },
+      { key: 95, text: "almost a hundred" },
+      { key:100, text: "full century" },
+    ];
+
+    const T6_SENTENCE_TEMPLATE = [
+      { pre: "He gave a ", key:  5, post: "," },
+      { pre: " remembered the ", key: 10, post: "," },
+      { pre: " waited ", key: 15, post: "," },
+      { pre: " asked ", key: 20, post: "," },
+      { pre: " spent his last ", key: 25, post: "," },
+      { pre: " survived ", key: 30, post: "," },
+      { pre: " drove past the ", key: 35, post: "," },
+      { pre: " endured ", key: 40, post: " of rain," },
+      { pre: " played a scratched ", key: 45, post: "," },
+      { pre: " hit his ", key: 50, post: "," },
+      { pre: " spotted the ", key: 55, post: " on a license plate," },
+      { pre: " counted ", key: 60, post: " under his breath," },
+      { pre: " planned his ", key: 65, post: "," },
+      { pre: " celebrated ", key: 70, post: "," },
+      { pre: " saved up ", key: 75, post: "," },
+      { pre: " blew out ", key: 80, post: " of candles," },
+      { pre: " drifted through his ", key: 85, post: "," },
+      { pre: " sweated in ", key: 90, post: "," },
+      { pre: " reached ", key: 95, post: "," },
+      { pre: " and finally completed his ", key: 100, post: "." },
+    ];
+
+    function t6RenderStory(highlightKey) {
+      const storyEl = document.getElementById('t6-story');
+      storyEl.innerHTML = T6_SENTENCE_TEMPLATE.map(part => {
+        const isMatch = highlightKey !== null && part.key === highlightKey;
+        const span = isMatch
+          ? `<span id="t6-match" style="
+              background:rgba(168,85,247,0.35);
+              color:#fff;
+              padding:2px 8px;
+              border-radius:6px;
+              font-weight:700;
+              box-shadow:0 0 14px rgba(168,85,247,0.7);
+              animation:revealPop 0.4s cubic-bezier(0.34,1.56,0.64,1);
+              display:inline-block;
+            ">${T6_DATA[part.key]}</span>`
+          : `<span style="color:#666">${T6_DATA[part.key]}</span>`;
+        return `<span style="color:#555">${part.pre}</span>${span}<span style="color:#555">${part.post}</span>`;
+      }).join('');
     }
 
+    // Render dim story immediately on load
+    t6RenderStory(null);
+
     function t6Start() {
-      if (t6Running) return;
+      if (t6Running || t6Stopped) return;
       t6Running = true;
-      t6Count = 0;
-      document.getElementById('t6-reveal').classList.remove('show');
+      t6Count = 5;
       document.getElementById('t6-start-btn').style.opacity = '0.4';
       document.getElementById('t6-start-btn').style.pointerEvents = 'none';
       document.getElementById('t6-stop-btn').style.opacity = '1';
       document.getElementById('t6-stop-btn').style.pointerEvents = 'auto';
+      document.getElementById('t6-landed').textContent = '';
 
       t6Interval = setInterval(() => {
         t6Count += 5;
@@ -1031,40 +1090,21 @@
       if (!t6Running) return;
       clearInterval(t6Interval);
       t6Running = false;
+      t6Stopped = true;
       document.getElementById('t6-stop-btn').style.opacity = '0.4';
       document.getElementById('t6-stop-btn').style.pointerEvents = 'none';
 
       const final = t6Count || 5;
       const phrase = T6_DATA[final];
 
-      document.getElementById('t6-landed').textContent = `You stopped on ${final} — "${phrase}"`;
+      t6RenderStory(final);
 
-      const h = (t) => t6Highlight(t, phrase);
-      document.getElementById('t6-story').innerHTML =
-        `He gave a ${h("high five")},
-        remembered the ${h("Ten Commandments")},
-        waited ${h("fifteen minutes of fame")},
-        asked ${h("twenty questions")},
-        spent his last ${h("quarter")},
-        survived ${h("thirty days")},
-        drove past the ${h("speed limit")},
-        endured ${h("forty days")} of rain,
-        played a scratched ${h("45 rpm record")},
-        hit his ${h("half century")},
-        spotted the ${h("double nickel")} on a license plate,
-        counted ${h("sixty seconds")} under his breath,
-        planned his ${h("retirement age")},
-        celebrated ${h("seventy years")},
-        saved up ${h("three quarters")},
-        blew out ${h("eighty years")} of candles,
-        drifted through his ${h("mid eighties")},
-        sweated in ${h("ninety degrees")},
-        reached ${h("almost a hundred")},
-        and finally completed his ${h("full century")}.`;
-
+      // Scroll phrase into view after render
       setTimeout(() => {
-        document.getElementById('t6-reveal').classList.add('show');
-      }, 300);
+        const match = document.getElementById('t6-match');
+        if (match) match.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.getElementById('t6-landed').textContent = `You stopped on ${final} — that's "${phrase}" ↑`;
+      }, 100);
     }
 
     // ─── Reset ────────────────────────────────────────────────────────────────
@@ -1101,14 +1141,16 @@
         setStep('t5', 1);
       } else if (n === 5) {
         clearInterval(t6Interval);
-        t6Count = 0; t6Running = false;
-        document.getElementById('t6-counter').textContent = '0';
-        document.getElementById('t6-counter').style.color = 'var(--cyan)';
-        document.getElementById('t6-reveal').classList.remove('show');
+        t6Count = 0; t6Running = false; t6Stopped = false;
+        const counterEl = document.getElementById('t6-counter');
+        counterEl.textContent = '–';
+        counterEl.style.color = 'var(--cyan)';
+        document.getElementById('t6-landed').textContent = '';
         document.getElementById('t6-start-btn').style.opacity = '1';
         document.getElementById('t6-start-btn').style.pointerEvents = 'auto';
         document.getElementById('t6-stop-btn').style.opacity = '0.4';
         document.getElementById('t6-stop-btn').style.pointerEvents = 'none';
+        t6RenderStory(null);
       }
     }
   </script>
