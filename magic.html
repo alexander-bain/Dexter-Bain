@@ -486,7 +486,7 @@
     <header>
       <div class="sparkle">✦</div>
       <h1>Dexter's Digital Magic</h1>
-      <p class="tagline">Five tricks. Zero explanations. Pure impossibility.</p>
+      <p class="tagline">Six tricks. Zero explanations. Pure impossibility.</p>
     </header>
 
     <div class="trick-nav">
@@ -495,6 +495,7 @@
       <button onclick="showTrick(2)">🃏 Card Force</button>
       <button onclick="showTrick(3)">📖 The Tutorial</button>
       <button onclick="showTrick(4)">🎯 Number Sniper</button>
+      <button onclick="showTrick(5)">⏱ The Time Sentence</button>
     </div>
 
     <!-- TRICK 1: The Prophecy (1089 trick disguised) -->
@@ -674,6 +675,50 @@
       </div>
 
       <button class="reset-btn" onclick="resetTrick(4)">↺ Try again</button>
+    </div>
+
+    <!-- TRICK 6: The Time Sentence -->
+    <div class="trick" id="trick-5">
+      <div class="trick-label">Trick 06 · Storytelling</div>
+      <h2 class="trick-title" style="color: var(--cyan)">The Time Sentence</h2>
+      <p class="trick-desc">Stop the counter whenever you want. Completely random. I'll tell you a story — and somehow, your number will be in it.</p>
+
+      <div class="step active" id="t6-s1">
+        <p class="step-text">Hit <em>Start</em>, wait as long as you want, then hit <em>Stop</em>. Whatever number you land on — that's yours.</p>
+
+        <div style="text-align:center; margin: 20px 0;">
+          <div id="t6-counter" style="
+            font-size: clamp(3.5rem, 16vw, 6rem);
+            font-weight: 900;
+            color: var(--cyan);
+            text-shadow: 0 0 30px rgba(34,211,238,0.6);
+            line-height: 1;
+            margin-bottom: 20px;
+            transition: color 0.1s;
+          ">0</div>
+          <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+            <button class="btn btn-primary" id="t6-start-btn" onclick="t6Start()">▶ Start</button>
+            <button class="btn" id="t6-stop-btn" onclick="t6Stop()" style="
+              background: linear-gradient(135deg, #0e7490, #0891b2);
+              color: #fff;
+              box-shadow: 0 6px 20px rgba(14,116,144,0.35);
+              opacity: 0.4;
+              pointer-events: none;
+            ">■ Stop</button>
+          </div>
+        </div>
+
+        <div class="reveal-box" id="t6-reveal" style="text-align:left;">
+          <div style="text-align:center; margin-bottom:16px;">
+            <span style="font-size:1.8rem">📖</span>
+            <div style="font-size:1.1rem; font-weight:800; color:var(--gold); margin-top:6px;" id="t6-landed"></div>
+          </div>
+          <p id="t6-story" style="line-height:1.9; font-size:0.95rem; color:#ccc;"></p>
+          <p style="margin-top:16px; font-size:0.78rem; color:#555; text-align:center;">Your number was already written into the story. It always is.</p>
+        </div>
+      </div>
+
+      <button class="reset-btn" onclick="resetTrick(5)">↺ Stop a different number</button>
     </div>
 
     <div class="back-link"><a href="/">← Back to DexterBain.com</a></div>
@@ -931,6 +976,97 @@
 
     buildGrid();
 
+    // ─── TRICK 6: The Time Sentence ───────────────────────────────────────────
+    let t6Count = 0, t6Interval = null, t6Running = false;
+
+    const T6_DATA = {
+       5: "high five",
+      10: "Ten Commandments",
+      15: "fifteen minutes of fame",
+      20: "twenty questions",
+      25: "quarter",
+      30: "thirty days",
+      35: "speed limit",
+      40: "forty days",
+      45: "45 rpm record",
+      50: "half century",
+      55: "double nickel",
+      60: "sixty seconds",
+      65: "retirement age",
+      70: "seventy years",
+      75: "three quarters",
+      80: "eighty years",
+      85: "mid eighties",
+      90: "ninety degrees",
+      95: "almost a hundred",
+     100: "full century"
+    };
+
+    function t6Highlight(text, match) {
+      return text === match
+        ? `<span style="background:rgba(168,85,247,0.3);color:#fff;padding:2px 7px;border-radius:5px;font-weight:700;box-shadow:0 0 10px rgba(168,85,247,0.5)">${text}</span>`
+        : `<span style="color:#888">${text}</span>`;
+    }
+
+    function t6Start() {
+      if (t6Running) return;
+      t6Running = true;
+      t6Count = 0;
+      document.getElementById('t6-reveal').classList.remove('show');
+      document.getElementById('t6-start-btn').style.opacity = '0.4';
+      document.getElementById('t6-start-btn').style.pointerEvents = 'none';
+      document.getElementById('t6-stop-btn').style.opacity = '1';
+      document.getElementById('t6-stop-btn').style.pointerEvents = 'auto';
+
+      t6Interval = setInterval(() => {
+        t6Count += 5;
+        if (t6Count > 100) t6Count = 5;
+        const el = document.getElementById('t6-counter');
+        el.textContent = t6Count;
+        el.style.color = t6Count % 20 === 0 ? 'var(--gold)' : 'var(--cyan)';
+      }, 40);
+    }
+
+    function t6Stop() {
+      if (!t6Running) return;
+      clearInterval(t6Interval);
+      t6Running = false;
+      document.getElementById('t6-stop-btn').style.opacity = '0.4';
+      document.getElementById('t6-stop-btn').style.pointerEvents = 'none';
+
+      const final = t6Count || 5;
+      const phrase = T6_DATA[final];
+
+      document.getElementById('t6-landed').textContent = `You stopped on ${final} — "${phrase}"`;
+
+      const h = (t) => t6Highlight(t, phrase);
+      document.getElementById('t6-story').innerHTML =
+        `He gave a ${h("high five")},
+        remembered the ${h("Ten Commandments")},
+        waited ${h("fifteen minutes of fame")},
+        asked ${h("twenty questions")},
+        spent his last ${h("quarter")},
+        survived ${h("thirty days")},
+        drove past the ${h("speed limit")},
+        endured ${h("forty days")} of rain,
+        played a scratched ${h("45 rpm record")},
+        hit his ${h("half century")},
+        spotted the ${h("double nickel")} on a license plate,
+        counted ${h("sixty seconds")} under his breath,
+        planned his ${h("retirement age")},
+        celebrated ${h("seventy years")},
+        saved up ${h("three quarters")},
+        blew out ${h("eighty years")} of candles,
+        drifted through his ${h("mid eighties")},
+        sweated in ${h("ninety degrees")},
+        reached ${h("almost a hundred")},
+        and finally completed his ${h("full century")}.`;
+
+      setTimeout(() => {
+        document.getElementById('t6-reveal').classList.add('show');
+      }, 300);
+    }
+
     // ─── Reset ────────────────────────────────────────────────────────────────
     function resetTrick(n) {
       const trick = document.getElementById('trick-' + n);
@@ -963,6 +1099,16 @@
         document.getElementById('t5-btn').disabled = true;
         buildGrid();
         setStep('t5', 1);
+      } else if (n === 5) {
+        clearInterval(t6Interval);
+        t6Count = 0; t6Running = false;
+        document.getElementById('t6-counter').textContent = '0';
+        document.getElementById('t6-counter').style.color = 'var(--cyan)';
+        document.getElementById('t6-reveal').classList.remove('show');
+        document.getElementById('t6-start-btn').style.opacity = '1';
+        document.getElementById('t6-start-btn').style.pointerEvents = 'auto';
+        document.getElementById('t6-stop-btn').style.opacity = '0.4';
+        document.getElementById('t6-stop-btn').style.pointerEvents = 'none';
       }
     }
   </script>
