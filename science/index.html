@@ -95,6 +95,11 @@
       text-shadow: 0 1px 4px #000, 0 0 10px #000;
       white-space: nowrap; pointer-events: none;
     }
+    .ink-bar-wrap { margin: 10px 0 4px; }
+    .ink-bar-label { font-size: 0.78rem; color: #aaa; margin-bottom: 5px; }
+    .ink-bar-track { height: 10px; background: rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; }
+    .ink-bar-fill  { height: 100%; background: linear-gradient(90deg, #4ade80, #fbbf24); border-radius: 6px; transition: width 0.1s linear; }
+    .ink-out { color: #f87171; font-size: 0.82rem; font-weight: 700; text-align: center; margin-top: 6px; }
 
     .stat-chip {
       font-size: 0.67rem;
@@ -353,11 +358,21 @@
   <div class="map-key">
     <div class="map-key-title">Key</div>
 
-    <div class="key-row key-modern" id="key-plates-row" style="display:none">
-      <div class="key-swatch" style="background:#f97316;opacity:0.8"></div>
-      <span class="key-label">Plate boundaries</span>
+    <div id="key-plates-section" style="display:none">
+      <div class="key-row key-modern">
+        <div class="key-swatch" style="background:#f87171;opacity:0.9"></div>
+        <span class="key-label">Convergent (colliding)</span>
+      </div>
+      <div class="key-row key-modern">
+        <div class="key-swatch" style="background:#60a5fa;opacity:0.9"></div>
+        <span class="key-label">Divergent (spreading)</span>
+      </div>
+      <div class="key-row key-modern">
+        <div class="key-swatch" style="background:#fbbf24;opacity:0.9"></div>
+        <span class="key-label">Transform (sliding)</span>
+      </div>
+      <hr class="key-divider key-modern" />
     </div>
-    <hr class="key-divider key-modern" id="key-plates-divider" style="display:none" />
     <div class="key-section-label key-modern" style="margin-top:0">Earthquakes</div>
     <div class="key-row key-modern">
       <div class="key-dot" style="width:10px;height:10px;background:#60a5fa;box-shadow:0 0 5px #60a5fa88"></div>
@@ -404,14 +419,19 @@
       <!-- Drawing phase -->
       <div class="game-phase" id="phase-draw">
         <p class="game-instructions">
-          Press and drag on the map to draw where you think earthquakes happen.
-          Cover as many earthquake zones as you can!
+          Press and drag to draw where you think earthquakes happen.
+          You have <strong>15,000 km</strong> of ink — use it wisely!
         </p>
-        <div class="game-count">Zones covered: <span id="mark-count">0</span></div>
+        <div class="ink-bar-wrap">
+          <div class="ink-bar-label">Ink remaining: <span id="ink-km">15,000</span> km</div>
+          <div class="ink-bar-track"><div class="ink-bar-fill" id="ink-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div id="ink-out-msg" class="ink-out" style="display:none">✏️ Out of ink!</div>
+        <div class="game-count" style="margin-top:8px">Zones covered: <span id="mark-count">0</span></div>
         <button class="game-btn game-btn-reveal" id="btn-reveal" onclick="revealAnswers()" disabled>Reveal Answers</button>
         <button class="game-btn game-btn-secondary" onclick="undoStroke()">Undo Last Line</button>
         <button class="game-btn game-btn-secondary" onclick="resetGame()">Clear All</button>
-        <p class="game-tip">Hint: think about where tectonic plates meet — the edges of the Pacific Ocean, along mountain ranges, and mid-ocean ridges.</p>
+        <p class="game-tip">Hint: trace the edges of the Pacific Ocean, mid-ocean ridges, and mountain ranges.</p>
       </div>
 
       <!-- Results phase -->
@@ -461,9 +481,13 @@
     let isDrawing    = false;
     let currentStroke    = [];
     let currentPolyline  = null;
-    const userStrokes = [];  // array of L.Polyline
+    const userStrokes  = [];
+    const strokeLengths = [];  // km used per stroke, parallel to userStrokes
     const userGrid    = new Set();
     const eqGrid      = new Set();
+    const INK_BUDGET_KM = 15000;
+    let inkUsedKm = 0;
+    let lastDrawPt = null;
 
     // ── Info panel toggle ──
     function toggleInfo() {
@@ -491,10 +515,25 @@
       }
     }
 
+    function updateInkUI() {
+      const remaining = Math.max(0, INK_BUDGET_KM - inkUsedKm);
+      const pct       = (remaining / INK_BUDGET_KM) * 100;
+      document.getElementById('ink-km').textContent = Math.round(remaining).toLocaleString();
+      document.getElementById('ink-bar-fill').style.width = pct + '%';
+      document.getElementById('ink-bar-fill').style.background =
+        pct > 40 ? 'linear-gradient(90deg,#4ade80,#fbbf24)' :
+        pct > 15 ? '#fbbf24' : '#f87171';
+      document.getElementById('ink-out-msg').style.display = remaining <= 0 ? 'block' : 'none';
+    }
+
+    let inkAtStrokeStart = 0;
+
     function startDraw(e) {
-      if (!gameOpen || gameRevealed) return;
+      if (!gameOpen || gameRevealed || inkUsedKm >= INK_BUDGET_KM) return;
       isDrawing = true;
+      inkAtStrokeStart = inkUsedKm;
       const pt = getEventLatLng(e);
+      lastDrawPt = pt;
       currentStroke = [pt];
       currentPolyline = L.polyline([[pt.lat, pt.lng]], {
         color: '#fbbf24', weight: 5, opacity: 0.75, lineJoin: 'round', lineCap: 'round',
@@ -505,18 +544,28 @@
 
     function continueDraw(e) {
       if (!isDrawing || !gameOpen || gameRevealed) return;
-      const pt = getEventLatLng(e);
+      const pt   = getEventLatLng(e);
+      const segKm = lastDrawPt ? L.latLng(lastDrawPt).distanceTo(L.latLng(pt)) / 1000 : 0;
+      if (inkUsedKm + segKm > INK_BUDGET_KM) {
+        endDraw(e);
+        return;
+      }
+      inkUsedKm += segKm;
+      lastDrawPt = pt;
       currentStroke.push(pt);
       currentPolyline.setLatLngs(currentStroke.map(p => [p.lat, p.lng]));
       markCell(pt);
+      updateInkUI();
       e.preventDefault();
     }
 
     function endDraw(e) {
       if (!isDrawing) return;
       isDrawing = false;
+      lastDrawPt = null;
       if (currentStroke.length >= 2) {
         userStrokes.push(currentPolyline);
+        strokeLengths.push(inkAtStrokeStart);  // ink before this stroke, for undo
       } else if (currentPolyline) {
         drawLayer.removeLayer(currentPolyline);
       }
@@ -599,13 +648,25 @@
       return L.divIcon({ className: '', html: svg + lbl, iconSize: [18, label ? 48 : 32], iconAnchor: [9, 16] });
     }
 
+    function plateBoundaryColor(type) {
+      // Convergent (colliding plates): subduction zones, continental & oceanic convergent
+      if (['SUB','CCB','OCB'].includes(type)) return { color: '#f87171', weight: 2.0, opacity: 0.8 };
+      // Divergent (spreading): mid-ocean ridges, continental rifts
+      if (['OSR','CRB'].includes(type)) return { color: '#60a5fa', weight: 2.0, opacity: 0.8 };
+      // Transform (sliding past each other)
+      if (['OTF','CTF'].includes(type)) return { color: '#fbbf24', weight: 1.8, opacity: 0.75 };
+      return { color: '#aaa', weight: 1.5, opacity: 0.6 };
+    }
+
     async function loadPlates() {
       if (platesLoaded) return;
       platesLoaded = true;
       try {
         const res = await fetch('https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json');
         const gj  = await res.json();
-        L.geoJSON(gj, { style: { color: '#f97316', weight: 1.8, opacity: 0.75 } }).addTo(platesLayer);
+        L.geoJSON(gj, {
+          style: f => plateBoundaryColor(f.properties?.Type),
+        }).addTo(platesLayer);
       } catch(e) { console.warn('Plate boundaries failed:', e); }
       PLATE_ARROWS.forEach(({ lat, lng, b, label }) => {
         L.marker([lat, lng], { icon: arrowIcon(b, label), interactive: false }).addTo(platesLayer);
@@ -615,8 +676,7 @@
     function togglePlates() {
       platesVisible = !platesVisible;
       document.getElementById('btn-plates').classList.toggle('plates-active', platesVisible);
-      document.getElementById('key-plates-row').style.display     = platesVisible ? 'flex' : 'none';
-      document.getElementById('key-plates-divider').style.display = platesVisible ? 'block' : 'none';
+      document.getElementById('key-plates-section').style.display = platesVisible ? 'block' : 'none';
       if (platesVisible) {
         loadPlates();
         if (currentView !== 'pangea') map.addLayer(platesLayer);
@@ -746,8 +806,8 @@
     function undoStroke() {
       if (!userStrokes.length) return;
       const last = userStrokes.pop();
+      inkUsedKm = strokeLengths.pop();  // restore ink to before that stroke
       drawLayer.removeLayer(last);
-      // Rebuild userGrid from remaining strokes
       userGrid.clear();
       userStrokes.forEach(poly => {
         poly.getLatLngs().forEach(pt => {
@@ -756,6 +816,7 @@
       });
       document.getElementById('mark-count').textContent = userGrid.size;
       document.getElementById('btn-reveal').disabled = userGrid.size < 3;
+      updateInkUI();
     }
 
     function revealAnswers() {
@@ -787,12 +848,15 @@
       gameRevealed = false;
       userStrokes.forEach(p => drawLayer.removeLayer(p));
       userStrokes.length = 0;
+      strokeLengths.length = 0;
       userGrid.clear();
+      inkUsedKm = 0;
       if (gameOpen) map.removeLayer(eqLayer);
       document.getElementById('mark-count').textContent = '0';
       document.getElementById('btn-reveal').disabled = true;
       document.getElementById('phase-draw').classList.remove('hidden');
       document.getElementById('phase-result').classList.add('hidden');
+      updateInkUI();
     }
 
     // ── Load earthquakes ──
