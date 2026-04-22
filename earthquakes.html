@@ -280,6 +280,22 @@
       showVol ? map.addLayer(volLayer) : map.removeLayer(volLayer);
     }
 
+    // Store all markers so we can resize them on zoom
+    const allMarkers = []; // { marker, baseRadius }
+
+    function scaledRadius(base, zoom) {
+      // At zoom 2 (world) → base size. Each extra zoom level roughly doubles size.
+      const factor = Math.pow(1.55, Math.max(0, zoom - 2));
+      return Math.min(base * factor, 40);
+    }
+
+    map.on('zoomend', () => {
+      const z = map.getZoom();
+      allMarkers.forEach(({ marker, baseRadius }) => {
+        marker.setRadius(scaledRadius(baseRadius, z));
+      });
+    });
+
     function magColor(mag) {
       if (mag >= 7) return '#f87171';
       if (mag >= 6) return '#fb923c';
@@ -287,11 +303,11 @@
       return '#22d3ee';
     }
 
-    function magRadius(mag) {
+    function magBaseRadius(mag) {
       if (mag >= 7) return 5;
-      if (mag >= 6) return 4;
-      if (mag >= 5) return 3;
-      return 1.8;
+      if (mag >= 6) return 3.5;
+      if (mag >= 5) return 2.5;
+      return 1.6;
     }
 
     function setStatus(msg) {
@@ -313,8 +329,9 @@
           const time  = new Date(eq.properties.time).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
           const depthStr = depth != null ? Math.round(depth) + ' km deep' : '';
 
-          L.circleMarker([lat, lng], {
-            radius: magRadius(mag),
+          const baseR = magBaseRadius(mag);
+          const marker = L.circleMarker([lat, lng], {
+            radius: scaledRadius(baseR, map.getZoom()),
             color: magColor(mag),
             fillColor: magColor(mag),
             fillOpacity: 0.8,
@@ -326,6 +343,7 @@
             <div class="popup-meta">${time}${depthStr ? ' · ' + depthStr : ''}</div>
           `, { maxWidth: 240 })
           .addTo(eqLayer);
+          allMarkers.push({ marker, baseRadius: baseR });
           count++;
         });
         document.getElementById('eq-count').textContent = count.toLocaleString();
@@ -348,8 +366,9 @@
           const type     = v.primaryVolcanoType || '';
           const lastErupt= v.lastKnownEruption || '';
 
-          L.circleMarker([v.latitude, v.longitude], {
-            radius: 3,
+          const volBase = 3;
+          const volMarker = L.circleMarker([v.latitude, v.longitude], {
+            radius: scaledRadius(volBase, map.getZoom()),
             color: '#f87171',
             fillColor: '#f87171',
             fillOpacity: 0.9,
@@ -361,6 +380,7 @@
             <div class="popup-meta">${[type, lastErupt ? 'Last eruption: ' + lastErupt : ''].filter(Boolean).join(' · ')}</div>
           `, { maxWidth: 240 })
           .addTo(volLayer);
+          allMarkers.push({ marker: volMarker, baseRadius: volBase });
           count++;
         });
         document.getElementById('vol-count').textContent = count.toLocaleString();
