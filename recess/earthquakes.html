@@ -21,9 +21,9 @@
     .topbar {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 10px 16px;
-      background: rgba(8,11,15,0.95);
+      gap: 12px;
+      padding: 9px 14px;
+      background: rgba(8,11,15,0.97);
       border-bottom: 1px solid rgba(255,255,255,0.07);
       flex-wrap: wrap;
       z-index: 1000;
@@ -31,7 +31,7 @@
     }
 
     .topbar-title {
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 800;
       background: linear-gradient(135deg, #f87171, #fbbf24);
       -webkit-background-clip: text;
@@ -40,9 +40,54 @@
       white-space: nowrap;
     }
 
+    /* ── View selector ── */
+    .view-selector {
+      display: flex;
+      gap: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      flex-shrink: 0;
+    }
+
+    .view-btn {
+      padding: 5px 13px;
+      background: transparent;
+      border: none;
+      color: #666;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .view-btn:last-child { border-right: none; }
+    .view-btn:hover { background: rgba(255,255,255,0.05); color: #ccc; }
+
+    .view-btn.active-both {
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+
+    .view-btn.active-eq {
+      background: rgba(34,211,238,0.12);
+      color: #22d3ee;
+    }
+
+    .view-btn.active-vol {
+      background: rgba(248,113,113,0.12);
+      color: #f87171;
+    }
+
+    /* ── Legend ── */
     .legend {
       display: flex;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
       align-items: center;
     }
@@ -51,133 +96,150 @@
       display: flex;
       align-items: center;
       gap: 5px;
-      font-size: 0.78rem;
-      color: #aaa;
+      font-size: 0.72rem;
+      color: #777;
     }
 
-    .dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .dot-eq  { background: #22d3ee; }
+    .dot-vol { background: #f87171; }
 
-    .dot-eq { background: #22d3ee; box-shadow: 0 0 6px rgba(34,211,238,0.6); }
-    .dot-vol { background: #f87171; box-shadow: 0 0 6px rgba(248,113,113,0.6); }
-
-    .filters {
+    /* Magnitude legend */
+    .mag-legend {
       display: flex;
       gap: 8px;
-      flex-wrap: wrap;
       align-items: center;
-      margin-left: auto;
+      flex-wrap: wrap;
     }
 
-    .filter-btn {
-      padding: 4px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: transparent;
-      color: #888;
-      font-size: 0.72rem;
-      cursor: pointer;
-      transition: all 0.15s;
+    .mag-chip {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.68rem;
+      color: #666;
     }
 
-    .filter-btn:hover { border-color: #aaa; color: #fff; }
-    .filter-btn.on { border-color: #22d3ee; color: #22d3ee; background: rgba(34,211,238,0.08); }
-    .filter-btn.on.vol { border-color: #f87171; color: #f87171; background: rgba(248,113,113,0.08); }
+    .mag-dot { width: 6px; height: 6px; border-radius: 50%; }
 
+    /* ── Stats ── */
     .stat-chip {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: #555;
       white-space: nowrap;
+      margin-left: auto;
     }
+    .stat-chip span { color: #888; font-weight: 700; }
 
-    .stat-chip span { color: #aaa; font-weight: 700; }
+    .click-hint {
+      font-size: 0.65rem;
+      color: #444;
+      white-space: nowrap;
+      font-style: italic;
+    }
 
     /* ── Map ── */
     #map { flex: 1; }
 
     .leaflet-container { background: #111418 !important; }
-    .leaflet-tile { filter: brightness(0.55) saturate(0.4) hue-rotate(200deg); }
+    .leaflet-tile { filter: brightness(0.5) saturate(0.35) hue-rotate(200deg); }
 
     .leaflet-popup-content-wrapper {
       background: #0d0f1a;
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 10px;
       color: #ddd;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.7);
     }
 
     .leaflet-popup-tip { background: #0d0f1a; }
-    .leaflet-popup-content { font-size: 0.82rem; line-height: 1.6; }
+    .leaflet-popup-content { font-size: 0.82rem; line-height: 1.7; padding: 4px 2px; }
     .leaflet-popup-content b { color: #fff; }
 
-    .eq-popup b { color: #22d3ee; }
-    .vol-popup b { color: #f87171; }
+    .popup-eq-title  { color: #22d3ee; font-weight: 800; font-size: 0.9rem; }
+    .popup-vol-title { color: #f87171; font-weight: 800; font-size: 0.9rem; }
+    .popup-meta      { color: #888; font-size: 0.75rem; margin-top: 2px; }
 
     /* ── Loading overlay ── */
     #loading {
       position: fixed;
       inset: 0;
-      background: rgba(8,11,15,0.88);
+      background: rgba(8,11,15,0.9);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 2000;
       gap: 14px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: #777;
     }
 
     #loading.hidden { display: none; }
 
     .spinner {
-      width: 36px; height: 36px;
-      border: 3px solid rgba(255,255,255,0.08);
+      width: 34px; height: 34px;
+      border: 3px solid rgba(255,255,255,0.07);
       border-top-color: #22d3ee;
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      animation: spin 0.75s linear infinite;
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
+    #load-status { font-size: 0.72rem; color: #444; }
 
-    #load-status { font-size: 0.78rem; color: #555; }
-
+    /* ── Back link ── */
     .back-link {
       position: fixed;
       bottom: 12px;
       left: 12px;
       z-index: 999;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: #444;
       text-decoration: none;
-      background: rgba(8,11,15,0.8);
+      background: rgba(8,11,15,0.85);
       padding: 4px 10px;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,0.06);
       transition: color 0.2s;
     }
 
-    .back-link:hover { color: #aaa; }
+    .back-link:hover { color: #888; }
+
+    @media (max-width: 600px) {
+      .mag-legend { display: none; }
+      .click-hint { display: none; }
+    }
   </style>
 </head>
 <body>
 
   <div class="topbar">
     <div class="topbar-title">🌍 Earthquakes &amp; Volcanoes</div>
-    <div class="legend">
-      <div class="legend-item"><div class="dot dot-eq"></div> Earthquake (M4+, since 2021)</div>
-      <div class="legend-item"><div class="dot dot-vol"></div> Volcano</div>
+
+    <!-- Three-way selector -->
+    <div class="view-selector">
+      <button class="view-btn active-both" id="btn-both" onclick="setView('both')">
+        🌐 Both
+      </button>
+      <button class="view-btn" id="btn-eq-only" onclick="setView('eq')">
+        <span style="color:#22d3ee">●</span> Earthquakes
+      </button>
+      <button class="view-btn" id="btn-vol-only" onclick="setView('vol')">
+        <span style="color:#f87171">●</span> Volcanoes
+      </button>
     </div>
-    <div class="filters">
-      <button class="filter-btn on" id="btn-eq" onclick="toggleLayer('eq')">Earthquakes</button>
-      <button class="filter-btn on vol" id="btn-vol" onclick="toggleLayer('vol')">Volcanoes</button>
+
+    <!-- Magnitude key -->
+    <div class="mag-legend">
+      <div class="mag-chip"><div class="mag-dot" style="background:#22d3ee"></div> M4</div>
+      <div class="mag-chip"><div class="mag-dot" style="background:#fbbf24;width:7px;height:7px"></div> M5</div>
+      <div class="mag-chip"><div class="mag-dot" style="background:#fb923c;width:9px;height:9px"></div> M6</div>
+      <div class="mag-chip"><div class="mag-dot" style="background:#f87171;width:11px;height:11px"></div> M7+</div>
     </div>
-    <div class="stat-chip">
-      EQ: <span id="eq-count">—</span> &nbsp; Vol: <span id="vol-count">—</span>
-    </div>
+
+    <div class="stat-chip">EQ: <span id="eq-count">—</span> &nbsp; Vol: <span id="vol-count">—</span></div>
+    <div class="click-hint">Click any dot for details</div>
   </div>
 
   <div id="map"></div>
@@ -185,34 +247,55 @@
 
   <div id="loading">
     <div class="spinner"></div>
-    <div>Loading earthquake &amp; volcano data…</div>
+    <div>Loading data…</div>
     <div id="load-status"></div>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    const map = L.map('map', { zoomControl: true }).setView([20, 10], 2);
+    const map = L.map('map', { zoomControl: true, minZoom: 2 }).setView([20, 10], 2);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors',
+      minZoom: 2,
       maxZoom: 18,
     }).addTo(map);
 
     const eqLayer  = L.layerGroup().addTo(map);
     const volLayer = L.layerGroup().addTo(map);
-    let showEq = true, showVol = true;
 
-    function toggleLayer(type) {
-      if (type === 'eq') {
-        showEq = !showEq;
-        document.getElementById('btn-eq').classList.toggle('on', showEq);
-        showEq ? map.addLayer(eqLayer) : map.removeLayer(eqLayer);
-      } else {
-        showVol = !showVol;
-        document.getElementById('btn-vol').classList.toggle('on', showVol);
-        showVol ? map.addLayer(volLayer) : map.removeLayer(volLayer);
-      }
+    let currentView = 'both'; // 'both' | 'eq' | 'vol'
+
+    function setView(v) {
+      currentView = v;
+
+      // Update button styles
+      document.getElementById('btn-both').className    = 'view-btn' + (v === 'both' ? ' active-both' : '');
+      document.getElementById('btn-eq-only').className = 'view-btn' + (v === 'eq'   ? ' active-eq'   : '');
+      document.getElementById('btn-vol-only').className= 'view-btn' + (v === 'vol'  ? ' active-vol'  : '');
+
+      // Toggle layers
+      const showEq  = v === 'both' || v === 'eq';
+      const showVol = v === 'both' || v === 'vol';
+      showEq  ? map.addLayer(eqLayer)  : map.removeLayer(eqLayer);
+      showVol ? map.addLayer(volLayer) : map.removeLayer(volLayer);
     }
+
+    // Store all markers so we can resize them on zoom
+    const allMarkers = []; // { marker, baseRadius }
+
+    function scaledRadius(base, zoom) {
+      // At zoom 2 (world) → base size. Each extra zoom level roughly doubles size.
+      const factor = Math.pow(1.55, Math.max(0, zoom - 2));
+      return Math.min(base * factor, 40);
+    }
+
+    map.on('zoomend', () => {
+      const z = map.getZoom();
+      allMarkers.forEach(({ marker, baseRadius }) => {
+        marker.setRadius(scaledRadius(baseRadius, z));
+      });
+    });
 
     function magColor(mag) {
       if (mag >= 7) return '#f87171';
@@ -221,8 +304,11 @@
       return '#22d3ee';
     }
 
-    function magRadius(mag) {
-      return Math.max(2, (mag - 3) * 2.2);
+    function magBaseRadius(mag) {
+      if (mag >= 7) return 5;
+      if (mag >= 6) return 3.5;
+      if (mag >= 5) return 2.5;
+      return 1.6;
     }
 
     function setStatus(msg) {
@@ -238,27 +324,34 @@
         const data = await res.json();
         let count = 0;
         data.features.forEach(eq => {
-          const [lng, lat] = eq.geometry.coordinates;
-          const mag = eq.properties.mag;
-          const place = eq.properties.place || 'Unknown';
-          const time = new Date(eq.properties.time).toLocaleDateString();
+          const [lng, lat, depth] = eq.geometry.coordinates;
+          const mag   = eq.properties.mag;
+          const place = eq.properties.place || 'Unknown location';
+          const time  = new Date(eq.properties.time).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+          const depthStr = depth != null ? Math.round(depth) + ' km deep' : '';
 
-          L.circleMarker([lat, lng], {
-            radius: magRadius(mag),
+          const baseR = magBaseRadius(mag);
+          const marker = L.circleMarker([lat, lng], {
+            radius: scaledRadius(baseR, map.getZoom()),
             color: magColor(mag),
             fillColor: magColor(mag),
-            fillOpacity: 0.75,
+            fillOpacity: 0.8,
             weight: 0,
           })
-          .bindPopup(`<div class="eq-popup"><b>Earthquake</b><br>Magnitude: <b>${mag}</b><br>${place}<br><span style="color:#666">${time}</span></div>`)
+          .bindPopup(`
+            <div class="popup-eq-title">Earthquake — M${mag}</div>
+            <div>${place}</div>
+            <div class="popup-meta">${time}${depthStr ? ' · ' + depthStr : ''}</div>
+          `, { maxWidth: 240 })
           .addTo(eqLayer);
+          allMarkers.push({ marker, baseRadius: baseR });
           count++;
         });
         document.getElementById('eq-count').textContent = count.toLocaleString();
-        setStatus(`Loaded ${count.toLocaleString()} earthquakes. Fetching volcanoes…`);
+        setStatus(`${count.toLocaleString()} earthquakes loaded. Fetching volcanoes…`);
       } catch (e) {
         document.getElementById('eq-count').textContent = 'error';
-        setStatus('Earthquake data failed. Trying volcanoes…');
+        setStatus('Earthquake data failed. Loading volcanoes…');
       }
     }
 
@@ -269,15 +362,26 @@
         let count = 0;
         data.forEach(v => {
           if (!v.latitude || !v.longitude) return;
-          L.circleMarker([v.latitude, v.longitude], {
-            radius: 4,
+          const name     = v.volcanoName || 'Unknown Volcano';
+          const location = [v.subregion, v.region, v.country].filter(Boolean).join(', ') || 'Unknown location';
+          const type     = v.primaryVolcanoType || '';
+          const lastErupt= v.lastKnownEruption || '';
+
+          const volBase = 3;
+          const volMarker = L.circleMarker([v.latitude, v.longitude], {
+            radius: scaledRadius(volBase, map.getZoom()),
             color: '#f87171',
             fillColor: '#f87171',
-            fillOpacity: 0.85,
+            fillOpacity: 0.9,
             weight: 0,
           })
-          .bindPopup(`<div class="vol-popup"><b>🌋 ${v.volcanoName || 'Volcano'}</b><br>${v.subregion || v.region || 'Unknown location'}</div>`)
+          .bindPopup(`
+            <div class="popup-vol-title">🌋 ${name}</div>
+            <div>${location}</div>
+            <div class="popup-meta">${[type, lastErupt ? 'Last eruption: ' + lastErupt : ''].filter(Boolean).join(' · ')}</div>
+          `, { maxWidth: 240 })
           .addTo(volLayer);
+          allMarkers.push({ marker: volMarker, baseRadius: volBase });
           count++;
         });
         document.getElementById('vol-count').textContent = count.toLocaleString();
