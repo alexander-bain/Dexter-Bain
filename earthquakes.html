@@ -87,7 +87,14 @@
     }
     .topbar-action:hover { background: rgba(255,255,255,0.07); color: #ccc; }
     .topbar-action.active { border-color: rgba(251,191,36,0.35); color: #fbbf24; background: rgba(251,191,36,0.07); }
-    .topbar-action.game-active { border-color: rgba(74,222,128,0.35); color: #4ade80; background: rgba(74,222,128,0.07); }
+    .topbar-action.game-active  { border-color: rgba(74,222,128,0.35); color: #4ade80; background: rgba(74,222,128,0.07); }
+    .topbar-action.plates-active { border-color: rgba(249,115,22,0.45); color: #f97316; background: rgba(249,115,22,0.08); }
+    .plate-label-icon {
+      background: none; border: none; box-shadow: none;
+      color: rgba(255,255,255,0.8); font-size: 0.72rem; font-weight: 700;
+      text-shadow: 0 1px 4px #000, 0 0 10px #000;
+      white-space: nowrap; pointer-events: none;
+    }
 
     .stat-chip {
       font-size: 0.67rem;
@@ -316,12 +323,13 @@
     <div class="topbar-title">🌍 Earthquakes &amp; Volcanoes</div>
 
     <div class="view-selector">
-      <button class="view-btn active-both" id="btn-both"    onclick="setView('both')">🌐 Both</button>
-      <button class="view-btn" id="btn-eq-only"  onclick="setView('eq')"><span style="color:#60a5fa">●</span> Earthquakes</button>
+      <button class="view-btn" id="btn-both"       onclick="setView('both')">🌐 Both</button>
+      <button class="view-btn active-eq" id="btn-eq-only"  onclick="setView('eq')"><span style="color:#60a5fa">●</span> Earthquakes</button>
       <button class="view-btn" id="btn-vol-only" onclick="setView('vol')"><span style="color:#f87171">●</span> Volcanoes</button>
       <button class="view-btn" id="btn-pangea"   onclick="setView('pangea')"><span style="color:#fbbf24">◎</span> Pangea</button>
     </div>
 
+    <button class="topbar-action" id="btn-plates"  onclick="togglePlates()">🗺️ Plates</button>
     <button class="topbar-action" id="btn-wegener" onclick="toggleInfo()">📖 Wegener</button>
     <button class="topbar-action" id="btn-game"    onclick="toggleGame()">🎮 Draw Game</button>
 
@@ -345,6 +353,11 @@
   <div class="map-key">
     <div class="map-key-title">Key</div>
 
+    <div class="key-row key-modern" id="key-plates-row" style="display:none">
+      <div class="key-swatch" style="background:#f97316;opacity:0.8"></div>
+      <span class="key-label">Plate boundaries</span>
+    </div>
+    <hr class="key-divider key-modern" id="key-plates-divider" style="display:none" />
     <div class="key-section-label key-modern" style="margin-top:0">Earthquakes</div>
     <div class="key-row key-modern">
       <div class="key-dot" style="width:10px;height:10px;background:#60a5fa;box-shadow:0 0 5px #60a5fa88"></div>
@@ -365,10 +378,6 @@
     <div class="key-row key-pangea">
       <div class="key-swatch" style="background:#8b6e45"></div>
       <span class="key-label">Land (250 Ma)</span>
-    </div>
-    <div class="key-row key-pangea">
-      <div class="key-swatch" style="background:#fffde0;opacity:0.7"></div>
-      <span class="key-label">Today's coastlines</span>
     </div>
     <hr class="key-divider key-pangea" />
     <div class="key-row key-pangea">
@@ -437,11 +446,14 @@
     }).addTo(map);
 
     const eqLayer     = L.layerGroup().addTo(map);
-    const volLayer    = L.layerGroup().addTo(map);
+    const volLayer    = L.layerGroup();
     const pangeaLayer = L.layerGroup();
+    const platesLayer = L.layerGroup();
     const drawLayer   = L.layerGroup().addTo(map);
 
-    let currentView   = 'both';
+    let currentView   = 'eq';
+    let platesLoaded  = false;
+    let platesVisible = false;
     let pangeaLoaded  = false;
     let rawVolData    = [];
     let gameOpen     = false;
@@ -555,6 +567,64 @@
       }
     }
 
+    // ── Tectonic plates layer ──
+    const PLATE_ARROWS = [
+      { lat: 18,  lng: -160, b: 305, label: 'Pacific' },
+      { lat: -15, lng: -135, b: 305 },
+      { lat: 28,  lng: 175,  b: 305 },
+      { lat: 50,  lng: -100, b: 248, label: 'N. America' },
+      { lat: 33,  lng: -85,  b: 248 },
+      { lat: -20, lng: -58,  b: 268, label: 'S. America' },
+      { lat: 8,   lng: 22,   b: 52,  label: 'Africa' },
+      { lat: -32, lng: 25,   b: 52  },
+      { lat: 52,  lng: 55,   b: 62,  label: 'Eurasia' },
+      { lat: 40,  lng: 5,    b: 62  },
+      { lat: -26, lng: 138,  b: 18,  label: 'Australia' },
+      { lat: -15, lng: 118,  b: 18  },
+      { lat: -78, lng: 0,    b: 0,   label: 'Antarctica' },
+      { lat: 22,  lng: 78,   b: 22,  label: 'India' },
+      { lat: -14, lng: -98,  b: 92,  label: 'Nazca' },
+      { lat: 10,  lng: -88,  b: 42,  label: 'Cocos' },
+      { lat: 28,  lng: 40,   b: 30,  label: 'Arabia' },
+    ];
+
+    function arrowIcon(bearing, label) {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="32" viewBox="0 0 18 32"
+          style="transform:rotate(${bearing}deg);display:block;filter:drop-shadow(0 0 3px #000)">
+        <line x1="9" y1="30" x2="9" y2="6" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="9,0 3,12 15,12" fill="white"/>
+      </svg>`;
+      const lbl = label ? `<div style="color:rgba(255,255,255,0.82);font-size:0.68rem;font-weight:700;
+          text-shadow:0 1px 4px #000;white-space:nowrap;margin-top:2px;text-align:center">${label}</div>` : '';
+      return L.divIcon({ className: '', html: svg + lbl, iconSize: [18, label ? 48 : 32], iconAnchor: [9, 16] });
+    }
+
+    async function loadPlates() {
+      if (platesLoaded) return;
+      platesLoaded = true;
+      try {
+        const res = await fetch('https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json');
+        const gj  = await res.json();
+        L.geoJSON(gj, { style: { color: '#f97316', weight: 1.8, opacity: 0.75 } }).addTo(platesLayer);
+      } catch(e) { console.warn('Plate boundaries failed:', e); }
+      PLATE_ARROWS.forEach(({ lat, lng, b, label }) => {
+        L.marker([lat, lng], { icon: arrowIcon(b, label), interactive: false }).addTo(platesLayer);
+      });
+    }
+
+    function togglePlates() {
+      platesVisible = !platesVisible;
+      document.getElementById('btn-plates').classList.toggle('plates-active', platesVisible);
+      document.getElementById('key-plates-row').style.display     = platesVisible ? 'flex' : 'none';
+      document.getElementById('key-plates-divider').style.display = platesVisible ? 'block' : 'none';
+      if (platesVisible) {
+        loadPlates();
+        if (currentView !== 'pangea') map.addLayer(platesLayer);
+      } else {
+        map.removeLayer(platesLayer);
+      }
+    }
+
     // ── View toggle ──
     function setView(v) {
       currentView = v;
@@ -570,6 +640,7 @@
         map.removeLayer(tileLayerRef);
         map.removeLayer(eqLayer);
         map.removeLayer(volLayer);
+        map.removeLayer(platesLayer);
         map.addLayer(pangeaLayer);
         document.getElementById('map').style.background = '#061a2e';
         loadPangeaData();
@@ -582,6 +653,7 @@
         const showVol = v === 'both' || v === 'vol';
         showEq  ? map.addLayer(eqLayer)  : map.removeLayer(eqLayer);
         showVol ? map.addLayer(volLayer) : map.removeLayer(volLayer);
+        if (platesVisible) map.addLayer(platesLayer);
       }
     }
 
@@ -647,49 +719,7 @@
         }
       } catch (e) { console.warn('Pangea coastlines failed:', e); }
 
-      // 2. Modern continent outlines reconstructed to 250 Ma
-      setPangeaStatus('Reconstructing today\'s coastlines…');
-      try {
-        const worldRes  = await fetch('https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_land.geojson');
-        const worldData = await worldRes.json();
-
-        const pts      = [];
-        const segments = [];
-
-        worldData.features.forEach(f => {
-          const polys = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
-          polys.forEach(poly => {
-            poly.forEach(ring => {
-              const sampled = [];
-              for (let i = 0; i < ring.length; i += 4) sampled.push([ring[i][1], ring[i][0]]);
-              if (sampled.length >= 3) {
-                segments.push({ start: pts.length, len: sampled.length });
-                pts.push(...sampled);
-              }
-            });
-          });
-        });
-
-        setPangeaStatus(`Reconstructing ${pts.length} outline points…`);
-        const recon = await gplatesReconstruct(pts);
-
-        // Draw as polylines, breaking at null points to avoid crossing lines
-        segments.forEach(({ start, len }) => {
-          const reconSlice = recon.slice(start, start + len);
-          let seg = [];
-          reconSlice.forEach(pt => {
-            if (pt) {
-              seg.push(pt);
-            } else {
-              if (seg.length >= 2) L.polyline([seg], { color: '#fffde0', weight: 1.2, opacity: 0.55 }).addTo(pangeaLayer);
-              seg = [];
-            }
-          });
-          if (seg.length >= 2) L.polyline([seg], { color: '#fffde0', weight: 1.2, opacity: 0.55 }).addTo(pangeaLayer);
-        });
-      } catch (e) { console.warn('Continent outlines failed:', e); }
-
-      // 3. Volcanoes at 250 Ma
+      // 2. Volcanoes at 250 Ma
       if (rawVolData.length > 0) {
         setPangeaStatus('Reconstructing volcano positions…');
         const volPts    = rawVolData.map(v => [v.latitude, v.longitude]);
