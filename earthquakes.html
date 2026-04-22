@@ -395,13 +395,14 @@
       <!-- Drawing phase -->
       <div class="game-phase" id="phase-draw">
         <p class="game-instructions">
-          Tap anywhere on the map to mark where you think earthquakes happen.
-          Try to cover as many earthquake zones as you can!
+          Press and drag on the map to draw where you think earthquakes happen.
+          Cover as many earthquake zones as you can!
         </p>
-        <div class="game-count">Marks placed: <span id="mark-count">0</span></div>
+        <div class="game-count">Zones covered: <span id="mark-count">0</span></div>
         <button class="game-btn game-btn-reveal" id="btn-reveal" onclick="revealAnswers()" disabled>Reveal Answers</button>
+        <button class="game-btn game-btn-secondary" onclick="undoStroke()">Undo Last Line</button>
         <button class="game-btn game-btn-secondary" onclick="resetGame()">Clear All</button>
-        <p class="game-tip">Hint: think about where tectonic plates meet — like around the Pacific Ocean, along mountain ranges, and in the middle of oceans.</p>
+        <p class="game-tip">Hint: think about where tectonic plates meet — the edges of the Pacific Ocean, along mountain ranges, and mid-ocean ridges.</p>
       </div>
 
       <!-- Results phase -->
@@ -443,11 +444,14 @@
     let currentView   = 'both';
     let pangeaLoaded  = false;
     let rawVolData    = [];
-    let gameOpen      = false;
-    let gameRevealed  = false;
-    const userMarkers = [];
+    let gameOpen     = false;
+    let gameRevealed = false;
+    let isDrawing    = false;
+    let currentStroke    = [];
+    let currentPolyline  = null;
+    const userStrokes = [];  // array of L.Polyline
     const userGrid    = new Set();
-    const eqGrid      = new Set(); // filled during earthquake load
+    const eqGrid      = new Set();
 
     // ── Info panel toggle ──
     function toggleInfo() {
@@ -456,6 +460,82 @@
       const isOpen = panel.classList.toggle('visible');
       btn.classList.toggle('active', isOpen);
       map.invalidateSize();
+    }
+
+    // ── Freehand draw mode helpers ──
+    function getEventLatLng(e) {
+      const container = map.getContainer();
+      const rect = container.getBoundingClientRect();
+      const src  = e.touches ? e.touches[0] : e;
+      return map.containerPointToLatLng([src.clientX - rect.left, src.clientY - rect.top]);
+    }
+
+    function markCell(pt) {
+      const key = `${Math.floor(pt.lat / 5)}_${Math.floor(pt.lng / 5)}`;
+      if (!userGrid.has(key)) {
+        userGrid.add(key);
+        document.getElementById('mark-count').textContent = userGrid.size;
+        document.getElementById('btn-reveal').disabled = userGrid.size < 3;
+      }
+    }
+
+    function startDraw(e) {
+      if (!gameOpen || gameRevealed) return;
+      isDrawing = true;
+      const pt = getEventLatLng(e);
+      currentStroke = [pt];
+      currentPolyline = L.polyline([[pt.lat, pt.lng]], {
+        color: '#fbbf24', weight: 5, opacity: 0.75, lineJoin: 'round', lineCap: 'round',
+      }).addTo(drawLayer);
+      markCell(pt);
+      e.preventDefault();
+    }
+
+    function continueDraw(e) {
+      if (!isDrawing || !gameOpen || gameRevealed) return;
+      const pt = getEventLatLng(e);
+      currentStroke.push(pt);
+      currentPolyline.setLatLngs(currentStroke.map(p => [p.lat, p.lng]));
+      markCell(pt);
+      e.preventDefault();
+    }
+
+    function endDraw(e) {
+      if (!isDrawing) return;
+      isDrawing = false;
+      if (currentStroke.length >= 2) {
+        userStrokes.push(currentPolyline);
+      } else if (currentPolyline) {
+        drawLayer.removeLayer(currentPolyline);
+      }
+      currentStroke = [];
+      currentPolyline = null;
+    }
+
+    function enableDrawMode() {
+      const c = map.getContainer();
+      map.dragging.disable();
+      c.style.cursor = 'crosshair';
+      c.addEventListener('mousedown',  startDraw);
+      c.addEventListener('mousemove',  continueDraw);
+      c.addEventListener('mouseup',    endDraw);
+      c.addEventListener('mouseleave', endDraw);
+      c.addEventListener('touchstart', startDraw,    { passive: false });
+      c.addEventListener('touchmove',  continueDraw, { passive: false });
+      c.addEventListener('touchend',   endDraw);
+    }
+
+    function disableDrawMode() {
+      const c = map.getContainer();
+      map.dragging.enable();
+      c.style.cursor = '';
+      c.removeEventListener('mousedown',  startDraw);
+      c.removeEventListener('mousemove',  continueDraw);
+      c.removeEventListener('mouseup',    endDraw);
+      c.removeEventListener('mouseleave', endDraw);
+      c.removeEventListener('touchstart', startDraw);
+      c.removeEventListener('touchmove',  continueDraw);
+      c.removeEventListener('touchend',   endDraw);
     }
 
     // ── Game sidebar toggle ──
@@ -467,11 +547,10 @@
       btn.classList.toggle('game-active', gameOpen);
 
       if (gameOpen) {
-        // Hide earthquakes so the user has to guess
         map.removeLayer(eqLayer);
-        map.on('click', onMapDrawClick);
+        enableDrawMode();
       } else {
-        map.off('click', onMapDrawClick);
+        disableDrawMode();
         if (currentView === 'both' || currentView === 'eq') map.addLayer(eqLayer);
       }
     }
@@ -633,22 +712,20 @@
       setPangeaStatus('');
     }
 
-    // ── Draw game ──
-    function onMapDrawClick(e) {
-      if (gameRevealed) return;
-      const { lat, lng } = e.latlng;
-      const marker = L.circleMarker([lat, lng], {
-        radius: 10, color: '#fbbf24', fillColor: '#fbbf24',
-        fillOpacity: 0.45, weight: 2,
-      }).addTo(drawLayer);
-      userMarkers.push(marker);
-
-      const cellKey = `${Math.floor(lat / 5)}_${Math.floor(lng / 5)}`;
-      userGrid.add(cellKey);
-
-      const count = userMarkers.length;
-      document.getElementById('mark-count').textContent = count;
-      document.getElementById('btn-reveal').disabled = count < 1;
+    // ── Draw game actions ──
+    function undoStroke() {
+      if (!userStrokes.length) return;
+      const last = userStrokes.pop();
+      drawLayer.removeLayer(last);
+      // Rebuild userGrid from remaining strokes
+      userGrid.clear();
+      userStrokes.forEach(poly => {
+        poly.getLatLngs().forEach(pt => {
+          userGrid.add(`${Math.floor(pt.lat / 5)}_${Math.floor(pt.lng / 5)}`);
+        });
+      });
+      document.getElementById('mark-count').textContent = userGrid.size;
+      document.getElementById('btn-reveal').disabled = userGrid.size < 3;
     }
 
     function revealAnswers() {
@@ -668,8 +745,8 @@
       scoreEl.style.color = pct >= 70 ? '#4ade80' : pct >= 40 ? '#fbbf24' : '#f87171';
 
       document.getElementById('score-detail').textContent =
-        `You covered ${hits} of ${totalEqCells} earthquake zones (${pct}%). ` +
-        `${precision}% of your marks landed in earthquake zones. ` +
+        `Your lines covered ${hits} of ${totalEqCells} earthquake zones (${pct}%). ` +
+        `${precision}% of your drawn area landed in earthquake zones. ` +
         `Blue dots show where earthquakes actually happened.`;
 
       document.getElementById('phase-draw').classList.add('hidden');
@@ -678,13 +755,10 @@
 
     function resetGame() {
       gameRevealed = false;
-      userMarkers.forEach(m => drawLayer.removeLayer(m));
-      userMarkers.length = 0;
+      userStrokes.forEach(p => drawLayer.removeLayer(p));
+      userStrokes.length = 0;
       userGrid.clear();
-      if (!gameOpen || currentView === 'eq' || currentView === 'both') {
-        // Only re-hide if game is still open
-        if (gameOpen) map.removeLayer(eqLayer);
-      }
+      if (gameOpen) map.removeLayer(eqLayer);
       document.getElementById('mark-count').textContent = '0';
       document.getElementById('btn-reveal').disabled = true;
       document.getElementById('phase-draw').classList.remove('hidden');
