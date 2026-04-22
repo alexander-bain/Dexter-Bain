@@ -21,7 +21,7 @@
     .topbar {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       padding: 9px 14px;
       background: rgba(8,11,15,0.97);
       border-bottom: 1px solid rgba(255,255,255,0.07);
@@ -69,20 +69,10 @@
     .view-btn:last-child { border-right: none; }
     .view-btn:hover { background: rgba(255,255,255,0.05); color: #ccc; }
 
-    .view-btn.active-both {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-    }
-
-    .view-btn.active-eq {
-      background: rgba(96,165,250,0.12);
-      color: #60a5fa;
-    }
-
-    .view-btn.active-vol {
-      background: rgba(248,113,113,0.12);
-      color: #f87171;
-    }
+    .view-btn.active-both   { background: rgba(255,255,255,0.08); color: #fff; }
+    .view-btn.active-eq     { background: rgba(96,165,250,0.12);  color: #60a5fa; }
+    .view-btn.active-vol    { background: rgba(248,113,113,0.12); color: #f87171; }
+    .view-btn.active-pangea { background: rgba(251,191,36,0.15);  color: #fbbf24; }
 
     /* ── Stats ── */
     .stat-chip {
@@ -150,6 +140,23 @@
     @keyframes spin { to { transform: rotate(360deg); } }
     #load-status { font-size: 0.72rem; color: #444; }
 
+    /* ── Pangea status bar ── */
+    #pangea-status {
+      position: fixed;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1500;
+      background: rgba(8,11,15,0.92);
+      border: 1px solid rgba(251,191,36,0.2);
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: 0.72rem;
+      color: #fbbf24;
+      display: none;
+      white-space: nowrap;
+    }
+
     /* ── Back link ── */
     .back-link {
       position: fixed;
@@ -178,7 +185,7 @@
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 12px;
       padding: 12px 14px;
-      min-width: 160px;
+      min-width: 165px;
       backdrop-filter: blur(6px);
     }
 
@@ -206,21 +213,20 @@
       margin-bottom: 6px;
     }
 
-    .key-dot {
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .key-dot { border-radius: 50%; flex-shrink: 0; }
+    .key-swatch { width: 18px; height: 3px; border-radius: 2px; flex-shrink: 0; }
 
-    .key-label {
-      font-size: 0.75rem;
-      color: #aaa;
-    }
+    .key-label { font-size: 0.75rem; color: #aaa; }
 
     .key-divider {
       border: none;
       border-top: 1px solid rgba(255,255,255,0.06);
       margin: 8px 0;
     }
+
+    /* Pangea-specific key rows (hidden by default) */
+    .key-pangea { display: none; }
+    .key-modern { display: flex; }
 
     @media (max-width: 600px) {
       .click-hint { display: none; }
@@ -243,6 +249,9 @@
       <button class="view-btn" id="btn-vol-only" onclick="setView('vol')">
         <span style="color:#f87171">●</span> Volcanoes
       </button>
+      <button class="view-btn" id="btn-pangea" onclick="setView('pangea')">
+        <span style="color:#fbbf24">◎</span> Pangea
+      </button>
     </div>
 
     <div class="stat-chip">EQ: <span id="eq-count">—</span> &nbsp; Vol: <span id="vol-count">—</span></div>
@@ -255,20 +264,43 @@
   <div class="map-key">
     <div class="map-key-title">Key</div>
 
-    <div class="key-section-label">Earthquakes</div>
-    <div class="key-row">
+    <!-- Modern view rows -->
+    <div class="key-modern" id="key-eq-section">
+      <div class="key-section-label" style="margin-top:0">Earthquakes</div>
+    </div>
+    <div class="key-row key-modern" id="key-eq-row">
       <div class="key-dot" style="width:10px;height:10px;background:#60a5fa;box-shadow:0 0 5px #60a5fa88"></div>
       <span class="key-label">Earthquake</span>
     </div>
 
-    <hr class="key-divider" />
+    <hr class="key-divider key-modern" />
 
-    <div class="key-section-label">Volcanoes</div>
-    <div class="key-row">
+    <div class="key-section-label key-modern">Volcanoes</div>
+    <div class="key-row key-modern">
       <div class="key-dot" style="width:10px;height:10px;background:#f87171;box-shadow:0 0 5px #f8717188"></div>
       <span class="key-label">Active volcano</span>
     </div>
-    <div class="key-row">
+    <div class="key-row key-modern">
+      <div class="key-dot" style="width:10px;height:10px;background:#ffffff;opacity:0.55"></div>
+      <span class="key-label">Dormant volcano</span>
+    </div>
+
+    <!-- Pangea view rows (shown only in Pangea mode) -->
+    <div class="key-section-label key-pangea" style="margin-top:0">Pangea — 250 Ma</div>
+    <div class="key-row key-pangea">
+      <div class="key-swatch" style="background:#8b6e45"></div>
+      <span class="key-label">Land (250 Ma)</span>
+    </div>
+    <div class="key-row key-pangea">
+      <div class="key-swatch" style="background:#fffde0;opacity:0.7"></div>
+      <span class="key-label">Today's coastlines</span>
+    </div>
+    <hr class="key-divider key-pangea" />
+    <div class="key-row key-pangea">
+      <div class="key-dot" style="width:10px;height:10px;background:#f87171;box-shadow:0 0 5px #f8717188"></div>
+      <span class="key-label">Active volcano</span>
+    </div>
+    <div class="key-row key-pangea">
       <div class="key-dot" style="width:10px;height:10px;background:#ffffff;opacity:0.55"></div>
       <span class="key-label">Dormant volcano</span>
     </div>
@@ -277,6 +309,7 @@
     <div style="font-size:0.65rem;color:#444;font-style:italic">Tap any dot for details</div>
   </div>
 
+  <div id="pangea-status"></div>
   <a class="back-link" href="/">← DexterBain.com</a>
 
   <div id="loading">
@@ -289,28 +322,53 @@
   <script>
     const map = L.map('map', { zoomControl: true, minZoom: 2 }).setView([20, 10], 2);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const tileLayerRef = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors',
       minZoom: 2,
       maxZoom: 18,
     }).addTo(map);
 
-    const eqLayer  = L.layerGroup().addTo(map);
-    const volLayer = L.layerGroup().addTo(map);
+    const eqLayer    = L.layerGroup().addTo(map);
+    const volLayer   = L.layerGroup().addTo(map);
+    const pangeaLayer = L.layerGroup();
 
     let currentView = 'both';
+    let pangeaLoaded = false;
+    let rawVolData = [];
 
+    // ── View toggle ──
     function setView(v) {
       currentView = v;
-      document.getElementById('btn-both').className    = 'view-btn' + (v === 'both' ? ' active-both' : '');
-      document.getElementById('btn-eq-only').className = 'view-btn' + (v === 'eq'   ? ' active-eq'   : '');
-      document.getElementById('btn-vol-only').className= 'view-btn' + (v === 'vol'  ? ' active-vol'  : '');
-      const showEq  = v === 'both' || v === 'eq';
-      const showVol = v === 'both' || v === 'vol';
-      showEq  ? map.addLayer(eqLayer)  : map.removeLayer(eqLayer);
-      showVol ? map.addLayer(volLayer) : map.removeLayer(volLayer);
+
+      document.getElementById('btn-both').className    = 'view-btn' + (v === 'both'   ? ' active-both'   : '');
+      document.getElementById('btn-eq-only').className = 'view-btn' + (v === 'eq'     ? ' active-eq'     : '');
+      document.getElementById('btn-vol-only').className= 'view-btn' + (v === 'vol'    ? ' active-vol'    : '');
+      document.getElementById('btn-pangea').className  = 'view-btn' + (v === 'pangea' ? ' active-pangea' : '');
+
+      // Toggle key sections
+      document.querySelectorAll('.key-modern').forEach(el => el.style.display = v === 'pangea' ? 'none' : '');
+      document.querySelectorAll('.key-pangea').forEach(el => el.style.display = v === 'pangea' ? 'flex'  : 'none');
+
+      if (v === 'pangea') {
+        map.removeLayer(tileLayerRef);
+        map.removeLayer(eqLayer);
+        map.removeLayer(volLayer);
+        map.addLayer(pangeaLayer);
+        document.getElementById('map').style.background = '#061a2e';
+        loadPangeaData();
+      } else {
+        if (!map.hasLayer(tileLayerRef)) map.addLayer(tileLayerRef);
+        map.removeLayer(pangeaLayer);
+        document.getElementById('map').style.background = '';
+
+        const showEq  = v === 'both' || v === 'eq';
+        const showVol = v === 'both' || v === 'vol';
+        showEq  ? map.addLayer(eqLayer)  : map.removeLayer(eqLayer);
+        showVol ? map.addLayer(volLayer) : map.removeLayer(volLayer);
+      }
     }
 
+    // ── Marker scaling ──
     const allMarkers = [];
 
     function scaledRadius(base, zoom) {
@@ -329,6 +387,143 @@
       document.getElementById('load-status').textContent = msg;
     }
 
+    function setPangeaStatus(msg) {
+      const el = document.getElementById('pangea-status');
+      if (msg) {
+        el.textContent = msg;
+        el.style.display = 'block';
+      } else {
+        el.style.display = 'none';
+      }
+    }
+
+    // ── GPlates reconstruction (lats/lons format) ──
+    async function gplatesReconstruct(latLngs) {
+      const CHUNK = 150;
+      const results = new Array(latLngs.length).fill(null);
+      const promises = [];
+
+      for (let i = 0; i < latLngs.length; i += CHUNK) {
+        const start = i;
+        const chunk = latLngs.slice(start, start + CHUNK);
+        const lats = chunk.map(([lat]) => lat).join(',');
+        const lons = chunk.map(([, lng]) => lng).join(',');
+        const url  = `https://gws.gplates.org/reconstruct/reconstruct_points/?lats=${lats}&lons=${lons}&time=250&model=GOLONKA&fc=true`;
+
+        promises.push(
+          fetch(url)
+            .then(r => r.json())
+            .then(data => {
+              data.features.forEach((f, j) => {
+                if (f.geometry?.type === 'Point') {
+                  const [lng, lat] = f.geometry.coordinates;
+                  if (isFinite(lat) && isFinite(lng)) results[start + j] = [lat, lng];
+                }
+              });
+            })
+            .catch(() => {})
+        );
+      }
+
+      await Promise.all(promises);
+      return results;
+    }
+
+    // ── Pangea data loader (lazy, cached) ──
+    async function loadPangeaData() {
+      if (pangeaLoaded) return;
+      pangeaLoaded = true;
+
+      // 1. Pangea coastlines (what land looked like 250 Ma)
+      setPangeaStatus('Loading Pangea coastlines…');
+      try {
+        const res = await fetch('https://gws.gplates.org/reconstruct/coastlines/?time=250&model=GOLONKA');
+        if (res.ok) {
+          const gj = await res.json();
+          L.geoJSON(gj, {
+            style: { color: '#6b5230', fillColor: '#8b6e45', fillOpacity: 0.75, weight: 0.5 },
+          }).addTo(pangeaLayer);
+        }
+      } catch (e) { console.warn('Pangea coastlines failed:', e); }
+
+      // 2. Modern continent outlines reconstructed to 250 Ma
+      setPangeaStatus('Reconstructing today\'s coastlines to 250 Ma…');
+      try {
+        const worldRes = await fetch(
+          'https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_land.geojson'
+        );
+        const worldData = await worldRes.json();
+
+        // Flatten all polygon ring points (sample every 4th for speed)
+        const pts = [];
+        const segments = [];
+
+        worldData.features.forEach(f => {
+          const polys = f.geometry.type === 'Polygon'
+            ? [f.geometry.coordinates]
+            : f.geometry.coordinates;
+
+          polys.forEach(poly => {
+            poly.forEach(ring => {
+              const sampled = [];
+              for (let i = 0; i < ring.length; i += 4) {
+                sampled.push([ring[i][1], ring[i][0]]); // [lat, lng]
+              }
+              if (sampled.length >= 3) {
+                segments.push({ start: pts.length, len: sampled.length });
+                pts.push(...sampled);
+              }
+            });
+          });
+        });
+
+        setPangeaStatus(`Reconstructing ${pts.length} coastline points…`);
+        const recon = await gplatesReconstruct(pts);
+
+        segments.forEach(({ start, len }) => {
+          const ring = recon.slice(start, start + len).filter(Boolean);
+          if (ring.length >= 3) {
+            L.polygon([ring], {
+              color: '#fffde0',
+              fill: false,
+              weight: 1.2,
+              opacity: 0.65,
+            }).addTo(pangeaLayer);
+          }
+        });
+      } catch (e) { console.warn('Continent outlines failed:', e); }
+
+      // 3. Volcanoes at their 250 Ma positions
+      if (rawVolData.length > 0) {
+        setPangeaStatus('Reconstructing volcano positions…');
+        const volPts   = rawVolData.map(v => [v.latitude, v.longitude]);
+        const reconVols = await gplatesReconstruct(volPts);
+
+        reconVols.forEach((pt, i) => {
+          if (!pt) return;
+          const v      = rawVolData[i];
+          const name   = v.vName || 'Unknown Volcano';
+          const loc    = [v.subregion, v.country].filter(Boolean).join(', ');
+          const active = v.obsAbbr && v.obsAbbr !== 'OTHER';
+          const color  = active ? '#f87171' : '#ffffff';
+
+          L.circleMarker(pt, {
+            radius: 4,
+            color, fillColor: color,
+            fillOpacity: active ? 0.9 : 0.5,
+            weight: 0,
+          }).bindPopup(`
+            <div class="popup-vol-title">🌋 ${name}</div>
+            <div>${loc}</div>
+            <div class="popup-meta">${active ? '🔴 Active' : '⚪ Dormant'} · position at 250 Ma</div>
+          `, { maxWidth: 220 }).addTo(pangeaLayer);
+        });
+      }
+
+      setPangeaStatus('');
+    }
+
+    // ── Load earthquake data ──
     async function loadEarthquakes() {
       setStatus('Fetching earthquake data…');
       try {
@@ -347,10 +542,8 @@
           const baseR = 2.5;
           const marker = L.circleMarker([lat, lng], {
             radius: scaledRadius(baseR, map.getZoom()),
-            color: '#60a5fa',
-            fillColor: '#60a5fa',
-            fillOpacity: 0.75,
-            weight: 0,
+            color: '#60a5fa', fillColor: '#60a5fa',
+            fillOpacity: 0.75, weight: 0,
           })
           .bindPopup(`
             <div class="popup-eq-title">Earthquake — M${mag}</div>
@@ -369,27 +562,26 @@
       }
     }
 
+    // ── Load volcano data ──
     async function loadVolcanoes() {
       try {
-        const res = await fetch('https://volcanoes.usgs.gov/vsc/api/volcanoApi/volcanoesGVP');
+        const res  = await fetch('https://volcanoes.usgs.gov/vsc/api/volcanoApi/volcanoesGVP');
         const data = await res.json();
-        let count = 0;
-        data.forEach(v => {
-          if (!v.latitude || !v.longitude) return;
+        rawVolData = data.filter(v => v.latitude && v.longitude);
+        let count  = 0;
+
+        rawVolData.forEach(v => {
           const name     = v.vName || 'Unknown Volcano';
           const location = [v.subregion, v.country].filter(Boolean).join(', ') || 'Unknown location';
-          // obsAbbr !== 'OTHER' means actively monitored by a USGS observatory → active
           const active   = v.obsAbbr && v.obsAbbr !== 'OTHER';
           const dotColor = active ? '#f87171' : '#ffffff';
-          const obsLabel = active ? `🔴 Active (monitored by ${v.obsAbbr})` : '⚪ Dormant';
+          const obsLabel = active ? `🔴 Active (${v.obsAbbr})` : '⚪ Dormant';
 
           const volBase = 3;
           const volMarker = L.circleMarker([v.latitude, v.longitude], {
             radius: scaledRadius(volBase, map.getZoom()),
-            color: dotColor,
-            fillColor: dotColor,
-            fillOpacity: active ? 0.9 : 0.55,
-            weight: 0,
+            color: dotColor, fillColor: dotColor,
+            fillOpacity: active ? 0.9 : 0.55, weight: 0,
           })
           .bindPopup(`
             <div class="popup-vol-title">🌋 ${name}</div>
