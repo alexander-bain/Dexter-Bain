@@ -206,9 +206,64 @@
 
     .back-link:hover { color: #888; }
 
+    /* ── Map key ── */
+    .map-key {
+      position: fixed;
+      bottom: 40px;
+      right: 12px;
+      z-index: 900;
+      background: rgba(8,11,15,0.92);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 12px 14px;
+      min-width: 160px;
+      backdrop-filter: blur(6px);
+    }
+
+    .map-key-title {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #555;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .key-section-label {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #444;
+      margin: 8px 0 5px;
+    }
+
+    .key-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 6px;
+    }
+
+    .key-dot {
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .key-label {
+      font-size: 0.75rem;
+      color: #aaa;
+    }
+
+    .key-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin: 8px 0;
+    }
+
     @media (max-width: 600px) {
       .mag-legend { display: none; }
       .click-hint { display: none; }
+      .map-key { bottom: 36px; right: 8px; padding: 10px 12px; min-width: 140px; }
     }
   </style>
 </head>
@@ -243,6 +298,41 @@
   </div>
 
   <div id="map"></div>
+
+  <!-- Map Key -->
+  <div class="map-key">
+    <div class="map-key-title">Key</div>
+
+    <div class="key-section-label">Earthquakes</div>
+    <div class="key-row">
+      <div class="key-dot" style="width:6px;height:6px;background:#22d3ee;box-shadow:0 0 4px #22d3ee88"></div>
+      <span class="key-label">Magnitude 4</span>
+    </div>
+    <div class="key-row">
+      <div class="key-dot" style="width:9px;height:9px;background:#fbbf24;box-shadow:0 0 4px #fbbf2488"></div>
+      <span class="key-label">Magnitude 5</span>
+    </div>
+    <div class="key-row">
+      <div class="key-dot" style="width:12px;height:12px;background:#fb923c;box-shadow:0 0 4px #fb923c88"></div>
+      <span class="key-label">Magnitude 6</span>
+    </div>
+    <div class="key-row">
+      <div class="key-dot" style="width:16px;height:16px;background:#f87171;box-shadow:0 0 6px #f8717188"></div>
+      <span class="key-label">Magnitude 7+</span>
+    </div>
+
+    <hr class="key-divider" />
+
+    <div class="key-section-label">Volcanoes</div>
+    <div class="key-row">
+      <div class="key-dot" style="width:10px;height:10px;background:#f87171;box-shadow:0 0 5px #f8717188"></div>
+      <span class="key-label">🌋 Volcano</span>
+    </div>
+
+    <hr class="key-divider" />
+    <div style="font-size:0.65rem;color:#444;font-style:italic">Tap any dot for details</div>
+  </div>
+
   <a class="back-link" href="/">← DexterBain.com</a>
 
   <div id="loading">
