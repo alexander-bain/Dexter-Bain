@@ -269,8 +269,8 @@
       <span class="key-label">Active volcano</span>
     </div>
     <div class="key-row">
-      <div class="key-dot" style="width:10px;height:10px;background:#6b7280;box-shadow:0 0 4px #6b728088"></div>
-      <span class="key-label">Inactive volcano</span>
+      <div class="key-dot" style="width:10px;height:10px;background:#ffffff;opacity:0.55"></div>
+      <span class="key-label">Dormant volcano</span>
     </div>
 
     <hr class="key-divider" />
@@ -325,11 +325,6 @@
       });
     });
 
-    function isActiveVolcano(lastKnownEruption) {
-      if (!lastKnownEruption) return false;
-      return lastKnownEruption.includes('CE');
-    }
-
     function setStatus(msg) {
       document.getElementById('load-status').textContent = msg;
     }
@@ -381,26 +376,25 @@
         let count = 0;
         data.forEach(v => {
           if (!v.latitude || !v.longitude) return;
-          const name      = v.volcanoName || 'Unknown Volcano';
-          const location  = [v.subregion, v.region, v.country].filter(Boolean).join(', ') || 'Unknown location';
-          const type      = v.primaryVolcanoType || '';
-          const lastErupt = v.lastKnownEruption || '';
-          const active    = isActiveVolcano(lastErupt);
-          const dotColor  = active ? '#f87171' : '#6b7280';
+          const name     = v.vName || 'Unknown Volcano';
+          const location = [v.subregion, v.country].filter(Boolean).join(', ') || 'Unknown location';
+          // obsAbbr !== 'OTHER' means actively monitored by a USGS observatory → active
+          const active   = v.obsAbbr && v.obsAbbr !== 'OTHER';
+          const dotColor = active ? '#f87171' : '#ffffff';
+          const obsLabel = active ? `🔴 Active (monitored by ${v.obsAbbr})` : '⚪ Dormant';
 
           const volBase = 3;
           const volMarker = L.circleMarker([v.latitude, v.longitude], {
             radius: scaledRadius(volBase, map.getZoom()),
             color: dotColor,
             fillColor: dotColor,
-            fillOpacity: 0.9,
+            fillOpacity: active ? 0.9 : 0.55,
             weight: 0,
           })
           .bindPopup(`
             <div class="popup-vol-title">🌋 ${name}</div>
             <div>${location}</div>
-            <div class="popup-meta">${[type, lastErupt ? 'Last eruption: ' + lastErupt : ''].filter(Boolean).join(' · ')}</div>
-            <div class="popup-meta">${active ? '🔴 Active' : '⚫ Inactive'}</div>
+            <div class="popup-meta">${obsLabel}</div>
           `, { maxWidth: 240 })
           .addTo(volLayer);
           allMarkers.push({ marker: volMarker, baseRadius: volBase });
