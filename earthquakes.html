@@ -75,52 +75,14 @@
     }
 
     .view-btn.active-eq {
-      background: rgba(34,211,238,0.12);
-      color: #22d3ee;
+      background: rgba(96,165,250,0.12);
+      color: #60a5fa;
     }
 
     .view-btn.active-vol {
       background: rgba(248,113,113,0.12);
       color: #f87171;
     }
-
-    /* ── Legend ── */
-    .legend {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 0.72rem;
-      color: #777;
-    }
-
-    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-    .dot-eq  { background: #22d3ee; }
-    .dot-vol { background: #f87171; }
-
-    /* Magnitude legend */
-    .mag-legend {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .mag-chip {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.68rem;
-      color: #666;
-    }
-
-    .mag-dot { width: 6px; height: 6px; border-radius: 50%; }
 
     /* ── Stats ── */
     .stat-chip {
@@ -156,7 +118,7 @@
     .leaflet-popup-content { font-size: 0.82rem; line-height: 1.7; padding: 4px 2px; }
     .leaflet-popup-content b { color: #fff; }
 
-    .popup-eq-title  { color: #22d3ee; font-weight: 800; font-size: 0.9rem; }
+    .popup-eq-title  { color: #60a5fa; font-weight: 800; font-size: 0.9rem; }
     .popup-vol-title { color: #f87171; font-weight: 800; font-size: 0.9rem; }
     .popup-meta      { color: #888; font-size: 0.75rem; margin-top: 2px; }
 
@@ -180,7 +142,7 @@
     .spinner {
       width: 34px; height: 34px;
       border: 3px solid rgba(255,255,255,0.07);
-      border-top-color: #22d3ee;
+      border-top-color: #60a5fa;
       border-radius: 50%;
       animation: spin 0.75s linear infinite;
     }
@@ -261,7 +223,6 @@
     }
 
     @media (max-width: 600px) {
-      .mag-legend { display: none; }
       .click-hint { display: none; }
       .map-key { bottom: 36px; right: 8px; padding: 10px 12px; min-width: 140px; }
     }
@@ -272,25 +233,16 @@
   <div class="topbar">
     <div class="topbar-title">🌍 Earthquakes &amp; Volcanoes</div>
 
-    <!-- Three-way selector -->
     <div class="view-selector">
       <button class="view-btn active-both" id="btn-both" onclick="setView('both')">
         🌐 Both
       </button>
       <button class="view-btn" id="btn-eq-only" onclick="setView('eq')">
-        <span style="color:#22d3ee">●</span> Earthquakes
+        <span style="color:#60a5fa">●</span> Earthquakes
       </button>
       <button class="view-btn" id="btn-vol-only" onclick="setView('vol')">
         <span style="color:#f87171">●</span> Volcanoes
       </button>
-    </div>
-
-    <!-- Magnitude key -->
-    <div class="mag-legend">
-      <div class="mag-chip"><div class="mag-dot" style="background:#22d3ee"></div> M4</div>
-      <div class="mag-chip"><div class="mag-dot" style="background:#fbbf24;width:7px;height:7px"></div> M5</div>
-      <div class="mag-chip"><div class="mag-dot" style="background:#fb923c;width:9px;height:9px"></div> M6</div>
-      <div class="mag-chip"><div class="mag-dot" style="background:#f87171;width:11px;height:11px"></div> M7+</div>
     </div>
 
     <div class="stat-chip">EQ: <span id="eq-count">—</span> &nbsp; Vol: <span id="vol-count">—</span></div>
@@ -305,20 +257,8 @@
 
     <div class="key-section-label">Earthquakes</div>
     <div class="key-row">
-      <div class="key-dot" style="width:6px;height:6px;background:#22d3ee;box-shadow:0 0 4px #22d3ee88"></div>
-      <span class="key-label">Magnitude 4</span>
-    </div>
-    <div class="key-row">
-      <div class="key-dot" style="width:9px;height:9px;background:#fbbf24;box-shadow:0 0 4px #fbbf2488"></div>
-      <span class="key-label">Magnitude 5</span>
-    </div>
-    <div class="key-row">
-      <div class="key-dot" style="width:12px;height:12px;background:#fb923c;box-shadow:0 0 4px #fb923c88"></div>
-      <span class="key-label">Magnitude 6</span>
-    </div>
-    <div class="key-row">
-      <div class="key-dot" style="width:16px;height:16px;background:#f87171;box-shadow:0 0 6px #f8717188"></div>
-      <span class="key-label">Magnitude 7+</span>
+      <div class="key-dot" style="width:10px;height:10px;background:#60a5fa;box-shadow:0 0 5px #60a5fa88"></div>
+      <span class="key-label">Earthquake</span>
     </div>
 
     <hr class="key-divider" />
@@ -326,7 +266,11 @@
     <div class="key-section-label">Volcanoes</div>
     <div class="key-row">
       <div class="key-dot" style="width:10px;height:10px;background:#f87171;box-shadow:0 0 5px #f8717188"></div>
-      <span class="key-label">🌋 Volcano</span>
+      <span class="key-label">Active volcano</span>
+    </div>
+    <div class="key-row">
+      <div class="key-dot" style="width:10px;height:10px;background:#6b7280;box-shadow:0 0 4px #6b728088"></div>
+      <span class="key-label">Inactive volcano</span>
     </div>
 
     <hr class="key-divider" />
@@ -354,28 +298,22 @@
     const eqLayer  = L.layerGroup().addTo(map);
     const volLayer = L.layerGroup().addTo(map);
 
-    let currentView = 'both'; // 'both' | 'eq' | 'vol'
+    let currentView = 'both';
 
     function setView(v) {
       currentView = v;
-
-      // Update button styles
       document.getElementById('btn-both').className    = 'view-btn' + (v === 'both' ? ' active-both' : '');
       document.getElementById('btn-eq-only').className = 'view-btn' + (v === 'eq'   ? ' active-eq'   : '');
       document.getElementById('btn-vol-only').className= 'view-btn' + (v === 'vol'  ? ' active-vol'  : '');
-
-      // Toggle layers
       const showEq  = v === 'both' || v === 'eq';
       const showVol = v === 'both' || v === 'vol';
       showEq  ? map.addLayer(eqLayer)  : map.removeLayer(eqLayer);
       showVol ? map.addLayer(volLayer) : map.removeLayer(volLayer);
     }
 
-    // Store all markers so we can resize them on zoom
-    const allMarkers = []; // { marker, baseRadius }
+    const allMarkers = [];
 
     function scaledRadius(base, zoom) {
-      // At zoom 2 (world) → base size. Each extra zoom level roughly doubles size.
       const factor = Math.pow(1.55, Math.max(0, zoom - 2));
       return Math.min(base * factor, 40);
     }
@@ -387,18 +325,9 @@
       });
     });
 
-    function magColor(mag) {
-      if (mag >= 7) return '#f87171';
-      if (mag >= 6) return '#fb923c';
-      if (mag >= 5) return '#fbbf24';
-      return '#22d3ee';
-    }
-
-    function magBaseRadius(mag) {
-      if (mag >= 7) return 5;
-      if (mag >= 6) return 3.5;
-      if (mag >= 5) return 2.5;
-      return 1.6;
+    function isActiveVolcano(lastKnownEruption) {
+      if (!lastKnownEruption) return false;
+      return lastKnownEruption.includes('CE');
     }
 
     function setStatus(msg) {
@@ -420,12 +349,12 @@
           const time  = new Date(eq.properties.time).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
           const depthStr = depth != null ? Math.round(depth) + ' km deep' : '';
 
-          const baseR = magBaseRadius(mag);
+          const baseR = 2.5;
           const marker = L.circleMarker([lat, lng], {
             radius: scaledRadius(baseR, map.getZoom()),
-            color: magColor(mag),
-            fillColor: magColor(mag),
-            fillOpacity: 0.8,
+            color: '#60a5fa',
+            fillColor: '#60a5fa',
+            fillOpacity: 0.75,
             weight: 0,
           })
           .bindPopup(`
@@ -452,16 +381,18 @@
         let count = 0;
         data.forEach(v => {
           if (!v.latitude || !v.longitude) return;
-          const name     = v.volcanoName || 'Unknown Volcano';
-          const location = [v.subregion, v.region, v.country].filter(Boolean).join(', ') || 'Unknown location';
-          const type     = v.primaryVolcanoType || '';
-          const lastErupt= v.lastKnownEruption || '';
+          const name      = v.volcanoName || 'Unknown Volcano';
+          const location  = [v.subregion, v.region, v.country].filter(Boolean).join(', ') || 'Unknown location';
+          const type      = v.primaryVolcanoType || '';
+          const lastErupt = v.lastKnownEruption || '';
+          const active    = isActiveVolcano(lastErupt);
+          const dotColor  = active ? '#f87171' : '#6b7280';
 
           const volBase = 3;
           const volMarker = L.circleMarker([v.latitude, v.longitude], {
             radius: scaledRadius(volBase, map.getZoom()),
-            color: '#f87171',
-            fillColor: '#f87171',
+            color: dotColor,
+            fillColor: dotColor,
             fillOpacity: 0.9,
             weight: 0,
           })
@@ -469,6 +400,7 @@
             <div class="popup-vol-title">🌋 ${name}</div>
             <div>${location}</div>
             <div class="popup-meta">${[type, lastErupt ? 'Last eruption: ' + lastErupt : ''].filter(Boolean).join(' · ')}</div>
+            <div class="popup-meta">${active ? '🔴 Active' : '⚫ Inactive'}</div>
           `, { maxWidth: 240 })
           .addTo(volLayer);
           allMarkers.push({ marker: volMarker, baseRadius: volBase });
