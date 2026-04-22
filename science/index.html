@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Earthquakes & Volcanoes</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #080b0f;
+      color: #f0f0f0;
+      font-family: system-ui, -apple-system, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: rgba(8,11,15,0.97);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      flex-wrap: wrap;
+      z-index: 1000;
+      flex-shrink: 0;
+    }
+
+    .topbar-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #f87171, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      white-space: nowrap;
+    }
+
+    .view-selector {
+      display: flex;
+      gap: 0;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      flex-shrink: 0;
+    }
+
+    .view-btn {
+      padding: 10px 20px;
+      background: transparent;
+      border: none;
+      color: #666;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .view-btn:last-child { border-right: none; }
+    .view-btn:hover { background: rgba(255,255,255,0.05); color: #ccc; }
+    .view-btn.active-both   { background: rgba(255,255,255,0.08); color: #fff; }
+    .view-btn.active-eq     { background: rgba(96,165,250,0.12);  color: #60a5fa; }
+    .view-btn.active-vol    { background: rgba(248,113,113,0.12); color: #f87171; }
+    .view-btn.active-pangea { background: rgba(251,191,36,0.15);  color: #fbbf24; }
+
+    .topbar-action {
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #888;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .topbar-action:hover { background: rgba(255,255,255,0.07); color: #ccc; }
+    .topbar-action.active { border-color: rgba(251,191,36,0.35); color: #fbbf24; background: rgba(251,191,36,0.07); }
+    .topbar-action.game-active  { border-color: rgba(74,222,128,0.35); color: #4ade80; background: rgba(74,222,128,0.07); }
+    .topbar-action.plates-active { border-color: rgba(249,115,22,0.45); color: #f97316; background: rgba(249,115,22,0.08); }
+    .plate-label-icon {
+      background: none; border: none; box-shadow: none;
+      color: rgba(255,255,255,0.8); font-size: 0.72rem; font-weight: 700;
+      text-shadow: 0 1px 4px #000, 0 0 10px #000;
+      white-space: nowrap; pointer-events: none;
+    }
+
+    .stat-chip {
+      font-size: 0.67rem;
+      color: #555;
+      white-space: nowrap;
+      margin-left: auto;
+    }
+    .stat-chip span { color: #888; font-weight: 700; }
+
+    /* ── Wegener info panel ── */
+    .info-panel {
+      display: none;
+      background: rgba(10,13,20,0.99);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 14px 20px 16px;
+      flex-shrink: 0;
+      overflow-y: auto;
+      max-height: 38vh;
+    }
+    .info-panel.visible { display: block; }
+    .info-panel-inner { max-width: 780px; }
+    .info-panel h3 {
+      font-size: 0.9rem;
+      color: #fbbf24;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .info-panel p {
+      font-size: 0.8rem;
+      line-height: 1.75;
+      color: #aaa;
+      margin-bottom: 9px;
+    }
+    .info-panel p:last-child { margin-bottom: 0; }
+
+    /* ── Map ── */
+    #map { flex: 1; min-height: 0; }
+
+    .leaflet-container { background: #111418 !important; }
+    .leaflet-tile { filter: brightness(0.5) saturate(0.35) hue-rotate(200deg); }
+
+    .leaflet-popup-content-wrapper {
+      background: #0d0f1a;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: #ddd;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.7);
+    }
+    .leaflet-popup-tip { background: #0d0f1a; }
+    .leaflet-popup-content { font-size: 0.82rem; line-height: 1.7; padding: 4px 2px; }
+    .popup-eq-title  { color: #60a5fa; font-weight: 800; font-size: 0.88rem; }
+    .popup-vol-title { color: #f87171; font-weight: 800; font-size: 0.88rem; }
+    .popup-meta      { color: #888; font-size: 0.74rem; margin-top: 2px; }
+
+    /* ── Loading overlay ── */
+    #loading {
+      position: fixed; inset: 0;
+      background: rgba(8,11,15,0.9);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 2000; gap: 14px;
+      font-size: 0.88rem; color: #777;
+    }
+    #loading.hidden { display: none; }
+    .spinner {
+      width: 34px; height: 34px;
+      border: 3px solid rgba(255,255,255,0.07);
+      border-top-color: #60a5fa;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #load-status { font-size: 0.72rem; color: #444; }
+
+    /* ── Pangea status ── */
+    #pangea-status {
+      position: fixed;
+      bottom: 50px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 1500;
+      background: rgba(8,11,15,0.92);
+      border: 1px solid rgba(251,191,36,0.2);
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: 0.72rem; color: #fbbf24;
+      display: none; white-space: nowrap;
+    }
+
+    /* ── Map key ── */
+    .map-key {
+      position: fixed;
+      bottom: 40px; right: 12px;
+      z-index: 900;
+      background: rgba(8,11,15,0.92);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 11px 13px;
+      min-width: 158px;
+      backdrop-filter: blur(6px);
+    }
+    .map-key-title { font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.14em; color: #555; margin-bottom: 9px; font-weight: 700; }
+    .key-section-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.1em; color: #444; margin: 7px 0 4px; }
+    .key-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .key-dot { border-radius: 50%; flex-shrink: 0; }
+    .key-swatch { width: 18px; height: 3px; border-radius: 2px; flex-shrink: 0; }
+    .key-label { font-size: 0.73rem; color: #aaa; }
+    .key-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 7px 0; }
+    .key-pangea { display: none; }
+
+    /* ── Back link ── */
+    .back-link {
+      position: fixed;
+      bottom: 12px; left: 12px;
+      z-index: 999;
+      font-size: 0.7rem; color: #444;
+      text-decoration: none;
+      background: rgba(8,11,15,0.85);
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #888; }
+
+    /* ── Game sidebar ── */
+    .game-sidebar {
+      position: fixed;
+      top: 0; right: -310px;
+      width: 290px;
+      height: 100vh;
+      background: rgba(8,12,18,0.97);
+      border-left: 1px solid rgba(255,255,255,0.07);
+      z-index: 1200;
+      transition: right 0.28s cubic-bezier(.4,0,.2,1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .game-sidebar.open { right: 0; }
+
+    .game-sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      flex-shrink: 0;
+    }
+    .game-sidebar-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #4ade80;
+    }
+    .game-close-btn {
+      background: none; border: none;
+      color: #555; font-size: 1rem;
+      cursor: pointer; padding: 4px;
+      border-radius: 4px;
+      transition: color 0.15s;
+    }
+    .game-close-btn:hover { color: #ccc; }
+
+    .game-body { flex: 1; padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+
+    .game-phase { display: flex; flex-direction: column; gap: 10px; }
+    .game-phase.hidden { display: none; }
+
+    .game-instructions {
+      font-size: 0.78rem; line-height: 1.65; color: #999;
+    }
+
+    .game-count {
+      font-size: 0.75rem; color: #666;
+    }
+    .game-count span { color: #4ade80; font-weight: 700; font-size: 0.9rem; }
+
+    .game-btn {
+      padding: 9px 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .game-btn-reveal {
+      background: #4ade80;
+      color: #050f07;
+    }
+    .game-btn-reveal:hover { background: #22c55e; }
+    .game-btn-secondary {
+      background: rgba(255,255,255,0.04);
+      color: #888;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .game-btn-secondary:hover { background: rgba(255,255,255,0.08); color: #ccc; }
+
+    .score-display {
+      text-align: center;
+      padding: 16px 0 10px;
+    }
+    .score-number {
+      font-size: 3rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .score-label { font-size: 0.75rem; color: #666; margin-top: 4px; }
+    .score-detail { font-size: 0.72rem; color: #555; line-height: 1.6; }
+
+    .game-tip {
+      font-size: 0.7rem; color: #333; line-height: 1.5;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      padding-top: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .game-sidebar { width: 100%; right: -100%; }
+      .map-key { bottom: 36px; right: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="topbar-title">🌍 Earthquakes &amp; Volcanoes</div>
+
+    <div class="view-selector">
+      <button class="view-btn" id="btn-both"       onclick="setView('both')">🌐 Both</button>
+      <button class="view-btn active-eq" id="btn-eq-only"  onclick="setView('eq')"><span style="color:#60a5fa">●</span> Earthquakes</button>
+      <button class="view-btn" id="btn-vol-only" onclick="setView('vol')"><span style="color:#f87171">●</span> Volcanoes</button>
+      <button class="view-btn" id="btn-pangea"   onclick="setView('pangea')"><span style="color:#fbbf24">◎</span> Pangea</button>
+    </div>
+
+    <button class="topbar-action" id="btn-plates"  onclick="togglePlates()">🗺️ Plates</button>
+    <button class="topbar-action" id="btn-wegener" onclick="toggleInfo()">📖 Wegener</button>
+    <button class="topbar-action" id="btn-game"    onclick="toggleGame()">🎮 Draw Game</button>
+
+    <div class="stat-chip">EQ: <span id="eq-count">—</span> &nbsp; Vol: <span id="vol-count">—</span></div>
+  </div>
+
+  <!-- Wegener Info Panel -->
+  <div class="info-panel" id="info-panel">
+    <div class="info-panel-inner">
+      <h3>Alfred Wegener &amp; Continental Drift</h3>
+      <p>Alfred Wegener was a German scientist who, in 1912, proposed that Earth's continents were once joined together in a single giant landmass he called <strong style="color:#fbbf24">Pangea</strong>. He noticed that the coastlines of South America and Africa fit together like puzzle pieces, and that identical fossils and rock formations appeared on opposite sides of the Atlantic Ocean. He called his idea <em>continental drift</em> — the theory that continents slowly move across Earth's surface over millions of years.</p>
+      <p>Almost nobody believed him. Other scientists argued that solid continents couldn't possibly plow through solid ocean rock, and Wegener was mocked and dismissed for decades. He died in Greenland in 1930 without ever seeing his theory accepted. It wasn't until the 1960s that scientists discovered <em>seafloor spreading</em> — new ocean crust forming at mid-ocean ridges — which finally proved that plates really do move, and that Wegener had been right all along.</p>
+      <p>Volcanoes were one of the key clues that helped piece Pangea back together. Volcanoes cluster along the edges of tectonic plates, where plates collide, pull apart, or grind past each other. When you map volcano locations back onto a reconstruction of Pangea, they trace the same collision zones that eventually tore the supercontinent apart — the same boundaries Wegener had identified from coastline shapes and fossils alone, without any modern technology.</p>
+    </div>
+  </div>
+
+  <!-- Map -->
+  <div id="map"></div>
+
+  <!-- Map Key -->
+  <div class="map-key">
+    <div class="map-key-title">Key</div>
+
+    <div class="key-row key-modern" id="key-plates-row" style="display:none">
+      <div class="key-swatch" style="background:#f97316;opacity:0.8"></div>
+      <span class="key-label">Plate boundaries</span>
+    </div>
+    <hr class="key-divider key-modern" id="key-plates-divider" style="display:none" />
+    <div class="key-section-label key-modern" style="margin-top:0">Earthquakes</div>
+    <div class="key-row key-modern">
+      <div class="key-dot" style="width:10px;height:10px;background:#60a5fa;box-shadow:0 0 5px #60a5fa88"></div>
+      <span class="key-label">Earthquake</span>
+    </div>
+    <hr class="key-divider key-modern" />
+    <div class="key-section-label key-modern">Volcanoes</div>
+    <div class="key-row key-modern">
+      <div class="key-dot" style="width:10px;height:10px;background:#f87171;box-shadow:0 0 5px #f8717188"></div>
+      <span class="key-label">Active volcano</span>
+    </div>
+    <div class="key-row key-modern">
+      <div class="key-dot" style="width:10px;height:10px;background:#fff;opacity:0.55"></div>
+      <span class="key-label">Dormant volcano</span>
+    </div>
+
+    <div class="key-section-label key-pangea" style="margin-top:0">Pangea — 250 Ma</div>
+    <div class="key-row key-pangea">
+      <div class="key-swatch" style="background:#8b6e45"></div>
+      <span class="key-label">Land (250 Ma)</span>
+    </div>
+    <hr class="key-divider key-pangea" />
+    <div class="key-row key-pangea">
+      <div class="key-dot" style="width:10px;height:10px;background:#f87171;box-shadow:0 0 5px #f8717188"></div>
+      <span class="key-label">Active volcano</span>
+    </div>
+    <div class="key-row key-pangea">
+      <div class="key-dot" style="width:10px;height:10px;background:#fff;opacity:0.55"></div>
+      <span class="key-label">Dormant volcano</span>
+    </div>
+
+    <hr class="key-divider" />
+    <div style="font-size:0.63rem;color:#444;font-style:italic">Tap any dot for details</div>
+  </div>
+
+  <!-- Game Sidebar -->
+  <div class="game-sidebar" id="game-sidebar">
+    <div class="game-sidebar-header">
+      <span class="game-sidebar-title">🎮 Earthquake Draw Game</span>
+      <button class="game-close-btn" onclick="toggleGame()">✕</button>
+    </div>
+    <div class="game-body">
+
+      <!-- Drawing phase -->
+      <div class="game-phase" id="phase-draw">
+        <p class="game-instructions">
+          Press and drag on the map to draw where you think earthquakes happen.
+          Cover as many earthquake zones as you can!
+        </p>
+        <div class="game-count">Zones covered: <span id="mark-count">0</span></div>
+        <button class="game-btn game-btn-reveal" id="btn-reveal" onclick="revealAnswers()" disabled>Reveal Answers</button>
+        <button class="game-btn game-btn-secondary" onclick="undoStroke()">Undo Last Line</button>
+        <button class="game-btn game-btn-secondary" onclick="resetGame()">Clear All</button>
+        <p class="game-tip">Hint: think about where tectonic plates meet — the edges of the Pacific Ocean, along mountain ranges, and mid-ocean ridges.</p>
+      </div>
+
+      <!-- Results phase -->
+      <div class="game-phase hidden" id="phase-result">
+        <div class="score-display">
+          <div class="score-number" id="score-pct">—</div>
+          <div class="score-label">of earthquake zones found</div>
+        </div>
+        <p class="score-detail" id="score-detail"></p>
+        <button class="game-btn game-btn-reveal" onclick="resetGame()">Play Again</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="pangea-status"></div>
+  <a class="back-link" href="/">← DexterBain.com</a>
+
+  <div id="loading">
+    <div class="spinner"></div>
+    <div>Loading data…</div>
+    <div id="load-status"></div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map', { zoomControl: true, minZoom: 2 }).setView([20, 10], 2);
+
+    const tileLayerRef = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+      minZoom: 2, maxZoom: 18,
+    }).addTo(map);
+
+    const eqLayer     = L.layerGroup().addTo(map);
+    const volLayer    = L.layerGroup();
+    const pangeaLayer = L.layerGroup();
+    const platesLayer = L.layerGroup();
+    const drawLayer   = L.layerGroup().addTo(map);
+
+    let currentView   = 'eq';
+    let platesLoaded  = false;
+    let platesVisible = false;
+    let pangeaLoaded  = false;
+    let rawVolData    = [];
+    let gameOpen     = false;
+    let gameRevealed = false;
+    let isDrawing    = false;
+    let currentStroke    = [];
+    let currentPolyline  = null;
+    const userStrokes = [];  // array of L.Polyline
+    const userGrid    = new Set();
+    const eqGrid      = new Set();
+
+    // ── Info panel toggle ──
+    function toggleInfo() {
+      const panel = document.getElementById('info-panel');
+      const btn   = document.getElementById('btn-wegener');
+      const isOpen = panel.classList.toggle('visible');
+      btn.classList.toggle('active', isOpen);
+      map.invalidateSize();
+    }
+
+    // ── Freehand draw mode helpers ──
+    function getEventLatLng(e) {
+      const container = map.getContainer();
+      const rect = container.getBoundingClientRect();
+      const src  = e.touches ? e.touches[0] : e;
+      return map.containerPointToLatLng([src.clientX - rect.left, src.clientY - rect.top]);
+    }
+
+    function markCell(pt) {
+      const key = `${Math.floor(pt.lat / 5)}_${Math.floor(pt.lng / 5)}`;
+      if (!userGrid.has(key)) {
+        userGrid.add(key);
+        document.getElementById('mark-count').textContent = userGrid.size;
+        document.getElementById('btn-reveal').disabled = userGrid.size < 3;
+      }
+    }
+
+    function startDraw(e) {
+      if (!gameOpen || gameRevealed) return;
+      isDrawing = true;
+      const pt = getEventLatLng(e);
+      currentStroke = [pt];
+      currentPolyline = L.polyline([[pt.lat, pt.lng]], {
+        color: '#fbbf24', weight: 5, opacity: 0.75, lineJoin: 'round', lineCap: 'round',
+      }).addTo(drawLayer);
+      markCell(pt);
+      e.preventDefault();
+    }
+
+    function continueDraw(e) {
+      if (!isDrawing || !gameOpen || gameRevealed) return;
+      const pt = getEventLatLng(e);
+      currentStroke.push(pt);
+      currentPolyline.setLatLngs(currentStroke.map(p => [p.lat, p.lng]));
+      markCell(pt);
+      e.preventDefault();
+    }
+
+    function endDraw(e) {
+      if (!isDrawing) return;
+      isDrawing = false;
+      if (currentStroke.length >= 2) {
+        userStrokes.push(currentPolyline);
+      } else if (currentPolyline) {
+        drawLayer.removeLayer(currentPolyline);
+      }
+      currentStroke = [];
+      currentPolyline = null;
+    }
+
+    function enableDrawMode() {
+      const c = map.getContainer();
+      map.dragging.disable();
+      c.style.cursor = 'crosshair';
+      c.addEventListener('mousedown',  startDraw);
+      c.addEventListener('mousemove',  continueDraw);
+      c.addEventListener('mouseup',    endDraw);
+      c.addEventListener('mouseleave', endDraw);
+      c.addEventListener('touchstart', startDraw,    { passive: false });
+      c.addEventListener('touchmove',  continueDraw, { passive: false });
+      c.addEventListener('touchend',   endDraw);
+    }
+
+    function disableDrawMode() {
+      const c = map.getContainer();
+      map.dragging.enable();
+      c.style.cursor = '';
+      c.removeEventListener('mousedown',  startDraw);
+      c.removeEventListener('mousemove',  continueDraw);
+      c.removeEventListener('mouseup',    endDraw);
+      c.removeEventListener('mouseleave', endDraw);
+      c.removeEventListener('touchstart', startDraw);
+      c.removeEventListener('touchmove',  continueDraw);
+      c.removeEventListener('touchend',   endDraw);
+    }
+
+    // ── Game sidebar toggle ──
+    function toggleGame() {
+      const sidebar = document.getElementById('game-sidebar');
+      const btn     = document.getElementById('btn-game');
+      gameOpen = !gameOpen;
+      sidebar.classList.toggle('open', gameOpen);
+      btn.classList.toggle('game-active', gameOpen);
+
+      if (gameOpen) {
+        map.removeLayer(eqLayer);
+        enableDrawMode();
+      } else {
+        disableDrawMode();
+        if (currentView === 'both' || currentView === 'eq') map.addLayer(eqLayer);
+      }
+    }
+
+    // ── Tectonic plates layer ──
+    const PLATE_ARROWS = [
+      { lat: 18,  lng: -160, b: 305, label: 'Pacific' },
+      { lat: -15, lng: -135, b: 305 },
+      { lat: 28,  lng: 175,  b: 305 },
+      { lat: 50,  lng: -100, b: 248, label: 'N. America' },
+      { lat: 33,  lng: -85,  b: 248 },
+      { lat: -20, lng: -58,  b: 268, label: 'S. America' },
+      { lat: 8,   lng: 22,   b: 52,  label: 'Africa' },
+      { lat: -32, lng: 25,   b: 52  },
+      { lat: 52,  lng: 55,   b: 62,  label: 'Eurasia' },
+      { lat: 40,  lng: 5,    b: 62  },
+      { lat: -26, lng: 138,  b: 18,  label: 'Australia' },
+      { lat: -15, lng: 118,  b: 18  },
+      { lat: -78, lng: 0,    b: 0,   label: 'Antarctica' },
+      { lat: 22,  lng: 78,   b: 22,  label: 'India' },
+      { lat: -14, lng: -98,  b: 92,  label: 'Nazca' },
+      { lat: 10,  lng: -88,  b: 42,  label: 'Cocos' },
+      { lat: 28,  lng: 40,   b: 30,  label: 'Arabia' },
+    ];
+
+    function arrowIcon(bearing, label) {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="32" viewBox="0 0 18 32"
+          style="transform:rotate(${bearing}deg);display:block;filter:drop-shadow(0 0 3px #000)">
+        <line x1="9" y1="30" x2="9" y2="6" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="9,0 3,12 15,12" fill="white"/>
+      </svg>`;
+      const lbl = label ? `<div style="color:rgba(255,255,255,0.82);font-size:0.68rem;font-weight:700;
+          text-shadow:0 1px 4px #000;white-space:nowrap;margin-top:2px;text-align:center">${label}</div>` : '';
+      return L.divIcon({ className: '', html: svg + lbl, iconSize: [18, label ? 48 : 32], iconAnchor: [9, 16] });
+    }
+
+    async function loadPlates() {
+      if (platesLoaded) return;
+      platesLoaded = true;
+      try {
+        const res = await fetch('https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json');
+        const gj  = await res.json();
+        L.geoJSON(gj, { style: { color: '#f97316', weight: 1.8, opacity: 0.75 } }).addTo(platesLayer);
+      } catch(e) { console.warn('Plate boundaries failed:', e); }
+      PLATE_ARROWS.forEach(({ lat, lng, b, label }) => {
+        L.marker([lat, lng], { icon: arrowIcon(b, label), interactive: false }).addTo(platesLayer);
+      });
+    }
+
+    function togglePlates() {
+      platesVisible = !platesVisible;
+      document.getElementById('btn-plates').classList.toggle('plates-active', platesVisible);
+      document.getElementById('key-plates-row').style.display     = platesVisible ? 'flex' : 'none';
+      document.getElementById('key-plates-divider').style.display = platesVisible ? 'block' : 'none';
+      if (platesVisible) {
+        loadPlates();
+        if (currentView !== 'pangea') map.addLayer(platesLayer);
+      } else {
+        map.removeLayer(platesLayer);
+      }
+    }
+
+    // ── View toggle ──
+    function setView(v) {
+      currentView = v;
+      document.getElementById('btn-both').className    = 'view-btn' + (v === 'both'   ? ' active-both'   : '');
+      document.getElementById('btn-eq-only').className = 'view-btn' + (v === 'eq'     ? ' active-eq'     : '');
+      document.getElementById('btn-vol-only').className= 'view-btn' + (v === 'vol'    ? ' active-vol'    : '');
+      document.getElementById('btn-pangea').className  = 'view-btn' + (v === 'pangea' ? ' active-pangea' : '');
+
+      document.querySelectorAll('.key-modern').forEach(el => el.style.display = v === 'pangea' ? 'none' : '');
+      document.querySelectorAll('.key-pangea').forEach(el => el.style.display = v === 'pangea' ? 'flex'  : 'none');
+
+      if (v === 'pangea') {
+        map.removeLayer(tileLayerRef);
+        map.removeLayer(eqLayer);
+        map.removeLayer(volLayer);
+        map.removeLayer(platesLayer);
+        map.addLayer(pangeaLayer);
+        document.getElementById('map').style.background = '#061a2e';
+        loadPangeaData();
+      } else {
+        if (!map.hasLayer(tileLayerRef)) map.addLayer(tileLayerRef);
+        map.removeLayer(pangeaLayer);
+        document.getElementById('map').style.background = '';
+
+        const showEq  = (v === 'both' || v === 'eq') && !gameOpen;
+        const showVol = v === 'both' || v === 'vol';
+        showEq  ? map.addLayer(eqLayer)  : map.removeLayer(eqLayer);
+        showVol ? map.addLayer(volLayer) : map.removeLayer(volLayer);
+        if (platesVisible) map.addLayer(platesLayer);
+      }
+    }
+
+    // ── Marker scaling ──
+    const allMarkers = [];
+    function scaledRadius(base, zoom) {
+      return Math.min(base * Math.pow(1.55, Math.max(0, zoom - 2)), 40);
+    }
+    map.on('zoomend', () => {
+      const z = map.getZoom();
+      allMarkers.forEach(({ marker, baseRadius }) => marker.setRadius(scaledRadius(baseRadius, z)));
+    });
+
+    function setStatus(msg) { document.getElementById('load-status').textContent = msg; }
+    function setPangeaStatus(msg) {
+      const el = document.getElementById('pangea-status');
+      el.textContent = msg; el.style.display = msg ? 'block' : 'none';
+    }
+
+    // ── GPlates reconstruction ──
+    async function gplatesReconstruct(latLngs) {
+      const CHUNK = 150;
+      const results = new Array(latLngs.length).fill(null);
+      const promises = [];
+
+      for (let i = 0; i < latLngs.length; i += CHUNK) {
+        const start = i;
+        const chunk = latLngs.slice(start, start + CHUNK);
+        const lats  = chunk.map(([lat]) => lat).join(',');
+        const lons  = chunk.map(([, lng]) => lng).join(',');
+        promises.push(
+          fetch(`https://gws.gplates.org/reconstruct/reconstruct_points/?lats=${lats}&lons=${lons}&time=250&model=GOLONKA&fc=true`)
+            .then(r => r.json())
+            .then(data => {
+              data.features.forEach((f, j) => {
+                if (f.geometry?.type === 'Point') {
+                  const [lng, lat] = f.geometry.coordinates;
+                  if (isFinite(lat) && isFinite(lng)) results[start + j] = [lat, lng];
+                }
+              });
+            })
+            .catch(() => {})
+        );
+      }
+      await Promise.all(promises);
+      return results;
+    }
+
+    // ── Pangea data loader ──
+    async function loadPangeaData() {
+      if (pangeaLoaded) return;
+      pangeaLoaded = true;
+
+      // 1. Pangea coastlines (land at 250 Ma)
+      setPangeaStatus('Loading Pangea coastlines…');
+      try {
+        const res = await fetch('https://gws.gplates.org/reconstruct/coastlines/?time=250&model=GOLONKA');
+        if (res.ok) {
+          const gj = await res.json();
+          L.geoJSON(gj, {
+            style: { color: '#6b5230', fillColor: '#8b6e45', fillOpacity: 0.75, weight: 0.5 },
+          }).addTo(pangeaLayer);
+        }
+      } catch (e) { console.warn('Pangea coastlines failed:', e); }
+
+      // 2. Volcanoes at 250 Ma
+      if (rawVolData.length > 0) {
+        setPangeaStatus('Reconstructing volcano positions…');
+        const volPts    = rawVolData.map(v => [v.latitude, v.longitude]);
+        const reconVols = await gplatesReconstruct(volPts);
+
+        reconVols.forEach((pt, i) => {
+          if (!pt) return;
+          const v      = rawVolData[i];
+          const name   = v.vName || 'Unknown Volcano';
+          const loc    = [v.subregion, v.country].filter(Boolean).join(', ');
+          const active = v.obsAbbr && v.obsAbbr !== 'OTHER';
+          const color  = active ? '#f87171' : '#ffffff';
+
+          L.circleMarker(pt, { radius: 4, color, fillColor: color, fillOpacity: active ? 0.9 : 0.5, weight: 0 })
+            .bindPopup(`<div class="popup-vol-title">🌋 ${name}</div><div>${loc}</div><div class="popup-meta">${active ? '🔴 Active' : '⚪ Dormant'} · position at 250 Ma</div>`, { maxWidth: 220 })
+            .addTo(pangeaLayer);
+        });
+      }
+
+      setPangeaStatus('');
+    }
+
+    // ── Draw game actions ──
+    function undoStroke() {
+      if (!userStrokes.length) return;
+      const last = userStrokes.pop();
+      drawLayer.removeLayer(last);
+      // Rebuild userGrid from remaining strokes
+      userGrid.clear();
+      userStrokes.forEach(poly => {
+        poly.getLatLngs().forEach(pt => {
+          userGrid.add(`${Math.floor(pt.lat / 5)}_${Math.floor(pt.lng / 5)}`);
+        });
+      });
+      document.getElementById('mark-count').textContent = userGrid.size;
+      document.getElementById('btn-reveal').disabled = userGrid.size < 3;
+    }
+
+    function revealAnswers() {
+      gameRevealed = true;
+      map.addLayer(eqLayer);
+
+      let hits = 0;
+      userGrid.forEach(key => { if (eqGrid.has(key)) hits++; });
+
+      const totalEqCells = eqGrid.size;
+      const userCells    = userGrid.size;
+      const pct          = totalEqCells > 0 ? Math.round(hits / totalEqCells * 100) : 0;
+      const precision    = userCells > 0 ? Math.round(hits / userCells * 100) : 0;
+
+      const scoreEl = document.getElementById('score-pct');
+      scoreEl.textContent = pct + '%';
+      scoreEl.style.color = pct >= 70 ? '#4ade80' : pct >= 40 ? '#fbbf24' : '#f87171';
+
+      document.getElementById('score-detail').textContent =
+        `Your lines covered ${hits} of ${totalEqCells} earthquake zones (${pct}%). ` +
+        `${precision}% of your drawn area landed in earthquake zones. ` +
+        `Blue dots show where earthquakes actually happened.`;
+
+      document.getElementById('phase-draw').classList.add('hidden');
+      document.getElementById('phase-result').classList.remove('hidden');
+    }
+
+    function resetGame() {
+      gameRevealed = false;
+      userStrokes.forEach(p => drawLayer.removeLayer(p));
+      userStrokes.length = 0;
+      userGrid.clear();
+      if (gameOpen) map.removeLayer(eqLayer);
+      document.getElementById('mark-count').textContent = '0';
+      document.getElementById('btn-reveal').disabled = true;
+      document.getElementById('phase-draw').classList.remove('hidden');
+      document.getElementById('phase-result').classList.add('hidden');
+    }
+
+    // ── Load earthquakes ──
+    async function loadEarthquakes() {
+      setStatus('Fetching earthquake data…');
+      try {
+        const res  = await fetch('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-01-01&minmagnitude=4&limit=5000');
+        const data = await res.json();
+        let count  = 0;
+
+        data.features.forEach(eq => {
+          const [lng, lat, depth] = eq.geometry.coordinates;
+          const mag      = eq.properties.mag;
+          const place    = eq.properties.place || 'Unknown location';
+          const time     = new Date(eq.properties.time).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+          const depthStr = depth != null ? Math.round(depth) + ' km deep' : '';
+
+          // Track earthquake grid cells for the game
+          eqGrid.add(`${Math.floor(lat / 5)}_${Math.floor(lng / 5)}`);
+
+          const baseR  = 2.5;
+          const marker = L.circleMarker([lat, lng], {
+            radius: scaledRadius(baseR, map.getZoom()),
+            color: '#60a5fa', fillColor: '#60a5fa', fillOpacity: 0.75, weight: 0,
+          }).bindPopup(`
+            <div class="popup-eq-title">Earthquake — M${mag}</div>
+            <div>${place}</div>
+            <div class="popup-meta">${time}${depthStr ? ' · ' + depthStr : ''}</div>
+          `, { maxWidth: 240 }).addTo(eqLayer);
+          allMarkers.push({ marker, baseRadius: baseR });
+          count++;
+        });
+
+        document.getElementById('eq-count').textContent = count.toLocaleString();
+        setStatus(`${count.toLocaleString()} earthquakes loaded. Fetching volcanoes…`);
+      } catch (e) {
+        document.getElementById('eq-count').textContent = 'error';
+        setStatus('Earthquake data failed. Loading volcanoes…');
+      }
+    }
+
+    // ── Load volcanoes ──
+    async function loadVolcanoes() {
+      try {
+        const res  = await fetch('https://volcanoes.usgs.gov/vsc/api/volcanoApi/volcanoesGVP');
+        const data = await res.json();
+        rawVolData = data.filter(v => v.latitude && v.longitude);
+        let count  = 0;
+
+        rawVolData.forEach(v => {
+          const name     = v.vName || 'Unknown Volcano';
+          const location = [v.subregion, v.country].filter(Boolean).join(', ') || 'Unknown location';
+          const active   = v.obsAbbr && v.obsAbbr !== 'OTHER';
+          const dotColor = active ? '#f87171' : '#ffffff';
+
+          const volBase   = 3;
+          const volMarker = L.circleMarker([v.latitude, v.longitude], {
+            radius: scaledRadius(volBase, map.getZoom()),
+            color: dotColor, fillColor: dotColor,
+            fillOpacity: active ? 0.9 : 0.55, weight: 0,
+          }).bindPopup(`
+            <div class="popup-vol-title">🌋 ${name}</div>
+            <div>${location}</div>
+            <div class="popup-meta">${active ? `🔴 Active (${v.obsAbbr})` : '⚪ Dormant'}</div>
+          `, { maxWidth: 240 }).addTo(volLayer);
+          allMarkers.push({ marker: volMarker, baseRadius: volBase });
+          count++;
+        });
+        document.getElementById('vol-count').textContent = count.toLocaleString();
+      } catch (e) {
+        document.getElementById('vol-count').textContent = 'error';
+      }
+    }
+
+    (async () => {
+      await loadEarthquakes();
+      await loadVolcanoes();
+      document.getElementById('loading').classList.add('hidden');
+    })();
+  </script>
+</body>
+</html>
