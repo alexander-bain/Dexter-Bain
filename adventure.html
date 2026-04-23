@@ -38,39 +38,97 @@
     border-radius: 20px;
     padding: 25px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    text-align: left;
   }
 
-  #story {
-    font-size: 1.3rem;
-    min-height: 120px;
-    margin-bottom: 25px;
+  /* Running story log */
+  #story-log {
+    margin-bottom: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .log-entry {
+    padding: 10px 0;
+    border-left: 3px solid #7c3aed;
+    padding-left: 14px;
+    margin-bottom: 6px;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .log-entry.choice-made {
+    border-left-color: #a78bfa;
+    color: #c4b5fd;
+    font-style: italic;
+    font-size: 0.95rem;
+  }
+
+  .log-entry.event {
+    color: #e2e8f0;
+    font-size: 1.05rem;
     line-height: 1.6;
+  }
+
+  .log-entry.final {
+    border-left-color: #fbbf24;
+    color: #fde68a;
+    font-size: 1.1rem;
+    font-weight: bold;
+    line-height: 1.6;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Current prompt box */
+  #current-prompt {
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.35);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 18px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #e8f4ff;
   }
 
   .choiceBtn {
     display: block;
-    width: 90%;
-    max-width: 500px;
-    margin: 10px auto;
-    padding: 15px;
+    width: 100%;
+    margin: 8px 0;
+    padding: 13px 16px;
     border: none;
-    border-radius: 14px;
-    font-size: 1rem;
+    border-radius: 12px;
+    font-size: 0.97rem;
     cursor: pointer;
-    transition: transform 0.2s, background 0.3s;
+    transition: transform 0.15s, background 0.2s;
     background: #7c3aed;
     color: white;
+    text-align: left;
   }
+  .choiceBtn:hover { transform: scale(1.02); background: #6d28d9; }
 
-  .choiceBtn:hover {
-    transform: scale(1.05);
-    background: #6d28d9;
+  #restartBtn {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 14px;
+    background: #dc2626;
+    border: none; border-radius: 12px;
+    font-size: 1rem; color: white;
+    cursor: pointer; font-weight: bold;
   }
-
-  #restartBtn { margin-top: 20px; background: #dc2626; }
   #restartBtn:hover { background: #b91c1c; }
 
-  #score { margin-top: 15px; font-size: 1rem; opacity: 0.8; }
+  #score {
+    text-align: center;
+    margin-top: 14px;
+    font-size: 0.95rem;
+    opacity: 0.75;
+  }
 
   .step-bar {
     display: flex; justify-content: center; gap: 6px;
@@ -78,10 +136,9 @@
   }
   .step-pip {
     width: 10px; height: 10px; border-radius: 50%;
-    background: rgba(255,255,255,0.15);
-    transition: background 0.3s;
+    background: rgba(255,255,255,0.15); transition: background 0.3s;
   }
-  .step-pip.done  { background: #7c3aed; }
+  .step-pip.done    { background: #7c3aed; }
   .step-pip.current { background: #a78bfa; box-shadow: 0 0 6px #7c3aed; }
 </style>
 </head>
@@ -92,58 +149,79 @@
 
 <div id="gameBox">
   <div class="step-bar" id="step-bar"></div>
-  <div id="story">Loading your adventure...</div>
+  <div id="story-log"></div>
+  <div id="current-prompt"></div>
   <div id="choices"></div>
-  <button id="restartBtn" class="choiceBtn" style="display:none;">🔄 Start New Adventure</button>
+  <button id="restartBtn" style="display:none" onclick="startGame()">🔄 Start New Adventure</button>
   <div id="score"></div>
 </div>
 
 <script>
-const storyEl   = document.getElementById("story");
-const choicesEl = document.getElementById("choices");
-const restartBtn = document.getElementById("restartBtn");
-const scoreEl   = document.getElementById("score");
-const stepBar   = document.getElementById("step-bar");
+const logEl      = document.getElementById('story-log');
+const promptEl   = document.getElementById('current-prompt');
+const choicesEl  = document.getElementById('choices');
+const restartBtn = document.getElementById('restartBtn');
+const scoreEl    = document.getElementById('score');
+const stepBar    = document.getElementById('step-bar');
 
 const TOTAL_STEPS = 8;
-let step = 0, score = 0, path = [];
+let step = 0, score = 0;
 
 const themes = [
   "dark cave","mystic forest","abandoned spaceship","haunted castle",
   "underwater city","dragon mountain","desert temple","frozen tundra",
   "floating sky island","ancient ruins","shadowy swamp","volcanic crater"
 ];
+
+// Each theme has contextual outcomes for each possible action
 const actions = [
-  "open the glowing chest","follow the strange whisper","challenge the mysterious figure",
-  "eat the suspicious fruit","press the forbidden button","run toward the shadow",
-  "climb the ancient staircase","befriend the weird creature","decode the ancient symbols",
-  "dive into the dark pool","light the mysterious torch","steal from the sleeping giant"
+  { label: "open the glowing chest",     outcomes: ["It bursts open — gold coins everywhere.", "A tiny monster leaps out and bites your nose.", "Inside: a map to something even more dangerous.", "It plays a little jingle and gives you a cookie."] },
+  { label: "follow the strange whisper",  outcomes: ["It leads you straight into a trap.", "You find a hidden shortcut through the area.", "The whisper is a lost traveler — they join you.", "It was just the wind. Embarrassing."] },
+  { label: "challenge the mysterious figure", outcomes: ["They accept — and lose badly.", "They laugh and walk away. Rude.", "Turns out it's your reflection. Still counts.", "You win by a technicality — they trip first."] },
+  { label: "eat the suspicious fruit",    outcomes: ["You grow three inches instantly.", "It tastes horrible but gives you energy.", "You can now speak to rocks. Questionable power.", "Nothing happens. Anticlimactic."] },
+  { label: "press the forbidden button",  outcomes: ["Alarms everywhere. You run.", "A secret door opens in the floor.", "It summons a very confused wizard.", "It just turns the lights off."] },
+  { label: "run toward the shadow",       outcomes: ["It runs back at you. Bold move.", "It was just a curtain. You feel silly.", "You tackle it — it was the villain. Nice.", "You trip and slide right through it."] },
+  { label: "climb the ancient staircase", outcomes: ["At the top: a breathtaking view and nothing else.", "The stairs collapse halfway up. You grab a ledge.", "A gargoyle gives you a high-five.", "You reach a room full of swords. Nice."] },
+  { label: "befriend the weird creature", outcomes: ["It becomes your loyal sidekick immediately.", "It was already friendly — it gives you a snack.", "It's terrified of you. The tables have turned.", "You bond over a shared hatred of loud noises."] },
+  { label: "decode the ancient symbols",  outcomes: ["It says 'do not eat the fruit.' Too late.", "You unlock a hidden chamber.", "It's a shopping list from 3,000 years ago.", "The code reveals the next step of your path."] },
+  { label: "dive into the dark pool",     outcomes: ["It's warmer than expected. Nice.", "Something brushes your leg. You don't look.", "You find an air pocket and a secret cave below.", "You surface on the other side of the world. Mostly."] },
+  { label: "light the mysterious torch",  outcomes: ["The whole room lights up. You see everything.", "It summons bats. So many bats.", "A message appears on the wall in fire.", "It just flickers annoyingly."] },
+  { label: "steal from the sleeping giant", outcomes: ["You grab the item and tiptoe away. Success.", "The giant sneezes and you fly across the room.", "It wasn't asleep. It was waiting.", "You get the item — and the giant's respect."] },
 ];
+
 const twists = [
-  "You discover a hidden treasure map.","A talking raven offers you a deal.",
-  "The floor disappears beneath you.","A portal opens to another dimension.",
-  "A giant hamster blocks your way.","You gain magical powers... temporarily.",
-  "The moon suddenly turns green.","A ghost tries to give you directions.",
-  "You find a note written by your future self.","Something is following you.",
-  "Time freezes for exactly one minute.","A tiny dragon lands on your shoulder."
+  "A portal hums in the corner.","Something moves in the shadows.","The ground shakes.",
+  "You hear a distant roar.","The air smells like lightning.","A voice whispers your name.",
+  "Time feels slower here.","The walls are covered in scratch marks.","An old lantern flickers.",
+  "You spot footprints ahead.","Something is definitely watching you.","The silence is deafening."
 ];
+
 const endings = [
-  "You emerge victorious, legend of the realm!",
+  "You emerge victorious — a true legend of the realm.",
   "Against all odds, you made it out alive.",
   "The world is saved — mostly because of you.",
   "You collapse at the finish line, triumphant and exhausted.",
-  "History will remember this day. Probably."
+  "History will remember this day. Probably.",
+  "You walk out into the sunlight, changed forever.",
+  "Whatever that was — you survived it. That's enough.",
 ];
 
 function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-
 function shuffle(arr) {
   const a = [...arr];
-  for (let i = a.length-1; i > 0; i--) {
+  for (let i = a.length-1; i>0; i--) {
     const j = Math.floor(Math.random()*(i+1));
-    [a[i],a[j]] = [a[j],a[i]];
+    [a[i],a[j]]=[a[j],a[i]];
   }
   return a;
+}
+
+function addLog(text, type) {
+  const div = document.createElement('div');
+  div.className = 'log-entry ' + type;
+  div.innerHTML = text;
+  logEl.appendChild(div);
+  div.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 function updateStepBar() {
@@ -155,41 +233,63 @@ function updateStepBar() {
   }
 }
 
-function nextStep(choice = null) {
-  if (choice) { path.push(choice); score += Math.floor(Math.random()*20)+10; }
+function showStep() {
   updateStepBar();
   choicesEl.innerHTML = '';
 
   if (step >= TOTAL_STEPS) {
-    storyEl.innerHTML = `🏆 <strong>Final Chapter!</strong><br><br>After ${TOTAL_STEPS} daring choices, ${rand(endings)}<br><br><em>Your path: ${path.join(" → ")}</em>`;
+    promptEl.style.display = 'none';
+    addLog('🏆 ' + rand(endings), 'final');
     restartBtn.style.display = 'block';
     scoreEl.textContent = 'Final Score: ' + score + ' points';
     return;
   }
 
-  const theme   = rand(themes);
-  const twist   = rand(twists);
-  storyEl.innerHTML = `<strong>Step ${step+1} of ${TOTAL_STEPS}:</strong> You enter the <em>${theme}</em>.<br><br>${twist}<br><br>What do you do?`;
+  const theme = rand(themes);
+  const twist = rand(twists);
+  const intro = step === 0
+    ? `You stand at the entrance of a ${theme}. ${twist} What do you do?`
+    : `You push on into a ${theme}. ${twist} What do you do?`;
 
-  const choices = shuffle(actions).slice(0, 4);
-  choices.forEach(c => {
+  promptEl.style.display = 'block';
+  promptEl.textContent = intro;
+
+  const picked = shuffle(actions).slice(0, 4);
+  picked.forEach(action => {
     const btn = document.createElement('button');
     btn.className = 'choiceBtn';
-    btn.textContent = c;
-    btn.onclick = () => { step++; nextStep(c); };
+    btn.textContent = action.label;
+    btn.onclick = () => {
+      score += Math.floor(Math.random()*20) + 10;
+      scoreEl.textContent = 'Score: ' + score;
+
+      // Add the environment to the log
+      addLog(intro.replace(' What do you do?', '.'), 'event');
+      // Add the player's choice
+      addLog('➤ You decide to ' + action.label + '...', 'choice-made');
+      // Add the outcome
+      addLog(rand(action.outcomes), 'event');
+
+      promptEl.style.display = 'none';
+      choicesEl.innerHTML = '';
+      step++;
+
+      setTimeout(showStep, 400);
+    };
     choicesEl.appendChild(btn);
   });
-
-  scoreEl.textContent = 'Score: ' + score;
 }
 
-restartBtn.onclick = () => {
-  step = 0; score = 0; path = [];
+function startGame() {
+  step = 0; score = 0;
+  logEl.innerHTML = '';
   restartBtn.style.display = 'none';
-  nextStep();
-};
+  promptEl.style.display = 'block';
+  scoreEl.textContent = '';
+  showStep();
+}
 
-nextStep();
+startGame();
 </script>
 </body>
 </html>
