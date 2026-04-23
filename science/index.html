@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <script>if(!location.search.includes('v=5'))location.replace(location.pathname+'?v=5');</script>
   <title>Earthquakes & Volcanoes</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
@@ -506,19 +510,19 @@
     <div class="depth-legend-title">Earthquake Depth</div>
     <table>
       <tr>
-        <td class="dot-cell"><span class="depth-dot" style="background:#ef4444"></span></td>
+        <td class="dot-cell"><span class="depth-dot" style="background:#ff2222"></span></td>
         <td>0 – 33 km deep</td>
       </tr>
       <tr>
-        <td class="dot-cell"><span class="depth-dot" style="background:#eab308"></span></td>
+        <td class="dot-cell"><span class="depth-dot" style="background:#ffcc00"></span></td>
         <td>33 – 70 km deep</td>
       </tr>
       <tr>
-        <td class="dot-cell"><span class="depth-dot" style="background:#22c55e"></span></td>
+        <td class="dot-cell"><span class="depth-dot" style="background:#00dd44"></span></td>
         <td>70 – 300 km deep</td>
       </tr>
       <tr>
-        <td class="dot-cell"><span class="depth-dot" style="background:#3b82f6"></span></td>
+        <td class="dot-cell"><span class="depth-dot" style="background:#2299ff"></span></td>
         <td>&gt;300 km deep</td>
       </tr>
     </table>
@@ -937,11 +941,11 @@
     }
 
     function eqDepthColor(depth) {
-      if (depth == null) return '#ef4444';
-      if (depth <= 33)  return '#ef4444';   // shallow — red
-      if (depth <= 70)  return '#eab308';   // intermediate-shallow — yellow
-      if (depth <= 300) return '#22c55e';   // intermediate-deep — green
-      return '#3b82f6';                      // deep — blue
+      if (depth == null) return '#ff2222';
+      if (depth <= 33)  return '#ff2222';   // shallow — bright red
+      if (depth <= 70)  return '#ffcc00';   // intermediate-shallow — bright yellow
+      if (depth <= 300) return '#00dd44';   // intermediate-deep — bright green
+      return '#2299ff';                      // deep — bright blue
     }
 
     // ── Load earthquakes ──
@@ -964,10 +968,10 @@
           // Track earthquake grid cells for the game
           eqGrid.add(`${Math.floor(lat / 5)}_${Math.floor(lng / 5)}`);
 
-          const baseR  = 2.5;
+          const baseR  = 5;
           const marker = L.circleMarker([lat, lng], {
             radius: scaledRadius(baseR, map.getZoom()),
-            color: col, fillColor: col, fillOpacity: 0.75, weight: 0,
+            color: col, fillColor: col, fillOpacity: 0.9, weight: 0,
           }).bindPopup(`
             <div class="popup-eq-title">Earthquake — M${mag}</div>
             <div>${place}</div>
