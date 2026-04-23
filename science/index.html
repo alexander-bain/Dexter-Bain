@@ -373,10 +373,22 @@
       </div>
       <hr class="key-divider key-modern" />
     </div>
-    <div class="key-section-label key-modern" style="margin-top:0">Earthquakes</div>
+    <div class="key-section-label key-modern" style="margin-top:0">Earthquakes — by depth</div>
     <div class="key-row key-modern">
-      <div class="key-dot" style="width:10px;height:10px;background:#60a5fa;box-shadow:0 0 5px #60a5fa88"></div>
-      <span class="key-label">Earthquake</span>
+      <div class="key-dot" style="width:10px;height:10px;background:#ef4444"></div>
+      <span class="key-label">0–33 km (shallow)</span>
+    </div>
+    <div class="key-row key-modern">
+      <div class="key-dot" style="width:10px;height:10px;background:#eab308"></div>
+      <span class="key-label">33–70 km</span>
+    </div>
+    <div class="key-row key-modern">
+      <div class="key-dot" style="width:10px;height:10px;background:#22c55e"></div>
+      <span class="key-label">70–300 km</span>
+    </div>
+    <div class="key-row key-modern">
+      <div class="key-dot" style="width:10px;height:10px;background:#3b82f6"></div>
+      <span class="key-label">&gt;300 km (deep)</span>
     </div>
     <hr class="key-divider key-modern" />
     <div class="key-section-label key-modern">Volcanoes</div>
@@ -859,6 +871,14 @@
       updateInkUI();
     }
 
+    function eqDepthColor(depth) {
+      if (depth == null) return '#ef4444';
+      if (depth <= 33)  return '#ef4444';   // shallow — red
+      if (depth <= 70)  return '#eab308';   // intermediate-shallow — yellow
+      if (depth <= 300) return '#22c55e';   // intermediate-deep — green
+      return '#3b82f6';                      // deep — blue
+    }
+
     // ── Load earthquakes ──
     async function loadEarthquakes() {
       setStatus('Fetching earthquake data…');
@@ -872,7 +892,9 @@
           const mag      = eq.properties.mag;
           const place    = eq.properties.place || 'Unknown location';
           const time     = new Date(eq.properties.time).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
-          const depthStr = depth != null ? Math.round(depth) + ' km deep' : '';
+          const depthKm  = depth != null ? Math.round(depth) : null;
+          const depthStr = depthKm != null ? depthKm + ' km deep' : '';
+          const col      = eqDepthColor(depth);
 
           // Track earthquake grid cells for the game
           eqGrid.add(`${Math.floor(lat / 5)}_${Math.floor(lng / 5)}`);
@@ -880,7 +902,7 @@
           const baseR  = 2.5;
           const marker = L.circleMarker([lat, lng], {
             radius: scaledRadius(baseR, map.getZoom()),
-            color: '#60a5fa', fillColor: '#60a5fa', fillOpacity: 0.75, weight: 0,
+            color: col, fillColor: col, fillOpacity: 0.75, weight: 0,
           }).bindPopup(`
             <div class="popup-eq-title">Earthquake — M${mag}</div>
             <div>${place}</div>
