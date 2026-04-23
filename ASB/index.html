@@ -8,7 +8,7 @@
     body {
       font-family: Arial;
       margin: 0;
-      background: #f4f4f4;
+      background: #ffe4ec;
     }
 
     header {
@@ -32,7 +32,6 @@
     }
 
     .event {
-      background: white;
       padding: 15px;
       margin-bottom: 15px;
       border-radius: 10px;
@@ -55,20 +54,56 @@
       line-height: 1.6;
     }
 
+    /* Pizza Showdown — red/warm */
+    .event.pizza {
+      background: #fff5f0;
+      border-left: 4px solid #e53e3e;
+      color: #2d1a1a;
+    }
+    .event.pizza h3 { color: #c0392b; }
+    .event.pizza p  { color: #4a2020; }
+    .pizza-badge {
+      display: inline-block;
+      background: #e53e3e;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Hillview Olympics — gold/navy */
+    .event.olympics {
+      background: #fffbea;
+      border-left: 4px solid #d4a017;
+      color: #1a1a2d;
+    }
+    .event.olympics h3 { color: #b8860b; }
+    .event.olympics p  { color: #2a2a40; }
+    .olympics-badge {
+      display: inline-block;
+      background: #d4a017;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Halloween Dance — black/orange */
     .event.halloween {
       background: #1a0a00;
       color: #f5deb3;
       border-left: 4px solid #ff6a00;
     }
-
-    .event.halloween h3 {
-      color: #ff9a3c;
-    }
-
-    .event.halloween p {
-      color: #e8d5b7;
-    }
-
+    .event.halloween h3 { color: #ff9a3c; }
+    .event.halloween p  { color: #e8d5b7; }
     .halloween-badge {
       display: inline-block;
       background: #ff6a00;
@@ -122,8 +157,9 @@
 
   <h2>Upcoming Events</h2>
 
-  <!-- EVENT 1 -->
-  <div class="event" onclick="toggleEvent(this)">
+  <!-- EVENT 1 — PIZZA -->
+  <div class="event pizza" onclick="toggleEvent(this)">
+    <div class="pizza-badge">All Grades · Assembly</div>
     <h3>🍕 Teacher Pizza Showdown Assembly</h3>
     <p>
       Get ready for one of the most entertaining assemblies of the year! In this creative and slightly chaotic competition, one teacher from each grade—6th, 7th, and 8th—will step into the spotlight to craft their own pizza masterpiece.
@@ -134,8 +170,9 @@
     </p>
   </div>
 
-  <!-- EVENT 2 -->
-  <div class="event" onclick="toggleEvent(this)">
+  <!-- EVENT 2 — OLYMPICS -->
+  <div class="event olympics" onclick="toggleEvent(this)">
+    <div class="olympics-badge">All Grades · Multi-Event</div>
     <h3>🏅 Hillview Olympics</h3>
     <p>
       Competition is heating up as Hillview launches its very own Olympic-style event! Students will have the chance to compete across ten different sports and challenges, testing everything from speed and strength to teamwork and determination.
@@ -193,9 +230,6 @@
     else if (q.includes("haunted") || q.includes("haunt")) {
       answer = "The haunted house at the Horrific Hillview Dance is designed and run by the ASB crew. Based on what they've been planning, it's going to be genuinely scary — not just jump scares but a full walk-through experience.";
     }
-    else if (q.includes("costume") || q.includes("dress")) {
-      answer = "Costumes are required for the Horrific Hillview Dance — 8th grade only, Halloween night. Go all out. There's a best costume contest, and the competition is going to be fierce.";
-    }
     else if (q.includes("when") || q.includes("date") || q.includes("time")) {
       answer = "The Halloween Dance is on Halloween night — October 31st. The Pizza Showdown and Olympics dates haven't been officially posted yet, but based on past years, expect them mid-semester. Keep checking back here.";
     }
@@ -206,7 +240,6 @@
       answer = "The Pizza Showdown gives the winning grade ice cream for the whole grade. The Olympics have overall standings with serious bragging rights on the line. The Halloween Dance has a best costume contest — prize TBD, but ASB usually makes it worth winning.";
     }
     else {
-      // Confident guess for anything unknown
       const guesses = [
         "That's almost certainly going to be part of one of the upcoming events — ASB has been dropping hints and this fits exactly the kind of thing they plan. Stay tuned for the official announcement.",
         "Based on everything ASB has hinted at, yes — that's likely happening. They've been building up to something big and the details should drop soon.",
