@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hillview ASB</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      background: #f4f4f4;
+    }
+
+    header {
+      background: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header a {
+      display: inline-block;
+      margin-top: 10px;
+      color: #93c5fd;
+      font-size: 0.85rem;
+      text-decoration: none;
+    }
+    header a:hover { text-decoration: underline; }
+
+    .container {
+      padding: 20px;
+    }
+
+    .event {
+      background: white;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .event:hover {
+      transform: scale(1.02);
+    }
+
+    .event h3 {
+      margin: 0;
+    }
+
+    .event p {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .chatbox {
+      margin-top: 30px;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+    }
+
+    input {
+      width: 80%;
+      padding: 10px;
+    }
+
+    button {
+      padding: 10px;
+      background: #3498db;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .response {
+      margin-top: 10px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Hillview Middle School ASB</h1>
+  <p>News • Events • Updates</p>
+  <a href="/">← Back to dexterbain.com</a>
+</header>
+
+<div class="container">
+
+  <h2>Upcoming Events</h2>
+
+  <!-- EVENT 1 -->
+  <div class="event" onclick="toggleEvent(this)">
+    <h3>🍕 Teacher Pizza Showdown Assembly</h3>
+    <p>
+      Get ready for one of the most entertaining assemblies of the year! In this creative and slightly chaotic competition, one teacher from each grade—6th, 7th, and 8th—will step into the spotlight to craft their own pizza masterpiece.
+      <br><br>
+      With only limited time and ingredients, these teacher representatives will mix strategy, creativity, and maybe a little luck to impress a panel of judges made up of students from each grade. Every decision matters, from toppings to presentation.
+      <br><br>
+      At the end of the showdown, one grade will take the crown—and earn a sweet reward: ice cream for the entire grade. Expect laughs, surprises, and some questionable cooking choices along the way.
+    </p>
+  </div>
+
+  <!-- EVENT 2 -->
+  <div class="event" onclick="toggleEvent(this)">
+    <h3>🏅 Hillview Olympics</h3>
+    <p>
+      Competition is heating up as Hillview launches its very own Olympic-style event! Students will have the chance to compete across ten different sports and challenges, testing everything from speed and strength to teamwork and determination.
+      <br><br>
+      Participants will represent their peers while earning points through each event, building toward an overall victory. Whether it's fast-paced games, skill-based challenges, or unexpected twists, every event will contribute to the final standings.
+      <br><br>
+      The energy, school spirit, and friendly rivalry will make this one of the most exciting events of the year. Who will come out on top and claim ultimate bragging rights?
+    </p>
+  </div>
+
+  <!-- AI CHAT -->
+  <div class="chatbox">
+    <h2>🤖 Ask About Events</h2>
+    <input type="text" id="question" placeholder="Ask a question...">
+    <button onclick="askAI()">Ask</button>
+    <div class="response" id="response"></div>
+  </div>
+
+</div>
+
+<script>
+  function toggleEvent(el) {
+    const p = el.querySelector("p");
+    p.style.display = p.style.display === "block" ? "none" : "block";
+  }
+
+  function askAI() {
+    const q = document.getElementById("question").value.toLowerCase();
+    let answer = "I'm not sure yet—ask ASB for more details!";
+
+    if (q.includes("pizza")) {
+      answer = "The pizza assembly is a competition where teachers from each grade make pizzas and judges decide the winner. The winning grade gets ice cream!";
+    }
+    else if (q.includes("olympics") || q.includes("sports")) {
+      answer = "The Hillview Olympics includes 10 different sports and challenges where students compete for points and school pride.";
+    }
+    else if (q.includes("when")) {
+      answer = "Event dates will be announced soon—stay tuned!";
+    }
+
+    document.getElementById("response").innerText = answer;
+  }
+</script>
+
+</body>
+</html>
