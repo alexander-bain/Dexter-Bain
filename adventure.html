@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Adventure Game</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #0f172a, #1e293b);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    min-height: 100vh;
+  }
+
+  h1 { font-size: 2.5rem; margin-bottom: 10px; }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #7c8fa6;
+    text-decoration: none;
+    font-size: 0.85rem;
+    background: rgba(255,255,255,0.05);
+    padding: 5px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: #ccc; }
+
+  #gameBox {
+    max-width: 850px;
+    margin: auto;
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  }
+
+  #story {
+    font-size: 1.3rem;
+    min-height: 120px;
+    margin-bottom: 25px;
+    line-height: 1.6;
+  }
+
+  .choiceBtn {
+    display: block;
+    width: 90%;
+    max-width: 500px;
+    margin: 10px auto;
+    padding: 15px;
+    border: none;
+    border-radius: 14px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+    background: #7c3aed;
+    color: white;
+  }
+
+  .choiceBtn:hover {
+    transform: scale(1.05);
+    background: #6d28d9;
+  }
+
+  #restartBtn { margin-top: 20px; background: #dc2626; }
+  #restartBtn:hover { background: #b91c1c; }
+
+  #score { margin-top: 15px; font-size: 1rem; opacity: 0.8; }
+
+  .step-bar {
+    display: flex; justify-content: center; gap: 6px;
+    margin-bottom: 20px;
+  }
+  .step-pip {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    transition: background 0.3s;
+  }
+  .step-pip.done  { background: #7c3aed; }
+  .step-pip.current { background: #a78bfa; box-shadow: 0 0 6px #7c3aed; }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="/">← Back to DexterBain.com</a>
+<h1>⚔️ AI Adventure Game</h1>
+
+<div id="gameBox">
+  <div class="step-bar" id="step-bar"></div>
+  <div id="story">Loading your adventure...</div>
+  <div id="choices"></div>
+  <button id="restartBtn" class="choiceBtn" style="display:none;">🔄 Start New Adventure</button>
+  <div id="score"></div>
+</div>
+
+<script>
+const storyEl   = document.getElementById("story");
+const choicesEl = document.getElementById("choices");
+const restartBtn = document.getElementById("restartBtn");
+const scoreEl   = document.getElementById("score");
+const stepBar   = document.getElementById("step-bar");
+
+const TOTAL_STEPS = 8;
+let step = 0, score = 0, path = [];
+
+const themes = [
+  "dark cave","mystic forest","abandoned spaceship","haunted castle",
+  "underwater city","dragon mountain","desert temple","frozen tundra",
+  "floating sky island","ancient ruins","shadowy swamp","volcanic crater"
+];
+const actions = [
+  "open the glowing chest","follow the strange whisper","challenge the mysterious figure",
+  "eat the suspicious fruit","press the forbidden button","run toward the shadow",
+  "climb the ancient staircase","befriend the weird creature","decode the ancient symbols",
+  "dive into the dark pool","light the mysterious torch","steal from the sleeping giant"
+];
+const twists = [
+  "You discover a hidden treasure map.","A talking raven offers you a deal.",
+  "The floor disappears beneath you.","A portal opens to another dimension.",
+  "A giant hamster blocks your way.","You gain magical powers... temporarily.",
+  "The moon suddenly turns green.","A ghost tries to give you directions.",
+  "You find a note written by your future self.","Something is following you.",
+  "Time freezes for exactly one minute.","A tiny dragon lands on your shoulder."
+];
+const endings = [
+  "You emerge victorious, legend of the realm!",
+  "Against all odds, you made it out alive.",
+  "The world is saved — mostly because of you.",
+  "You collapse at the finish line, triumphant and exhausted.",
+  "History will remember this day. Probably."
+];
+
+function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function updateStepBar() {
+  stepBar.innerHTML = '';
+  for (let i = 0; i < TOTAL_STEPS; i++) {
+    const pip = document.createElement('div');
+    pip.className = 'step-pip' + (i < step ? ' done' : i === step ? ' current' : '');
+    stepBar.appendChild(pip);
+  }
+}
+
+function nextStep(choice = null) {
+  if (choice) { path.push(choice); score += Math.floor(Math.random()*20)+10; }
+  updateStepBar();
+  choicesEl.innerHTML = '';
+
+  if (step >= TOTAL_STEPS) {
+    storyEl.innerHTML = `🏆 <strong>Final Chapter!</strong><br><br>After ${TOTAL_STEPS} daring choices, ${rand(endings)}<br><br><em>Your path: ${path.join(" → ")}</em>`;
+    restartBtn.style.display = 'block';
+    scoreEl.textContent = 'Final Score: ' + score + ' points';
+    return;
+  }
+
+  const theme   = rand(themes);
+  const twist   = rand(twists);
+  storyEl.innerHTML = `<strong>Step ${step+1} of ${TOTAL_STEPS}:</strong> You enter the <em>${theme}</em>.<br><br>${twist}<br><br>What do you do?`;
+
+  const choices = shuffle(actions).slice(0, 4);
+  choices.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'choiceBtn';
+    btn.textContent = c;
+    btn.onclick = () => { step++; nextStep(c); };
+    choicesEl.appendChild(btn);
+  });
+
+  scoreEl.textContent = 'Score: ' + score;
+}
+
+restartBtn.onclick = () => {
+  step = 0; score = 0; path = [];
+  restartBtn.style.display = 'none';
+  nextStep();
+};
+
+nextStep();
+</script>
+</body>
+</html>
