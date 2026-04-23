@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <script>if(!location.search.includes('v=5'))location.replace(location.pathname+'?v=5');</script>
+  <script>if(!location.search.includes('v=6'))location.replace(location.pathname+'?v=6');</script>
   <title>Earthquakes & Volcanoes</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
@@ -507,24 +507,42 @@
 
   <!-- Depth legend table -->
   <div class="depth-legend">
-    <div class="depth-legend-title">Earthquake Depth</div>
+    <div class="depth-legend-title">Earthquakes</div>
     <table>
-      <tr>
-        <td class="dot-cell"><span class="depth-dot" style="background:#ff2222"></span></td>
-        <td>0 – 33 km deep</td>
-      </tr>
-      <tr>
-        <td class="dot-cell"><span class="depth-dot" style="background:#ffcc00"></span></td>
-        <td>33 – 70 km deep</td>
-      </tr>
-      <tr>
-        <td class="dot-cell"><span class="depth-dot" style="background:#00dd44"></span></td>
-        <td>70 – 300 km deep</td>
-      </tr>
-      <tr>
-        <td class="dot-cell"><span class="depth-dot" style="background:#2299ff"></span></td>
-        <td>&gt;300 km deep</td>
-      </tr>
+      <thead>
+        <tr>
+          <th style="font-size:0.72rem;font-weight:bold;padding:2px 6px 6px;text-align:center">&gt;6</th>
+          <th style="font-size:0.72rem;font-weight:bold;padding:2px 6px 6px;text-align:center">5.0–5.9</th>
+          <th style="font-size:0.72rem;font-weight:bold;padding:2px 6px 6px;text-align:center">4.6–4.9</th>
+          <th style="font-size:0.78rem;padding:2px 6px 6px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="dot-cell"><span class="depth-dot" style="background:#ff2222;width:18px;height:18px"></span></td>
+          <td class="dot-cell"><span class="depth-dot" style="background:#ff2222;width:12px;height:12px"></span></td>
+          <td class="dot-cell"><span class="depth-dot" style="background:#ff2222;width:7px;height:7px"></span></td>
+          <td style="font-size:0.78rem;padding:4px 6px;white-space:nowrap">0–33 km deep</td>
+        </tr>
+        <tr>
+          <td class="dot-cell"><span class="depth-dot" style="background:#ffcc00;width:18px;height:18px"></span></td>
+          <td class="dot-cell"><span class="depth-dot" style="background:#ffcc00;width:12px;height:12px"></span></td>
+          <td class="dot-cell"><span class="depth-dot" style="background:#ffcc00;width:7px;height:7px"></span></td>
+          <td style="font-size:0.78rem;padding:4px 6px;white-space:nowrap">33–70 km deep</td>
+        </tr>
+        <tr>
+          <td class="dot-cell"><span class="depth-dot" style="background:#00dd44;width:18px;height:18px"></span></td>
+          <td class="dot-cell"><span class="depth-dot" style="background:#00dd44;width:12px;height:12px"></span></td>
+          <td class="dot-cell"><span class="depth-dot" style="background:#00dd44;width:7px;height:7px"></span></td>
+          <td style="font-size:0.78rem;padding:4px 6px;white-space:nowrap">70–300 km deep</td>
+        </tr>
+        <tr>
+          <td class="dot-cell"><span class="depth-dot" style="background:#2299ff;width:18px;height:18px"></span></td>
+          <td class="dot-cell"><span class="depth-dot" style="background:#2299ff;width:12px;height:12px"></span></td>
+          <td class="dot-cell"><span class="depth-dot" style="background:#2299ff;width:7px;height:7px"></span></td>
+          <td style="font-size:0.78rem;padding:4px 6px;white-space:nowrap">&gt;300 km deep</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 
@@ -968,10 +986,10 @@
           // Track earthquake grid cells for the game
           eqGrid.add(`${Math.floor(lat / 5)}_${Math.floor(lng / 5)}`);
 
-          const baseR  = 5;
+          const baseR = mag >= 6 ? 9 : mag >= 5 ? 5.5 : 3;
           const marker = L.circleMarker([lat, lng], {
             radius: scaledRadius(baseR, map.getZoom()),
-            color: col, fillColor: col, fillOpacity: 0.9, weight: 0,
+            color: col, fillColor: col, fillOpacity: 0.88, weight: 0,
           }).bindPopup(`
             <div class="popup-eq-title">Earthquake — M${mag}</div>
             <div>${place}</div>
