@@ -209,6 +209,48 @@
     .key-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 7px 0; }
     .key-pangea { display: none; }
 
+    /* ── Depth legend table ── */
+    .depth-legend {
+      position: fixed;
+      bottom: 40px; left: 12px;
+      z-index: 900;
+      background: #fff;
+      border: 2px solid #333;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-family: Georgia, serif;
+      color: #111;
+      min-width: 200px;
+    }
+    .depth-legend-title {
+      font-size: 0.85rem;
+      font-weight: bold;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+      letter-spacing: 0.01em;
+    }
+    .depth-legend table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .depth-legend td {
+      padding: 3px 6px;
+      font-size: 0.78rem;
+      vertical-align: middle;
+    }
+    .depth-legend .dot-cell {
+      text-align: center;
+      padding: 3px 8px;
+    }
+    .depth-dot {
+      display: inline-block;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      vertical-align: middle;
+    }
+
     /* ── Back link ── */
     .back-link {
       position: fixed;
@@ -457,6 +499,29 @@
       </div>
 
     </div>
+  </div>
+
+  <!-- Depth legend table -->
+  <div class="depth-legend">
+    <div class="depth-legend-title">Earthquake Depth</div>
+    <table>
+      <tr>
+        <td class="dot-cell"><span class="depth-dot" style="background:#ef4444"></span></td>
+        <td>0 – 33 km deep</td>
+      </tr>
+      <tr>
+        <td class="dot-cell"><span class="depth-dot" style="background:#eab308"></span></td>
+        <td>33 – 70 km deep</td>
+      </tr>
+      <tr>
+        <td class="dot-cell"><span class="depth-dot" style="background:#22c55e"></span></td>
+        <td>70 – 300 km deep</td>
+      </tr>
+      <tr>
+        <td class="dot-cell"><span class="depth-dot" style="background:#3b82f6"></span></td>
+        <td>&gt;300 km deep</td>
+      </tr>
+    </table>
   </div>
 
   <div id="pangea-status"></div>
