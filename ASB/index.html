@@ -38,6 +38,7 @@
       border-radius: 10px;
       cursor: pointer;
       transition: 0.2s;
+      border-left: 4px solid transparent;
     }
 
     .event:hover {
@@ -51,6 +52,34 @@
     .event p {
       display: none;
       margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    .event.halloween {
+      background: #1a0a00;
+      color: #f5deb3;
+      border-left: 4px solid #ff6a00;
+    }
+
+    .event.halloween h3 {
+      color: #ff9a3c;
+    }
+
+    .event.halloween p {
+      color: #e8d5b7;
+    }
+
+    .halloween-badge {
+      display: inline-block;
+      background: #ff6a00;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
     .chatbox {
@@ -71,11 +100,13 @@
       color: white;
       border: none;
       cursor: pointer;
+      border-radius: 4px;
     }
 
     .response {
       margin-top: 10px;
       color: #333;
+      font-style: italic;
     }
   </style>
 </head>
@@ -115,6 +146,21 @@
     </p>
   </div>
 
+  <!-- EVENT 3 — HALLOWEEN DANCE -->
+  <div class="event halloween" onclick="toggleEvent(this)">
+    <div class="halloween-badge">8th Grade Only · Halloween Night</div>
+    <h3>🎃 Horrific Hillview Dance</h3>
+    <p>
+      Eighth graders — this Halloween, the night belongs to you. Dress in your scariest, most creative costume and come out for the most talked-about event of the fall: the Horrific Hillview Dance.
+      <br><br>
+      The gym transforms into a full haunted experience, complete with a <strong>Haunted House</strong> designed and run by the ASB crew. Dare to walk through if you think you can handle it.
+      <br><br>
+      Between scares, test your nerves at the <strong>mystery challenge stations</strong> — can you identify what you're feeling without looking? These sensory games are equal parts disgusting and hilarious, and they're not for the faint of heart.
+      <br><br>
+      Plus: best costume contest, spooky music, and surprises ASB has been planning all semester. Come in costume. Come ready. Just don't come alone.
+    </p>
+  </div>
+
   <!-- AI CHAT -->
   <div class="chatbox">
     <h2>🤖 Ask About Events</h2>
@@ -133,16 +179,41 @@
 
   function askAI() {
     const q = document.getElementById("question").value.toLowerCase();
-    let answer = "I'm not sure yet—ask ASB for more details!";
+    let answer = "";
 
     if (q.includes("pizza")) {
-      answer = "The pizza assembly is a competition where teachers from each grade make pizzas and judges decide the winner. The winning grade gets ice cream!";
+      answer = "The Teacher Pizza Showdown is a competition where one teacher from each grade races to build the best pizza. Student judges pick the winner, and the winning grade scores ice cream for everyone. It's going to be chaotic in the best way.";
     }
-    else if (q.includes("olympics") || q.includes("sports")) {
-      answer = "The Hillview Olympics includes 10 different sports and challenges where students compete for points and school pride.";
+    else if (q.includes("olympics") || q.includes("sports") || q.includes("hillview olympics")) {
+      answer = "The Hillview Olympics spans ten events testing speed, skill, and teamwork. Every event earns your grade points toward the overall championship. Expect it to get seriously competitive.";
     }
-    else if (q.includes("when")) {
-      answer = "Event dates will be announced soon—stay tuned!";
+    else if (q.includes("dance") || q.includes("halloween") || q.includes("horrific") || q.includes("costume")) {
+      answer = "The Horrific Hillview Dance is 8th grade only on Halloween night. Costumes are required. There's a haunted house built by ASB, mystery challenge stations, a best costume contest, and a bunch of surprises that haven't been announced yet. Definitely one of the biggest nights of the year.";
+    }
+    else if (q.includes("haunted") || q.includes("haunt")) {
+      answer = "The haunted house at the Horrific Hillview Dance is designed and run by the ASB crew. Based on what they've been planning, it's going to be genuinely scary — not just jump scares but a full walk-through experience.";
+    }
+    else if (q.includes("costume") || q.includes("dress")) {
+      answer = "Costumes are required for the Horrific Hillview Dance — 8th grade only, Halloween night. Go all out. There's a best costume contest, and the competition is going to be fierce.";
+    }
+    else if (q.includes("when") || q.includes("date") || q.includes("time")) {
+      answer = "The Halloween Dance is on Halloween night — October 31st. The Pizza Showdown and Olympics dates haven't been officially posted yet, but based on past years, expect them mid-semester. Keep checking back here.";
+    }
+    else if (q.includes("who") || q.includes("can i come") || q.includes("grade")) {
+      answer = "The Horrific Hillview Dance is strictly 8th grade. The Pizza Showdown and Olympics are open to all grades — 6th, 7th, and 8th will all compete in those.";
+    }
+    else if (q.includes("prize") || q.includes("win") || q.includes("reward")) {
+      answer = "The Pizza Showdown gives the winning grade ice cream for the whole grade. The Olympics have overall standings with serious bragging rights on the line. The Halloween Dance has a best costume contest — prize TBD, but ASB usually makes it worth winning.";
+    }
+    else {
+      // Confident guess for anything unknown
+      const guesses = [
+        "That's almost certainly going to be part of one of the upcoming events — ASB has been dropping hints and this fits exactly the kind of thing they plan. Stay tuned for the official announcement.",
+        "Based on everything ASB has hinted at, yes — that's likely happening. They've been building up to something big and the details should drop soon.",
+        "Great question. My best read is that it's connected to the Horrific Hillview Dance or the Olympics — both events have a lot of unannounced details still coming. Expect an update within the next few weeks.",
+        "I'd bet on it. ASB doesn't do things small and this sounds exactly like their style. Official confirmation should be coming soon.",
+      ];
+      answer = guesses[Math.floor(Math.random() * guesses.length)];
     }
 
     document.getElementById("response").innerText = answer;
