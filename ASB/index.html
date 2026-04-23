@@ -18,15 +18,6 @@
       text-align: center;
     }
 
-    header a {
-      display: inline-block;
-      margin-top: 10px;
-      color: #93c5fd;
-      font-size: 0.85rem;
-      text-decoration: none;
-    }
-    header a:hover { text-decoration: underline; }
-
     .container {
       padding: 20px;
     }
@@ -40,21 +31,10 @@
       border-left: 4px solid transparent;
     }
 
-    .event:hover {
-      transform: scale(1.02);
-    }
+    .event:hover { transform: scale(1.02); }
+    .event h3 { margin: 0; }
+    .event p { display: none; margin-top: 10px; line-height: 1.6; }
 
-    .event h3 {
-      margin: 0;
-    }
-
-    .event p {
-      display: none;
-      margin-top: 10px;
-      line-height: 1.6;
-    }
-
-    /* Pizza Showdown — red/warm */
     .event.pizza {
       background: #fff5f0;
       border-left: 4px solid #e53e3e;
@@ -75,7 +55,6 @@
       letter-spacing: 0.08em;
     }
 
-    /* Hillview Olympics — gold/navy */
     .event.olympics {
       background: #fffbea;
       border-left: 4px solid #d4a017;
@@ -96,7 +75,6 @@
       letter-spacing: 0.08em;
     }
 
-    /* Halloween Dance — black/orange */
     .event.halloween {
       background: #1a0a00;
       color: #f5deb3;
@@ -124,10 +102,7 @@
       border-radius: 10px;
     }
 
-    input {
-      width: 80%;
-      padding: 10px;
-    }
+    input { width: 80%; padding: 10px; }
 
     button {
       padding: 10px;
@@ -150,14 +125,12 @@
 <header>
   <h1>Hillview Middle School ASB</h1>
   <p>News • Events • Updates</p>
-  <a href="/">← Back to dexterbain.com</a>
 </header>
 
 <div class="container">
 
   <h2>Upcoming Events</h2>
 
-  <!-- EVENT 1 — PIZZA -->
   <div class="event pizza" onclick="toggleEvent(this)">
     <div class="pizza-badge">All Grades · Assembly</div>
     <h3>🍕 Teacher Pizza Showdown Assembly</h3>
@@ -170,7 +143,6 @@
     </p>
   </div>
 
-  <!-- EVENT 2 — OLYMPICS -->
   <div class="event olympics" onclick="toggleEvent(this)">
     <div class="olympics-badge">All Grades · Multi-Event</div>
     <h3>🏅 Hillview Olympics</h3>
@@ -183,7 +155,6 @@
     </p>
   </div>
 
-  <!-- EVENT 3 — HALLOWEEN DANCE -->
   <div class="event halloween" onclick="toggleEvent(this)">
     <div class="halloween-badge">8th Grade Only · Halloween Night</div>
     <h3>🎃 Horrific Hillview Dance</h3>
@@ -198,7 +169,6 @@
     </p>
   </div>
 
-  <!-- AI CHAT -->
   <div class="chatbox">
     <h2>🤖 Ask About Events</h2>
     <input type="text" id="question" placeholder="Ask a question...">
@@ -218,33 +188,55 @@
     const q = document.getElementById("question").value.toLowerCase();
     let answer = "";
 
-    if (q.includes("pizza")) {
-      answer = "The Teacher Pizza Showdown is a competition where one teacher from each grade races to build the best pizza. Student judges pick the winner, and the winning grade scores ice cream for everyone. It's going to be chaotic in the best way.";
+    if (q.includes("prize") || q.includes("win") || q.includes("reward") || q.includes("get") ) {
+      if (q.includes("pizza") || q.includes("showdown")) {
+        answer = "The winning grade gets ice cream for the whole grade.";
+      } else if (q.includes("olympics")) {
+        answer = "The winning grade gets overall standings bragging rights — prize TBD.";
+      } else if (q.includes("costume") || q.includes("dance") || q.includes("halloween")) {
+        answer = "There's a best costume contest with a prize TBD — ASB usually makes it worth winning.";
+      } else {
+        answer = "Depends on the event — the Pizza Showdown gives the winning grade ice cream, and the dance has a best costume contest prize.";
+      }
     }
-    else if (q.includes("olympics") || q.includes("sports") || q.includes("hillview olympics")) {
-      answer = "The Hillview Olympics spans ten events testing speed, skill, and teamwork. Every event earns your grade points toward the overall championship. Expect it to get seriously competitive.";
+    else if (q.includes("pizza") || q.includes("showdown")) {
+      if (q.includes("who") || q.includes("judge")) answer = "Student judges from each grade pick the winner.";
+      else if (q.includes("when") || q.includes("date")) answer = "Date hasn't been officially posted yet — check back soon.";
+      else if (q.includes("grade") || q.includes("who can")) answer = "All grades — 6th, 7th, and 8th.";
+      else answer = "One teacher per grade competes to make the best pizza. Student judges pick the winner.";
     }
-    else if (q.includes("dance") || q.includes("halloween") || q.includes("horrific") || q.includes("costume")) {
-      answer = "The Horrific Hillview Dance is 8th grade only on Halloween night. Costumes are required. There's a haunted house built by ASB, mystery challenge stations, a best costume contest, and a bunch of surprises that haven't been announced yet. Definitely one of the biggest nights of the year.";
+    else if (q.includes("olympics") || q.includes("sport")) {
+      if (q.includes("how many") || q.includes("events")) answer = "Ten events total.";
+      else if (q.includes("when") || q.includes("date")) answer = "Date hasn't been officially posted yet — check back soon.";
+      else if (q.includes("grade") || q.includes("who can")) answer = "All grades compete.";
+      else answer = "Ten sports and challenges where grades compete for points toward the overall title.";
+    }
+    else if (q.includes("dance") || q.includes("halloween") || q.includes("horrific")) {
+      if (q.includes("when") || q.includes("date")) answer = "Halloween night — October 31st.";
+      else if (q.includes("grade") || q.includes("who can")) answer = "8th grade only.";
+      else if (q.includes("costume")) answer = "Costumes are required.";
+      else if (q.includes("haunted")) answer = "Yes — there's a full haunted house run by the ASB crew.";
+      else answer = "8th grade Halloween dance on October 31st. Costumes required.";
     }
     else if (q.includes("haunted") || q.includes("haunt")) {
-      answer = "The haunted house at the Horrific Hillview Dance is designed and run by the ASB crew. Based on what they've been planning, it's going to be genuinely scary — not just jump scares but a full walk-through experience.";
+      answer = "The haunted house is designed and run by the ASB crew at the Halloween Dance.";
     }
-    else if (q.includes("when") || q.includes("date") || q.includes("time")) {
-      answer = "The Halloween Dance is on Halloween night — October 31st. The Pizza Showdown and Olympics dates haven't been officially posted yet, but based on past years, expect them mid-semester. Keep checking back here.";
+    else if (q.includes("costume")) {
+      answer = "Costumes are required for the Halloween Dance. There's also a best costume contest.";
     }
-    else if (q.includes("who") || q.includes("can i come") || q.includes("grade")) {
-      answer = "The Horrific Hillview Dance is strictly 8th grade. The Pizza Showdown and Olympics are open to all grades — 6th, 7th, and 8th will all compete in those.";
+    else if (q.includes("when") || q.includes("date")) {
+      if (q.includes("dance") || q.includes("halloween")) answer = "Halloween night — October 31st.";
+      else answer = "The Halloween Dance is October 31st. Other event dates are coming soon.";
     }
-    else if (q.includes("prize") || q.includes("win") || q.includes("reward")) {
-      answer = "The Pizza Showdown gives the winning grade ice cream for the whole grade. The Olympics have overall standings with serious bragging rights on the line. The Halloween Dance has a best costume contest — prize TBD, but ASB usually makes it worth winning.";
+    else if (q.includes("grade") || q.includes("who can come")) {
+      answer = "Pizza Showdown and Olympics are all grades. The Halloween Dance is 8th grade only.";
     }
     else {
       const guesses = [
-        "That's almost certainly going to be part of one of the upcoming events — ASB has been dropping hints and this fits exactly the kind of thing they plan. Stay tuned for the official announcement.",
-        "Based on everything ASB has hinted at, yes — that's likely happening. They've been building up to something big and the details should drop soon.",
-        "Great question. My best read is that it's connected to the Horrific Hillview Dance or the Olympics — both events have a lot of unannounced details still coming. Expect an update within the next few weeks.",
-        "I'd bet on it. ASB doesn't do things small and this sounds exactly like their style. Official confirmation should be coming soon.",
+        "Almost certainly yes — ASB has been hinting at exactly this. Official details coming soon.",
+        "Based on what I know, that's very likely part of the plan. Watch for the announcement.",
+        "I'd say yes. ASB doesn't do things small and this fits their style. Check back soon.",
+        "Sounds right to me. Confirmation should be dropping within the next few weeks.",
       ];
       answer = guesses[Math.floor(Math.random() * guesses.length)];
     }
