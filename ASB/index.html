@@ -5,119 +5,125 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body {
-      font-family: Arial;
-      margin: 0;
-      background: #ffe4ec;
-    }
+    body { font-family: Arial; margin: 0; background: #ffe4ec; }
 
     header {
-      background: #2c3e50;
-      color: white;
-      padding: 20px;
-      text-align: center;
+      background: #2c3e50; color: white;
+      padding: 20px; text-align: center;
     }
 
-    .container {
-      padding: 20px;
-    }
+    .container { padding: 20px; }
 
+    /* ── Event cards ── */
     .event {
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: 0.2s;
-      border-left: 4px solid transparent;
+      padding: 15px; margin-bottom: 15px;
+      border-radius: 10px; cursor: pointer;
+      transition: 0.2s; border-left: 4px solid transparent;
     }
-
     .event:hover { transform: scale(1.02); }
     .event h3 { margin: 0; }
     .event p { display: none; margin-top: 10px; line-height: 1.6; }
 
-    .event.pizza {
-      background: #fff5f0;
-      border-left: 4px solid #e53e3e;
-      color: #2d1a1a;
-    }
-    .event.pizza h3 { color: #c0392b; }
-    .event.pizza p  { color: #4a2020; }
-    .pizza-badge {
-      display: inline-block;
-      background: #e53e3e;
-      color: #fff;
-      font-size: 0.7rem;
-      font-weight: bold;
-      padding: 2px 8px;
-      border-radius: 999px;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+    .event.pizza  { background:#fff5f0; border-left:4px solid #e53e3e; color:#2d1a1a; }
+    .event.pizza h3 { color:#c0392b; }
+    .event.pizza p  { color:#4a2020; }
+    .pizza-badge { display:inline-block; background:#e53e3e; color:#fff; font-size:0.7rem; font-weight:bold; padding:2px 8px; border-radius:999px; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em; }
 
-    .event.olympics {
-      background: #fffbea;
-      border-left: 4px solid #d4a017;
-      color: #1a1a2d;
-    }
-    .event.olympics h3 { color: #b8860b; }
-    .event.olympics p  { color: #2a2a40; }
-    .olympics-badge {
-      display: inline-block;
-      background: #d4a017;
-      color: #fff;
-      font-size: 0.7rem;
-      font-weight: bold;
-      padding: 2px 8px;
-      border-radius: 999px;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+    .event.olympics { background:#fffbea; border-left:4px solid #d4a017; color:#1a1a2d; }
+    .event.olympics h3 { color:#b8860b; }
+    .event.olympics p  { color:#2a2a40; }
+    .olympics-badge { display:inline-block; background:#d4a017; color:#fff; font-size:0.7rem; font-weight:bold; padding:2px 8px; border-radius:999px; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em; }
 
-    .event.halloween {
-      background: #1a0a00;
-      color: #f5deb3;
-      border-left: 4px solid #ff6a00;
-    }
-    .event.halloween h3 { color: #ff9a3c; }
-    .event.halloween p  { color: #e8d5b7; }
-    .halloween-badge {
-      display: inline-block;
-      background: #ff6a00;
-      color: #fff;
-      font-size: 0.7rem;
-      font-weight: bold;
-      padding: 2px 8px;
-      border-radius: 999px;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+    .event.halloween { background:#1a0a00; color:#f5deb3; border-left:4px solid #ff6a00; }
+    .event.halloween h3 { color:#ff9a3c; }
+    .event.halloween p  { color:#e8d5b7; }
+    .halloween-badge { display:inline-block; background:#ff6a00; color:#fff; font-size:0.7rem; font-weight:bold; padding:2px 8px; border-radius:999px; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.08em; }
 
-    .chatbox {
-      margin-top: 30px;
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-    }
+    /* ── AI chat ── */
+    .chatbox { margin-top: 30px; background:white; padding:15px; border-radius:10px; }
+    .chatbox input { width:80%; padding:10px; }
+    .chatbox button { padding:10px; background:#3498db; color:white; border:none; cursor:pointer; border-radius:4px; }
+    .response { margin-top:10px; color:#333; font-style:italic; }
 
-    input { width: 80%; padding: 10px; }
-
-    button {
-      padding: 10px;
-      background: #3498db;
+    /* ── True/False Game ── */
+    .tf-card {
+      margin-top: 20px;
+      background: #1a2a4a;
+      border-radius: 14px;
+      padding: 22px;
       color: white;
-      border: none;
+    }
+    .tf-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #7ec8f7;
+      margin-bottom: 4px;
+    }
+    .tf-subtitle {
+      font-size: 0.8rem;
+      color: #7a9cc0;
+      margin-bottom: 18px;
+    }
+    .tf-progress {
+      font-size: 0.78rem;
+      color: #5580a0;
+      margin-bottom: 10px;
+    }
+    .tf-question {
+      font-size: 1.05rem;
+      font-weight: bold;
+      line-height: 1.5;
+      min-height: 60px;
+      margin-bottom: 18px;
+      color: #e8f4ff;
+    }
+    .tf-buttons { display: flex; gap: 12px; margin-bottom: 14px; }
+    .tf-btn {
+      flex: 1; padding: 14px;
+      font-size: 1rem; font-weight: bold;
+      border: none; border-radius: 10px;
+      cursor: pointer; transition: 0.15s;
+    }
+    .tf-btn-true  { background: #22c55e; color: #fff; }
+    .tf-btn-false { background: #ef4444; color: #fff; }
+    .tf-btn:hover { opacity: 0.85; transform: scale(1.03); }
+    .tf-btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+    .tf-feedback {
+      min-height: 40px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: #a0d0ff;
+      margin-bottom: 14px;
+    }
+    .tf-feedback.correct { color: #4ade80; }
+    .tf-feedback.wrong   { color: #f87171; }
+    .tf-next {
+      padding: 10px 20px;
+      background: #3b6fcc;
+      color: white; border: none;
+      border-radius: 8px; cursor: pointer;
+      font-size: 0.9rem; font-weight: bold;
+      display: none;
+    }
+    .tf-next:hover { background: #2a5ab0; }
+    .tf-score {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .tf-score-num {
+      font-size: 3rem; font-weight: 900;
+      color: #7ec8f7; line-height: 1;
+    }
+    .tf-score-label { color: #5580a0; font-size: 0.85rem; margin-top: 6px; }
+    .tf-play-again {
+      margin-top: 16px;
+      padding: 12px 28px;
+      background: #22c55e; color: white;
+      border: none; border-radius: 10px;
+      font-size: 1rem; font-weight: bold;
       cursor: pointer;
-      border-radius: 4px;
     }
-
-    .response {
-      margin-top: 10px;
-      color: #333;
-      font-style: italic;
-    }
+    .tf-play-again:hover { background: #16a34a; }
   </style>
 </head>
 <body>
@@ -134,41 +140,42 @@
   <div class="event pizza" onclick="toggleEvent(this)">
     <div class="pizza-badge">All Grades · Assembly</div>
     <h3>🍕 Teacher Pizza Showdown Assembly</h3>
-    <p>
-      Get ready for one of the most entertaining assemblies of the year! In this creative and slightly chaotic competition, one teacher from each grade—6th, 7th, and 8th—will step into the spotlight to craft their own pizza masterpiece.
-      <br><br>
-      With only limited time and ingredients, these teacher representatives will mix strategy, creativity, and maybe a little luck to impress a panel of judges made up of students from each grade. Every decision matters, from toppings to presentation.
-      <br><br>
-      At the end of the showdown, one grade will take the crown—and earn a sweet reward: ice cream for the entire grade. Expect laughs, surprises, and some questionable cooking choices along the way.
-    </p>
+    <p>Get ready for one of the most entertaining assemblies of the year! One teacher from each grade — 6th, 7th, and 8th — will craft their own pizza masterpiece against the clock. Student judges pick the winner, and the winning grade earns ice cream for everyone. Expect laughs, surprises, and some questionable cooking choices.</p>
   </div>
 
   <div class="event olympics" onclick="toggleEvent(this)">
     <div class="olympics-badge">All Grades · Multi-Event</div>
     <h3>🏅 Hillview Olympics</h3>
-    <p>
-      Competition is heating up as Hillview launches its very own Olympic-style event! Students will have the chance to compete across ten different sports and challenges, testing everything from speed and strength to teamwork and determination.
-      <br><br>
-      Participants will represent their peers while earning points through each event, building toward an overall victory. Whether it's fast-paced games, skill-based challenges, or unexpected twists, every event will contribute to the final standings.
-      <br><br>
-      The energy, school spirit, and friendly rivalry will make this one of the most exciting events of the year. Who will come out on top and claim ultimate bragging rights?
-    </p>
+    <p>Ten events testing speed, skill, and teamwork — grades compete for points toward the overall championship. Every event contributes to the final standings. Friendly rivalry, school spirit, and serious competition all in one. Who will claim ultimate bragging rights?</p>
   </div>
 
   <div class="event halloween" onclick="toggleEvent(this)">
     <div class="halloween-badge">8th Grade Only · Halloween Night</div>
     <h3>🎃 Horrific Hillview Dance</h3>
-    <p>
-      Eighth graders — this Halloween, the night belongs to you. Dress in your scariest, most creative costume and come out for the most talked-about event of the fall: the Horrific Hillview Dance.
-      <br><br>
-      The gym transforms into a full haunted experience, complete with a <strong>Haunted House</strong> designed and run by the ASB crew. Dare to walk through if you think you can handle it.
-      <br><br>
-      Between scares, test your nerves at the <strong>mystery challenge stations</strong> — can you identify what you're feeling without looking? These sensory games are equal parts disgusting and hilarious, and they're not for the faint of heart.
-      <br><br>
-      Plus: best costume contest, spooky music, and surprises ASB has been planning all semester. Come in costume. Come ready. Just don't come alone.
-    </p>
+    <p>8th graders only. Halloween night. Costumes required. The gym turns into a full haunted experience — haunted house built and run by ASB, mystery sensory challenge stations, best costume contest, and surprises ASB has been planning all semester. Come in costume. Come ready. Just don't come alone.</p>
   </div>
 
+  <!-- TRUE/FALSE GAME -->
+  <div class="tf-card">
+    <div class="tf-title">🦅 Hillview True or False</div>
+    <div class="tf-subtitle">Real facts pulled from Hillview's website, Niche, and public school data</div>
+    <div class="tf-progress" id="tf-progress"></div>
+    <div class="tf-question" id="tf-question"></div>
+    <div class="tf-buttons" id="tf-buttons">
+      <button class="tf-btn tf-btn-true"  onclick="answer(true)">TRUE</button>
+      <button class="tf-btn tf-btn-false" onclick="answer(false)">FALSE</button>
+    </div>
+    <div class="tf-feedback" id="tf-feedback"></div>
+    <button class="tf-next" id="tf-next" onclick="nextQuestion()">Next →</button>
+    <div class="tf-score" id="tf-score" style="display:none">
+      <div class="tf-score-num" id="tf-score-num"></div>
+      <div class="tf-score-label" id="tf-score-label"></div>
+      <br>
+      <button class="tf-play-again" onclick="startGame()">Play Again</button>
+    </div>
+  </div>
+
+  <!-- AI CHAT -->
   <div class="chatbox">
     <h2>🤖 Ask About Events</h2>
     <input type="text" id="question" placeholder="Ask a question...">
@@ -184,20 +191,115 @@
     p.style.display = p.style.display === "block" ? "none" : "block";
   }
 
+  // ── True/False Game ──
+  const ALL_QUESTIONS = [
+    { q: "Hillview's mascot is the Hawks.", ans: true,  explain: "Correct! The Hillview Hawks." },
+    { q: "Hillview has more than 1,000 students enrolled.", ans: false, explain: "Hillview has about 858 students." },
+    { q: "Hillview covers grades 6, 7, and 8.", ans: true, explain: "Correct — grades 6 through 8." },
+    { q: "Hillview is the only middle school in the Menlo Park City School District.", ans: true, explain: "True — it's the one and only middle school in MPCSD." },
+    { q: "Hillview's student-teacher ratio is lower than the California state average.", ans: true, explain: "True — Hillview is 16:1, better than California's average of 21:1." },
+    { q: "Hillview's principal is named Danielle O'Brien.", ans: true, explain: "Correct — Danielle O'Brien became permanent principal in 2023." },
+    { q: "Hillview received an overall grade of A from Niche.com.", ans: true, explain: "True — Niche rates Hillview an A overall." },
+    { q: "Hillview is ranked in the top 5% of all California schools.", ans: true, explain: "True — top 5% statewide for both math and reading scores." },
+    { q: "Hillview's mascot is the Eagles.", ans: false, explain: "Nope — the mascot is the Hawks, not Eagles." },
+    { q: "76% of Hillview students score proficient or above in math.", ans: true, explain: "Correct, according to California state test score data." },
+    { q: "Hillview has a student-teacher ratio of 21:1.", ans: false, explain: "21:1 is the California state average — Hillview's is 16:1." },
+    { q: "Hillview Middle School is located in Palo Alto.", ans: false, explain: "Hillview is in Menlo Park, at 1100 Elder Ave." },
+    { q: "80% of Hillview students score proficient or above in reading.", ans: true, explain: "Correct — 80% reading proficiency per state test data." },
+    { q: "Hillview's address is on Elder Ave.", ans: true, explain: "Correct — 1100 Elder Ave, Menlo Park, CA 94025." },
+    { q: "Hillview's after-school athletics program is run by the PTO.", ans: true, explain: "True — the Hillview PTO runs the entire after-school athletics program." },
+    { q: "Hillview covers grades 5 through 8.", ans: false, explain: "Hillview is a middle school — grades 6 through 8 only." },
+    { q: "Hillview's Niche diversity grade is an A.", ans: false, explain: "Close — diversity is rated A minus, not a full A." },
+    { q: "Hillview home games are sometimes held at the Arrillaga Family Gym.", ans: true, explain: "Correct — the Arrillaga Family Gym hosts Hillview games and matches." },
+    { q: "Hillview's student-teacher ratio is better than the California state average of 21:1.", ans: true, explain: "True — Hillview's 16:1 ratio is significantly better than the state's 21:1." },
+    { q: "Hillview has over 900 students enrolled.", ans: false, explain: "Enrollment is about 858 — just under 900." },
+    { q: "Hillview's Niche academics grade is an A.", ans: true, explain: "Correct — Niche gives Hillview an A for academics." },
+    { q: "Hillview is part of the Palo Alto Unified School District.", ans: false, explain: "Hillview belongs to the Menlo Park City School District (MPCSD)." },
+    { q: "Hillview parent volunteers help coach after-school sports teams.", ans: true, explain: "True — most coaches are parent volunteers who give their time for free." },
+    { q: "Volleyball and basketball are the most impacted sports at Hillview.", ans: true, explain: "Correct — the school website specifically calls these out as most impacted." },
+  ];
+
+  let questions = [];
+  let current = 0;
+  let score   = 0;
+  let answered = false;
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function startGame() {
+    questions = shuffle(ALL_QUESTIONS).slice(0, 12);
+    current   = 0;
+    score     = 0;
+    document.getElementById('tf-score').style.display = 'none';
+    document.getElementById('tf-buttons').style.display = 'flex';
+    showQuestion();
+  }
+
+  function showQuestion() {
+    answered = false;
+    const q = questions[current];
+    document.getElementById('tf-progress').textContent = `Question ${current + 1} of ${questions.length}`;
+    document.getElementById('tf-question').textContent  = q.q;
+    document.getElementById('tf-feedback').textContent  = '';
+    document.getElementById('tf-feedback').className    = 'tf-feedback';
+    document.getElementById('tf-next').style.display    = 'none';
+    document.querySelectorAll('.tf-btn').forEach(b => b.disabled = false);
+  }
+
+  function answer(userAnswer) {
+    if (answered) return;
+    answered = true;
+    const q       = questions[current];
+    const correct = userAnswer === q.ans;
+    if (correct) score++;
+    const fb = document.getElementById('tf-feedback');
+    fb.textContent  = (correct ? '✅ ' : '❌ ') + q.explain;
+    fb.className    = 'tf-feedback ' + (correct ? 'correct' : 'wrong');
+    document.querySelectorAll('.tf-btn').forEach(b => b.disabled = true);
+    document.getElementById('tf-next').style.display = 'inline-block';
+  }
+
+  function nextQuestion() {
+    current++;
+    if (current >= questions.length) {
+      showScore();
+    } else {
+      showQuestion();
+    }
+  }
+
+  function showScore() {
+    document.getElementById('tf-buttons').style.display = 'none';
+    document.getElementById('tf-next').style.display    = 'none';
+    document.getElementById('tf-question').textContent  = '';
+    document.getElementById('tf-progress').textContent  = '';
+    document.getElementById('tf-feedback').textContent  = '';
+    const pct = Math.round(score / questions.length * 100);
+    document.getElementById('tf-score-num').textContent  = score + '/' + questions.length;
+    document.getElementById('tf-score-label').textContent =
+      pct === 100 ? 'Perfect score! You really know Hillview.' :
+      pct >= 75   ? 'Nice work — Hawks fan for sure.' :
+      pct >= 50   ? 'Not bad. Study up a bit!' :
+                    'Time to learn more about your school!';
+    document.getElementById('tf-score').style.display = 'block';
+  }
+
+  // ── AI chat ──
   function askAI() {
     const q = document.getElementById("question").value.toLowerCase();
     let answer = "";
-
-    if (q.includes("prize") || q.includes("win") || q.includes("reward") || q.includes("get") ) {
-      if (q.includes("pizza") || q.includes("showdown")) {
-        answer = "The winning grade gets ice cream for the whole grade.";
-      } else if (q.includes("olympics")) {
-        answer = "The winning grade gets overall standings bragging rights — prize TBD.";
-      } else if (q.includes("costume") || q.includes("dance") || q.includes("halloween")) {
-        answer = "There's a best costume contest with a prize TBD — ASB usually makes it worth winning.";
-      } else {
-        answer = "Depends on the event — the Pizza Showdown gives the winning grade ice cream, and the dance has a best costume contest prize.";
-      }
+    if (q.includes("prize") || q.includes("win") || q.includes("reward") || q.includes("get")) {
+      if (q.includes("pizza") || q.includes("showdown")) answer = "The winning grade gets ice cream for the whole grade.";
+      else if (q.includes("olympics")) answer = "The winning grade gets overall standings bragging rights — prize TBD.";
+      else if (q.includes("costume") || q.includes("dance") || q.includes("halloween")) answer = "There's a best costume contest with a prize TBD — ASB usually makes it worth winning.";
+      else answer = "Depends on the event — the Pizza Showdown gives the winning grade ice cream, and the dance has a best costume contest prize.";
     }
     else if (q.includes("pizza") || q.includes("showdown")) {
       if (q.includes("who") || q.includes("judge")) answer = "Student judges from each grade pick the winner.";
@@ -208,29 +310,18 @@
     else if (q.includes("olympics") || q.includes("sport")) {
       if (q.includes("how many") || q.includes("events")) answer = "Ten events total.";
       else if (q.includes("when") || q.includes("date")) answer = "Date hasn't been officially posted yet — check back soon.";
-      else if (q.includes("grade") || q.includes("who can")) answer = "All grades compete.";
       else answer = "Ten sports and challenges where grades compete for points toward the overall title.";
     }
     else if (q.includes("dance") || q.includes("halloween") || q.includes("horrific")) {
       if (q.includes("when") || q.includes("date")) answer = "Halloween night — October 31st.";
       else if (q.includes("grade") || q.includes("who can")) answer = "8th grade only.";
       else if (q.includes("costume")) answer = "Costumes are required.";
-      else if (q.includes("haunted")) answer = "Yes — there's a full haunted house run by the ASB crew.";
       else answer = "8th grade Halloween dance on October 31st. Costumes required.";
     }
-    else if (q.includes("haunted") || q.includes("haunt")) {
-      answer = "The haunted house is designed and run by the ASB crew at the Halloween Dance.";
-    }
-    else if (q.includes("costume")) {
-      answer = "Costumes are required for the Halloween Dance. There's also a best costume contest.";
-    }
-    else if (q.includes("when") || q.includes("date")) {
-      if (q.includes("dance") || q.includes("halloween")) answer = "Halloween night — October 31st.";
-      else answer = "The Halloween Dance is October 31st. Other event dates are coming soon.";
-    }
-    else if (q.includes("grade") || q.includes("who can come")) {
-      answer = "Pizza Showdown and Olympics are all grades. The Halloween Dance is 8th grade only.";
-    }
+    else if (q.includes("haunted")) { answer = "The haunted house is designed and run by the ASB crew at the Halloween Dance."; }
+    else if (q.includes("costume")) { answer = "Costumes are required for the Halloween Dance. There's also a best costume contest."; }
+    else if (q.includes("when") || q.includes("date")) { answer = "The Halloween Dance is October 31st. Other event dates are coming soon."; }
+    else if (q.includes("grade") || q.includes("who can come")) { answer = "Pizza Showdown and Olympics are all grades. The Halloween Dance is 8th grade only."; }
     else {
       const guesses = [
         "Almost certainly yes — ASB has been hinting at exactly this. Official details coming soon.",
@@ -240,10 +331,10 @@
       ];
       answer = guesses[Math.floor(Math.random() * guesses.length)];
     }
-
     document.getElementById("response").innerText = answer;
   }
-</script>
 
+  startGame();
+</script>
 </body>
 </html>
