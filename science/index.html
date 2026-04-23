@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <script>if(!location.search.includes('v=7'))location.replace(location.pathname+'?v=7');</script>
+  <script>if(!location.search.includes('v=8'))location.replace(location.pathname+'?v=8');</script>
   <title>Earthquakes & Volcanoes</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
@@ -986,7 +986,7 @@
           // Track earthquake grid cells for the game
           eqGrid.add(`${Math.floor(lat / 5)}_${Math.floor(lng / 5)}`);
 
-          const baseR = mag >= 6 ? 5 : mag >= 5 ? 3 : 1.5;
+          const baseR = mag >= 6 ? 3 : mag >= 5 ? 1.8 : 0.9;
           const marker = L.circleMarker([lat, lng], {
             radius: scaledRadius(baseR, map.getZoom()),
             color: col, fillColor: col, fillOpacity: 0.88, weight: 0,
