@@ -5,843 +5,1016 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Adventure Game</title>
 <style>
+  * { box-sizing: border-box; }
   body { margin:0; font-family:Arial,sans-serif; background:linear-gradient(to bottom,#0f172a,#1e293b); color:white; text-align:center; padding:20px; min-height:100vh; }
-  h1 { font-size:2.5rem; margin-bottom:10px; }
+  h1 { font-size:2.5rem; margin-bottom:6px; }
+  .subtitle { color:#94a3b8; font-size:0.95rem; margin-bottom:20px; }
   .back-link { display:inline-block; margin-bottom:18px; color:#7c8fa6; text-decoration:none; font-size:0.85rem; background:rgba(255,255,255,0.05); padding:5px 14px; border-radius:999px; border:1px solid rgba(255,255,255,0.08); }
   .back-link:hover { color:#ccc; }
-  #gameBox { max-width:750px; margin:auto; background:rgba(255,255,255,0.08); border-radius:20px; padding:25px; box-shadow:0 8px 20px rgba(0,0,0,0.4); text-align:left; }
+
+  /* ── START SCREEN ── */
+  #startScreen { max-width:500px; margin:auto; }
+  .mode-card {
+    background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+    border-radius:16px; padding:24px; margin:14px 0; cursor:pointer;
+    transition:background 0.2s, transform 0.15s; text-align:left;
+  }
+  .mode-card:hover { background:rgba(255,255,255,0.12); transform:scale(1.01); }
+  .mode-card h2 { margin:0 0 6px; font-size:1.3rem; }
+  .mode-card p  { margin:0; font-size:0.9rem; color:#94a3b8; line-height:1.5; }
+  .mode-card .mode-icon { font-size:2rem; margin-bottom:10px; }
+  .mode-card.standard { border-color:rgba(124,58,237,0.4); }
+  .mode-card.custom   { border-color:rgba(234,179,8,0.4); }
+  .mode-card.custom h2 { color:#fde68a; }
+  .mode-card.custom .mode-icon { }
+
+  /* ── GAME BOX ── */
+  #gameBox { max-width:750px; margin:auto; background:rgba(255,255,255,0.08); border-radius:20px; padding:25px; box-shadow:0 8px 20px rgba(0,0,0,0.4); text-align:left; display:none; }
+
+  /* step counter */
+  #step-counter { text-align:center; font-size:0.82rem; color:#64748b; margin-bottom:14px; letter-spacing:0.05em; }
+
+  /* story log */
   #story-log { margin-bottom:16px; display:flex; flex-direction:column; gap:2px; }
-  .log-event  { padding:8px 0 8px 14px; border-left:3px solid #4a3080; color:#cbd5e1; font-size:1rem; line-height:1.6; animation:fadeIn 0.35s ease; }
-  .log-choice { padding:6px 0 6px 14px; border-left:3px solid #7c3aed; color:#a78bfa; font-style:italic; font-size:0.95rem; animation:fadeIn 0.35s ease; }
-  .log-outcome{ padding:8px 0 8px 14px; border-left:3px solid #2563eb; color:#e2e8f0; font-size:1rem; line-height:1.6; animation:fadeIn 0.35s ease; }
-  .final-entry{ padding:12px 0 12px 14px; border-left:3px solid #fbbf24; color:#fde68a; font-size:1.05rem; font-weight:bold; line-height:1.6; animation:fadeIn 0.35s ease; }
+  .log-event   { padding:8px 0 8px 14px; border-left:3px solid #4a3080; color:#cbd5e1; font-size:1rem; line-height:1.6; animation:fadeIn 0.35s ease; }
+  .log-choice  { padding:6px 0 6px 14px; border-left:3px solid #7c3aed; color:#a78bfa; font-style:italic; font-size:0.95rem; animation:fadeIn 0.35s ease; }
+  .log-custom  { padding:6px 0 6px 14px; border-left:3px solid #ca8a04; color:#fde68a; font-style:italic; font-size:0.95rem; animation:fadeIn 0.35s ease; }
+  .log-outcome { padding:8px 0 8px 14px; border-left:3px solid #2563eb; color:#e2e8f0; font-size:1rem; line-height:1.6; animation:fadeIn 0.35s ease; }
+  .log-end     { padding:12px 0 12px 14px; border-left:3px solid #fbbf24; color:#fde68a; font-size:1.05rem; font-weight:bold; line-height:1.6; animation:fadeIn 0.35s ease; }
   @keyframes fadeIn { from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);} }
-  #prompt-box { background:rgba(124,58,237,0.18); border:1px solid rgba(124,58,237,0.4); border-radius:12px; padding:16px; margin-bottom:16px; font-size:1.05rem; line-height:1.6; color:#e8f4ff; }
-  .choiceBtn { display:block; width:100%; margin:7px 0; padding:12px 16px; border:none; border-radius:10px; font-size:0.95rem; cursor:pointer; transition:transform 0.15s,background 0.2s; background:#5b21b6; color:white; text-align:left; }
+
+  /* current prompt */
+  #prompt-box { background:rgba(124,58,237,0.18); border:1px solid rgba(124,58,237,0.4); border-radius:12px; padding:16px; margin-bottom:14px; font-size:1.05rem; line-height:1.6; color:#e8f4ff; }
+
+  /* choice buttons */
+  .choiceBtn { display:block; width:100%; margin:6px 0; padding:12px 16px; border:none; border-radius:10px; font-size:0.95rem; cursor:pointer; transition:transform 0.15s,background 0.2s; background:#5b21b6; color:white; text-align:left; }
   .choiceBtn:hover { transform:scale(1.02); background:#6d28d9; }
-  #restartBtn { display:block; width:100%; margin-top:16px; padding:14px; background:#dc2626; border:none; border-radius:12px; font-size:1rem; color:white; cursor:pointer; font-weight:bold; }
-  #restartBtn:hover { background:#b91c1c; }
-  #score { text-align:center; margin-top:12px; font-size:0.9rem; opacity:0.7; }
-  .step-bar { display:flex; justify-content:center; gap:6px; margin-bottom:18px; }
-  .pip { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,0.12); transition:background 0.3s; }
-  .pip.done    { background:#7c3aed; }
-  .pip.current { background:#a78bfa; box-shadow:0 0 6px #7c3aed; }
+
+  /* custom input row */
+  #custom-row { display:none; margin-top:10px; gap:8px; align-items:stretch; }
+  #custom-row.visible { display:flex; }
+  #custom-input {
+    flex:1; padding:12px 14px; border:1px solid rgba(234,179,8,0.5);
+    border-radius:10px; background:rgba(234,179,8,0.08); color:#fde68a;
+    font-size:0.95rem; outline:none;
+  }
+  #custom-input::placeholder { color:#92633a; }
+  #custom-input:focus { border-color:#ca8a04; background:rgba(234,179,8,0.12); }
+  #custom-submit {
+    padding:12px 18px; background:#ca8a04; border:none; border-radius:10px;
+    color:white; font-size:0.95rem; cursor:pointer; font-weight:bold; white-space:nowrap;
+  }
+  #custom-submit:hover { background:#b45309; }
+
+  /* end + restart */
+  #end-row { display:flex; gap:8px; margin-top:14px; }
+  #endBtn {
+    flex:1; padding:12px; background:rgba(220,38,38,0.15); border:1px solid rgba(220,38,38,0.35);
+    border-radius:10px; font-size:0.9rem; color:#fca5a5; cursor:pointer;
+  }
+  #endBtn:hover { background:rgba(220,38,38,0.3); }
+  #restartBtn {
+    flex:1; padding:12px; background:#1e40af; border:none; border-radius:10px;
+    font-size:0.9rem; color:white; cursor:pointer; display:none;
+  }
+  #restartBtn:hover { background:#1d4ed8; }
+  #homeBtn {
+    flex:1; padding:12px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+    border-radius:10px; font-size:0.9rem; color:#94a3b8; cursor:pointer;
+  }
+  #homeBtn:hover { background:rgba(255,255,255,0.12); color:white; }
 </style>
 </head>
 <body>
+
 <a class="back-link" href="/">← Back to DexterBain.com</a>
 <h1>⚔️ AI Adventure Game</h1>
+<p class="subtitle">Your choices shape the story — forever, if you want.</p>
+
+<!-- START SCREEN -->
+<div id="startScreen">
+  <div class="mode-card standard" onclick="startGame(false)">
+    <div class="mode-icon">🗺️</div>
+    <h2>Standard Adventure</h2>
+    <p>Pick from 4 choices at each step. The story goes on as long as you want — end it whenever you're ready.</p>
+  </div>
+  <div class="mode-card custom" onclick="startGame(true)">
+    <div class="mode-icon">✍️</div>
+    <h2>Custom Mode</h2>
+    <p>Same 4 choices — plus a text box where you can type exactly what you want to do. Your story, your rules.</p>
+  </div>
+</div>
+
+<!-- GAME BOX -->
 <div id="gameBox">
-  <div class="step-bar" id="step-bar"></div>
+  <div id="step-counter">Step 1</div>
   <div id="story-log"></div>
   <div id="prompt-box"></div>
   <div id="choices"></div>
-  <button id="restartBtn" style="display:none" onclick="startGame()">🔄 New Adventure</button>
-  <div id="score"></div>
+  <div id="custom-row">
+    <input id="custom-input" type="text" placeholder="Type what you do..." maxlength="120">
+    <button id="custom-submit">Do it</button>
+  </div>
+  <div id="end-row">
+    <button id="endBtn" onclick="endStory()">📖 End my story here</button>
+    <button id="restartBtn" onclick="goHome()">🔄 Play again</button>
+    <button id="homeBtn" onclick="goHome()">🏠 Home</button>
+  </div>
 </div>
 
 <script>
-const TOTAL = 8;
+// ── DATA ───────────────────────────────────────────────────────────────────
 
 const SCENES = {
   cave_bear: {
     setup: "You enter a dark cave. A large bear blocks the path, staring right at you.",
     choices: [
-      { label: "Fight the bear",           outcome: "You charge with a stick. The bear swipes you hard across the arm.", next: "fight_bear_hurt" },
-      { label: "Sneak past it quietly",    outcome: "You tiptoe... and step on a twig. CRACK. The bear spins around.",  next: "chase_bear" },
-      { label: "Offer it your snack",      outcome: "You hold out a granola bar. The bear sniffs it, then takes it and lets you pass.", next: "bear_friendly" },
-      { label: "Back away slowly",         outcome: "You inch backward... and fall into a hidden tunnel behind you.",   next: "tunnel" },
+      { label: "Fight the bear",            outcome: "You charge with a stick. The bear swipes you hard across the arm.",    next: "fight_bear_hurt" },
+      { label: "Sneak past it quietly",     outcome: "You tiptoe... and step on a twig. CRACK. The bear spins around.",     next: "chase_bear" },
+      { label: "Offer it your snack",       outcome: "You hold out a granola bar. The bear takes it and lets you pass.",     next: "bear_friendly" },
+      { label: "Back away slowly",          outcome: "You inch backward... and fall into a hidden tunnel behind you.",       next: "tunnel" },
     ]
   },
   forest_wolf: {
     setup: "You walk into a misty forest. A wolf steps out from the trees, growling low.",
     choices: [
-      { label: "Stand your ground",        outcome: "You puff up and yell. The wolf pauses, confused.",                 next: "wolf_standoff" },
-      { label: "Climb the nearest tree",   outcome: "You scramble up. The wolf sits below, waiting.",                  next: "trapped_tree" },
-      { label: "Run",                      outcome: "You sprint. The wolf is right behind you.",                        next: "chase_wolf" },
-      { label: "Throw your bag at it",     outcome: "It hits the wolf in the face. It yelps and backs off.",           next: "wolf_retreats" },
+      { label: "Stand your ground",         outcome: "You puff up and yell. The wolf pauses, confused.",                    next: "wolf_standoff" },
+      { label: "Climb the nearest tree",    outcome: "You scramble up. The wolf sits below, waiting.",                     next: "trapped_tree" },
+      { label: "Run",                       outcome: "You sprint. The wolf is right behind you.",                           next: "chase_wolf" },
+      { label: "Throw your bag at it",      outcome: "It hits the wolf in the face. It yelps and backs off.",              next: "wolf_retreats" },
     ]
   },
   spaceship: {
     setup: "You step into an abandoned spaceship. The door seals shut behind you with a hiss.",
     choices: [
-      { label: "Search for a way out",     outcome: "You find a sparking control panel.",                              next: "control_panel" },
-      { label: "Explore the cockpit",      outcome: "You sit in the pilot seat. Something activates.",                 next: "ship_starts" },
-      { label: "Look for other people",    outcome: "You hear breathing from a dark corner.",                          next: "alien_encounter" },
-      { label: "Try to radio for help",    outcome: "Static, then a voice: 'Do NOT open the cargo bay.'",             next: "cargo_warning" },
+      { label: "Search for a way out",      outcome: "You find a sparking control panel.",                                 next: "control_panel" },
+      { label: "Explore the cockpit",       outcome: "You sit in the pilot seat. Something activates.",                    next: "ship_starts" },
+      { label: "Look for other people",     outcome: "You hear breathing from a dark corner.",                             next: "alien_encounter" },
+      { label: "Try to radio for help",     outcome: "Static, then a voice: 'Do NOT open the cargo bay.'",                next: "cargo_warning" },
     ]
   },
   castle: {
     setup: "You push open the gate of a haunted castle. The drawbridge rises behind you.",
     choices: [
-      { label: "Head into the great hall", outcome: "A chandelier swings overhead. Something is up there.",            next: "great_hall" },
-      { label: "Climb the tower",          outcome: "Halfway up, a stair crumbles under your foot.",                  next: "falling" },
-      { label: "Check the dungeon",        outcome: "The dungeon door is already open. Someone left in a hurry.",     next: "dungeon" },
-      { label: "Yell to see if anyone's home", outcome: "Your voice echoes. Then something yells back.",             next: "something_heard_you" },
+      { label: "Head into the great hall",  outcome: "A chandelier swings overhead. Something is up there.",               next: "great_hall" },
+      { label: "Climb the tower",           outcome: "Halfway up, a stair crumbles under your foot.",                     next: "falling" },
+      { label: "Check the dungeon",         outcome: "The dungeon door is already open. Someone left in a hurry.",        next: "dungeon" },
+      { label: "Yell to see if anyone's home", outcome: "Your voice echoes. Then something yells back.",                 next: "something_heard_you" },
     ]
   },
-
   fight_bear_hurt: {
     setup: "The bear swipes you again. You're bleeding. It rears up on its hind legs.",
     choices: [
-      { label: "Fight harder",           outcome: "You grab a rock and nail it on the nose. It howls and backs off.", next: "bear_retreats" },
-      { label: "Run while you can",      outcome: "You bolt. The bear chases you to the cave entrance, then gives up.", next: "escaped_cave" },
-      { label: "Play dead",              outcome: "You drop to the floor. The bear sniffs you forever... then wanders off.", next: "bear_leaves" },
-      { label: "Climb the cave wall",    outcome: "There are cracks — you claw your way up. The bear can't follow.", next: "high_up" },
+      { label: "Fight harder",              outcome: "You grab a rock and nail it on the nose. It howls and backs off.",  next: "bear_retreats" },
+      { label: "Run while you can",         outcome: "You bolt. The bear chases you to the cave entrance, then gives up.",next: "escaped_cave" },
+      { label: "Play dead",                 outcome: "You drop to the floor. The bear sniffs you forever... then wanders off.", next: "bear_leaves" },
+      { label: "Climb the cave wall",       outcome: "There are cracks — you claw your way up. The bear can't follow.",  next: "high_up" },
     ]
   },
   chase_bear: {
     setup: "The bear is sprinting after you through the cave. Your torch is flickering.",
     choices: [
-      { label: "Split at the fork",      outcome: "You take the left tunnel. The bear takes the right. Silence.",    next: "safe_tunnel" },
-      { label: "Jump over the stream",   outcome: "You leap. You make it. The bear stops at the water's edge.",      next: "across_stream" },
-      { label: "Throw your torch at it", outcome: "The bear flinches at the flame and skids to a stop.",            next: "bear_stopped" },
-      { label: "Hide in a crevice",      outcome: "You squeeze into a crack just wide enough. The bear runs past.", next: "hiding" },
+      { label: "Split at the fork",         outcome: "You take the left tunnel. The bear takes the right. Silence.",     next: "safe_tunnel" },
+      { label: "Jump over the stream",      outcome: "You leap. You make it. The bear stops at the water's edge.",       next: "across_stream" },
+      { label: "Throw your torch at it",    outcome: "The bear flinches at the flame and skids to a stop.",             next: "bear_stopped" },
+      { label: "Hide in a crevice",         outcome: "You squeeze into a crack just wide enough. The bear runs past.",  next: "hiding" },
     ]
   },
   bear_friendly: {
     setup: "The bear is following you like a big fluffy dog. Great — until you reach a locked door.",
     choices: [
-      { label: "Have the bear break it", outcome: "One swipe. Door gone. The bear looks very pleased with itself.", next: "new_room" },
-      { label: "Look for a key",         outcome: "You search and find a key tucked in a crevice.",                next: "key_found" },
-      { label: "Knock politely",         outcome: "A slot opens. A voice asks: 'Password?'",                       next: "password_door" },
-      { label: "Go around",             outcome: "You find a window just small enough to squeeze through.",        next: "window_escape" },
+      { label: "Have the bear break it",    outcome: "One swipe. Door gone. The bear looks very pleased.",               next: "new_room" },
+      { label: "Look for a key",            outcome: "You search and find a key tucked in a crevice.",                  next: "key_found" },
+      { label: "Knock politely",            outcome: "A slot opens. A voice asks: 'Password?'",                         next: "password_door" },
+      { label: "Go around",                outcome: "You find a window just small enough to squeeze through.",          next: "window_escape" },
     ]
   },
   tunnel: {
     setup: "You tumbled into a narrow underground tunnel. Dark, tight, hard to move.",
     choices: [
-      { label: "Crawl forward",          outcome: "After a long crawl you see faint light ahead.",                 next: "tunnel_exit" },
-      { label: "Dig sideways",           outcome: "The dirt is loose. You break through into a chamber.",          next: "secret_chamber" },
-      { label: "Call for help",          outcome: "Your voice echoes. Something calls back — from below.",         next: "something_below" },
-      { label: "Go back the way you came", outcome: "You crawl back and find yourself in a completely different cave.", next: "wrong_cave" },
+      { label: "Crawl forward",             outcome: "After a long crawl you see faint light ahead.",                   next: "tunnel_exit" },
+      { label: "Dig sideways",              outcome: "The dirt is loose. You break through into a chamber.",            next: "secret_chamber" },
+      { label: "Call for help",             outcome: "Your voice echoes. Something calls back — from below.",           next: "something_below" },
+      { label: "Go back the way you came",  outcome: "You crawl back and find yourself in a completely different cave.",next: "wrong_cave" },
     ]
   },
   chase_wolf: {
     setup: "The wolf is gaining on you. Your lungs are burning. A river appears ahead.",
     choices: [
-      { label: "Jump in the river",      outcome: "You splash in. The wolf stops at the bank, pacing.",            next: "across_stream" },
-      { label: "Climb a boulder",        outcome: "You pull yourself up just in time. The wolf circles below.",    next: "trapped_rock" },
-      { label: "Keep running",           outcome: "You find a gap in a fence and dive through. The wolf can't fit.", next: "safe_zone" },
-      { label: "Turn and face it",       outcome: "You spin and roar. The wolf skids to a stop, startled.",       next: "wolf_standoff" },
+      { label: "Jump in the river",         outcome: "You splash in. The wolf stops at the bank, pacing.",             next: "across_stream" },
+      { label: "Climb a boulder",           outcome: "You pull yourself up just in time. The wolf circles below.",     next: "trapped_rock" },
+      { label: "Keep running",              outcome: "You find a gap in a fence and dive through. The wolf can't fit.",next: "safe_zone" },
+      { label: "Turn and face it",          outcome: "You spin and roar. The wolf skids to a stop, startled.",        next: "wolf_standoff" },
     ]
   },
   wolf_standoff: {
     setup: "You and the wolf are face to face. Neither moves. Total standoff.",
     choices: [
-      { label: "Stare it down",          outcome: "After a tense minute, the wolf sits. It wants to be friends.", next: "wolf_friendly" },
-      { label: "Back away slowly",       outcome: "You inch back. The wolf mirrors you. This goes on a while.",   next: "wolf_retreats" },
-      { label: "Make a loud noise",      outcome: "You clap and shout. The wolf bolts into the trees.",           next: "wolf_retreats" },
-      { label: "Offer your hand",        outcome: "The wolf sniffs it. Then licks it. Good wolf.",               next: "wolf_friendly" },
+      { label: "Stare it down",             outcome: "After a tense minute, the wolf sits. It wants to be friends.",  next: "wolf_friendly" },
+      { label: "Back away slowly",          outcome: "You inch back. The wolf mirrors you. This goes on a while.",    next: "wolf_retreats" },
+      { label: "Make a loud noise",         outcome: "You clap and shout. The wolf bolts into the trees.",            next: "wolf_retreats" },
+      { label: "Offer your hand",           outcome: "The wolf sniffs it. Then licks it. Good wolf.",                next: "wolf_friendly" },
     ]
   },
   wolf_retreats: {
     setup: "The wolf is gone. You catch your breath. But now you're deep in the forest with no idea where you are.",
     choices: [
-      { label: "Follow the sun",         outcome: "You navigate west and eventually hit a road.",                  next: "road" },
-      { label: "Climb a tree to look",   outcome: "From the top you spot a village in the distance.",             next: "village_spotted" },
-      { label: "Follow a stream",        outcome: "Streams lead downhill, and downhill leads to people.",         next: "across_stream" },
-      { label: "Build a shelter",        outcome: "You make a lean-to and wait out the night safely.",            next: "morning" },
+      { label: "Follow the sun",            outcome: "You navigate west and eventually hit a road.",                   next: "road" },
+      { label: "Climb a tree to look",      outcome: "From the top you spot a village in the distance.",              next: "village_spotted" },
+      { label: "Follow a stream",           outcome: "Streams lead downhill, and downhill leads to people.",          next: "across_stream" },
+      { label: "Build a shelter",           outcome: "You make a lean-to and wait out the night safely.",             next: "morning" },
     ]
   },
   wolf_friendly: {
     setup: "The wolf has decided you're its person now. It trots beside you into the forest.",
     choices: [
-      { label: "Let it lead",            outcome: "The wolf takes you straight to a clearing with a fire burning.", next: "mysterious_camp" },
-      { label: "Follow the path",        outcome: "Together you find a trail leading out of the forest.",          next: "road" },
-      { label: "Rest here",              outcome: "You sit. The wolf curls up next to you. You both sleep.",      next: "morning" },
-      { label: "Look for food",          outcome: "The wolf digs something up. You eat it anyway.",               next: "found_food" },
+      { label: "Let it lead",               outcome: "The wolf takes you to a clearing with a fire already burning.",  next: "mysterious_camp" },
+      { label: "Follow the path",           outcome: "Together you find a trail leading out of the forest.",           next: "road" },
+      { label: "Rest here",                 outcome: "You sit. The wolf curls up next to you. You both sleep.",       next: "morning" },
+      { label: "Look for food",             outcome: "The wolf digs something up. You eat it anyway.",                next: "found_food" },
     ]
   },
   trapped_tree: {
     setup: "You're in a tree. The wolf is below. You've been here twenty minutes.",
     choices: [
-      { label: "Wait it out",            outcome: "The wolf eventually loses interest and pads away.",             next: "wolf_retreats" },
-      { label: "Throw a pinecone at it", outcome: "It hits the wolf. It looks personally offended, then leaves.", next: "wolf_retreats" },
-      { label: "Swing branch to branch", outcome: "You go far enough to drop safely.",                            next: "safe_zone" },
-      { label: "Talk to it softly",      outcome: "You speak gently. The wolf tilts its head. Then sits.",       next: "wolf_standoff" },
+      { label: "Wait it out",               outcome: "The wolf eventually loses interest and pads away.",              next: "wolf_retreats" },
+      { label: "Throw a pinecone at it",    outcome: "It looks personally offended, then leaves.",                    next: "wolf_retreats" },
+      { label: "Swing branch to branch",    outcome: "You go far enough to drop safely.",                             next: "safe_zone" },
+      { label: "Talk to it softly",         outcome: "You speak gently. The wolf tilts its head. Then sits.",        next: "wolf_standoff" },
     ]
   },
   bear_retreats: {
     setup: "The bear is stumbling back. You've won. But now you're deep in the cave with no light.",
     choices: [
-      { label: "Feel your way forward",  outcome: "Your hand finds a torch mounted in the rock.",                 next: "torch_found" },
-      { label: "Sit still and listen",   outcome: "A breeze touches your face. There's an opening nearby.",      next: "found_exit" },
-      { label: "Shout for help",         outcome: "Your echo bounces around — then a voice echoes back.",        next: "voice_in_cave" },
-      { label: "Go back toward daylight",outcome: "You stumble back and feel light before you see it.",          next: "escaped_cave" },
+      { label: "Feel your way forward",     outcome: "Your hand finds a torch mounted in the rock.",                  next: "torch_found" },
+      { label: "Sit still and listen",      outcome: "A breeze touches your face. There's an opening nearby.",       next: "found_exit" },
+      { label: "Shout for help",            outcome: "Your echo bounces around — then a voice echoes back.",         next: "voice_in_cave" },
+      { label: "Go back toward daylight",   outcome: "You stumble back and feel light before you see it.",           next: "escaped_cave" },
     ]
   },
   bear_leaves: {
     setup: "The bear wandered off. You're flat on the cave floor, unharmed. You get up slowly.",
     choices: [
-      { label: "Keep going forward",     outcome: "The cave opens into a huge underground chamber.",              next: "underground_chamber" },
-      { label: "Head back out",          outcome: "You walk toward the light at the entrance.",                   next: "escaped_cave" },
-      { label: "Check the bear's den",   outcome: "You find objects the bear collected — some are useful.",     next: "found_food" },
-      { label: "Light a fire",           outcome: "Sparks from two rocks. The cave warms up.",                   next: "campfire" },
+      { label: "Keep going forward",        outcome: "The cave opens into a huge underground chamber.",               next: "underground_chamber" },
+      { label: "Head back out",             outcome: "You walk toward the light at the entrance.",                    next: "escaped_cave" },
+      { label: "Check the bear's den",      outcome: "You find objects the bear collected — some are useful.",      next: "found_food" },
+      { label: "Light a fire",              outcome: "Sparks from two rocks. The cave warms up.",                    next: "campfire" },
     ]
   },
   high_up: {
     setup: "You're clinging to the cave wall, high above the floor. The bear is gone. Getting down is its own problem.",
     choices: [
-      { label: "Slowly climb down",      outcome: "Hand over hand. You make it. Your arms are wrecked.",         next: "escaped_cave" },
-      { label: "Look for a ledge",       outcome: "There's one to the left — and a passage behind it.",          next: "secret_passage" },
-      { label: "Jump to a stalagmite",   outcome: "You stick the landing. Barely.",                              next: "underground_chamber" },
-      { label: "Wait for help",          outcome: "Twenty minutes later, a ranger shines a light up at you.",   next: "rescue" },
+      { label: "Slowly climb down",         outcome: "Hand over hand. You make it. Your arms are wrecked.",          next: "escaped_cave" },
+      { label: "Look for a ledge",          outcome: "There's one to the left — and a passage behind it.",           next: "secret_passage" },
+      { label: "Jump to a stalagmite",      outcome: "You stick the landing. Barely.",                               next: "underground_chamber" },
+      { label: "Wait for help",             outcome: "Twenty minutes later, a ranger shines a light up at you.",    next: "rescue" },
     ]
   },
   escaped_cave: {
     setup: "You're out of the cave, blinking in sunlight. You made it. But where exactly are you?",
     choices: [
-      { label: "Follow the trail",       outcome: "The trail winds through pine trees and leads uphill.",        next: "mountain_path" },
-      { label: "Rest first",             outcome: "You sit on a rock. A hawk circles overhead. You feel watched.", next: "hawk_watches" },
-      { label: "Look for water",         outcome: "You find a cold stream. Exactly what you needed.",            next: "across_stream" },
-      { label: "Climb the ridge",        outcome: "From the top you can see everything — including what's ahead.", next: "ridge_view" },
+      { label: "Follow the trail",          outcome: "The trail winds through pine trees and leads uphill.",         next: "mountain_path" },
+      { label: "Rest first",                outcome: "You sit on a rock. A hawk circles overhead. You feel watched.",next: "hawk_watches" },
+      { label: "Look for water",            outcome: "You find a cold stream. Exactly what you needed.",             next: "across_stream" },
+      { label: "Climb the ridge",           outcome: "From the top you can see everything — including what's ahead.",next: "ridge_view" },
     ]
   },
   safe_tunnel: {
     setup: "You're in a quiet tunnel. The bear is gone. There's faint light at the far end.",
     choices: [
-      { label: "Walk toward the light",  outcome: "The tunnel opens into a massive underground cathedral of rock.", next: "underground_chamber" },
-      { label: "Move carefully",         outcome: "Good instinct. You spot a tripwire and step over it.",         next: "tripwire" },
-      { label: "Sprint toward it",       outcome: "You burst out into open air on the other side of the mountain.", next: "other_side" },
-      { label: "Wait and listen",        outcome: "You hear wind — and small footsteps.",                        next: "small_creature" },
+      { label: "Walk toward the light",     outcome: "The tunnel opens into a massive underground cathedral of rock.",next: "underground_chamber" },
+      { label: "Move carefully",            outcome: "Good instinct. You spot a tripwire and step over it.",         next: "tripwire" },
+      { label: "Sprint toward it",          outcome: "You burst out into open air on the other side of the mountain.",next: "other_side" },
+      { label: "Wait and listen",           outcome: "You hear wind — and small footsteps.",                        next: "small_creature" },
     ]
   },
   across_stream: {
     setup: "You're across the stream, catching your breath. Strong current. No going back that way.",
     choices: [
-      { label: "Follow it downhill",     outcome: "It leads you to a wide valley.",                              next: "valley" },
-      { label: "Head into the trees",    outcome: "The forest thickens. Something rustles to your left.",        next: "forest_wolf" },
-      { label: "Wade upstream",          outcome: "Cold water, slippery rocks — but you push through to a waterfall.", next: "waterfall" },
-      { label: "Build a raft",           outcome: "Lashed branches. It holds — barely.",                        next: "raft" },
+      { label: "Follow it downhill",        outcome: "It leads you to a wide valley.",                              next: "valley" },
+      { label: "Head into the trees",       outcome: "The forest thickens. Something rustles to your left.",        next: "forest_wolf" },
+      { label: "Wade upstream",             outcome: "Cold water, slippery rocks — but you push through to a waterfall.", next: "waterfall" },
+      { label: "Build a raft",              outcome: "Lashed branches. It holds — barely.",                        next: "raft" },
     ]
   },
   control_panel: {
     setup: "The control panel is sparking. Buttons everywhere. Screens flickering with warnings.",
     choices: [
-      { label: "Press the big red button", outcome: "Alarms stop. All systems go to standby. Nice.",            next: "ship_quiet" },
-      { label: "Cut the wires",          outcome: "Wrong wire. Everything goes dark.",                           next: "darkness" },
-      { label: "Read the sticky note",   outcome: "It says: 'Do NOT press Y7.' You eye Y7 very carefully.",    next: "mystery_button" },
-      { label: "Restart the system",     outcome: "The ship hums. Engines warming up.",                         next: "ship_starts" },
+      { label: "Press the big red button",  outcome: "Alarms stop. All systems go to standby. Nice.",              next: "ship_quiet" },
+      { label: "Cut the wires",             outcome: "Wrong wire. Everything goes dark.",                           next: "darkness" },
+      { label: "Read the sticky note",      outcome: "It says: 'Do NOT press Y7.' You eye Y7 very carefully.",    next: "mystery_button" },
+      { label: "Restart the system",        outcome: "The ship hums. Engines warming up.",                         next: "ship_starts" },
     ]
   },
   ship_starts: {
     setup: "The engines are running. This spaceship is about to take off.",
     choices: [
-      { label: "Strap in and go",        outcome: "The ship launches. You're in orbit before you can scream.",  next: "in_space" },
-      { label: "Try to stop it",         outcome: "You yank levers. The ship sputters back to standby.",       next: "ship_quiet" },
-      { label: "Find another pilot",     outcome: "There's a robot in the co-pilot seat. Thumbs up.",          next: "robot_ally" },
-      { label: "Set autopilot",          outcome: "It locks in a destination: somewhere called 'the Vault.'",  next: "vault_destination" },
+      { label: "Strap in and go",           outcome: "The ship launches. You're in orbit before you can scream.",  next: "in_space" },
+      { label: "Try to stop it",            outcome: "You yank levers. The ship sputters back to standby.",       next: "ship_quiet" },
+      { label: "Find another pilot",        outcome: "There's a robot in the co-pilot seat. Thumbs up.",          next: "robot_ally" },
+      { label: "Set autopilot",             outcome: "It locks in a destination: somewhere called 'the Vault.'",  next: "vault_destination" },
     ]
   },
   alien_encounter: {
     setup: "Something is breathing in the corner. You shine your light — it's not human.",
     choices: [
-      { label: "Say hello",              outcome: "It blinks all six eyes. Then waves.",                        next: "alien_friendly" },
-      { label: "Back away quietly",      outcome: "You back into the door. It turns to look.",                 next: "alien_standoff" },
-      { label: "Throw something at it",  outcome: "It catches the object. Looks disappointed.",               next: "alien_standoff" },
-      { label: "Ask if it speaks English", outcome: "It replies: 'Of course. Please stop shining that in my eyes.'", next: "alien_friendly" },
+      { label: "Say hello",                 outcome: "It blinks all six eyes. Then waves.",                        next: "alien_friendly" },
+      { label: "Back away quietly",         outcome: "You back into the door. It turns to look.",                 next: "alien_standoff" },
+      { label: "Throw something at it",     outcome: "It catches the object. Looks disappointed.",               next: "alien_standoff" },
+      { label: "Ask if it speaks English",  outcome: "'Of course. Please stop shining that in my eyes.'",        next: "alien_friendly" },
     ]
   },
   cargo_warning: {
     setup: "Someone warned you: do NOT open the cargo bay. You're now standing right in front of it.",
     choices: [
-      { label: "Open it anyway",         outcome: "You open it. It was just empty boxes. Anticlimactic.",      next: "ship_quiet" },
-      { label: "Walk away",              outcome: "Smart. The ship seems to relax.",                           next: "ship_starts" },
-      { label: "Knock on it",            outcome: "Something knocks back. Three times.",                       next: "alien_encounter" },
-      { label: "Look for another way through", outcome: "There's a vent. You squeeze in.",                   next: "tunnel" },
+      { label: "Open it anyway",            outcome: "You open it. Empty boxes. Anticlimactic.",                  next: "ship_quiet" },
+      { label: "Walk away",                 outcome: "Smart. The ship seems to relax.",                           next: "ship_starts" },
+      { label: "Knock on it",               outcome: "Something knocks back. Three times.",                       next: "alien_encounter" },
+      { label: "Find another way through",  outcome: "There's a vent. You squeeze in.",                          next: "tunnel" },
     ]
   },
   great_hall: {
     setup: "Long tables, cold fireplaces, portraits with eyes that move. Something is on the chandelier.",
     choices: [
-      { label: "Look up at the chandelier", outcome: "A gargoyle stares back and drops to the floor in front of you.", next: "gargoyle" },
-      { label: "Sit at the table",       outcome: "Food appears. You have no idea from where.",               next: "mystery_feast" },
-      { label: "Check behind the fireplace", outcome: "A lever. You pull it. A door opens in the floor.",   next: "hidden_door" },
-      { label: "Follow where the portraits stare", outcome: "They all look at one painting. You pull it.",  next: "secret_passage" },
+      { label: "Look up at the chandelier", outcome: "A gargoyle drops to the floor in front of you.",           next: "gargoyle" },
+      { label: "Sit at the table",          outcome: "Food appears. You have no idea from where.",               next: "mystery_feast" },
+      { label: "Check behind the fireplace",outcome: "A lever. You pull it. A door opens in the floor.",        next: "hidden_door" },
+      { label: "Follow where the portraits stare", outcome: "They all look at one painting. You pull it.",      next: "secret_passage" },
     ]
   },
   falling: {
     setup: "The stair crumbled. You're falling.",
     choices: [
-      { label: "Grab the wall",          outcome: "Your fingers catch a stone edge. You hang there, breathing hard.", next: "high_up" },
-      { label: "Tuck and roll",          outcome: "You land hard on a pile of old tapestries. Saved.",          next: "dungeon" },
-      { label: "Grab a tapestry",        outcome: "It slows you enough. You land on your feet. Barely.",       next: "great_hall" },
-      { label: "Just fall",              outcome: "You land in water — a moat, underground. You swim.",        next: "across_stream" },
+      { label: "Grab the wall",             outcome: "Your fingers catch a stone edge. You hang there, breathing hard.", next: "high_up" },
+      { label: "Tuck and roll",             outcome: "You land hard on old tapestries. Saved.",                  next: "dungeon" },
+      { label: "Grab a tapestry",           outcome: "It slows you enough. You land on your feet. Barely.",     next: "great_hall" },
+      { label: "Just fall",                 outcome: "You land in water — a moat, underground. You swim.",      next: "across_stream" },
     ]
   },
   dungeon: {
-    setup: "The dungeon is open and empty — except for scratch marks on the wall and a broken lock.",
+    setup: "The dungeon is open and empty — scratch marks on the wall and a broken lock on the floor.",
     choices: [
-      { label: "Read the scratch marks", outcome: "It's a crude map. Clear enough to follow.",                 next: "map_found" },
-      { label: "Follow the muddy footprints", outcome: "They lead up a spiral staircase.",                   next: "tower" },
-      { label: "Wait here — it's safer", outcome: "Something drips on your head. You look up. Horrible idea.", next: "something_heard_you" },
-      { label: "Examine the broken lock", outcome: "It was broken from the inside. Whatever was here got out.", next: "something_heard_you" },
+      { label: "Read the scratch marks",    outcome: "It's a crude map. Clear enough to follow.",                next: "map_found" },
+      { label: "Follow the muddy footprints", outcome: "They lead up a spiral staircase.",                     next: "tower" },
+      { label: "Wait here — it's safer",   outcome: "Something drips on your head. You look up. Horrible idea.",next: "something_heard_you" },
+      { label: "Examine the broken lock",   outcome: "Broken from the inside. Whatever was here got out.",     next: "something_heard_you" },
     ]
   },
   something_heard_you: {
     setup: "Something heard you. Heavy footsteps, getting louder.",
     choices: [
-      { label: "Hide behind a pillar",   outcome: "It passes two feet from you. You hold your breath.",       next: "hiding" },
-      { label: "Stand and face it",      outcome: "It rounds the corner — a very large, confused sheep.",    next: "sheep" },
-      { label: "Run up the stairs",      outcome: "You sprint up. Whatever it is doesn't follow.",            next: "tower" },
-      { label: "Slam a door between you", outcome: "The door holds. Barely. You hear it stop outside.",      next: "door_between" },
+      { label: "Hide behind a pillar",      outcome: "It passes two feet from you. You hold your breath.",     next: "hiding" },
+      { label: "Stand and face it",         outcome: "It rounds the corner — a very large, confused sheep.",  next: "sheep" },
+      { label: "Run up the stairs",         outcome: "You sprint up. Whatever it is doesn't follow.",          next: "tower" },
+      { label: "Slam a door between you",   outcome: "The door holds. Barely. You hear it stop outside.",    next: "door_between" },
     ]
   },
   underground_chamber: {
     setup: "A vast underground chamber. Crystals line the walls. Three tunnels lead out.",
     choices: [
-      { label: "Take the left tunnel",   outcome: "It slopes upward and comes out in a meadow.",              next: "meadow" },
-      { label: "Take the middle tunnel", outcome: "It leads to an underground river — and a boat.",           next: "underground_river" },
-      { label: "Take the right tunnel",  outcome: "It gets smaller until you're crawling.",                   next: "tunnel" },
-      { label: "Stay and explore",       outcome: "You find ancient carvings — your name is among them.",     next: "your_name" },
+      { label: "Take the left tunnel",      outcome: "It slopes upward and comes out in a meadow.",            next: "meadow" },
+      { label: "Take the middle tunnel",    outcome: "It leads to an underground river — and a boat.",         next: "underground_river" },
+      { label: "Take the right tunnel",     outcome: "It gets smaller until you're crawling.",                 next: "tunnel" },
+      { label: "Stay and explore",          outcome: "You find ancient carvings — your name is among them.",   next: "your_name" },
     ]
   },
   road: {
     setup: "A road. A cart is approaching. The driver waves.",
     choices: [
-      { label: "Ask for a ride",         outcome: "They say yes. You're heading toward a city.",              next: "village_spotted" },
-      { label: "Let it pass",            outcome: "A faster horse zooms by right after. Probably fine.",      next: "meadow" },
-      { label: "Ask where you are",      outcome: "'Couldn't tell ya,' they say helpfully.",                 next: "meadow" },
-      { label: "Walk the other way",     outcome: "The road curves into a pine forest.",                      next: "forest_wolf" },
+      { label: "Ask for a ride",            outcome: "They say yes. You're heading toward a city.",            next: "village_spotted" },
+      { label: "Let it pass",               outcome: "A faster horse zooms by right after. Probably fine.",   next: "meadow" },
+      { label: "Ask where you are",         outcome: "'Couldn't tell ya,' they say helpfully.",               next: "meadow" },
+      { label: "Walk the other way",        outcome: "The road curves into a pine forest.",                    next: "forest_wolf" },
     ]
   },
   meadow: {
     setup: "A wide open meadow. Wildflowers. Silence. A figure in the distance stands very still.",
     choices: [
-      { label: "Walk toward it",         outcome: "Up close — it's a scarecrow. Wearing your jacket.",       next: "your_name" },
-      { label: "Sit and rest",           outcome: "You wake up an hour later. The figure is closer now.",    next: "something_heard_you" },
-      { label: "Run past it",            outcome: "You sprint across and reach the treeline safely.",         next: "forest_wolf" },
-      { label: "Wave at it",             outcome: "It waves back. Slowly.",                                   next: "something_heard_you" },
+      { label: "Walk toward it",            outcome: "Up close — it's a scarecrow. Wearing your jacket.",     next: "your_name" },
+      { label: "Sit and rest",              outcome: "You wake up an hour later. The figure is closer now.",  next: "something_heard_you" },
+      { label: "Run past it",               outcome: "You sprint across and reach the treeline safely.",       next: "forest_wolf" },
+      { label: "Wave at it",                outcome: "It waves back. Slowly.",                                 next: "something_heard_you" },
     ]
   },
   morning: {
     setup: "Morning. You slept, somehow. Light through the trees. Everything is quiet.",
     choices: [
-      { label: "Head toward the light",  outcome: "Through the trees — a road.",                              next: "road" },
-      { label: "Explore the area",       outcome: "You find the remains of a recent campfire.",               next: "mysterious_camp" },
-      { label: "Keep sleeping",          outcome: "You wake again later. Something moved your bag.",          next: "something_heard_you" },
-      { label: "Climb high to look",     outcome: "From the ridge you can see everything.",                   next: "ridge_view" },
+      { label: "Head toward the light",     outcome: "Through the trees — a road.",                           next: "road" },
+      { label: "Explore the area",          outcome: "You find the remains of a recent campfire.",             next: "mysterious_camp" },
+      { label: "Keep sleeping",             outcome: "You wake again later. Something moved your bag.",        next: "something_heard_you" },
+      { label: "Climb high to look",        outcome: "From the ridge you can see everything.",                 next: "ridge_view" },
     ]
   },
   ridge_view: {
     setup: "From the ridge: forest, a village, a castle, something glowing in the valley. Your choice.",
     choices: [
-      { label: "Head to the village",    outcome: "Smoke from chimneys. Warm light. People.",                 next: "village_spotted" },
-      { label: "Head to the castle",     outcome: "It looms larger the closer you get.",                      next: "castle" },
-      { label: "Head toward the glow",   outcome: "A fire — and strangers around it.",                        next: "mysterious_camp" },
-      { label: "Stay on the ridge",      outcome: "A hawk lands next to you with a note tied to its leg.",   next: "hawk_note" },
+      { label: "Head to the village",       outcome: "Smoke from chimneys. Warm light. People.",              next: "village_spotted" },
+      { label: "Head to the castle",        outcome: "It looms larger the closer you get.",                   next: "castle" },
+      { label: "Head toward the glow",      outcome: "A fire — and strangers around it.",                     next: "mysterious_camp" },
+      { label: "Stay on the ridge",         outcome: "A hawk lands next to you with a note tied to its leg.",next: "hawk_note" },
     ]
   },
   mysterious_camp: {
     setup: "A camp. A fire. Three strangers look up as you arrive. Nobody speaks first.",
     choices: [
-      { label: "Sit down",               outcome: "One hands you food. Still nobody speaks.",                 next: "found_food" },
-      { label: "Ask who they are",       outcome: "'Travelers,' the tallest says. Nothing more.",             next: "village_spotted" },
-      { label: "Turn and leave",         outcome: "They watch you go. You feel their eyes for a long time.", next: "ridge_view" },
-      { label: "Offer to help",          outcome: "The quiet one smiles and hands you a map.",                next: "map_found" },
+      { label: "Sit down",                  outcome: "One hands you food. Still nobody speaks.",              next: "found_food" },
+      { label: "Ask who they are",          outcome: "'Travelers,' the tallest says. Nothing more.",          next: "village_spotted" },
+      { label: "Turn and leave",            outcome: "They watch you go. You feel their eyes for a long time.",next: "ridge_view" },
+      { label: "Offer to help",             outcome: "The quiet one smiles and hands you a map.",             next: "map_found" },
     ]
   },
   village_spotted: {
     setup: "The village looks peaceful. Smoke, bread smell, people in the streets.",
     choices: [
-      { label: "Walk straight in",       outcome: "Everyone stares. Then someone recognizes you. Somehow.",   next: "your_name" },
-      { label: "Find the inn first",     outcome: "Warm, dry, and safe — for now.",                           next: "found_food" },
-      { label: "Head to the market",     outcome: "Stalls everywhere — one has something unusual.",           next: "key_found" },
-      { label: "Ask about the glow",     outcome: "Villagers go quiet. One pulls you aside.",                next: "hawk_note" },
+      { label: "Walk straight in",          outcome: "Everyone stares. Then someone recognizes you. Somehow.", next: "your_name" },
+      { label: "Find the inn first",        outcome: "Warm, dry, and safe — for now.",                        next: "found_food" },
+      { label: "Head to the market",        outcome: "Stalls everywhere — one has something unusual.",        next: "key_found" },
+      { label: "Ask about the glow",        outcome: "Villagers go quiet. One pulls you aside.",             next: "hawk_note" },
     ]
   },
   your_name: {
     setup: "Your name. On the wall. On the map. In the records. It shouldn't be here — but it is.",
     choices: [
-      { label: "Follow where it points", outcome: "It leads you to a door you've never seen.",               next: "hidden_door" },
-      { label: "Erase it",              outcome: "As soon as you do, it reappears behind you.",              next: "something_heard_you" },
-      { label: "Ask someone",           outcome: "They look at it, look at you: 'We've been waiting.'",     next: "mysterious_camp" },
-      { label: "Ignore it and move on", outcome: "You try. But it's on the next wall too.",                 next: "hidden_door" },
+      { label: "Follow where it points",    outcome: "It leads you to a door you've never seen.",            next: "hidden_door" },
+      { label: "Erase it",                 outcome: "As soon as you do, it reappears behind you.",           next: "something_heard_you" },
+      { label: "Ask someone",              outcome: "They look at it, look at you: 'We've been waiting.'",  next: "mysterious_camp" },
+      { label: "Ignore it and move on",    outcome: "You try. But it's on the next wall too.",              next: "hidden_door" },
     ]
   },
   hidden_door: {
     setup: "A door you've never seen before. No handle. No lock. It hums faintly.",
     choices: [
-      { label: "Push it open",          outcome: "It swings silently into a bright room.",                   next: "final_room" },
-      { label: "Say your name",         outcome: "The hum gets louder. Then it opens.",                      next: "final_room" },
-      { label: "Knock",                 outcome: "Three knocks. Three from the other side. Then it opens.", next: "final_room" },
-      { label: "Walk away",             outcome: "Three steps later it appears in front of you again.",      next: "final_room" },
+      { label: "Push it open",             outcome: "It swings silently into a bright room.",                next: "new_room" },
+      { label: "Say your name",            outcome: "The hum gets louder. Then it opens.",                   next: "new_room" },
+      { label: "Knock",                    outcome: "Three knocks. Three from the other side. Then it opens.",next: "new_room" },
+      { label: "Walk away",                outcome: "Three steps later it appears in front of you again.",   next: "new_room" },
     ]
   },
-  final_room: {
-    setup: "Inside: light, quiet, and an answer to at least one thing you've been wondering.",
+  new_room: {
+    setup: "A new room. Something here you haven't seen before.",
     choices: [
-      { label: "Take what's here",      outcome: "It's everything you needed.",                              next: "__end__" },
-      { label: "Ask your question",     outcome: "The answer comes. You understand now.",                   next: "__end__" },
-      { label: "Stay a while",          outcome: "You do. And when ready, you walk back out.",              next: "__end__" },
-      { label: "Leave without looking", outcome: "Some things are better that way.",                        next: "__end__" },
+      { label: "Explore every corner",     outcome: "You find something hidden — and something useful.",     next: "secret_chamber" },
+      { label: "Find the next door",       outcome: "There's always another door.",                          next: "hidden_door" },
+      { label: "Rest here",                outcome: "Safe, quiet. You needed this.",                         next: "morning" },
+      { label: "Take what's here",         outcome: "It fits perfectly in your bag.",                        next: "key_found" },
     ]
   },
-
   hiding: {
     setup: "You're hidden. Whatever was hunting you passes. Now what?",
     choices: [
-      { label: "Keep hiding",           outcome: "A few more minutes — then it's gone.",                    next: "safe_zone" },
-      { label: "Follow it",             outcome: "You tail it at a distance. Interesting destination.",    next: "mysterious_camp" },
-      { label: "Run the other way",     outcome: "Clear path. You take it.",                               next: "road" },
-      { label: "Come out slowly",       outcome: "Coast is clear.",                                         next: "meadow" },
+      { label: "Keep hiding",              outcome: "A few more minutes — then it's gone.",                  next: "safe_zone" },
+      { label: "Follow it",                outcome: "You tail it at a distance. Interesting destination.",   next: "mysterious_camp" },
+      { label: "Run the other way",        outcome: "Clear path. You take it.",                              next: "road" },
+      { label: "Come out slowly",          outcome: "Coast is clear.",                                        next: "meadow" },
     ]
   },
   safe_zone: {
     setup: "You're safe — for now. Time to think about what's next.",
     choices: [
-      { label: "Press forward",         outcome: "You move ahead carefully.",                               next: "ridge_view" },
-      { label: "Find shelter",          outcome: "You spot a cabin in the distance.",                      next: "mysterious_camp" },
-      { label: "Look for others",       outcome: "There are tracks nearby.",                               next: "village_spotted" },
-      { label: "Rest and recover",      outcome: "You rest. Then keep going.",                             next: "morning" },
+      { label: "Press forward",            outcome: "You move ahead carefully.",                             next: "ridge_view" },
+      { label: "Find shelter",             outcome: "You spot something in the distance.",                   next: "mysterious_camp" },
+      { label: "Look for others",          outcome: "There are tracks nearby.",                              next: "village_spotted" },
+      { label: "Rest and recover",         outcome: "You rest. Then keep going.",                            next: "morning" },
     ]
   },
   found_food: {
     setup: "You found food and ate. Energy restored. The path ahead is still unclear.",
     choices: [
-      { label: "Keep moving",           outcome: "Refreshed, you push forward.",                           next: "ridge_view" },
-      { label: "Explore nearby",        outcome: "There's more here than you thought.",                    next: "secret_chamber" },
-      { label: "Stay the night",        outcome: "You sleep safely and wake renewed.",                     next: "morning" },
-      { label: "Look for the source",   outcome: "Where did this come from?",                              next: "mysterious_camp" },
+      { label: "Keep moving",              outcome: "Refreshed, you push forward.",                          next: "ridge_view" },
+      { label: "Explore nearby",           outcome: "There's more here than you thought.",                   next: "secret_chamber" },
+      { label: "Stay the night",           outcome: "You sleep safely and wake renewed.",                    next: "morning" },
+      { label: "Look for the source",      outcome: "Where did this come from?",                             next: "mysterious_camp" },
     ]
   },
   map_found: {
     setup: "You have a map. It shows where you've been — and where to go.",
     choices: [
-      { label: "Follow it exactly",     outcome: "The map is accurate. Good map.",                         next: "hidden_door" },
-      { label: "Take the shortcut",     outcome: "The shortcut is a swamp.",                               next: "across_stream" },
-      { label: "Share it with someone", outcome: "Someone knows this place.",                              next: "mysterious_camp" },
-      { label: "Memorize and destroy",  outcome: "Just in case.",                                          next: "ridge_view" },
+      { label: "Follow it exactly",        outcome: "The map is accurate.",                                  next: "hidden_door" },
+      { label: "Take the shortcut",        outcome: "The shortcut is a swamp.",                              next: "across_stream" },
+      { label: "Share it with someone",    outcome: "Someone knows this place.",                             next: "mysterious_camp" },
+      { label: "Memorize and destroy it",  outcome: "Just in case.",                                         next: "ridge_view" },
     ]
   },
   secret_chamber: {
     setup: "A secret chamber. Old, sealed for a long time. Something was left here on purpose.",
     choices: [
-      { label: "Take the object",       outcome: "It hums in your hands.",                                 next: "your_name" },
-      { label: "Leave it alone",        outcome: "Some things stay sealed for a reason.",                  next: "tunnel_exit" },
-      { label: "Examine everything",    outcome: "You find a map and a name.",                             next: "map_found" },
-      { label: "Open the chest",        outcome: "The lock clicks open.",                                  next: "key_found" },
+      { label: "Take the object",          outcome: "It hums in your hands.",                                next: "your_name" },
+      { label: "Leave it alone",           outcome: "Some things stay sealed for a reason.",                 next: "tunnel_exit" },
+      { label: "Examine everything",       outcome: "You find a map and a name.",                            next: "map_found" },
+      { label: "Open the chest",           outcome: "The lock clicks open.",                                 next: "key_found" },
     ]
   },
   key_found: {
     setup: "A key. Old, ornate, unlike anything you've seen. It belongs somewhere.",
     choices: [
-      { label: "Search for the lock",   outcome: "Nearby: a door.",                                       next: "hidden_door" },
-      { label: "Keep it for now",       outcome: "Smart move.",                                            next: "ridge_view" },
-      { label: "Ask around",            outcome: "Someone recognizes it immediately.",                     next: "mysterious_camp" },
-      { label: "Try every lock you see", outcome: "The third one works.",                                 next: "secret_chamber" },
+      { label: "Search for the lock",      outcome: "Nearby: a door.",                                      next: "hidden_door" },
+      { label: "Keep it for now",          outcome: "Smart move.",                                           next: "ridge_view" },
+      { label: "Ask around",               outcome: "Someone recognizes it immediately.",                    next: "mysterious_camp" },
+      { label: "Try every lock you see",   outcome: "The third one works.",                                  next: "secret_chamber" },
     ]
   },
   tunnel_exit: {
     setup: "Light ahead. The tunnel ends somewhere new.",
     choices: [
-      { label: "Step out",              outcome: "Fresh air. Open sky.",                                   next: "meadow" },
-      { label: "Listen first",          outcome: "Nothing dangerous. You go.",                             next: "meadow" },
-      { label: "Come out running",      outcome: "You burst into daylight.",                               next: "ridge_view" },
-      { label: "Send a rock first",     outcome: "It rolls out. Nothing happens. You follow.",             next: "meadow" },
+      { label: "Step out",                 outcome: "Fresh air. Open sky.",                                  next: "meadow" },
+      { label: "Listen first",             outcome: "Nothing dangerous. You go.",                            next: "meadow" },
+      { label: "Come out running",         outcome: "You burst into daylight.",                              next: "ridge_view" },
+      { label: "Send a rock first",        outcome: "It rolls out. Nothing happens. You follow.",            next: "meadow" },
     ]
   },
   tower: {
     setup: "You're in the tower. Through a narrow window: fog, treetops, and far below — a way out.",
     choices: [
-      { label: "Climb down the outside", outcome: "Stone by stone. Your fingers ache but you make it.", next: "escaped_cave" },
-      { label: "Look for another stair", outcome: "There's a ladder behind a door.",                     next: "hidden_door" },
-      { label: "Wait up here",          outcome: "After a long wait, you hear someone coming up.",       next: "mysterious_camp" },
-      { label: "Signal for help",       outcome: "A light answers back from the treeline.",              next: "village_spotted" },
+      { label: "Climb down the outside",   outcome: "Stone by stone. Your fingers ache but you make it.",  next: "escaped_cave" },
+      { label: "Look for another stair",   outcome: "There's a ladder behind a door.",                      next: "hidden_door" },
+      { label: "Wait up here",             outcome: "After a long wait, you hear someone coming up.",       next: "mysterious_camp" },
+      { label: "Signal for help",          outcome: "A light answers back from the treeline.",              next: "village_spotted" },
     ]
   },
   gargoyle: {
     setup: "A gargoyle stands in front of you. Solid stone — except it blinked.",
     choices: [
-      { label: "Ask it a question",     outcome: "It answers. Somehow you're not surprised.",             next: "your_name" },
-      { label: "Run",                   outcome: "It doesn't follow. You run anyway.",                    next: "dungeon" },
-      { label: "Touch it",              outcome: "It's warm. That's unsettling.",                         next: "hidden_door" },
-      { label: "Ignore it",             outcome: "You walk past. It watches you the whole time.",        next: "great_hall" },
+      { label: "Ask it a question",        outcome: "It answers. Somehow you're not surprised.",            next: "your_name" },
+      { label: "Run",                      outcome: "It doesn't follow. You run anyway.",                   next: "dungeon" },
+      { label: "Touch it",                 outcome: "It's warm. That's unsettling.",                        next: "hidden_door" },
+      { label: "Ignore it",                outcome: "You walk past. It watches you the whole time.",       next: "great_hall" },
     ]
   },
   sheep: {
-    setup: "It's a sheep. Enormous, confused, and blocking the entire hallway.",
+    setup: "It's a sheep. Enormous, confused, blocking the entire hallway.",
     choices: [
-      { label: "Try to move it",        outcome: "It does not move. It is immovable.",                   next: "hiding" },
-      { label: "Befriend it",           outcome: "It follows you now. For the rest of the adventure.",   next: "wolf_friendly" },
-      { label: "Go around",             outcome: "There's a gap. You squeeze through.",                  next: "dungeon" },
-      { label: "Offer it food",         outcome: "It accepts and waddles away.",                         next: "great_hall" },
+      { label: "Try to move it",           outcome: "It does not move. It is immovable.",                   next: "hiding" },
+      { label: "Befriend it",              outcome: "It follows you now. For the rest of the adventure.",   next: "wolf_friendly" },
+      { label: "Go around",                outcome: "There's a gap. You squeeze through.",                  next: "dungeon" },
+      { label: "Offer it food",            outcome: "It accepts and waddles away.",                         next: "great_hall" },
     ]
   },
   campfire: {
     setup: "You've made a fire. Warmth, light, some safety. But you're still underground.",
     choices: [
-      { label: "Use the light to explore", outcome: "The fire reveals a tunnel you missed.",            next: "safe_tunnel" },
-      { label: "Rest here",             outcome: "You sleep. You wake up feeling better.",               next: "underground_chamber" },
-      { label: "Signal with the smoke", outcome: "Smoke rises toward a crack above. Someone sees it.", next: "rescue" },
-      { label: "Cook something",        outcome: "You find cave mushrooms. They're... fine.",            next: "found_food" },
+      { label: "Use the light to explore", outcome: "The fire reveals a tunnel you missed.",                next: "safe_tunnel" },
+      { label: "Rest here",                outcome: "You sleep. You wake feeling better.",                  next: "underground_chamber" },
+      { label: "Signal with the smoke",    outcome: "Smoke rises toward a crack above. Someone sees it.", next: "rescue" },
+      { label: "Cook something",           outcome: "Cave mushrooms. They're... fine.",                     next: "found_food" },
     ]
   },
   rescue: {
     setup: "Help is coming. You can hear them above. They've found the opening.",
     choices: [
-      { label: "Call out to guide them", outcome: "They follow your voice directly to you.",             next: "mysterious_camp" },
-      { label: "Start climbing toward them", outcome: "You meet halfway.",                               next: "escaped_cave" },
-      { label: "Wait for them to come down", outcome: "They do. It takes a while.",                     next: "found_food" },
-      { label: "Wave your torch",       outcome: "They see the light and come right to you.",            next: "village_spotted" },
+      { label: "Call out to guide them",   outcome: "They follow your voice directly to you.",              next: "mysterious_camp" },
+      { label: "Climb toward them",        outcome: "You meet halfway.",                                     next: "escaped_cave" },
+      { label: "Wait for them",            outcome: "They do. It takes a while.",                           next: "found_food" },
+      { label: "Wave your torch",          outcome: "They see the light and come right to you.",            next: "village_spotted" },
     ]
   },
   hawk_note: {
     setup: "The note reads: 'Go to the door that wasn't there yesterday.' Signed with an X.",
     choices: [
-      { label: "Follow the instructions", outcome: "You search and find exactly that door.",             next: "hidden_door" },
-      { label: "Ignore it",             outcome: "You try. But the door finds you anyway.",              next: "hidden_door" },
-      { label: "Find whoever sent it",  outcome: "The hawk circles. You follow it.",                    next: "mysterious_camp" },
-      { label: "Write back on the note", outcome: "The hawk waits. Takes the note. Returns with directions.", next: "map_found" },
+      { label: "Follow the instructions",  outcome: "You search and find exactly that door.",               next: "hidden_door" },
+      { label: "Ignore it",                outcome: "You try. But the door finds you anyway.",              next: "hidden_door" },
+      { label: "Find whoever sent it",     outcome: "The hawk circles. You follow it.",                    next: "mysterious_camp" },
+      { label: "Write back on the note",   outcome: "The hawk takes it. Returns with directions.",         next: "map_found" },
     ]
   },
   mountain_path: {
-    setup: "A mountain path winding upward. Clean air. Below: the cave you escaped. Above: unknown.",
+    setup: "A mountain path winding upward. Clean air. Below: the cave. Above: unknown.",
     choices: [
-      { label: "Keep climbing",         outcome: "Near the summit, you find a shelter.",                 next: "mysterious_camp" },
-      { label: "Head down the other side", outcome: "The path descends into a valley.",                 next: "valley" },
-      { label: "Rest here",             outcome: "The view is worth stopping for.",                      next: "ridge_view" },
-      { label: "Look for a sign",       outcome: "There is one. It says: 'You are close.'",             next: "your_name" },
+      { label: "Keep climbing",            outcome: "Near the summit, you find a shelter.",                 next: "mysterious_camp" },
+      { label: "Head down the other side", outcome: "The path descends into a valley.",                    next: "valley" },
+      { label: "Rest here",                outcome: "The view is worth stopping for.",                      next: "ridge_view" },
+      { label: "Look for a sign",          outcome: "There is one. It says: 'You are close.'",             next: "your_name" },
     ]
   },
   valley: {
-    setup: "A wide valley. Green, open, quiet. A river runs through the middle and a bridge crosses it.",
+    setup: "A wide valley. Green, open, quiet. A river runs through the middle.",
     choices: [
-      { label: "Cross the bridge",      outcome: "The other side: a village.",                          next: "village_spotted" },
-      { label: "Follow the river",      outcome: "Downstream, something glints in the water.",          next: "key_found" },
-      { label: "Set up camp here",      outcome: "A peaceful night. The stars are incredible.",         next: "morning" },
-      { label: "Explore the valley floor", outcome: "You find stone ruins — and a door in the ground.", next: "hidden_door" },
+      { label: "Cross the bridge",         outcome: "The other side: a village.",                          next: "village_spotted" },
+      { label: "Follow the river",         outcome: "Downstream, something glints in the water.",          next: "key_found" },
+      { label: "Set up camp",              outcome: "A peaceful night. The stars are incredible.",         next: "morning" },
+      { label: "Explore the valley floor", outcome: "Stone ruins — and a door in the ground.",            next: "hidden_door" },
     ]
   },
   door_between: {
     setup: "The door is holding. Whatever is on the other side has stopped. For now.",
     choices: [
-      { label: "Barricade it",          outcome: "You pile furniture against it. That buys time.",      next: "tower" },
-      { label: "Open it fast",          outcome: "You yank it open. A very startled sheep stares back.", next: "sheep" },
-      { label: "Find another way out",  outcome: "There's a window just large enough.",                 next: "window_escape" },
-      { label: "Wait and listen",       outcome: "After a while, it walks away.",                       next: "hiding" },
+      { label: "Barricade it",             outcome: "You pile furniture against it. That buys time.",      next: "tower" },
+      { label: "Open it fast",             outcome: "You yank it open. A very startled sheep stares back.",next: "sheep" },
+      { label: "Find another way out",     outcome: "There's a window just large enough.",                 next: "window_escape" },
+      { label: "Wait and listen",          outcome: "After a while, it walks away.",                       next: "hiding" },
     ]
   },
   window_escape: {
     setup: "You're through the window and outside — but it's a long drop.",
     choices: [
-      { label: "Drop and roll",         outcome: "You land hard but safe in a hedge.",                  next: "escaped_cave" },
-      { label: "Hang and then drop",    outcome: "Much shorter fall. You stick it.",                    next: "meadow" },
-      { label: "Find a drainpipe",      outcome: "You slide down it faster than planned.",              next: "road" },
-      { label: "Climb sideways first",  outcome: "You find a lower window and drop from there.",        next: "dungeon" },
+      { label: "Drop and roll",            outcome: "You land hard but safe in a hedge.",                  next: "escaped_cave" },
+      { label: "Hang and then drop",       outcome: "Much shorter fall. You stick it.",                   next: "meadow" },
+      { label: "Find a drainpipe",         outcome: "You slide down faster than planned.",                 next: "road" },
+      { label: "Climb sideways first",     outcome: "You find a lower window and drop from there.",        next: "dungeon" },
     ]
   },
   torch_found: {
     setup: "You have a torch now. The cave is lit. You can finally see what's around you.",
     choices: [
-      { label: "Explore what's ahead",  outcome: "A large chamber opens up.",                          next: "underground_chamber" },
-      { label: "Look for markings",     outcome: "Arrows carved into the wall. Someone was here.",    next: "secret_passage" },
-      { label: "Go toward the sound",   outcome: "Running water. A stream.",                           next: "across_stream" },
-      { label: "Follow the breeze",     outcome: "Air means an exit is near.",                         next: "tunnel_exit" },
+      { label: "Explore ahead",            outcome: "A large chamber opens up.",                           next: "underground_chamber" },
+      { label: "Look for markings",        outcome: "Arrows carved into the wall. Someone was here.",     next: "secret_passage" },
+      { label: "Go toward the sound",      outcome: "Running water. A stream.",                            next: "across_stream" },
+      { label: "Follow the breeze",        outcome: "Air means an exit is near.",                         next: "tunnel_exit" },
     ]
   },
   secret_passage: {
-    setup: "A hidden passage. Narrow, old, clearly not used in a very long time.",
+    setup: "A hidden passage. Narrow, old, clearly not used in a long time.",
     choices: [
-      { label: "Follow it",             outcome: "It ends at a heavy wooden door.",                    next: "hidden_door" },
-      { label: "Check for traps first", outcome: "There's one. You disarm it and continue.",           next: "hidden_door" },
-      { label: "Go back",              outcome: "This didn't feel right. Back to the main path.",     next: "underground_chamber" },
-      { label: "Crawl through quickly", outcome: "You move fast and emerge in a bright room.",        next: "final_room" },
+      { label: "Follow it",                outcome: "It ends at a heavy wooden door.",                    next: "hidden_door" },
+      { label: "Check for traps first",    outcome: "There's one. You disarm it and continue.",           next: "hidden_door" },
+      { label: "Go back",                 outcome: "This didn't feel right. Back to the main path.",     next: "underground_chamber" },
+      { label: "Crawl through quickly",    outcome: "You move fast and emerge somewhere new.",            next: "new_room" },
     ]
   },
   mystery_button: {
     setup: "Y7 stares at you. The sticky note said don't. Every instinct says don't. But here you are.",
     choices: [
-      { label: "Press it",              outcome: "A compartment opens with exactly what you needed.",  next: "found_food" },
-      { label: "Don't press it",        outcome: "You back away. The right call, probably.",           next: "ship_quiet" },
-      { label: "Press everything else", outcome: "You press every button except Y7. The ship calms.", next: "ship_quiet" },
-      { label: "Label it and move on",  outcome: "You write 'DO NOT PRESS' underneath the sticky note. Responsible.", next: "control_panel" },
+      { label: "Press it",                 outcome: "A compartment opens with exactly what you needed.", next: "found_food" },
+      { label: "Don't press it",           outcome: "You back away. The right call, probably.",           next: "ship_quiet" },
+      { label: "Press everything else",    outcome: "You press every button except Y7. The ship calms.", next: "ship_quiet" },
+      { label: "Label it and move on",     outcome: "You write 'DO NOT PRESS' under the note.",          next: "control_panel" },
     ]
   },
   ship_quiet: {
     setup: "The ship is quiet and running. You're in control — or close to it.",
     choices: [
-      { label: "Look for an exit",      outcome: "An airlock. Beyond it: stairs back to ground level.", next: "escaped_cave" },
-      { label: "Explore more",          outcome: "There's a whole back section you haven't seen.",    next: "alien_encounter" },
-      { label: "Check the navigation",  outcome: "The last destination logged: coordinates, strange ones.", next: "vault_destination" },
-      { label: "Rest here",             outcome: "The ship is safe. You sleep in the co-pilot seat.", next: "morning" },
+      { label: "Look for an exit",         outcome: "An airlock. Beyond it: stairs to ground level.",     next: "escaped_cave" },
+      { label: "Explore more",             outcome: "There's a whole back section you haven't seen.",    next: "alien_encounter" },
+      { label: "Check the navigation",     outcome: "The last destination logged: strange coordinates.", next: "vault_destination" },
+      { label: "Rest here",                outcome: "You sleep in the co-pilot seat.",                    next: "morning" },
     ]
   },
   in_space: {
     setup: "You're in orbit. Earth is below. Silence surrounds you.",
     choices: [
-      { label: "Turn the ship around",  outcome: "Re-entry is rough but you make it back.",            next: "escaped_cave" },
-      { label: "Keep going",            outcome: "You pick a direction and go.",                       next: "vault_destination" },
-      { label: "Try to radio someone",  outcome: "A response comes. Someone's coming to get you.",    next: "rescue" },
-      { label: "Look out the window",   outcome: "You see something moving alongside you that shouldn't exist.", next: "alien_encounter" },
+      { label: "Turn the ship around",     outcome: "Re-entry is rough but you make it back.",            next: "escaped_cave" },
+      { label: "Keep going",               outcome: "You pick a direction and go.",                       next: "vault_destination" },
+      { label: "Radio someone",            outcome: "A response comes. Someone's coming to get you.",    next: "rescue" },
+      { label: "Look out the window",      outcome: "Something moves alongside you that shouldn't exist.",next: "alien_encounter" },
     ]
   },
   alien_friendly: {
     setup: "The alien is friendly. It shows you around the ship. It's been here a long time.",
     choices: [
-      { label: "Ask how to get home",   outcome: "It points at a button. Simple as that.",             next: "escaped_cave" },
-      { label: "Ask where it's from",   outcome: "It shows you a star map. You recognize nothing.",   next: "vault_destination" },
-      { label: "Offer to help it",      outcome: "It seems relieved. It needed someone.",              next: "robot_ally" },
-      { label: "Stay and talk",         outcome: "You talk for what feels like hours. You understand more now.", next: "your_name" },
+      { label: "Ask how to get home",      outcome: "It points at a button. Simple as that.",             next: "escaped_cave" },
+      { label: "Ask where it's from",      outcome: "It shows you a star map. You recognize nothing.",   next: "vault_destination" },
+      { label: "Offer to help it",         outcome: "It seems relieved. It needed someone.",              next: "robot_ally" },
+      { label: "Stay and talk",            outcome: "You talk for hours. You understand more now.",       next: "your_name" },
     ]
   },
   alien_standoff: {
     setup: "You and the alien are still. Watching each other.",
     choices: [
-      { label: "Speak calmly",          outcome: "It responds. Slowly things relax.",                  next: "alien_friendly" },
-      { label: "Back toward the exit",  outcome: "It lets you go.",                                    next: "ship_quiet" },
-      { label: "Show it your hands",    outcome: "Universal symbol. It understands.",                  next: "alien_friendly" },
-      { label: "Ask what it wants",     outcome: "It points at the cargo bay.",                        next: "cargo_warning" },
+      { label: "Speak calmly",             outcome: "It responds. Slowly things relax.",                  next: "alien_friendly" },
+      { label: "Back toward the exit",     outcome: "It lets you go.",                                    next: "ship_quiet" },
+      { label: "Show it your hands",       outcome: "Universal symbol. It understands.",                  next: "alien_friendly" },
+      { label: "Ask what it wants",        outcome: "It points at the cargo bay.",                        next: "cargo_warning" },
     ]
   },
   robot_ally: {
     setup: "The robot is on your side. It knows the ship well.",
     choices: [
-      { label: "Ask it to fly you home", outcome: "It does. Smooth landing.",                         next: "escaped_cave" },
-      { label: "Ask what happened here", outcome: "It tells you. Long story. Important.",             next: "your_name" },
-      { label: "Ask it to open the vault", outcome: "It hesitates — then does.",                     next: "final_room" },
-      { label: "Ask it to come with you", outcome: "It shuts down, then reboots in a smaller form. Ready.", next: "found_food" },
+      { label: "Ask it to fly you home",   outcome: "It does. Smooth landing.",                          next: "escaped_cave" },
+      { label: "Ask what happened here",   outcome: "It tells you. Long story. Important.",              next: "your_name" },
+      { label: "Ask it to open the vault", outcome: "It hesitates — then does.",                        next: "new_room" },
+      { label: "Ask it to come with you",  outcome: "It reboots in a smaller form. Ready.",             next: "found_food" },
     ]
   },
   vault_destination: {
     setup: "The Vault. You've arrived. A massive structure, old and sealed.",
     choices: [
-      { label: "Find a way in",         outcome: "There's a keyhole.",                               next: "key_found" },
-      { label: "Look for another entrance", outcome: "A small door around the back. Unlocked.",     next: "final_room" },
-      { label: "Read what's carved above the door", outcome: "Your name. Again.",                   next: "your_name" },
-      { label: "Knock",                 outcome: "It opens. Of course it does.",                     next: "final_room" },
+      { label: "Find a way in",            outcome: "There's a keyhole.",                               next: "key_found" },
+      { label: "Look for another entrance",outcome: "A small door around the back. Unlocked.",          next: "new_room" },
+      { label: "Read what's carved above", outcome: "Your name. Again.",                                next: "your_name" },
+      { label: "Knock",                    outcome: "It opens. Of course it does.",                      next: "new_room" },
     ]
   },
   mystery_feast: {
-    setup: "Food appeared. Hot, real, and better than anything you've had. You eat. Carefully.",
+    setup: "Food appeared. Hot, real, better than anything you've had. You eat. Carefully.",
     choices: [
-      { label: "Keep eating",           outcome: "You feel completely restored.",                     next: "found_food" },
-      { label: "Look for who made it",  outcome: "The kitchen is empty. The stove is cold.",        next: "great_hall" },
-      { label: "Take some for later",   outcome: "You pocket some bread. Good thinking.",            next: "hidden_door" },
-      { label: "Leave a thank-you note", outcome: "Something about doing so feels important.",      next: "your_name" },
+      { label: "Keep eating",              outcome: "You feel completely restored.",                     next: "found_food" },
+      { label: "Look for who made it",     outcome: "The kitchen is empty. The stove is cold.",        next: "great_hall" },
+      { label: "Take some for later",      outcome: "You pocket some bread. Good thinking.",            next: "hidden_door" },
+      { label: "Leave a thank-you note",   outcome: "Something about doing so feels important.",       next: "your_name" },
     ]
   },
   underground_river: {
     setup: "An underground river — and a small wooden boat waiting at the bank.",
     choices: [
-      { label: "Take the boat",         outcome: "The current carries you smoothly through the dark.", next: "tunnel_exit" },
-      { label: "Wade instead",          outcome: "Shallow enough. You cross on foot.",               next: "underground_chamber" },
-      { label: "Follow the bank",       outcome: "It leads to a lit chamber.",                       next: "campfire" },
-      { label: "Look where the water goes", outcome: "A waterfall, and below: a valley.",           next: "valley" },
+      { label: "Take the boat",            outcome: "The current carries you through the dark.",          next: "tunnel_exit" },
+      { label: "Wade instead",             outcome: "Shallow enough. You cross on foot.",                next: "underground_chamber" },
+      { label: "Follow the bank",          outcome: "It leads to a lit chamber.",                        next: "campfire" },
+      { label: "Look where the water goes",outcome: "A waterfall, and below: a valley.",                next: "valley" },
     ]
   },
   waterfall: {
-    setup: "A waterfall crashes down into a pool. The mist is cold. The sound is loud.",
+    setup: "A waterfall crashes into a pool below. Mist, cold, deafening sound.",
     choices: [
-      { label: "Swim across the pool",  outcome: "Strong but manageable. You make it.",              next: "valley" },
-      { label: "Climb behind the falls", outcome: "There's a passage. Of course there is.",         next: "secret_passage" },
-      { label: "Follow the cliff edge", outcome: "A path leads down to the valley floor.",           next: "valley" },
-      { label: "Jump in",               outcome: "Cold. Very cold. You surface, energized.",         next: "across_stream" },
+      { label: "Swim across the pool",     outcome: "Strong but manageable. You make it.",              next: "valley" },
+      { label: "Climb behind the falls",   outcome: "There's a passage. Of course there is.",           next: "secret_passage" },
+      { label: "Follow the cliff edge",    outcome: "A path leads down to the valley floor.",            next: "valley" },
+      { label: "Jump in",                  outcome: "Cold. Very cold. You surface, energized.",         next: "across_stream" },
     ]
   },
   raft: {
     setup: "You're on the raft. The river moves quickly. You have a stick for steering.",
     choices: [
-      { label: "Steer to the bank",     outcome: "You beach the raft safely at a flat shore.",      next: "valley" },
-      { label: "Let it carry you",      outcome: "The river does the work. You arrive somewhere new.", next: "village_spotted" },
-      { label: "Steer toward the light", outcome: "A dock. Someone's standing on it.",             next: "mysterious_camp" },
-      { label: "Fight the current",     outcome: "The raft jams between rocks. You wade to shore.", next: "meadow" },
+      { label: "Steer to the bank",        outcome: "You beach it safely at a flat shore.",             next: "valley" },
+      { label: "Let it carry you",         outcome: "The river does the work. You arrive somewhere new.",next: "village_spotted" },
+      { label: "Steer toward the light",   outcome: "A dock. Someone's standing on it.",               next: "mysterious_camp" },
+      { label: "Fight the current",        outcome: "The raft jams. You wade to shore.",                next: "meadow" },
     ]
   },
   hawk_watches: {
     setup: "The hawk is circling. Watching you. Not flying away.",
     choices: [
-      { label: "Hold out your arm",     outcome: "It lands. There's a note.",                       next: "hawk_note" },
-      { label: "Follow it",             outcome: "It leads you somewhere.",                         next: "ridge_view" },
-      { label: "Ignore it",             outcome: "It follows you anyway.",                          next: "morning" },
-      { label: "Talk to it",            outcome: "It cocks its head. Seems to understand.",        next: "hawk_note" },
+      { label: "Hold out your arm",        outcome: "It lands. There's a note.",                       next: "hawk_note" },
+      { label: "Follow it",                outcome: "It leads you somewhere.",                         next: "ridge_view" },
+      { label: "Ignore it",                outcome: "It follows you anyway.",                          next: "morning" },
+      { label: "Talk to it",               outcome: "It cocks its head. Seems to understand.",        next: "hawk_note" },
     ]
   },
   something_below: {
     setup: "Something called back from below. Now it's quiet. Did you imagine it?",
     choices: [
-      { label: "Dig toward it",         outcome: "You break through to a lower tunnel.",            next: "tunnel_exit" },
-      { label: "Call again",            outcome: "It answers again. Clearer this time.",            next: "voice_in_cave" },
-      { label: "Back away",             outcome: "You back up until you're somewhere more open.",   next: "underground_chamber" },
-      { label: "Keep going forward",    outcome: "You move past and don't think about it.",        next: "safe_tunnel" },
+      { label: "Dig toward it",            outcome: "You break through to a lower tunnel.",            next: "tunnel_exit" },
+      { label: "Call again",               outcome: "It answers again. Clearer this time.",            next: "voice_in_cave" },
+      { label: "Back away",                outcome: "You back up until you're somewhere more open.",   next: "underground_chamber" },
+      { label: "Keep going forward",       outcome: "You move past and don't think about it.",        next: "safe_tunnel" },
     ]
   },
   voice_in_cave: {
     setup: "A voice. Underground. Asking something you can't quite make out.",
     choices: [
-      { label: "Answer it",             outcome: "It sounds relieved. Moves toward you.",          next: "rescue" },
-      { label: "Move toward it",        outcome: "You find a person. Lost, like you were.",       next: "mysterious_camp" },
-      { label: "Follow the sound",      outcome: "It leads you to an opening.",                   next: "found_exit" },
-      { label: "Stay quiet",            outcome: "It fades. Then silence.",                       next: "campfire" },
+      { label: "Answer it",                outcome: "It sounds relieved. Moves toward you.",          next: "rescue" },
+      { label: "Move toward it",           outcome: "You find a person. Lost, like you were.",       next: "mysterious_camp" },
+      { label: "Follow the sound",         outcome: "It leads you to an opening.",                   next: "found_exit" },
+      { label: "Stay quiet",               outcome: "It fades. Then silence.",                       next: "campfire" },
     ]
   },
   found_exit: {
     setup: "There's a way out — a gap in the rock with daylight on the other side.",
     choices: [
-      { label: "Squeeze through",       outcome: "Tight but you make it. Fresh air.",             next: "escaped_cave" },
-      { label: "Check if it's safe",    outcome: "Looks clear. You go.",                          next: "meadow" },
-      { label: "Mark the way back",     outcome: "You carve an arrow. Then step through.",        next: "escaped_cave" },
+      { label: "Squeeze through",          outcome: "Tight but you make it. Fresh air.",             next: "escaped_cave" },
+      { label: "Check if it's safe",       outcome: "Looks clear. You go.",                          next: "meadow" },
+      { label: "Mark the way back",        outcome: "You carve an arrow. Then step through.",        next: "escaped_cave" },
       { label: "Call back before leaving", outcome: "You shout back into the cave — just in case.", next: "rescue" },
     ]
   },
   wrong_cave: {
-    setup: "You crawled back and emerged somewhere completely different. This is not where you started.",
+    setup: "You crawled back and emerged somewhere completely different.",
     choices: [
-      { label: "Explore this new cave", outcome: "It's bigger than the last one.",                 next: "underground_chamber" },
-      { label: "Look for a way out",    outcome: "There's light ahead.",                          next: "tunnel_exit" },
-      { label: "Sit and think",         outcome: "You figure out roughly where you are.",         next: "ridge_view" },
-      { label: "Go back through the tunnel", outcome: "You end up somewhere else again.",        next: "safe_tunnel" },
+      { label: "Explore this new cave",    outcome: "It's bigger than the last one.",                 next: "underground_chamber" },
+      { label: "Look for a way out",       outcome: "There's light ahead.",                          next: "tunnel_exit" },
+      { label: "Sit and think",            outcome: "You figure out roughly where you are.",         next: "ridge_view" },
+      { label: "Go back through",          outcome: "You end up somewhere else again.",              next: "safe_tunnel" },
     ]
   },
   bear_stopped: {
     setup: "The bear stopped, flinching from the torch light. It's not chasing anymore.",
     choices: [
-      { label: "Slowly back away",      outcome: "You put distance between you and move to a fork.", next: "safe_tunnel" },
-      { label: "Keep the torch between you", outcome: "You side-step past it carefully.",         next: "escaped_cave" },
-      { label: "Leave the torch and run", outcome: "You throw it down and sprint into the dark.", next: "safe_tunnel" },
-      { label: "Hold your ground",      outcome: "The bear turns and ambles back the way it came.", next: "bear_retreats" },
+      { label: "Slowly back away",         outcome: "You put distance between you.",                 next: "safe_tunnel" },
+      { label: "Keep the torch between you", outcome: "You side-step past it carefully.",           next: "escaped_cave" },
+      { label: "Leave the torch and run",  outcome: "You throw it down and sprint into the dark.",  next: "safe_tunnel" },
+      { label: "Hold your ground",         outcome: "The bear turns and ambles back.",               next: "bear_retreats" },
     ]
   },
-  new_room: {
-    setup: "The door is down. You're in a new room. The bear waits happily at the doorway.",
+  darkness: {
+    setup: "Everything went dark. You can't see your hand in front of your face.",
     choices: [
-      { label: "Explore the room",      outcome: "There's something here you needed.",            next: "secret_chamber" },
-      { label: "Find another exit",     outcome: "There's a door at the far end.",               next: "hidden_door" },
-      { label: "Let the bear in",       outcome: "It ambles in and knocks something over. Helpful.", next: "map_found" },
-      { label: "Search for valuables",  outcome: "You find a key.",                              next: "key_found" },
-    ]
-  },
-  trapped_rock: {
-    setup: "You're on a boulder. The wolf circles. The rock is bigger than you thought.",
-    choices: [
-      { label: "Wait",                  outcome: "It eventually gives up.",                       next: "wolf_retreats" },
-      { label: "Jump to the next rock", outcome: "You make it. Then the next one. Then dry land.", next: "safe_zone" },
-      { label: "Find something to throw", outcome: "You hit the wolf on the snout. It backs off.", next: "wolf_retreats" },
-      { label: "Talk to it calmly",     outcome: "It tilts its head. Then sits.",                next: "wolf_standoff" },
+      { label: "Stay still and wait",      outcome: "Your eyes adjust. Faint emergency lights flicker on.", next: "ship_quiet" },
+      { label: "Feel your way forward",    outcome: "Your hand finds a wall. Then a door.",         next: "hidden_door" },
+      { label: "Call out",                 outcome: "A voice answers. Not far away.",               next: "rescue" },
+      { label: "Use your phone light",     outcome: "It works. You can see just enough.",           next: "control_panel" },
     ]
   },
   password_door: {
     setup: "The door has a slot. A voice behind it: 'Password?'",
     choices: [
-      { label: "Say your name",         outcome: "A long pause. Then the door opens.",           next: "your_name" },
-      { label: "Guess 'adventure'",     outcome: "'Incorrect.' Then: 'Close enough.' It opens.", next: "final_room" },
-      { label: "Have the bear growl",   outcome: "The door opens immediately.",                  next: "new_room" },
-      { label: "Knock instead",         outcome: "The slot closes. The door opens. No password needed.", next: "hidden_door" },
+      { label: "Say your name",            outcome: "A long pause. Then the door opens.",           next: "your_name" },
+      { label: "Guess 'adventure'",        outcome: "'Incorrect.' Then: 'Close enough.' It opens.",next: "new_room" },
+      { label: "Have the bear growl",      outcome: "The door opens immediately.",                  next: "new_room" },
+      { label: "Knock instead",            outcome: "The slot closes. The door opens anyway.",     next: "hidden_door" },
     ]
   },
   small_creature: {
-    setup: "Small footsteps. Then a creature the size of a cat emerges, carrying a tiny lantern.",
+    setup: "Small footsteps. A creature the size of a cat emerges, carrying a tiny lantern.",
     choices: [
-      { label: "Follow it",             outcome: "It knows the tunnels well. It takes you where you need to go.", next: "tunnel_exit" },
-      { label: "Talk to it",            outcome: "It speaks. Quickly. Useful information.",      next: "map_found" },
-      { label: "Let it pass",           outcome: "It gives you a look and scurries on.",         next: "safe_tunnel" },
-      { label: "Ask for help",          outcome: "It considers. Then waves you forward.",        next: "underground_chamber" },
+      { label: "Follow it",                outcome: "It knows the tunnels. It takes you where you need to go.", next: "tunnel_exit" },
+      { label: "Talk to it",               outcome: "It speaks. Quickly. Useful information.",     next: "map_found" },
+      { label: "Let it pass",              outcome: "It gives you a look and scurries on.",         next: "safe_tunnel" },
+      { label: "Ask for help",             outcome: "It considers. Then waves you forward.",        next: "underground_chamber" },
     ]
   },
   tripwire: {
     setup: "You spotted a tripwire. Someone set this up. Someone's protecting something.",
     choices: [
-      { label: "Step over it",          outcome: "Clean. You continue.",                          next: "safe_tunnel" },
-      { label: "Disarm it",             outcome: "You sever the wire carefully. Safe.",           next: "underground_chamber" },
-      { label: "Trigger it on purpose", outcome: "A bell rings far off. You run.",               next: "chase_bear" },
-      { label: "Turn back",             outcome: "If someone set that trap, you don't want to know what's ahead.", next: "safe_zone" },
+      { label: "Step over it",             outcome: "Clean. You continue.",                          next: "safe_tunnel" },
+      { label: "Disarm it",                outcome: "You sever the wire carefully.",                 next: "underground_chamber" },
+      { label: "Trigger it on purpose",    outcome: "A bell rings far off. You run.",               next: "chase_bear" },
+      { label: "Turn back",                outcome: "If someone set that trap, you don't want to know.", next: "safe_zone" },
     ]
   },
   other_side: {
     setup: "You've come out the other side of the mountain. New territory. Different air.",
     choices: [
-      { label: "Head downhill",         outcome: "Downhill always leads somewhere.",              next: "valley" },
-      { label: "Find high ground",      outcome: "You climb until you can see far.",             next: "ridge_view" },
-      { label: "Look for shelter",      outcome: "There's a structure in the distance.",         next: "mysterious_camp" },
-      { label: "Follow a stream",       outcome: "Water leads to life.",                         next: "across_stream" },
+      { label: "Head downhill",            outcome: "Downhill always leads somewhere.",              next: "valley" },
+      { label: "Find high ground",         outcome: "You climb until you can see far.",             next: "ridge_view" },
+      { label: "Look for shelter",         outcome: "There's a structure in the distance.",         next: "mysterious_camp" },
+      { label: "Follow a stream",          outcome: "Water leads to life.",                         next: "across_stream" },
+    ]
+  },
+  trapped_rock: {
+    setup: "You're on a boulder. The wolf circles. The rock is bigger than you thought.",
+    choices: [
+      { label: "Wait",                     outcome: "It eventually gives up.",                       next: "wolf_retreats" },
+      { label: "Jump to the next rock",    outcome: "You make it. Then the next. Then dry land.",   next: "safe_zone" },
+      { label: "Throw something",          outcome: "You hit the wolf on the snout. It backs off.", next: "wolf_retreats" },
+      { label: "Talk to it calmly",        outcome: "It tilts its head. Then sits.",               next: "wolf_standoff" },
     ]
   },
 };
 
 const OPENINGS = ["cave_bear","forest_wolf","spaceship","castle"];
 const ENDINGS  = [
-  "You emerged victorious — a true legend of the realm.",
-  "Against all odds, you made it through.",
-  "The world is saved, mostly because of you.",
-  "Whatever that was — you survived it. That's enough.",
-  "You walk back into the light, changed forever.",
-  "History will remember this day. Probably.",
+  "And that's where your story ends — for now.",
+  "You close the chapter, knowing the world you left behind will wait.",
+  "You rest. The adventure is over, but it will always be with you.",
+  "You walk back into the ordinary world, carrying everything you learned.",
+  "The story settles like dust. It was a good one.",
+  "Some journeys don't end — they just pause.",
   "You made it. And honestly? You'd do it again.",
 ];
 
-function rand(a){return a[Math.floor(Math.random()*a.length)];}
-function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+// Custom action resolution
+const CUSTOM_OUTCOMES = {
+  fight:   ["You throw yourself into it. It's messier than you expected, but effective.", "The brawl is short. You come out on top — barely.", "You fight with everything you have. It works.", "You charge in. It's a bad idea that somehow works out."],
+  flee:    ["You bolt. Nobody follows.", "You run until your lungs give out. You've lost whatever was behind you.", "You sprint and don't look back. Smart.", "You're fast when you need to be. You escape cleanly."],
+  talk:    ["They listen. That wasn't what you expected.", "Your words actually work. The tension drops.", "You talk your way out of it. Impressive.", "A few sentences and everything changes. Language is powerful."],
+  climb:   ["You scale it. The view from the top is worth the effort.", "Halfway up, you almost slip. You don't. You keep going.", "You reach the top. Something's up here.", "You climb it clean. Now you can see for miles."],
+  hide:    ["You find a spot and hold completely still. It works.", "Your hiding place is better than you thought.", "You disappear into the shadows. Nobody finds you.", "You press yourself flat and breathe slowly. It passes."],
+  search:  ["You look carefully and find exactly what you were hoping for.", "After a thorough search, you come up with something useful.", "Hidden, but you found it. Good eye.", "It was there the whole time. You just had to look."],
+  eat:     ["It's fine. You needed the energy.", "Better than expected. You feel restored.", "Not your best meal, but it does the job.", "You eat. You feel considerably better."],
+  sleep:   ["You sleep. When you wake, things feel clearer.", "A short rest but a good one.", "You close your eyes. The world waits.", "You sleep surprisingly well. You needed that."],
+  wait:    ["You wait. Patience pays off.", "You hold still. Whatever it was passes.", "You wait long enough that things change.", "You do nothing, and that turns out to be exactly right."],
+  generic: ["That works better than expected.", "You do it. The world adjusts.", "An unconventional move — but it lands.", "Nobody expected that. Including you.", "That was the right call. Somehow."],
+};
 
-const logEl=document.getElementById('story-log'),
-      promptEl=document.getElementById('prompt-box'),
-      choicesEl=document.getElementById('choices'),
-      restartBtn=document.getElementById('restartBtn'),
-      scoreEl=document.getElementById('score'),
-      stepBar=document.getElementById('step-bar');
+const CUSTOM_NEXT = {
+  fight: ["fight_bear_hurt","bear_retreats","wolf_standoff","chase_wolf","chase_bear"],
+  flee:  ["escaped_cave","safe_zone","across_stream","wolf_retreats","hiding"],
+  talk:  ["alien_friendly","mysterious_camp","village_spotted","wolf_friendly","bear_friendly"],
+  climb: ["high_up","ridge_view","tower","mountain_path","other_side"],
+  hide:  ["hiding","safe_tunnel","safe_zone","door_between"],
+  search:["secret_chamber","key_found","map_found","found_food","torch_found"],
+  generic:["safe_zone","meadow","road","morning","found_food","ridge_view","mysterious_camp"],
+};
 
-let step=0,score=0;
+function resolveCustom(action) {
+  const a = action.toLowerCase();
+  if (/fight|attack|punch|hit|swing|strike|battle|charge|stab|shoot|throw/.test(a))
+    return { outcomes: CUSTOM_OUTCOMES.fight, pool: CUSTOM_NEXT.fight };
+  if (/run|flee|escape|sprint|dash|bolt|back away|retreat|get out|leave/.test(a))
+    return { outcomes: CUSTOM_OUTCOMES.flee, pool: CUSTOM_NEXT.flee };
+  if (/talk|ask|speak|say|tell|call|shout|yell|whisper|negotiate|explain/.test(a))
+    return { outcomes: CUSTOM_OUTCOMES.talk, pool: CUSTOM_NEXT.talk };
+  if (/climb|jump|leap|scale|fly|fall|drop|swing|vault/.test(a))
+    return { outcomes: CUSTOM_OUTCOMES.climb, pool: CUSTOM_NEXT.climb };
+  if (/hide|sneak|crouch|duck|crawl|stealth|disappear|blend/.test(a))
+    return { outcomes: CUSTOM_OUTCOMES.hide, pool: CUSTOM_NEXT.hide };
+  if (/search|look|find|check|explore|investigate|examine|inspect|take|grab|pick/.test(a))
+    return { outcomes: CUSTOM_OUTCOMES.search, pool: CUSTOM_NEXT.search };
+  if (/eat|drink|consume/.test(a))
+    return { outcomes: CUSTOM_OUTCOMES.eat, pool: ["found_food","morning","campfire"] };
+  if (/sleep|rest|nap|wait|sit|stay/.test(a))
+    return { outcomes: CUSTOM_OUTCOMES.sleep, pool: ["morning","safe_zone","found_food"] };
+  return { outcomes: CUSTOM_OUTCOMES.generic, pool: CUSTOM_NEXT.generic };
+}
 
-function addLog(text,cls){
-  const d=document.createElement('div');
-  d.className=cls; d.textContent=text;
+// ── GAME STATE ──────────────────────────────────────────────────────────────
+
+let step = 0, customMode = false, gameActive = false;
+
+function rand(a) { return a[Math.floor(Math.random()*a.length)]; }
+function shuffle(a) {
+  const b=[...a];
+  for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}
+  return b;
+}
+
+const logEl      = document.getElementById('story-log');
+const promptEl   = document.getElementById('prompt-box');
+const choicesEl  = document.getElementById('choices');
+const customRow  = document.getElementById('custom-row');
+const customIn   = document.getElementById('custom-input');
+const customSub  = document.getElementById('custom-submit');
+const endBtn     = document.getElementById('endBtn');
+const restartBtn = document.getElementById('restartBtn');
+const counterEl  = document.getElementById('step-counter');
+const startScreen= document.getElementById('startScreen');
+const gameBox    = document.getElementById('gameBox');
+
+function addLog(text, cls) {
+  const d = document.createElement('div');
+  d.className = cls; d.textContent = text;
   logEl.appendChild(d);
-  d.scrollIntoView({behavior:'smooth',block:'nearest'});
+  d.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
-function updateBar(){
-  stepBar.innerHTML='';
-  for(let i=0;i<TOTAL;i++){
-    const p=document.createElement('div');
-    p.className='pip'+(i<step?' done':i===step?' current':'');
-    stepBar.appendChild(p);
-  }
+function updateCounter() {
+  counterEl.textContent = step === 0 ? 'Step 1' : 'Step ' + (step+1) + ' — ' + step + ' chapter' + (step===1?'':'s') + ' written';
 }
 
-function showScene(key){
-  updateBar();
-  choicesEl.innerHTML='';
+function lockChoices() {
+  choicesEl.innerHTML = '';
+  customRow.classList.remove('visible');
+  customIn.value = '';
+}
 
-  if(step>=TOTAL||key==='__end__'){
-    promptEl.style.display='none';
-    addLog('🏆 '+rand(ENDINGS),'final-entry');
-    restartBtn.style.display='block';
-    scoreEl.textContent='Final Score: '+score+' points';
-    return;
-  }
+function applyChoice(sceneSetup, choiceLabel, outcome, nextKey, isCustom) {
+  step++;
+  updateCounter();
+  addLog(sceneSetup, 'log-event');
+  addLog('➤ ' + choiceLabel + '...', isCustom ? 'log-custom' : 'log-choice');
+  addLog(outcome, 'log-outcome');
+  lockChoices();
+  setTimeout(() => showScene(nextKey), 400);
+}
 
-  const scene=SCENES[key]||SCENES['safe_zone'];
-  promptEl.style.display='block';
-  promptEl.textContent=scene.setup+' What do you do?';
+function showScene(key) {
+  if (!gameActive) return;
+  promptEl.style.display = 'block';
 
-  shuffle(scene.choices).slice(0,4).forEach(ch=>{
-    const btn=document.createElement('button');
-    btn.className='choiceBtn';
-    btn.textContent=ch.label;
-    btn.onclick=()=>{
-      score+=Math.floor(Math.random()*20)+10;
-      scoreEl.textContent='Score: '+score;
-      addLog(scene.setup,'log-event');
-      addLog('➤ You decide to '+ch.label+'...','log-choice');
-      addLog(ch.outcome,'log-outcome');
-      promptEl.style.display='none';
-      choicesEl.innerHTML='';
-      step++;
-      setTimeout(()=>showScene(ch.next),400);
-    };
+  const scene = SCENES[key] || SCENES['safe_zone'];
+  promptEl.textContent = scene.setup + ' What do you do?';
+
+  // Regular choices
+  shuffle(scene.choices).slice(0,4).forEach(ch => {
+    const btn = document.createElement('button');
+    btn.className = 'choiceBtn';
+    btn.textContent = ch.label;
+    btn.onclick = () => applyChoice(scene.setup, 'You decide to ' + ch.label, ch.outcome, ch.next, false);
     choicesEl.appendChild(btn);
   });
+
+  // Custom mode input
+  if (customMode) {
+    customRow.classList.add('visible');
+    customIn.placeholder = 'Type what you do...';
+    customIn.focus();
+    customSub.onclick = () => submitCustom(scene);
+    customIn.onkeydown = e => { if (e.key === 'Enter') submitCustom(scene); };
+  }
 }
 
-function startGame(){
-  step=0;score=0;
-  logEl.innerHTML='';
-  restartBtn.style.display='none';
-  scoreEl.textContent='';
+function submitCustom(scene) {
+  const text = customIn.value.trim();
+  if (!text) return;
+  const { outcomes, pool } = resolveCustom(text);
+  const outcome = rand(outcomes);
+  const next = rand(pool);
+  applyChoice(scene.setup, 'You decide to ' + text, outcome, next, true);
+}
+
+function endStory() {
+  if (!gameActive) return;
+  gameActive = false;
+  lockChoices();
+  promptEl.style.display = 'none';
+  endBtn.style.display = 'none';
+  addLog('📖 ' + rand(ENDINGS), 'log-end');
+  restartBtn.style.display = 'block';
+}
+
+function startGame(custom) {
+  customMode = custom;
+  gameActive = true;
+  step = 0;
+  logEl.innerHTML = '';
+  promptEl.style.display = 'none';
+  choicesEl.innerHTML = '';
+  customRow.classList.remove('visible');
+  restartBtn.style.display = 'none';
+  endBtn.style.display = 'block';
+  startScreen.style.display = 'none';
+  gameBox.style.display = 'block';
+  updateCounter();
   showScene(rand(OPENINGS));
 }
 
-startGame();
+function goHome() {
+  gameActive = false;
+  gameBox.style.display = 'none';
+  logEl.innerHTML = '';
+  choicesEl.innerHTML = '';
+  restartBtn.style.display = 'none';
+  endBtn.style.display = 'block';
+  startScreen.style.display = 'block';
+}
 </script>
 </body>
 </html>
