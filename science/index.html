@@ -6,11 +6,12 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <script>if(location.search !== '?v=12') location.replace(location.pathname+'?v=12');</script>
+  <script>if(location.search !== '?v=13') location.replace(location.pathname+'?v=13');</script>
   <title>Earthquakes & Volcanoes</title>
   <link rel="preconnect" href="https://earthquake.usgs.gov">
   <link rel="preconnect" href="https://volcanoes.usgs.gov">
-  <link rel="preconnect" href="https://tile.openstreetmap.org">
+  <link rel="preconnect" href="https://basemaps.cartocdn.com">
+  <link rel="dns-prefetch" href="https://basemaps.cartocdn.com">
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
@@ -241,7 +242,7 @@
     #map { flex: 1; min-height: 0; }
 
     .leaflet-container { background: #111418 !important; }
-    .leaflet-tile { filter: brightness(0.5) saturate(0.35) hue-rotate(200deg); }
+    /* CartoDB dark tiles need no extra filter */
 
     .leaflet-popup-content-wrapper {
       background: #0d0f1a;
@@ -660,7 +661,7 @@
   <script>
     const map = L.map('map', { zoomControl: true, minZoom: 2 }).setView([20, 10], 2);
 
-    const tileLayerRef = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const tileLayerRef = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap contributors',
       minZoom: 2, maxZoom: 18,
     }).addTo(map);
@@ -1071,7 +1072,7 @@
     async function loadEarthquakes() {
       setStatus('Fetching earthquake data…');
       try {
-        const res  = await fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson');
+        const res  = await fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.geojson');
         const data = await res.json();
         let count  = 0;
 
