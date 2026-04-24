@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <script>if(location.search !== '?v=10') location.replace(location.pathname+'?v=10');</script>
+  <script>if(location.search !== '?v=11') location.replace(location.pathname+'?v=11');</script>
   <title>Earthquakes & Volcanoes</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
@@ -1088,8 +1088,8 @@
     // ── Reference image viewer ──
     let refOpen = null;
     const REF_IMGS = {
-      seafloor: { src: 'seafloor-age.png', title: 'Age of Seafloor Rocks — Anne E. Egger, 2002', btnId: 'btn-seafloor', cls: 'seafloor-active' },
-      topo:     { src: 'global-topo.png',  title: 'Global Topography — Anne E. Egger, 2002',     btnId: 'btn-topo',     cls: 'topo-active'     },
+      seafloor: { src: 'seafloor-age.jpg', title: 'Age of Seafloor Rocks — Anne E. Egger, 2002', btnId: 'btn-seafloor', cls: 'seafloor-active' },
+      topo:     { src: 'global-topo.jpg',  title: 'Global Topography — Anne E. Egger, 2002',     btnId: 'btn-topo',     cls: 'topo-active'     },
     };
     function toggleRefImg(key) {
       if (refOpen === key) { closeRefImg(); return; }
