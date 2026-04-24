@@ -965,17 +965,237 @@ const customSetupSc = document.getElementById('customSetupScreen');
 const setupInput    = document.getElementById('setup-input');
 const gameBox       = document.getElementById('gameBox');
 
-// Generic first-scene choices that work for ANY opening scenario
-const FIRST_CHOICES = [
-  { label: "Go along with it",            outcome: "You roll with it. Somehow that's the right call.",       next: "safe_zone" },
-  { label: "Back away slowly",            outcome: "You inch back. That buys you a moment to think.",        next: "hiding" },
-  { label: "Ask what's happening",        outcome: "You get an answer. Not a simple one.",                   next: "mysterious_camp" },
-  { label: "Act like nothing happened",   outcome: "Bold strategy. Somehow it works.",                       next: "road" },
-  { label: "Run",                         outcome: "You bolt. The situation disappears behind you.",          next: "escaped_cave" },
-  { label: "Stand your ground",           outcome: "You hold firm. The world adjusts around you.",           next: "wolf_standoff" },
-  { label: "Look for a way out",          outcome: "There's always a way out if you look hard enough.",      next: "tunnel_exit" },
-  { label: "Challenge it",                outcome: "You step forward and make your position clear.",          next: "fight_bear_hurt" },
-];
+// ── THEMED CHOICE POOLS ─────────────────────────────────────────────────────
+// Each pool has 6+ choices so we shuffle and pick 4 for variety.
+
+const CHOICE_POOLS = {
+  celebrity: [
+    { label: "Say hi back",                  outcome: "They nod. You're cooler than they expected.",                  next: "mysterious_camp" },
+    { label: "Ask for an autograph",         outcome: "They sign whatever you hand them and give you life advice.",   next: "found_food" },
+    { label: "Challenge them",               outcome: "They stare at you. Then grin. 'You're serious,' they say.",   next: "wolf_standoff" },
+    { label: "Pretend not to recognize them",outcome: "You look right through them. They seem genuinely confused.",  next: "hiding" },
+    { label: "Ask why they're here",         outcome: "The answer is weirder than you expected.",                     next: "your_name" },
+    { label: "Take a photo",                 outcome: "They pose. You now have proof. Nobody will believe you.",      next: "village_spotted" },
+  ],
+  animal_friendly: [
+    { label: "Pet it",                       outcome: "It leans into your hand. You have a new best friend.",        next: "wolf_friendly" },
+    { label: "Offer it food",                outcome: "It takes it gently. Trust established.",                      next: "bear_friendly" },
+    { label: "Follow where it leads",        outcome: "Animals always know something you don't.",                    next: "mysterious_camp" },
+    { label: "Talk to it",                   outcome: "It tilts its head. It's listening.",                          next: "wolf_standoff" },
+    { label: "Back away slowly",             outcome: "It watches you go. No hard feelings.",                        next: "safe_zone" },
+    { label: "Sit down next to it",          outcome: "It shuffles closer. You sit there a while.",                  next: "morning" },
+  ],
+  animal_threat: [
+    { label: "Stand your ground",            outcome: "You puff up and yell. It pauses.",                            next: "wolf_standoff" },
+    { label: "Fight it",                     outcome: "You charge. It's messier than expected.",                     next: "fight_bear_hurt" },
+    { label: "Run",                          outcome: "You bolt. It chases — then gives up.",                        next: "chase_wolf" },
+    { label: "Offer it food",                outcome: "It sniffs it, takes it, loses interest in you.",              next: "bear_friendly" },
+    { label: "Play dead",                    outcome: "You drop flat. It sniffs you for a very long time.",          next: "bear_leaves" },
+    { label: "Climb something",              outcome: "You scramble up whatever's nearby. It circles below.",        next: "trapped_tree" },
+  ],
+  dragon: [
+    { label: "Ask what the job pays",        outcome: "'Gold,' it says. 'Lots of it.' That tracks.",                next: "found_food" },
+    { label: "Accept immediately",           outcome: "It seems surprised. 'You didn't even ask what it is.' Fair.", next: "mysterious_camp" },
+    { label: "Negotiate the terms",          outcome: "You haggle. The dragon respects this. You get a better deal.",next: "map_found" },
+    { label: "Ask what the job involves",    outcome: "'It's complicated,' the dragon says, which is concerning.",   next: "your_name" },
+    { label: "Politely decline",             outcome: "It blinks slowly. 'Nobody has ever said no.' You have.",     next: "wolf_standoff" },
+    { label: "Ask how it found you",         outcome: "It pauses. 'That's the right question,' it says.",           next: "your_name" },
+  ],
+  monster_creature: [
+    { label: "Run",                          outcome: "You sprint. It follows — then loses interest.",               next: "escaped_cave" },
+    { label: "Fight it",                     outcome: "You grab whatever's nearby and charge.",                      next: "fight_bear_hurt" },
+    { label: "Hide",                         outcome: "You find a spot and hold completely still.",                  next: "hiding" },
+    { label: "Try to communicate",           outcome: "It stops. Maybe nobody ever tried that before.",              next: "alien_friendly" },
+    { label: "Distract it and slip away",    outcome: "You throw something. It looks. You go.",                     next: "safe_tunnel" },
+    { label: "Stand your ground",            outcome: "You stare it down. Something about that works.",              next: "wolf_standoff" },
+  ],
+  space: [
+    { label: "Look for oxygen",              outcome: "You find a suit — barely in time.",                           next: "ship_quiet" },
+    { label: "Try to contact Earth",         outcome: "Static. Then a voice. Faint but real.",                      next: "rescue" },
+    { label: "Explore the surface",          outcome: "The ground is strange under your feet. And it moves.",       next: "your_name" },
+    { label: "Find shelter fast",            outcome: "There's a structure. Old. But sealed.",                       next: "spaceship" },
+    { label: "Check your equipment",         outcome: "Most of it works. One thing doesn't. That's the important one.", next: "control_panel" },
+    { label: "Look around for anyone else",  outcome: "You're not alone up here.",                                   next: "alien_encounter" },
+  ],
+  door_portal: [
+    { label: "Open it",                      outcome: "It swings inward. Light — or something — on the other side.", next: "new_room" },
+    { label: "Knock first",                  outcome: "Three knocks. Three knocks back. Then silence.",              next: "hidden_door" },
+    { label: "Peek through the keyhole",     outcome: "You see something you can't explain.",                        next: "your_name" },
+    { label: "Walk away",                    outcome: "You turn. The door appears in front of you again.",           next: "hidden_door" },
+    { label: "Try to break it open",         outcome: "It opens before you finish trying.",                          next: "new_room" },
+    { label: "Read what's written on it",    outcome: "Your name. In your own handwriting.",                         next: "your_name" },
+  ],
+  talking_object: [
+    { label: "Listen to what it says",       outcome: "It has opinions. Strong ones. You're not sure where to start.", next: "mysterious_camp" },
+    { label: "Ask it a question",            outcome: "It answers immediately. And it's right.",                     next: "your_name" },
+    { label: "Put it down and back away",    outcome: "It keeps talking from the floor.",                            next: "safe_zone" },
+    { label: "Introduce yourself",           outcome: "It already knows your name. Unsettling.",                     next: "your_name" },
+    { label: "Tell someone else",            outcome: "They don't believe you. Until they hear it.",                 next: "village_spotted" },
+    { label: "Take it with you",             outcome: "It seems pleased. 'Finally,' it says.",                       next: "found_food" },
+  ],
+  message_envelope: [
+    { label: "Open it immediately",          outcome: "Inside: a name, a location, a warning.",                      next: "map_found" },
+    { label: "Read it carefully",            outcome: "Every word matters. You read it three times.",                next: "your_name" },
+    { label: "Refuse to open it",            outcome: "You slide it back. But your name is on the front.",          next: "your_name" },
+    { label: "Ask who sent it",              outcome: "'We don't know,' they say. 'It just appeared.'",             next: "mysterious_camp" },
+    { label: "Hide it and open it later",    outcome: "Later comes sooner than you think.",                          next: "hidden_door" },
+    { label: "Pass it to someone else",      outcome: "They read it. Then hand it back. 'It's for you,' they say.", next: "your_name" },
+  ],
+  offer_deal: [
+    { label: "Accept without thinking",      outcome: "Bold. The terms are actually fine.",                          next: "found_food" },
+    { label: "Ask what they get in return",  outcome: "The answer changes things.",                                  next: "mysterious_camp" },
+    { label: "Negotiate",                    outcome: "You push back. They push back. You find middle ground.",      next: "map_found" },
+    { label: "Decline",                      outcome: "They nod. 'Smart.' And walk away.",                           next: "wolf_retreats" },
+    { label: "Ask for time to decide",       outcome: "They give you until morning. That's not much time.",          next: "morning" },
+    { label: "Ask why you specifically",     outcome: "That question changes the conversation completely.",           next: "your_name" },
+  ],
+  school_authority: [
+    { label: "Play dumb",                    outcome: "They see right through it. Respect the attempt though.",      next: "wolf_standoff" },
+    { label: "Ask why you're involved",      outcome: "Their answer raises more questions than it answers.",         next: "mysterious_camp" },
+    { label: "Tell the truth",               outcome: "Surprisingly, this works in your favor.",                     next: "village_spotted" },
+    { label: "Agree to everything",          outcome: "They look suspicious. 'That was too easy,' they say.",       next: "hiding" },
+    { label: "Ask what happens if you refuse", outcome: "They pause. Nobody's asked that before.",                  next: "your_name" },
+    { label: "Accept whatever this is",      outcome: "You're in it now. Might as well commit.",                    next: "mysterious_camp" },
+  ],
+  underwater_ocean: [
+    { label: "Swim toward it",               outcome: "The water gets colder. And darker. And stranger.",            next: "underground_river" },
+    { label: "Surface immediately",          outcome: "You break through. The air hits you. You're far from shore.",next: "raft" },
+    { label: "Look for a way to breathe",    outcome: "There's an air pocket. Just barely enough.",                  next: "campfire" },
+    { label: "Follow whatever is moving",    outcome: "It leads you somewhere you've never seen.",                   next: "underground_chamber" },
+    { label: "Try to communicate",           outcome: "You gesture. It gestures back. Progress.",                    next: "alien_friendly" },
+    { label: "Grab onto something",          outcome: "It moves. You hold on.",                                      next: "raft" },
+  ],
+  magic_wizard: [
+    { label: "Ask them to teach you",        outcome: "'It takes years,' they say. 'Start now.'",                   next: "mysterious_camp" },
+    { label: "Touch the thing they're holding", outcome: "You probably shouldn't have done that.",                  next: "your_name" },
+    { label: "Ask what they want from you",  outcome: "The answer is not what you expected.",                        next: "hawk_note" },
+    { label: "Step back",                    outcome: "Wise. Some magic is better observed from a distance.",        next: "safe_zone" },
+    { label: "Ask for a demonstration",      outcome: "They oblige. It's impressive and slightly terrifying.",       next: "hidden_door" },
+    { label: "Say you don't believe in magic", outcome: "'I know,' they say. And then prove you wrong.",            next: "your_name" },
+  ],
+  robot_tech: [
+    { label: "Ask it a question",            outcome: "It answers immediately. Completely and accurately.",          next: "your_name" },
+    { label: "Try to shut it down",          outcome: "It anticipated that. 'Please don't,' it says.",              next: "robot_ally" },
+    { label: "Ask if it's friendly",         outcome: "'Define friendly,' it says. That's not reassuring.",         next: "alien_standoff" },
+    { label: "Give it a command",            outcome: "It follows it. Efficiently. Almost too efficiently.",        next: "ship_quiet" },
+    { label: "Ask who built it",             outcome: "It says your name.",                                          next: "your_name" },
+    { label: "Walk away from it",            outcome: "It follows at a respectful distance.",                        next: "robot_ally" },
+  ],
+  treasure_discovery: [
+    { label: "Take it",                      outcome: "It's heavier than it looks. But you manage.",                next: "key_found" },
+    { label: "Check for traps first",        outcome: "There's one. You spot it just in time.",                     next: "tripwire" },
+    { label: "Leave it alone",               outcome: "Wise. But curiosity lingers.",                               next: "secret_chamber" },
+    { label: "Figure out what it is first",  outcome: "The more you look, the stranger it gets.",                   next: "your_name" },
+    { label: "Mark the location and go",     outcome: "You'll come back. Probably.",                                next: "map_found" },
+    { label: "Open it",                      outcome: "The lid gives. What's inside is unexpected.",                next: "new_room" },
+  ],
+  fight_challenge: [
+    { label: "Accept the challenge",         outcome: "You step forward. No hesitation. They weren't expecting that.", next: "wolf_standoff" },
+    { label: "Talk your way out",            outcome: "You negotiate. It works. Barely.",                            next: "road" },
+    { label: "Run",                          outcome: "You bolt. Fast. It doesn't follow.",                         next: "escaped_cave" },
+    { label: "Counter-challenge them",       outcome: "You raise the stakes. Now they're the nervous one.",         next: "bear_retreats" },
+    { label: "Find a weapon first",          outcome: "You stall while you look. You find something.",              next: "found_food" },
+    { label: "Ask what this is really about", outcome: "The question lands. They weren't expecting it.",            next: "mysterious_camp" },
+  ],
+  time_travel: [
+    { label: "Figure out when you are",      outcome: "The clues don't add up. But you narrow it down.",            next: "ridge_view" },
+    { label: "Find someone who can help",    outcome: "People here are confused by your questions.",                next: "village_spotted" },
+    { label: "Try to get back",             outcome: "You find the mechanism. It's more complicated than you thought.", next: "control_panel" },
+    { label: "Just explore",                outcome: "You decide to make the most of this. For now.",              next: "meadow" },
+    { label: "Avoid changing anything",      outcome: "Harder than it sounds. You already may have.",              next: "your_name" },
+    { label: "Find out why you're here",     outcome: "The answer is specific. And about you.",                    next: "your_name" },
+  ],
+  generic: [
+    { label: "Go along with it",             outcome: "You roll with it. Somehow that's exactly right.",           next: "safe_zone" },
+    { label: "Ask what's happening",         outcome: "You get an answer. Not a simple one.",                      next: "mysterious_camp" },
+    { label: "Take a moment to think",       outcome: "You step back mentally. Things become clearer.",            next: "ridge_view" },
+    { label: "Do the unexpected",            outcome: "Nobody saw that coming. Including you.",                     next: "your_name" },
+    { label: "Look for an exit",             outcome: "There's always one if you look carefully enough.",           next: "tunnel_exit" },
+    { label: "Stand your ground",            outcome: "You hold firm. The world adjusts.",                         next: "wolf_standoff" },
+    { label: "Act like nothing happened",    outcome: "Bold strategy. It actually works.",                         next: "road" },
+    { label: "Run",                          outcome: "You bolt. The situation disappears behind you.",             next: "escaped_cave" },
+  ],
+};
+
+function generateCustomChoices(text) {
+  const t = text.toLowerCase();
+
+  // Celebrity / famous person (name + greeting/action)
+  if (/says hi|waves at you|walks up|greets you|talks to you|high.?five|shakes your hand/.test(t) ||
+      /cena|lebron|taylor|bieber|drake|beyonce|elon|obama|rihanna|kanye|trump|biden|ninja|mrbeast|pewdiepie/.test(t))
+    return CHOICE_POOLS.celebrity;
+
+  // Dragon specifically
+  if (/dragon/.test(t)) return CHOICE_POOLS.dragon;
+
+  // Space / moon / planet
+  if (/moon|space|orbit|planet|asteroid|mars|nasa|rocket|astronaut|satellite|galaxy|zero.?gravity/.test(t))
+    return CHOICE_POOLS.space;
+
+  // Underwater / ocean
+  if (/ocean|underwater|sea|submarine|diving|whale|shark|coral|deep sea|drowning|swimming/.test(t))
+    return CHOICE_POOLS.underwater_ocean;
+
+  // Magic / wizard / spell
+  if (/wizard|witch|magic|spell|potion|wand|enchant|sorcerer|curse|fairy/.test(t))
+    return CHOICE_POOLS.magic_wizard;
+
+  // Robot / AI / tech
+  if (/robot|ai |android|machine|computer|drone|cyborg|algorithm|artificial/.test(t))
+    return CHOICE_POOLS.robot_tech;
+
+  // Time travel
+  if (/time travel|time machine|past|future|1800|1900|2100|3000|dinosaur|medieval|ancient rome/.test(t))
+    return CHOICE_POOLS.time_travel;
+
+  // Talking inanimate object
+  if (/talking|starts talking|speaks|says something|begins to speak/.test(t) &&
+      /sandwich|chair|shoe|book|lamp|door|rock|phone|sock|backpack|pencil|table|toilet|car/.test(t))
+    return CHOICE_POOLS.talking_object;
+
+  // Monster / creature (non-dragon)
+  if (/zombie|ghost|alien|monster|demon|vampire|werewolf|creature|beast|mutant|shadow creature/.test(t))
+    return CHOICE_POOLS.monster_creature;
+
+  // Friendly animal
+  if (/puppy|kitten|baby|friendly|pet|little|small|tiny/.test(t) &&
+      /bear|wolf|lion|tiger|eagle|fox|deer|raccoon|elephant/.test(t))
+    return CHOICE_POOLS.animal_friendly;
+
+  // Threatening animal
+  if (/bear|wolf|lion|tiger|shark|alligator|crocodile|snake|gorilla|bull/.test(t))
+    return CHOICE_POOLS.animal_threat;
+
+  // Door / portal / gate
+  if (/door|portal|gate|entrance|trapdoor|arch|passage|rift|vortex/.test(t))
+    return CHOICE_POOLS.door_portal;
+
+  // Letter / envelope / note / message
+  if (/envelope|letter|note|message|scroll|text message|voicemail/.test(t))
+    return CHOICE_POOLS.message_envelope;
+
+  // Job / offer / deal
+  if (/offers you|gives you an offer|deal|proposition|job|hired|recruited|chosen for/.test(t))
+    return CHOICE_POOLS.offer_deal;
+
+  // School / teacher / principal / authority
+  if (/principal|teacher|coach|counselor|detention|office|school|class|grade|homework/.test(t))
+    return CHOICE_POOLS.school_authority;
+
+  // Treasure / discovery
+  if (/treasure|gold|chest|diamond|jewel|artifact|ancient|relic|fortune|buried|hidden/.test(t))
+    return CHOICE_POOLS.treasure_discovery;
+
+  // Fight / battle / challenge
+  if (/challenge|fight|battle|duel|competition|race|vs |versus|showdown|standoff/.test(t))
+    return CHOICE_POOLS.fight_challenge;
+
+  // Greeting (fallback for any "says hi / appears / shows up")
+  if (/says hi|says hello|waves|appears|shows up|walks in|arrives|turns around|you meet/.test(t))
+    return CHOICE_POOLS.celebrity;
+
+  return CHOICE_POOLS.generic;
+}
 
 function showStartScreen() {
   startScreen.style.display = 'block';
@@ -1042,7 +1262,7 @@ function showScene(key) {
   if (customOpeningText && step === 0) {
     const openingText = customOpeningText;
     promptEl.textContent = openingText + ' What do you do?';
-    shuffle(FIRST_CHOICES).slice(0, 4).forEach(ch => {
+    shuffle(generateCustomChoices(openingText)).slice(0, 4).forEach(ch => {
       const btn = document.createElement('button');
       btn.className = 'choiceBtn';
       btn.textContent = ch.label;
