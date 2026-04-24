@@ -26,7 +26,35 @@
   .mode-card.standard { border-color:rgba(124,58,237,0.4); }
   .mode-card.custom   { border-color:rgba(234,179,8,0.4); }
   .mode-card.custom h2 { color:#fde68a; }
-  .mode-card.custom .mode-icon { }
+
+  /* ── CUSTOM SETUP SCREEN ── */
+  #customSetupScreen { max-width:500px; margin:auto; display:none; }
+  #customSetupScreen h2 { font-size:1.5rem; margin-bottom:8px; color:#fde68a; }
+  #customSetupScreen p  { color:#94a3b8; font-size:0.9rem; margin-bottom:20px; }
+  .setup-examples { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; justify-content:center; }
+  .example-pill {
+    background:rgba(234,179,8,0.1); border:1px solid rgba(234,179,8,0.25);
+    color:#fde68a; font-size:0.8rem; padding:5px 12px; border-radius:999px; cursor:pointer;
+    transition:background 0.15s;
+  }
+  .example-pill:hover { background:rgba(234,179,8,0.2); }
+  #setup-input {
+    width:100%; padding:14px 16px; border:1px solid rgba(234,179,8,0.4);
+    border-radius:12px; background:rgba(234,179,8,0.07); color:#fde68a;
+    font-size:1rem; outline:none; margin-bottom:12px;
+  }
+  #setup-input::placeholder { color:#7a5c1e; }
+  #setup-input:focus { border-color:#ca8a04; background:rgba(234,179,8,0.12); }
+  #setup-start {
+    width:100%; padding:14px; background:#ca8a04; border:none; border-radius:12px;
+    color:white; font-size:1rem; cursor:pointer; font-weight:bold; margin-bottom:10px;
+  }
+  #setup-start:hover { background:#b45309; }
+  #setup-back {
+    width:100%; padding:10px; background:transparent; border:1px solid rgba(255,255,255,0.1);
+    border-radius:12px; color:#64748b; font-size:0.9rem; cursor:pointer;
+  }
+  #setup-back:hover { color:#94a3b8; border-color:rgba(255,255,255,0.2); }
 
   /* ── GAME BOX ── */
   #gameBox { max-width:750px; margin:auto; background:rgba(255,255,255,0.08); border-radius:20px; padding:25px; box-shadow:0 8px 20px rgba(0,0,0,0.4); text-align:left; display:none; }
@@ -98,11 +126,28 @@
     <h2>Standard Adventure</h2>
     <p>Pick from 4 choices at each step. The story goes on as long as you want — end it whenever you're ready.</p>
   </div>
-  <div class="mode-card custom" onclick="startGame(true)">
+  <div class="mode-card custom" onclick="showCustomSetup()">
     <div class="mode-icon">✍️</div>
     <h2>Custom Mode</h2>
-    <p>Same 4 choices — plus a text box where you can type exactly what you want to do. Your story, your rules.</p>
+    <p>You write how the story starts. Then pick from choices — or type exactly what you do next. Your story, your rules.</p>
   </div>
+</div>
+
+<!-- CUSTOM SETUP SCREEN -->
+<div id="customSetupScreen">
+  <h2>✍️ How does your story begin?</h2>
+  <p>Write any situation — wild, funny, serious, whatever. The story continues from there.</p>
+  <div class="setup-examples">
+    <span class="example-pill" onclick="fillExample(this)">John Cena says hi</span>
+    <span class="example-pill" onclick="fillExample(this)">You wake up on the moon</span>
+    <span class="example-pill" onclick="fillExample(this)">A dragon offers you a job</span>
+    <span class="example-pill" onclick="fillExample(this)">Your sandwich starts talking</span>
+    <span class="example-pill" onclick="fillExample(this)">You find a door in the middle of the ocean</span>
+    <span class="example-pill" onclick="fillExample(this)">The principal gives you a mysterious envelope</span>
+  </div>
+  <input id="setup-input" type="text" placeholder="Write your opening scene..." maxlength="150">
+  <button id="setup-start" onclick="startCustomGame()">Start my story →</button>
+  <button id="setup-back" onclick="showStartScreen()">← Back</button>
 </div>
 
 <!-- GAME BOX -->
@@ -906,17 +951,58 @@ function shuffle(a) {
   return b;
 }
 
-const logEl      = document.getElementById('story-log');
-const promptEl   = document.getElementById('prompt-box');
-const choicesEl  = document.getElementById('choices');
-const customRow  = document.getElementById('custom-row');
-const customIn   = document.getElementById('custom-input');
-const customSub  = document.getElementById('custom-submit');
-const endBtn     = document.getElementById('endBtn');
-const restartBtn = document.getElementById('restartBtn');
-const counterEl  = document.getElementById('step-counter');
-const startScreen= document.getElementById('startScreen');
-const gameBox    = document.getElementById('gameBox');
+const logEl         = document.getElementById('story-log');
+const promptEl      = document.getElementById('prompt-box');
+const choicesEl     = document.getElementById('choices');
+const customRow     = document.getElementById('custom-row');
+const customIn      = document.getElementById('custom-input');
+const customSub     = document.getElementById('custom-submit');
+const endBtn        = document.getElementById('endBtn');
+const restartBtn    = document.getElementById('restartBtn');
+const counterEl     = document.getElementById('step-counter');
+const startScreen   = document.getElementById('startScreen');
+const customSetupSc = document.getElementById('customSetupScreen');
+const setupInput    = document.getElementById('setup-input');
+const gameBox       = document.getElementById('gameBox');
+
+// Generic first-scene choices that work for ANY opening scenario
+const FIRST_CHOICES = [
+  { label: "Go along with it",            outcome: "You roll with it. Somehow that's the right call.",       next: "safe_zone" },
+  { label: "Back away slowly",            outcome: "You inch back. That buys you a moment to think.",        next: "hiding" },
+  { label: "Ask what's happening",        outcome: "You get an answer. Not a simple one.",                   next: "mysterious_camp" },
+  { label: "Act like nothing happened",   outcome: "Bold strategy. Somehow it works.",                       next: "road" },
+  { label: "Run",                         outcome: "You bolt. The situation disappears behind you.",          next: "escaped_cave" },
+  { label: "Stand your ground",           outcome: "You hold firm. The world adjusts around you.",           next: "wolf_standoff" },
+  { label: "Look for a way out",          outcome: "There's always a way out if you look hard enough.",      next: "tunnel_exit" },
+  { label: "Challenge it",                outcome: "You step forward and make your position clear.",          next: "fight_bear_hurt" },
+];
+
+function showStartScreen() {
+  startScreen.style.display = 'block';
+  customSetupSc.style.display = 'none';
+  gameBox.style.display = 'none';
+}
+
+function showCustomSetup() {
+  startScreen.style.display = 'none';
+  customSetupSc.style.display = 'block';
+  setupInput.value = '';
+  setTimeout(() => setupInput.focus(), 100);
+}
+
+function fillExample(el) {
+  setupInput.value = el.textContent;
+  setupInput.focus();
+}
+
+function startCustomGame() {
+  const text = setupInput.value.trim();
+  if (!text) { setupInput.focus(); return; }
+  // Launch game with the user's custom opening text as the first scene
+  beginGame(true, text);
+}
+
+setupInput && (setupInput.onkeydown = e => { if (e.key === 'Enter') startCustomGame(); });
 
 function addLog(text, cls) {
   const d = document.createElement('div');
@@ -945,15 +1031,38 @@ function applyChoice(sceneSetup, choiceLabel, outcome, nextKey, isCustom) {
   setTimeout(() => showScene(nextKey), 400);
 }
 
+// customOpeningText: if set, first scene uses this text with generic choices
+let customOpeningText = null;
+
 function showScene(key) {
   if (!gameActive) return;
   promptEl.style.display = 'block';
 
+  // First scene in custom mode: use the user's typed opening
+  if (customOpeningText && step === 0) {
+    const openingText = customOpeningText;
+    promptEl.textContent = openingText + ' What do you do?';
+    shuffle(FIRST_CHOICES).slice(0, 4).forEach(ch => {
+      const btn = document.createElement('button');
+      btn.className = 'choiceBtn';
+      btn.textContent = ch.label;
+      btn.onclick = () => applyChoice(openingText, 'You decide to ' + ch.label, ch.outcome, ch.next, false);
+      choicesEl.appendChild(btn);
+    });
+    // Also allow custom input on first scene
+    customRow.classList.add('visible');
+    customIn.placeholder = 'Or type what you do...';
+    customIn.focus();
+    const fakeScene = { setup: openingText };
+    customSub.onclick = () => submitCustom(fakeScene);
+    customIn.onkeydown = e => { if (e.key === 'Enter') submitCustom(fakeScene); };
+    return;
+  }
+
   const scene = SCENES[key] || SCENES['safe_zone'];
   promptEl.textContent = scene.setup + ' What do you do?';
 
-  // Regular choices
-  shuffle(scene.choices).slice(0,4).forEach(ch => {
+  shuffle(scene.choices).slice(0, 4).forEach(ch => {
     const btn = document.createElement('button');
     btn.className = 'choiceBtn';
     btn.textContent = ch.label;
@@ -961,11 +1070,9 @@ function showScene(key) {
     choicesEl.appendChild(btn);
   });
 
-  // Custom mode input
   if (customMode) {
     customRow.classList.add('visible');
-    customIn.placeholder = 'Type what you do...';
-    customIn.focus();
+    customIn.placeholder = 'Or type what you do...';
     customSub.onclick = () => submitCustom(scene);
     customIn.onkeydown = e => { if (e.key === 'Enter') submitCustom(scene); };
   }
@@ -990,20 +1097,27 @@ function endStory() {
   restartBtn.style.display = 'block';
 }
 
-function startGame(custom) {
+function beginGame(custom, openingText) {
   customMode = custom;
+  customOpeningText = openingText || null;
   gameActive = true;
   step = 0;
   logEl.innerHTML = '';
   promptEl.style.display = 'none';
   choicesEl.innerHTML = '';
   customRow.classList.remove('visible');
+  customIn.value = '';
   restartBtn.style.display = 'none';
   endBtn.style.display = 'block';
   startScreen.style.display = 'none';
+  customSetupSc.style.display = 'none';
   gameBox.style.display = 'block';
   updateCounter();
   showScene(rand(OPENINGS));
+}
+
+function startGame(custom) {
+  beginGame(custom, null);
 }
 
 function goHome() {
@@ -1013,6 +1127,7 @@ function goHome() {
   choicesEl.innerHTML = '';
   restartBtn.style.display = 'none';
   endBtn.style.display = 'block';
+  customSetupSc.style.display = 'none';
   startScreen.style.display = 'block';
 }
 </script>
