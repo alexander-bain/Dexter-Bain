@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <script>if(location.search !== '?v=15') location.replace(location.pathname+'?v=15');</script>
+  <script>if(location.search !== '?v=16') location.replace(location.pathname+'?v=16');</script>
   <title>Earthquakes & Volcanoes</title>
   <link rel="preconnect" href="https://earthquake.usgs.gov">
   <link rel="preconnect" href="https://volcanoes.usgs.gov">
@@ -661,7 +661,7 @@
   <script>
     const map = L.map('map', { zoomControl: true, minZoom: 2 }).setView([20, 10], 2);
 
-    const tileLayerRef = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    const tileLayerRef = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap contributors',
       minZoom: 2, maxZoom: 18,
     }).addTo(map);
