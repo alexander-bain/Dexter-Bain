@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <script>if(location.search !== '?v=13') location.replace(location.pathname+'?v=13');</script>
+  <script>if(location.search !== '?v=14') location.replace(location.pathname+'?v=14');</script>
   <title>Earthquakes & Volcanoes</title>
   <link rel="preconnect" href="https://earthquake.usgs.gov">
   <link rel="preconnect" href="https://volcanoes.usgs.gov">
@@ -1072,7 +1072,7 @@
     async function loadEarthquakes() {
       setStatus('Fetching earthquake data…');
       try {
-        const res  = await fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_month.geojson');
+        const res  = await fetch('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-04-24&minmagnitude=4&limit=8000');
         const data = await res.json();
         let count  = 0;
 
