@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <script>if(location.search !== '?v=17') location.replace(location.pathname+'?v=17');</script>
+  <script>if(location.search !== '?v=18') location.replace(location.pathname+'?v=18');</script>
   <title>Earthquakes & Volcanoes</title>
   <link rel="preconnect" href="https://earthquake.usgs.gov">
   <link rel="preconnect" href="https://volcanoes.usgs.gov">
@@ -1120,29 +1120,31 @@
       }
     }
 
-    // ── Load volcanoes ──
+    // ── Load volcanoes — NASA EONET eruption events past 4 years ──
     async function loadVolcanoes() {
       try {
-        const res  = await fetch('https://volcanoes.usgs.gov/vsc/api/volcanoApi/volcanoesGVP');
+        const res  = await fetch('https://eonet.gsfc.nasa.gov/api/v3/events?category=volcanoes&limit=500&days=1461&status=all');
         const data = await res.json();
-        rawVolData = data.filter(v => v.latitude && v.longitude && v.obsAbbr && v.obsAbbr !== 'OTHER');
+        rawVolData = data.events || [];
         let count  = 0;
 
-        rawVolData.forEach(v => {
-          const name     = v.vName || 'Unknown Volcano';
-          const location = [v.subregion, v.country].filter(Boolean).join(', ') || 'Unknown location';
-          const active   = v.obsAbbr && v.obsAbbr !== 'OTHER';
-          const dotColor = active ? '#f87171' : '#ffffff';
+        rawVolData.forEach(ev => {
+          if (!ev.geometry?.length) return;
+          const geo = ev.geometry[ev.geometry.length - 1];
+          const [lng, lat] = geo.coordinates;
+          const name   = ev.title || 'Unknown Volcano';
+          const date   = new Date(geo.date).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+          const active = !ev.closed;
+          const dotColor = active ? '#f87171' : '#fbbf24';
 
           const volBase   = 3;
-          const volMarker = L.circleMarker([v.latitude, v.longitude], {
+          const volMarker = L.circleMarker([lat, lng], {
             radius: scaledRadius(volBase, map.getZoom()),
             color: dotColor, fillColor: dotColor,
-            fillOpacity: active ? 0.9 : 0.55, weight: 0,
+            fillOpacity: active ? 0.9 : 0.7, weight: 0,
           }).bindPopup(`
             <div class="popup-vol-title">🌋 ${name}</div>
-            <div>${location}</div>
-            <div class="popup-meta">${active ? `🔴 Active (${v.obsAbbr})` : '⚪ Dormant'}</div>
+            <div class="popup-meta">${active ? '🔴 Active' : '🟡 Recent (ended)'} · ${date}</div>
           `, { maxWidth: 240 }).addTo(volLayer);
           allMarkers.push({ marker: volMarker, baseRadius: volBase });
           count++;
@@ -1204,105 +1206,70 @@
     }
 
     async function buildEarth() {
-      const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js');
+      const [THREE, { OrbitControls }] = await Promise.all([
+        import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js'),
+        import('https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js'),
+      ]);
       const canvas = document.getElementById('earth-canvas');
       const wrap   = canvas.parentElement;
       const W = wrap.clientWidth || 600, H = wrap.clientHeight || 500;
 
       const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
       renderer.setSize(W, H); renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-      renderer.setClearColor(0x070b10, 1); renderer.localClippingEnabled = true;
+      renderer.setClearColor(0x111111, 1);
 
       const scene  = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(42, W / H, 0.01, 50);
-      camera.position.set(0, 0.5, 3.2); camera.lookAt(0, 0, 0);
+      scene.background = new THREE.Color(0x111111);
+      const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 1000);
+      camera.position.set(0, 2, 8);
 
-      // Two world-space clipping planes → keep front-right quarter (x≥0, z≥0)
-      const xCut = new THREE.Plane(new THREE.Vector3(1, 0, 0), 0);
-      const zCut = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.08;
 
+      // Lighting
+      const light1 = new THREE.DirectionalLight(0xffffff, 1.2);
+      light1.position.set(5, 5, 5); scene.add(light1);
+      scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+
+      // 4 layers — each a 3/4 sphere (phiLength = 1.5π) so the inside is visible
       const LAYERS = [
-        { r: 1.000, hex: 0x3d7a5e },
-        { r: 0.975, hex: 0x8b2500 },
-        { r: 0.855, hex: 0xc94010 },
-        { r: 0.770, hex: 0xe67f10 },
-        { r: 0.545, hex: 0x8899aa },
-        { r: 0.200, hex: 0xd8dde2 },
+        { radius: 2.5, color: 0x3366ff },
+        { radius: 2.1, color: 0xff9933 },
+        { radius: 1.4, color: 0x999999 },
+        { radius: 0.8, color: 0xffffcc },
       ];
 
-      const group = new THREE.Group();
-      scene.add(group);
-
-      // Concentric spheres — each clipped to front-right quarter
+      const earthGroup = new THREE.Group();
       LAYERS.forEach(lay => {
-        const geo = new THREE.SphereGeometry(lay.r, 72, 54);
-        const mat = new THREE.MeshPhongMaterial({
-          color: lay.hex, side: THREE.FrontSide,
-          clippingPlanes: [xCut, zCut],
-          shininess: lay.r < 0.3 ? 90 : lay.r < 0.6 ? 35 : 12,
-          specular: new THREE.Color(lay.r < 0.3 ? 0xaaaaaa : 0x111111),
+        const geo = new THREE.SphereGeometry(lay.radius, 64, 64, 0, Math.PI * 1.5, 0, Math.PI);
+        const mat = new THREE.MeshStandardMaterial({
+          color: lay.color, transparent: true, opacity: 0.85,
         });
-        group.add(new THREE.Mesh(geo, mat));
+        earthGroup.add(new THREE.Mesh(geo, mat));
       });
-
-      // Fill cut faces — world-space discs (not in group) so they stay at the clip planes
-      function addFace(rotY, clip) {
-        const eps = 0.001;
-        LAYERS.forEach((lay, i) => {
-          const innerR = i < LAYERS.length - 1 ? LAYERS[i + 1].r : 0;
-          const geo = innerR === 0
-            ? new THREE.CircleGeometry(lay.r, 128)
-            : new THREE.RingGeometry(innerR, lay.r, 128);
-          const mat = new THREE.MeshBasicMaterial({
-            color: lay.hex, side: THREE.DoubleSide, clippingPlanes: [clip],
-          });
-          const mesh = new THREE.Mesh(geo, mat);
-          mesh.rotation.y = rotY;
-          mesh.position.set(rotY !== 0 ? eps : 0, 0, rotY !== 0 ? 0 : eps);
-          scene.add(mesh);
-        });
-      }
-      addFace(0, xCut);              // z≈0 face, clip to x≥0
-      addFace(-Math.PI / 2, zCut);   // x≈0 face, clip to z≥0
+      scene.add(earthGroup);
 
       // Stars
       const starGeo = new THREE.BufferGeometry();
       const starPos = new Float32Array(1800);
-      for (let i = 0; i < 1800; i++) {
+      for (let i = 0; i < 600; i++) {
         const theta = Math.random() * Math.PI * 2, phi = Math.acos(2 * Math.random() - 1);
-        const r = 12 + Math.random() * 6;
-        starPos[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
-        starPos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-        starPos[i * 3 + 2] = r * Math.cos(phi);
+        const r = 18 + Math.random() * 6;
+        starPos[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+        starPos[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+        starPos[i*3+2] = r * Math.cos(phi);
       }
       starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-      scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.045, sizeAttenuation: true })));
-
-      // Lighting
-      scene.add(new THREE.AmbientLight(0xffffff, 0.45));
-      const sun = new THREE.DirectionalLight(0xfff3d0, 1.5); sun.position.set(4, 5, 6); scene.add(sun);
-      const fill = new THREE.DirectionalLight(0x3355aa, 0.3); fill.position.set(-3, -2, -4); scene.add(fill);
-
-      // Drag to rotate
-      let dragging = false, lx = 0, ly = 0, vx = 0, vy = 0, rx = 0.28, ry = -0.45;
-      const getXY = e => [e.clientX ?? e.touches?.[0].clientX, e.clientY ?? e.touches?.[0].clientY];
-      canvas.addEventListener('mousedown', e => { dragging=true; [lx,ly]=getXY(e); vx=vy=0; });
-      canvas.addEventListener('touchstart', e => { dragging=true; [lx,ly]=getXY(e); vx=vy=0; e.preventDefault(); }, {passive:false});
-      window.addEventListener('mousemove', e => { if(!dragging)return; const [cx,cy]=getXY(e); vx=(cx-lx)*0.013; vy=(cy-ly)*0.013; ry+=vx; rx+=vy; lx=cx; ly=cy; });
-      canvas.addEventListener('touchmove', e => { if(!dragging)return; const [cx,cy]=getXY(e); vx=(cx-lx)*0.013; vy=(cy-ly)*0.013; ry+=vx; rx+=vy; lx=cx; ly=cy; e.preventDefault(); }, {passive:false});
-      window.addEventListener('mouseup', () => dragging=false);
-      canvas.addEventListener('touchend', () => dragging=false);
+      scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.12 })));
 
       function animate() {
         earthAnimId = requestAnimationFrame(animate);
-        if (!dragging) { vx *= 0.95; vy *= 0.95; ry += vx + 0.004; rx += vy; }
-        rx = Math.max(-0.65, Math.min(0.75, rx));
-        group.rotation.set(rx, ry, 0);
+        controls.update();
         renderer.render(scene, camera);
       }
       animate();
 
-      // Handle resize
       new ResizeObserver(() => {
         const W2 = wrap.clientWidth, H2 = wrap.clientHeight;
         renderer.setSize(W2, H2); camera.aspect = W2/H2; camera.updateProjectionMatrix();
@@ -1325,47 +1292,32 @@
       </div>
       <div class="earth-legend">
         <div class="earth-legend-title">Layers</div>
-        
         <div class="earth-layer-item">
-          <div class="earth-layer-dot" style="background:#3d7a5e"></div>
+          <div class="earth-layer-dot" style="background:#3366ff"></div>
           <div class="earth-layer-text">
             <div class="earth-layer-name">Crust</div>
             <div class="earth-layer-info">0–100 km thick</div>
           </div>
         </div>
         <div class="earth-layer-item">
-          <div class="earth-layer-dot" style="background:#8b2500"></div>
+          <div class="earth-layer-dot" style="background:#ff9933"></div>
           <div class="earth-layer-text">
-            <div class="earth-layer-name">Upper Mantle</div>
-            <div class="earth-layer-info">100–660 km</div>
+            <div class="earth-layer-name">Mantle</div>
+            <div class="earth-layer-info">100–2,900 km</div>
           </div>
         </div>
         <div class="earth-layer-item">
-          <div class="earth-layer-dot" style="background:#c94010"></div>
-          <div class="earth-layer-text">
-            <div class="earth-layer-name">Asthenosphere</div>
-            <div class="earth-layer-info">~100–350 km (semi-liquid rock)</div>
-          </div>
-        </div>
-        <div class="earth-layer-item">
-          <div class="earth-layer-dot" style="background:#e67f10"></div>
-          <div class="earth-layer-text">
-            <div class="earth-layer-name">Lower Mantle</div>
-            <div class="earth-layer-info">660–2,900 km</div>
-          </div>
-        </div>
-        <div class="earth-layer-item">
-          <div class="earth-layer-dot" style="background:#8899aa"></div>
+          <div class="earth-layer-dot" style="background:#999999"></div>
           <div class="earth-layer-text">
             <div class="earth-layer-name">Outer Core</div>
-            <div class="earth-layer-info">2,900–5,100 km · Liquid iron</div>
+            <div class="earth-layer-info">2,900–5,100 km · Liquid</div>
           </div>
         </div>
         <div class="earth-layer-item">
-          <div class="earth-layer-dot" style="background:#d8dde2"></div>
+          <div class="earth-layer-dot" style="background:#ffffcc"></div>
           <div class="earth-layer-text">
             <div class="earth-layer-name">Inner Core</div>
-            <div class="earth-layer-info">5,100–6,378 km · Solid iron</div>
+            <div class="earth-layer-info">5,100–6,378 km · Solid</div>
           </div>
         </div>
       </div>
