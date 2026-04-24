@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <script>if(!location.search.includes('v=8'))location.replace(location.pathname+'?v=8');</script>
+  <script>if(!location.search.includes('v=9'))location.replace(location.pathname+'?v=8');</script>
   <title>Earthquakes & Volcanoes</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
@@ -112,6 +112,43 @@
       margin-left: auto;
     }
     .stat-chip span { color: #888; font-weight: 700; }
+
+
+    /* ── Reference image overlay ── */
+    .ref-overlay {
+      position: fixed; inset: 0; z-index: 1500;
+      background: rgba(4,6,10,0.96);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 20px;
+      animation: fadeInOverlay 0.2s ease;
+    }
+    .ref-overlay.hidden { display: none; }
+    @keyframes fadeInOverlay { from{opacity:0;} to{opacity:1;} }
+    .ref-overlay-inner {
+      position: relative; max-width: 980px; width: 100%;
+    }
+    .ref-overlay-title {
+      color: #f0f0f0; font-size: 1rem; font-weight: 700;
+      margin-bottom: 12px; text-align: center; letter-spacing: 0.04em;
+    }
+    .ref-overlay img {
+      width: 100%; max-height: 78vh; object-fit: contain;
+      border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+      display: block;
+    }
+    .ref-overlay-close {
+      position: absolute; top: -10px; right: -10px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18);
+      color: #ccc; font-size: 1.1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+    }
+    .ref-overlay-close:hover { background: rgba(255,255,255,0.22); color: #fff; }
+    .ref-overlay-tap { font-size: 0.75rem; color: #444; text-align: center; margin-top: 10px; }
+    .topbar-action.seafloor-active { border-color: rgba(34,211,238,0.45); color: #22d3ee; background: rgba(34,211,238,0.07); }
+    .topbar-action.topo-active     { border-color: rgba(74,222,128,0.45); color: #4ade80;  background: rgba(74,222,128,0.07); }
 
     /* ── Wegener info panel ── */
     .info-panel {
@@ -383,6 +420,8 @@
     <button class="topbar-action" id="btn-plates"  onclick="togglePlates()">🗺️ Plates</button>
     <button class="topbar-action" id="btn-wegener" onclick="toggleInfo()">📖 Wegener</button>
     <button class="topbar-action" id="btn-game"    onclick="toggleGame()">🎮 Draw Game</button>
+    <button class="topbar-action" id="btn-seafloor" onclick="toggleRefImg('seafloor')">🌊 Seafloor Age</button>
+    <button class="topbar-action" id="btn-topo"     onclick="toggleRefImg('topo')">🏔️ Topography</button>
 
     <div class="stat-chip">EQ: <span id="eq-count">—</span> &nbsp; Vol: <span id="vol-count">—</span></div>
   </div>
@@ -1045,6 +1084,44 @@
       await loadVolcanoes();
       document.getElementById('loading').classList.add('hidden');
     })();
+  
+    // ── Reference image viewer ──
+    let refOpen = null;
+    const REF_IMGS = {
+      seafloor: { src: 'seafloor-age.png', title: 'Age of Seafloor Rocks — Anne E. Egger, 2002', btnId: 'btn-seafloor', cls: 'seafloor-active' },
+      topo:     { src: 'global-topo.png',  title: 'Global Topography — Anne E. Egger, 2002',     btnId: 'btn-topo',     cls: 'topo-active'     },
+    };
+    function toggleRefImg(key) {
+      if (refOpen === key) { closeRefImg(); return; }
+      closeRefImg();
+      refOpen = key;
+      const cfg = REF_IMGS[key];
+      document.getElementById('ref-overlay-img').src = cfg.src;
+      document.getElementById('ref-overlay-title').textContent = cfg.title;
+      document.getElementById('ref-overlay').classList.remove('hidden');
+      document.getElementById(cfg.btnId).classList.add(cfg.cls);
+    }
+    function closeRefImg() {
+      if (!refOpen) return;
+      document.getElementById('ref-overlay').classList.add('hidden');
+      document.getElementById(REF_IMGS[refOpen].btnId).classList.remove(REF_IMGS[refOpen].cls);
+      refOpen = null;
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeRefImg(); });
+
   </script>
+
+  <!-- Reference image overlay -->
+  <div class="ref-overlay hidden" id="ref-overlay" onclick="closeRefImg()">
+    <div class="ref-overlay-inner" onclick="event.stopPropagation()">
+      <div class="ref-overlay-title" id="ref-overlay-title"></div>
+      <div style="position:relative">
+        <button class="ref-overlay-close" onclick="closeRefImg()">✕</button>
+        <img id="ref-overlay-img" src="" alt="">
+      </div>
+      <div class="ref-overlay-tap">Tap outside or ✕ to close</div>
+    </div>
+  </div>
+
 </body>
 </html>
