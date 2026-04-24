@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <script>if(location.search !== '?v=16') location.replace(location.pathname+'?v=16');</script>
+  <script>if(location.search !== '?v=17') location.replace(location.pathname+'?v=17');</script>
   <title>Earthquakes & Volcanoes</title>
   <link rel="preconnect" href="https://earthquake.usgs.gov">
   <link rel="preconnect" href="https://volcanoes.usgs.gov">
@@ -1125,7 +1125,7 @@
       try {
         const res  = await fetch('https://volcanoes.usgs.gov/vsc/api/volcanoApi/volcanoesGVP');
         const data = await res.json();
-        rawVolData = data.filter(v => v.latitude && v.longitude);
+        rawVolData = data.filter(v => v.latitude && v.longitude && v.obsAbbr && v.obsAbbr !== 'OTHER');
         let count  = 0;
 
         rawVolData.forEach(v => {
