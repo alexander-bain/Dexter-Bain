@@ -6,8 +6,12 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <script>if(location.search !== '?v=11') location.replace(location.pathname+'?v=11');</script>
+  <script>if(location.search !== '?v=12') location.replace(location.pathname+'?v=12');</script>
   <title>Earthquakes & Volcanoes</title>
+  <link rel="preconnect" href="https://earthquake.usgs.gov">
+  <link rel="preconnect" href="https://volcanoes.usgs.gov">
+  <link rel="preconnect" href="https://tile.openstreetmap.org">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -149,6 +153,63 @@
     .ref-overlay-tap { font-size: 0.75rem; color: #444; text-align: center; margin-top: 10px; }
     .topbar-action.seafloor-active { border-color: rgba(34,211,238,0.45); color: #22d3ee; background: rgba(34,211,238,0.07); }
     .topbar-action.topo-active     { border-color: rgba(74,222,128,0.45); color: #4ade80;  background: rgba(74,222,128,0.07); }
+
+
+    /* ── Earth Layers 3D viewer ── */
+    .earth-overlay {
+      position: fixed; inset: 0; z-index: 1600;
+      background: #070b10;
+      display: flex; flex-direction: column;
+      animation: fadeInOverlay 0.22s ease;
+    }
+    .earth-overlay.hidden { display: none; }
+    .earth-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px; background: rgba(0,0,0,0.55);
+      border-bottom: 1px solid rgba(255,255,255,0.07); flex-shrink: 0;
+    }
+    .earth-title { font-weight: 700; font-size: 1rem; color: #f0f0f0; letter-spacing: 0.04em; }
+    .earth-close {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      color: #aaa; font-size: 1rem; cursor: pointer; padding: 4px 14px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .earth-close:hover { background: rgba(255,255,255,0.16); color: #fff; }
+    .earth-body {
+      flex: 1; display: flex; min-height: 0;
+    }
+    .earth-canvas-wrap {
+      flex: 1; position: relative; min-width: 0;
+    }
+    #earth-canvas { display: block; width: 100%; height: 100%; }
+    .earth-drag-hint {
+      position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+      font-size: 0.72rem; color: rgba(255,255,255,0.28); pointer-events: none;
+      white-space: nowrap;
+    }
+    .earth-legend {
+      width: 200px; flex-shrink: 0; padding: 20px 16px;
+      background: rgba(0,0,0,0.4); border-left: 1px solid rgba(255,255,255,0.06);
+      overflow-y: auto; display: flex; flex-direction: column; gap: 14px;
+    }
+    .earth-legend-title {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.35); text-transform: uppercase; margin-bottom: 4px;
+    }
+    .earth-layer-item { display: flex; align-items: flex-start; gap: 10px; }
+    .earth-layer-dot {
+      width: 13px; height: 13px; border-radius: 50%; flex-shrink: 0; margin-top: 3px;
+      box-shadow: 0 0 6px rgba(255,255,255,0.15);
+    }
+    .earth-layer-text {}
+    .earth-layer-name { font-size: 0.82rem; font-weight: 700; color: #e8e8e8; }
+    .earth-layer-info { font-size: 0.72rem; color: #888; margin-top: 2px; line-height: 1.4; }
+    .topbar-action.earth-active { border-color: rgba(96,165,250,0.45); color: #60a5fa; background: rgba(96,165,250,0.07); }
+    @media (max-width: 600px) {
+      .earth-legend { width: 140px; padding: 12px 10px; gap: 10px; }
+      .earth-layer-name { font-size: 0.74rem; }
+      .earth-layer-info { font-size: 0.65rem; }
+    }
 
     /* ── Wegener info panel ── */
     .info-panel {
@@ -420,6 +481,7 @@
     <button class="topbar-action" id="btn-plates"  onclick="togglePlates()">🗺️ Plates</button>
     <button class="topbar-action" id="btn-wegener" onclick="toggleInfo()">📖 Wegener</button>
     <button class="topbar-action" id="btn-game"    onclick="toggleGame()">🎮 Draw Game</button>
+    <button class="topbar-action" id="btn-earth"    onclick="toggleEarthLayers()">🌐 Earth Layers</button>
     <button class="topbar-action" id="btn-seafloor" onclick="toggleRefImg('seafloor')">🌊 Seafloor Age</button>
     <button class="topbar-action" id="btn-topo"     onclick="toggleRefImg('topo')">🏔️ Topography</button>
 
@@ -1009,7 +1071,7 @@
     async function loadEarthquakes() {
       setStatus('Fetching earthquake data…');
       try {
-        const res  = await fetch('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2021-01-01&minmagnitude=4&limit=5000');
+        const res  = await fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson');
         const data = await res.json();
         let count  = 0;
 
@@ -1109,7 +1171,194 @@
     }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeRefImg(); });
 
+  
+    // ── Earth Layers 3D viewer ──
+    let earthBuilt = false;
+    let earthAnimId = null;
+
+    function toggleEarthLayers() {
+      const btn = document.getElementById('btn-earth');
+      const ov  = document.getElementById('earth-overlay');
+      if (!ov.classList.contains('hidden')) {
+        ov.classList.add('hidden'); btn.classList.remove('earth-active'); return;
+      }
+      closeRefImg();
+      ov.classList.remove('hidden'); btn.classList.add('earth-active');
+      if (!earthBuilt) { earthBuilt = true; buildEarth(); }
+    }
+    function closeEarthLayers() {
+      document.getElementById('earth-overlay').classList.add('hidden');
+      document.getElementById('btn-earth').classList.remove('earth-active');
+    }
+
+    async function buildEarth() {
+      const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js');
+      const canvas = document.getElementById('earth-canvas');
+      const wrap   = canvas.parentElement;
+      const W = wrap.clientWidth || 600, H = wrap.clientHeight || 500;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+      renderer.setSize(W, H); renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+      renderer.setClearColor(0x070b10, 1); renderer.localClippingEnabled = true;
+
+      const scene  = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(42, W / H, 0.01, 50);
+      camera.position.set(0, 0.5, 3.2); camera.lookAt(0, 0, 0);
+
+      // Two world-space clipping planes → keep front-right quarter (x≥0, z≥0)
+      const xCut = new THREE.Plane(new THREE.Vector3(1, 0, 0), 0);
+      const zCut = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+
+      const LAYERS = [
+        { r: 1.000, hex: 0x3d7a5e },
+        { r: 0.975, hex: 0x8b2500 },
+        { r: 0.855, hex: 0xc94010 },
+        { r: 0.770, hex: 0xe67f10 },
+        { r: 0.545, hex: 0x8899aa },
+        { r: 0.200, hex: 0xd8dde2 },
+      ];
+
+      const group = new THREE.Group();
+      scene.add(group);
+
+      // Concentric spheres — each clipped to front-right quarter
+      LAYERS.forEach(lay => {
+        const geo = new THREE.SphereGeometry(lay.r, 72, 54);
+        const mat = new THREE.MeshPhongMaterial({
+          color: lay.hex, side: THREE.FrontSide,
+          clippingPlanes: [xCut, zCut],
+          shininess: lay.r < 0.3 ? 90 : lay.r < 0.6 ? 35 : 12,
+          specular: new THREE.Color(lay.r < 0.3 ? 0xaaaaaa : 0x111111),
+        });
+        group.add(new THREE.Mesh(geo, mat));
+      });
+
+      // Fill cut faces — world-space discs (not in group) so they stay at the clip planes
+      function addFace(rotY, clip) {
+        const eps = 0.001;
+        LAYERS.forEach((lay, i) => {
+          const innerR = i < LAYERS.length - 1 ? LAYERS[i + 1].r : 0;
+          const geo = innerR === 0
+            ? new THREE.CircleGeometry(lay.r, 128)
+            : new THREE.RingGeometry(innerR, lay.r, 128);
+          const mat = new THREE.MeshBasicMaterial({
+            color: lay.hex, side: THREE.DoubleSide, clippingPlanes: [clip],
+          });
+          const mesh = new THREE.Mesh(geo, mat);
+          mesh.rotation.y = rotY;
+          mesh.position.set(rotY !== 0 ? eps : 0, 0, rotY !== 0 ? 0 : eps);
+          scene.add(mesh);
+        });
+      }
+      addFace(0, xCut);              // z≈0 face, clip to x≥0
+      addFace(-Math.PI / 2, zCut);   // x≈0 face, clip to z≥0
+
+      // Stars
+      const starGeo = new THREE.BufferGeometry();
+      const starPos = new Float32Array(1800);
+      for (let i = 0; i < 1800; i++) {
+        const theta = Math.random() * Math.PI * 2, phi = Math.acos(2 * Math.random() - 1);
+        const r = 12 + Math.random() * 6;
+        starPos[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
+        starPos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+        starPos[i * 3 + 2] = r * Math.cos(phi);
+      }
+      starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+      scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.045, sizeAttenuation: true })));
+
+      // Lighting
+      scene.add(new THREE.AmbientLight(0xffffff, 0.45));
+      const sun = new THREE.DirectionalLight(0xfff3d0, 1.5); sun.position.set(4, 5, 6); scene.add(sun);
+      const fill = new THREE.DirectionalLight(0x3355aa, 0.3); fill.position.set(-3, -2, -4); scene.add(fill);
+
+      // Drag to rotate
+      let dragging = false, lx = 0, ly = 0, vx = 0, vy = 0, rx = 0.28, ry = -0.45;
+      const getXY = e => [e.clientX ?? e.touches?.[0].clientX, e.clientY ?? e.touches?.[0].clientY];
+      canvas.addEventListener('mousedown', e => { dragging=true; [lx,ly]=getXY(e); vx=vy=0; });
+      canvas.addEventListener('touchstart', e => { dragging=true; [lx,ly]=getXY(e); vx=vy=0; e.preventDefault(); }, {passive:false});
+      window.addEventListener('mousemove', e => { if(!dragging)return; const [cx,cy]=getXY(e); vx=(cx-lx)*0.013; vy=(cy-ly)*0.013; ry+=vx; rx+=vy; lx=cx; ly=cy; });
+      canvas.addEventListener('touchmove', e => { if(!dragging)return; const [cx,cy]=getXY(e); vx=(cx-lx)*0.013; vy=(cy-ly)*0.013; ry+=vx; rx+=vy; lx=cx; ly=cy; e.preventDefault(); }, {passive:false});
+      window.addEventListener('mouseup', () => dragging=false);
+      canvas.addEventListener('touchend', () => dragging=false);
+
+      function animate() {
+        earthAnimId = requestAnimationFrame(animate);
+        if (!dragging) { vx *= 0.95; vy *= 0.95; ry += vx + 0.004; rx += vy; }
+        rx = Math.max(-0.65, Math.min(0.75, rx));
+        group.rotation.set(rx, ry, 0);
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Handle resize
+      new ResizeObserver(() => {
+        const W2 = wrap.clientWidth, H2 = wrap.clientHeight;
+        renderer.setSize(W2, H2); camera.aspect = W2/H2; camera.updateProjectionMatrix();
+      }).observe(wrap);
+    }
+
   </script>
+
+
+  <!-- Earth Layers 3D overlay -->
+  <div class="earth-overlay hidden" id="earth-overlay">
+    <div class="earth-topbar">
+      <div class="earth-title">🌐 Earth's Interior — 3D Cutaway</div>
+      <button class="earth-close" onclick="closeEarthLayers()">✕ Close</button>
+    </div>
+    <div class="earth-body">
+      <div class="earth-canvas-wrap">
+        <canvas id="earth-canvas"></canvas>
+        <div class="earth-drag-hint">Drag to rotate</div>
+      </div>
+      <div class="earth-legend">
+        <div class="earth-legend-title">Layers</div>
+        
+        <div class="earth-layer-item">
+          <div class="earth-layer-dot" style="background:#3d7a5e"></div>
+          <div class="earth-layer-text">
+            <div class="earth-layer-name">Crust</div>
+            <div class="earth-layer-info">0–100 km thick</div>
+          </div>
+        </div>
+        <div class="earth-layer-item">
+          <div class="earth-layer-dot" style="background:#8b2500"></div>
+          <div class="earth-layer-text">
+            <div class="earth-layer-name">Upper Mantle</div>
+            <div class="earth-layer-info">100–660 km</div>
+          </div>
+        </div>
+        <div class="earth-layer-item">
+          <div class="earth-layer-dot" style="background:#c94010"></div>
+          <div class="earth-layer-text">
+            <div class="earth-layer-name">Asthenosphere</div>
+            <div class="earth-layer-info">~100–350 km (semi-liquid rock)</div>
+          </div>
+        </div>
+        <div class="earth-layer-item">
+          <div class="earth-layer-dot" style="background:#e67f10"></div>
+          <div class="earth-layer-text">
+            <div class="earth-layer-name">Lower Mantle</div>
+            <div class="earth-layer-info">660–2,900 km</div>
+          </div>
+        </div>
+        <div class="earth-layer-item">
+          <div class="earth-layer-dot" style="background:#8899aa"></div>
+          <div class="earth-layer-text">
+            <div class="earth-layer-name">Outer Core</div>
+            <div class="earth-layer-info">2,900–5,100 km · Liquid iron</div>
+          </div>
+        </div>
+        <div class="earth-layer-item">
+          <div class="earth-layer-dot" style="background:#d8dde2"></div>
+          <div class="earth-layer-text">
+            <div class="earth-layer-name">Inner Core</div>
+            <div class="earth-layer-info">5,100–6,378 km · Solid iron</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Reference image overlay -->
   <div class="ref-overlay hidden" id="ref-overlay" onclick="closeRefImg()">
