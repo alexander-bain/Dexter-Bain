@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <script>if(location.search !== '?v=14') location.replace(location.pathname+'?v=14');</script>
+  <script>if(location.search !== '?v=15') location.replace(location.pathname+'?v=15');</script>
   <title>Earthquakes & Volcanoes</title>
   <link rel="preconnect" href="https://earthquake.usgs.gov">
   <link rel="preconnect" href="https://volcanoes.usgs.gov">
@@ -1068,42 +1068,53 @@
       return '#2299ff';                      // deep — bright blue
     }
 
-    // ── Load earthquakes ──
+    // ── Load earthquakes ── (4 parallel yearly chunks for speed)
+    function addEqFeatures(features) {
+      features.forEach(eq => {
+        const [lng, lat, depth] = eq.geometry.coordinates;
+        const mag      = eq.properties.mag;
+        const place    = eq.properties.place || 'Unknown location';
+        const time     = new Date(eq.properties.time).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
+        const depthKm  = depth != null ? Math.round(depth) : null;
+        const depthStr = depthKm != null ? depthKm + ' km deep' : '';
+        const col      = eqDepthColor(depth);
+        eqGrid.add(`${Math.floor(lat / 5)}_${Math.floor(lng / 5)}`);
+        const baseR = mag >= 6 ? 3 : mag >= 5 ? 1.8 : 0.9;
+        const marker = L.circleMarker([lat, lng], {
+          radius: scaledRadius(baseR, map.getZoom()),
+          color: col, fillColor: col, fillOpacity: 0.88, weight: 0,
+        }).bindPopup(`
+          <div class="popup-eq-title">Earthquake — M${mag}</div>
+          <div>${place}</div>
+          <div class="popup-meta">${time}${depthStr ? ' · ' + depthStr : ''}</div>
+        `, { maxWidth: 240 }).addTo(eqLayer);
+        allMarkers.push({ marker, baseRadius: baseR });
+      });
+    }
+
     async function loadEarthquakes() {
       setStatus('Fetching earthquake data…');
+      const BASE = 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&minmagnitude=4&limit=3000';
+      const chunks = [
+        [BASE + '&starttime=2022-04-24&endtime=2023-04-24'],
+        [BASE + '&starttime=2023-04-24&endtime=2024-04-24'],
+        [BASE + '&starttime=2024-04-24&endtime=2025-04-24'],
+        [BASE + '&starttime=2025-04-24&endtime=2026-04-25'],
+      ];
+      let total = 0;
+      // Fire all 4 requests simultaneously; add dots as each one arrives
+      const promises = chunks.map(([url]) =>
+        fetch(url).then(r => r.json()).then(data => {
+          addEqFeatures(data.features);
+          total += data.features.length;
+          document.getElementById('eq-count').textContent = total.toLocaleString();
+          setStatus(`${total.toLocaleString()} earthquakes loaded…`);
+        }).catch(() => {})
+      );
       try {
-        const res  = await fetch('https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2022-04-24&minmagnitude=4&limit=8000');
-        const data = await res.json();
-        let count  = 0;
-
-        data.features.forEach(eq => {
-          const [lng, lat, depth] = eq.geometry.coordinates;
-          const mag      = eq.properties.mag;
-          const place    = eq.properties.place || 'Unknown location';
-          const time     = new Date(eq.properties.time).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' });
-          const depthKm  = depth != null ? Math.round(depth) : null;
-          const depthStr = depthKm != null ? depthKm + ' km deep' : '';
-          const col      = eqDepthColor(depth);
-
-          // Track earthquake grid cells for the game
-          eqGrid.add(`${Math.floor(lat / 5)}_${Math.floor(lng / 5)}`);
-
-          const baseR = mag >= 6 ? 3 : mag >= 5 ? 1.8 : 0.9;
-          const marker = L.circleMarker([lat, lng], {
-            radius: scaledRadius(baseR, map.getZoom()),
-            color: col, fillColor: col, fillOpacity: 0.88, weight: 0,
-          }).bindPopup(`
-            <div class="popup-eq-title">Earthquake — M${mag}</div>
-            <div>${place}</div>
-            <div class="popup-meta">${time}${depthStr ? ' · ' + depthStr : ''}</div>
-          `, { maxWidth: 240 }).addTo(eqLayer);
-          allMarkers.push({ marker, baseRadius: baseR });
-          count++;
-        });
-
-        document.getElementById('eq-count').textContent = count.toLocaleString();
-        setStatus(`${count.toLocaleString()} earthquakes loaded. Fetching volcanoes…`);
-      } catch (e) {
+        await Promise.allSettled(promises);
+        setStatus(`${total.toLocaleString()} earthquakes loaded. Fetching volcanoes…`);
+      } catch(e) {
         document.getElementById('eq-count').textContent = 'error';
         setStatus('Earthquake data failed. Loading volcanoes…');
       }
