@@ -89,6 +89,7 @@
     .topbar-action.active { border-color: rgba(251,191,36,0.35); color: #fbbf24; background: rgba(251,191,36,0.07); }
     .topbar-action.game-active  { border-color: rgba(74,222,128,0.35); color: #4ade80; background: rgba(74,222,128,0.07); }
     .topbar-action.plates-active { border-color: rgba(249,115,22,0.45); color: #f97316; background: rgba(249,115,22,0.08); }
+    .topbar-action.overlay-active { border-color: rgba(56,189,248,0.4); color: #38bdf8; background: rgba(56,189,248,0.08); }
     .plate-label-icon {
       background: none; border: none; box-shadow: none;
       color: rgba(255,255,255,0.8); font-size: 0.72rem; font-weight: 700;
@@ -330,6 +331,8 @@
     </div>
 
     <button class="topbar-action" id="btn-plates"  onclick="togglePlates()">🗺️ Plates</button>
+    <button class="topbar-action" id="btn-topo" onclick="toggleOverlay('topo')">🌊 Topography</button>
+    <button class="topbar-action" id="btn-seafloor" onclick="toggleOverlay('seafloor')">🧭 Seafloor Age</button>
     <button class="topbar-action" id="btn-wegener" onclick="toggleInfo()">📖 Wegener</button>
     <button class="topbar-action" id="btn-game"    onclick="toggleGame()">🎮 Draw Game</button>
 
@@ -455,6 +458,7 @@
     let platesLoaded  = false;
     let platesVisible = false;
     let pangeaLoaded  = false;
+    let activeOverlay = null;
     let rawVolData    = [];
     let gameOpen     = false;
     let gameRevealed = false;
@@ -464,6 +468,9 @@
     const userStrokes = [];  // array of L.Polyline
     const userGrid    = new Set();
     const eqGrid      = new Set();
+    const globalBounds    = [[-85, -180], [85, 180]];
+    const topoOverlay     = L.imageOverlay('science/global-topo.png', globalBounds, { opacity: 0.55, interactive: false });
+    const seafloorOverlay = L.imageOverlay('science/seafloor-age.png', globalBounds, { opacity: 0.6, interactive: false });
 
     // ── Info panel toggle ──
     function toggleInfo() {
@@ -626,6 +633,31 @@
     }
 
     // ── View toggle ──
+    function clearOverlay() {
+      if (activeOverlay === 'topo' && map.hasLayer(topoOverlay)) map.removeLayer(topoOverlay);
+      if (activeOverlay === 'seafloor' && map.hasLayer(seafloorOverlay)) map.removeLayer(seafloorOverlay);
+      activeOverlay = null;
+      document.getElementById('btn-topo').classList.remove('overlay-active');
+      document.getElementById('btn-seafloor').classList.remove('overlay-active');
+    }
+
+    function toggleOverlay(kind) {
+      const targetOverlay = kind === 'topo' ? topoOverlay : seafloorOverlay;
+      const targetBtn = kind === 'topo' ? 'btn-topo' : 'btn-seafloor';
+
+      if (activeOverlay === kind) {
+        map.removeLayer(targetOverlay);
+        document.getElementById(targetBtn).classList.remove('overlay-active');
+        activeOverlay = null;
+        return;
+      }
+
+      clearOverlay();
+      targetOverlay.addTo(map);
+      document.getElementById(targetBtn).classList.add('overlay-active');
+      activeOverlay = kind;
+    }
+
     function setView(v) {
       currentView = v;
       document.getElementById('btn-both').className    = 'view-btn' + (v === 'both'   ? ' active-both'   : '');
@@ -637,6 +669,7 @@
       document.querySelectorAll('.key-pangea').forEach(el => el.style.display = v === 'pangea' ? 'flex'  : 'none');
 
       if (v === 'pangea') {
+        clearOverlay();
         map.removeLayer(tileLayerRef);
         map.removeLayer(eqLayer);
         map.removeLayer(volLayer);
@@ -835,14 +868,31 @@
     }
 
     // ── Load volcanoes ──
+    function parseEruptionYear(v) {
+      const candidates = [v.lastKnownEruption, v.lastEruption, v.last_eruption, v.lastEruptionYear, v.eruptionYear, v.lastKnownEruptionYear, v.knownEruption, v.last_activity];
+      for (const c of candidates) {
+        if (c == null) continue;
+        const m = String(c).match(/(1[6-9]\d{2}|20\d{2}|21\d{2})/);
+        if (m) return Number(m[1]);
+      }
+      return null;
+    }
+
     async function loadVolcanoes() {
       try {
         const res  = await fetch('https://volcanoes.usgs.gov/vsc/api/volcanoApi/volcanoesGVP');
         const data = await res.json();
-        rawVolData = data.filter(v => v.latitude && v.longitude);
+        const cutoffYear = new Date().getUTCFullYear() - 3;
+        const geocoded = data.filter(v => v.latitude && v.longitude);
+        rawVolData = geocoded.filter(v => {
+          const year = parseEruptionYear(v);
+          if (year) return year >= cutoffYear;
+          return v.obsAbbr && v.obsAbbr !== 'OTHER';
+        });
         let count  = 0;
 
         rawVolData.forEach(v => {
+          const eruptionYear = parseEruptionYear(v);
           const name     = v.vName || 'Unknown Volcano';
           const location = [v.subregion, v.country].filter(Boolean).join(', ') || 'Unknown location';
           const active   = v.obsAbbr && v.obsAbbr !== 'OTHER';
@@ -856,7 +906,7 @@
           }).bindPopup(`
             <div class="popup-vol-title">🌋 ${name}</div>
             <div>${location}</div>
-            <div class="popup-meta">${active ? `🔴 Active (${v.obsAbbr})` : '⚪ Dormant'}</div>
+            <div class="popup-meta">${active ? `🔴 Active (${v.obsAbbr})` : '⚪ Dormant'}${eruptionYear ? ` · Last eruption ${eruptionYear}` : ''}</div>
           `, { maxWidth: 240 }).addTo(volLayer);
           allMarkers.push({ marker: volMarker, baseRadius: volBase });
           count++;
