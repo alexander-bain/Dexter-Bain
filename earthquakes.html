@@ -90,33 +90,6 @@
     .topbar-action.game-active  { border-color: rgba(74,222,128,0.35); color: #4ade80; background: rgba(74,222,128,0.07); }
     .topbar-action.plates-active { border-color: rgba(249,115,22,0.45); color: #f97316; background: rgba(249,115,22,0.08); }
     .topbar-action.overlay-active { border-color: rgba(56,189,248,0.4); color: #38bdf8; background: rgba(56,189,248,0.08); }
-    .screenshot-modal {
-      position: fixed; inset: 0; z-index: 1800;
-      background: rgba(5,8,12,0.9);
-      display: none; align-items: center; justify-content: center;
-      padding: 24px;
-    }
-    .screenshot-modal.visible { display: flex; }
-    .screenshot-modal-card {
-      width: min(1200px, 96vw);
-      max-height: 88vh;
-      background: rgba(8,11,15,0.96);
-      border: 1px solid rgba(255,255,255,0.16);
-      border-radius: 12px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-    .screenshot-modal-header {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08);
-      color: #ddd; font-size: 0.82rem; font-weight: 700;
-    }
-    .screenshot-close {
-      background: transparent; border: none; color: #888; cursor: pointer; font-size: 1rem;
-    }
-    .screenshot-close:hover { color: #ddd; }
-    .screenshot-modal img { width: 100%; height: auto; display: block; }
     .plate-label-icon {
       background: none; border: none; box-shadow: none;
       color: rgba(255,255,255,0.8); font-size: 0.72rem; font-weight: 700;
@@ -504,10 +477,9 @@
     const userStrokes = [];  // array of L.Polyline
     const userGrid    = new Set();
     const eqGrid      = new Set();
-    const screenshotSources = {
-      topo: { title: 'Global Topography', src: 'science/global-topo.png' },
-      seafloor: { title: 'Age of Seafloor Rocks', src: 'science/seafloor-age.png' },
-    };
+    const globalBounds    = [[-85, -180], [85, 180]];
+    const topoOverlay     = L.imageOverlay('science/global-topo.png', globalBounds, { opacity: 0.55, interactive: false });
+    const seafloorOverlay = L.imageOverlay('science/seafloor-age.png', globalBounds, { opacity: 0.6, interactive: false });
 
     // ── Info panel toggle ──
     function toggleInfo() {
@@ -670,43 +642,29 @@
     }
 
     // ── View toggle ──
-    function syncMainLayersForView() {
-      const showEq = (currentView === 'both' || currentView === 'eq') && !gameOpen;
-      const showVol = currentView === 'both' || currentView === 'vol';
-      showEq ? map.addLayer(eqLayer) : map.removeLayer(eqLayer);
-      showVol ? map.addLayer(volLayer) : map.removeLayer(volLayer);
-    }
-
     function clearOverlay() {
+      if (activeOverlay === 'topo' && map.hasLayer(topoOverlay)) map.removeLayer(topoOverlay);
+      if (activeOverlay === 'seafloor' && map.hasLayer(seafloorOverlay)) map.removeLayer(seafloorOverlay);
       activeOverlay = null;
       document.getElementById('btn-topo').classList.remove('overlay-active');
       document.getElementById('btn-seafloor').classList.remove('overlay-active');
-      document.getElementById('screenshot-modal').classList.remove('visible');
-      if (currentView !== 'pangea') syncMainLayersForView();
     }
 
     function toggleOverlay(kind) {
+      const targetOverlay = kind === 'topo' ? topoOverlay : seafloorOverlay;
       const targetBtn = kind === 'topo' ? 'btn-topo' : 'btn-seafloor';
-      const graph = screenshotSources[kind];
 
       if (activeOverlay === kind) {
-        clearOverlay();
+        map.removeLayer(targetOverlay);
+        document.getElementById(targetBtn).classList.remove('overlay-active');
+        activeOverlay = null;
         return;
       }
 
       clearOverlay();
+      targetOverlay.addTo(map);
       document.getElementById(targetBtn).classList.add('overlay-active');
       activeOverlay = kind;
-      document.getElementById('screenshot-title').textContent = graph.title;
-      document.getElementById('screenshot-image').src = graph.src;
-      document.getElementById('screenshot-modal').classList.add('visible');
-      map.removeLayer(eqLayer);
-      map.removeLayer(volLayer);
-    }
-
-    function closeScreenshot(event) {
-      if (event && event.target.closest('.screenshot-modal-card')) return;
-      clearOverlay();
     }
 
     function setView(v) {
