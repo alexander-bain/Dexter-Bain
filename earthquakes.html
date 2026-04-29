@@ -690,9 +690,7 @@
       const graph = screenshotSources[kind];
 
       if (activeOverlay === kind) {
-        document.getElementById(targetBtn).classList.remove('overlay-active');
-        activeOverlay = null;
-        document.getElementById('screenshot-modal').classList.remove('visible');
+        clearOverlay();
         return;
       }
 
