@@ -89,6 +89,34 @@
     .topbar-action.active { border-color: rgba(251,191,36,0.35); color: #fbbf24; background: rgba(251,191,36,0.07); }
     .topbar-action.game-active  { border-color: rgba(74,222,128,0.35); color: #4ade80; background: rgba(74,222,128,0.07); }
     .topbar-action.plates-active { border-color: rgba(249,115,22,0.45); color: #f97316; background: rgba(249,115,22,0.08); }
+    .topbar-action.overlay-active { border-color: rgba(56,189,248,0.4); color: #38bdf8; background: rgba(56,189,248,0.08); }
+    .screenshot-modal {
+      position: fixed; inset: 0; z-index: 1800;
+      background: rgba(5,8,12,0.9);
+      display: none; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .screenshot-modal.visible { display: flex; }
+    .screenshot-modal-card {
+      width: min(1200px, 96vw);
+      max-height: 88vh;
+      background: rgba(8,11,15,0.96);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .screenshot-modal-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: #ddd; font-size: 0.82rem; font-weight: 700;
+    }
+    .screenshot-close {
+      background: transparent; border: none; color: #888; cursor: pointer; font-size: 1rem;
+    }
+    .screenshot-close:hover { color: #ddd; }
+    .screenshot-modal img { width: 100%; height: auto; display: block; }
     .plate-label-icon {
       background: none; border: none; box-shadow: none;
       color: rgba(255,255,255,0.8); font-size: 0.72rem; font-weight: 700;
@@ -330,6 +358,8 @@
     </div>
 
     <button class="topbar-action" id="btn-plates"  onclick="togglePlates()">🗺️ Plates</button>
+    <button class="topbar-action" id="btn-topo" onclick="toggleOverlay('topo')">🌊 Topography</button>
+    <button class="topbar-action" id="btn-seafloor" onclick="toggleOverlay('seafloor')">🧭 Seafloor Age</button>
     <button class="topbar-action" id="btn-wegener" onclick="toggleInfo()">📖 Wegener</button>
     <button class="topbar-action" id="btn-game"    onclick="toggleGame()">🎮 Draw Game</button>
 
@@ -428,6 +458,15 @@
   </div>
 
   <div id="pangea-status"></div>
+  <div id="screenshot-modal" class="screenshot-modal" onclick="closeScreenshot(event)">
+    <div class="screenshot-modal-card">
+      <div class="screenshot-modal-header">
+        <span id="screenshot-title">Graph</span>
+        <button class="screenshot-close" onclick="closeScreenshot()">✕</button>
+      </div>
+      <img id="screenshot-image" src="" alt="Science graph screenshot" />
+    </div>
+  </div>
   <a class="back-link" href="/">← DexterBain.com</a>
 
   <div id="loading">
@@ -455,6 +494,7 @@
     let platesLoaded  = false;
     let platesVisible = false;
     let pangeaLoaded  = false;
+    let activeOverlay = null;
     let rawVolData    = [];
     let gameOpen     = false;
     let gameRevealed = false;
@@ -464,6 +504,10 @@
     const userStrokes = [];  // array of L.Polyline
     const userGrid    = new Set();
     const eqGrid      = new Set();
+    const screenshotSources = {
+      topo: { title: 'Global Topography', src: 'science/global-topo.png' },
+      seafloor: { title: 'Age of Seafloor Rocks', src: 'science/seafloor-age.png' },
+    };
 
     // ── Info panel toggle ──
     function toggleInfo() {
@@ -626,6 +670,47 @@
     }
 
     // ── View toggle ──
+    function syncMainLayersForView() {
+      const showEq = (currentView === 'both' || currentView === 'eq') && !gameOpen;
+      const showVol = currentView === 'both' || currentView === 'vol';
+      showEq ? map.addLayer(eqLayer) : map.removeLayer(eqLayer);
+      showVol ? map.addLayer(volLayer) : map.removeLayer(volLayer);
+    }
+
+    function clearOverlay() {
+      activeOverlay = null;
+      document.getElementById('btn-topo').classList.remove('overlay-active');
+      document.getElementById('btn-seafloor').classList.remove('overlay-active');
+      document.getElementById('screenshot-modal').classList.remove('visible');
+      if (currentView !== 'pangea') syncMainLayersForView();
+    }
+
+    function toggleOverlay(kind) {
+      const targetBtn = kind === 'topo' ? 'btn-topo' : 'btn-seafloor';
+      const graph = screenshotSources[kind];
+
+      if (activeOverlay === kind) {
+        document.getElementById(targetBtn).classList.remove('overlay-active');
+        activeOverlay = null;
+        document.getElementById('screenshot-modal').classList.remove('visible');
+        return;
+      }
+
+      clearOverlay();
+      document.getElementById(targetBtn).classList.add('overlay-active');
+      activeOverlay = kind;
+      document.getElementById('screenshot-title').textContent = graph.title;
+      document.getElementById('screenshot-image').src = graph.src;
+      document.getElementById('screenshot-modal').classList.add('visible');
+      map.removeLayer(eqLayer);
+      map.removeLayer(volLayer);
+    }
+
+    function closeScreenshot(event) {
+      if (event && event.target.closest('.screenshot-modal-card')) return;
+      clearOverlay();
+    }
+
     function setView(v) {
       currentView = v;
       document.getElementById('btn-both').className    = 'view-btn' + (v === 'both'   ? ' active-both'   : '');
@@ -637,6 +722,7 @@
       document.querySelectorAll('.key-pangea').forEach(el => el.style.display = v === 'pangea' ? 'flex'  : 'none');
 
       if (v === 'pangea') {
+        clearOverlay();
         map.removeLayer(tileLayerRef);
         map.removeLayer(eqLayer);
         map.removeLayer(volLayer);
@@ -649,10 +735,12 @@
         map.removeLayer(pangeaLayer);
         document.getElementById('map').style.background = '';
 
-        const showEq  = (v === 'both' || v === 'eq') && !gameOpen;
-        const showVol = v === 'both' || v === 'vol';
-        showEq  ? map.addLayer(eqLayer)  : map.removeLayer(eqLayer);
-        showVol ? map.addLayer(volLayer) : map.removeLayer(volLayer);
+        if (activeOverlay) {
+          map.removeLayer(eqLayer);
+          map.removeLayer(volLayer);
+        } else {
+          syncMainLayersForView();
+        }
         if (platesVisible) map.addLayer(platesLayer);
       }
     }
@@ -835,14 +923,31 @@
     }
 
     // ── Load volcanoes ──
+    function parseEruptionYear(v) {
+      const candidates = [v.lastKnownEruption, v.lastEruption, v.last_eruption, v.lastEruptionYear, v.eruptionYear, v.lastKnownEruptionYear, v.knownEruption, v.last_activity];
+      for (const c of candidates) {
+        if (c == null) continue;
+        const m = String(c).match(/(1[6-9]\d{2}|20\d{2}|21\d{2})/);
+        if (m) return Number(m[1]);
+      }
+      return null;
+    }
+
     async function loadVolcanoes() {
       try {
         const res  = await fetch('https://volcanoes.usgs.gov/vsc/api/volcanoApi/volcanoesGVP');
         const data = await res.json();
-        rawVolData = data.filter(v => v.latitude && v.longitude);
+        const cutoffYear = new Date().getUTCFullYear() - 3;
+        const geocoded = data.filter(v => v.latitude && v.longitude);
+        rawVolData = geocoded.filter(v => {
+          const year = parseEruptionYear(v);
+          if (year) return year >= cutoffYear;
+          return v.obsAbbr && v.obsAbbr !== 'OTHER';
+        });
         let count  = 0;
 
         rawVolData.forEach(v => {
+          const eruptionYear = parseEruptionYear(v);
           const name     = v.vName || 'Unknown Volcano';
           const location = [v.subregion, v.country].filter(Boolean).join(', ') || 'Unknown location';
           const active   = v.obsAbbr && v.obsAbbr !== 'OTHER';
@@ -856,7 +961,7 @@
           }).bindPopup(`
             <div class="popup-vol-title">🌋 ${name}</div>
             <div>${location}</div>
-            <div class="popup-meta">${active ? `🔴 Active (${v.obsAbbr})` : '⚪ Dormant'}</div>
+            <div class="popup-meta">${active ? `🔴 Active (${v.obsAbbr})` : '⚪ Dormant'}${eruptionYear ? ` · Last eruption ${eruptionYear}` : ''}</div>
           `, { maxWidth: 240 }).addTo(volLayer);
           allMarkers.push({ marker: volMarker, baseRadius: volBase });
           count++;
