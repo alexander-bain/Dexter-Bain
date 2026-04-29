@@ -431,6 +431,15 @@
   </div>
 
   <div id="pangea-status"></div>
+  <div id="screenshot-modal" class="screenshot-modal" onclick="closeScreenshot(event)">
+    <div class="screenshot-modal-card">
+      <div class="screenshot-modal-header">
+        <span id="screenshot-title">Graph</span>
+        <button class="screenshot-close" onclick="closeScreenshot()">✕</button>
+      </div>
+      <img id="screenshot-image" src="" alt="Science graph screenshot" />
+    </div>
+  </div>
   <a class="back-link" href="/">← DexterBain.com</a>
 
   <div id="loading">
@@ -682,10 +691,12 @@
         map.removeLayer(pangeaLayer);
         document.getElementById('map').style.background = '';
 
-        const showEq  = (v === 'both' || v === 'eq') && !gameOpen;
-        const showVol = v === 'both' || v === 'vol';
-        showEq  ? map.addLayer(eqLayer)  : map.removeLayer(eqLayer);
-        showVol ? map.addLayer(volLayer) : map.removeLayer(volLayer);
+        if (activeOverlay) {
+          map.removeLayer(eqLayer);
+          map.removeLayer(volLayer);
+        } else {
+          syncMainLayersForView();
+        }
         if (platesVisible) map.addLayer(platesLayer);
       }
     }
