@@ -8,13 +8,9 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { overflow: hidden; background: #111111; }
     canvas { display: block; }
-    .hint { position: fixed; left: 10px; bottom: 10px; padding: 6px 8px; border-radius: 8px;
-      color: #ddd; font: 12px/1.35 system-ui, sans-serif; background: rgba(0,0,0,0.45);
-      border: 1px solid rgba(255,255,255,0.15); pointer-events: none; }
   </style>
 </head>
 <body>
-  <div class="hint">Drag to rotate • Scroll/pinch to zoom</div>
   <script type="module">
     import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
     import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js";
@@ -31,11 +27,6 @@
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
-    controls.enableZoom = true;
-    controls.enableRotate = true;
-    controls.enablePan = false;
-    controls.minDistance = 3.5;
-    controls.maxDistance = 16;
 
     // Lighting
     const light1 = new THREE.DirectionalLight(0xffffff, 1.2);
