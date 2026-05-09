@@ -71,16 +71,6 @@
     .view-btn.active-eq     { background: rgba(96,165,250,0.12);  color: #60a5fa; }
     .view-btn.active-vol    { background: rgba(248,113,113,0.12); color: #f87171; }
     .view-btn.active-pangea { background: rgba(251,191,36,0.15);  color: #fbbf24; }
-    body.graph-overlay-active .view-btn,
-    body.graph-overlay-active .view-btn.active-both,
-    body.graph-overlay-active .view-btn.active-eq,
-    body.graph-overlay-active .view-btn.active-vol,
-    body.graph-overlay-active .view-btn.active-pangea {
-      background: transparent;
-      color: #666;
-    }
-    body.graph-overlay-active .view-btn span { color: inherit !important; }
-
     .topbar-action {
       padding: 10px 20px;
       background: rgba(255,255,255,0.03);
@@ -679,12 +669,20 @@
     }
 
     // ── View toggle ──
+    function setViewButtonState(buttonId, activeClass, isActive, markerColor) {
+      const button = document.getElementById(buttonId);
+      button.className = 'view-btn' + (isActive ? ` ${activeClass}` : '');
+
+      const marker = button.querySelector('span');
+      if (marker) marker.style.color = isActive ? markerColor : '';
+    }
+
     function updateViewButtonStates() {
       const overlayOpen = Boolean(activeOverlay);
-      document.getElementById('btn-both').className    = 'view-btn' + (!overlayOpen && currentView === 'both'   ? ' active-both'   : '');
-      document.getElementById('btn-eq-only').className = 'view-btn' + (!overlayOpen && currentView === 'eq'     ? ' active-eq'     : '');
-      document.getElementById('btn-vol-only').className= 'view-btn' + (!overlayOpen && currentView === 'vol'    ? ' active-vol'    : '');
-      document.getElementById('btn-pangea').className  = 'view-btn' + (!overlayOpen && currentView === 'pangea' ? ' active-pangea' : '');
+      setViewButtonState('btn-both', 'active-both', !overlayOpen && currentView === 'both', '');
+      setViewButtonState('btn-eq-only', 'active-eq', !overlayOpen && currentView === 'eq', '#60a5fa');
+      setViewButtonState('btn-vol-only', 'active-vol', !overlayOpen && currentView === 'vol', '#f87171');
+      setViewButtonState('btn-pangea', 'active-pangea', !overlayOpen && currentView === 'pangea', '#fbbf24');
     }
 
     function syncMainLayersForView() {
