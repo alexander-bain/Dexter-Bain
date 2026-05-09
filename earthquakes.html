@@ -72,7 +72,7 @@
     .view-btn.active-vol    { background: rgba(248,113,113,0.12); color: #f87171; }
     .view-btn.active-pangea { background: rgba(251,191,36,0.15);  color: #fbbf24; }
     
-body.graph-overlay-active .view-btn,
+/*body.graph-overlay-active .view-btn,
 body.graph-overlay-active .view-btn.active-both,
 body.graph-overlay-active .view-btn.active-eq,
 body.graph-overlay-active .view-btn.active-vol,
@@ -80,7 +80,7 @@ body.graph-overlay-active .view-btn.active-pangea {
   background: transparent;
   color: #666;
 }
-body.graph-overlay-active .view-btn span { color: inherit !important; }
+body.graph-overlay-active .view-btn span { color: inherit !important; }*/
     .topbar-action {
       padding: 10px 20px;
       background: rgba(255,255,255,0.03);
@@ -659,13 +659,10 @@ body.graph-overlay-active .view-btn span { color: inherit !important; }
 
       if (activeOverlay === kind) {
         map.removeLayer(targetOverlay);
-        /*document.getElementById(targetBtn).classList.remove('overlay-active');*/
-        /*activeOverlay = null;
-        return;*/
-        document.getElementById(targetBtn).classList.add('overlay-active');
-activeOverlay = kind;
-document.body.classList.add('graph-overlay-active');
-updateViewButtonStates();
+        document.getElementById(targetBtn).classList.remove('overlay-active');
+        activeOverlay = null;
+        return;
+        
         
       }
 
