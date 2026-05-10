@@ -71,16 +71,6 @@
     .view-btn.active-eq     { background: rgba(96,165,250,0.12);  color: #60a5fa; }
     .view-btn.active-vol    { background: rgba(248,113,113,0.12); color: #f87171; }
     .view-btn.active-pangea { background: rgba(251,191,36,0.15);  color: #fbbf24; }
-    
-/*body.graph-overlay-active .view-btn,
-body.graph-overlay-active .view-btn.active-both,
-body.graph-overlay-active .view-btn.active-eq,
-body.graph-overlay-active .view-btn.active-vol,
-body.graph-overlay-active .view-btn.active-pangea {
-  background: transparent;
-  color: #666;
-}
-body.graph-overlay-active .view-btn span { color: inherit !important; }*/
     .topbar-action {
       padding: 10px 20px;
       background: rgba(255,255,255,0.03);
@@ -98,7 +88,6 @@ body.graph-overlay-active .view-btn span { color: inherit !important; }*/
     .topbar-action.active { border-color: rgba(251,191,36,0.35); color: #fbbf24; background: rgba(251,191,36,0.07); }
     .topbar-action.game-active  { border-color: rgba(74,222,128,0.35); color: #4ade80; background: rgba(74,222,128,0.07); }
     .topbar-action.plates-active { border-color: rgba(249,115,22,0.45); color: #f97316; background: rgba(249,115,22,0.08); }
-    .topbar-action.overlay-active { border-color: rgba(56,189,248,0.4); color: #38bdf8; background: rgba(56,189,248,0.08); }
     .plate-label-icon {
       background: none; border: none; box-shadow: none;
       color: rgba(255,255,255,0.8); font-size: 0.72rem; font-weight: 700;
@@ -333,15 +322,13 @@ body.graph-overlay-active .view-btn span { color: inherit !important; }*/
     <div class="topbar-title">🌍 Earthquakes &amp; Volcanoes</div>
 
     <div class="view-selector">
-      <button class="view-btn" id="btn-both"       onclick="setView('both')">🌐 Both</button>
-      <button class="view-btn active-eq" id="btn-eq-only"  onclick="setView('eq')"><span style="color:#60a5fa">●</span> Earthquakes</button>
+      <button class="view-btn active-both" id="btn-both"       onclick="setView('both')">🌐 Both</button>
+      <button class="view-btn" id="btn-eq-only"  onclick="setView('eq')"><span style="color:#60a5fa">●</span> Earthquakes</button>
       <button class="view-btn" id="btn-vol-only" onclick="setView('vol')"><span style="color:#f87171">●</span> Volcanoes</button>
       <button class="view-btn" id="btn-pangea"   onclick="setView('pangea')"><span style="color:#fbbf24">◎</span> Pangea</button>
     </div>
 
     <button class="topbar-action" id="btn-plates"  onclick="togglePlates()">🗺️ Plates</button>
-    <button class="topbar-action" id="btn-topo" onclick="toggleOverlay('topo')">🌊 Topography</button>
-    <button class="topbar-action" id="btn-seafloor" onclick="toggleOverlay('seafloor')">🧭 Seafloor Age</button>
     <button class="topbar-action" id="btn-wegener" onclick="toggleInfo()">📖 Wegener</button>
     <button class="topbar-action" id="btn-game"    onclick="toggleGame()">🎮 Draw Game</button>
 
@@ -458,16 +445,15 @@ body.graph-overlay-active .view-btn span { color: inherit !important; }*/
     }).addTo(map);
 
     const eqLayer     = L.layerGroup().addTo(map);
-    const volLayer    = L.layerGroup();
+    const volLayer    = L.layerGroup().addTo(map);
     const pangeaLayer = L.layerGroup();
     const platesLayer = L.layerGroup();
     const drawLayer   = L.layerGroup().addTo(map);
 
-    let currentView   = 'eq';
+    let currentView   = 'both';
     let platesLoaded  = false;
     let platesVisible = false;
     let pangeaLoaded  = false;
-    let activeOverlay = null;
     let rawVolData    = [];
     let gameOpen     = false;
     let gameRevealed = false;
@@ -477,9 +463,6 @@ body.graph-overlay-active .view-btn span { color: inherit !important; }*/
     const userStrokes = [];  // array of L.Polyline
     const userGrid    = new Set();
     const eqGrid      = new Set();
-    const globalBounds    = [[-85, -180], [85, 180]];
-    const topoOverlay     = L.imageOverlay('science/global-topo.png', globalBounds, { opacity: 0.55, interactive: false });
-    const seafloorOverlay = L.imageOverlay('science/seafloor-age.png', globalBounds, { opacity: 0.6, interactive: false });
 
     // ── Info panel toggle ──
     function toggleInfo() {
@@ -642,36 +625,6 @@ body.graph-overlay-active .view-btn span { color: inherit !important; }*/
     }
 
     // ── View toggle ──
-    function clearOverlay() {
-      /*if (activeOverlay === 'topo' && map.hasLayer(topoOverlay)) map.removeLayer(topoOverlay);
-      if (activeOverlay === 'seafloor' && map.hasLayer(seafloorOverlay)) map.removeLayer(seafloorOverlay);
-      activeOverlay = null;
-      document.getElementById('btn-topo').classList.remove('overlay-active');
-      document.getElementById('btn-seafloor').classList.remove('overlay-active');*/
-    
-  activeOverlay = null;
-  document.body.classList.remove('graph-overlay-active');
-    }
-
-    function toggleOverlay(kind) {
-      const targetOverlay = kind === 'topo' ? topoOverlay : seafloorOverlay;
-      const targetBtn = kind === 'topo' ? 'btn-topo' : 'btn-seafloor';
-
-      if (activeOverlay === kind) {
-        map.removeLayer(targetOverlay);
-        document.getElementById(targetBtn).classList.remove('overlay-active');
-        activeOverlay = null;
-        return;
-        
-        
-      }
-
-      clearOverlay();
-      targetOverlay.addTo(map);
-      document.getElementById(targetBtn).classList.add('overlay-active');
-      activeOverlay = kind;
-    }
-
     function setView(v) {
       currentView = v;
       document.getElementById('btn-both').className    = 'view-btn' + (v === 'both'   ? ' active-both'   : '');
@@ -683,7 +636,6 @@ body.graph-overlay-active .view-btn span { color: inherit !important; }*/
       document.querySelectorAll('.key-pangea').forEach(el => el.style.display = v === 'pangea' ? 'flex'  : 'none');
 
       if (v === 'pangea') {
-        clearOverlay();
         map.removeLayer(tileLayerRef);
         map.removeLayer(eqLayer);
         map.removeLayer(volLayer);
