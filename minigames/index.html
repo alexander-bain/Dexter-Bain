@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DexterBain Minigames</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f9fafb;
+      --muted: #a7b1c2;
+      --panel: rgba(11, 18, 32, 0.9);
+      --panel-strong: #0b1220;
+      --line: rgba(255, 255, 255, 0.13);
+      --gold: #f9c74f;
+      --coral: #ff6b6b;
+      --teal: #31d0aa;
+      --blue: #60a5fa;
+      --night: #06080f;
+      --good: #86efac;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(135deg, rgba(96, 165, 250, 0.2), transparent 34%),
+        linear-gradient(225deg, rgba(49, 208, 170, 0.18), transparent 36%),
+        #06080f;
+      color: var(--ink);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page-shell {
+      min-height: 100vh;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 78vh;
+      padding: 22px clamp(18px, 4vw, 54px) 34px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(rgba(6, 8, 15, 0.18), rgba(6, 8, 15, 0.9)),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop stop-color='%2320345a'/%3E%3Cstop offset='.52' stop-color='%23101828'/%3E%3Cstop offset='1' stop-color='%2306080f'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1600' height='900' fill='url(%23sky)'/%3E%3Cpath d='M0 628h1600v272H0z' fill='%23090d16'/%3E%3Cpath d='M90 250h1420v430H90z' fill='%23141f34'/%3E%3Cpath d='M125 288h1350v330H125z' fill='%230a1020'/%3E%3Cg fill='%23f9c74f'%3E%3Ccircle cx='236' cy='192' r='24'/%3E%3Ccircle cx='1360' cy='210' r='24'/%3E%3Ccircle cx='452' cy='192' r='18'/%3E%3Ccircle cx='1150' cy='192' r='18'/%3E%3C/g%3E%3Cg fill='%23f7f7f7' opacity='.9'%3E%3Crect x='250' y='352' width='210' height='38' rx='8'/%3E%3Crect x='250' y='420' width='148' height='38' rx='8'/%3E%3Crect x='250' y='488' width='188' height='38' rx='8'/%3E%3Crect x='1058' y='352' width='250' height='38' rx='8'/%3E%3Crect x='1058' y='420' width='170' height='38' rx='8'/%3E%3Crect x='1058' y='488' width='210' height='38' rx='8'/%3E%3C/g%3E%3Cg fill='%2331d0aa'%3E%3Cpath d='M630 342h340l52 238H578z'/%3E%3Cpath d='M668 302h264l38 62H630z' fill='%2360a5fa'/%3E%3C/g%3E%3Cg fill='%23ff6b6b'%3E%3Ccircle cx='710' cy='455' r='24'/%3E%3Ccircle cx='806' cy='455' r='24'/%3E%3Ccircle cx='902' cy='455' r='24'/%3E%3C/g%3E%3Cg fill='%23e5e7eb'%3E%3Crect x='690' y='585' width='220' height='28' rx='14'/%3E%3Crect x='520' y='698' width='560' height='34' rx='17' opacity='.72'/%3E%3C/g%3E%3Cg fill='%23f9c74f'%3E%3Cpath d='M200 735l22 48h-44z'/%3E%3Cpath d='M1390 700l26 58h-52z'/%3E%3Cpath d='M1248 744l16 34h-32z'/%3E%3C/g%3E%3C/svg%3E") center / cover;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(6, 8, 15, 0.55);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(6, 8, 15, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #dbeafe;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 0 6px rgba(49, 208, 170, 0.14);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      align-self: end;
+      max-width: 1040px;
+      padding: 72px 0 16px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: #d7f7ed;
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 920px;
+      margin: 0;
+      font-size: clamp(3rem, 8vw, 7.2rem);
+      line-height: 0.88;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin: 22px 0 28px;
+      color: #d8dee9;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      line-height: 1.55;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      min-height: 44px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-weight: 900;
+      color: #041015;
+      background: var(--gold);
+      box-shadow: 0 14px 30px rgba(249, 199, 79, 0.24);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 34px rgba(249, 199, 79, 0.32);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn.secondary {
+      color: var(--ink);
+      background: rgba(6, 8, 15, 0.66);
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: none;
+    }
+
+    .btn.small {
+      min-height: 38px;
+      padding: 8px 11px;
+      font-size: 0.9rem;
+      box-shadow: none;
+    }
+
+    .next-strip {
+      margin-top: -26px;
+      padding: 0 clamp(18px, 4vw, 54px);
+      position: relative;
+      z-index: 3;
+    }
+
+    .event-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .event-tab {
+      min-height: 116px;
+      text-align: left;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(11, 18, 32, 0.94);
+      cursor: pointer;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.24);
+    }
+
+    .event-tab[aria-pressed="true"] {
+      border-color: rgba(249, 199, 79, 0.82);
+      outline: 2px solid rgba(249, 199, 79, 0.18);
+    }
+
+    .tab-kicker {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.77rem;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .tab-title {
+      margin: 12px 0 6px;
+      font-size: 1.15rem;
+      font-weight: 950;
+    }
+
+    .tab-meta {
+      margin: 0;
+      color: #d8dee9;
+      font-size: 0.9rem;
+    }
+
+    .app-grid {
+      max-width: 1180px;
+      margin: 34px auto 60px;
+      padding: 0 clamp(18px, 4vw, 54px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.42fr) minmax(310px, 0.8fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.24);
+    }
+
+    .panel-head {
+      padding: 18px 18px 0;
+    }
+
+    .game-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #e6edf7;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .event-title {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+      line-height: 1;
+    }
+
+    .event-summary {
+      margin: 12px 0 16px;
+      color: #cdd6e5;
+      line-height: 1.55;
+    }
+
+    .scoreline {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      padding: 14px 18px 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .score-tile {
+      min-height: 78px;
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.065);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .score-label {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .score-value {
+      margin: 0;
+      font-size: 1.45rem;
+      font-weight: 950;
+    }
+
+    .form-panel {
+      margin-top: 18px;
+      padding: 18px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .name-input {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.08);
+      outline: none;
+    }
+
+    .name-input:focus {
+      border-color: rgba(96, 165, 250, 0.9);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.16);
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 1.05rem;
+    }
+
+    .questions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .question {
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .question-text {
+      margin: 0 0 12px;
+      font-weight: 850;
+      line-height: 1.35;
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .answer {
+      position: relative;
+    }
+
+    .answer input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .answer span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 9px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(6, 8, 15, 0.55);
+      color: #eaf1fb;
+      font-weight: 850;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .answer input:checked + span {
+      border-color: rgba(49, 208, 170, 0.95);
+      background: rgba(49, 208, 170, 0.18);
+      box-shadow: inset 0 0 0 1px rgba(49, 208, 170, 0.4);
+    }
+
+    .notify-box {
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px solid rgba(96, 165, 250, 0.22);
+      border-radius: 8px;
+      background: rgba(96, 165, 250, 0.08);
+    }
+
+    .notify-options {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .submit-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .save-note {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .side-stack {
+      display: grid;
+      gap: 18px;
+      position: sticky;
+      top: 14px;
+    }
+
+    .leaderboard {
+      padding: 18px;
+    }
+
+    .leaderboard-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .leader-row {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 46px;
+      padding: 8px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .rank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: rgba(249, 199, 79, 0.14);
+      color: #ffe7a0;
+      font-weight: 950;
+    }
+
+    .leader-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 900;
+    }
+
+    .leader-details {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 750;
+    }
+
+    .points {
+      font-weight: 950;
+      color: var(--good);
+    }
+
+    .activity {
+      padding: 18px;
+    }
+
+    .ticker {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ticker li {
+      display: grid;
+      grid-template-columns: 10px minmax(0, 1fr);
+      gap: 10px;
+      color: #d8dee9;
+      line-height: 1.35;
+      font-size: 0.9rem;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      margin-top: 5px;
+      border-radius: 50%;
+      background: var(--coral);
+    }
+
+    .empty-state {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      z-index: 30;
+      transform: translateX(-50%) translateY(140%);
+      width: min(520px, calc(100vw - 28px));
+      padding: 13px 15px;
+      border-radius: 8px;
+      color: var(--ink);
+      background: #101827;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.46);
+      transition: transform 0.2s ease;
+      font-weight: 850;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        min-height: 72vh;
+      }
+
+      .event-tabs,
+      .app-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .side-stack {
+        position: static;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .hero {
+        min-height: 70vh;
+      }
+
+      h1 {
+        font-size: clamp(2.65rem, 16vw, 4.5rem);
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .status-pill {
+        max-width: 190px;
+      }
+
+      .scoreline,
+      .answers,
+      .notify-options,
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-shell">
+    <section class="hero">
+      <nav class="topbar" aria-label="Minigames navigation">
+        <a class="home-link" href="../index.html">DexterBain.com</a>
+        <span class="status-pill"><span class="pulse" aria-hidden="true"></span><span id="liveStatus">Finding the next big event</span></span>
+      </nav>
+
+      <div class="hero-content">
+        <p class="eyebrow">Live family prediction games</p>
+        <h1>Event picks, bragging rights, leaderboard chaos.</h1>
+        <p class="hero-copy">
+          Pick the next big event, answer the questions, choose how much you want to be notified, and see whether your guesses climb the table.
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="#play">Play the next game</a>
+          <button class="btn secondary" type="button" id="randomizeBtn">Surprise me</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="next-strip" aria-label="Upcoming event games">
+      <div class="event-tabs" id="eventTabs"></div>
+    </section>
+
+    <section class="app-grid" id="play">
+      <div>
+        <article class="panel" aria-live="polite">
+          <div class="panel-head">
+            <div class="game-meta" id="gameMeta"></div>
+            <h2 class="event-title" id="eventTitle">Loading game</h2>
+            <p class="event-summary" id="eventSummary"></p>
+          </div>
+          <div class="scoreline">
+            <div class="score-tile">
+              <p class="score-label">Game opens</p>
+              <p class="score-value" id="openDate">Soon</p>
+            </div>
+            <div class="score-tile">
+              <p class="score-label">Entries</p>
+              <p class="score-value" id="entryCount">0</p>
+            </div>
+            <div class="score-tile">
+              <p class="score-label">Questions</p>
+              <p class="score-value" id="questionCount">0</p>
+            </div>
+          </div>
+        </article>
+
+        <form class="panel form-panel" id="predictionForm">
+          <div class="form-row">
+            <input class="name-input" id="playerName" name="playerName" maxlength="24" autocomplete="name" placeholder="Your leaderboard name" required />
+            <button class="btn" type="submit">Lock picks</button>
+          </div>
+
+          <h3 class="section-title">Your predictions</h3>
+          <div class="questions" id="questions"></div>
+
+          <section class="notify-box" aria-labelledby="notifyTitle">
+            <h3 class="section-title" id="notifyTitle">Notifications</h3>
+            <div class="notify-options">
+              <label class="answer">
+                <input type="radio" name="notify" value="none" checked />
+                <span>Zero notifications</span>
+              </label>
+              <label class="answer">
+                <input type="radio" name="notify" value="win" />
+                <span>Only if I win</span>
+              </label>
+              <label class="answer">
+                <input type="radio" name="notify" value="updates" />
+                <span>Update me along the way</span>
+              </label>
+            </div>
+          </section>
+
+          <div class="submit-line">
+            <span class="save-note" id="saveNote">Your picks stay on this device until you change them.</span>
+          </div>
+        </form>
+      </div>
+
+      <aside class="side-stack">
+        <section class="panel leaderboard" aria-labelledby="leaderboardTitle">
+          <h3 class="section-title" id="leaderboardTitle">Leaderboard</h3>
+          <ol class="leaderboard-list" id="leaderboard"></ol>
+        </section>
+
+        <section class="panel activity" aria-labelledby="activityTitle">
+          <h3 class="section-title" id="activityTitle">Game room</h3>
+          <ul class="ticker" id="ticker"></ul>
+          <p class="empty-state" id="emptyState">No picks yet. Be the first name on the board.</p>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const STORAGE_KEY = "dexterbain-minigames-v1";
+    const today = new Date();
+    const year = today.getFullYear();
+
+    const eventCatalog = [
+      {
+        id: "oscars",
+        name: "The Oscars",
+        type: "Awards",
+        month: 2,
+        day: 8,
+        summary: "Red carpet surprises, speech timers, unexpected winners, and one very serious leaderboard.",
+        questions: [
+          ["Will the opening monologue be over 11 minutes?", ["Yes", "No"]],
+          ["Will Best Picture be the final award of the night?", ["Yes", "No"]],
+          ["Will someone thank their pet?", ["Yes", "No"]],
+          ["Will a winner get played off by music?", ["Yes", "No"]],
+          ["Which happens first?", ["Standing ovation", "Technical delay", "Host costume change", "Big upset"]]
+        ]
+      },
+      {
+        id: "super-bowl",
+        name: "The Big Football Game",
+        type: "Sports",
+        month: 1,
+        day: 8,
+        summary: "Commercials, coin flips, halftime spectacle, fourth-quarter drama, and family predictions.",
+        questions: [
+          ["Will the first score be a touchdown?", ["Yes", "No"]],
+          ["Will the coin toss be heads?", ["Heads", "Tails"]],
+          ["Will the halftime show start within 7 minutes of halftime?", ["Yes", "No"]],
+          ["Which quarter has the most points?", ["1st", "2nd", "3rd", "4th"]],
+          ["Will a commercial include a talking animal?", ["Yes", "No"]]
+        ]
+      },
+      {
+        id: "grammys",
+        name: "Music Awards Night",
+        type: "Awards",
+        month: 1,
+        day: 1,
+        summary: "Big performances, emotional speeches, surprise guests, and quick guesses before the show starts.",
+        questions: [
+          ["Will the first performance include pyrotechnics?", ["Yes", "No"]],
+          ["Will any winner mention their mom first?", ["Yes", "No"]],
+          ["Will there be a surprise duet?", ["Yes", "No"]],
+          ["Which appears first?", ["Standing ovation", "Wardrobe change", "Technical pause", "Crowd singalong"]],
+          ["Will the final speech run over 90 seconds?", ["Yes", "No"]]
+        ]
+      },
+      {
+        id: "nba-finals",
+        name: "Basketball Finals Opener",
+        type: "Sports",
+        month: 5,
+        day: 4,
+        summary: "Tipoff predictions for the first game of the finals: runs, threes, lead changes, and buzzer tension.",
+        questions: [
+          ["Will either team make 5 threes in the first quarter?", ["Yes", "No"]],
+          ["Will there be more than 8 lead changes?", ["Yes", "No"]],
+          ["Which team scores first?", ["Home team", "Away team"]],
+          ["Will a player score 30 or more?", ["Yes", "No"]],
+          ["Will the game be within 6 points with two minutes left?", ["Yes", "No"]]
+        ]
+      },
+      {
+        id: "world-series",
+        name: "Baseball Championship Opener",
+        type: "Sports",
+        month: 9,
+        day: 24,
+        summary: "First pitch, first hit, late innings, and a scoreboard that changes the whole watch party.",
+        questions: [
+          ["Will the first pitch be a strike?", ["Yes", "No"]],
+          ["Will there be a home run before the 5th inning?", ["Yes", "No"]],
+          ["Which happens first?", ["Double play", "Stolen base", "Manager mound visit", "Replay review"]],
+          ["Will the winning team score 5 or more?", ["Yes", "No"]],
+          ["Will the game last over 3 hours?", ["Yes", "No"]]
+        ]
+      },
+      {
+        id: "new-year",
+        name: "New Year's Countdown",
+        type: "Holiday",
+        month: 11,
+        day: 31,
+        summary: "Countdown timing, song choices, confetti, camera cuts, and family bragging rights for the first day of the year.",
+        questions: [
+          ["Will the countdown begin exactly 60 seconds before midnight?", ["Yes", "No"]],
+          ["Will the first song after midnight be upbeat?", ["Yes", "No"]],
+          ["Will someone on camera cry?", ["Yes", "No"]],
+          ["Which color dominates the confetti?", ["Gold", "Silver", "Blue", "Mixed"]],
+          ["Will fireworks appear before the clock hits zero?", ["Yes", "No"]]
+        ]
+      }
+    ];
+
+    const names = ["Dexter", "Avery", "Maya", "Eli", "Nora", "Sam", "Riley", "Jordan", "Quinn"];
+    let selectedGameId = null;
+    let state = loadState();
+
+    const tabsEl = document.getElementById("eventTabs");
+    const metaEl = document.getElementById("gameMeta");
+    const titleEl = document.getElementById("eventTitle");
+    const summaryEl = document.getElementById("eventSummary");
+    const openDateEl = document.getElementById("openDate");
+    const entryCountEl = document.getElementById("entryCount");
+    const questionCountEl = document.getElementById("questionCount");
+    const questionsEl = document.getElementById("questions");
+    const leaderboardEl = document.getElementById("leaderboard");
+    const tickerEl = document.getElementById("ticker");
+    const emptyStateEl = document.getElementById("emptyState");
+    const formEl = document.getElementById("predictionForm");
+    const playerNameEl = document.getElementById("playerName");
+    const saveNoteEl = document.getElementById("saveNote");
+    const liveStatusEl = document.getElementById("liveStatus");
+    const toastEl = document.getElementById("toast");
+
+    function normalizeGame(event, offsetYear = 0) {
+      const gameYear = year + offsetYear;
+      const date = new Date(gameYear, event.month, event.day, 17, 0, 0);
+      return {
+        ...event,
+        gameId: `${event.id}-${gameYear}`,
+        date,
+        gameYear
+      };
+    }
+
+    function upcomingGames() {
+      return eventCatalog
+        .flatMap((event) => [normalizeGame(event, 0), normalizeGame(event, 1)])
+        .filter((game) => game.date >= new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1))
+        .sort((a, b) => a.date - b.date)
+        .slice(0, 3);
+    }
+
+    function loadState() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { entries: {}, playerName: "", notify: "none" };
+      } catch {
+        return { entries: {}, playerName: "", notify: "none" };
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function hashText(text) {
+      let hash = 2166136261;
+      for (let index = 0; index < text.length; index += 1) {
+        hash ^= text.charCodeAt(index);
+        hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+      }
+      return Math.abs(hash >>> 0);
+    }
+
+    function seededAnswer(game, questionIndex) {
+      const options = game.questions[questionIndex][1];
+      return options[hashText(`${game.gameId}-${questionIndex}`) % options.length];
+    }
+
+    function seededPick(game, name, questionIndex) {
+      const options = game.questions[questionIndex][1];
+      return options[hashText(`${name}-${game.gameId}-${questionIndex}`) % options.length];
+    }
+
+    function scorePicks(game, picks) {
+      return game.questions.reduce((total, question, index) => {
+        return total + (picks[index] === seededAnswer(game, index) ? 1 : 0);
+      }, 0);
+    }
+
+    function dateLabel(date) {
+      return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(date);
+    }
+
+    function daysUntil(date) {
+      const ms = date - today;
+      return Math.max(0, Math.ceil(ms / 86400000));
+    }
+
+    function allEntries(game) {
+      const saved = (state.entries[game.gameId] || []).map((entry) => ({
+        ...entry,
+        score: scorePicks(game, entry.picks),
+        source: "player"
+      }));
+      const savedNames = new Set(saved.map((entry) => entry.name.toLowerCase()));
+      const fakeEntries = names.slice(0, 6).filter((name) => !savedNames.has(name.toLowerCase())).map((name) => {
+        const picks = game.questions.map((question, index) => seededPick(game, name, index));
+        return {
+          name,
+          picks,
+          score: scorePicks(game, picks),
+          source: "seed"
+        };
+      });
+
+      return [...fakeEntries, ...saved].sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+    }
+
+    function renderTabs(games) {
+      tabsEl.innerHTML = games.map((game) => `
+        <button class="event-tab" type="button" data-game="${game.gameId}" aria-pressed="${game.gameId === selectedGameId}">
+          <span class="tab-kicker"><span>${game.type}</span><span>${dateLabel(game.date)}</span></span>
+          <div class="tab-title">${game.name}</div>
+          <p class="tab-meta">${daysUntil(game.date)} days away</p>
+        </button>
+      `).join("");
+
+      tabsEl.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", () => {
+          selectedGameId = button.dataset.game;
+          render();
+          document.getElementById("play").scrollIntoView({ block: "start" });
+        });
+      });
+    }
+
+    function renderGame(game) {
+      const entries = allEntries(game);
+      const savedEntry = (state.entries[game.gameId] || []).at(-1);
+      const remaining = daysUntil(game.date);
+
+      metaEl.innerHTML = `
+        <span class="chip">${game.type}</span>
+        <span class="chip">${remaining === 0 ? "Tonight" : `${remaining} days away`}</span>
+        <span class="chip">Auto-generated questions</span>
+      `;
+      titleEl.textContent = game.name;
+      summaryEl.textContent = game.summary;
+      openDateEl.textContent = dateLabel(game.date);
+      entryCountEl.textContent = String(entries.length);
+      questionCountEl.textContent = String(game.questions.length);
+      liveStatusEl.textContent = `${game.name} is next`;
+      playerNameEl.value = state.playerName || "";
+
+      questionsEl.innerHTML = game.questions.map((question, questionIndex) => {
+        const saved = savedEntry?.picks?.[questionIndex] || "";
+        const options = question[1].map((answer) => `
+          <label class="answer">
+            <input type="radio" name="q${questionIndex}" value="${answer}" ${answer === saved ? "checked" : ""} required />
+            <span>${answer}</span>
+          </label>
+        `).join("");
+        return `
+          <fieldset class="question">
+            <legend class="question-text">${questionIndex + 1}. ${question[0]}</legend>
+            <div class="answers">${options}</div>
+          </fieldset>
+        `;
+      }).join("");
+
+      document.querySelectorAll("input[name='notify']").forEach((input) => {
+        input.checked = input.value === (state.notify || "none");
+      });
+
+      renderLeaderboard(entries);
+      renderTicker(game, entries);
+      saveNoteEl.textContent = savedEntry
+        ? `Saved picks for ${savedEntry.name}. Change anything and lock picks again.`
+        : "Your picks stay on this device until you change them.";
+    }
+
+    function renderLeaderboard(entries) {
+      leaderboardEl.innerHTML = entries.slice(0, 8).map((entry, index) => `
+        <li class="leader-row">
+          <span class="rank">${index + 1}</span>
+          <span>
+            <span class="leader-name">${entry.name}</span>
+            <div class="leader-details">${entry.source === "player" ? "Your table" : "Family table"} · ${entry.score} correct so far</div>
+          </span>
+          <span class="points">${entry.score}</span>
+        </li>
+      `).join("");
+    }
+
+    function renderTicker(game, entries) {
+      const top = entries[0];
+      const player = entries.find((entry) => entry.source === "player");
+      const lines = [
+        `${top.name} is leading ${game.name} with ${top.score} points.`,
+        `${game.questions.length} questions are live for this event.`,
+        player ? `${player.name}, your projected score is ${player.score}.` : "Lock your picks to join this leaderboard."
+      ];
+      tickerEl.innerHTML = lines.map((line) => `<li><span class="dot"></span><span>${line}</span></li>`).join("");
+      emptyStateEl.hidden = entries.length > 0;
+    }
+
+    function currentGame() {
+      const games = upcomingGames();
+      return games.find((game) => game.gameId === selectedGameId) || games[0];
+    }
+
+    function render() {
+      const games = upcomingGames();
+      selectedGameId = selectedGameId || games[0].gameId;
+      renderTabs(games);
+      renderGame(currentGame());
+    }
+
+    function showToast(message) {
+      toastEl.textContent = message;
+      toastEl.classList.add("show");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toastEl.classList.remove("show"), 3600);
+    }
+
+    async function handleNotifications(mode, entry, entries) {
+      if (mode === "none") {
+        showToast("Picks locked. No notifications will be sent.");
+        return;
+      }
+
+      if (!("Notification" in window)) {
+        showToast("This browser does not support notifications, but your picks are saved.");
+        return;
+      }
+
+      const permission = Notification.permission === "granted"
+        ? "granted"
+        : await Notification.requestPermission();
+
+      if (permission !== "granted") {
+        showToast("Picks locked. Notifications were not allowed.");
+        return;
+      }
+
+      const rank = entries.findIndex((candidate) => candidate.name === entry.name && candidate.source === "player") + 1;
+      const title = mode === "win" ? "Win-only alerts are on" : "Game updates are on";
+      const body = mode === "win"
+        ? `You are currently rank ${rank}. I will only alert if your saved picks finish first.`
+        : `You are currently rank ${rank} with ${entry.score} points.`;
+
+      new Notification(title, { body });
+      showToast("Picks locked and notifications are ready.");
+    }
+
+    formEl.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const game = currentGame();
+      const formData = new FormData(formEl);
+      const name = (formData.get("playerName") || "").toString().trim().slice(0, 24);
+      const notify = (formData.get("notify") || "none").toString();
+      const picks = game.questions.map((question, index) => (formData.get(`q${index}`) || "").toString());
+
+      if (!name || picks.some((pick) => !pick)) {
+        showToast("Add your name and answer every question first.");
+        return;
+      }
+
+      const entry = {
+        name,
+        picks,
+        notify,
+        score: scorePicks(game, picks),
+        savedAt: new Date().toISOString()
+      };
+
+      state.playerName = name;
+      state.notify = notify;
+      state.entries[game.gameId] = (state.entries[game.gameId] || []).filter((oldEntry) => oldEntry.name.toLowerCase() !== name.toLowerCase());
+      state.entries[game.gameId].push(entry);
+      saveState();
+
+      render();
+      await handleNotifications(notify, entry, allEntries(game));
+    });
+
+    document.getElementById("randomizeBtn").addEventListener("click", () => {
+      const game = currentGame();
+      game.questions.forEach((question, index) => {
+        const options = question[1];
+        const choice = options[Math.floor(Math.random() * options.length)];
+        const input = formEl.querySelector(`input[name="q${index}"][value="${CSS.escape(choice)}"]`);
+        if (input) input.checked = true;
+      });
+      showToast("Random picks filled in. Change any you disagree with, then lock them.");
+    });
+
+    render();
+  </script>
+</body>
+</html>
