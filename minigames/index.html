@@ -235,6 +235,14 @@
       font-weight: 950;
     }
 
+    .tab-description {
+      margin: 0 0 8px;
+      color: #dbe5f3;
+      font-size: 0.86rem;
+      font-weight: 750;
+      line-height: 1.35;
+    }
+
     .tab-meta {
       margin: 0;
       color: #d8dee9;
@@ -351,6 +359,19 @@
       box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.16);
     }
 
+    .profile-note {
+      margin: -6px 0 14px;
+      color: #d8dee9;
+      font-size: 0.88rem;
+      font-weight: 750;
+      line-height: 1.45;
+    }
+
+    .profile-note strong {
+      color: #ffe7a0;
+      font-weight: 950;
+    }
+
     .section-title {
       margin: 0 0 12px;
       font-size: 1.05rem;
@@ -376,7 +397,7 @@
 
     .answers {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 8px;
     }
 
@@ -390,11 +411,13 @@
       pointer-events: none;
     }
 
-    .answer span {
+    .answer > span {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      align-items: stretch;
       justify-content: center;
-      min-height: 40px;
+      gap: 7px;
+      min-height: 62px;
       padding: 9px 10px;
       border-radius: 8px;
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -403,6 +426,40 @@
       font-weight: 850;
       text-align: center;
       cursor: pointer;
+    }
+
+    .answer-main {
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .answer-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      font-weight: 850;
+    }
+
+    .answer-chance,
+    .answer-points {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 22px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .answer-points {
+      border-color: rgba(134, 239, 172, 0.24);
+      background: rgba(134, 239, 172, 0.09);
+      color: #b9f6ca;
     }
 
     .answer input:checked + span {
@@ -444,6 +501,107 @@
       gap: 18px;
       position: sticky;
       top: 14px;
+    }
+
+    .room-panel {
+      padding: 18px;
+    }
+
+    .room-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .room-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .room-code {
+      color: #ffe7a0;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+    }
+
+    .room-status {
+      min-height: 20px;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 750;
+      line-height: 1.4;
+    }
+
+    .room-status.good {
+      color: var(--good);
+    }
+
+    .room-status.warn {
+      color: #ffe7a0;
+    }
+
+    .room-status.bad {
+      color: #fca5a5;
+    }
+
+    .creator-panel {
+      padding: 18px;
+    }
+
+    .creator-fields,
+    .custom-question-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .creator-field {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 850;
+    }
+
+    .creator-question {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .creator-question-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .creator-answer-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 72px 72px;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .creator-status {
+      min-height: 20px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 750;
+      line-height: 1.4;
+    }
+
+    .creator-status.good {
+      color: var(--good);
+    }
+
+    .creator-status.bad {
+      color: #fca5a5;
     }
 
     .leaderboard {
@@ -503,6 +661,61 @@
 
     .activity {
       padding: 18px;
+    }
+
+    .results-panel {
+      padding: 18px;
+    }
+
+    .result-list {
+      display: grid;
+      gap: 8px;
+      margin: 10px 0 0;
+    }
+
+    .result-row {
+      display: grid;
+      gap: 6px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .result-row strong {
+      color: #f7f8fb;
+      font-size: 0.86rem;
+      line-height: 1.3;
+    }
+
+    .result-note {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 750;
+      line-height: 1.35;
+    }
+
+    .result-badge {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 24px;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(255, 231, 160, 0.13);
+      color: #ffe7a0;
+      font-size: 0.72rem;
+      font-weight: 950;
+    }
+
+    .result-badge.resolved {
+      background: rgba(134, 239, 172, 0.13);
+      color: #b9f6ca;
+    }
+
+    .result-badge.needs-source {
+      background: rgba(252, 165, 165, 0.12);
+      color: #fca5a5;
     }
 
     .ticker {
@@ -592,7 +805,9 @@
       .scoreline,
       .answers,
       .notify-options,
-      .form-row {
+      .form-row,
+      .room-form,
+      .creator-answer-row {
         grid-template-columns: 1fr;
       }
     }
@@ -641,7 +856,7 @@
               <p class="score-value" id="entryCount">0</p>
             </div>
             <div class="score-tile">
-              <p class="score-label">Questions</p>
+              <p class="score-label">Max points</p>
               <p class="score-value" id="questionCount">0</p>
             </div>
           </div>
@@ -649,9 +864,10 @@
 
         <form class="panel form-panel" id="predictionForm">
           <div class="form-row">
-            <input class="name-input" id="playerName" name="playerName" maxlength="24" autocomplete="name" placeholder="Your leaderboard name" required />
+            <input class="name-input" id="playerName" name="playerName" maxlength="24" autocomplete="name" placeholder="Leaderboard name" required />
             <button class="btn" type="submit">Lock picks</button>
           </div>
+          <p class="profile-note" id="profileNote">Enter a player name so the server can update your picks on the leaderboard.</p>
 
           <h3 class="section-title">Your predictions</h3>
           <div class="questions" id="questions"></div>
@@ -661,29 +877,82 @@
             <div class="notify-options">
               <label class="answer">
                 <input type="radio" name="notify" value="none" checked />
-                <span>Zero notifications</span>
+                <span>
+                  <span class="answer-main">No notifications</span>
+                  <span class="answer-meta">Just save my picks</span>
+                </span>
               </label>
               <label class="answer">
                 <input type="radio" name="notify" value="win" />
-                <span>Only if I win</span>
+                <span>
+                  <span class="answer-main">Notify me if I win only</span>
+                  <span class="answer-meta">Browser alert on this device</span>
+                </span>
               </label>
               <label class="answer">
                 <input type="radio" name="notify" value="updates" />
-                <span>Update me along the way</span>
+                <span>
+                  <span class="answer-main">Notify me along the way</span>
+                  <span class="answer-meta">Browser updates when this page checks</span>
+                </span>
               </label>
             </div>
+            <p class="empty-state">
+              This static page can show browser notifications after you allow them, but it cannot send true background push alerts while the site is closed.
+            </p>
           </section>
 
           <div class="submit-line">
-            <span class="save-note" id="saveNote">Your picks stay on this device until you change them.</span>
+            <span class="save-note" id="saveNote">Lock picks to save them to the server leaderboard.</span>
           </div>
         </form>
       </div>
 
       <aside class="side-stack">
+        <section class="panel creator-panel" aria-labelledby="creatorTitle">
+          <h3 class="section-title" id="creatorTitle">Create a minigame</h3>
+          <p class="empty-state">Make a custom prediction game with a name, at least 5 questions, and options with odds and points. Publishing adds it to the public game list.</p>
+          <form class="creator-fields" id="customGameForm">
+            <label class="creator-field">
+              Game name
+              <input class="name-input" id="customGameName" maxlength="64" placeholder="Example: Dexter's Movie Night" required />
+            </label>
+            <label class="creator-field">
+              Explanation
+              <input class="name-input" id="customGameSummary" maxlength="180" placeholder="What players are predicting" />
+            </label>
+            <div class="custom-question-list" id="customQuestions"></div>
+            <div class="room-actions">
+              <button class="btn small secondary" type="button" id="addCustomQuestionBtn">Add question</button>
+              <button class="btn small" type="submit" id="publishCustomGameBtn">Publish game</button>
+            </div>
+            <p class="creator-status" id="customGameStatus" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <section class="panel room-panel" aria-labelledby="roomTitle">
+          <h3 class="section-title" id="roomTitle">Private room</h3>
+          <p class="empty-state" id="roomSummary">Create a room for friends, or join one with a real code.</p>
+          <div class="room-form">
+            <input class="name-input" id="roomCodeInput" maxlength="16" autocomplete="off" placeholder="Room code" aria-label="Room code" />
+            <button class="btn small secondary" type="button" id="joinRoomBtn">Join</button>
+          </div>
+          <div class="room-actions">
+            <button class="btn small" type="button" id="createRoomBtn">Create room</button>
+            <button class="btn small secondary" type="button" id="leaveRoomBtn">Use public board</button>
+          </div>
+          <p class="room-status" id="roomStatus" role="status" aria-live="polite"></p>
+        </section>
+
         <section class="panel leaderboard" aria-labelledby="leaderboardTitle">
           <h3 class="section-title" id="leaderboardTitle">Leaderboard</h3>
           <ol class="leaderboard-list" id="leaderboard"></ol>
+        </section>
+
+        <section class="panel results-panel" aria-labelledby="resultsTitle">
+          <h3 class="section-title" id="resultsTitle">Auto scoring</h3>
+          <p class="empty-state" id="resultsSummary">Checking for event results as questions close.</p>
+          <div class="result-list" id="resultList"></div>
         </section>
 
         <section class="panel activity" aria-labelledby="activityTitle">
@@ -702,7 +971,230 @@
     const today = new Date();
     const year = today.getFullYear();
 
+    function slugify(value) {
+      return String(value || "")
+        .toLowerCase()
+        .replace(/&/g, " and ")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 48) || "answer";
+    }
+
+    function pointsForOdds(odds) {
+      const chance = Math.min(95, Math.max(4, Number(odds) || 50));
+      return Math.max(10, Math.round(1000 / chance));
+    }
+
+    function answer(label, odds, id = slugify(label)) {
+      const chance = Math.min(95, Math.max(4, Number(odds) || 50));
+      return {
+        id,
+        label,
+        odds: chance,
+        points: pointsForOdds(chance)
+      };
+    }
+
+    function question(text, answers, id = slugify(text)) {
+      return { id, text, answers };
+    }
+
     const eventCatalog = [
+      {
+        id: "weather-weekend",
+        name: "Weekend Weather Watch",
+        type: "Weather",
+        month: 4,
+        day: 24,
+        summary: "A light, local-feeling weather game about forecasts, clouds, surprise rain, and whether weekend plans stay outside.",
+        questions: [
+          question("What will the weekend headline be?", [
+            answer("Sunny and easy", 34),
+            answer("Cloudier than expected", 26),
+            answer("Rain sneaks in", 18),
+            answer("Wind steals the story", 12),
+            answer("Forecast totally flips", 10)
+          ]),
+          question("Will outdoor plans need a backup?", [
+            answer("Yes", 29),
+            answer("No", 71)
+          ]),
+          question("What happens first on the weather app?", [
+            answer("Temperature jumps", 24),
+            answer("Rain chance rises", 28),
+            answer("Wind alert appears", 14),
+            answer("Forecast barely changes", 34)
+          ]),
+          question("How dramatic is sunset?", [
+            answer("Clear golden sky", 38),
+            answer("Cloudy but pretty", 31),
+            answer("Washed out", 20),
+            answer("Surprise rainbow", 11)
+          ]),
+          question("What will people complain about first?", [
+            answer("Too hot", 29),
+            answer("Too cold", 22),
+            answer("Too windy", 21),
+            answer("Bad forecast", 18),
+            answer("Nothing, rare peace", 10)
+          ])
+        ]
+      },
+      {
+        id: "internet-random",
+        name: "Random Internet Day",
+        type: "Random",
+        month: 5,
+        day: 12,
+        summary: "A goofy daily-culture game for memes, group chats, surprise trends, and the internet choosing something weird.",
+        questions: [
+          question("What kind of post takes over first?", [
+            answer("Sports clip", 22),
+            answer("Weather screenshot", 14),
+            answer("Celebrity moment", 28),
+            answer("Food debate", 18),
+            answer("Completely random meme", 18)
+          ]),
+          question("Will the group chat argue about it?", [
+            answer("Yes", 62),
+            answer("No", 38)
+          ]),
+          question("Which phrase shows up first?", [
+            answer("No way", 27),
+            answer("I called it", 21),
+            answer("This is so dumb", 32),
+            answer("Wait what happened", 20)
+          ]),
+          question("How long does the trend last?", [
+            answer("Under 2 hours", 16),
+            answer("Half a day", 38),
+            answer("All day", 32),
+            answer("Somehow all week", 14)
+          ]),
+          question("Who sends the first screenshot?", [
+            answer("Friend", 45),
+            answer("Sibling", 21),
+            answer("Parent", 12),
+            answer("Nobody, it stays quiet", 22)
+          ])
+        ]
+      },
+      {
+        id: "soccer-kickoff",
+        name: "Big Soccer Kickoff",
+        type: "Sports",
+        month: 5,
+        day: 11,
+        summary: "A simple watch-party game for the first big soccer match: first shot, first card, chants, and late drama.",
+        questions: [
+          question("What happens in the first 10 minutes?", [
+            answer("Shot on goal", 34),
+            answer("Corner kick", 28),
+            answer("Yellow card", 13),
+            answer("Goal", 9),
+            answer("Mostly midfield passing", 16)
+          ]),
+          question("Who scores first?", [
+            answer("Favorite", 49),
+            answer("Underdog", 29),
+            answer("No first-half goal", 22)
+          ]),
+          question("What does the crowd do first?", [
+            answer("Big chant", 41),
+            answer("Whistles", 18),
+            answer("Phone lights", 11),
+            answer("Wave", 8),
+            answer("Nothing obvious", 22)
+          ]),
+          question("Will VAR change a call?", [
+            answer("Yes", 24),
+            answer("No", 76)
+          ]),
+          question("How tense is the ending?", [
+            answer("Comfortable win", 31),
+            answer("One-goal finish", 37),
+            answer("Late equalizer", 18),
+            answer("Penalty chaos", 14)
+          ])
+        ]
+      },
+      {
+        id: "local-election",
+        name: "Simple Election Night",
+        type: "Politics",
+        month: 10,
+        day: 3,
+        summary: "A non-heavy election-night game about timing, speeches, turnout chatter, and which race gets called first.",
+        questions: [
+          question("What is the first election-night headline?", [
+            answer("Turnout is high", 31),
+            answer("Race too close", 27),
+            answer("Early lead appears", 24),
+            answer("Counting delay", 18)
+          ]),
+          question("When does the first race get called?", [
+            answer("Before 8 PM", 22),
+            answer("8 to 10 PM", 43),
+            answer("After 10 PM", 25),
+            answer("Not that night", 10)
+          ]),
+          question("What does the first speech focus on?", [
+            answer("Thanking voters", 38),
+            answer("Unity", 24),
+            answer("Local issues", 21),
+            answer("Waiting for results", 17)
+          ]),
+          question("Will there be a surprise upset?", [
+            answer("Yes", 19),
+            answer("No", 81)
+          ]),
+          question("Which topic gets mentioned first?", [
+            answer("Economy", 30),
+            answer("Schools", 24),
+            answer("Safety", 21),
+            answer("Housing", 16),
+            answer("Weather at polling places", 9)
+          ])
+        ]
+      },
+      {
+        id: "space-launch",
+        name: "Space Launch Watch",
+        type: "Random",
+        month: 7,
+        day: 12,
+        summary: "A countdown game for launch streams, holds, camera shots, engine ignition, and whether everything leaves on time.",
+        questions: [
+          question("What happens first during the countdown?", [
+            answer("Smooth hold-free countdown", 39),
+            answer("Short technical hold", 28),
+            answer("Weather concern", 18),
+            answer("Launch delay", 15)
+          ]),
+          question("Which camera shot appears first?", [
+            answer("Rocket close-up", 44),
+            answer("Mission control", 22),
+            answer("Crowd reaction", 18),
+            answer("Clouds or sky", 16)
+          ]),
+          question("Will liftoff happen within 5 minutes of schedule?", [
+            answer("Yes", 58),
+            answer("No", 42)
+          ]),
+          question("What does the announcer say first?", [
+            answer("Nominal", 35),
+            answer("Go for launch", 31),
+            answer("Standing by", 22),
+            answer("Unexpected issue", 12)
+          ]),
+          question("How dramatic is the launch shot?", [
+            answer("Clean and bright", 42),
+            answer("Cloudy view", 24),
+            answer("Shaky camera", 18),
+            answer("Almost hidden", 16)
+          ])
+        ]
+      },
       {
         id: "oscars",
         name: "The Oscars",
@@ -711,11 +1203,45 @@
         day: 8,
         summary: "Red carpet surprises, speech timers, unexpected winners, and one very serious leaderboard.",
         questions: [
-          ["Will the opening monologue be over 11 minutes?", ["Yes", "No"]],
-          ["Will Best Picture be the final award of the night?", ["Yes", "No"]],
-          ["Will someone thank their pet?", ["Yes", "No"]],
-          ["Will a winner get played off by music?", ["Yes", "No"]],
-          ["Which happens first?", ["Standing ovation", "Technical delay", "Host costume change", "Big upset"]]
+          question("How long will the opening monologue run?", [
+            answer("Under 8 minutes", 22),
+            answer("8 to 11 minutes", 46),
+            answer("Over 11 minutes", 32)
+          ]),
+          question("What will Best Picture's spot be?", [
+            answer("Final award", 72),
+            answer("Second-to-last", 18),
+            answer("Earlier surprise", 10)
+          ]),
+          question("Who gets thanked in the strangest speech?", [
+            answer("A pet", 16),
+            answer("A teacher", 24),
+            answer("A childhood friend", 31),
+            answer("No strange thank-you", 29)
+          ]),
+          question("Will a winner get played off by music?", [
+            answer("Yes, awkwardly", 40),
+            answer("Almost, but saved", 34),
+            answer("No", 26)
+          ]),
+          question("Which happens first?", [
+            answer("Standing ovation", 38),
+            answer("Technical delay", 14),
+            answer("Host costume change", 21),
+            answer("Big upset", 18),
+            answer("Presenter flub", 9)
+          ]),
+          question("What becomes the first red carpet mini-trend?", [
+            answer("Black gowns", 28),
+            answer("Metallic suits", 20),
+            answer("Vintage jewelry", 22),
+            answer("Tiny sunglasses", 12),
+            answer("Unexpected sneakers", 18)
+          ]),
+          question("Will a winner mention a group chat?", [
+            answer("Yes", 17),
+            answer("No", 83)
+          ])
         ]
       },
       {
@@ -726,11 +1252,45 @@
         day: 8,
         summary: "Commercials, coin flips, halftime spectacle, fourth-quarter drama, and family predictions.",
         questions: [
-          ["Will the first score be a touchdown?", ["Yes", "No"]],
-          ["Will the coin toss be heads?", ["Heads", "Tails"]],
-          ["Will the halftime show start within 7 minutes of halftime?", ["Yes", "No"]],
-          ["Which quarter has the most points?", ["1st", "2nd", "3rd", "4th"]],
-          ["Will a commercial include a talking animal?", ["Yes", "No"]]
+          question("What will the first score be?", [
+            answer("Touchdown", 48),
+            answer("Field goal", 38),
+            answer("Safety", 4),
+            answer("Defensive touchdown", 10)
+          ]),
+          question("What will the coin toss be?", [
+            answer("Heads", 50),
+            answer("Tails", 50)
+          ]),
+          question("When will the halftime show start?", [
+            answer("Within 7 minutes", 44),
+            answer("8 to 11 minutes", 40),
+            answer("12+ minutes", 16)
+          ]),
+          question("Which quarter has the most points?", [
+            answer("1st", 21),
+            answer("2nd", 29),
+            answer("3rd", 22),
+            answer("4th", 28)
+          ]),
+          question("What kind of commercial shows up first?", [
+            answer("Talking animal", 24),
+            answer("Celebrity cameo", 42),
+            answer("Food close-up", 23),
+            answer("Car stunt", 11)
+          ]),
+          question("What triggers the first replay review?", [
+            answer("Catch near sideline", 36),
+            answer("Goal-line spot", 23),
+            answer("Turnover", 28),
+            answer("No review before halftime", 13)
+          ]),
+          question("How does the halftime show surprise people?", [
+            answer("Guest singer", 39),
+            answer("Marching band", 16),
+            answer("Drone or light show", 27),
+            answer("No surprise", 18)
+          ])
         ]
       },
       {
@@ -741,11 +1301,46 @@
         day: 1,
         summary: "Big performances, emotional speeches, surprise guests, and quick guesses before the show starts.",
         questions: [
-          ["Will the first performance include pyrotechnics?", ["Yes", "No"]],
-          ["Will any winner mention their mom first?", ["Yes", "No"]],
-          ["Will there be a surprise duet?", ["Yes", "No"]],
-          ["Which appears first?", ["Standing ovation", "Wardrobe change", "Technical pause", "Crowd singalong"]],
-          ["Will the final speech run over 90 seconds?", ["Yes", "No"]]
+          question("What opens the first performance?", [
+            answer("Pyrotechnics", 26),
+            answer("Dancers", 34),
+            answer("Solo spotlight", 25),
+            answer("Guest entrance", 15)
+          ]),
+          question("Who gets mentioned first in a winner's speech?", [
+            answer("Mom", 31),
+            answer("Fans", 27),
+            answer("Team", 33),
+            answer("Nobody expected", 9)
+          ]),
+          question("Will there be a surprise duet?", [
+            answer("Yes", 37),
+            answer("No", 63)
+          ]),
+          question("Which appears first?", [
+            answer("Standing ovation", 33),
+            answer("Wardrobe change", 25),
+            answer("Technical pause", 12),
+            answer("Crowd singalong", 30)
+          ]),
+          question("How long will the final speech run?", [
+            answer("Under 60 seconds", 21),
+            answer("60 to 90 seconds", 45),
+            answer("Over 90 seconds", 34)
+          ]),
+          question("What gets the first big crowd reaction?", [
+            answer("Surprise win", 23),
+            answer("High note", 31),
+            answer("Artist cameo", 20),
+            answer("Emotional tribute", 17),
+            answer("Awkward silence", 9)
+          ]),
+          question("Which camera cutaway happens first?", [
+            answer("Dancing celebrity", 34),
+            answer("Parent crying", 19),
+            answer("Rival artist clapping", 27),
+            answer("Confused audience member", 20)
+          ])
         ]
       },
       {
@@ -756,11 +1351,45 @@
         day: 4,
         summary: "Tipoff predictions for the first game of the finals: runs, threes, lead changes, and buzzer tension.",
         questions: [
-          ["Will either team make 5 threes in the first quarter?", ["Yes", "No"]],
-          ["Will there be more than 8 lead changes?", ["Yes", "No"]],
-          ["Which team scores first?", ["Home team", "Away team"]],
-          ["Will a player score 30 or more?", ["Yes", "No"]],
-          ["Will the game be within 6 points with two minutes left?", ["Yes", "No"]]
+          question("How hot is the first-quarter three-point shooting?", [
+            answer("One team hits 5+", 26),
+            answer("Both stay under 5", 58),
+            answer("Both hit 5+", 16)
+          ]),
+          question("How many lead changes will there be?", [
+            answer("0 to 4", 25),
+            answer("5 to 8", 43),
+            answer("9 to 12", 22),
+            answer("13+", 10)
+          ]),
+          question("Which team scores first?", [
+            answer("Home team", 52),
+            answer("Away team", 48)
+          ]),
+          question("Who gets the biggest scoring night?", [
+            answer("One player scores 30+", 55),
+            answer("Two players score 30+", 20),
+            answer("Nobody reaches 30", 25)
+          ]),
+          question("How close is it with two minutes left?", [
+            answer("Within 3 points", 24),
+            answer("4 to 6 points", 26),
+            answer("7 to 12 points", 30),
+            answer("Blowout", 20)
+          ]),
+          question("What is the first made basket?", [
+            answer("Layup or dunk", 41),
+            answer("Corner three", 17),
+            answer("Midrange jumper", 24),
+            answer("Free throw", 10),
+            answer("Putback", 8)
+          ]),
+          question("When does the first coach challenge happen?", [
+            answer("First quarter", 12),
+            answer("Second or third quarter", 38),
+            answer("Fourth quarter", 31),
+            answer("No challenge", 19)
+          ])
         ]
       },
       {
@@ -771,11 +1400,47 @@
         day: 24,
         summary: "First pitch, first hit, late innings, and a scoreboard that changes the whole watch party.",
         questions: [
-          ["Will the first pitch be a strike?", ["Yes", "No"]],
-          ["Will there be a home run before the 5th inning?", ["Yes", "No"]],
-          ["Which happens first?", ["Double play", "Stolen base", "Manager mound visit", "Replay review"]],
-          ["Will the winning team score 5 or more?", ["Yes", "No"]],
-          ["Will the game last over 3 hours?", ["Yes", "No"]]
+          question("What is the first pitch?", [
+            answer("Called strike", 38),
+            answer("Ball", 35),
+            answer("Swinging strike", 15),
+            answer("Ball in play", 12)
+          ]),
+          question("When does the first home run happen?", [
+            answer("Before 5th inning", 34),
+            answer("5th to 7th inning", 27),
+            answer("8th or later", 14),
+            answer("No home runs", 25)
+          ]),
+          question("Which happens first?", [
+            answer("Double play", 28),
+            answer("Stolen base", 18),
+            answer("Manager mound visit", 31),
+            answer("Replay review", 23)
+          ]),
+          question("How many runs does the winner score?", [
+            answer("1 to 3", 21),
+            answer("4", 24),
+            answer("5 to 7", 38),
+            answer("8+", 17)
+          ]),
+          question("How long will the game last?", [
+            answer("Under 2:45", 19),
+            answer("2:45 to 3:05", 39),
+            answer("3:06 to 3:30", 30),
+            answer("Over 3:30", 12)
+          ]),
+          question("How does the first baserunner reach?", [
+            answer("Single", 42),
+            answer("Walk", 24),
+            answer("Error", 10),
+            answer("Extra-base hit", 16),
+            answer("Hit by pitch", 8)
+          ]),
+          question("Will the bullpen phone ring before the 6th inning?", [
+            answer("Yes", 57),
+            answer("No", 43)
+          ])
         ]
       },
       {
@@ -786,18 +1451,70 @@
         day: 31,
         summary: "Countdown timing, song choices, confetti, camera cuts, and family bragging rights for the first day of the year.",
         questions: [
-          ["Will the countdown begin exactly 60 seconds before midnight?", ["Yes", "No"]],
-          ["Will the first song after midnight be upbeat?", ["Yes", "No"]],
-          ["Will someone on camera cry?", ["Yes", "No"]],
-          ["Which color dominates the confetti?", ["Gold", "Silver", "Blue", "Mixed"]],
-          ["Will fireworks appear before the clock hits zero?", ["Yes", "No"]]
+          question("When does the countdown begin?", [
+            answer("Exactly 60 seconds", 28),
+            answer("Early", 31),
+            answer("Late", 25),
+            answer("Chaotically unclear", 16)
+          ]),
+          question("What is the first song after midnight?", [
+            answer("Upbeat pop", 44),
+            answer("Classic singalong", 29),
+            answer("Slow emotional song", 17),
+            answer("Unexpected remix", 10)
+          ]),
+          question("Who cries on camera first?", [
+            answer("Host", 11),
+            answer("Audience member", 33),
+            answer("Performer", 18),
+            answer("Nobody", 38)
+          ]),
+          question("Which color dominates the confetti?", [
+            answer("Gold", 37),
+            answer("Silver", 24),
+            answer("Blue", 13),
+            answer("Mixed", 26)
+          ]),
+          question("When do fireworks appear?", [
+            answer("Before zero", 24),
+            answer("Exactly at midnight", 51),
+            answer("After midnight", 20),
+            answer("No clear fireworks shot", 5)
+          ]),
+          question("What is the first crowd chant after midnight?", [
+            answer("Happy New Year", 46),
+            answer("City name", 21),
+            answer("Countdown encore", 12),
+            answer("Song lyric", 15),
+            answer("No clear chant", 6)
+          ]),
+          question("What goes slightly off-script first?", [
+            answer("Camera misses a hug", 31),
+            answer("Host talks over music", 24),
+            answer("Confetti cannon delay", 13),
+            answer("Nothing obvious", 32)
+          ])
         ]
       }
     ];
 
-    const names = ["Dexter", "Avery", "Maya", "Eli", "Nora", "Sam", "Riley", "Jordan", "Quinn"];
     let selectedGameId = null;
     let state = loadState();
+    let sharedEntries = {};
+    let sharedLoadedGames = new Set();
+    let sharedRooms = {};
+    let sharedLoadedRooms = new Set();
+    let sharedStatus = "checking";
+    let roomStatusByGame = {};
+    let roomInfoByKey = {};
+    let checkedUrlRooms = new Set();
+    let draftPicksByGame = {};
+    let sharedResults = {};
+    let resultsCheckedAt = {};
+    let renderedGameId = "";
+    let publishedCustomGames = [];
+    let customGamesLoaded = false;
+    let customBuilderQuestions = Array.from({ length: 5 }, () => 4);
 
     const tabsEl = document.getElementById("eventTabs");
     const metaEl = document.getElementById("gameMeta");
@@ -808,13 +1525,29 @@
     const questionCountEl = document.getElementById("questionCount");
     const questionsEl = document.getElementById("questions");
     const leaderboardEl = document.getElementById("leaderboard");
+    const resultsSummaryEl = document.getElementById("resultsSummary");
+    const resultListEl = document.getElementById("resultList");
     const tickerEl = document.getElementById("ticker");
     const emptyStateEl = document.getElementById("emptyState");
     const formEl = document.getElementById("predictionForm");
     const playerNameEl = document.getElementById("playerName");
+    const profileNoteEl = document.getElementById("profileNote");
     const saveNoteEl = document.getElementById("saveNote");
     const liveStatusEl = document.getElementById("liveStatus");
     const toastEl = document.getElementById("toast");
+    const roomCodeInputEl = document.getElementById("roomCodeInput");
+    const roomSummaryEl = document.getElementById("roomSummary");
+    const roomStatusEl = document.getElementById("roomStatus");
+    const createRoomBtn = document.getElementById("createRoomBtn");
+    const joinRoomBtn = document.getElementById("joinRoomBtn");
+    const leaveRoomBtn = document.getElementById("leaveRoomBtn");
+    const customGameFormEl = document.getElementById("customGameForm");
+    const customGameNameEl = document.getElementById("customGameName");
+    const customGameSummaryEl = document.getElementById("customGameSummary");
+    const customQuestionsEl = document.getElementById("customQuestions");
+    const addCustomQuestionBtn = document.getElementById("addCustomQuestionBtn");
+    const publishCustomGameBtn = document.getElementById("publishCustomGameBtn");
+    const customGameStatusEl = document.getElementById("customGameStatus");
 
     function normalizeGame(event, offsetYear = 0) {
       const gameYear = year + offsetYear;
@@ -828,18 +1561,38 @@
     }
 
     function upcomingGames() {
-      return eventCatalog
+      const builtInGames = eventCatalog
         .flatMap((event) => [normalizeGame(event, 0), normalizeGame(event, 1)])
+        ;
+      const customGames = publishedCustomGames.map((game) => ({
+        ...game,
+        id: game.id,
+        gameId: game.id,
+        date: new Date(game.closesAt || Date.now() + 365 * 86400000),
+        type: "Custom",
+        summary: game.summary || `A custom prediction game by ${game.creator || "a player"}.`,
+        questions: game.questions || [],
+      }));
+
+      return [...customGames, ...builtInGames]
         .filter((game) => game.date >= new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1))
-        .sort((a, b) => a.date - b.date)
-        .slice(0, 3);
+        .sort((a, b) => {
+          if (a.type === "Custom" && b.type !== "Custom") return -1;
+          if (a.type !== "Custom" && b.type === "Custom") return 1;
+          if (a.type === "Custom" && b.type === "Custom") {
+            return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+          }
+          return a.date - b.date;
+        })
+        .slice(0, 6);
     }
 
     function loadState() {
+      const fallback = { entries: {}, activeRoomByGame: {}, playerName: "", notify: "none", notificationReceipts: {} };
       try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { entries: {}, playerName: "", notify: "none" };
+        return { ...fallback, ...(JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}) };
       } catch {
-        return { entries: {}, playerName: "", notify: "none" };
+        return fallback;
       }
     }
 
@@ -847,28 +1600,731 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     }
 
-    function hashText(text) {
-      let hash = 2166136261;
-      for (let index = 0; index < text.length; index += 1) {
-        hash ^= text.charCodeAt(index);
-        hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    function normalizePlayerName(value) {
+      return String(value || "").replace(/\s+/g, " ").trim().slice(0, 24);
+    }
+
+    function activePlayerName() {
+      return normalizePlayerName(playerNameEl.value || state.playerName);
+    }
+
+    function saveActivePlayerName(name) {
+      const cleanName = normalizePlayerName(name);
+      if (cleanName && cleanName !== state.playerName) {
+        state.playerName = cleanName;
+        saveState();
       }
-      return Math.abs(hash >>> 0);
+      return cleanName;
     }
 
-    function seededAnswer(game, questionIndex) {
-      const options = game.questions[questionIndex][1];
-      return options[hashText(`${game.gameId}-${questionIndex}`) % options.length];
+    function minigamesApiUrl(gameId) {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/minigames/${encodeURIComponent(gameId)}/entries`;
     }
 
-    function seededPick(game, name, questionIndex) {
-      const options = game.questions[questionIndex][1];
-      return options[hashText(`${name}-${game.gameId}-${questionIndex}`) % options.length];
+    function minigamesResultsApiUrl(gameId) {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/minigames/${encodeURIComponent(gameId)}/results`;
+    }
+
+    function minigamesResultsCheckApiUrl(gameId) {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/minigames/${encodeURIComponent(gameId)}/results/check`;
+    }
+
+    function customMinigamesApiUrl() {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/minigames/custom`;
+    }
+
+    async function loadPublishedCustomGames(force = false) {
+      if (customGamesLoaded && !force) {
+        return true;
+      }
+
+      try {
+        const response = await fetch(customMinigamesApiUrl(), {
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) {
+          throw new Error(`Custom games request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        publishedCustomGames = Array.isArray(data.games) ? data.games : [];
+        customGamesLoaded = true;
+        sharedStatus = "online";
+        return true;
+      } catch (err) {
+        customGamesLoaded = true;
+        sharedStatus = "offline";
+        return false;
+      }
+    }
+
+    async function publishCustomGame(game) {
+      const response = await fetch(customMinigamesApiUrl(), {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(game),
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || `Publish failed: ${response.status}`);
+      }
+      return data.game;
+    }
+
+    function resultMapForGame(game) {
+      return sharedResults[game.gameId] || {};
+    }
+
+    function resultForQuestion(game, question, index) {
+      return resultMapForGame(game)[getQuestionId(question, index)] || null;
+    }
+
+    async function loadResultsForGame(game, force = false) {
+      const lastChecked = resultsCheckedAt[game.gameId] || 0;
+      if (!force && Date.now() - lastChecked < 30000) {
+        return true;
+      }
+
+      try {
+        const response = await fetch(minigamesResultsApiUrl(game.gameId), {
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) {
+          throw new Error(`Results request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        sharedResults[game.gameId] = Object.fromEntries(
+          (Array.isArray(data.results) ? data.results : [])
+            .filter((result) => result.questionId)
+            .map((result) => [result.questionId, result])
+        );
+        resultsCheckedAt[game.gameId] = Date.now();
+        sharedStatus = "online";
+        return true;
+      } catch (err) {
+        sharedStatus = "offline";
+        return false;
+      }
+    }
+
+    async function checkResultsForGame(game) {
+      const questionsToCheck = game.questions
+        .map((question, index) => ({ question, index }))
+        .filter(({ question }) => isQuestionLocked(game, question))
+        .map(({ question, index }) => ({
+          id: getQuestionId(question, index),
+          text: getQuestionText(question),
+          autoSource: question.autoSource || "",
+        }));
+
+      if (!questionsToCheck.length) {
+        return true;
+      }
+
+      try {
+        const response = await fetch(minigamesResultsCheckApiUrl(game.gameId), {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            questions: questionsToCheck,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Result check failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        sharedResults[game.gameId] = Object.fromEntries(
+          (Array.isArray(data.results) ? data.results : [])
+            .filter((result) => result.questionId)
+            .map((result) => [result.questionId, result])
+        );
+        resultsCheckedAt[game.gameId] = Date.now();
+        sharedStatus = "online";
+        return true;
+      } catch (err) {
+        sharedStatus = "offline";
+        return false;
+      }
+    }
+
+    function cleanRoomCode(value) {
+      return String(value || "").replace(/[^a-zA-Z0-9]/g, "").toUpperCase().slice(0, 16);
+    }
+
+    function minigamesRoomApiUrl(gameId, roomCode) {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/minigames/${encodeURIComponent(gameId)}/rooms/${encodeURIComponent(roomCode)}/entries`;
+    }
+
+    function minigamesRoomsApiUrl(gameId) {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/minigames/${encodeURIComponent(gameId)}/rooms`;
+    }
+
+    function minigamesRoomInfoApiUrl(gameId, roomCode) {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/minigames/${encodeURIComponent(gameId)}/rooms/${encodeURIComponent(roomCode)}`;
+    }
+
+    function roomEntriesKey(gameId, roomCode) {
+      return `${gameId}:${roomCode}`;
+    }
+
+    function setRoomStatus(game, message, tone = "") {
+      roomStatusByGame[game.gameId] = { message, tone };
+    }
+
+    function updateRoomUrl(game, roomCode) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("game", game.gameId);
+      if (roomCode) {
+        url.searchParams.set("room", roomCode);
+      } else {
+        url.searchParams.delete("room");
+      }
+      window.history.replaceState({}, "", url);
+    }
+
+    function activeRoomCode(game) {
+      return cleanRoomCode(state.activeRoomByGame?.[game.gameId]);
+    }
+
+    function hydrateGameFromUrl(games) {
+      const gameId = new URLSearchParams(window.location.search).get("game");
+      return games.some((game) => game.gameId === gameId) ? gameId : "";
+    }
+
+    function hydrateRoomFromUrl(game) {
+      const roomCode = cleanRoomCode(new URLSearchParams(window.location.search).get("room"));
+      if (!roomCode) {
+        return "";
+      }
+
+      if (activeRoomCode(game) === roomCode) {
+        return roomCode;
+      }
+
+      setRoomStatus(game, `Checking room ${roomCode} before joining...`, "warn");
+      return "";
+    }
+
+    function leaderboardScope(game) {
+      const roomCode = activeRoomCode(game) || hydrateRoomFromUrl(game);
+      return roomCode
+        ? { type: "room", roomCode, label: `Private room ${roomCode}` }
+        : { type: "public", roomCode: "", label: sharedStatus === "online" ? "Public leaderboard" : "Server unavailable" };
+    }
+
+    async function loadSharedEntries(game, force = false) {
+      if (!force && sharedLoadedGames.has(game.gameId)) {
+        return true;
+      }
+
+      try {
+        const response = await fetch(minigamesApiUrl(game.gameId), {
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) {
+          throw new Error(`Shared entries request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        sharedEntries[game.gameId] = Array.isArray(data.entries) ? data.entries : [];
+        sharedLoadedGames.add(game.gameId);
+        sharedStatus = "online";
+        return true;
+      } catch (err) {
+        sharedStatus = "offline";
+        return false;
+      }
+    }
+
+    async function loadRoomEntries(game, roomCode, force = false) {
+      const key = roomEntriesKey(game.gameId, roomCode);
+      if (!force && sharedLoadedRooms.has(key)) {
+        return true;
+      }
+
+      try {
+        const response = await fetch(minigamesRoomApiUrl(game.gameId, roomCode), {
+          headers: { Accept: "application/json" },
+        });
+        if (response.status === 404) {
+          sharedRooms[key] = [];
+          sharedLoadedRooms.delete(key);
+          if (activeRoomCode(game) === roomCode) {
+            state.activeRoomByGame ||= {};
+            delete state.activeRoomByGame[game.gameId];
+            saveState();
+            updateRoomUrl(game, "");
+          }
+          setRoomStatus(game, `Room ${roomCode} does not exist yet. Create it first, then share the code.`, "bad");
+          sharedStatus = "online";
+          return false;
+        }
+        if (!response.ok) {
+          throw new Error(`Room entries request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        sharedRooms[key] = Array.isArray(data.entries) ? data.entries : [];
+        roomInfoByKey[key] = data.room || { code: roomCode };
+        sharedLoadedRooms.add(key);
+        sharedStatus = "online";
+        return true;
+      } catch (err) {
+        sharedStatus = "offline";
+        return false;
+      }
+    }
+
+    async function loadRoomInfo(game, roomCode) {
+      const key = roomEntriesKey(game.gameId, roomCode);
+      const response = await fetch(minigamesRoomInfoApiUrl(game.gameId, roomCode), {
+        headers: { Accept: "application/json" },
+      });
+      if (response.status === 404) {
+        sharedStatus = "online";
+        return null;
+      }
+      if (!response.ok) {
+        throw new Error(`Room check failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      roomInfoByKey[key] = data.room || { code: roomCode };
+      sharedRooms[key] = Array.isArray(data.entries) ? data.entries : [];
+      sharedLoadedRooms.add(key);
+      sharedStatus = "online";
+      return data;
+    }
+
+    function activateRoom(game, roomCode, room) {
+      state.activeRoomByGame ||= {};
+      state.activeRoomByGame[game.gameId] = roomCode;
+      saveState();
+      roomInfoByKey[roomEntriesKey(game.gameId, roomCode)] = room || { code: roomCode };
+      updateRoomUrl(game, roomCode);
+    }
+
+    function leaveRoom(game) {
+      const roomCode = activeRoomCode(game);
+      state.activeRoomByGame ||= {};
+      delete state.activeRoomByGame[game.gameId];
+      saveState();
+      updateRoomUrl(game, "");
+      setRoomStatus(
+        game,
+        roomCode ? `Left room ${roomCode}. You are back on the public leaderboard.` : "You are already on the public leaderboard.",
+        ""
+      );
+      render();
+      loadEntriesForScope(game, true).then(() => {
+        if (currentGame().gameId === game.gameId) {
+          renderGame(game);
+        }
+      });
+    }
+
+    async function createRoom(game) {
+      createRoomBtn.disabled = true;
+      joinRoomBtn.disabled = true;
+      setRoomStatus(game, "Creating a real shared room...", "warn");
+      renderRoomControls(game, leaderboardScope(game));
+
+      try {
+        const response = await fetch(minigamesRoomsApiUrl(game.gameId), {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}),
+        });
+        if (!response.ok) {
+          throw new Error(`Room create failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const roomCode = cleanRoomCode(data.room?.code);
+        if (!roomCode) {
+          throw new Error("Room create response did not include a code");
+        }
+
+        const key = roomEntriesKey(game.gameId, roomCode);
+        sharedRooms[key] = Array.isArray(data.entries) ? data.entries : [];
+        sharedLoadedRooms.add(key);
+        activateRoom(game, roomCode, data.room);
+        setRoomStatus(game, `Room ${roomCode} is ready. Share this code with friends.`, "good");
+        showToast(`Created room ${roomCode}.`);
+        render();
+      } catch (err) {
+        setRoomStatus(game, "Could not create a shared room right now. Your public picks still work.", "bad");
+        showToast("Room creation failed. Try again in a moment.");
+        renderRoomControls(game, leaderboardScope(game));
+      } finally {
+        createRoomBtn.disabled = false;
+        joinRoomBtn.disabled = false;
+      }
+    }
+
+    async function joinRoom(game, roomCode, { silent = false } = {}) {
+      const cleanedCode = cleanRoomCode(roomCode);
+      if (!cleanedCode) {
+        setRoomStatus(game, "Enter a room code to join.", "bad");
+        renderRoomControls(game, leaderboardScope(game));
+        return false;
+      }
+
+      createRoomBtn.disabled = true;
+      joinRoomBtn.disabled = true;
+      setRoomStatus(game, `Checking room ${cleanedCode}...`, "warn");
+      renderRoomControls(game, leaderboardScope(game));
+
+      try {
+        const data = await loadRoomInfo(game, cleanedCode);
+        if (!data?.room?.code) {
+          setRoomStatus(game, `No room named ${cleanedCode} exists yet. Create a room before sharing a code.`, "bad");
+          if (!silent) {
+            showToast(`Room ${cleanedCode} was not found.`);
+          }
+          renderRoomControls(game, leaderboardScope(game));
+          return false;
+        }
+
+        activateRoom(game, cleanedCode, data.room);
+        setRoomStatus(game, `Joined room ${cleanedCode}. Picks now save to that private leaderboard.`, "good");
+        if (!silent) {
+          showToast(`Joined room ${cleanedCode}.`);
+        }
+        render();
+        return true;
+      } catch (err) {
+        setRoomStatus(game, `Could not verify room ${cleanedCode}. Staying on the current leaderboard.`, "bad");
+        if (!silent) {
+          showToast("Could not verify that room.");
+        }
+        renderRoomControls(game, leaderboardScope(game));
+        return false;
+      } finally {
+        createRoomBtn.disabled = false;
+        joinRoomBtn.disabled = false;
+      }
+    }
+
+    async function loadEntriesForScope(game, force = false) {
+      const scope = leaderboardScope(game);
+      return scope.type === "room"
+        ? loadRoomEntries(game, scope.roomCode, force)
+        : loadSharedEntries(game, force);
+    }
+
+    async function saveSharedEntry(game, entry) {
+      try {
+        const response = await fetch(minigamesApiUrl(game.gameId), {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: entry.name,
+            picks: entry.picks,
+            notify: entry.notify,
+          }),
+        });
+        if (!response.ok) {
+          throw new Error(`Shared save request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        sharedEntries[game.gameId] = Array.isArray(data.entries) ? data.entries : [];
+        sharedLoadedGames.add(game.gameId);
+        sharedStatus = "online";
+        return true;
+      } catch (err) {
+        sharedStatus = "offline";
+        console.error("Could not save minigame picks to server:", err);
+        return false;
+      }
+    }
+
+    async function saveRoomEntry(game, roomCode, entry) {
+      try {
+        const response = await fetch(minigamesRoomApiUrl(game.gameId, roomCode), {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: entry.name,
+            picks: entry.picks,
+            notify: entry.notify,
+          }),
+        });
+        if (!response.ok) {
+          throw new Error(`Room save request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const key = roomEntriesKey(game.gameId, roomCode);
+        sharedRooms[key] = Array.isArray(data.entries) ? data.entries : [];
+        sharedLoadedRooms.add(key);
+        sharedStatus = "online";
+        return true;
+      } catch (err) {
+        sharedStatus = "offline";
+        console.error("Could not save room picks to server:", err);
+        return false;
+      }
+    }
+
+    async function saveEntryForScope(game, entry) {
+      const scope = leaderboardScope(game);
+      if (scope.type !== "room") {
+        return saveSharedEntry(game, entry);
+      }
+
+      let roomData = null;
+      try {
+        roomData = await loadRoomInfo(game, scope.roomCode);
+      } catch (err) {
+        setRoomStatus(game, `Could not verify room ${scope.roomCode}, so your picks were not saved to the server.`, "bad");
+        return false;
+      }
+
+      if (!roomData?.room?.code) {
+        state.activeRoomByGame ||= {};
+        delete state.activeRoomByGame[game.gameId];
+        saveState();
+        updateRoomUrl(game, "");
+        setRoomStatus(game, `Room ${scope.roomCode} was not found, so your picks were not saved to the server.`, "bad");
+        return false;
+      }
+
+      return saveRoomEntry(game, scope.roomCode, entry);
+    }
+
+    function getQuestionId(question, index) {
+      return question.id || `q-${index}`;
+    }
+
+    function getQuestionText(question) {
+      return Array.isArray(question) ? question[0] : question.text;
+    }
+
+    function getAnswers(question) {
+      const rawAnswers = Array.isArray(question) ? question[1] : question.answers;
+      return rawAnswers.map((rawAnswer) => {
+        if (typeof rawAnswer === "string") {
+          return answer(rawAnswer, 50);
+        }
+        return {
+          id: rawAnswer.id || slugify(rawAnswer.label),
+          label: rawAnswer.label,
+          odds: Math.min(95, Math.max(4, Number(rawAnswer.odds) || 50)),
+          points: rawAnswer.points || pointsForOdds(rawAnswer.odds)
+        };
+      });
+    }
+
+    function maxPointsForGame(game) {
+      return game.questions.reduce((total, question) => {
+        const points = getAnswers(question).map((answerOption) => answerOption.points);
+        return total + Math.max(...points);
+      }, 0);
+    }
+
+    function questionLockDate(game, question) {
+      if (question.lockAt) {
+        return new Date(question.lockAt);
+      }
+      return game.date;
+    }
+
+    function isQuestionLocked(game, question) {
+      return questionLockDate(game, question) <= new Date();
+    }
+
+    function openQuestions(game) {
+      return game.questions.filter((question) => !isQuestionLocked(game, question));
+    }
+
+    function lockedQuestions(game) {
+      return game.questions.filter((question) => isQuestionLocked(game, question));
+    }
+
+    function resolvedQuestions(game) {
+      return game.questions.filter((question, index) => {
+        const result = resultForQuestion(game, question, index);
+        return result?.status === "resolved" && result.answerId;
+      });
+    }
+
+    function answerMeta(answerOption) {
+      return `
+        <span class="answer-chance">${answerOption.odds}% chance</span>
+        <span class="answer-points">${answerOption.points} pts</span>
+      `;
+    }
+
+    function getSavedPick(picks, question, index) {
+      if (Array.isArray(picks)) {
+        return picks[index] || "";
+      }
+
+      if (picks && typeof picks === "object") {
+        return picks[getQuestionId(question, index)] || "";
+      }
+
+      return "";
+    }
+
+    function findSavedEntryForName(game, entries, name) {
+      const cleanName = normalizePlayerName(name).toLowerCase();
+      if (!cleanName) {
+        return null;
+      }
+
+      return entries.find((entry) => String(entry.name || "").toLowerCase() === cleanName) || null;
+    }
+
+    function renderProfileNote(name, savedEntry) {
+      if (!name) {
+        profileNoteEl.textContent = "Enter a player name so the server can update your picks on the leaderboard.";
+        return;
+      }
+
+      const savedText = savedEntry
+        ? "Server picks found for this event."
+        : "No server picks for this event yet.";
+      profileNoteEl.innerHTML = `Player name: <strong>${escapeHtml(name)}</strong>. ${savedText}`;
+    }
+
+    function renderCustomGameBuilder() {
+      customQuestionsEl.innerHTML = customBuilderQuestions.map((answerCount, questionIndex) => {
+        const answers = Array.from({ length: answerCount }, (_, answerIndex) => `
+          <div class="creator-answer-row">
+            <input class="name-input" name="custom-q${questionIndex}-a${answerIndex}-label" maxlength="80" placeholder="Option ${answerIndex + 1}" required />
+            <input class="name-input" name="custom-q${questionIndex}-a${answerIndex}-odds" type="number" min="1" max="99" placeholder="Odds %" required />
+            <input class="name-input" name="custom-q${questionIndex}-a${answerIndex}-points" type="number" min="1" max="999" placeholder="Pts" required />
+          </div>
+        `).join("");
+
+        return `
+          <section class="creator-question" data-question-index="${questionIndex}">
+            <div class="creator-question-head">
+              <strong>Question ${questionIndex + 1}</strong>
+              <button class="btn small secondary" type="button" data-add-custom-option="${questionIndex}">Add option</button>
+            </div>
+            <input class="name-input" name="custom-q${questionIndex}-text" maxlength="120" placeholder="Question text" required />
+            ${answers}
+          </section>
+        `;
+      }).join("");
+    }
+
+    function setCustomGameStatus(message, tone = "") {
+      customGameStatusEl.className = `creator-status ${tone}`.trim();
+      customGameStatusEl.textContent = message;
+    }
+
+    function customGameFromForm() {
+      const formData = new FormData(customGameFormEl);
+      const questions = customBuilderQuestions.map((answerCount, questionIndex) => {
+        const text = (formData.get(`custom-q${questionIndex}-text`) || "").toString().trim();
+        const answers = Array.from({ length: answerCount }, (_, answerIndex) => {
+          const label = (formData.get(`custom-q${questionIndex}-a${answerIndex}-label`) || "").toString().trim();
+          return {
+            label,
+            odds: Number(formData.get(`custom-q${questionIndex}-a${answerIndex}-odds`) || 0),
+            points: Number(formData.get(`custom-q${questionIndex}-a${answerIndex}-points`) || 0),
+          };
+        }).filter((answerOption) => answerOption.label && answerOption.odds > 0 && answerOption.points > 0);
+
+        return { text, answers };
+      }).filter((question) => question.text && question.answers.length >= 2);
+
+      return {
+        name: customGameNameEl.value.trim(),
+        summary: customGameSummaryEl.value.trim(),
+        creator: activePlayerName(),
+        questions,
+      };
+    }
+
+    function captureDraftPicks(game) {
+      if (!game || renderedGameId !== game.gameId || !questionsEl.children.length) {
+        return;
+      }
+
+      const formData = new FormData(formEl);
+      const draft = { ...(draftPicksByGame[game.gameId] || {}) };
+
+      game.questions.forEach((question, index) => {
+        if (isQuestionLocked(game, question)) {
+          return;
+        }
+
+        const questionId = getQuestionId(question, index);
+        const value = (formData.get(questionId) || "").toString();
+        if (value) {
+          draft[questionId] = value;
+        }
+      });
+
+      draftPicksByGame[game.gameId] = draft;
+    }
+
+    function getDraftPick(game, question, index) {
+      return draftPicksByGame[game.gameId]?.[getQuestionId(question, index)] || "";
+    }
+
+    function normalizePickId(question, pick) {
+      const answers = getAnswers(question);
+      return answers.find((candidate) => candidate.id === pick || candidate.label === pick)?.id || pick;
     }
 
     function scorePicks(game, picks) {
       return game.questions.reduce((total, question, index) => {
-        return total + (picks[index] === seededAnswer(game, index) ? 1 : 0);
+        if (!isQuestionLocked(game, question)) {
+          return total;
+        }
+
+        const pick = normalizePickId(question, getSavedPick(picks, question, index));
+        const result = resultForQuestion(game, question, index);
+        if (result?.status !== "resolved" || !result.answerId) {
+          return total;
+        }
+
+        const correctAnswerId = normalizePickId(question, result.answerId);
+        const correctAnswer = getAnswers(question).find((answerOption) => answerOption.id === correctAnswerId);
+        return total + (pick === correctAnswerId ? (correctAnswer?.points || 0) : 0);
       }, 0);
     }
 
@@ -882,36 +2338,34 @@
     }
 
     function allEntries(game) {
-      const saved = (state.entries[game.gameId] || []).map((entry) => ({
+      const scope = leaderboardScope(game);
+      const roomKey = roomEntriesKey(game.gameId, scope.roomCode);
+      const sourceEntries = scope.type === "room"
+        ? (Array.isArray(sharedRooms[roomKey]) ? sharedRooms[roomKey] : [])
+        : Array.isArray(sharedEntries[game.gameId])
+        ? sharedEntries[game.gameId]
+        : [];
+
+      return sourceEntries.map((entry) => ({
         ...entry,
         score: scorePicks(game, entry.picks),
-        source: "player"
-      }));
-      const savedNames = new Set(saved.map((entry) => entry.name.toLowerCase()));
-      const fakeEntries = names.slice(0, 6).filter((name) => !savedNames.has(name.toLowerCase())).map((name) => {
-        const picks = game.questions.map((question, index) => seededPick(game, name, index));
-        return {
-          name,
-          picks,
-          score: scorePicks(game, picks),
-          source: "seed"
-        };
-      });
-
-      return [...fakeEntries, ...saved].sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+        source: scope.type
+      })).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
     }
 
     function renderTabs(games) {
       tabsEl.innerHTML = games.map((game) => `
         <button class="event-tab" type="button" data-game="${game.gameId}" aria-pressed="${game.gameId === selectedGameId}">
-          <span class="tab-kicker"><span>${game.type}</span><span>${dateLabel(game.date)}</span></span>
-          <div class="tab-title">${game.name}</div>
+          <span class="tab-kicker"><span>${escapeHtml(game.type)}</span><span>${dateLabel(game.date)}</span></span>
+          <div class="tab-title">${escapeHtml(game.name)}</div>
+          <p class="tab-description">${escapeHtml(game.summary)}</p>
           <p class="tab-meta">${daysUntil(game.date)} days away</p>
         </button>
       `).join("");
 
       tabsEl.querySelectorAll("button").forEach((button) => {
         button.addEventListener("click", () => {
+          captureDraftPicks(currentGame());
           selectedGameId = button.dataset.game;
           render();
           document.getElementById("play").scrollIntoView({ block: "start" });
@@ -919,35 +2373,144 @@
       });
     }
 
+    function renderRoomControls(game, scope) {
+      const key = roomEntriesKey(game.gameId, scope.roomCode);
+      const roomInfo = scope.type === "room" ? roomInfoByKey[key] : null;
+      const status = roomStatusByGame[game.gameId] || {};
+      const urlRoomCode = cleanRoomCode(new URLSearchParams(window.location.search).get("room"));
+
+      roomSummaryEl.innerHTML = scope.type === "room"
+        ? `Active room <span class="room-code">${escapeHtml(scope.roomCode)}</span>${roomInfo?.createdAt ? " is saved in shared storage." : " is being checked in shared storage."}`
+        : "Create a real shared room, or join an existing room code.";
+      roomCodeInputEl.value = scope.type === "room" ? scope.roomCode : (urlRoomCode || roomCodeInputEl.value);
+      leaveRoomBtn.hidden = scope.type !== "room";
+      roomStatusEl.className = `room-status ${status.tone || ""}`.trim();
+      roomStatusEl.textContent = status.message || (
+        scope.type === "room"
+          ? "Only people using this code will appear on this leaderboard."
+          : "Joining checks shared storage first. Unknown codes stay unjoined."
+      );
+    }
+
+    function resultStatusLabel(result) {
+      if (result?.status === "resolved") return "Scored";
+      if (result?.status === "needs-source") return "Needs source";
+      return "Checking";
+    }
+
+    function resultBadgeClass(result) {
+      if (result?.status === "resolved") return "resolved";
+      if (result?.status === "needs-source") return "needs-source";
+      return "";
+    }
+
+    function resultAnswerLabel(game, question, index) {
+      const result = resultForQuestion(game, question, index);
+      if (result?.status !== "resolved" || !result.answerId) {
+        return "";
+      }
+      const answerOption = getAnswers(question).find((candidate) => candidate.id === normalizePickId(question, result.answerId));
+      return answerOption?.label || result.answerId;
+    }
+
+    function renderResults(game) {
+      const locked = lockedQuestions(game);
+      const resolved = resolvedQuestions(game);
+      const resultMap = resultMapForGame(game);
+
+      resultsSummaryEl.textContent = locked.length === 0
+        ? "Auto scoring starts when questions close."
+        : `${resolved.length} of ${locked.length} closed questions have confirmed answers.`;
+
+      if (locked.length === 0) {
+        resultListEl.innerHTML = `<p class="empty-state">No questions are closed yet. The site will check results after the event starts.</p>`;
+        return;
+      }
+
+      resultListEl.innerHTML = locked.map((question, lockedIndex) => {
+        const questionIndex = game.questions.indexOf(question);
+        const questionId = getQuestionId(question, questionIndex);
+        const result = resultMap[questionId] || { status: "pending", note: "Waiting for the event result source." };
+        const answerLabel = resultAnswerLabel(game, question, questionIndex);
+        const note = answerLabel
+          ? `Correct answer: ${answerLabel}`
+          : (result.note || "Waiting for a reliable source before scoring.");
+        return `
+          <article class="result-row">
+            <span class="result-badge ${resultBadgeClass(result)}">${resultStatusLabel(result)}</span>
+            <strong>${lockedIndex + 1}. ${escapeHtml(getQuestionText(question))}</strong>
+            <span class="result-note">${escapeHtml(note)}</span>
+          </article>
+        `;
+      }).join("");
+    }
+
     function renderGame(game) {
+      captureDraftPicks(game);
       const entries = allEntries(game);
-      const savedEntry = (state.entries[game.gameId] || []).at(-1);
+      const scope = leaderboardScope(game);
+      const profileName = activePlayerName();
+      const savedEntry = findSavedEntryForName(game, entries, profileName);
       const remaining = daysUntil(game.date);
+      const questionsStillOpen = openQuestions(game).length;
+      const questionsLocked = lockedQuestions(game).length;
+      const hasOpenQuestions = questionsStillOpen > 0;
 
       metaEl.innerHTML = `
         <span class="chip">${game.type}</span>
         <span class="chip">${remaining === 0 ? "Tonight" : `${remaining} days away`}</span>
-        <span class="chip">Auto-generated questions</span>
+        <span class="chip">${questionsStillOpen} open · ${questionsLocked} locked</span>
+        <span class="chip">${scope.label}</span>
       `;
       titleEl.textContent = game.name;
       summaryEl.textContent = game.summary;
       openDateEl.textContent = dateLabel(game.date);
       entryCountEl.textContent = String(entries.length);
-      questionCountEl.textContent = String(game.questions.length);
+      questionCountEl.textContent = String(maxPointsForGame(game));
       liveStatusEl.textContent = `${game.name} is next`;
-      playerNameEl.value = state.playerName || "";
+      playerNameEl.value = profileName;
+      renderProfileNote(profileName, savedEntry);
+
+      formEl.querySelector("button[type='submit']").disabled = !hasOpenQuestions;
+      formEl.querySelector("button[type='submit']").textContent = hasOpenQuestions
+        ? "Lock picks"
+        : "Questions closed";
 
       questionsEl.innerHTML = game.questions.map((question, questionIndex) => {
-        const saved = savedEntry?.picks?.[questionIndex] || "";
-        const options = question[1].map((answer) => `
+        const locked = isQuestionLocked(game, question);
+        if (locked) {
+          const result = resultForQuestion(game, question, questionIndex);
+          const answerLabel = resultAnswerLabel(game, question, questionIndex);
+          const resultText = answerLabel
+            ? `Scored. Correct answer: ${answerLabel}.`
+            : result?.status === "needs-source"
+            ? "Closed. Auto scoring needs a reliable live source for this one."
+            : "Closed. Auto scoring is checking for the confirmed answer.";
+          return `
+            <fieldset class="question">
+              <legend class="question-text">${questionIndex + 1}. ${escapeHtml(getQuestionText(question))}</legend>
+              <p class="empty-state">${escapeHtml(resultText)}</p>
+            </fieldset>
+          `;
+        }
+
+        const questionId = getQuestionId(question, questionIndex);
+        const saved = normalizePickId(
+          question,
+          getDraftPick(game, question, questionIndex) || getSavedPick(savedEntry?.picks, question, questionIndex)
+        );
+        const options = getAnswers(question).map((answerOption) => `
           <label class="answer">
-            <input type="radio" name="q${questionIndex}" value="${answer}" ${answer === saved ? "checked" : ""} required />
-            <span>${answer}</span>
+            <input type="radio" name="${questionId}" value="${answerOption.id}" ${answerOption.id === saved ? "checked" : ""} required />
+            <span>
+              <span class="answer-main">${escapeHtml(answerOption.label)}</span>
+              <span class="answer-meta">${answerMeta(answerOption)}</span>
+            </span>
           </label>
         `).join("");
         return `
           <fieldset class="question">
-            <legend class="question-text">${questionIndex + 1}. ${question[0]}</legend>
+            <legend class="question-text">${questionIndex + 1}. ${escapeHtml(getQuestionText(question))}</legend>
             <div class="answers">${options}</div>
           </fieldset>
         `;
@@ -957,35 +2520,67 @@
         input.checked = input.value === (state.notify || "none");
       });
 
-      renderLeaderboard(entries);
-      renderTicker(game, entries);
+      renderLeaderboard(entries, scope, game);
+      renderResults(game);
+      renderTicker(game, entries, scope);
+      renderRoomControls(game, scope);
       saveNoteEl.textContent = savedEntry
         ? `Saved picks for ${savedEntry.name}. Change anything and lock picks again.`
-        : "Your picks stay on this device until you change them.";
+        : hasOpenQuestions
+        ? "Lock picks to save them to the server leaderboard."
+        : "This game's questions have started, so new picks are closed.";
+      renderedGameId = game.gameId;
+      maybeShowStoredNotification(game);
     }
 
-    function renderLeaderboard(entries) {
+    function renderLeaderboard(entries, scope, game) {
+      const maxPoints = maxPointsForGame(game);
+
+      if (entries.length === 0) {
+        leaderboardEl.innerHTML = `
+          <li class="leader-row">
+            <span class="rank">1</span>
+            <span>
+              <span class="leader-name">No players yet</span>
+              <div class="leader-details">${lockedQuestions(game).length === 0 ? "Points unlock after questions start." : `${maxPoints} max weighted points are on the board.`}</div>
+            </span>
+            <span class="points">0</span>
+          </li>
+        `;
+        return;
+      }
+
       leaderboardEl.innerHTML = entries.slice(0, 8).map((entry, index) => `
         <li class="leader-row">
           <span class="rank">${index + 1}</span>
           <span>
-            <span class="leader-name">${entry.name}</span>
-            <div class="leader-details">${entry.source === "player" ? "Your table" : "Family table"} · ${entry.score} correct so far</div>
+            <span class="leader-name">${escapeHtml(entry.name)}</span>
+            <div class="leader-details">${scope.type === "room" ? `Room ${scope.roomCode}` : "Public board"} · ${entry.score}/${maxPoints} weighted points</div>
           </span>
           <span class="points">${entry.score}</span>
         </li>
       `).join("");
     }
 
-    function renderTicker(game, entries) {
+    function renderTicker(game, entries, scope) {
+      if (entries.length === 0) {
+        tickerEl.innerHTML = [
+          scope.type === "room" ? `No one has joined room ${scope.roomCode} yet.` : "No one has joined this public game yet.",
+          `${openQuestions(game).length} questions are open for real players.`,
+          `Lock your picks to start the ${scope.type === "room" ? "room" : "public"} leaderboard.`
+        ].map((line) => `<li><span class="dot"></span><span>${escapeHtml(line)}</span></li>`).join("");
+        emptyStateEl.hidden = false;
+        return;
+      }
+
       const top = entries[0];
-      const player = entries.find((entry) => entry.source === "player");
+      const player = entries.find((entry) => entry.name === activePlayerName());
       const lines = [
-        `${top.name} is leading ${game.name} with ${top.score} points.`,
-        `${game.questions.length} questions are live for this event.`,
-        player ? `${player.name}, your projected score is ${player.score}.` : "Lock your picks to join this leaderboard."
+        `${top.name} is leading ${scope.type === "room" ? `room ${scope.roomCode}` : game.name} with ${top.score} points.`,
+        `${resolvedQuestions(game).length} questions are scored, ${openQuestions(game).length} are still open.`,
+        player ? `${player.name}, your projected score is ${player.score}.` : `Lock your picks to join this ${scope.type === "room" ? "room" : "leaderboard"}.`
       ];
-      tickerEl.innerHTML = lines.map((line) => `<li><span class="dot"></span><span>${line}</span></li>`).join("");
+      tickerEl.innerHTML = lines.map((line) => `<li><span class="dot"></span><span>${escapeHtml(line)}</span></li>`).join("");
       emptyStateEl.hidden = entries.length > 0;
     }
 
@@ -996,9 +2591,43 @@
 
     function render() {
       const games = upcomingGames();
-      selectedGameId = selectedGameId || games[0].gameId;
+      selectedGameId = selectedGameId || hydrateGameFromUrl(games) || games[0].gameId;
+      const game = currentGame();
       renderTabs(games);
-      renderGame(currentGame());
+      renderGame(game);
+      loadPublishedCustomGames().then((loaded) => {
+        if (loaded) {
+          const refreshedGames = upcomingGames();
+          if (!refreshedGames.some((candidate) => candidate.gameId === selectedGameId)) {
+            selectedGameId = refreshedGames[0]?.gameId || selectedGameId;
+          }
+          renderTabs(refreshedGames);
+          renderGame(currentGame());
+        }
+      });
+      const urlRoomCode = cleanRoomCode(new URLSearchParams(window.location.search).get("room"));
+      const urlRoomKey = roomEntriesKey(game.gameId, urlRoomCode);
+      if (urlRoomCode && activeRoomCode(game) !== urlRoomCode && !checkedUrlRooms.has(urlRoomKey)) {
+        checkedUrlRooms.add(urlRoomKey);
+        joinRoom(game, urlRoomCode, { silent: true });
+      }
+      loadEntriesForScope(game).then((loaded) => {
+        if (loaded && currentGame().gameId === game.gameId) {
+          renderGame(game);
+        }
+      });
+      loadResultsForGame(game).then((loaded) => {
+        if (loaded && currentGame().gameId === game.gameId) {
+          renderGame(game);
+        }
+      });
+      if (lockedQuestions(game).length > 0) {
+        checkResultsForGame(game).then((loaded) => {
+          if (loaded && currentGame().gameId === game.gameId) {
+            renderGame(game);
+          }
+        });
+      }
     }
 
     function showToast(message) {
@@ -1008,7 +2637,70 @@
       showToast.timer = window.setTimeout(() => toastEl.classList.remove("show"), 3600);
     }
 
-    async function handleNotifications(mode, entry, entries) {
+    function showBrowserNotification(title, body, tag) {
+      if (!("Notification" in window) || Notification.permission !== "granted") {
+        return false;
+      }
+
+      new Notification(title, {
+        body,
+        tag,
+      });
+      return true;
+    }
+
+    function notificationSnapshot(game, entry, entries) {
+      const rank = entries.findIndex((candidate) => candidate.name === entry.name) + 1;
+      const scoringCount = resolvedQuestions(game).length;
+      return {
+        rank,
+        scoringCount,
+        key: `${game.gameId}:${entry.name}:${entry.score}:${rank}:${scoringCount}`,
+      };
+    }
+
+    function maybeShowStoredNotification(game) {
+      if (!("Notification" in window) || Notification.permission !== "granted") {
+        return;
+      }
+
+      const mode = state.notify || "none";
+      if (mode === "none" || !state.playerName) {
+        return;
+      }
+
+      const entries = allEntries(game);
+      const entry = entries.find((candidate) => candidate.name === state.playerName);
+      if (!entry) {
+        return;
+      }
+
+      const snapshot = notificationSnapshot(game, entry, entries);
+      if (snapshot.scoringCount === 0) {
+        return;
+      }
+
+      if (mode === "win" && snapshot.rank !== 1) {
+        return;
+      }
+
+      state.notificationReceipts ||= {};
+      if (state.notificationReceipts[game.gameId] === snapshot.key) {
+        return;
+      }
+
+      const title = mode === "win" ? "You are winning" : "Minigame score update";
+      const body = mode === "win"
+        ? `${entry.name}, you are currently first with ${entry.score} points.`
+        : `${entry.name}, you are rank ${snapshot.rank} with ${entry.score} points.`;
+
+      if (showBrowserNotification(title, body, `minigames-${game.gameId}-${mode}`)) {
+        state.notificationReceipts[game.gameId] = snapshot.key;
+        saveState();
+      }
+    }
+
+    async function handleNotifications(mode, entry, entries, game) {
       if (mode === "none") {
         showToast("Picks locked. No notifications will be sent.");
         return;
@@ -1028,58 +2720,218 @@
         return;
       }
 
-      const rank = entries.findIndex((candidate) => candidate.name === entry.name && candidate.source === "player") + 1;
-      const title = mode === "win" ? "Win-only alerts are on" : "Game updates are on";
+      const snapshot = notificationSnapshot(game, entry, entries);
+      const title = mode === "win" ? "Win-only browser alerts are on" : "Browser score updates are on";
       const body = mode === "win"
-        ? `You are currently rank ${rank}. I will only alert if your saved picks finish first.`
-        : `You are currently rank ${rank} with ${entry.score} points.`;
+        ? `If you are first when this page checks the scoring questions, this browser can alert you.`
+        : `This browser can alert you when this page is open or reopened and scores change.`;
 
-      new Notification(title, { body });
-      showToast("Picks locked and notifications are ready.");
+      showBrowserNotification(title, body, `minigames-confirm-${entry.name}`);
+      state.notificationReceipts ||= {};
+      state.notificationReceipts[game.gameId] = snapshot.key;
+      saveState();
+      showToast("Picks locked. Browser notifications can appear only while this site is open or reopened.");
     }
 
     formEl.addEventListener("submit", async (event) => {
       event.preventDefault();
       const game = currentGame();
       const formData = new FormData(formEl);
-      const name = (formData.get("playerName") || "").toString().trim().slice(0, 24);
+      const name = normalizePlayerName(formData.get("playerName"));
       const notify = (formData.get("notify") || "none").toString();
-      const picks = game.questions.map((question, index) => (formData.get(`q${index}`) || "").toString());
+      const openQuestionIds = game.questions
+        .map((question, index) => ({ question, index, questionId: getQuestionId(question, index) }))
+        .filter(({ question }) => !isQuestionLocked(game, question))
+        .map(({ questionId }) => questionId);
 
-      if (!name || picks.some((pick) => !pick)) {
-        showToast("Add your name and answer every question first.");
+      if (openQuestionIds.length === 0) {
+        showToast("These questions have already started, so new picks are closed.");
         return;
       }
 
+      if (!name) {
+        showToast("Add your name first.");
+        return;
+      }
+
+      const openPicks = Object.fromEntries(openQuestionIds.map((questionId) => [
+        questionId,
+        (formData.get(questionId) || "").toString(),
+      ]));
+
+      if (openQuestionIds.some((questionId) => !openPicks[questionId])) {
+        showToast("Add your name and answer every open question first.");
+        return;
+      }
+
+      const entriesLoaded = await loadEntriesForScope(game, true);
+      if (!entriesLoaded && lockedQuestions(game).length > 0) {
+        showToast("Could not load your existing server picks. Try again before updating this game.");
+        renderRoomControls(game, leaderboardScope(game));
+        return;
+      }
+
+      const savedEntry = findSavedEntryForName(game, allEntries(game), name);
+      const picks = { ...(savedEntry?.picks && !Array.isArray(savedEntry.picks) ? savedEntry.picks : {}) };
+      Object.assign(picks, openPicks);
+
+      const sanitizedPicks = Object.fromEntries(game.questions.map((question, index) => {
+        const questionId = getQuestionId(question, index);
+        return [questionId, picks[questionId] || ""];
+      }));
+
       const entry = {
         name,
-        picks,
+        picks: sanitizedPicks,
         notify,
-        score: scorePicks(game, picks),
+        score: scorePicks(game, sanitizedPicks),
         savedAt: new Date().toISOString()
       };
 
+      const savedToServer = await saveEntryForScope(game, entry);
+      if (!savedToServer) {
+        showToast("Could not save picks to the server. Check the connection and try again.");
+        renderRoomControls(game, leaderboardScope(game));
+        return;
+      }
+
       state.playerName = name;
       state.notify = notify;
-      state.entries[game.gameId] = (state.entries[game.gameId] || []).filter((oldEntry) => oldEntry.name.toLowerCase() !== name.toLowerCase());
-      state.entries[game.gameId].push(entry);
+      state.entries[game.gameId] = (state.entries[game.gameId] || []).filter(
+        (oldEntry) => String(oldEntry.name || "").toLowerCase() !== name.toLowerCase()
+      );
+      draftPicksByGame[game.gameId] = sanitizedPicks;
       saveState();
 
+      showToast("Picks saved to the server.");
       render();
-      await handleNotifications(notify, entry, allEntries(game));
+      await handleNotifications(notify, entry, allEntries(game), game);
+    });
+
+    formEl.addEventListener("change", () => {
+      saveActivePlayerName(playerNameEl.value);
+      captureDraftPicks(currentGame());
+    });
+
+    playerNameEl.addEventListener("input", () => {
+      saveActivePlayerName(playerNameEl.value);
+    });
+
+    playerNameEl.addEventListener("blur", () => {
+      const name = saveActivePlayerName(playerNameEl.value);
+      renderProfileNote(name, findSavedEntryForName(currentGame(), allEntries(currentGame()), name));
     });
 
     document.getElementById("randomizeBtn").addEventListener("click", () => {
       const game = currentGame();
       game.questions.forEach((question, index) => {
-        const options = question[1];
-        const choice = options[Math.floor(Math.random() * options.length)];
-        const input = formEl.querySelector(`input[name="q${index}"][value="${CSS.escape(choice)}"]`);
+        if (isQuestionLocked(game, question)) {
+          return;
+        }
+
+        const questionId = getQuestionId(question, index);
+        const options = getAnswers(question);
+        const totalOdds = options.reduce((total, answerOption) => total + answerOption.odds, 0);
+        let bucket = Math.random() * totalOdds;
+        const choice = options.find((answerOption) => {
+          bucket -= answerOption.odds;
+          return bucket <= 0;
+        }) || options.at(-1);
+        const input = formEl.querySelector(`input[name="${CSS.escape(questionId)}"][value="${CSS.escape(choice.id)}"]`);
         if (input) input.checked = true;
       });
+      captureDraftPicks(game);
       showToast("Random picks filled in. Change any you disagree with, then lock them.");
     });
 
+    createRoomBtn.addEventListener("click", () => {
+      createRoom(currentGame());
+    });
+
+    joinRoomBtn.addEventListener("click", () => {
+      joinRoom(currentGame(), roomCodeInputEl.value);
+    });
+
+    roomCodeInputEl.addEventListener("input", () => {
+      const cleaned = cleanRoomCode(roomCodeInputEl.value);
+      if (roomCodeInputEl.value !== cleaned) {
+        roomCodeInputEl.value = cleaned;
+      }
+    });
+
+    roomCodeInputEl.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        joinRoom(currentGame(), roomCodeInputEl.value);
+      }
+    });
+
+    leaveRoomBtn.addEventListener("click", () => {
+      leaveRoom(currentGame());
+    });
+
+    addCustomQuestionBtn.addEventListener("click", () => {
+      customBuilderQuestions.push(4);
+      renderCustomGameBuilder();
+      setCustomGameStatus("Added a question. Custom games need at least 5 complete questions.");
+    });
+
+    customQuestionsEl.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-add-custom-option]");
+      if (!button) {
+        return;
+      }
+
+      const questionIndex = Number(button.dataset.addCustomOption);
+      customBuilderQuestions[questionIndex] = Math.min(8, (customBuilderQuestions[questionIndex] || 4) + 1);
+      renderCustomGameBuilder();
+      setCustomGameStatus("Added an option row. Fill in option, odds, and points before publishing.");
+    });
+
+    customGameFormEl.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const game = customGameFromForm();
+
+      if (!game.name || game.questions.length < 5) {
+        setCustomGameStatus("Add a game name and at least 5 complete questions.", "bad");
+        return;
+      }
+
+      publishCustomGameBtn.disabled = true;
+      setCustomGameStatus("Publishing your game...", "");
+
+      try {
+        const publishedGame = await publishCustomGame(game);
+        publishedCustomGames = [publishedGame, ...publishedCustomGames.filter((candidate) => candidate.id !== publishedGame.id)];
+        customGamesLoaded = true;
+        selectedGameId = publishedGame.id;
+        customGameFormEl.reset();
+        customBuilderQuestions = Array.from({ length: 5 }, () => 4);
+        renderCustomGameBuilder();
+        setCustomGameStatus(`Published "${publishedGame.name}". Everyone can see it in the minigames list.`, "good");
+        showToast("Custom minigame published.");
+        render();
+      } catch (err) {
+        setCustomGameStatus(err.message || "Could not publish that minigame right now.", "bad");
+      } finally {
+        publishCustomGameBtn.disabled = false;
+      }
+    });
+
+    window.setInterval(() => {
+      const game = currentGame();
+      if (!game || !lockedQuestions(game).length) {
+        return;
+      }
+
+      checkResultsForGame(game).then((loaded) => {
+        if (loaded && currentGame()?.gameId === game.gameId) {
+          renderGame(game);
+        }
+      });
+    }, 60000);
+
+    renderCustomGameBuilder();
     render();
   </script>
 </body>
