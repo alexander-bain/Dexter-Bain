@@ -6,10 +6,16 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import OpenAI from "openai";
+import fs from "node:fs/promises";
+import path from "node:path";
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+
+const minigamesDataFile =
+  process.env.MINIGAMES_DATA_FILE ||
+  path.join(process.cwd(), "minigames-data.json");
 
 // IMPORTANT: set this in your environment on Render, don't hardcode it in code
 const openai = new OpenAI({
@@ -25,6 +31,78 @@ function clamp(num, min, max) {
 function addNoise(n, spread = 2) {
   const wiggle = Math.floor(Math.random() * (spread * 2 + 1)) - spread; // -spread..+spread
   return n + wiggle;
+}
+
+function cleanText(value, maxLength) {
+  return String(value || "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, maxLength);
+}
+
+function cleanGameId(value) {
+  return cleanText(value, 80).replace(/[^a-zA-Z0-9_-]/g, "");
+}
+
+function cleanPicks(picks) {
+  if (Array.isArray(picks)) {
+    return picks.slice(0, 30).map((pick) => cleanText(pick, 80));
+  }
+
+  if (picks && typeof picks === "object") {
+    return Object.fromEntries(
+      Object.entries(picks)
+        .slice(0, 30)
+        .map(([questionId, answerId]) => [
+          cleanText(questionId, 80).replace(/[^a-zA-Z0-9_-]/g, ""),
+          cleanText(answerId, 80).replace(/[^a-zA-Z0-9_-]/g, ""),
+        ])
+        .filter(([questionId, answerId]) => questionId && answerId)
+    );
+  }
+
+  return [];
+}
+
+function hasPicks(picks) {
+  return Array.isArray(picks)
+    ? picks.some(Boolean)
+    : picks && typeof picks === "object" && Object.keys(picks).length > 0;
+}
+
+async function readMinigamesData() {
+  try {
+    const raw = await fs.readFile(minigamesDataFile, "utf8");
+    const data = JSON.parse(raw);
+    return data && typeof data === "object" ? data : { games: {} };
+  } catch (err) {
+    if (err.code === "ENOENT") {
+      return { games: {} };
+    }
+    throw err;
+  }
+}
+
+async function writeMinigamesData(data) {
+  await fs.writeFile(
+    minigamesDataFile,
+    JSON.stringify(data, null, 2),
+    "utf8"
+  );
+}
+
+function publicEntriesForGame(data, gameId) {
+  const entries = data.games?.[gameId]?.entries || [];
+  return entries
+    .map((entry) => ({
+      name: cleanText(entry.name, 24),
+      picks: cleanPicks(entry.picks),
+      notify: ["none", "win", "updates"].includes(entry.notify)
+        ? entry.notify
+        : "none",
+      savedAt: entry.savedAt || null,
+    }))
+    .filter((entry) => entry.name && hasPicks(entry.picks));
 }
 
 /**
@@ -92,7 +170,7 @@ app.post("/api/hillview-sim/scenario", async (req, res) => {
             "Return STRICT JSON with this shape:",
             "{",
             '  "id": string,                  // unique id, new each time',
-            '  "title": string,               // short label like \"Lab Disaster\" or \"Phone Chaos\"',
+            '  "title": string,               // short label like "Lab Disaster" or "Phone Chaos"',
             '  "prompt": string,              // 2–4 sentence description, plain text, no markdown',
             '  "options": [',
             '    { "id": string, "text": string }, // exactly four distinct choices',
@@ -386,6 +464,62 @@ app.post("/api/hillview-sim/evaluate", async (req, res) => {
   } catch (err) {
     console.error("Evaluate endpoint error:", err);
     res.status(500).json({ error: "Failed to evaluate decision" });
+  }
+});
+
+app.get("/api/minigames/:gameId/entries", async (req, res) => {
+  const gameId = cleanGameId(req.params.gameId);
+
+  if (!gameId) {
+    res.status(400).json({ error: "Missing game id" });
+    return;
+  }
+
+  try {
+    const data = await readMinigamesData();
+    res.json({ gameId, entries: publicEntriesForGame(data, gameId) });
+  } catch (err) {
+    console.error("Minigames read error:", err);
+    res.status(500).json({ error: "Failed to load minigame entries" });
+  }
+});
+
+app.post("/api/minigames/:gameId/entries", async (req, res) => {
+  const gameId = cleanGameId(req.params.gameId);
+  const name = cleanText(req.body?.name, 24);
+  const notify = ["none", "win", "updates"].includes(req.body?.notify)
+    ? req.body.notify
+    : "none";
+  const picks = cleanPicks(req.body?.picks);
+
+  if (!gameId || !name || !hasPicks(picks)) {
+    res.status(400).json({ error: "Missing name or picks" });
+    return;
+  }
+
+  try {
+    const data = await readMinigamesData();
+    data.games ||= {};
+    data.games[gameId] ||= { entries: [] };
+
+    const entries = data.games[gameId].entries.filter(
+      (entry) => cleanText(entry.name, 24).toLowerCase() !== name.toLowerCase()
+    );
+
+    entries.push({
+      name,
+      picks,
+      notify,
+      savedAt: new Date().toISOString(),
+    });
+
+    data.games[gameId].entries = entries;
+    await writeMinigamesData(data);
+
+    res.json({ gameId, entries: publicEntriesForGame(data, gameId) });
+  } catch (err) {
+    console.error("Minigames save error:", err);
+    res.status(500).json({ error: "Failed to save minigame entry" });
   }
 });
 
