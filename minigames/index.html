@@ -1108,6 +1108,43 @@
 
     const eventCatalog = [
       // DAILY_WEATHER_GAME_START
+      {
+        id: "daily-weather-20260512",
+        name: "Menlo Park May 12 Weather",
+        type: "Weather",
+        month: 4,
+        day: 12,
+        summary: "Generated at 6 AM for May 12: Mostly Sunny, high near 75, night near 52.",
+        questions: [
+          question("What will the May 12 high temperature be closest to?", [
+            answer("Under 70 degrees", 18, "under-70"),
+            answer("70 to 80 degrees", 50, "70-80"),
+            answer("81 to 88 degrees", 22, "81-88"),
+            answer("Over 88 degrees", 10, "over-88")
+          ], "20260512-high-temp", { autoSource: menloParkWeatherSource, lockAt: "2026-05-13T13:00:00.000Z" }),
+          question("What will the main daytime sky be?", [
+            answer("Mostly sunny", 42, "mostly-sunny"),
+            answer("Partly cloudy", 26, "partly-cloudy"),
+            answer("Mostly cloudy", 19, "mostly-cloudy"),
+            answer("Rain likely", 9, "rain-likely")
+          ], "20260512-sky", { autoSource: menloParkWeatherSource, lockAt: "2026-05-13T13:00:00.000Z" }),
+          question("Will rain be mentioned for May 12?", [
+            answer("Yes", 18, "yes"),
+            answer("No", 82, "no")
+          ], "20260512-rain", { autoSource: menloParkWeatherSource, lockAt: "2026-05-13T13:00:00.000Z" }),
+          question("How windy will it sound?", [
+            answer("Light wind", 21, "light-wind"),
+            answer("Noticeable breeze", 42, "noticeable-breeze"),
+            answer("Windy", 12, "windy")
+          ], "20260512-wind", { autoSource: menloParkWeatherSource, lockAt: "2026-05-13T13:00:00.000Z" }),
+          question("What will the May 12 night feel like?", [
+            answer("Clear and cool", 22, "clear-cool"),
+            answer("Cloudy and mild", 34, "cloudy-mild"),
+            answer("Chilly", 18, "chilly"),
+            answer("Rainy", 12, "rainy")
+          ], "20260512-night", { autoSource: menloParkWeatherSource, lockAt: "2026-05-13T13:00:00.000Z" })
+        ]
+      },
       // DAILY_WEATHER_GAME_END
       {
         id: "weather-weekend",

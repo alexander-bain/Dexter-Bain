@@ -29,6 +29,10 @@ function slugDate(date) {
   return dayKey(date).replaceAll("-", "");
 }
 
+function lockDate(date) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1, 6, 0, 0);
+}
+
 function labelDate(date) {
   return `${monthNames[date.getMonth()]} ${date.getDate()}`;
 }
@@ -144,6 +148,7 @@ function weatherEvent(date, forecast) {
   const nightFeel = nightBucket(nightText, low);
   const dateLabel = labelDate(date);
   const idDate = slugDate(date);
+  const lockAt = lockDate(date).toISOString();
 
   const skyOdds = {
     "mostly-sunny": [sky === "mostly-sunny" ? 42 : 18, "Mostly sunny"],
@@ -178,28 +183,28 @@ function weatherEvent(date, forecast) {
             answer(${jsString(`${lowEdge} to ${highEdge} degrees`)}, 50, "${lowEdge}-${highEdge}"),
             answer(${jsString(`${highEdge + 1} to ${highEdge + 8} degrees`)}, ${chance(35, 22, high > highEdge)}, "${highEdge + 1}-${highEdge + 8}"),
             answer(${jsString(`Over ${highEdge + 8} degrees`)}, 10, "over-${highEdge + 8}")
-          ], "${idDate}-high-temp", { autoSource: menloParkWeatherSource }),
+          ], "${idDate}-high-temp", { autoSource: menloParkWeatherSource, lockAt: ${jsString(lockAt)} }),
           question(${jsString("What will the main daytime sky be?")}, [
             answer("Mostly sunny", ${skyOdds["mostly-sunny"][0]}, "mostly-sunny"),
             answer("Partly cloudy", ${skyOdds["partly-cloudy"][0]}, "partly-cloudy"),
             answer("Mostly cloudy", ${skyOdds["mostly-cloudy"][0]}, "mostly-cloudy"),
             answer("Rain likely", ${skyOdds["rain-likely"][0]}, "rain-likely")
-          ], "${idDate}-sky", { autoSource: menloParkWeatherSource }),
+          ], "${idDate}-sky", { autoSource: menloParkWeatherSource, lockAt: ${jsString(lockAt)} }),
           question(${jsString(`Will rain be mentioned for ${dateLabel}?`)}, [
             answer("Yes", ${rainLikely ? 62 : 18}, "yes"),
             answer("No", ${rainLikely ? 38 : 82}, "no")
-          ], "${idDate}-rain", { autoSource: menloParkWeatherSource }),
+          ], "${idDate}-rain", { autoSource: menloParkWeatherSource, lockAt: ${jsString(lockAt)} }),
           question("How windy will it sound?", [
             answer("Light wind", ${windOdds["light-wind"][0]}, "light-wind"),
             answer("Noticeable breeze", ${windOdds["noticeable-breeze"][0]}, "noticeable-breeze"),
             answer("Windy", ${windOdds["windy"][0]}, "windy")
-          ], "${idDate}-wind", { autoSource: menloParkWeatherSource }),
+          ], "${idDate}-wind", { autoSource: menloParkWeatherSource, lockAt: ${jsString(lockAt)} }),
           question(${jsString(`What will the ${dateLabel} night feel like?`)}, [
             answer("Clear and cool", ${nightOdds["clear-cool"][0]}, "clear-cool"),
             answer("Cloudy and mild", ${nightOdds["cloudy-mild"][0]}, "cloudy-mild"),
             answer("Chilly", ${nightOdds["chilly"][0]}, "chilly"),
             answer("Rainy", ${nightOdds["rainy"][0]}, "rainy")
-          ], "${idDate}-night", { autoSource: menloParkWeatherSource })
+          ], "${idDate}-night", { autoSource: menloParkWeatherSource, lockAt: ${jsString(lockAt)} })
         ]
       },`;
 }
