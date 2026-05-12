@@ -172,7 +172,7 @@ function weatherEvent(date, forecast) {
 
   return `      {
         id: "daily-weather-${idDate}",
-        name: ${jsString(`Menlo Park ${dateLabel} Weather`)},
+        name: ${jsString(`Menlo Park Morning Outlook - ${dateLabel}`)},
         type: "Weather",
         month: ${date.getMonth()},
         day: ${date.getDate()},
