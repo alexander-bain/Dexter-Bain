@@ -2252,7 +2252,7 @@
       const roomCode = activeRoomCode(game) || hydrateRoomFromUrl(game);
       return roomCode
         ? { type: "room", roomCode, label: `Private room ${roomCode}` }
-        : { type: "public", roomCode: "", label: sharedStatus === "online" ? "Public leaderboard" : "Server unavailable" };
+        : { type: "public", roomCode: "", label: sharedStatus === "online" ? "Public leaderboard" : "Saved on this device" };
     }
 
     async function loadSharedEntries(game, force = false) {
@@ -2560,6 +2560,15 @@
       return saveRoomEntry(game, scope.roomCode, entry);
     }
 
+    function saveLocalEntry(game, entry) {
+      state.entries ||= {};
+      state.entries[game.gameId] = (state.entries[game.gameId] || []).filter(
+        (oldEntry) => String(oldEntry.name || "").toLowerCase() !== entry.name.toLowerCase()
+      );
+      state.entries[game.gameId].push(entry);
+      saveState();
+    }
+
     function getQuestionId(question, index) {
       return question.id || `q-${index}`;
     }
@@ -2651,8 +2660,10 @@
       }
 
       const savedText = savedEntry
-        ? "Server picks found for this event."
-        : "No server picks for this event yet.";
+        ? savedEntry.source === "device"
+          ? "Picks saved on this device for this event."
+          : "Server picks found for this event."
+        : "No saved picks for this event yet.";
       profileNoteEl.innerHTML = `Player name: <strong>${escapeHtml(name)}</strong>. ${savedText}`;
     }
 
@@ -2799,16 +2810,17 @@
     function allEntries(game) {
       const scope = leaderboardScope(game);
       const roomKey = roomEntriesKey(game.gameId, scope.roomCode);
+      const localEntries = Array.isArray(state.entries?.[game.gameId]) ? state.entries[game.gameId] : [];
       const sourceEntries = scope.type === "room"
         ? (Array.isArray(sharedRooms[roomKey]) ? sharedRooms[roomKey] : [])
         : Array.isArray(sharedEntries[game.gameId])
         ? sharedEntries[game.gameId]
-        : [];
+        : localEntries;
 
       return sourceEntries.map((entry) => ({
         ...entry,
         score: scorePicks(game, entry.picks),
-        source: scope.type
+        source: sourceEntries === localEntries ? "device" : scope.type
       })).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
     }
 
@@ -3321,20 +3333,23 @@
 
       const savedToServer = await saveEntryForScope(game, entry);
       if (!savedToServer) {
-        showToast("Could not save picks to the server. Check the connection and try again.");
-        renderRoomControls(game, leaderboardScope(game));
-        return;
+        saveLocalEntry(game, entry);
+        showToast("Server is unavailable, so your picks were saved on this device.");
       }
 
       state.playerName = name;
       state.notify = notify;
-      state.entries[game.gameId] = (state.entries[game.gameId] || []).filter(
-        (oldEntry) => String(oldEntry.name || "").toLowerCase() !== name.toLowerCase()
-      );
+      if (savedToServer) {
+        state.entries[game.gameId] = (state.entries[game.gameId] || []).filter(
+          (oldEntry) => String(oldEntry.name || "").toLowerCase() !== name.toLowerCase()
+        );
+      }
       draftPicksByGame[game.gameId] = sanitizedPicks;
       saveState();
 
-      showToast("Picks saved to the server.");
+      if (savedToServer) {
+        showToast("Picks saved to the server.");
+      }
       render();
       await handleNotifications(notify, entry, allEntries(game), game);
     });
