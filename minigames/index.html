@@ -552,6 +552,20 @@
       padding: 18px;
     }
 
+    .creator-compact {
+      display: grid;
+      gap: 10px;
+    }
+
+    .creator-panel.is-collapsed .creator-body {
+      display: none;
+    }
+
+    .creator-toggle {
+      width: 100%;
+      justify-content: center;
+    }
+
     .creator-fields,
     .custom-question-list {
       display: grid;
@@ -909,25 +923,30 @@
       </div>
 
       <aside class="side-stack">
-        <section class="panel creator-panel" aria-labelledby="creatorTitle">
-          <h3 class="section-title" id="creatorTitle">Create a minigame</h3>
-          <p class="empty-state">Make a custom prediction game with a name, at least 5 questions, and options with odds and points. Publishing adds it to the public game list.</p>
-          <form class="creator-fields" id="customGameForm">
-            <label class="creator-field">
-              Game name
-              <input class="name-input" id="customGameName" maxlength="64" placeholder="Example: Dexter's Movie Night" required />
-            </label>
-            <label class="creator-field">
-              Explanation
-              <input class="name-input" id="customGameSummary" maxlength="180" placeholder="What players are predicting" />
-            </label>
-            <div class="custom-question-list" id="customQuestions"></div>
-            <div class="room-actions">
-              <button class="btn small secondary" type="button" id="addCustomQuestionBtn">Add question</button>
-              <button class="btn small" type="submit" id="publishCustomGameBtn">Publish game</button>
-            </div>
-            <p class="creator-status" id="customGameStatus" role="status" aria-live="polite"></p>
-          </form>
+        <section class="panel creator-panel is-collapsed" id="creatorPanel" aria-labelledby="creatorTitle">
+          <div class="creator-compact">
+            <h3 class="section-title" id="creatorTitle">Create a minigame</h3>
+            <button class="btn small creator-toggle" type="button" id="toggleCreatorBtn" aria-expanded="false" aria-controls="creatorBody">Create a minigame</button>
+          </div>
+          <div class="creator-body" id="creatorBody">
+            <p class="empty-state">Make a custom prediction game with a name, at least 5 questions, and options with odds and points. Publishing adds it to the public game list.</p>
+            <form class="creator-fields" id="customGameForm">
+              <label class="creator-field">
+                Game name
+                <input class="name-input" id="customGameName" maxlength="64" placeholder="Example: Dexter's Movie Night" required />
+              </label>
+              <label class="creator-field">
+                Explanation
+                <input class="name-input" id="customGameSummary" maxlength="180" placeholder="What players are predicting" />
+              </label>
+              <div class="custom-question-list" id="customQuestions"></div>
+              <div class="room-actions">
+                <button class="btn small secondary" type="button" id="addCustomQuestionBtn">Add question</button>
+                <button class="btn small" type="submit" id="publishCustomGameBtn">Publish game</button>
+              </div>
+              <p class="creator-status" id="customGameStatus" role="status" aria-live="polite"></p>
+            </form>
+          </div>
         </section>
 
         <section class="panel room-panel" aria-labelledby="roomTitle">
@@ -1938,6 +1957,8 @@
     const createRoomBtn = document.getElementById("createRoomBtn");
     const joinRoomBtn = document.getElementById("joinRoomBtn");
     const leaveRoomBtn = document.getElementById("leaveRoomBtn");
+    const creatorPanelEl = document.getElementById("creatorPanel");
+    const toggleCreatorBtn = document.getElementById("toggleCreatorBtn");
     const customGameFormEl = document.getElementById("customGameForm");
     const customGameNameEl = document.getElementById("customGameName");
     const customGameSummaryEl = document.getElementById("customGameSummary");
@@ -3437,6 +3458,15 @@
 
     leaveRoomBtn.addEventListener("click", () => {
       leaveRoom(currentGame());
+    });
+
+    toggleCreatorBtn.addEventListener("click", () => {
+      const isOpening = creatorPanelEl.classList.toggle("is-collapsed") === false;
+      toggleCreatorBtn.setAttribute("aria-expanded", String(isOpening));
+      toggleCreatorBtn.textContent = isOpening ? "Hide creator" : "Create a minigame";
+      if (isOpening) {
+        customGameNameEl.focus();
+      }
     });
 
     addCustomQuestionBtn.addEventListener("click", () => {
