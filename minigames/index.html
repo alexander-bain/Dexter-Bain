@@ -304,7 +304,7 @@
 
     .scoreline {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
       padding: 14px 18px 18px;
       border-top: 1px solid var(--line);
@@ -329,6 +329,12 @@
       margin: 0;
       font-size: 1.45rem;
       font-weight: 950;
+    }
+
+    .score-value.countdown {
+      color: #ffe7a0;
+      font-size: clamp(1.05rem, 2vw, 1.34rem);
+      line-height: 1.12;
     }
 
     .form-panel {
@@ -932,6 +938,10 @@
               <p class="score-value" id="openDate">Soon</p>
             </div>
             <div class="score-tile">
+              <p class="score-label">Countdown</p>
+              <p class="score-value countdown" id="countdownClock">Soon</p>
+            </div>
+            <div class="score-tile">
               <p class="score-label">Entries</p>
               <p class="score-value" id="entryCount">0</p>
             </div>
@@ -1055,6 +1065,8 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
+    window.MINIGAMES_API_BASE = window.MINIGAMES_API_BASE || "https://dexter-bain.onrender.com";
+
     const STORAGE_KEY = "dexterbain-minigames-v1";
     const today = new Date();
     const year = today.getFullYear();
@@ -1972,6 +1984,7 @@
     const titleEl = document.getElementById("eventTitle");
     const summaryEl = document.getElementById("eventSummary");
     const openDateEl = document.getElementById("openDate");
+    const countdownClockEl = document.getElementById("countdownClock");
     const entryCountEl = document.getElementById("entryCount");
     const questionCountEl = document.getElementById("questionCount");
     const questionsEl = document.getElementById("questions");
@@ -2990,6 +3003,45 @@
       return Math.max(0, Math.ceil(ms / 86400000));
     }
 
+    function countdownLabel(date) {
+      const diff = date - new Date();
+      if (diff <= 0) {
+        return "Started";
+      }
+
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+
+      if (days > 0) {
+        return `${days}d ${hours}h ${minutes}m`;
+      }
+
+      if (hours > 0) {
+        return `${hours}h ${minutes}m ${seconds}s`;
+      }
+
+      return `${minutes}m ${seconds}s`;
+    }
+
+    function updateCountdowns() {
+      const games = upcomingGames();
+      const gameById = Object.fromEntries(games.map((game) => [game.gameId, game]));
+
+      if (countdownClockEl) {
+        const game = currentGame();
+        countdownClockEl.textContent = game ? countdownLabel(game.date) : "Soon";
+      }
+
+      document.querySelectorAll("[data-countdown-game]").forEach((element) => {
+        const game = gameById[element.dataset.countdownGame];
+        if (game) {
+          element.textContent = countdownLabel(game.date);
+        }
+      });
+    }
+
     function allEntries(game) {
       const scope = leaderboardScope(game);
       const roomKey = roomEntriesKey(game.gameId, scope.roomCode);
@@ -3013,7 +3065,7 @@
           <span class="tab-kicker"><span>${escapeHtml(game.type)}</span><span>${dateLabel(game.date)}</span></span>
           <div class="tab-title">${escapeHtml(game.name)}</div>
           <p class="tab-description">${escapeHtml(game.summary)}</p>
-          <p class="tab-meta">${daysUntil(game.date)} days away</p>
+          <p class="tab-meta"><span data-countdown-game="${escapeHtml(game.gameId)}">${escapeHtml(countdownLabel(game.date))}</span> · ${daysUntil(game.date)} days away</p>
         </button>
       `).join("");
 
@@ -3119,6 +3171,7 @@
       titleEl.textContent = game.name;
       summaryEl.textContent = game.summary;
       openDateEl.textContent = dateLabel(game.date);
+      countdownClockEl.textContent = countdownLabel(game.date);
       entryCountEl.textContent = String(entries.length);
       questionCountEl.textContent = String(maxPointsForGame(game));
       liveStatusEl.textContent = `${game.name} is next`;
@@ -3178,6 +3231,7 @@
       renderResults(game);
       renderTicker(game, entries, scope);
       renderRoomControls(game, scope);
+      updateCountdowns();
       saveNoteEl.textContent = savedEntry
         ? `Saved picks for ${savedEntry.name}. Change anything and lock picks again.`
         : hasOpenQuestions
@@ -3709,6 +3763,8 @@
         }
       });
     }, 60000);
+
+    window.setInterval(updateCountdowns, 1000);
 
     renderCustomGameBuilder();
     render();
