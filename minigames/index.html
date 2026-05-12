@@ -2328,13 +2328,16 @@
       };
     }
 
-    function captureDraftPicks(game) {
+    function renderedDraftGame() {
+      return upcomingGames().find((game) => game.gameId === renderedGameId) || null;
+    }
+
+    function captureDraftPicks(game = renderedDraftGame()) {
       if (!game || renderedGameId !== game.gameId || !questionsEl.children.length) {
         return;
       }
 
       const formData = new FormData(formEl);
-      const draft = { ...(draftPicksByGame[game.gameId] || {}) };
 
       game.questions.forEach((question, index) => {
         if (isQuestionLocked(game, question)) {
@@ -2344,10 +2347,34 @@
         const questionId = getQuestionId(question, index);
         const value = (formData.get(questionId) || "").toString();
         if (value) {
-          draft[questionId] = value;
+          rememberDraftPick(game, questionId, value);
         }
       });
+    }
 
+    function captureVisibleDraftPicks() {
+      const game = renderedDraftGame();
+      if (!game || !questionsEl.children.length) {
+        return;
+      }
+
+      questionsEl.querySelectorAll("input[type='radio']:checked").forEach((input) => {
+        const question = game.questions.find((candidate, index) => getQuestionId(candidate, index) === input.name);
+        if (!question || isQuestionLocked(game, question)) {
+          return;
+        }
+
+        rememberDraftPick(game, input.name, input.value);
+      });
+    }
+
+    function rememberDraftPick(game, questionId, value) {
+      if (!game || !questionId || !value) {
+        return;
+      }
+
+      const draft = { ...(draftPicksByGame[game.gameId] || {}) };
+      draft[questionId] = value;
       draftPicksByGame[game.gameId] = draft;
     }
 
@@ -2415,7 +2442,7 @@
 
       tabsEl.querySelectorAll("button").forEach((button) => {
         button.addEventListener("click", () => {
-          captureDraftPicks(currentGame());
+          captureDraftPicks();
           selectedGameId = button.dataset.game;
           render();
           document.getElementById("play").scrollIntoView({ block: "start" });
@@ -2496,7 +2523,7 @@
     }
 
     function renderGame(game) {
-      captureDraftPicks(game);
+      captureVisibleDraftPicks();
       const entries = allEntries(game);
       const scope = leaderboardScope(game);
       const profileName = activePlayerName();
@@ -2860,7 +2887,30 @@
 
     formEl.addEventListener("change", () => {
       saveActivePlayerName(playerNameEl.value);
-      captureDraftPicks(currentGame());
+      captureVisibleDraftPicks();
+    });
+
+    questionsEl.addEventListener("change", (event) => {
+      const input = event.target.closest("input[type='radio']");
+      if (!input || !input.checked) {
+        return;
+      }
+
+      const game = renderedDraftGame();
+      if (!game) {
+        return;
+      }
+
+      const question = game.questions.find((candidate, index) => getQuestionId(candidate, index) === input.name);
+      if (!question || isQuestionLocked(game, question)) {
+        return;
+      }
+
+      rememberDraftPick(game, input.name, input.value);
+    });
+
+    questionsEl.addEventListener("input", () => {
+      captureVisibleDraftPicks();
     });
 
     playerNameEl.addEventListener("input", () => {
