@@ -61,6 +61,10 @@ function cleanRoomCode(value) {
   return cleanText(value, 16).replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
 }
 
+function isValidRoomCode(value) {
+  return /^[A-HJ-NP-Z2-9]{6}$/.test(cleanRoomCode(value));
+}
+
 function minigamesInitialData() {
   return { games: {}, customGames: [] };
 }
@@ -434,6 +438,19 @@ function ensureRoom(data, gameId, roomCode) {
   const room = game.rooms[roomCode];
   room.code = roomCode;
   room.createdAt ||= now;
+  room.updatedAt ||= null;
+  room.entries = Array.isArray(room.entries) ? room.entries : [];
+  return room;
+}
+
+function existingRoom(data, gameId, roomCode) {
+  const room = data.games?.[gameId]?.rooms?.[roomCode];
+  if (!room || typeof room !== "object" || Array.isArray(room)) {
+    return null;
+  }
+
+  room.code = roomCode;
+  room.createdAt ||= new Date().toISOString();
   room.updatedAt ||= null;
   room.entries = Array.isArray(room.entries) ? room.entries : [];
   return room;
@@ -1364,6 +1381,11 @@ app.post("/api/minigames/:gameId/rooms", async (req, res) => {
     return;
   }
 
+  if (requestedCode && !isValidRoomCode(requestedCode)) {
+    res.status(400).json({ error: "Room codes must be six characters from the shared room alphabet" });
+    return;
+  }
+
   try {
     const payload = await updateMinigamesData((data) => {
       const roomCode = requestedCode || uniqueRoomCode(data, gameId);
@@ -1401,9 +1423,14 @@ app.get("/api/minigames/:gameId/rooms/:roomCode", async (req, res) => {
     return;
   }
 
+  if (!isValidRoomCode(roomCode)) {
+    res.status(400).json({ error: "Invalid room code" });
+    return;
+  }
+
   try {
     const data = await readMinigamesData();
-    const room = data.games?.[gameId]?.rooms?.[roomCode];
+    const room = existingRoom(data, gameId, roomCode);
 
     if (!room) {
       res.status(404).json({ error: "Room not found" });
@@ -1430,9 +1457,14 @@ app.get("/api/minigames/:gameId/rooms/:roomCode/entries", async (req, res) => {
     return;
   }
 
+  if (!isValidRoomCode(roomCode)) {
+    res.status(400).json({ error: "Invalid room code" });
+    return;
+  }
+
   try {
     const data = await readMinigamesData();
-    const room = data.games?.[gameId]?.rooms?.[roomCode];
+    const room = existingRoom(data, gameId, roomCode);
 
     if (!room) {
       res.status(404).json({ error: "Room not found" });
@@ -1464,9 +1496,20 @@ app.post("/api/minigames/:gameId/rooms/:roomCode/entries", async (req, res) => {
     return;
   }
 
+  if (!isValidRoomCode(roomCode)) {
+    res.status(400).json({ error: "Invalid room code" });
+    return;
+  }
+
   try {
     const payload = await updateMinigamesData((data) => {
-      const room = ensureRoom(data, gameId, roomCode);
+      const room = existingRoom(data, gameId, roomCode);
+      if (!room) {
+        const err = new Error("Room not found");
+        err.statusCode = 404;
+        throw err;
+      }
+
       const savedAt = new Date().toISOString();
       const entries = room.entries.filter(
         (entry) =>
@@ -1491,6 +1534,10 @@ app.post("/api/minigames/:gameId/rooms/:roomCode/entries", async (req, res) => {
     });
     res.json(payload);
   } catch (err) {
+    if (err.statusCode === 404) {
+      res.status(404).json({ error: "Room not found" });
+      return;
+    }
     console.error("Minigames room save error:", err);
     res.status(500).json({ error: "Failed to save minigame room entry" });
   }

@@ -934,7 +934,7 @@
           <h3 class="section-title" id="roomTitle">Private room</h3>
           <p class="empty-state" id="roomSummary">Create a room for friends, or join one with a real code.</p>
           <div class="room-form">
-            <input class="name-input" id="roomCodeInput" maxlength="16" autocomplete="off" placeholder="Room code" aria-label="Room code" />
+            <input class="name-input" id="roomCodeInput" maxlength="6" autocomplete="off" placeholder="6-character code" aria-label="Room code" />
             <button class="btn small secondary" type="button" id="joinRoomBtn">Join</button>
           </div>
           <div class="room-actions">
@@ -1820,7 +1820,11 @@
     }
 
     function cleanRoomCode(value) {
-      return String(value || "").replace(/[^a-zA-Z0-9]/g, "").toUpperCase().slice(0, 16);
+      return String(value || "").replace(/[^A-HJ-NP-Z2-9]/gi, "").toUpperCase().slice(0, 6);
+    }
+
+    function isValidRoomCode(value) {
+      return /^[A-HJ-NP-Z2-9]{6}$/.test(cleanRoomCode(value));
     }
 
     function minigamesRoomApiUrl(gameId, roomCode) {
@@ -1858,7 +1862,8 @@
     }
 
     function activeRoomCode(game) {
-      return cleanRoomCode(state.activeRoomByGame?.[game.gameId]);
+      const roomCode = cleanRoomCode(state.activeRoomByGame?.[game.gameId]);
+      return isValidRoomCode(roomCode) ? roomCode : "";
     }
 
     function hydrateGameFromUrl(games) {
@@ -1868,7 +1873,7 @@
 
     function hydrateRoomFromUrl(game) {
       const roomCode = cleanRoomCode(new URLSearchParams(window.location.search).get("room"));
-      if (!roomCode) {
+      if (!roomCode || !isValidRoomCode(roomCode)) {
         return "";
       }
 
@@ -1912,6 +1917,11 @@
     }
 
     async function loadRoomEntries(game, roomCode, force = false) {
+      if (!isValidRoomCode(roomCode)) {
+        setRoomStatus(game, "That room code is not valid. Create a room first, then share its code.", "bad");
+        return false;
+      }
+
       const key = roomEntriesKey(game.gameId, roomCode);
       if (!force && sharedLoadedRooms.has(key)) {
         return true;
@@ -2042,8 +2052,8 @@
 
     async function joinRoom(game, roomCode, { silent = false } = {}) {
       const cleanedCode = cleanRoomCode(roomCode);
-      if (!cleanedCode) {
-        setRoomStatus(game, "Enter a room code to join.", "bad");
+      if (!cleanedCode || !isValidRoomCode(cleanedCode)) {
+        setRoomStatus(game, "Enter a real 6-character room code to join.", "bad");
         renderRoomControls(game, leaderboardScope(game));
         return false;
       }
@@ -2135,6 +2145,15 @@
             notify: entry.notify,
           }),
         });
+        if (response.status === 404) {
+          state.activeRoomByGame ||= {};
+          delete state.activeRoomByGame[game.gameId];
+          saveState();
+          updateRoomUrl(game, "");
+          setRoomStatus(game, `Room ${roomCode} was not found, so your picks were not saved.`, "bad");
+          sharedStatus = "online";
+          return false;
+        }
         if (!response.ok) {
           throw new Error(`Room save request failed: ${response.status}`);
         }
