@@ -127,6 +127,7 @@ function publicCustomGame(game) {
       .map((question) => ({
         id: cleanGameId(question?.id),
         text: cleanText(question?.text, 120),
+        autoSource: cleanResultSourceUrl(question?.autoSource),
         answers: Array.isArray(question?.answers)
           ? question.answers
               .map((answer) => ({
@@ -165,6 +166,7 @@ function cleanCustomGamePayload(body) {
     return {
       id: cleanGameId(rawQuestion?.id) || `q-${questionIndex + 1}`,
       text,
+      autoSource: cleanResultSourceUrl(rawQuestion?.autoSource),
       answers,
     };
   }).filter((question) => question.text && question.answers.length >= 2);
@@ -231,6 +233,20 @@ function cleanResultStatus(value) {
     : "pending";
 }
 
+function cleanResultSourceUrl(value) {
+  const raw = cleanText(value, 300);
+  if (!raw) {
+    return "";
+  }
+
+  try {
+    const url = new URL(raw);
+    return ["http:", "https:"].includes(url.protocol) ? url.toString() : "";
+  } catch {
+    return "";
+  }
+}
+
 function cleanResult(result) {
   const questionId = cleanText(result?.questionId, 80).replace(/[^a-zA-Z0-9_-]/g, "");
   const answerId = cleanText(result?.answerId, 80).replace(/[^a-zA-Z0-9_-]/g, "");
@@ -258,24 +274,139 @@ function publicResultsForGame(data, gameId) {
     .filter(Boolean);
 }
 
-function automaticResultForQuestion(question, questionIndex) {
+function cleanResultAnswers(question) {
+  return (Array.isArray(question?.answers) ? question.answers : [])
+    .slice(0, 8)
+    .map((answer) => ({
+      id: cleanText(answer?.id, 80).replace(/[^a-zA-Z0-9_-]/g, ""),
+      label: cleanText(answer?.label, 80),
+    }))
+    .filter((answer) => answer.id && answer.label);
+}
+
+function stripSourceText(raw) {
+  return String(raw || "")
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, "\"")
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 12000);
+}
+
+async function fetchResultSource(source) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 7000);
+
+  try {
+    const response = await fetch(source, {
+      headers: {
+        Accept: "text/html,application/json,text/plain;q=0.9,*/*;q=0.5",
+        "User-Agent": "DexterBainMinigames/1.0",
+      },
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Source returned ${response.status}`);
+    }
+
+    return stripSourceText(await response.text());
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function chooseAnswerFromSource(questionText, answers, sourceText) {
+  if (!process.env.OPENAI_API_KEY || !answers.length || !sourceText) {
+    return null;
+  }
+
+  const response = await openai.chat.completions.create({
+    model: process.env.MINIGAMES_RESULT_MODEL || "gpt-4o-mini",
+    response_format: { type: "json_object" },
+    temperature: 0,
+    messages: [
+      {
+        role: "system",
+        content:
+          "You score prediction-game questions from source text. Only choose an answer when the source clearly confirms it. Return JSON only.",
+      },
+      {
+        role: "user",
+        content: JSON.stringify({
+          question: questionText,
+          answers,
+          sourceText,
+          requiredJson:
+            "Return {\"answerId\":\"one listed answer id or empty string\",\"confidence\":0-1,\"explanation\":\"short reason\"}. Use empty answerId if not confirmed.",
+        }),
+      },
+    ],
+  });
+
+  const raw = response.choices?.[0]?.message?.content || "{}";
+  const parsed = JSON.parse(raw);
+  const answerId = cleanText(parsed.answerId, 80).replace(/[^a-zA-Z0-9_-]/g, "");
+  const confidence = Number(parsed.confidence) || 0;
+  const explanation = cleanText(parsed.explanation, 180);
+
+  if (confidence < 0.72 || !answers.some((answer) => answer.id === answerId)) {
+    return null;
+  }
+
+  return { answerId, explanation };
+}
+
+async function automaticResultForQuestion(question, questionIndex) {
   const questionId = cleanText(question?.id || `q-${questionIndex}`, 80).replace(/[^a-zA-Z0-9_-]/g, "");
   const text = cleanText(question?.text, 160);
-  const source = cleanText(question?.autoSource, 160);
+  const source = cleanResultSourceUrl(question?.autoSource);
+  const answers = cleanResultAnswers(question);
 
   if (!questionId) {
     return null;
   }
 
   if (source) {
-    return {
-      questionId,
-      status: "pending",
-      answerId: "",
-      source,
-      note: "Auto-checking this source. It will score when the source confirms the answer.",
-      checkedAt: new Date().toISOString(),
-    };
+    try {
+      const sourceText = await fetchResultSource(source);
+      const choice = await chooseAnswerFromSource(text, answers, sourceText);
+      if (choice?.answerId) {
+        return {
+          questionId,
+          status: "resolved",
+          answerId: choice.answerId,
+          source,
+          note: choice.explanation || "Confirmed by the connected result source.",
+          checkedAt: new Date().toISOString(),
+        };
+      }
+
+      return {
+        questionId,
+        status: "pending",
+        answerId: "",
+        source,
+        note: process.env.OPENAI_API_KEY
+          ? "The source is connected, but it has not clearly confirmed one answer yet."
+          : "The source is connected. Add an OpenAI API key on the server to choose the confirmed answer automatically.",
+        checkedAt: new Date().toISOString(),
+      };
+    } catch (err) {
+      return {
+        questionId,
+        status: "pending",
+        answerId: "",
+        source,
+        note: "The source is connected, but the site could not read it yet.",
+        checkedAt: new Date().toISOString(),
+      };
+    }
   }
 
   return {
@@ -1169,21 +1300,21 @@ app.post("/api/minigames/:gameId/results/check", async (req, res) => {
   }
 
   try {
-    const payload = await updateMinigamesData((data) => {
+    const payload = await updateMinigamesData(async (data) => {
       const game = ensureGame(data, gameId);
       game.results ||= {};
 
-      questions.forEach((question, questionIndex) => {
+      await Promise.all(questions.map(async (question, questionIndex) => {
         const questionId = cleanText(question?.id || `q-${questionIndex}`, 80).replace(/[^a-zA-Z0-9_-]/g, "");
         if (!questionId || game.results[questionId]?.status === "resolved") {
           return;
         }
 
-        const result = automaticResultForQuestion(question, questionIndex);
+        const result = await automaticResultForQuestion(question, questionIndex);
         if (result) {
           game.results[questionId] = result;
         }
-      });
+      }));
 
       return { gameId, results: publicResultsForGame(data, gameId) };
     });

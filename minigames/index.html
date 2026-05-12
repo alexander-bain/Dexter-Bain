@@ -995,11 +995,55 @@
       };
     }
 
-    function question(text, answers, id = slugify(text)) {
-      return { id, text, answers };
+    function question(text, answers, id = slugify(text), options = {}) {
+      return {
+        id,
+        text,
+        answers,
+        autoSource: options.autoSource || ""
+      };
     }
 
+    const menloParkWeatherSource = "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182";
+
     const eventCatalog = [
+      {
+        id: "may-12-weather-test",
+        name: "May 12 Weather Test",
+        type: "Weather",
+        month: 4,
+        day: 12,
+        summary: "A temporary Menlo Park weather minigame for testing auto-scoring with a real forecast source.",
+        questions: [
+          question("What will the May 12 high temperature be closest to?", [
+            answer("Under 65 degrees", 18, "under-65"),
+            answer("65 to 72 degrees", 44, "65-72"),
+            answer("73 to 80 degrees", 28, "73-80"),
+            answer("Over 80 degrees", 10, "over-80")
+          ], "may-12-high-temp", { autoSource: menloParkWeatherSource }),
+          question("What will the main daytime sky be?", [
+            answer("Mostly sunny", 38, "mostly-sunny"),
+            answer("Partly cloudy", 34, "partly-cloudy"),
+            answer("Mostly cloudy", 18, "mostly-cloudy"),
+            answer("Rain likely", 10, "rain-likely")
+          ], "may-12-sky", { autoSource: menloParkWeatherSource }),
+          question("Will rain be mentioned for May 12?", [
+            answer("Yes", 22, "yes"),
+            answer("No", 78, "no")
+          ], "may-12-rain", { autoSource: menloParkWeatherSource }),
+          question("How windy will it sound?", [
+            answer("Light wind", 46, "light-wind"),
+            answer("Noticeable breeze", 38, "noticeable-breeze"),
+            answer("Windy", 16, "windy")
+          ], "may-12-wind", { autoSource: menloParkWeatherSource }),
+          question("What will the May 12 night feel like?", [
+            answer("Clear and cool", 35, "clear-cool"),
+            answer("Cloudy and mild", 30, "cloudy-mild"),
+            answer("Chilly", 20, "chilly"),
+            answer("Rainy", 15, "rainy")
+          ], "may-12-night", { autoSource: menloParkWeatherSource })
+        ]
+      },
       {
         id: "weather-weekend",
         name: "Weekend Weather Watch",
@@ -1734,6 +1778,10 @@
           id: getQuestionId(question, index),
           text: getQuestionText(question),
           autoSource: question.autoSource || "",
+          answers: getAnswers(question).map((answerOption) => ({
+            id: answerOption.id,
+            label: answerOption.label,
+          })),
         }));
 
       if (!questionsToCheck.length) {
@@ -2243,6 +2291,7 @@
               <button class="btn small secondary" type="button" data-add-custom-option="${questionIndex}">Add option</button>
             </div>
             <input class="name-input" name="custom-q${questionIndex}-text" maxlength="120" placeholder="Question text" required />
+            <input class="name-input" name="custom-q${questionIndex}-source" maxlength="300" placeholder="Optional official result page URL for auto-scoring" />
             ${answers}
           </section>
         `;
@@ -2258,6 +2307,7 @@
       const formData = new FormData(customGameFormEl);
       const questions = customBuilderQuestions.map((answerCount, questionIndex) => {
         const text = (formData.get(`custom-q${questionIndex}-text`) || "").toString().trim();
+        const autoSource = (formData.get(`custom-q${questionIndex}-source`) || "").toString().trim();
         const answers = Array.from({ length: answerCount }, (_, answerIndex) => {
           const label = (formData.get(`custom-q${questionIndex}-a${answerIndex}-label`) || "").toString().trim();
           return {
@@ -2267,7 +2317,7 @@
           };
         }).filter((answerOption) => answerOption.label && answerOption.odds > 0 && answerOption.points > 0);
 
-        return { text, answers };
+        return { text, autoSource, answers };
       }).filter((question) => question.text && question.answers.length >= 2);
 
       return {
