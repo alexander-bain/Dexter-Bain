@@ -29,6 +29,7 @@ const vapidSubject =
   process.env.VAPID_SUBJECT || "mailto:notifications@dexterbain.com";
 const notificationAdminToken = process.env.NOTIFICATION_ADMIN_TOKEN || "";
 let webpushClientPromise = null;
+let vapidKeysPromise = null;
 
 // IMPORTANT: set this in your environment on Render, don't hardcode it in code
 const openai = new OpenAI({
@@ -523,18 +524,37 @@ async function updateNotificationsData(mutator) {
   return run;
 }
 
-function pushNotificationsConfigured() {
-  return Boolean(vapidPublicKey && vapidPrivateKey);
+async function getStoredOrGeneratedVapidKeys() {
+  if (vapidPublicKey && vapidPrivateKey) {
+    return { publicKey: vapidPublicKey, privateKey: vapidPrivateKey };
+  }
+
+  vapidKeysPromise ||= updateNotificationsData(async (data) => {
+    if (data.vapidKeys?.publicKey && data.vapidKeys?.privateKey) {
+      return data.vapidKeys;
+    }
+
+    const module = await import("web-push");
+    const webpush = module.default || module;
+    const keys = webpush.generateVAPIDKeys();
+    data.vapidKeys = keys;
+    return keys;
+  }).finally(() => {
+    vapidKeysPromise = null;
+  });
+
+  return vapidKeysPromise;
 }
 
 async function getWebPushClient() {
-  if (!pushNotificationsConfigured()) {
+  const keys = await getStoredOrGeneratedVapidKeys();
+  if (!keys?.publicKey || !keys?.privateKey) {
     return null;
   }
 
   webpushClientPromise ||= import("web-push").then((module) => {
     const client = module.default || module;
-    client.setVapidDetails(vapidSubject, vapidPublicKey, vapidPrivateKey);
+    client.setVapidDetails(vapidSubject, keys.publicKey, keys.privateKey);
     return client;
   });
 
@@ -637,13 +657,12 @@ function notificationMatches(item, filter = {}) {
 }
 
 async function sendPushNotifications(payload, filter = {}) {
-  if (!pushNotificationsConfigured()) {
-    return { sent: 0, removed: 0, skipped: true };
-  }
-
   let webpush;
   try {
     webpush = await getWebPushClient();
+    if (!webpush) {
+      return { sent: 0, removed: 0, skipped: true };
+    }
   } catch (err) {
     console.error("Push setup error:", err);
     return { sent: 0, removed: 0, skipped: true };
@@ -1057,11 +1076,17 @@ app.post("/api/hillview-sim/evaluate", async (req, res) => {
   }
 });
 
-app.get("/api/notifications/vapid-public-key", (req, res) => {
-  res.json({
-    configured: pushNotificationsConfigured(),
-    publicKey: vapidPublicKey || null,
-  });
+app.get("/api/notifications/vapid-public-key", async (req, res) => {
+  try {
+    const keys = await getStoredOrGeneratedVapidKeys();
+    res.json({
+      configured: Boolean(keys?.publicKey),
+      publicKey: keys?.publicKey || null,
+    });
+  } catch (err) {
+    console.error("Notification key error:", err);
+    res.status(500).json({ error: "Failed to prepare notification keys" });
+  }
 });
 
 app.post("/api/notifications/subscribe", async (req, res) => {
