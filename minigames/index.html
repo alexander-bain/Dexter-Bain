@@ -1009,11 +1009,11 @@
     const eventCatalog = [
       {
         id: "may-12-weather-test",
-        name: "May 12 Weather Test",
+        name: "Menlo Park May 12 Weather",
         type: "Weather",
         month: 4,
         day: 12,
-        summary: "A temporary Menlo Park weather minigame for testing auto-scoring with a real forecast source.",
+        summary: "A real-source Menlo Park weather game about the May 12 forecast, sky, wind, and evening feel.",
         questions: [
           question("What will the May 12 high temperature be closest to?", [
             answer("Under 65 degrees", 18, "under-65"),
@@ -1086,7 +1086,7 @@
       },
       {
         id: "internet-random",
-        name: "Random Internet Day",
+        name: "Internet Trend Watch",
         type: "Random",
         month: 5,
         day: 12,
@@ -1125,7 +1125,7 @@
       },
       {
         id: "soccer-kickoff",
-        name: "Big Soccer Kickoff",
+        name: "Soccer Match Watch",
         type: "Sports",
         month: 5,
         day: 11,
@@ -1164,7 +1164,7 @@
       },
       {
         id: "local-election",
-        name: "Simple Election Night",
+        name: "Election Night Watch",
         type: "Politics",
         month: 10,
         day: 3,
@@ -1240,6 +1240,398 @@
         ]
       },
       {
+        id: "school-spirit-week",
+        name: "School Spirit Week",
+        type: "School",
+        month: 4,
+        day: 29,
+        summary: "A school-day game about outfits, announcements, lunch talk, hallway energy, and which theme catches on first.",
+        questions: [
+          question("Which spirit theme gets the most effort?", [
+            answer("Pajama day", 32),
+            answer("Sports jersey day", 25),
+            answer("Twin day", 22),
+            answer("Color war", 15),
+            answer("Nobody really tries", 6)
+          ]),
+          question("What happens first at school?", [
+            answer("Announcement reminder", 35),
+            answer("Group photo", 24),
+            answer("Teacher joins in", 18),
+            answer("Someone forgets the theme", 23)
+          ]),
+          question("Will the lunch table debate the best outfit?", [
+            answer("Yes", 54),
+            answer("No", 46)
+          ]),
+          question("Which grade acts the most into it?", [
+            answer("6th grade", 24),
+            answer("7th grade", 31),
+            answer("8th grade", 29),
+            answer("Teachers win it", 16)
+          ]),
+          question("What is the surprise moment?", [
+            answer("Principal costume", 13),
+            answer("Class chant", 22),
+            answer("Unexpected matching group", 36),
+            answer("No surprise", 29)
+          ])
+        ]
+      },
+      {
+        id: "movie-trailer-drop",
+        name: "Movie Trailer Drop",
+        type: "Movies",
+        month: 5,
+        day: 5,
+        summary: "A trailer-release game about first reactions, big reveals, comment-section chaos, and whether the hype feels real.",
+        questions: [
+          question("What gets shown in the first 20 seconds?", [
+            answer("Main hero", 38),
+            answer("Villain tease", 22),
+            answer("Big landscape shot", 20),
+            answer("Explosion or chase", 15),
+            answer("Only a logo", 5)
+          ]),
+          question("What is the first big reaction?", [
+            answer("People love it", 34),
+            answer("People complain", 27),
+            answer("Meme screenshot", 21),
+            answer("Confused theories", 18)
+          ]),
+          question("Will the trailer reveal a surprise character?", [
+            answer("Yes", 29),
+            answer("No", 71)
+          ]),
+          question("Which line becomes the quote?", [
+            answer("Hero one-liner", 36),
+            answer("Villain threat", 28),
+            answer("Funny sidekick line", 24),
+            answer("No quotable line", 12)
+          ]),
+          question("How strong is the hype after one hour?", [
+            answer("Huge", 26),
+            answer("Pretty good", 42),
+            answer("Mixed", 24),
+            answer("Rough", 8)
+          ])
+        ]
+      },
+      {
+        id: "concert-night",
+        name: "Concert Night",
+        type: "Music",
+        month: 5,
+        day: 18,
+        summary: "A concert watch game for setlists, guest artists, crowd singalongs, encore drama, and phone-camera moments.",
+        questions: [
+          question("What opens the show?", [
+            answer("Big hit", 37),
+            answer("New song", 24),
+            answer("Slow intro", 18),
+            answer("Surprise cover", 11),
+            answer("Late start chaos", 10)
+          ]),
+          question("Will there be a guest performer?", [
+            answer("Yes", 31),
+            answer("No", 69)
+          ]),
+          question("What does the crowd do first?", [
+            answer("Sing every word", 43),
+            answer("Phone lights", 21),
+            answer("Chant the artist name", 18),
+            answer("Crowd wave", 8),
+            answer("Nothing special", 10)
+          ]),
+          question("When does the biggest hit happen?", [
+            answer("First third", 21),
+            answer("Middle", 28),
+            answer("Near the end", 39),
+            answer("Encore", 12)
+          ]),
+          question("What is the encore?", [
+            answer("Fan favorite", 40),
+            answer("New single", 20),
+            answer("Acoustic version", 18),
+            answer("No encore", 22)
+          ])
+        ]
+      },
+      {
+        id: "tech-product-reveal",
+        name: "Tech Product Reveal",
+        type: "Tech",
+        month: 5,
+        day: 25,
+        summary: "A product-launch game about new gadgets, awkward demos, price reveals, AI features, and audience applause.",
+        questions: [
+          question("What gets announced first?", [
+            answer("New phone", 29),
+            answer("Laptop or tablet", 24),
+            answer("AI feature", 31),
+            answer("Wearable gadget", 10),
+            answer("Subscription service", 6)
+          ]),
+          question("Will a live demo glitch?", [
+            answer("Yes", 18),
+            answer("No", 82)
+          ]),
+          question("What phrase gets repeated most?", [
+            answer("AI-powered", 34),
+            answer("All-new design", 25),
+            answer("Our fastest ever", 23),
+            answer("Built for creators", 18)
+          ]),
+          question("How does the price land?", [
+            answer("Cheaper than expected", 14),
+            answer("About expected", 46),
+            answer("Too expensive", 32),
+            answer("No price yet", 8)
+          ]),
+          question("What closes the reveal?", [
+            answer("Release date", 37),
+            answer("One more thing", 17),
+            answer("Product video", 31),
+            answer("Developer demo", 15)
+          ])
+        ]
+      },
+      {
+        id: "food-truck-friday",
+        name: "Food Truck Friday",
+        type: "Food",
+        month: 6,
+        day: 3,
+        summary: "A food-event game about the longest line, sold-out items, surprise favorites, and what everyone orders first.",
+        questions: [
+          question("Which food has the longest line first?", [
+            answer("Tacos", 32),
+            answer("Burgers", 24),
+            answer("Pizza", 20),
+            answer("Dessert", 14),
+            answer("Something random", 10)
+          ]),
+          question("What sells out first?", [
+            answer("Fries", 26),
+            answer("Special item", 29),
+            answer("Dessert", 18),
+            answer("Nothing sells out", 27)
+          ]),
+          question("Will someone say it was overpriced?", [
+            answer("Yes", 74),
+            answer("No", 26)
+          ]),
+          question("What becomes the sleeper hit?", [
+            answer("Sauce", 22),
+            answer("Drink", 18),
+            answer("Side dish", 27),
+            answer("Vegetarian option", 13),
+            answer("No sleeper hit", 20)
+          ]),
+          question("How long is the biggest wait?", [
+            answer("Under 10 minutes", 18),
+            answer("10 to 20 minutes", 44),
+            answer("21 to 35 minutes", 28),
+            answer("Over 35 minutes", 10)
+          ])
+        ]
+      },
+      {
+        id: "traffic-chaos-watch",
+        name: "Traffic Chaos Watch",
+        type: "Local",
+        month: 6,
+        day: 10,
+        summary: "A local-errand game about delays, detours, packed parking lots, and whether the shortcut actually works.",
+        questions: [
+          question("What causes the first delay?", [
+            answer("Construction", 29),
+            answer("Crash or stall", 24),
+            answer("School pickup", 22),
+            answer("Random backup", 19),
+            answer("No delay", 6)
+          ]),
+          question("Will the shortcut save time?", [
+            answer("Yes", 35),
+            answer("No", 65)
+          ]),
+          question("Where is the worst parking?", [
+            answer("Grocery store", 28),
+            answer("Downtown", 31),
+            answer("Sports field", 18),
+            answer("Mall or shops", 15),
+            answer("Parking is fine", 8)
+          ]),
+          question("What does someone complain about first?", [
+            answer("Red lights", 34),
+            answer("Bad drivers", 29),
+            answer("No parking", 21),
+            answer("Maps app lied", 16)
+          ]),
+          question("How late does everyone end up?", [
+            answer("On time", 18),
+            answer("1 to 5 minutes", 36),
+            answer("6 to 15 minutes", 34),
+            answer("Way late", 12)
+          ])
+        ]
+      },
+      {
+        id: "game-show-night",
+        name: "Game Show Night",
+        type: "TV",
+        month: 6,
+        day: 22,
+        summary: "A TV game-show game about wrong answers, big risks, audience reactions, and whether someone goes for the jackpot.",
+        questions: [
+          question("What happens on the first big question?", [
+            answer("Confident correct answer", 39),
+            answer("Long hesitation", 26),
+            answer("Audience gasp", 16),
+            answer("Wrong answer", 19)
+          ]),
+          question("Will a contestant risk it all?", [
+            answer("Yes", 33),
+            answer("No", 67)
+          ]),
+          question("Which category causes trouble?", [
+            answer("Sports", 20),
+            answer("History", 24),
+            answer("Pop culture", 18),
+            answer("Science", 16),
+            answer("Wordplay", 22)
+          ]),
+          question("What does the host do first?", [
+            answer("Jokes with contestant", 42),
+            answer("Explains a rule", 21),
+            answer("Builds suspense", 28),
+            answer("Corrects a mistake", 9)
+          ]),
+          question("How does the final round end?", [
+            answer("Big win", 24),
+            answer("Small win", 33),
+            answer("Painful miss", 25),
+            answer("No final round drama", 18)
+          ])
+        ]
+      },
+      {
+        id: "debate-night-light",
+        name: "Debate Night Light",
+        type: "Politics",
+        month: 7,
+        day: 4,
+        summary: "A simple politics game about debate timing, moderator moments, repeated phrases, and who gets the first zinger.",
+        questions: [
+          question("What happens first in the debate?", [
+            answer("Opening story", 30),
+            answer("Policy answer", 33),
+            answer("Moderator interruption", 17),
+            answer("Direct attack", 20)
+          ]),
+          question("Will someone use a catchphrase?", [
+            answer("Yes", 58),
+            answer("No", 42)
+          ]),
+          question("Which topic comes up first?", [
+            answer("Economy", 31),
+            answer("Schools", 18),
+            answer("Housing", 17),
+            answer("Public safety", 22),
+            answer("Climate", 12)
+          ]),
+          question("Who gets clipped online first?", [
+            answer("Candidate A", 38),
+            answer("Candidate B", 36),
+            answer("Moderator", 12),
+            answer("No obvious clip", 14)
+          ]),
+          question("How civil does it stay?", [
+            answer("Mostly polite", 34),
+            answer("A little spicy", 42),
+            answer("Very tense", 18),
+            answer("Total chaos", 6)
+          ])
+        ]
+      },
+      {
+        id: "video-game-showcase",
+        name: "Video Game Showcase",
+        type: "Gaming",
+        month: 7,
+        day: 18,
+        summary: "A game-announcement stream about trailers, release dates, surprise sequels, remakes, and chat losing its mind.",
+        questions: [
+          question("What opens the showcase?", [
+            answer("Big sequel", 27),
+            answer("Indie montage", 22),
+            answer("Remake reveal", 16),
+            answer("Gameplay demo", 25),
+            answer("Host intro only", 10)
+          ]),
+          question("Will a release date be sooner than expected?", [
+            answer("Yes", 28),
+            answer("No", 72)
+          ]),
+          question("What does chat spam first?", [
+            answer("W", 31),
+            answer("Where is the sequel?", 25),
+            answer("Looks mid", 19),
+            answer("Take my money", 17),
+            answer("Lag complaints", 8)
+          ]),
+          question("Which genre gets the biggest reveal?", [
+            answer("Action adventure", 33),
+            answer("Shooter", 22),
+            answer("RPG", 20),
+            answer("Cozy game", 12),
+            answer("Sports/racing", 13)
+          ]),
+          question("How does the showcase end?", [
+            answer("One last trailer", 41),
+            answer("Release date montage", 22),
+            answer("Awkward goodbye", 18),
+            answer("Surprise shadow drop", 19)
+          ])
+        ]
+      },
+      {
+        id: "tennis-final-watch",
+        name: "Tennis Final Watch",
+        type: "Sports",
+        month: 8,
+        day: 7,
+        summary: "A tennis-final game about first breaks, tiebreaks, long rallies, crowd energy, and whether the underdog hangs around.",
+        questions: [
+          question("Who wins the first game?", [
+            answer("Favorite holds serve", 43),
+            answer("Underdog holds serve", 31),
+            answer("Immediate break", 26)
+          ]),
+          question("What happens first?", [
+            answer("Ace", 29),
+            answer("Double fault", 13),
+            answer("Long rally", 34),
+            answer("Challenge review", 24)
+          ]),
+          question("Will the first set need a tiebreak?", [
+            answer("Yes", 24),
+            answer("No", 76)
+          ]),
+          question("How loud does the crowd get?", [
+            answer("Polite applause", 26),
+            answer("Big roar", 42),
+            answer("Chants", 17),
+            answer("Tense silence", 15)
+          ]),
+          question("How close is the match?", [
+            answer("Straight sets", 39),
+            answer("One tight set", 34),
+            answer("Goes the distance", 27)
+          ])
+        ]
+      },
+      {
         id: "oscars",
         name: "The Oscars",
         type: "Awards",
@@ -1290,7 +1682,7 @@
       },
       {
         id: "super-bowl",
-        name: "The Big Football Game",
+        name: "Super Bowl Watch Party",
         type: "Sports",
         month: 1,
         day: 8,
@@ -1339,7 +1731,7 @@
       },
       {
         id: "grammys",
-        name: "Music Awards Night",
+        name: "Grammy Awards Night",
         type: "Awards",
         month: 1,
         day: 1,
@@ -1389,7 +1781,7 @@
       },
       {
         id: "nba-finals",
-        name: "Basketball Finals Opener",
+        name: "NBA Finals Game 1",
         type: "Sports",
         month: 5,
         day: 4,
@@ -1438,7 +1830,7 @@
       },
       {
         id: "world-series",
-        name: "Baseball Championship Opener",
+        name: "World Series Game 1",
         type: "Sports",
         month: 9,
         day: 24,
@@ -1628,7 +2020,7 @@
           }
           return a.date - b.date;
         })
-        .slice(0, 6);
+        .slice(0, 12);
     }
 
     function loadState() {
