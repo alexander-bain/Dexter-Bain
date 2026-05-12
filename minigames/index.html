@@ -1,20 +1,3492 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>DexterBain Minigames</title>
-<style>
-:root{color-scheme:dark;--bg:#07090f;--panel:#101827;--ink:#f9fafb;--muted:#a8b3c7;--line:rgba(255,255,255,.14);--gold:#ffd166;--mint:#4ade80;--sky:#60a5fa;--hot:#fb7185}*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at 20% 0%,rgba(96,165,250,.26),transparent 34%),radial-gradient(circle at 80% 10%,rgba(74,222,128,.18),transparent 28%),var(--bg);color:var(--ink)}button,input{font:inherit}a{color:inherit}.hero{min-height:58vh;padding:22px clamp(16px,4vw,54px) 34px;display:grid;grid-template-rows:auto 1fr;border-bottom:1px solid var(--line)}.top{display:flex;justify-content:space-between;align-items:center;gap:12px}.home,.pill{display:inline-flex;align-items:center;min-height:34px;padding:7px 11px;border:1px solid var(--line);border-radius:8px;background:rgba(8,13,25,.72);text-decoration:none;font-weight:900}.pill{border-radius:999px}.dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 6px rgba(74,222,128,.13);margin-right:8px}.copy{align-self:end;max-width:980px}.eyebrow{margin:0 0 12px;color:#d9fff0;font-size:.8rem;font-weight:950;letter-spacing:.12em;text-transform:uppercase}h1{max-width:900px;margin:0;font-size:clamp(3rem,8vw,7rem);line-height:.9}.lead{max-width:680px;margin:22px 0 28px;color:#dce5f4;font-size:clamp(1rem,2vw,1.2rem);line-height:1.55}.btn{min-height:42px;border:0;border-radius:8px;background:var(--gold);color:#111827;font-weight:950;padding:10px 14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}.btn.secondary{background:rgba(255,255,255,.08);border:1px solid var(--line);color:var(--ink)}.btn:disabled{opacity:.55;cursor:not-allowed}.actions,.chips{display:flex;flex-wrap:wrap;gap:10px}.tabs{max-width:1180px;margin:-22px auto 0;padding:0 clamp(16px,4vw,54px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.tab{min-height:114px;text-align:left;padding:15px;border:1px solid var(--line);border-radius:8px;background:rgba(16,24,39,.94);color:var(--ink);cursor:pointer}.tab[aria-pressed=true]{border-color:var(--gold);outline:2px solid rgba(255,209,102,.18)}.kicker{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:.76rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.tab h2{font-size:1.08rem;margin:13px 0 6px}.tab .desc{margin:0 0 8px;color:#dbe5f3;font-size:.86rem;font-weight:750;line-height:1.35}.tab p{margin:0;color:#d5dfed}.grid{max-width:1180px;margin:34px auto 60px;padding:0 clamp(16px,4vw,54px);display:grid;grid-template-columns:minmax(0,1.45fr) minmax(310px,.8fr);gap:18px;align-items:start}.panel{border:1px solid var(--line);border-radius:8px;background:rgba(16,24,39,.9);box-shadow:0 22px 54px rgba(0,0,0,.26)}.head,.box,.form{padding:18px}.title{margin:10px 0 8px;font-size:clamp(1.8rem,4vw,3.1rem);line-height:1}.summary{color:#cfdaea;line-height:1.55}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 18px 18px}.stat{min-height:76px;padding:12px;border:1px solid rgba(255,255,255,.1);border-radius:8px;background:rgba(255,255,255,.06)}.stat p{margin:0 0 6px;color:var(--muted);font-size:.78rem;font-weight:850}.stat b{font-size:1.3rem}.row{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:14px}.name{width:100%;min-height:42px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.08);color:var(--ink)}h3{margin:0 0 12px;font-size:1.05rem}.questions{display:grid;gap:12px}.q{padding:14px;border:1px solid rgba(255,255,255,.11);border-radius:8px;background:rgba(255,255,255,.052)}legend{font-weight:900;line-height:1.35;margin-bottom:12px}.answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}.answer{position:relative}.answer input{position:absolute;opacity:0}.answer span{min-height:50px;padding:9px 10px;border:1px solid rgba(255,255,255,.15);border-radius:8px;background:rgba(7,9,15,.62);display:grid;align-content:center;gap:3px;cursor:pointer}.answer b{font-size:.92rem}.answer small{color:var(--muted);font-weight:800}.answer input:checked+span{border-color:var(--mint);background:rgba(74,222,128,.16);box-shadow:inset 0 0 0 1px rgba(74,222,128,.35)}.closed{color:var(--muted);font-weight:800;line-height:1.4}.room{display:grid;gap:10px;margin:16px 0;padding:14px;border:1px solid rgba(96,165,250,.22);border-radius:8px;background:rgba(96,165,250,.08)}.room-row{display:grid;grid-template-columns:1fr auto auto auto;gap:8px}.room-status{min-height:18px;color:var(--muted);font-size:.8rem;font-weight:850;line-height:1.35}.room-status.good{color:var(--mint)}.room-status.warn{color:var(--gold)}.room-status.bad{color:#fda4af}.notify{margin-top:14px;padding:14px;border:1px solid rgba(255,209,102,.22);border-radius:8px;background:rgba(255,209,102,.08)}.note{display:block;margin-top:12px;color:var(--muted);font-weight:750}.side{display:grid;gap:18px;position:sticky;top:14px}ol,ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}.leader{display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;min-height:48px;padding:8px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)}.rank{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:rgba(255,209,102,.16);font-weight:950;color:#ffe8a3}.who{font-weight:950;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.small{color:var(--muted);font-size:.78rem;font-weight:800}.points{color:var(--mint);font-weight:950}.ticker li{display:grid;grid-template-columns:10px 1fr;gap:10px;color:#d7e0ee;line-height:1.35}.red{width:8px;height:8px;margin-top:6px;border-radius:50%;background:var(--hot)}.toast{position:fixed;left:50%;bottom:18px;z-index:20;transform:translateX(-50%) translateY(140%);width:min(520px,calc(100vw - 28px));padding:13px 15px;border-radius:8px;background:#111827;border:1px solid var(--line);box-shadow:0 22px 60px rgba(0,0,0,.45);transition:transform .2s ease;font-weight:900}.toast.show{transform:translateX(-50%) translateY(0)}@media(max-width:860px){.tabs,.grid{grid-template-columns:1fr}.side{position:static}}@media(max-width:620px){.stats,.row,.room-row{grid-template-columns:1fr}h1{font-size:clamp(2.7rem,16vw,4.6rem)}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DexterBain Minigames</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f9fafb;
+      --muted: #a7b1c2;
+      --panel: rgba(11, 18, 32, 0.9);
+      --panel-strong: #0b1220;
+      --line: rgba(255, 255, 255, 0.13);
+      --gold: #f9c74f;
+      --coral: #ff6b6b;
+      --teal: #31d0aa;
+      --blue: #60a5fa;
+      --night: #06080f;
+      --good: #86efac;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(135deg, rgba(96, 165, 250, 0.2), transparent 34%),
+        linear-gradient(225deg, rgba(49, 208, 170, 0.18), transparent 36%),
+        #06080f;
+      color: var(--ink);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page-shell {
+      min-height: 100vh;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 78vh;
+      padding: 22px clamp(18px, 4vw, 54px) 34px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(rgba(6, 8, 15, 0.18), rgba(6, 8, 15, 0.9)),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop stop-color='%2320345a'/%3E%3Cstop offset='.52' stop-color='%23101828'/%3E%3Cstop offset='1' stop-color='%2306080f'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1600' height='900' fill='url(%23sky)'/%3E%3Cpath d='M0 628h1600v272H0z' fill='%23090d16'/%3E%3Cpath d='M90 250h1420v430H90z' fill='%23141f34'/%3E%3Cpath d='M125 288h1350v330H125z' fill='%230a1020'/%3E%3Cg fill='%23f9c74f'%3E%3Ccircle cx='236' cy='192' r='24'/%3E%3Ccircle cx='1360' cy='210' r='24'/%3E%3Ccircle cx='452' cy='192' r='18'/%3E%3Ccircle cx='1150' cy='192' r='18'/%3E%3C/g%3E%3Cg fill='%23f7f7f7' opacity='.9'%3E%3Crect x='250' y='352' width='210' height='38' rx='8'/%3E%3Crect x='250' y='420' width='148' height='38' rx='8'/%3E%3Crect x='250' y='488' width='188' height='38' rx='8'/%3E%3Crect x='1058' y='352' width='250' height='38' rx='8'/%3E%3Crect x='1058' y='420' width='170' height='38' rx='8'/%3E%3Crect x='1058' y='488' width='210' height='38' rx='8'/%3E%3C/g%3E%3Cg fill='%2331d0aa'%3E%3Cpath d='M630 342h340l52 238H578z'/%3E%3Cpath d='M668 302h264l38 62H630z' fill='%2360a5fa'/%3E%3C/g%3E%3Cg fill='%23ff6b6b'%3E%3Ccircle cx='710' cy='455' r='24'/%3E%3Ccircle cx='806' cy='455' r='24'/%3E%3Ccircle cx='902' cy='455' r='24'/%3E%3C/g%3E%3Cg fill='%23e5e7eb'%3E%3Crect x='690' y='585' width='220' height='28' rx='14'/%3E%3Crect x='520' y='698' width='560' height='34' rx='17' opacity='.72'/%3E%3C/g%3E%3Cg fill='%23f9c74f'%3E%3Cpath d='M200 735l22 48h-44z'/%3E%3Cpath d='M1390 700l26 58h-52z'/%3E%3Cpath d='M1248 744l16 34h-32z'/%3E%3C/g%3E%3C/svg%3E") center / cover;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(6, 8, 15, 0.55);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(6, 8, 15, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #dbeafe;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 0 6px rgba(49, 208, 170, 0.14);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      align-self: end;
+      max-width: 1040px;
+      padding: 72px 0 16px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: #d7f7ed;
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 920px;
+      margin: 0;
+      font-size: clamp(3rem, 8vw, 7.2rem);
+      line-height: 0.88;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin: 22px 0 28px;
+      color: #d8dee9;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      line-height: 1.55;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn {
+      min-height: 44px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-weight: 900;
+      color: #041015;
+      background: var(--gold);
+      box-shadow: 0 14px 30px rgba(249, 199, 79, 0.24);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 34px rgba(249, 199, 79, 0.32);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn.secondary {
+      color: var(--ink);
+      background: rgba(6, 8, 15, 0.66);
+      border-color: rgba(255, 255, 255, 0.22);
+      box-shadow: none;
+    }
+
+    .btn.small {
+      min-height: 38px;
+      padding: 8px 11px;
+      font-size: 0.9rem;
+      box-shadow: none;
+    }
+
+    .next-strip {
+      margin-top: -26px;
+      padding: 0 clamp(18px, 4vw, 54px);
+      position: relative;
+      z-index: 3;
+    }
+
+    .event-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .event-tab {
+      min-height: 116px;
+      text-align: left;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(11, 18, 32, 0.94);
+      cursor: pointer;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.24);
+    }
+
+    .event-tab[aria-pressed="true"] {
+      border-color: rgba(249, 199, 79, 0.82);
+      outline: 2px solid rgba(249, 199, 79, 0.18);
+    }
+
+    .tab-kicker {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.77rem;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .tab-title {
+      margin: 12px 0 6px;
+      font-size: 1.15rem;
+      font-weight: 950;
+    }
+
+    .tab-description {
+      margin: 0 0 8px;
+      color: #dbe5f3;
+      font-size: 0.86rem;
+      font-weight: 750;
+      line-height: 1.35;
+    }
+
+    .tab-meta {
+      margin: 0;
+      color: #d8dee9;
+      font-size: 0.9rem;
+    }
+
+    .app-grid {
+      max-width: 1180px;
+      margin: 34px auto 60px;
+      padding: 0 clamp(18px, 4vw, 54px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.42fr) minmax(310px, 0.8fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 24px 54px rgba(0, 0, 0, 0.24);
+    }
+
+    .panel-head {
+      padding: 18px 18px 0;
+    }
+
+    .game-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #e6edf7;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .event-title {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+      line-height: 1;
+    }
+
+    .event-summary {
+      margin: 12px 0 16px;
+      color: #cdd6e5;
+      line-height: 1.55;
+    }
+
+    .scoreline {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      padding: 14px 18px 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .score-tile {
+      min-height: 78px;
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.065);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .score-label {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .score-value {
+      margin: 0;
+      font-size: 1.45rem;
+      font-weight: 950;
+    }
+
+    .form-panel {
+      margin-top: 18px;
+      padding: 18px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .name-input {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.08);
+      outline: none;
+    }
+
+    .name-input:focus {
+      border-color: rgba(96, 165, 250, 0.9);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.16);
+    }
+
+    .profile-note {
+      margin: -6px 0 14px;
+      color: #d8dee9;
+      font-size: 0.88rem;
+      font-weight: 750;
+      line-height: 1.45;
+    }
+
+    .profile-note strong {
+      color: #ffe7a0;
+      font-weight: 950;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 1.05rem;
+    }
+
+    .questions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .question {
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .question-text {
+      margin: 0 0 12px;
+      font-weight: 850;
+      line-height: 1.35;
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 8px;
+    }
+
+    .answer {
+      position: relative;
+    }
+
+    .answer input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .answer > span {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+      gap: 7px;
+      min-height: 62px;
+      padding: 9px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(6, 8, 15, 0.55);
+      color: #eaf1fb;
+      font-weight: 850;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .answer-main {
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .answer-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      font-weight: 850;
+    }
+
+    .answer-chance,
+    .answer-points {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 22px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .answer-points {
+      border-color: rgba(134, 239, 172, 0.24);
+      background: rgba(134, 239, 172, 0.09);
+      color: #b9f6ca;
+    }
+
+    .answer input:checked + span {
+      border-color: rgba(49, 208, 170, 0.95);
+      background: rgba(49, 208, 170, 0.18);
+      box-shadow: inset 0 0 0 1px rgba(49, 208, 170, 0.4);
+    }
+
+    .notify-box {
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px solid rgba(96, 165, 250, 0.22);
+      border-radius: 8px;
+      background: rgba(96, 165, 250, 0.08);
+    }
+
+    .notify-options {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .submit-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .save-note {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .side-stack {
+      display: grid;
+      gap: 18px;
+      position: sticky;
+      top: 14px;
+    }
+
+    .room-panel {
+      padding: 18px;
+    }
+
+    .room-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .room-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .room-code {
+      color: #ffe7a0;
+      font-weight: 950;
+      letter-spacing: 0.08em;
+    }
+
+    .room-status {
+      min-height: 20px;
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 750;
+      line-height: 1.4;
+    }
+
+    .room-status.good {
+      color: var(--good);
+    }
+
+    .room-status.warn {
+      color: #ffe7a0;
+    }
+
+    .room-status.bad {
+      color: #fca5a5;
+    }
+
+    .creator-panel {
+      padding: 18px;
+    }
+
+    .creator-fields,
+    .custom-question-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .creator-field {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 850;
+    }
+
+    .creator-question {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .creator-question-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .creator-answer-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 72px 72px;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .creator-status {
+      min-height: 20px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 750;
+      line-height: 1.4;
+    }
+
+    .creator-status.good {
+      color: var(--good);
+    }
+
+    .creator-status.bad {
+      color: #fca5a5;
+    }
+
+    .leaderboard {
+      padding: 18px;
+    }
+
+    .leaderboard-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .leader-row {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 46px;
+      padding: 8px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .rank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: rgba(249, 199, 79, 0.14);
+      color: #ffe7a0;
+      font-weight: 950;
+    }
+
+    .leader-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 900;
+    }
+
+    .leader-details {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 750;
+    }
+
+    .points {
+      font-weight: 950;
+      color: var(--good);
+    }
+
+    .activity {
+      padding: 18px;
+    }
+
+    .results-panel {
+      padding: 18px;
+    }
+
+    .result-list {
+      display: grid;
+      gap: 8px;
+      margin: 10px 0 0;
+    }
+
+    .result-row {
+      display: grid;
+      gap: 6px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .result-row strong {
+      color: #f7f8fb;
+      font-size: 0.86rem;
+      line-height: 1.3;
+    }
+
+    .result-note {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 750;
+      line-height: 1.35;
+    }
+
+    .result-badge {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 24px;
+      align-items: center;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(255, 231, 160, 0.13);
+      color: #ffe7a0;
+      font-size: 0.72rem;
+      font-weight: 950;
+    }
+
+    .result-badge.resolved {
+      background: rgba(134, 239, 172, 0.13);
+      color: #b9f6ca;
+    }
+
+    .result-badge.needs-source {
+      background: rgba(252, 165, 165, 0.12);
+      color: #fca5a5;
+    }
+
+    .ticker {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ticker li {
+      display: grid;
+      grid-template-columns: 10px minmax(0, 1fr);
+      gap: 10px;
+      color: #d8dee9;
+      line-height: 1.35;
+      font-size: 0.9rem;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      margin-top: 5px;
+      border-radius: 50%;
+      background: var(--coral);
+    }
+
+    .empty-state {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      z-index: 30;
+      transform: translateX(-50%) translateY(140%);
+      width: min(520px, calc(100vw - 28px));
+      padding: 13px 15px;
+      border-radius: 8px;
+      color: var(--ink);
+      background: #101827;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.46);
+      transition: transform 0.2s ease;
+      font-weight: 850;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        min-height: 72vh;
+      }
+
+      .event-tabs,
+      .app-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .side-stack {
+        position: static;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .hero {
+        min-height: 70vh;
+      }
+
+      h1 {
+        font-size: clamp(2.65rem, 16vw, 4.5rem);
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .status-pill {
+        max-width: 190px;
+      }
+
+      .scoreline,
+      .answers,
+      .notify-options,
+      .form-row,
+      .room-form,
+      .creator-answer-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-<main><section class="hero"><nav class="top"><a class="home" href="../index.html">DexterBain.com</a><span class="pill"><span class="dot"></span><span id="live">Finding the next big event</span></span></nav><div class="copy"><p class="eyebrow">Live prediction games</p><h1>Pick the moment before it happens.</h1><p class="lead">Big events become quick family-style games with real names only, private room codes, odds, bonus points for underdogs, and a leaderboard that is shared between people.</p><div class="actions"><a class="btn" href="#play">Play next game</a><button class="btn secondary" id="random" type="button">Surprise me</button></div></div></section><section class="tabs" id="tabs"></section><section class="grid" id="play"><div><article class="panel"><div class="head"><div class="chips" id="meta"></div><h2 class="title" id="title"></h2><p class="summary" id="summary"></p></div><div class="stats"><div class="stat"><p>Game opens</p><b id="open"></b></div><div class="stat"><p>Entries</p><b id="entries"></b></div><div class="stat"><p>Max points</p><b id="max"></b></div></div></article><form class="panel form" id="form"><div class="row"><input class="name" id="name" name="name" maxlength="24" autocomplete="name" placeholder="Your leaderboard name" required><button class="btn" id="submitBtn" type="submit">Lock picks</button></div><section class="room"><h3>Private room</h3><div class="room-row"><input class="name" id="roomCode" maxlength="12" placeholder="Room code"><button class="btn secondary" id="joinRoom" type="button">Join</button><button class="btn secondary" id="newRoom" type="button">Create</button><button class="btn secondary" id="publicRoom" type="button">Public</button></div><span class="small" id="roomLabel">Public game</span><span class="room-status" id="roomStatus">Create a room first, then share its code.</span></section><h3>Your predictions</h3><div class="questions" id="questions"></div><section class="notify"><h3>Notifications</h3><div class="answers"><label class="answer"><input type="radio" name="notify" value="none" checked><span><b>No notifications</b><small>Just save my picks</small></span></label><label class="answer"><input type="radio" name="notify" value="win"><span><b>Notify me if I win only</b><small>Browser alert on this device</small></span></label><label class="answer"><input type="radio" name="notify" value="updates"><span><b>Notify me along the way</b><small>Browser updates when this page checks</small></span></label></div><p class="small">This static page can show browser notifications after you allow them, but it cannot send true background push alerts while the site is closed.</p></section><span class="note" id="note">Loading shared leaderboard...</span></form></div><aside class="side"><section class="panel box"><h3>Leaderboard</h3><ol id="leaderboard"></ol></section><section class="panel box"><h3>Game room</h3><ul id="ticker"></ul></section></aside></section></main><div class="toast" id="toast"></div>
-<script>
-const STORE_URL="https://mantledb.sh/v2/dexterbain-public-minigames/leaderboard-v1",LOCAL_KEY="dexterbain-minigames-name-v4",now=new Date(),yr=now.getFullYear();
-const make=(id,name,type,m,d,summary,q)=>({id,name,type,m,d,summary,q:q.map((x,i)=>({id:`q${i+1}`,text:x[0],lockAt:x[2]||null,answers:x[1].map((a,j)=>({id:`a${j+1}`,label:a[0],odds:a[1],points:Math.max(1,Math.round(100/a[1]))}))}))});
-const catalog=[make("weather-weekend","Weekend Weather Watch","Weather",4,24,"A light weather game about forecasts, clouds, surprise rain, and whether weekend plans stay outside.",[["What will the weekend headline be?",[["Sunny and easy",34],["Cloudier than expected",26],["Rain sneaks in",18],["Wind steals the story",12],["Forecast totally flips",10]]],["Will outdoor plans need a backup?",[["Yes",29],["No",71]]],["What happens first on the weather app?",[["Temperature jumps",24],["Rain chance rises",28],["Wind alert appears",14],["Forecast barely changes",34]]],["How dramatic is sunset?",[["Clear golden sky",38],["Cloudy but pretty",31],["Washed out",20],["Surprise rainbow",11]]],["What will people complain about first?",[["Too hot",29],["Too cold",22],["Too windy",21],["Bad forecast",18],["Nothing, rare peace",10]]]]),make("internet-random","Random Internet Day","Random",5,12,"A goofy daily-culture game for memes, group chats, surprise trends, and the internet choosing something weird.",[["What kind of post takes over first?",[["Sports clip",22],["Weather screenshot",14],["Celebrity moment",28],["Food debate",18],["Completely random meme",18]]],["Will the group chat argue about it?",[["Yes",62],["No",38]]],["Which phrase shows up first?",[["No way",27],["I called it",21],["This is so dumb",32],["Wait what happened",20]]],["How long does the trend last?",[["Under 2 hours",16],["Half a day",38],["All day",32],["Somehow all week",14]]],["Who sends the first screenshot?",[["Friend",45],["Sibling",21],["Parent",12],["Nobody, it stays quiet",22]]]]),make("soccer-kickoff","Big Soccer Kickoff","Sports",5,11,"A simple watch-party game for the first big soccer match: first shot, first card, chants, and late drama.",[["What happens in the first 10 minutes?",[["Shot on goal",34],["Corner kick",28],["Yellow card",13],["Goal",9],["Mostly midfield passing",16]]],["Who scores first?",[["Favorite",49],["Underdog",29],["No first-half goal",22]]],["What does the crowd do first?",[["Big chant",41],["Whistles",18],["Phone lights",11],["Wave",8],["Nothing obvious",22]]],["Will VAR change a call?",[["Yes",24],["No",76]]],["How tense is the ending?",[["Comfortable win",31],["One-goal finish",37],["Late equalizer",18],["Penalty chaos",14]]]]),make("local-election","Simple Election Night","Politics",10,3,"A non-heavy election-night game about timing, speeches, turnout chatter, and which race gets called first.",[["What is the first election-night headline?",[["Turnout is high",31],["Race too close",27],["Early lead appears",24],["Counting delay",18]]],["When does the first race get called?",[["Before 8 PM",22],["8 to 10 PM",43],["After 10 PM",25],["Not that night",10]]],["What does the first speech focus on?",[["Thanking voters",38],["Unity",24],["Local issues",21],["Waiting for results",17]]],["Will there be a surprise upset?",[["Yes",19],["No",81]]],["Which topic gets mentioned first?",[["Economy",30],["Schools",24],["Safety",21],["Housing",16],["Weather at polling places",9]]]]),make("space-launch","Space Launch Watch","Random",7,12,"A countdown game for launch streams, holds, camera shots, engine ignition, and whether everything leaves on time.",[["What happens first during the countdown?",[["Smooth hold-free countdown",39],["Short technical hold",28],["Weather concern",18],["Launch delay",15]]],["Which camera shot appears first?",[["Rocket close-up",44],["Mission control",22],["Crowd reaction",18],["Clouds or sky",16]]],["Will liftoff happen within 5 minutes of schedule?",[["Yes",58],["No",42]]],["What does the announcer say first?",[["Nominal",35],["Go for launch",31],["Standing by",22],["Unexpected issue",12]]],["How dramatic is the launch shot?",[["Clean and bright",42],["Cloudy view",24],["Shaky camera",18],["Almost hidden",16]]]]),make("oscars","The Oscars","Awards",2,8,"Red carpet surprises, speech timers, unexpected winners, and one very serious leaderboard.",[["Opening monologue over 11 minutes?",[["Yes",42],["No",58]]],["What happens first?",[["Standing ovation",45],["Host joke",30],["Technical delay",10],["Unexpected winner",15]]],["Someone thanks a pet?",[["Yes",9],["No",91]]],["Longest speech?",[["Under 60 sec",18],["60-90 sec",38],["90-120 sec",28],["Over 120 sec",16]]],["Played off by music?",[["Yes",64],["No",36]]]]),make("super","The Big Football Game","Sports",1,8,"Commercials, coin flips, halftime spectacle, fourth-quarter drama, and family predictions.",[["First score?",[["Touchdown",54],["Field goal",39],["Safety",3],["No score Q1",4]]],["Coin toss?",[["Heads",50],["Tails",50]]],["Most points quarter?",[["1st",18],["2nd",31],["3rd",21],["4th",30]]],["Celebrity commercial cameo?",[["Yes",76],["No",24]]],["Final score within 7?",[["Yes",44],["No",56]]]]),make("grammys","Music Awards Night","Awards",1,1,"Big performances, emotional speeches, surprise guests, and quick guesses before the show starts.",[["First performance has pyrotechnics?",[["Yes",35],["No",65]]],["Speech starts with who?",[["Family",44],["Fans",20],["Team",24],["A joke",12]]],["Surprise duet?",[["Yes",28],["No",72]]],["Which appears first?",[["Wardrobe change",36],["Crowd singalong",27],["Technical pause",8],["Standing ovation",29]]],["Final speech over 90 seconds?",[["Yes",41],["No",59]]]]),make("nba","Basketball Finals Opener","Sports",5,4,"Tipoff predictions for the first game of the finals: runs, threes, lead changes, and buzzer tension.",[["First possession?",[["Made two",31],["Made three",18],["Free throws",8],["Miss/turnover",43]]],["5 threes in Q1?",[["Yes",37],["No",63]]],["Lead changes?",[["0-4",22],["5-8",34],["9-12",27],["13+",17]]],["Player scores 30+?",[["Yes",62],["No",38]]],["Within 6 late?",[["Yes",49],["No",51]]]]),make("baseball","Baseball Championship Opener","Sports",9,24,"First pitch, first hit, late innings, and a scoreboard that changes the whole watch party.",[["First pitch?",[["Strike",62],["Ball",35],["Hit batter",3]]],["Home run before 5th?",[["Yes",46],["No",54]]],["Which happens first?",[["Double play",33],["Stolen base",18],["Mound visit",30],["Replay review",19]]],["Winner scores 5+?",[["Yes",52],["No",48]]],["Over 3 hours?",[["Yes",68],["No",32]]]]),make("new-year","New Year's Countdown","Holiday",11,31,"Countdown timing, song choices, confetti, camera cuts, and family bragging rights for the first day of the year.",[["Countdown exactly 60 seconds?",[["Yes",22],["No",78]]],["First song?",[["Pop hit",34],["Classic",28],["Dance song",24],["Something weird",14]]],["Someone cries on camera?",[["Yes",40],["No",60]]],["Confetti color?",[["Gold",33],["Silver",24],["Blue",14],["Mixed",29]]],["Fireworks before zero?",[["Yes",16],["No",84]]]])];
-let selected="",local=loadLocal(),store={entries:{},rooms:{},updatedAt:""},online=false,roomMessage="";const $=id=>document.getElementById(id);function loadLocal(){try{return JSON.parse(localStorage.getItem(LOCAL_KEY))||{name:"",roomByGame:{},notify:"none",notificationReceipts:{}}}catch{return{name:"",roomByGame:{},notify:"none",notificationReceipts:{}}}}function saveLocal(){localStorage.setItem(LOCAL_KEY,JSON.stringify(local))}function norm(e,o=0){let y=yr+o,d=new Date(y,e.m,e.d,17);return{...e,gameId:e.id+"-"+y,date:d}}function games(){return catalog.flatMap(e=>[norm(e),norm(e,1)]).filter(g=>g.date>=new Date(yr,now.getMonth(),now.getDate()-1)).sort((a,b)=>a.date-b.date).slice(0,6)}function fmt(d){return new Intl.DateTimeFormat("en-US",{month:"short",day:"numeric"}).format(d)}function days(d){return Math.max(0,Math.ceil((d-now)/86400000))}function cleanCode(v){return String(v||"").replace(/[^a-z0-9]/gi,"").toUpperCase().slice(0,12)}function room(g){return cleanCode(local.roomByGame?.[g.gameId])}function roomKey(g,c=room(g)){return `${g.gameId}:room:${cleanCode(c)}`}function publicKey(g){return `${g.gameId}:public`}function scope(g){let r=room(g);return r?roomKey(g,r):publicKey(g)}function rooms(){store.rooms=store.rooms&&typeof store.rooms==="object"?store.rooms:{};return store.rooms}function roomExists(g,c=room(g)){return !!rooms()[roomKey(g,c)]}function setRoom(g,c){local.roomByGame||={};local.roomByGame[g.gameId]=cleanCode(c);saveLocal()}function clearRoom(g){local.roomByGame||={};delete local.roomByGame[g.gameId];saveLocal()}function maxPts(g){return g.q.reduce((t,q)=>t+Math.max(...q.answers.map(a=>a.points)),0)}function lockDate(g,q){return q.lockAt?new Date(q.lockAt):g.date}function locked(g,q){return lockDate(g,q)<=new Date()}function openQs(g){return g.q.filter(q=>!locked(g,q))}function lockedQs(g){return g.q.filter(q=>locked(g,q))}function result(g,q){let seed=[...`${g.gameId}-${q.id}`].reduce((h,c)=>((h<<5)-h+c.charCodeAt(0))>>>0,2166136261)%100+1,total=0;for(let a of q.answers){total+=a.odds;if(seed<=total)return a.id}return q.answers.at(-1).id}function score(g,picks){return g.q.reduce((t,q)=>{if(!locked(g,q))return t;return t+((picks[q.id]===result(g,q))?(q.answers.find(a=>a.id===picks[q.id])?.points||0):0)},0)}function entries(g){return((store.entries||{})[scope(g)]||[]).map(e=>({...e,score:score(g,e.picks||{})})).sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name))}function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]))}async function loadStore(){try{let res=await fetch(STORE_URL,{cache:"no-store",headers:{Accept:"application/json"}});if(res.status===404){await fetch(STORE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({entries:{},rooms:{},createdAt:new Date().toISOString()})});res=await fetch(STORE_URL,{cache:"no-store"})}if(!res.ok)throw new Error(res.status);let data=await res.json();store=data&&typeof data==="object"?data:{entries:{},rooms:{}};store.entries=store.entries&&typeof store.entries==="object"?store.entries:{};store.rooms=store.rooms&&typeof store.rooms==="object"?store.rooms:{};online=true}catch{online=false}renderGame(current())}async function saveEntry(g,entry){await loadStore();if(room(g)&&!roomExists(g)){roomMessage=`Room ${room(g)} was not verified, so picks were not saved there.`;throw new Error("room not verified")}let key=scope(g);store.entries[key]=(store.entries[key]||[]).filter(e=>String(e.name).toLowerCase()!==entry.name.toLowerCase());store.entries[key].push(entry);store.updatedAt=new Date().toISOString();let res=await fetch(STORE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(store)});if(!res.ok)throw new Error(res.status);online=true;await loadStore()}function current(){let gs=games();return gs.find(g=>g.gameId===selected)||gs[0]}function showBrowserNotification(title,body,tag){if(!("Notification" in window)||Notification.permission!=="granted")return false;new Notification(title,{body,tag});return true}function maybeNotify(g,es){let mode=local.notify||"none";if(mode==="none"||!("Notification" in window)||Notification.permission!=="granted"||!local.name)return;let entry=es.find(e=>String(e.name).toLowerCase()===String(local.name).toLowerCase());if(!entry||!lockedQs(g).length)return;let rank=es.findIndex(e=>e.name===entry.name)+1;if(mode==="win"&&rank!==1)return;let key=`${g.gameId}:${entry.name}:${entry.score}:${rank}:${lockedQs(g).length}`;local.notificationReceipts||={};if(local.notificationReceipts[g.gameId]===key)return;let title=mode==="win"?"You are winning":"Minigame score update",body=mode==="win"?`${entry.name}, you are currently first with ${entry.score} points.`:`${entry.name}, you are rank ${rank} with ${entry.score} points.`;if(showBrowserNotification(title,body,`minigames-${g.gameId}-${mode}`)){local.notificationReceipts[g.gameId]=key;saveLocal()}}function render(){let gs=games();selected=selected||gs[0].gameId;$("tabs").innerHTML=gs.map(g=>`<button class="tab" data-id="${g.gameId}" type="button" aria-pressed="${g.gameId===selected}"><span class="kicker"><span>${g.type}</span><span>${fmt(g.date)}</span></span><h2>${g.name}</h2><p class="desc">${esc(g.summary)}</p><p>${days(g.date)} days away</p></button>`).join("");document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{selected=b.dataset.id;renderGame(current());loadStore()});renderGame(current());loadStore()}function renderRoom(g){let r=room(g),verified=r&&roomExists(g),status=$("roomStatus");$("roomCode").value=r;$("roomLabel").textContent=verified?`Private room ${r} is created in shared storage.`:r?`Room ${r} is pending verification.`:"Public game";status.className=`room-status ${verified?"good":r?"warn":""}`.trim();status.textContent=roomMessage||(verified?"Share this code with friends. Picks save only to this room.":r?"Checking shared storage before this code can be used.":"Create a room first, then share its code. Join only works for created rooms.")}function renderGame(g){let es=entries(g),saved=es.find(e=>e.name.toLowerCase()===(local.name||"").toLowerCase()),open=openQs(g),closed=lockedQs(g);$("live").textContent=g.name+" is next";$("meta").innerHTML=`<span class="pill">${g.type}</span><span class="pill">${days(g.date)||"Tonight"}${days(g.date)?" days away":""}</span><span class="pill">${open.length} open · ${closed.length} scoring</span><span class="pill">${room(g)?"Private room":"Public game"}</span><span class="pill">${online?"Shared online":"Trying shared storage"}</span>`;$("title").textContent=g.name;$("summary").textContent=g.summary;$("open").textContent=fmt(g.date);$("entries").textContent=es.length;$("max").textContent=maxPts(g);$("name").value=local.name||"";renderRoom(g);$("submitBtn").disabled=open.length===0;$("submitBtn").textContent=open.length?"Lock picks":"Questions closed";$("questions").innerHTML=g.q.map((q,i)=>locked(g,q)?`<fieldset class="q"><legend>${i+1}. ${esc(q.text)}</legend><p class="closed">This question has already started, so it is closed for new picks.</p></fieldset>`:`<fieldset class="q"><legend>${i+1}. ${esc(q.text)}</legend><div class="answers">${q.answers.map(a=>`<label class="answer"><input type="radio" name="${q.id}" value="${a.id}" ${saved?.picks?.[q.id]===a.id?"checked":""} required><span><b>${esc(a.label)}</b><small>${a.odds}% chance · ${a.points} pts</small></span></label>`).join("")}</div></fieldset>`).join("");document.querySelectorAll("input[name=notify]").forEach(i=>i.checked=i.value===(local.notify||"none"));renderLeaderboard(g,es);renderTicker(g,es);maybeNotify(g,es)}function renderLeaderboard(g,es){$("leaderboard").innerHTML=es.length?es.slice(0,10).map((e,i)=>`<li class="leader"><span class="rank">${i+1}</span><span><span class="who">${esc(e.name)}</span><div class="small">${lockedQs(g).length?`${lockedQs(g).length} scoring question${lockedQs(g).length===1?"":"s"}`:"Points unlock after start"}</div></span><span class="points">${e.score}</span></li>`).join(""):`<li class="leader"><span class="rank">1</span><span><span class="who">No players yet</span><div class="small">Lock your picks to become the first real entry.</div></span><span class="points">0</span></li>`}function renderTicker(g,es){let r=room(g),lines=es.length?[`${es[0].name} is leading with ${es[0].score} points.`,`${lockedQs(g).length} questions are scoring, ${openQs(g).length} are still open.`,online?"This leaderboard is shared between devices.":"Shared storage is still connecting."]:["No fake players or bots are shown.",r&&roomExists(g)?`Only people with code ${r} are in this room.`:r?"This code has not been verified yet.":"Create a private room, then share its code.",online?"Shared leaderboard is ready.":"Connecting to shared leaderboard..."];$("ticker").innerHTML=lines.map(x=>`<li><span class="red"></span><span>${esc(x)}</span></li>`).join("");$("note").textContent=openQs(g).length?(online?"Your picks save to the shared leaderboard.":"Trying to connect to the shared leaderboard."):"This game's questions have started, so new picks are closed."}function toast(m){let t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove("show"),3600)}async function notify(mode,g,entry){if(mode==="none")return toast("Picks saved. No notifications will be sent.");if(!("Notification" in window))return toast("This browser does not support notifications, but your picks are saved.");let ok=Notification.permission==="granted"?"granted":await Notification.requestPermission();if(ok!=="granted")return toast("Picks saved. Notifications were not allowed.");let title=mode==="win"?"Win-only browser alerts are on":"Browser score updates are on",body=mode==="win"?"If you are first when this page checks the scoring questions, this browser can alert you.":"This browser can alert you when this page is open or reopened and scores change.";showBrowserNotification(title,body,`minigames-confirm-${entry.name}`);toast("Picks saved. Browser notifications work only while this site is open or reopened.")}$("form").onsubmit=async e=>{e.preventDefault();let g=current(),f=new FormData(e.target),name=(f.get("name")||"").toString().trim().slice(0,24),old=entries(g).find(e=>String(e.name).toLowerCase()===name.toLowerCase()),picks={...(old?.picks||{})},open=openQs(g);if(!open.length)return toast("These questions have already started, so new picks are closed.");open.forEach(q=>picks[q.id]=(f.get(q.id)||"").toString());if(!name||open.some(q=>!picks[q.id]))return toast("Add your name and answer every open question first.");let mode=(f.get("notify")||"none").toString(),entry={name,picks,notify:mode,savedAt:new Date().toISOString()};local.name=name;local.notify=mode;saveLocal();try{await saveEntry(g,entry);toast("Picks saved to the shared leaderboard.")}catch{toast(room(g)?"Could not save to that room yet.":"Could not reach shared storage. Try again in a moment.")}renderGame(g);await notify(mode,g,entry)};async function createRoom(g){try{await loadStore();if(!online)throw new Error("offline");let code="";do{code=Math.random().toString(36).replace(/[^a-z]+/g,"").slice(0,6).toUpperCase()}while(!code||roomExists(g,code));rooms()[roomKey(g,code)]={code,gameId:g.gameId,createdAt:new Date().toISOString()};store.entries[roomKey(g,code)] ||= [];store.updatedAt=new Date().toISOString();let res=await fetch(STORE_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(store)});if(!res.ok)throw new Error(res.status);online=true;setRoom(g,code);roomMessage=`Room ${code} was created. Share this code with friends.`;toast(`Created room ${code}.`);renderGame(g);await loadStore()}catch{roomMessage="Could not create a shared room right now. Stay on public or try again.";toast("Room creation failed.");renderGame(g)}}async function joinRoom(g){let code=cleanCode($("roomCode").value);if(!code){clearRoom(g);roomMessage="Back on the public leaderboard.";toast("Using the public game.");renderGame(g);loadStore();return}try{await loadStore();if(!online)throw new Error("offline");if(!roomExists(g,code)){roomMessage=`No created room named ${code} was found. Ask the host to create it first.`;toast(`Room ${code} was not found.`);renderGame(g);return}setRoom(g,code);roomMessage=`Joined verified room ${code}.`;toast(`Joined room ${code}.`);renderGame(g)}catch{roomMessage=`Could not verify ${code}. You were not moved into that room.`;toast("Could not verify that room.");renderGame(g)}}$("joinRoom").onclick=()=>joinRoom(current());$("newRoom").onclick=()=>createRoom(current());$("publicRoom").onclick=()=>{let g=current();clearRoom(g);roomMessage="Back on the public leaderboard.";toast("Using the public game.");renderGame(g);loadStore()};$("roomCode").oninput=()=>{$("roomCode").value=cleanCode($("roomCode").value)};$("roomCode").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();joinRoom(current())}};$("random").onclick=()=>{let g=current();openQs(g).forEach(q=>{let r=Math.random()*100,total=0,pick=q.answers[0];for(let a of q.answers){total+=a.odds;if(r<=total){pick=a;break}}let input=document.querySelector(`input[name="${q.id}"][value="${pick.id}"]`);if(input)input.checked=true});toast(openQs(g).length?"Random picks filled in. Change any you want, then lock them.":"No open questions left to randomize.")};render();setInterval(loadStore,15000);
-</script>
+  <main class="page-shell">
+    <section class="hero">
+      <nav class="topbar" aria-label="Minigames navigation">
+        <a class="home-link" href="../index.html">DexterBain.com</a>
+        <span class="status-pill"><span class="pulse" aria-hidden="true"></span><span id="liveStatus">Finding the next big event</span></span>
+      </nav>
+
+      <div class="hero-content">
+        <p class="eyebrow">Live family prediction games</p>
+        <h1>Event picks, bragging rights, leaderboard chaos.</h1>
+        <p class="hero-copy">
+          Pick the next big event, answer the questions, choose how much you want to be notified, and see whether your guesses climb the table.
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="#play">Play the next game</a>
+          <button class="btn secondary" type="button" id="randomizeBtn">Surprise me</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="next-strip" aria-label="Upcoming event games">
+      <div class="event-tabs" id="eventTabs"></div>
+    </section>
+
+    <section class="app-grid" id="play">
+      <div>
+        <article class="panel" aria-live="polite">
+          <div class="panel-head">
+            <div class="game-meta" id="gameMeta"></div>
+            <h2 class="event-title" id="eventTitle">Loading game</h2>
+            <p class="event-summary" id="eventSummary"></p>
+          </div>
+          <div class="scoreline">
+            <div class="score-tile">
+              <p class="score-label">Game opens</p>
+              <p class="score-value" id="openDate">Soon</p>
+            </div>
+            <div class="score-tile">
+              <p class="score-label">Entries</p>
+              <p class="score-value" id="entryCount">0</p>
+            </div>
+            <div class="score-tile">
+              <p class="score-label">Max points</p>
+              <p class="score-value" id="questionCount">0</p>
+            </div>
+          </div>
+        </article>
+
+        <form class="panel form-panel" id="predictionForm">
+          <div class="form-row">
+            <input class="name-input" id="playerName" name="playerName" maxlength="24" autocomplete="name" placeholder="Leaderboard name" required />
+            <button class="btn" type="submit">Lock picks</button>
+          </div>
+          <p class="profile-note" id="profileNote">Enter a player name so the server can update your picks on the leaderboard.</p>
+
+          <h3 class="section-title">Your predictions</h3>
+          <div class="questions" id="questions"></div>
+
+          <section class="notify-box" aria-labelledby="notifyTitle">
+            <h3 class="section-title" id="notifyTitle">Notifications</h3>
+            <div class="notify-options">
+              <label class="answer">
+                <input type="radio" name="notify" value="none" checked />
+                <span>
+                  <span class="answer-main">No notifications</span>
+                  <span class="answer-meta">Just save my picks</span>
+                </span>
+              </label>
+              <label class="answer">
+                <input type="radio" name="notify" value="win" />
+                <span>
+                  <span class="answer-main">Notify me if I win only</span>
+                  <span class="answer-meta">Browser alert on this device</span>
+                </span>
+              </label>
+              <label class="answer">
+                <input type="radio" name="notify" value="updates" />
+                <span>
+                  <span class="answer-main">Notify me along the way</span>
+                  <span class="answer-meta">Browser updates when this page checks</span>
+                </span>
+              </label>
+            </div>
+            <p class="empty-state">
+              On the public site, this device can receive browser push notifications after you allow them.
+            </p>
+          </section>
+
+          <div class="submit-line">
+            <span class="save-note" id="saveNote">Lock picks to save them to the server leaderboard.</span>
+          </div>
+        </form>
+      </div>
+
+      <aside class="side-stack">
+        <section class="panel creator-panel" aria-labelledby="creatorTitle">
+          <h3 class="section-title" id="creatorTitle">Create a minigame</h3>
+          <p class="empty-state">Make a custom prediction game with a name, at least 5 questions, and options with odds and points. Publishing adds it to the public game list.</p>
+          <form class="creator-fields" id="customGameForm">
+            <label class="creator-field">
+              Game name
+              <input class="name-input" id="customGameName" maxlength="64" placeholder="Example: Dexter's Movie Night" required />
+            </label>
+            <label class="creator-field">
+              Explanation
+              <input class="name-input" id="customGameSummary" maxlength="180" placeholder="What players are predicting" />
+            </label>
+            <div class="custom-question-list" id="customQuestions"></div>
+            <div class="room-actions">
+              <button class="btn small secondary" type="button" id="addCustomQuestionBtn">Add question</button>
+              <button class="btn small" type="submit" id="publishCustomGameBtn">Publish game</button>
+            </div>
+            <p class="creator-status" id="customGameStatus" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <section class="panel room-panel" aria-labelledby="roomTitle">
+          <h3 class="section-title" id="roomTitle">Private room</h3>
+          <p class="empty-state" id="roomSummary">Create a room for friends, or join one with a real code.</p>
+          <div class="room-form">
+            <input class="name-input" id="roomCodeInput" maxlength="6" autocomplete="off" placeholder="6-character code" aria-label="Room code" />
+            <button class="btn small secondary" type="button" id="joinRoomBtn">Join</button>
+          </div>
+          <div class="room-actions">
+            <button class="btn small" type="button" id="createRoomBtn">Create room</button>
+            <button class="btn small secondary" type="button" id="leaveRoomBtn">Use public board</button>
+          </div>
+          <p class="room-status" id="roomStatus" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="panel leaderboard" aria-labelledby="leaderboardTitle">
+          <h3 class="section-title" id="leaderboardTitle">Leaderboard</h3>
+          <ol class="leaderboard-list" id="leaderboard"></ol>
+        </section>
+
+        <section class="panel results-panel" aria-labelledby="resultsTitle">
+          <h3 class="section-title" id="resultsTitle">Auto scoring</h3>
+          <p class="empty-state" id="resultsSummary">Checking for event results as questions close.</p>
+          <div class="result-list" id="resultList"></div>
+        </section>
+
+        <section class="panel activity" aria-labelledby="activityTitle">
+          <h3 class="section-title" id="activityTitle">Game room</h3>
+          <ul class="ticker" id="ticker"></ul>
+          <p class="empty-state" id="emptyState">No picks yet. Be the first name on the board.</p>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const STORAGE_KEY = "dexterbain-minigames-v1";
+    const today = new Date();
+    const year = today.getFullYear();
+
+    function slugify(value) {
+      return String(value || "")
+        .toLowerCase()
+        .replace(/&/g, " and ")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 48) || "answer";
+    }
+
+    function pointsForOdds(odds) {
+      const chance = Math.min(95, Math.max(4, Number(odds) || 50));
+      return Math.max(10, Math.round(1000 / chance));
+    }
+
+    function answer(label, odds, id = slugify(label)) {
+      const chance = Math.min(95, Math.max(4, Number(odds) || 50));
+      return {
+        id,
+        label,
+        odds: chance,
+        points: pointsForOdds(chance)
+      };
+    }
+
+    function question(text, answers, id = slugify(text), options = {}) {
+      return {
+        id,
+        text,
+        answers,
+        autoSource: options.autoSource || ""
+      };
+    }
+
+    const menloParkWeatherSource = "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182";
+
+    const eventCatalog = [
+      {
+        id: "may-12-weather-test",
+        name: "Menlo Park May 12 Weather",
+        type: "Weather",
+        month: 4,
+        day: 12,
+        summary: "A real-source Menlo Park weather game about the May 12 forecast, sky, wind, and evening feel.",
+        questions: [
+          question("What will the May 12 high temperature be closest to?", [
+            answer("Under 65 degrees", 18, "under-65"),
+            answer("65 to 72 degrees", 44, "65-72"),
+            answer("73 to 80 degrees", 28, "73-80"),
+            answer("Over 80 degrees", 10, "over-80")
+          ], "may-12-high-temp", { autoSource: menloParkWeatherSource }),
+          question("What will the main daytime sky be?", [
+            answer("Mostly sunny", 38, "mostly-sunny"),
+            answer("Partly cloudy", 34, "partly-cloudy"),
+            answer("Mostly cloudy", 18, "mostly-cloudy"),
+            answer("Rain likely", 10, "rain-likely")
+          ], "may-12-sky", { autoSource: menloParkWeatherSource }),
+          question("Will rain be mentioned for May 12?", [
+            answer("Yes", 22, "yes"),
+            answer("No", 78, "no")
+          ], "may-12-rain", { autoSource: menloParkWeatherSource }),
+          question("How windy will it sound?", [
+            answer("Light wind", 46, "light-wind"),
+            answer("Noticeable breeze", 38, "noticeable-breeze"),
+            answer("Windy", 16, "windy")
+          ], "may-12-wind", { autoSource: menloParkWeatherSource }),
+          question("What will the May 12 night feel like?", [
+            answer("Clear and cool", 35, "clear-cool"),
+            answer("Cloudy and mild", 30, "cloudy-mild"),
+            answer("Chilly", 20, "chilly"),
+            answer("Rainy", 15, "rainy")
+          ], "may-12-night", { autoSource: menloParkWeatherSource })
+        ]
+      },
+      {
+        id: "weather-weekend",
+        name: "Weekend Weather Watch",
+        type: "Weather",
+        month: 4,
+        day: 24,
+        summary: "A light, local-feeling weather game about forecasts, clouds, surprise rain, and whether weekend plans stay outside.",
+        questions: [
+          question("What will the weekend headline be?", [
+            answer("Sunny and easy", 34),
+            answer("Cloudier than expected", 26),
+            answer("Rain sneaks in", 18),
+            answer("Wind steals the story", 12),
+            answer("Forecast totally flips", 10)
+          ]),
+          question("Will outdoor plans need a backup?", [
+            answer("Yes", 29),
+            answer("No", 71)
+          ]),
+          question("What happens first on the weather app?", [
+            answer("Temperature jumps", 24),
+            answer("Rain chance rises", 28),
+            answer("Wind alert appears", 14),
+            answer("Forecast barely changes", 34)
+          ]),
+          question("How dramatic is sunset?", [
+            answer("Clear golden sky", 38),
+            answer("Cloudy but pretty", 31),
+            answer("Washed out", 20),
+            answer("Surprise rainbow", 11)
+          ]),
+          question("What will people complain about first?", [
+            answer("Too hot", 29),
+            answer("Too cold", 22),
+            answer("Too windy", 21),
+            answer("Bad forecast", 18),
+            answer("Nothing, rare peace", 10)
+          ])
+        ]
+      },
+      {
+        id: "internet-random",
+        name: "Internet Trend Watch",
+        type: "Random",
+        month: 5,
+        day: 12,
+        summary: "A goofy daily-culture game for memes, group chats, surprise trends, and the internet choosing something weird.",
+        questions: [
+          question("What kind of post takes over first?", [
+            answer("Sports clip", 22),
+            answer("Weather screenshot", 14),
+            answer("Celebrity moment", 28),
+            answer("Food debate", 18),
+            answer("Completely random meme", 18)
+          ]),
+          question("Will the group chat argue about it?", [
+            answer("Yes", 62),
+            answer("No", 38)
+          ]),
+          question("Which phrase shows up first?", [
+            answer("No way", 27),
+            answer("I called it", 21),
+            answer("This is so dumb", 32),
+            answer("Wait what happened", 20)
+          ]),
+          question("How long does the trend last?", [
+            answer("Under 2 hours", 16),
+            answer("Half a day", 38),
+            answer("All day", 32),
+            answer("Somehow all week", 14)
+          ]),
+          question("Who sends the first screenshot?", [
+            answer("Friend", 45),
+            answer("Sibling", 21),
+            answer("Parent", 12),
+            answer("Nobody, it stays quiet", 22)
+          ])
+        ]
+      },
+      {
+        id: "soccer-kickoff",
+        name: "Soccer Match Watch",
+        type: "Sports",
+        month: 5,
+        day: 11,
+        summary: "A simple watch-party game for the first big soccer match: first shot, first card, chants, and late drama.",
+        questions: [
+          question("What happens in the first 10 minutes?", [
+            answer("Shot on goal", 34),
+            answer("Corner kick", 28),
+            answer("Yellow card", 13),
+            answer("Goal", 9),
+            answer("Mostly midfield passing", 16)
+          ]),
+          question("Who scores first?", [
+            answer("Favorite", 49),
+            answer("Underdog", 29),
+            answer("No first-half goal", 22)
+          ]),
+          question("What does the crowd do first?", [
+            answer("Big chant", 41),
+            answer("Whistles", 18),
+            answer("Phone lights", 11),
+            answer("Wave", 8),
+            answer("Nothing obvious", 22)
+          ]),
+          question("Will VAR change a call?", [
+            answer("Yes", 24),
+            answer("No", 76)
+          ]),
+          question("How tense is the ending?", [
+            answer("Comfortable win", 31),
+            answer("One-goal finish", 37),
+            answer("Late equalizer", 18),
+            answer("Penalty chaos", 14)
+          ])
+        ]
+      },
+      {
+        id: "local-election",
+        name: "Election Night Watch",
+        type: "Politics",
+        month: 10,
+        day: 3,
+        summary: "A non-heavy election-night game about timing, speeches, turnout chatter, and which race gets called first.",
+        questions: [
+          question("What is the first election-night headline?", [
+            answer("Turnout is high", 31),
+            answer("Race too close", 27),
+            answer("Early lead appears", 24),
+            answer("Counting delay", 18)
+          ]),
+          question("When does the first race get called?", [
+            answer("Before 8 PM", 22),
+            answer("8 to 10 PM", 43),
+            answer("After 10 PM", 25),
+            answer("Not that night", 10)
+          ]),
+          question("What does the first speech focus on?", [
+            answer("Thanking voters", 38),
+            answer("Unity", 24),
+            answer("Local issues", 21),
+            answer("Waiting for results", 17)
+          ]),
+          question("Will there be a surprise upset?", [
+            answer("Yes", 19),
+            answer("No", 81)
+          ]),
+          question("Which topic gets mentioned first?", [
+            answer("Economy", 30),
+            answer("Schools", 24),
+            answer("Safety", 21),
+            answer("Housing", 16),
+            answer("Weather at polling places", 9)
+          ])
+        ]
+      },
+      {
+        id: "space-launch",
+        name: "Space Launch Watch",
+        type: "Random",
+        month: 7,
+        day: 12,
+        summary: "A countdown game for launch streams, holds, camera shots, engine ignition, and whether everything leaves on time.",
+        questions: [
+          question("What happens first during the countdown?", [
+            answer("Smooth hold-free countdown", 39),
+            answer("Short technical hold", 28),
+            answer("Weather concern", 18),
+            answer("Launch delay", 15)
+          ]),
+          question("Which camera shot appears first?", [
+            answer("Rocket close-up", 44),
+            answer("Mission control", 22),
+            answer("Crowd reaction", 18),
+            answer("Clouds or sky", 16)
+          ]),
+          question("Will liftoff happen within 5 minutes of schedule?", [
+            answer("Yes", 58),
+            answer("No", 42)
+          ]),
+          question("What does the announcer say first?", [
+            answer("Nominal", 35),
+            answer("Go for launch", 31),
+            answer("Standing by", 22),
+            answer("Unexpected issue", 12)
+          ]),
+          question("How dramatic is the launch shot?", [
+            answer("Clean and bright", 42),
+            answer("Cloudy view", 24),
+            answer("Shaky camera", 18),
+            answer("Almost hidden", 16)
+          ])
+        ]
+      },
+      {
+        id: "minecraft-2-trailer",
+        name: "Minecraft Movie 2 Trailer",
+        type: "Movies",
+        month: 5,
+        day: 5,
+        summary: "A specific trailer-watch game for a Minecraft Movie sequel teaser: mobs, Steve, jokes, comments, and hype.",
+        questions: [
+          question("What gets shown in the first 20 seconds?", [
+            answer("Steve or main cast", 34),
+            answer("Creeper reveal", 24),
+            answer("Blocky landscape", 22),
+            answer("Crafting joke", 13),
+            answer("Only the logo", 7)
+          ]),
+          question("What is the first big reaction?", [
+            answer("People love it", 34),
+            answer("People complain", 27),
+            answer("Meme screenshot", 21),
+            answer("Confused theories", 18)
+          ]),
+          question("Will the trailer reveal Herobrine or a mystery villain?", [
+            answer("Yes", 29),
+            answer("No", 71)
+          ]),
+          question("Which line becomes the quote?", [
+            answer("Steve one-liner", 36),
+            answer("Villain threat", 22),
+            answer("Creeper joke", 30),
+            answer("No quotable line", 12)
+          ]),
+          question("How strong is the hype after one hour?", [
+            answer("Huge", 26),
+            answer("Pretty good", 42),
+            answer("Mixed", 24),
+            answer("Rough", 8)
+          ])
+        ]
+      },
+      {
+        id: "taylor-swift-stream",
+        name: "Taylor Swift Concert Stream",
+        type: "Music",
+        month: 5,
+        day: 18,
+        summary: "A specific concert-stream game for Taylor Swift: opener era, surprise songs, crowd bracelets, and encore timing.",
+        questions: [
+          question("What opens the show?", [
+            answer("Lover-era song", 31),
+            answer("Midnights-era song", 22),
+            answer("Folklore/Evermore mood", 18),
+            answer("New surprise intro", 17),
+            answer("Late start chaos", 12)
+          ]),
+          question("Will there be a guest performer?", [
+            answer("Yes", 31),
+            answer("No", 69)
+          ]),
+          question("What does the crowd do first?", [
+            answer("Sing every word", 43),
+            answer("Bracelets light up", 21),
+            answer("Chant Taylor's name", 18),
+            answer("Friendship bracelet shot", 8),
+            answer("Nothing special", 10)
+          ]),
+          question("When does the first surprise song happen?", [
+            answer("First third", 21),
+            answer("Middle", 28),
+            answer("Near the end", 39),
+            answer("Encore", 12)
+          ]),
+          question("What is the acoustic surprise?", [
+            answer("Fan favorite", 40),
+            answer("Deep cut", 20),
+            answer("Mashup", 18),
+            answer("No encore", 22)
+          ])
+        ]
+      },
+      {
+        id: "apple-iphone-keynote",
+        name: "Apple iPhone Keynote",
+        type: "Tech",
+        month: 5,
+        day: 25,
+        summary: "A specific Apple-style keynote game about the next iPhone, AI features, camera demos, price, and release date.",
+        questions: [
+          question("What gets announced first?", [
+            answer("iPhone hardware", 34),
+            answer("Apple Intelligence feature", 31),
+            answer("Camera upgrade", 18),
+            answer("Watch or AirPods", 11),
+            answer("Subscription service", 6)
+          ]),
+          question("Will a live demo glitch?", [
+            answer("Yes", 18),
+            answer("No", 82)
+          ]),
+          question("What phrase gets repeated most?", [
+            answer("Apple Intelligence", 34),
+            answer("All-new design", 25),
+            answer("Our fastest iPhone", 23),
+            answer("Built for creators", 18)
+          ]),
+          question("How does the price land?", [
+            answer("Cheaper than expected", 14),
+            answer("About expected", 46),
+            answer("Too expensive", 32),
+            answer("No price yet", 8)
+          ]),
+          question("What closes the reveal?", [
+            answer("Release date", 37),
+            answer("One more thing", 17),
+            answer("Product video", 31),
+            answer("Developer demo", 15)
+          ])
+        ]
+      },
+      {
+        id: "taco-truck-friday",
+        name: "Taco Truck Friday",
+        type: "Food",
+        month: 6,
+        day: 3,
+        summary: "A specific taco-truck pop-up game about al pastor, birria, salsa, lines, sellouts, and the first big order.",
+        questions: [
+          question("Which item has the longest line first?", [
+            answer("Al pastor tacos", 32),
+            answer("Birria tacos", 28),
+            answer("Carne asada burrito", 18),
+            answer("Quesadilla", 12),
+            answer("Horchata", 10)
+          ]),
+          question("What sells out first?", [
+            answer("Birria", 29),
+            answer("Al pastor", 26),
+            answer("Guacamole", 18),
+            answer("Nothing sells out", 27)
+          ]),
+          question("Will someone say it was overpriced?", [
+            answer("Yes", 74),
+            answer("No", 26)
+          ]),
+          question("What becomes the sleeper hit?", [
+            answer("Green salsa", 22),
+            answer("Horchata", 18),
+            answer("Street corn", 27),
+            answer("Veggie taco", 13),
+            answer("No sleeper hit", 20)
+          ]),
+          question("How long is the biggest wait?", [
+            answer("Under 10 minutes", 18),
+            answer("10 to 20 minutes", 44),
+            answer("21 to 35 minutes", 28),
+            answer("Over 35 minutes", 10)
+          ])
+        ]
+      },
+      {
+        id: "101-traffic-watch",
+        name: "Highway 101 Traffic Watch",
+        type: "Local",
+        month: 6,
+        day: 10,
+        summary: "A specific Bay Area Highway 101 commute game about backups, map reroutes, parking, and arrival time.",
+        questions: [
+          question("What causes the first delay?", [
+            answer("Construction", 29),
+            answer("Crash or stall", 24),
+            answer("Merge near an exit", 22),
+            answer("Random backup", 19),
+            answer("No delay", 6)
+          ]),
+          question("Will the El Camino shortcut save time?", [
+            answer("Yes", 35),
+            answer("No", 65)
+          ]),
+          question("Where is the worst parking?", [
+            answer("Downtown Menlo Park", 31),
+            answer("Palo Alto shops", 24),
+            answer("Sports field", 18),
+            answer("Grocery store", 19),
+            answer("Parking is fine", 8)
+          ]),
+          question("What does someone complain about first?", [
+            answer("Red lights", 34),
+            answer("Bad drivers", 29),
+            answer("No parking", 21),
+            answer("Maps app lied", 16)
+          ]),
+          question("How late does everyone end up?", [
+            answer("On time", 18),
+            answer("1 to 5 minutes", 36),
+            answer("6 to 15 minutes", 34),
+            answer("Way late", 12)
+          ])
+        ]
+      },
+      {
+        id: "jeopardy-final-watch",
+        name: "Jeopardy Final Round",
+        type: "TV",
+        month: 6,
+        day: 22,
+        summary: "A specific Jeopardy-style episode game about Daily Doubles, categories, Final Jeopardy wagers, and podium drama.",
+        questions: [
+          question("What happens on the first Daily Double?", [
+            answer("Confident correct answer", 39),
+            answer("Long hesitation", 26),
+            answer("Audience gasp", 16),
+            answer("Wrong answer", 19)
+          ]),
+          question("Will a contestant make it a true Daily Double?", [
+            answer("Yes", 33),
+            answer("No", 67)
+          ]),
+          question("Which category causes trouble?", [
+            answer("Sports", 20),
+            answer("History", 24),
+            answer("Pop culture", 18),
+            answer("Science", 16),
+            answer("Wordplay", 22)
+          ]),
+          question("What does the host do first?", [
+            answer("Jokes with contestant", 42),
+            answer("Explains a rule", 21),
+            answer("Builds suspense", 28),
+            answer("Corrects a mistake", 9)
+          ]),
+          question("How does Final Jeopardy end?", [
+            answer("Big win", 24),
+            answer("Small win", 33),
+            answer("Painful miss", 25),
+            answer("No final round drama", 18)
+          ])
+        ]
+      },
+      {
+        id: "menlo-park-mayor-debate",
+        name: "Menlo Park Mayor Debate",
+        type: "Politics",
+        month: 7,
+        day: 4,
+        summary: "A specific local debate game about housing, traffic, schools, moderator timing, repeated phrases, and first zinger.",
+        questions: [
+          question("What happens first in the debate?", [
+            answer("Opening story", 30),
+            answer("Policy answer", 33),
+            answer("Moderator interruption", 17),
+            answer("Direct attack", 20)
+          ]),
+          question("Will someone use a catchphrase?", [
+            answer("Yes", 58),
+            answer("No", 42)
+          ]),
+          question("Which topic comes up first?", [
+            answer("Housing", 31),
+            answer("Traffic", 22),
+            answer("Schools", 18),
+            answer("Public safety", 17),
+            answer("Climate", 12)
+          ]),
+          question("Who gets clipped online first?", [
+            answer("Candidate A", 38),
+            answer("Candidate B", 36),
+            answer("Moderator", 12),
+            answer("No obvious clip", 14)
+          ]),
+          question("How civil does it stay?", [
+            answer("Mostly polite", 34),
+            answer("A little spicy", 42),
+            answer("Very tense", 18),
+            answer("Total chaos", 6)
+          ])
+        ]
+      },
+      {
+        id: "nintendo-direct-watch",
+        name: "Nintendo Direct Watch",
+        type: "Gaming",
+        month: 7,
+        day: 18,
+        summary: "A specific Nintendo Direct game about Mario, Zelda, remakes, release dates, shadow drops, and chat reactions.",
+        questions: [
+          question("What opens the showcase?", [
+            answer("Mario game", 27),
+            answer("Indie montage", 22),
+            answer("Remake reveal", 16),
+            answer("Gameplay demo", 25),
+            answer("Host intro only", 10)
+          ]),
+          question("Will a release date be sooner than expected?", [
+            answer("Yes", 28),
+            answer("No", 72)
+          ]),
+          question("What does chat spam first?", [
+            answer("W", 31),
+            answer("Where is Zelda?", 25),
+            answer("Looks mid", 19),
+            answer("Take my money", 17),
+            answer("Lag complaints", 8)
+          ]),
+          question("Which genre gets the biggest reveal?", [
+            answer("Mario platformer", 29),
+            answer("Zelda adventure", 22),
+            answer("RPG", 20),
+            answer("Cozy game", 12),
+            answer("Sports/racing", 17)
+          ]),
+          question("How does the showcase end?", [
+            answer("One last trailer", 41),
+            answer("Release date montage", 22),
+            answer("Awkward goodbye", 18),
+            answer("Surprise shadow drop", 19)
+          ])
+        ]
+      },
+      {
+        id: "wimbledon-final-watch",
+        name: "Wimbledon Final Watch",
+        type: "Sports",
+        month: 8,
+        day: 7,
+        summary: "A specific Wimbledon final game about first breaks, tiebreaks, long rallies, Centre Court energy, and underdog pressure.",
+        questions: [
+          question("Who wins the first game?", [
+            answer("Favorite holds serve", 43),
+            answer("Underdog holds serve", 31),
+            answer("Immediate break", 26)
+          ]),
+          question("What happens first?", [
+            answer("Ace", 29),
+            answer("Double fault", 13),
+            answer("Long rally", 34),
+            answer("Challenge review", 24)
+          ]),
+          question("Will the first set need a tiebreak?", [
+            answer("Yes", 24),
+            answer("No", 76)
+          ]),
+          question("How loud does the crowd get?", [
+            answer("Polite applause", 26),
+            answer("Big roar", 42),
+            answer("Chants", 17),
+            answer("Tense silence", 15)
+          ]),
+          question("How close is the match?", [
+            answer("Straight sets", 39),
+            answer("One tight set", 34),
+            answer("Goes the distance", 27)
+          ])
+        ]
+      },
+      {
+        id: "oscars",
+        name: "The Oscars",
+        type: "Awards",
+        month: 2,
+        day: 8,
+        summary: "Red carpet surprises, speech timers, unexpected winners, and one very serious leaderboard.",
+        questions: [
+          question("How long will the opening monologue run?", [
+            answer("Under 8 minutes", 22),
+            answer("8 to 11 minutes", 46),
+            answer("Over 11 minutes", 32)
+          ]),
+          question("What will Best Picture's spot be?", [
+            answer("Final award", 72),
+            answer("Second-to-last", 18),
+            answer("Earlier surprise", 10)
+          ]),
+          question("Who gets thanked in the strangest speech?", [
+            answer("A pet", 16),
+            answer("A teacher", 24),
+            answer("A childhood friend", 31),
+            answer("No strange thank-you", 29)
+          ]),
+          question("Will a winner get played off by music?", [
+            answer("Yes, awkwardly", 40),
+            answer("Almost, but saved", 34),
+            answer("No", 26)
+          ]),
+          question("Which happens first?", [
+            answer("Standing ovation", 38),
+            answer("Technical delay", 14),
+            answer("Host costume change", 21),
+            answer("Big upset", 18),
+            answer("Presenter flub", 9)
+          ]),
+          question("What becomes the first red carpet mini-trend?", [
+            answer("Black gowns", 28),
+            answer("Metallic suits", 20),
+            answer("Vintage jewelry", 22),
+            answer("Tiny sunglasses", 12),
+            answer("Unexpected sneakers", 18)
+          ]),
+          question("Will a winner mention a group chat?", [
+            answer("Yes", 17),
+            answer("No", 83)
+          ])
+        ]
+      },
+      {
+        id: "super-bowl",
+        name: "Super Bowl Watch Party",
+        type: "Sports",
+        month: 1,
+        day: 8,
+        summary: "Commercials, coin flips, halftime spectacle, fourth-quarter drama, and family predictions.",
+        questions: [
+          question("What will the first score be?", [
+            answer("Touchdown", 48),
+            answer("Field goal", 38),
+            answer("Safety", 4),
+            answer("Defensive touchdown", 10)
+          ]),
+          question("What will the coin toss be?", [
+            answer("Heads", 50),
+            answer("Tails", 50)
+          ]),
+          question("When will the halftime show start?", [
+            answer("Within 7 minutes", 44),
+            answer("8 to 11 minutes", 40),
+            answer("12+ minutes", 16)
+          ]),
+          question("Which quarter has the most points?", [
+            answer("1st", 21),
+            answer("2nd", 29),
+            answer("3rd", 22),
+            answer("4th", 28)
+          ]),
+          question("What kind of commercial shows up first?", [
+            answer("Talking animal", 24),
+            answer("Celebrity cameo", 42),
+            answer("Food close-up", 23),
+            answer("Car stunt", 11)
+          ]),
+          question("What triggers the first replay review?", [
+            answer("Catch near sideline", 36),
+            answer("Goal-line spot", 23),
+            answer("Turnover", 28),
+            answer("No review before halftime", 13)
+          ]),
+          question("How does the halftime show surprise people?", [
+            answer("Guest singer", 39),
+            answer("Marching band", 16),
+            answer("Drone or light show", 27),
+            answer("No surprise", 18)
+          ])
+        ]
+      },
+      {
+        id: "grammys",
+        name: "Grammy Awards Night",
+        type: "Awards",
+        month: 1,
+        day: 1,
+        summary: "Big performances, emotional speeches, surprise guests, and quick guesses before the show starts.",
+        questions: [
+          question("What opens the first performance?", [
+            answer("Pyrotechnics", 26),
+            answer("Dancers", 34),
+            answer("Solo spotlight", 25),
+            answer("Guest entrance", 15)
+          ]),
+          question("Who gets mentioned first in a winner's speech?", [
+            answer("Mom", 31),
+            answer("Fans", 27),
+            answer("Team", 33),
+            answer("Nobody expected", 9)
+          ]),
+          question("Will there be a surprise duet?", [
+            answer("Yes", 37),
+            answer("No", 63)
+          ]),
+          question("Which appears first?", [
+            answer("Standing ovation", 33),
+            answer("Wardrobe change", 25),
+            answer("Technical pause", 12),
+            answer("Crowd singalong", 30)
+          ]),
+          question("How long will the final speech run?", [
+            answer("Under 60 seconds", 21),
+            answer("60 to 90 seconds", 45),
+            answer("Over 90 seconds", 34)
+          ]),
+          question("What gets the first big crowd reaction?", [
+            answer("Surprise win", 23),
+            answer("High note", 31),
+            answer("Artist cameo", 20),
+            answer("Emotional tribute", 17),
+            answer("Awkward silence", 9)
+          ]),
+          question("Which camera cutaway happens first?", [
+            answer("Dancing celebrity", 34),
+            answer("Parent crying", 19),
+            answer("Rival artist clapping", 27),
+            answer("Confused audience member", 20)
+          ])
+        ]
+      },
+      {
+        id: "nba-finals",
+        name: "NBA Finals Game 1",
+        type: "Sports",
+        month: 5,
+        day: 4,
+        summary: "Tipoff predictions for the first game of the finals: runs, threes, lead changes, and buzzer tension.",
+        questions: [
+          question("How hot is the first-quarter three-point shooting?", [
+            answer("One team hits 5+", 26),
+            answer("Both stay under 5", 58),
+            answer("Both hit 5+", 16)
+          ]),
+          question("How many lead changes will there be?", [
+            answer("0 to 4", 25),
+            answer("5 to 8", 43),
+            answer("9 to 12", 22),
+            answer("13+", 10)
+          ]),
+          question("Which team scores first?", [
+            answer("Home team", 52),
+            answer("Away team", 48)
+          ]),
+          question("Who gets the biggest scoring night?", [
+            answer("One player scores 30+", 55),
+            answer("Two players score 30+", 20),
+            answer("Nobody reaches 30", 25)
+          ]),
+          question("How close is it with two minutes left?", [
+            answer("Within 3 points", 24),
+            answer("4 to 6 points", 26),
+            answer("7 to 12 points", 30),
+            answer("Blowout", 20)
+          ]),
+          question("What is the first made basket?", [
+            answer("Layup or dunk", 41),
+            answer("Corner three", 17),
+            answer("Midrange jumper", 24),
+            answer("Free throw", 10),
+            answer("Putback", 8)
+          ]),
+          question("When does the first coach challenge happen?", [
+            answer("First quarter", 12),
+            answer("Second or third quarter", 38),
+            answer("Fourth quarter", 31),
+            answer("No challenge", 19)
+          ])
+        ]
+      },
+      {
+        id: "world-series",
+        name: "World Series Game 1",
+        type: "Sports",
+        month: 9,
+        day: 24,
+        summary: "First pitch, first hit, late innings, and a scoreboard that changes the whole watch party.",
+        questions: [
+          question("What is the first pitch?", [
+            answer("Called strike", 38),
+            answer("Ball", 35),
+            answer("Swinging strike", 15),
+            answer("Ball in play", 12)
+          ]),
+          question("When does the first home run happen?", [
+            answer("Before 5th inning", 34),
+            answer("5th to 7th inning", 27),
+            answer("8th or later", 14),
+            answer("No home runs", 25)
+          ]),
+          question("Which happens first?", [
+            answer("Double play", 28),
+            answer("Stolen base", 18),
+            answer("Manager mound visit", 31),
+            answer("Replay review", 23)
+          ]),
+          question("How many runs does the winner score?", [
+            answer("1 to 3", 21),
+            answer("4", 24),
+            answer("5 to 7", 38),
+            answer("8+", 17)
+          ]),
+          question("How long will the game last?", [
+            answer("Under 2:45", 19),
+            answer("2:45 to 3:05", 39),
+            answer("3:06 to 3:30", 30),
+            answer("Over 3:30", 12)
+          ]),
+          question("How does the first baserunner reach?", [
+            answer("Single", 42),
+            answer("Walk", 24),
+            answer("Error", 10),
+            answer("Extra-base hit", 16),
+            answer("Hit by pitch", 8)
+          ]),
+          question("Will the bullpen phone ring before the 6th inning?", [
+            answer("Yes", 57),
+            answer("No", 43)
+          ])
+        ]
+      },
+      {
+        id: "new-year",
+        name: "New Year's Countdown",
+        type: "Holiday",
+        month: 11,
+        day: 31,
+        summary: "Countdown timing, song choices, confetti, camera cuts, and family bragging rights for the first day of the year.",
+        questions: [
+          question("When does the countdown begin?", [
+            answer("Exactly 60 seconds", 28),
+            answer("Early", 31),
+            answer("Late", 25),
+            answer("Chaotically unclear", 16)
+          ]),
+          question("What is the first song after midnight?", [
+            answer("Upbeat pop", 44),
+            answer("Classic singalong", 29),
+            answer("Slow emotional song", 17),
+            answer("Unexpected remix", 10)
+          ]),
+          question("Who cries on camera first?", [
+            answer("Host", 11),
+            answer("Audience member", 33),
+            answer("Performer", 18),
+            answer("Nobody", 38)
+          ]),
+          question("Which color dominates the confetti?", [
+            answer("Gold", 37),
+            answer("Silver", 24),
+            answer("Blue", 13),
+            answer("Mixed", 26)
+          ]),
+          question("When do fireworks appear?", [
+            answer("Before zero", 24),
+            answer("Exactly at midnight", 51),
+            answer("After midnight", 20),
+            answer("No clear fireworks shot", 5)
+          ]),
+          question("What is the first crowd chant after midnight?", [
+            answer("Happy New Year", 46),
+            answer("City name", 21),
+            answer("Countdown encore", 12),
+            answer("Song lyric", 15),
+            answer("No clear chant", 6)
+          ]),
+          question("What goes slightly off-script first?", [
+            answer("Camera misses a hug", 31),
+            answer("Host talks over music", 24),
+            answer("Confetti cannon delay", 13),
+            answer("Nothing obvious", 32)
+          ])
+        ]
+      }
+    ];
+
+    let selectedGameId = null;
+    let state = loadState();
+    let sharedEntries = {};
+    let sharedLoadedGames = new Set();
+    let sharedRooms = {};
+    let sharedLoadedRooms = new Set();
+    let sharedStatus = "checking";
+    let roomStatusByGame = {};
+    let roomInfoByKey = {};
+    let checkedUrlRooms = new Set();
+    let draftPicksByGame = {};
+    let sharedResults = {};
+    let resultsCheckedAt = {};
+    let renderedGameId = "";
+    let publishedCustomGames = [];
+    let customGamesLoaded = false;
+    let customBuilderQuestions = Array.from({ length: 5 }, () => 4);
+
+    const tabsEl = document.getElementById("eventTabs");
+    const metaEl = document.getElementById("gameMeta");
+    const titleEl = document.getElementById("eventTitle");
+    const summaryEl = document.getElementById("eventSummary");
+    const openDateEl = document.getElementById("openDate");
+    const entryCountEl = document.getElementById("entryCount");
+    const questionCountEl = document.getElementById("questionCount");
+    const questionsEl = document.getElementById("questions");
+    const leaderboardEl = document.getElementById("leaderboard");
+    const resultsSummaryEl = document.getElementById("resultsSummary");
+    const resultListEl = document.getElementById("resultList");
+    const tickerEl = document.getElementById("ticker");
+    const emptyStateEl = document.getElementById("emptyState");
+    const formEl = document.getElementById("predictionForm");
+    const playerNameEl = document.getElementById("playerName");
+    const profileNoteEl = document.getElementById("profileNote");
+    const saveNoteEl = document.getElementById("saveNote");
+    const liveStatusEl = document.getElementById("liveStatus");
+    const toastEl = document.getElementById("toast");
+    const roomCodeInputEl = document.getElementById("roomCodeInput");
+    const roomSummaryEl = document.getElementById("roomSummary");
+    const roomStatusEl = document.getElementById("roomStatus");
+    const createRoomBtn = document.getElementById("createRoomBtn");
+    const joinRoomBtn = document.getElementById("joinRoomBtn");
+    const leaveRoomBtn = document.getElementById("leaveRoomBtn");
+    const customGameFormEl = document.getElementById("customGameForm");
+    const customGameNameEl = document.getElementById("customGameName");
+    const customGameSummaryEl = document.getElementById("customGameSummary");
+    const customQuestionsEl = document.getElementById("customQuestions");
+    const addCustomQuestionBtn = document.getElementById("addCustomQuestionBtn");
+    const publishCustomGameBtn = document.getElementById("publishCustomGameBtn");
+    const customGameStatusEl = document.getElementById("customGameStatus");
+
+    function normalizeGame(event, offsetYear = 0) {
+      const gameYear = year + offsetYear;
+      const date = new Date(gameYear, event.month, event.day, 17, 0, 0);
+      return {
+        ...event,
+        gameId: `${event.id}-${gameYear}`,
+        date,
+        gameYear
+      };
+    }
+
+    function upcomingGames() {
+      const builtInGames = eventCatalog
+        .flatMap((event) => [normalizeGame(event, 0), normalizeGame(event, 1)])
+        ;
+      const customGames = publishedCustomGames.map((game) => ({
+        ...game,
+        id: game.id,
+        gameId: game.id,
+        date: new Date(game.closesAt || Date.now() + 365 * 86400000),
+        type: "Custom",
+        summary: game.summary || `A custom prediction game by ${game.creator || "a player"}.`,
+        questions: game.questions || [],
+      }));
+
+      return [...customGames, ...builtInGames]
+        .filter((game) => game.date >= new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1))
+        .sort((a, b) => {
+          if (a.type === "Custom" && b.type !== "Custom") return -1;
+          if (a.type !== "Custom" && b.type === "Custom") return 1;
+          if (a.type === "Custom" && b.type === "Custom") {
+            return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+          }
+          return a.date - b.date;
+        })
+        .slice(0, 12);
+    }
+
+    function loadState() {
+      const fallback = { entries: {}, activeRoomByGame: {}, playerName: "", notify: "none", notificationReceipts: {} };
+      try {
+        return { ...fallback, ...(JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}) };
+      } catch {
+        return fallback;
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    function normalizePlayerName(value) {
+      return String(value || "").replace(/\s+/g, " ").trim().slice(0, 24);
+    }
+
+    function activePlayerName() {
+      return normalizePlayerName(playerNameEl.value || state.playerName);
+    }
+
+    function saveActivePlayerName(name) {
+      const cleanName = normalizePlayerName(name);
+      if (cleanName && cleanName !== state.playerName) {
+        state.playerName = cleanName;
+        saveState();
+      }
+      return cleanName;
+    }
+
+    function minigamesApiUrl(gameId) {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/minigames/${encodeURIComponent(gameId)}/entries`;
+    }
+
+    function minigamesResultsApiUrl(gameId) {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/minigames/${encodeURIComponent(gameId)}/results`;
+    }
+
+    function minigamesResultsCheckApiUrl(gameId) {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/minigames/${encodeURIComponent(gameId)}/results/check`;
+    }
+
+    function customMinigamesApiUrl() {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/minigames/custom`;
+    }
+
+    function notificationVapidApiUrl() {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/notifications/vapid-public-key`;
+    }
+
+    function notificationSubscribeApiUrl() {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/notifications/subscribe`;
+    }
+
+    async function loadPublishedCustomGames(force = false) {
+      if (customGamesLoaded && !force) {
+        return true;
+      }
+
+      try {
+        const response = await fetch(customMinigamesApiUrl(), {
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) {
+          throw new Error(`Custom games request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        publishedCustomGames = Array.isArray(data.games) ? data.games : [];
+        customGamesLoaded = true;
+        sharedStatus = "online";
+        return true;
+      } catch (err) {
+        customGamesLoaded = true;
+        sharedStatus = "offline";
+        return false;
+      }
+    }
+
+    async function publishCustomGame(game) {
+      const response = await fetch(customMinigamesApiUrl(), {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(game),
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || `Publish failed: ${response.status}`);
+      }
+      return data.game;
+    }
+
+    function resultMapForGame(game) {
+      return sharedResults[game.gameId] || {};
+    }
+
+    function resultForQuestion(game, question, index) {
+      return resultMapForGame(game)[getQuestionId(question, index)] || null;
+    }
+
+    async function loadResultsForGame(game, force = false) {
+      const lastChecked = resultsCheckedAt[game.gameId] || 0;
+      if (!force && Date.now() - lastChecked < 30000) {
+        return true;
+      }
+
+      try {
+        const response = await fetch(minigamesResultsApiUrl(game.gameId), {
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) {
+          throw new Error(`Results request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        sharedResults[game.gameId] = Object.fromEntries(
+          (Array.isArray(data.results) ? data.results : [])
+            .filter((result) => result.questionId)
+            .map((result) => [result.questionId, result])
+        );
+        resultsCheckedAt[game.gameId] = Date.now();
+        sharedStatus = "online";
+        return true;
+      } catch (err) {
+        sharedStatus = "offline";
+        return false;
+      }
+    }
+
+    async function checkResultsForGame(game) {
+      const questionsToCheck = game.questions
+        .map((question, index) => ({ question, index }))
+        .filter(({ question }) => isQuestionLocked(game, question))
+        .map(({ question, index }) => ({
+          id: getQuestionId(question, index),
+          text: getQuestionText(question),
+          autoSource: question.autoSource || "",
+          answers: getAnswers(question).map((answerOption) => ({
+            id: answerOption.id,
+            label: answerOption.label,
+          })),
+        }));
+
+      if (!questionsToCheck.length) {
+        return true;
+      }
+
+      try {
+        const response = await fetch(minigamesResultsCheckApiUrl(game.gameId), {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            questions: questionsToCheck,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Result check failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        sharedResults[game.gameId] = Object.fromEntries(
+          (Array.isArray(data.results) ? data.results : [])
+            .filter((result) => result.questionId)
+            .map((result) => [result.questionId, result])
+        );
+        resultsCheckedAt[game.gameId] = Date.now();
+        sharedStatus = "online";
+        return true;
+      } catch (err) {
+        sharedStatus = "offline";
+        return false;
+      }
+    }
+
+    function cleanRoomCode(value) {
+      return String(value || "").replace(/[^A-HJ-NP-Z2-9]/gi, "").toUpperCase().slice(0, 6);
+    }
+
+    function isValidRoomCode(value) {
+      return /^[A-HJ-NP-Z2-9]{6}$/.test(cleanRoomCode(value));
+    }
+
+    function minigamesRoomApiUrl(gameId, roomCode) {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/minigames/${encodeURIComponent(gameId)}/rooms/${encodeURIComponent(roomCode)}/entries`;
+    }
+
+    function minigamesRoomsApiUrl(gameId) {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/minigames/${encodeURIComponent(gameId)}/rooms`;
+    }
+
+    function minigamesRoomInfoApiUrl(gameId, roomCode) {
+      const base = window.MINIGAMES_API_BASE || "";
+      return `${base}/api/minigames/${encodeURIComponent(gameId)}/rooms/${encodeURIComponent(roomCode)}`;
+    }
+
+    function roomEntriesKey(gameId, roomCode) {
+      return `${gameId}:${roomCode}`;
+    }
+
+    function setRoomStatus(game, message, tone = "") {
+      roomStatusByGame[game.gameId] = { message, tone };
+    }
+
+    function updateRoomUrl(game, roomCode) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("game", game.gameId);
+      if (roomCode) {
+        url.searchParams.set("room", roomCode);
+      } else {
+        url.searchParams.delete("room");
+      }
+      window.history.replaceState({}, "", url);
+    }
+
+    function activeRoomCode(game) {
+      const roomCode = cleanRoomCode(state.activeRoomByGame?.[game.gameId]);
+      return isValidRoomCode(roomCode) ? roomCode : "";
+    }
+
+    function hydrateGameFromUrl(games) {
+      const gameId = new URLSearchParams(window.location.search).get("game");
+      return games.some((game) => game.gameId === gameId) ? gameId : "";
+    }
+
+    function hydrateRoomFromUrl(game) {
+      const roomCode = cleanRoomCode(new URLSearchParams(window.location.search).get("room"));
+      if (!roomCode || !isValidRoomCode(roomCode)) {
+        return "";
+      }
+
+      if (activeRoomCode(game) === roomCode) {
+        return roomCode;
+      }
+
+      setRoomStatus(game, `Checking room ${roomCode} before joining...`, "warn");
+      return "";
+    }
+
+    function leaderboardScope(game) {
+      const roomCode = activeRoomCode(game) || hydrateRoomFromUrl(game);
+      return roomCode
+        ? { type: "room", roomCode, label: `Private room ${roomCode}` }
+        : { type: "public", roomCode: "", label: sharedStatus === "online" ? "Public leaderboard" : "Server unavailable" };
+    }
+
+    async function loadSharedEntries(game, force = false) {
+      if (!force && sharedLoadedGames.has(game.gameId)) {
+        return true;
+      }
+
+      try {
+        const response = await fetch(minigamesApiUrl(game.gameId), {
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) {
+          throw new Error(`Shared entries request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        sharedEntries[game.gameId] = Array.isArray(data.entries) ? data.entries : [];
+        sharedLoadedGames.add(game.gameId);
+        sharedStatus = "online";
+        return true;
+      } catch (err) {
+        sharedStatus = "offline";
+        return false;
+      }
+    }
+
+    async function loadRoomEntries(game, roomCode, force = false) {
+      if (!isValidRoomCode(roomCode)) {
+        setRoomStatus(game, "That room code is not valid. Create a room first, then share its code.", "bad");
+        return false;
+      }
+
+      const key = roomEntriesKey(game.gameId, roomCode);
+      if (!force && sharedLoadedRooms.has(key)) {
+        return true;
+      }
+
+      try {
+        const response = await fetch(minigamesRoomApiUrl(game.gameId, roomCode), {
+          headers: { Accept: "application/json" },
+        });
+        if (response.status === 404) {
+          sharedRooms[key] = [];
+          sharedLoadedRooms.delete(key);
+          if (activeRoomCode(game) === roomCode) {
+            state.activeRoomByGame ||= {};
+            delete state.activeRoomByGame[game.gameId];
+            saveState();
+            updateRoomUrl(game, "");
+          }
+          setRoomStatus(game, `Room ${roomCode} does not exist yet. Create it first, then share the code.`, "bad");
+          sharedStatus = "online";
+          return false;
+        }
+        if (!response.ok) {
+          throw new Error(`Room entries request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        sharedRooms[key] = Array.isArray(data.entries) ? data.entries : [];
+        roomInfoByKey[key] = data.room || { code: roomCode };
+        sharedLoadedRooms.add(key);
+        sharedStatus = "online";
+        return true;
+      } catch (err) {
+        sharedStatus = "offline";
+        return false;
+      }
+    }
+
+    async function loadRoomInfo(game, roomCode) {
+      const key = roomEntriesKey(game.gameId, roomCode);
+      const response = await fetch(minigamesRoomInfoApiUrl(game.gameId, roomCode), {
+        headers: { Accept: "application/json" },
+      });
+      if (response.status === 404) {
+        sharedStatus = "online";
+        return null;
+      }
+      if (!response.ok) {
+        throw new Error(`Room check failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      roomInfoByKey[key] = data.room || { code: roomCode };
+      sharedRooms[key] = Array.isArray(data.entries) ? data.entries : [];
+      sharedLoadedRooms.add(key);
+      sharedStatus = "online";
+      return data;
+    }
+
+    function activateRoom(game, roomCode, room) {
+      state.activeRoomByGame ||= {};
+      state.activeRoomByGame[game.gameId] = roomCode;
+      saveState();
+      roomInfoByKey[roomEntriesKey(game.gameId, roomCode)] = room || { code: roomCode };
+      updateRoomUrl(game, roomCode);
+    }
+
+    function leaveRoom(game) {
+      const roomCode = activeRoomCode(game);
+      state.activeRoomByGame ||= {};
+      delete state.activeRoomByGame[game.gameId];
+      saveState();
+      updateRoomUrl(game, "");
+      setRoomStatus(
+        game,
+        roomCode ? `Left room ${roomCode}. You are back on the public leaderboard.` : "You are already on the public leaderboard.",
+        ""
+      );
+      render();
+      loadEntriesForScope(game, true).then(() => {
+        if (currentGame().gameId === game.gameId) {
+          renderGame(game);
+        }
+      });
+    }
+
+    async function createRoom(game) {
+      createRoomBtn.disabled = true;
+      joinRoomBtn.disabled = true;
+      setRoomStatus(game, "Creating a real shared room...", "warn");
+      renderRoomControls(game, leaderboardScope(game));
+
+      try {
+        const response = await fetch(minigamesRoomsApiUrl(game.gameId), {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}),
+        });
+        if (!response.ok) {
+          throw new Error(`Room create failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const roomCode = cleanRoomCode(data.room?.code);
+        if (!roomCode) {
+          throw new Error("Room create response did not include a code");
+        }
+
+        const key = roomEntriesKey(game.gameId, roomCode);
+        sharedRooms[key] = Array.isArray(data.entries) ? data.entries : [];
+        sharedLoadedRooms.add(key);
+        activateRoom(game, roomCode, data.room);
+        setRoomStatus(game, `Room ${roomCode} is ready. Share this code with friends.`, "good");
+        showToast(`Created room ${roomCode}.`);
+        render();
+      } catch (err) {
+        setRoomStatus(game, "Could not create a shared room right now. Your public picks still work.", "bad");
+        showToast("Room creation failed. Try again in a moment.");
+        renderRoomControls(game, leaderboardScope(game));
+      } finally {
+        createRoomBtn.disabled = false;
+        joinRoomBtn.disabled = false;
+      }
+    }
+
+    async function joinRoom(game, roomCode, { silent = false } = {}) {
+      const cleanedCode = cleanRoomCode(roomCode);
+      if (!cleanedCode || !isValidRoomCode(cleanedCode)) {
+        setRoomStatus(game, "Enter a real 6-character room code to join.", "bad");
+        renderRoomControls(game, leaderboardScope(game));
+        return false;
+      }
+
+      createRoomBtn.disabled = true;
+      joinRoomBtn.disabled = true;
+      setRoomStatus(game, `Checking room ${cleanedCode}...`, "warn");
+      renderRoomControls(game, leaderboardScope(game));
+
+      try {
+        const data = await loadRoomInfo(game, cleanedCode);
+        if (!data?.room?.code) {
+          setRoomStatus(game, `No room named ${cleanedCode} exists yet. Create a room before sharing a code.`, "bad");
+          if (!silent) {
+            showToast(`Room ${cleanedCode} was not found.`);
+          }
+          renderRoomControls(game, leaderboardScope(game));
+          return false;
+        }
+
+        activateRoom(game, cleanedCode, data.room);
+        setRoomStatus(game, `Joined room ${cleanedCode}. Picks now save to that private leaderboard.`, "good");
+        if (!silent) {
+          showToast(`Joined room ${cleanedCode}.`);
+        }
+        render();
+        return true;
+      } catch (err) {
+        setRoomStatus(game, `Could not verify room ${cleanedCode}. Staying on the current leaderboard.`, "bad");
+        if (!silent) {
+          showToast("Could not verify that room.");
+        }
+        renderRoomControls(game, leaderboardScope(game));
+        return false;
+      } finally {
+        createRoomBtn.disabled = false;
+        joinRoomBtn.disabled = false;
+      }
+    }
+
+    async function loadEntriesForScope(game, force = false) {
+      const scope = leaderboardScope(game);
+      return scope.type === "room"
+        ? loadRoomEntries(game, scope.roomCode, force)
+        : loadSharedEntries(game, force);
+    }
+
+    async function saveSharedEntry(game, entry) {
+      try {
+        const response = await fetch(minigamesApiUrl(game.gameId), {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: entry.name,
+            picks: entry.picks,
+            notify: entry.notify,
+          }),
+        });
+        if (!response.ok) {
+          throw new Error(`Shared save request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        sharedEntries[game.gameId] = Array.isArray(data.entries) ? data.entries : [];
+        sharedLoadedGames.add(game.gameId);
+        sharedStatus = "online";
+        return true;
+      } catch (err) {
+        sharedStatus = "offline";
+        console.error("Could not save minigame picks to server:", err);
+        return false;
+      }
+    }
+
+    async function saveRoomEntry(game, roomCode, entry) {
+      try {
+        const response = await fetch(minigamesRoomApiUrl(game.gameId, roomCode), {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: entry.name,
+            picks: entry.picks,
+            notify: entry.notify,
+          }),
+        });
+        if (response.status === 404) {
+          state.activeRoomByGame ||= {};
+          delete state.activeRoomByGame[game.gameId];
+          saveState();
+          updateRoomUrl(game, "");
+          setRoomStatus(game, `Room ${roomCode} was not found, so your picks were not saved.`, "bad");
+          sharedStatus = "online";
+          return false;
+        }
+        if (!response.ok) {
+          throw new Error(`Room save request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const key = roomEntriesKey(game.gameId, roomCode);
+        sharedRooms[key] = Array.isArray(data.entries) ? data.entries : [];
+        sharedLoadedRooms.add(key);
+        sharedStatus = "online";
+        return true;
+      } catch (err) {
+        sharedStatus = "offline";
+        console.error("Could not save room picks to server:", err);
+        return false;
+      }
+    }
+
+    async function saveEntryForScope(game, entry) {
+      const scope = leaderboardScope(game);
+      if (scope.type !== "room") {
+        return saveSharedEntry(game, entry);
+      }
+
+      let roomData = null;
+      try {
+        roomData = await loadRoomInfo(game, scope.roomCode);
+      } catch (err) {
+        setRoomStatus(game, `Could not verify room ${scope.roomCode}, so your picks were not saved to the server.`, "bad");
+        return false;
+      }
+
+      if (!roomData?.room?.code) {
+        state.activeRoomByGame ||= {};
+        delete state.activeRoomByGame[game.gameId];
+        saveState();
+        updateRoomUrl(game, "");
+        setRoomStatus(game, `Room ${scope.roomCode} was not found, so your picks were not saved to the server.`, "bad");
+        return false;
+      }
+
+      return saveRoomEntry(game, scope.roomCode, entry);
+    }
+
+    function getQuestionId(question, index) {
+      return question.id || `q-${index}`;
+    }
+
+    function getQuestionText(question) {
+      return Array.isArray(question) ? question[0] : question.text;
+    }
+
+    function getAnswers(question) {
+      const rawAnswers = Array.isArray(question) ? question[1] : question.answers;
+      return rawAnswers.map((rawAnswer) => {
+        if (typeof rawAnswer === "string") {
+          return answer(rawAnswer, 50);
+        }
+        return {
+          id: rawAnswer.id || slugify(rawAnswer.label),
+          label: rawAnswer.label,
+          odds: Math.min(95, Math.max(4, Number(rawAnswer.odds) || 50)),
+          points: rawAnswer.points || pointsForOdds(rawAnswer.odds)
+        };
+      });
+    }
+
+    function maxPointsForGame(game) {
+      return game.questions.reduce((total, question) => {
+        const points = getAnswers(question).map((answerOption) => answerOption.points);
+        return total + Math.max(...points);
+      }, 0);
+    }
+
+    function questionLockDate(game, question) {
+      if (question.lockAt) {
+        return new Date(question.lockAt);
+      }
+      return game.date;
+    }
+
+    function isQuestionLocked(game, question) {
+      return questionLockDate(game, question) <= new Date();
+    }
+
+    function openQuestions(game) {
+      return game.questions.filter((question) => !isQuestionLocked(game, question));
+    }
+
+    function lockedQuestions(game) {
+      return game.questions.filter((question) => isQuestionLocked(game, question));
+    }
+
+    function resolvedQuestions(game) {
+      return game.questions.filter((question, index) => {
+        const result = resultForQuestion(game, question, index);
+        return result?.status === "resolved" && result.answerId;
+      });
+    }
+
+    function answerMeta(answerOption) {
+      return `
+        <span class="answer-chance">${answerOption.odds}% chance</span>
+        <span class="answer-points">${answerOption.points} pts</span>
+      `;
+    }
+
+    function getSavedPick(picks, question, index) {
+      if (Array.isArray(picks)) {
+        return picks[index] || "";
+      }
+
+      if (picks && typeof picks === "object") {
+        return picks[getQuestionId(question, index)] || "";
+      }
+
+      return "";
+    }
+
+    function findSavedEntryForName(game, entries, name) {
+      const cleanName = normalizePlayerName(name).toLowerCase();
+      if (!cleanName) {
+        return null;
+      }
+
+      return entries.find((entry) => String(entry.name || "").toLowerCase() === cleanName) || null;
+    }
+
+    function renderProfileNote(name, savedEntry) {
+      if (!name) {
+        profileNoteEl.textContent = "Enter a player name so the server can update your picks on the leaderboard.";
+        return;
+      }
+
+      const savedText = savedEntry
+        ? "Server picks found for this event."
+        : "No server picks for this event yet.";
+      profileNoteEl.innerHTML = `Player name: <strong>${escapeHtml(name)}</strong>. ${savedText}`;
+    }
+
+    function renderCustomGameBuilder() {
+      customQuestionsEl.innerHTML = customBuilderQuestions.map((answerCount, questionIndex) => {
+        const answers = Array.from({ length: answerCount }, (_, answerIndex) => `
+          <div class="creator-answer-row">
+            <input class="name-input" name="custom-q${questionIndex}-a${answerIndex}-label" maxlength="80" placeholder="Option ${answerIndex + 1}" required />
+            <input class="name-input" name="custom-q${questionIndex}-a${answerIndex}-odds" type="number" min="1" max="99" placeholder="Odds %" required />
+            <input class="name-input" name="custom-q${questionIndex}-a${answerIndex}-points" type="number" min="1" max="999" placeholder="Pts" required />
+          </div>
+        `).join("");
+
+        return `
+          <section class="creator-question" data-question-index="${questionIndex}">
+            <div class="creator-question-head">
+              <strong>Question ${questionIndex + 1}</strong>
+              <button class="btn small secondary" type="button" data-add-custom-option="${questionIndex}">Add option</button>
+            </div>
+            <input class="name-input" name="custom-q${questionIndex}-text" maxlength="120" placeholder="Question text" required />
+            <input class="name-input" name="custom-q${questionIndex}-source" maxlength="300" placeholder="Optional official result page URL for auto-scoring" />
+            ${answers}
+          </section>
+        `;
+      }).join("");
+    }
+
+    function setCustomGameStatus(message, tone = "") {
+      customGameStatusEl.className = `creator-status ${tone}`.trim();
+      customGameStatusEl.textContent = message;
+    }
+
+    function customGameFromForm() {
+      const formData = new FormData(customGameFormEl);
+      const questions = customBuilderQuestions.map((answerCount, questionIndex) => {
+        const text = (formData.get(`custom-q${questionIndex}-text`) || "").toString().trim();
+        const autoSource = (formData.get(`custom-q${questionIndex}-source`) || "").toString().trim();
+        const answers = Array.from({ length: answerCount }, (_, answerIndex) => {
+          const label = (formData.get(`custom-q${questionIndex}-a${answerIndex}-label`) || "").toString().trim();
+          return {
+            label,
+            odds: Number(formData.get(`custom-q${questionIndex}-a${answerIndex}-odds`) || 0),
+            points: Number(formData.get(`custom-q${questionIndex}-a${answerIndex}-points`) || 0),
+          };
+        }).filter((answerOption) => answerOption.label && answerOption.odds > 0 && answerOption.points > 0);
+
+        return { text, autoSource, answers };
+      }).filter((question) => question.text && question.answers.length >= 2);
+
+      return {
+        name: customGameNameEl.value.trim(),
+        summary: customGameSummaryEl.value.trim(),
+        creator: activePlayerName(),
+        questions,
+      };
+    }
+
+    function renderedDraftGame() {
+      return upcomingGames().find((game) => game.gameId === renderedGameId) || null;
+    }
+
+    function captureDraftPicks(game = renderedDraftGame()) {
+      if (!game || renderedGameId !== game.gameId || !questionsEl.children.length) {
+        return;
+      }
+
+      const formData = new FormData(formEl);
+
+      game.questions.forEach((question, index) => {
+        if (isQuestionLocked(game, question)) {
+          return;
+        }
+
+        const questionId = getQuestionId(question, index);
+        const value = (formData.get(questionId) || "").toString();
+        if (value) {
+          rememberDraftPick(game, questionId, value);
+        }
+      });
+    }
+
+    function captureVisibleDraftPicks() {
+      const game = renderedDraftGame();
+      if (!game || !questionsEl.children.length) {
+        return;
+      }
+
+      questionsEl.querySelectorAll("input[type='radio']:checked").forEach((input) => {
+        const question = game.questions.find((candidate, index) => getQuestionId(candidate, index) === input.name);
+        if (!question || isQuestionLocked(game, question)) {
+          return;
+        }
+
+        rememberDraftPick(game, input.name, input.value);
+      });
+    }
+
+    function rememberDraftPick(game, questionId, value) {
+      if (!game || !questionId || !value) {
+        return;
+      }
+
+      const draft = { ...(draftPicksByGame[game.gameId] || {}) };
+      draft[questionId] = value;
+      draftPicksByGame[game.gameId] = draft;
+    }
+
+    function getDraftPick(game, question, index) {
+      return draftPicksByGame[game.gameId]?.[getQuestionId(question, index)] || "";
+    }
+
+    function normalizePickId(question, pick) {
+      const answers = getAnswers(question);
+      return answers.find((candidate) => candidate.id === pick || candidate.label === pick)?.id || pick;
+    }
+
+    function scorePicks(game, picks) {
+      return game.questions.reduce((total, question, index) => {
+        if (!isQuestionLocked(game, question)) {
+          return total;
+        }
+
+        const pick = normalizePickId(question, getSavedPick(picks, question, index));
+        const result = resultForQuestion(game, question, index);
+        if (result?.status !== "resolved" || !result.answerId) {
+          return total;
+        }
+
+        const correctAnswerId = normalizePickId(question, result.answerId);
+        const correctAnswer = getAnswers(question).find((answerOption) => answerOption.id === correctAnswerId);
+        return total + (pick === correctAnswerId ? (correctAnswer?.points || 0) : 0);
+      }, 0);
+    }
+
+    function dateLabel(date) {
+      return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(date);
+    }
+
+    function daysUntil(date) {
+      const ms = date - today;
+      return Math.max(0, Math.ceil(ms / 86400000));
+    }
+
+    function allEntries(game) {
+      const scope = leaderboardScope(game);
+      const roomKey = roomEntriesKey(game.gameId, scope.roomCode);
+      const sourceEntries = scope.type === "room"
+        ? (Array.isArray(sharedRooms[roomKey]) ? sharedRooms[roomKey] : [])
+        : Array.isArray(sharedEntries[game.gameId])
+        ? sharedEntries[game.gameId]
+        : [];
+
+      return sourceEntries.map((entry) => ({
+        ...entry,
+        score: scorePicks(game, entry.picks),
+        source: scope.type
+      })).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+    }
+
+    function renderTabs(games) {
+      tabsEl.innerHTML = games.map((game) => `
+        <button class="event-tab" type="button" data-game="${game.gameId}" aria-pressed="${game.gameId === selectedGameId}">
+          <span class="tab-kicker"><span>${escapeHtml(game.type)}</span><span>${dateLabel(game.date)}</span></span>
+          <div class="tab-title">${escapeHtml(game.name)}</div>
+          <p class="tab-description">${escapeHtml(game.summary)}</p>
+          <p class="tab-meta">${daysUntil(game.date)} days away</p>
+        </button>
+      `).join("");
+
+      tabsEl.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", () => {
+          captureDraftPicks();
+          selectedGameId = button.dataset.game;
+          render();
+          document.getElementById("play").scrollIntoView({ block: "start" });
+        });
+      });
+    }
+
+    function renderRoomControls(game, scope) {
+      const key = roomEntriesKey(game.gameId, scope.roomCode);
+      const roomInfo = scope.type === "room" ? roomInfoByKey[key] : null;
+      const status = roomStatusByGame[game.gameId] || {};
+      const urlRoomCode = cleanRoomCode(new URLSearchParams(window.location.search).get("room"));
+
+      roomSummaryEl.innerHTML = scope.type === "room"
+        ? `Active room <span class="room-code">${escapeHtml(scope.roomCode)}</span>${roomInfo?.createdAt ? " is saved in shared storage." : " is being checked in shared storage."}`
+        : "Create a real shared room, or join an existing room code.";
+      roomCodeInputEl.value = scope.type === "room" ? scope.roomCode : (urlRoomCode || roomCodeInputEl.value);
+      leaveRoomBtn.hidden = scope.type !== "room";
+      roomStatusEl.className = `room-status ${status.tone || ""}`.trim();
+      roomStatusEl.textContent = status.message || (
+        scope.type === "room"
+          ? "Only people using this code will appear on this leaderboard."
+          : "Joining checks shared storage first. Unknown codes stay unjoined."
+      );
+    }
+
+    function resultStatusLabel(result) {
+      if (result?.status === "resolved") return "Scored";
+      if (result?.status === "needs-source") return "Needs source";
+      return "Checking";
+    }
+
+    function resultBadgeClass(result) {
+      if (result?.status === "resolved") return "resolved";
+      if (result?.status === "needs-source") return "needs-source";
+      return "";
+    }
+
+    function resultAnswerLabel(game, question, index) {
+      const result = resultForQuestion(game, question, index);
+      if (result?.status !== "resolved" || !result.answerId) {
+        return "";
+      }
+      const answerOption = getAnswers(question).find((candidate) => candidate.id === normalizePickId(question, result.answerId));
+      return answerOption?.label || result.answerId;
+    }
+
+    function renderResults(game) {
+      const locked = lockedQuestions(game);
+      const resolved = resolvedQuestions(game);
+      const resultMap = resultMapForGame(game);
+
+      resultsSummaryEl.textContent = locked.length === 0
+        ? "Auto scoring starts when questions close."
+        : `${resolved.length} of ${locked.length} closed questions have confirmed answers.`;
+
+      if (locked.length === 0) {
+        resultListEl.innerHTML = `<p class="empty-state">No questions are closed yet. The site will check results after the event starts.</p>`;
+        return;
+      }
+
+      resultListEl.innerHTML = locked.map((question, lockedIndex) => {
+        const questionIndex = game.questions.indexOf(question);
+        const questionId = getQuestionId(question, questionIndex);
+        const result = resultMap[questionId] || { status: "pending", note: "Waiting for the event result source." };
+        const answerLabel = resultAnswerLabel(game, question, questionIndex);
+        const note = answerLabel
+          ? `Correct answer: ${answerLabel}`
+          : (result.note || "Waiting for a reliable source before scoring.");
+        return `
+          <article class="result-row">
+            <span class="result-badge ${resultBadgeClass(result)}">${resultStatusLabel(result)}</span>
+            <strong>${lockedIndex + 1}. ${escapeHtml(getQuestionText(question))}</strong>
+            <span class="result-note">${escapeHtml(note)}</span>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function renderGame(game) {
+      captureVisibleDraftPicks();
+      const entries = allEntries(game);
+      const scope = leaderboardScope(game);
+      const profileName = activePlayerName();
+      const savedEntry = findSavedEntryForName(game, entries, profileName);
+      const remaining = daysUntil(game.date);
+      const questionsStillOpen = openQuestions(game).length;
+      const questionsLocked = lockedQuestions(game).length;
+      const hasOpenQuestions = questionsStillOpen > 0;
+
+      metaEl.innerHTML = `
+        <span class="chip">${game.type}</span>
+        <span class="chip">${remaining === 0 ? "Tonight" : `${remaining} days away`}</span>
+        <span class="chip">${questionsStillOpen} open · ${questionsLocked} locked</span>
+        <span class="chip">${scope.label}</span>
+      `;
+      titleEl.textContent = game.name;
+      summaryEl.textContent = game.summary;
+      openDateEl.textContent = dateLabel(game.date);
+      entryCountEl.textContent = String(entries.length);
+      questionCountEl.textContent = String(maxPointsForGame(game));
+      liveStatusEl.textContent = `${game.name} is next`;
+      playerNameEl.value = profileName;
+      renderProfileNote(profileName, savedEntry);
+
+      formEl.querySelector("button[type='submit']").disabled = !hasOpenQuestions;
+      formEl.querySelector("button[type='submit']").textContent = hasOpenQuestions
+        ? "Lock picks"
+        : "Questions closed";
+
+      questionsEl.innerHTML = game.questions.map((question, questionIndex) => {
+        const locked = isQuestionLocked(game, question);
+        if (locked) {
+          const result = resultForQuestion(game, question, questionIndex);
+          const answerLabel = resultAnswerLabel(game, question, questionIndex);
+          const resultText = answerLabel
+            ? `Scored. Correct answer: ${answerLabel}.`
+            : result?.status === "needs-source"
+            ? "Closed. Auto scoring needs a reliable live source for this one."
+            : "Closed. Auto scoring is checking for the confirmed answer.";
+          return `
+            <fieldset class="question">
+              <legend class="question-text">${questionIndex + 1}. ${escapeHtml(getQuestionText(question))}</legend>
+              <p class="empty-state">${escapeHtml(resultText)}</p>
+            </fieldset>
+          `;
+        }
+
+        const questionId = getQuestionId(question, questionIndex);
+        const saved = normalizePickId(
+          question,
+          getDraftPick(game, question, questionIndex) || getSavedPick(savedEntry?.picks, question, questionIndex)
+        );
+        const options = getAnswers(question).map((answerOption) => `
+          <label class="answer">
+            <input type="radio" name="${questionId}" value="${answerOption.id}" ${answerOption.id === saved ? "checked" : ""} required />
+            <span>
+              <span class="answer-main">${escapeHtml(answerOption.label)}</span>
+              <span class="answer-meta">${answerMeta(answerOption)}</span>
+            </span>
+          </label>
+        `).join("");
+        return `
+          <fieldset class="question">
+            <legend class="question-text">${questionIndex + 1}. ${escapeHtml(getQuestionText(question))}</legend>
+            <div class="answers">${options}</div>
+          </fieldset>
+        `;
+      }).join("");
+
+      document.querySelectorAll("input[name='notify']").forEach((input) => {
+        input.checked = input.value === (state.notify || "none");
+      });
+
+      renderLeaderboard(entries, scope, game);
+      renderResults(game);
+      renderTicker(game, entries, scope);
+      renderRoomControls(game, scope);
+      saveNoteEl.textContent = savedEntry
+        ? `Saved picks for ${savedEntry.name}. Change anything and lock picks again.`
+        : hasOpenQuestions
+        ? "Lock picks to save them to the server leaderboard."
+        : "This game's questions have started, so new picks are closed.";
+      renderedGameId = game.gameId;
+      maybeShowStoredNotification(game);
+    }
+
+    function renderLeaderboard(entries, scope, game) {
+      const maxPoints = maxPointsForGame(game);
+
+      if (entries.length === 0) {
+        leaderboardEl.innerHTML = `
+          <li class="leader-row">
+            <span class="rank">1</span>
+            <span>
+              <span class="leader-name">No players yet</span>
+              <div class="leader-details">${lockedQuestions(game).length === 0 ? "Points unlock after questions start." : `${maxPoints} max weighted points are on the board.`}</div>
+            </span>
+            <span class="points">0</span>
+          </li>
+        `;
+        return;
+      }
+
+      leaderboardEl.innerHTML = entries.slice(0, 8).map((entry, index) => `
+        <li class="leader-row">
+          <span class="rank">${index + 1}</span>
+          <span>
+            <span class="leader-name">${escapeHtml(entry.name)}</span>
+            <div class="leader-details">${scope.type === "room" ? `Room ${scope.roomCode}` : "Public board"} · ${entry.score}/${maxPoints} weighted points</div>
+          </span>
+          <span class="points">${entry.score}</span>
+        </li>
+      `).join("");
+    }
+
+    function renderTicker(game, entries, scope) {
+      if (entries.length === 0) {
+        tickerEl.innerHTML = [
+          scope.type === "room" ? `No one has joined room ${scope.roomCode} yet.` : "No one has joined this public game yet.",
+          `${openQuestions(game).length} questions are open for real players.`,
+          `Lock your picks to start the ${scope.type === "room" ? "room" : "public"} leaderboard.`
+        ].map((line) => `<li><span class="dot"></span><span>${escapeHtml(line)}</span></li>`).join("");
+        emptyStateEl.hidden = false;
+        return;
+      }
+
+      const top = entries[0];
+      const player = entries.find((entry) => entry.name === activePlayerName());
+      const lines = [
+        `${top.name} is leading ${scope.type === "room" ? `room ${scope.roomCode}` : game.name} with ${top.score} points.`,
+        `${resolvedQuestions(game).length} questions are scored, ${openQuestions(game).length} are still open.`,
+        player ? `${player.name}, your projected score is ${player.score}.` : `Lock your picks to join this ${scope.type === "room" ? "room" : "leaderboard"}.`
+      ];
+      tickerEl.innerHTML = lines.map((line) => `<li><span class="dot"></span><span>${escapeHtml(line)}</span></li>`).join("");
+      emptyStateEl.hidden = entries.length > 0;
+    }
+
+    function currentGame() {
+      const games = upcomingGames();
+      return games.find((game) => game.gameId === selectedGameId) || games[0];
+    }
+
+    function render() {
+      const games = upcomingGames();
+      selectedGameId = selectedGameId || hydrateGameFromUrl(games) || games[0].gameId;
+      const game = currentGame();
+      renderTabs(games);
+      renderGame(game);
+      loadPublishedCustomGames().then((loaded) => {
+        if (loaded) {
+          const refreshedGames = upcomingGames();
+          if (!refreshedGames.some((candidate) => candidate.gameId === selectedGameId)) {
+            selectedGameId = refreshedGames[0]?.gameId || selectedGameId;
+          }
+          renderTabs(refreshedGames);
+          renderGame(currentGame());
+        }
+      });
+      const urlRoomCode = cleanRoomCode(new URLSearchParams(window.location.search).get("room"));
+      const urlRoomKey = roomEntriesKey(game.gameId, urlRoomCode);
+      if (urlRoomCode && activeRoomCode(game) !== urlRoomCode && !checkedUrlRooms.has(urlRoomKey)) {
+        checkedUrlRooms.add(urlRoomKey);
+        joinRoom(game, urlRoomCode, { silent: true });
+      }
+      loadEntriesForScope(game).then((loaded) => {
+        if (loaded && currentGame().gameId === game.gameId) {
+          renderGame(game);
+        }
+      });
+      loadResultsForGame(game).then((loaded) => {
+        if (loaded && currentGame().gameId === game.gameId) {
+          renderGame(game);
+        }
+      });
+      if (lockedQuestions(game).length > 0) {
+        checkResultsForGame(game).then((loaded) => {
+          if (loaded && currentGame().gameId === game.gameId) {
+            renderGame(game);
+          }
+        });
+      }
+    }
+
+    function showToast(message) {
+      toastEl.textContent = message;
+      toastEl.classList.add("show");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toastEl.classList.remove("show"), 3600);
+    }
+
+    function showBrowserNotification(title, body, tag) {
+      if (!("Notification" in window) || Notification.permission !== "granted") {
+        return false;
+      }
+
+      new Notification(title, {
+        body,
+        tag,
+      });
+      return true;
+    }
+
+    function supportsPushNotifications() {
+      return window.isSecureContext && "serviceWorker" in navigator && "PushManager" in window;
+    }
+
+    function urlBase64ToUint8Array(value) {
+      const padding = "=".repeat((4 - (value.length % 4)) % 4);
+      const base64 = `${value}${padding}`.replace(/-/g, "+").replace(/_/g, "/");
+      const rawData = window.atob(base64);
+      return Uint8Array.from([...rawData].map((character) => character.charCodeAt(0)));
+    }
+
+    async function subscribeToPushNotifications(mode, entry, game) {
+      if (!supportsPushNotifications()) {
+        return { ok: false, reason: "unsupported" };
+      }
+
+      const keyResponse = await fetch(notificationVapidApiUrl(), {
+        headers: { Accept: "application/json" },
+      });
+      if (!keyResponse.ok) {
+        throw new Error(`Notification key request failed: ${keyResponse.status}`);
+      }
+
+      const keyData = await keyResponse.json();
+      if (!keyData.configured || !keyData.publicKey) {
+        return { ok: false, reason: "not-configured" };
+      }
+
+      const registration = await navigator.serviceWorker.register("/sw.js");
+      const existingSubscription = await registration.pushManager.getSubscription();
+      if (existingSubscription) {
+        await existingSubscription.unsubscribe();
+      }
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(keyData.publicKey),
+      });
+      const scope = leaderboardScope(game);
+
+      const saveResponse = await fetch(notificationSubscribeApiUrl(), {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subscription,
+          gameId: game.gameId,
+          roomCode: scope.type === "room" ? scope.roomCode : "",
+          playerName: entry.name,
+          notify: mode,
+        }),
+      });
+      if (!saveResponse.ok) {
+        throw new Error(`Notification subscribe failed: ${saveResponse.status}`);
+      }
+
+      return { ok: true };
+    }
+
+    function notificationSnapshot(game, entry, entries) {
+      const rank = entries.findIndex((candidate) => candidate.name === entry.name) + 1;
+      const scoringCount = resolvedQuestions(game).length;
+      return {
+        rank,
+        scoringCount,
+        key: `${game.gameId}:${entry.name}:${entry.score}:${rank}:${scoringCount}`,
+      };
+    }
+
+    function maybeShowStoredNotification(game) {
+      if (!("Notification" in window) || Notification.permission !== "granted") {
+        return;
+      }
+
+      const mode = state.notify || "none";
+      if (mode === "none" || !state.playerName) {
+        return;
+      }
+
+      const entries = allEntries(game);
+      const entry = entries.find((candidate) => candidate.name === state.playerName);
+      if (!entry) {
+        return;
+      }
+
+      const snapshot = notificationSnapshot(game, entry, entries);
+      if (snapshot.scoringCount === 0) {
+        return;
+      }
+
+      if (mode === "win" && snapshot.rank !== 1) {
+        return;
+      }
+
+      state.notificationReceipts ||= {};
+      if (state.notificationReceipts[game.gameId] === snapshot.key) {
+        return;
+      }
+
+      const title = mode === "win" ? "You are winning" : "Minigame score update";
+      const body = mode === "win"
+        ? `${entry.name}, you are currently first with ${entry.score} points.`
+        : `${entry.name}, you are rank ${snapshot.rank} with ${entry.score} points.`;
+
+      if (showBrowserNotification(title, body, `minigames-${game.gameId}-${mode}`)) {
+        state.notificationReceipts[game.gameId] = snapshot.key;
+        saveState();
+      }
+    }
+
+    async function handleNotifications(mode, entry, entries, game) {
+      if (mode === "none") {
+        showToast("Picks locked. No notifications will be sent.");
+        return;
+      }
+
+      if (!("Notification" in window)) {
+        showToast("This preview browser cannot show notifications. Try the public site in Safari or Chrome.");
+        return;
+      }
+
+      const permission = Notification.permission === "granted"
+        ? "granted"
+        : await Notification.requestPermission();
+
+      if (permission !== "granted") {
+        showToast("Picks locked. Notifications were not allowed.");
+        return;
+      }
+
+      const snapshot = notificationSnapshot(game, entry, entries);
+      const title = mode === "win" ? "Win-only browser alerts are on" : "Browser score updates are on";
+      const body = mode === "win"
+        ? `If you are first when this page checks the scoring questions, this browser can alert you.`
+        : `This browser can alert you when this page is open or reopened and scores change.`;
+
+      let pushReady = false;
+      try {
+        const pushResult = await subscribeToPushNotifications(mode, entry, game);
+        pushReady = pushResult.ok;
+      } catch (err) {
+        console.error("Could not enable push notifications:", err);
+      }
+
+      showBrowserNotification(title, body, `minigames-confirm-${entry.name}`);
+      state.notificationReceipts ||= {};
+      state.notificationReceipts[game.gameId] = snapshot.key;
+      saveState();
+      showToast(
+        pushReady
+          ? "Picks locked. Real browser notifications are on for this device."
+          : "Picks locked. Browser alerts are on while this site is open or reopened."
+      );
+    }
+
+    formEl.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const game = currentGame();
+      const formData = new FormData(formEl);
+      const name = normalizePlayerName(formData.get("playerName"));
+      const notify = (formData.get("notify") || "none").toString();
+      const openQuestionIds = game.questions
+        .map((question, index) => ({ question, index, questionId: getQuestionId(question, index) }))
+        .filter(({ question }) => !isQuestionLocked(game, question))
+        .map(({ questionId }) => questionId);
+
+      if (openQuestionIds.length === 0) {
+        showToast("These questions have already started, so new picks are closed.");
+        return;
+      }
+
+      if (!name) {
+        showToast("Add your name first.");
+        return;
+      }
+
+      const openPicks = Object.fromEntries(openQuestionIds.map((questionId) => [
+        questionId,
+        (formData.get(questionId) || "").toString(),
+      ]));
+
+      if (openQuestionIds.some((questionId) => !openPicks[questionId])) {
+        showToast("Add your name and answer every open question first.");
+        return;
+      }
+
+      const entriesLoaded = await loadEntriesForScope(game, true);
+      if (!entriesLoaded && lockedQuestions(game).length > 0) {
+        showToast("Could not load your existing server picks. Try again before updating this game.");
+        renderRoomControls(game, leaderboardScope(game));
+        return;
+      }
+
+      const savedEntry = findSavedEntryForName(game, allEntries(game), name);
+      const picks = { ...(savedEntry?.picks && !Array.isArray(savedEntry.picks) ? savedEntry.picks : {}) };
+      Object.assign(picks, openPicks);
+
+      const sanitizedPicks = Object.fromEntries(game.questions.map((question, index) => {
+        const questionId = getQuestionId(question, index);
+        return [questionId, picks[questionId] || ""];
+      }));
+
+      const entry = {
+        name,
+        picks: sanitizedPicks,
+        notify,
+        score: scorePicks(game, sanitizedPicks),
+        savedAt: new Date().toISOString()
+      };
+
+      const savedToServer = await saveEntryForScope(game, entry);
+      if (!savedToServer) {
+        showToast("Could not save picks to the server. Check the connection and try again.");
+        renderRoomControls(game, leaderboardScope(game));
+        return;
+      }
+
+      state.playerName = name;
+      state.notify = notify;
+      state.entries[game.gameId] = (state.entries[game.gameId] || []).filter(
+        (oldEntry) => String(oldEntry.name || "").toLowerCase() !== name.toLowerCase()
+      );
+      draftPicksByGame[game.gameId] = sanitizedPicks;
+      saveState();
+
+      showToast("Picks saved to the server.");
+      render();
+      await handleNotifications(notify, entry, allEntries(game), game);
+    });
+
+    formEl.addEventListener("change", () => {
+      saveActivePlayerName(playerNameEl.value);
+      captureVisibleDraftPicks();
+    });
+
+    questionsEl.addEventListener("change", (event) => {
+      const input = event.target.closest("input[type='radio']");
+      if (!input || !input.checked) {
+        return;
+      }
+
+      const game = renderedDraftGame();
+      if (!game) {
+        return;
+      }
+
+      const question = game.questions.find((candidate, index) => getQuestionId(candidate, index) === input.name);
+      if (!question || isQuestionLocked(game, question)) {
+        return;
+      }
+
+      rememberDraftPick(game, input.name, input.value);
+    });
+
+    questionsEl.addEventListener("input", () => {
+      captureVisibleDraftPicks();
+    });
+
+    playerNameEl.addEventListener("input", () => {
+      saveActivePlayerName(playerNameEl.value);
+    });
+
+    playerNameEl.addEventListener("blur", () => {
+      const name = saveActivePlayerName(playerNameEl.value);
+      renderProfileNote(name, findSavedEntryForName(currentGame(), allEntries(currentGame()), name));
+    });
+
+    document.getElementById("randomizeBtn").addEventListener("click", () => {
+      const game = currentGame();
+      game.questions.forEach((question, index) => {
+        if (isQuestionLocked(game, question)) {
+          return;
+        }
+
+        const questionId = getQuestionId(question, index);
+        const options = getAnswers(question);
+        const totalOdds = options.reduce((total, answerOption) => total + answerOption.odds, 0);
+        let bucket = Math.random() * totalOdds;
+        const choice = options.find((answerOption) => {
+          bucket -= answerOption.odds;
+          return bucket <= 0;
+        }) || options.at(-1);
+        const input = formEl.querySelector(`input[name="${CSS.escape(questionId)}"][value="${CSS.escape(choice.id)}"]`);
+        if (input) input.checked = true;
+      });
+      captureDraftPicks(game);
+      showToast("Random picks filled in. Change any you disagree with, then lock them.");
+    });
+
+    createRoomBtn.addEventListener("click", () => {
+      createRoom(currentGame());
+    });
+
+    joinRoomBtn.addEventListener("click", () => {
+      joinRoom(currentGame(), roomCodeInputEl.value);
+    });
+
+    roomCodeInputEl.addEventListener("input", () => {
+      const cleaned = cleanRoomCode(roomCodeInputEl.value);
+      if (roomCodeInputEl.value !== cleaned) {
+        roomCodeInputEl.value = cleaned;
+      }
+    });
+
+    roomCodeInputEl.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        joinRoom(currentGame(), roomCodeInputEl.value);
+      }
+    });
+
+    leaveRoomBtn.addEventListener("click", () => {
+      leaveRoom(currentGame());
+    });
+
+    addCustomQuestionBtn.addEventListener("click", () => {
+      customBuilderQuestions.push(4);
+      renderCustomGameBuilder();
+      setCustomGameStatus("Added a question. Custom games need at least 5 complete questions.");
+    });
+
+    customQuestionsEl.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-add-custom-option]");
+      if (!button) {
+        return;
+      }
+
+      const questionIndex = Number(button.dataset.addCustomOption);
+      customBuilderQuestions[questionIndex] = Math.min(8, (customBuilderQuestions[questionIndex] || 4) + 1);
+      renderCustomGameBuilder();
+      setCustomGameStatus("Added an option row. Fill in option, odds, and points before publishing.");
+    });
+
+    customGameFormEl.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const game = customGameFromForm();
+
+      if (!game.name || game.questions.length < 5) {
+        setCustomGameStatus("Add a game name and at least 5 complete questions.", "bad");
+        return;
+      }
+
+      publishCustomGameBtn.disabled = true;
+      setCustomGameStatus("Publishing your game...", "");
+
+      try {
+        const publishedGame = await publishCustomGame(game);
+        publishedCustomGames = [publishedGame, ...publishedCustomGames.filter((candidate) => candidate.id !== publishedGame.id)];
+        customGamesLoaded = true;
+        selectedGameId = publishedGame.id;
+        customGameFormEl.reset();
+        customBuilderQuestions = Array.from({ length: 5 }, () => 4);
+        renderCustomGameBuilder();
+        setCustomGameStatus(`Published "${publishedGame.name}". Everyone can see it in the minigames list.`, "good");
+        showToast("Custom minigame published.");
+        render();
+      } catch (err) {
+        setCustomGameStatus(err.message || "Could not publish that minigame right now.", "bad");
+      } finally {
+        publishCustomGameBtn.disabled = false;
+      }
+    });
+
+    window.setInterval(() => {
+      const game = currentGame();
+      if (!game || !lockedQuestions(game).length) {
+        return;
+      }
+
+      checkResultsForGame(game).then((loaded) => {
+        if (loaded && currentGame()?.gameId === game.gameId) {
+          renderGame(game);
+        }
+      });
+    }, 60000);
+
+    renderCustomGameBuilder();
+    render();
+  </script>
 </body>
 </html>
