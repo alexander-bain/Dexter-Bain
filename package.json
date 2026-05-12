@@ -5,6 +5,8 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
+    "generate:weather-game": "node scripts/generate-daily-weather-game.mjs",
+    "test:weather-game": "node scripts/test-daily-weather-game.mjs",
     "start": "node server.js"
   },
   "dependencies": {
