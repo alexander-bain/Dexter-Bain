@@ -772,6 +772,40 @@
       font-weight: 950;
     }
 
+    .signin-panel {
+      display: grid;
+      gap: 12px;
+    }
+
+    .signin-status {
+      margin: 0;
+      color: #d8dee9;
+      font-size: 0.9rem;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .signin-status strong {
+      color: #b9f6ca;
+      font-weight: 950;
+    }
+
+    .signin-actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+    }
+
+    .signin-panel .room-actions {
+      margin-top: 0;
+    }
+
+    .name-input[readonly] {
+      color: #b9f6ca;
+      border-color: rgba(49, 208, 170, 0.42);
+      background: rgba(49, 208, 170, 0.1);
+    }
+
     .section-title {
       margin: 0 0 12px;
       font-size: 1.05rem;
@@ -1864,6 +1898,19 @@
       </div>
 
       <aside class="side-stack">
+        <section class="panel signin-panel" aria-labelledby="signInTitle">
+          <h3 class="section-title" id="signInTitle">Player sign in</h3>
+          <p class="signin-status" id="signInStatus">Sign in with a player name so your picks use the same identity.</p>
+          <form class="signin-actions" id="signInForm">
+            <input class="name-input" id="signInName" maxlength="24" autocomplete="name" placeholder="Player name" required />
+            <button class="btn small" type="submit" id="signInBtn">Sign in</button>
+          </form>
+          <div class="room-actions">
+            <button class="btn small secondary" type="button" id="signOutBtn">Sign out</button>
+          </div>
+          <p class="empty-state">This keeps your name and saved picks on this device. Full password accounts can come later.</p>
+        </section>
+
         <section class="panel creator-panel is-collapsed" id="creatorPanel" aria-labelledby="creatorTitle">
           <div class="creator-compact">
             <h3 class="section-title" id="creatorTitle">Create a minigame</h3>
@@ -2902,6 +2949,11 @@
     const formEl = document.getElementById("predictionForm");
     const playerNameEl = document.getElementById("playerName");
     const profileNoteEl = document.getElementById("profileNote");
+    const signInFormEl = document.getElementById("signInForm");
+    const signInNameEl = document.getElementById("signInName");
+    const signInStatusEl = document.getElementById("signInStatus");
+    const signInBtn = document.getElementById("signInBtn");
+    const signOutBtn = document.getElementById("signOutBtn");
     const saveNoteEl = document.getElementById("saveNote");
     const liveStatusEl = document.getElementById("liveStatus");
     const toastEl = document.getElementById("toast");
@@ -3040,7 +3092,7 @@
     }
 
     function loadState() {
-      const fallback = { entries: {}, activeRoomByGame: {}, playerName: "", notify: "none", notificationReceipts: {} };
+      const fallback = { entries: {}, activeRoomByGame: {}, playerName: "", signedInPlayer: null, notify: "none", notificationReceipts: {} };
       try {
         return { ...fallback, ...(JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}) };
       } catch {
@@ -3066,8 +3118,16 @@
       return String(value || "").replace(/\s+/g, " ").trim().slice(0, 24);
     }
 
+    function signedInPlayerName() {
+      return normalizePlayerName(state.signedInPlayer?.name);
+    }
+
+    function isSignedIn() {
+      return Boolean(signedInPlayerName());
+    }
+
     function activePlayerName() {
-      return normalizePlayerName(playerNameEl.value || state.playerName);
+      return normalizePlayerName(playerNameEl.value || signedInPlayerName() || state.playerName);
     }
 
     function saveActivePlayerName(name) {
@@ -3077,6 +3137,51 @@
         saveState();
       }
       return cleanName;
+    }
+
+    function renderSignInPanel() {
+      const name = signedInPlayerName();
+      if (name) {
+        signInStatusEl.innerHTML = `Signed in as <strong>${escapeHtml(name)}</strong>. Your picks will use this name.`;
+        signInNameEl.value = name;
+        signInBtn.textContent = "Switch";
+        signOutBtn.hidden = false;
+        playerNameEl.readOnly = true;
+        return;
+      }
+
+      signInStatusEl.textContent = "Sign in with a player name so your picks use the same identity.";
+      signInBtn.textContent = "Sign in";
+      signOutBtn.hidden = true;
+      playerNameEl.readOnly = false;
+    }
+
+    function signInPlayer(name) {
+      const cleanName = normalizePlayerName(name);
+      if (!cleanName) {
+        showToast("Enter a player name to sign in.");
+        return;
+      }
+
+      state.signedInPlayer = {
+        name: cleanName,
+        signedInAt: new Date().toISOString(),
+      };
+      state.playerName = cleanName;
+      playerNameEl.value = cleanName;
+      saveState();
+      showToast(`Signed in as ${cleanName}.`);
+      render();
+    }
+
+    function signOutPlayer() {
+      const name = signedInPlayerName();
+      state.signedInPlayer = null;
+      state.playerName = "";
+      playerNameEl.value = "";
+      saveState();
+      showToast(name ? `Signed out ${name}.` : "Signed out.");
+      render();
     }
 
     function minigamesApiUrl(gameId) {
@@ -4367,6 +4472,7 @@
       questionCountEl.textContent = String(maxPointsForGame(game));
       liveStatusEl.textContent = `${game.name} is next`;
       playerNameEl.value = profileName;
+      renderSignInPanel();
       renderProfileNote(profileName, savedEntry);
 
       formEl.querySelector("button[type='submit']").disabled = !hasOpenQuestions;
@@ -4835,12 +4941,25 @@
     });
 
     playerNameEl.addEventListener("input", () => {
+      if (isSignedIn()) {
+        playerNameEl.value = signedInPlayerName();
+        return;
+      }
       saveActivePlayerName(playerNameEl.value);
     });
 
     playerNameEl.addEventListener("blur", () => {
       const name = saveActivePlayerName(playerNameEl.value);
       renderProfileNote(name, findSavedEntryForName(currentGame(), allEntries(currentGame()), name));
+    });
+
+    signInFormEl.addEventListener("submit", (event) => {
+      event.preventDefault();
+      signInPlayer(signInNameEl.value);
+    });
+
+    signOutBtn.addEventListener("click", () => {
+      signOutPlayer();
     });
 
     document.getElementById("randomizeBtn").addEventListener("click", () => {
