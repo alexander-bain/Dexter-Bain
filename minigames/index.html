@@ -1303,7 +1303,8 @@
       right: 31px;
     }
 
-    .guide-skip {
+    .guide-skip,
+    .guide-repeat {
       min-height: 34px;
       padding: 7px 10px;
       border: 1px solid rgba(255, 255, 255, 0.18);
@@ -1315,6 +1316,10 @@
       font: inherit;
       font-size: 0.78rem;
       font-weight: 900;
+    }
+
+    .guide-repeat.is-hidden {
+      display: none;
     }
 
     .guide-pose-1 .guide-arm.left {
@@ -1453,14 +1458,15 @@
         <span class="guide-leg right"></span>
       </button>
       <button class="guide-skip" id="guideSkipBtn" type="button">Skip</button>
+      <button class="guide-repeat is-hidden" id="guideRepeatBtn" type="button">Repeat instructions</button>
     </div>
   </div>
+  <button class="guide-return is-hidden" id="guideReturnBtn" type="button">Show Pip</button>
   <main class="page-shell">
     <section class="hero">
       <nav class="topbar" aria-label="Minigames navigation">
         <a class="home-link" href="../index.html">DexterBain.com</a>
         <span class="status-pill"><span class="pulse" aria-hidden="true"></span><span id="liveStatus">Finding the next big event</span></span>
-        <button class="guide-return is-hidden" id="guideReturnBtn" type="button">Show Pip</button>
       </nav>
 
       <div class="hero-visual" aria-hidden="true">
@@ -2636,6 +2642,7 @@
     const siteGuideEl = document.getElementById("siteGuide");
     const guideBubbleEl = document.getElementById("guideBubble");
     const guideSkipBtn = document.getElementById("guideSkipBtn");
+    const guideRepeatBtn = document.getElementById("guideRepeatBtn");
     const guideReturnBtn = document.getElementById("guideReturnBtn");
 
     const guideTips = [
@@ -2651,6 +2658,14 @@
         pose: "guide-pose-2",
         text: "Odds show risk. Private rooms and custom games are in the side panel.",
       },
+      {
+        pose: "guide-pose-3",
+        text: "Click a leaderboard name to see that player's picks.",
+      },
+      {
+        pose: "guide-pose-1",
+        text: "Use Skip anytime. The Show Pip button brings me back.",
+      },
     ];
     let guideTipIndex = 0;
 
@@ -2659,6 +2674,7 @@
       saveState();
       siteGuideEl?.classList.toggle("is-hidden", hidden);
       guideReturnBtn?.classList.toggle("is-hidden", !hidden);
+      guideRepeatBtn?.classList.toggle("is-hidden", hidden || guideTipIndex < guideTips.length - 1);
     }
 
     function showGuideTip(index) {
@@ -2672,11 +2688,12 @@
       siteGuideEl.classList.remove("guide-pose-0", "guide-pose-1", "guide-pose-2", "guide-pose-3");
       siteGuideEl.classList.add(tip.pose);
       guideBubbleEl.textContent = tip.text;
+      guideRepeatBtn?.classList.toggle("is-hidden", index < guideTips.length - 1);
     }
 
     function advanceGuideTip() {
       if (guideTipIndex >= guideTips.length - 1) {
-        setGuideHidden(true);
+        showGuideTip(guideTipIndex);
         return;
       }
 
@@ -2684,10 +2701,22 @@
       showGuideTip(guideTipIndex);
     }
 
+    function repeatGuideInstructions() {
+      guideTipIndex = 0;
+      state.guideHidden = false;
+      saveState();
+      siteGuideEl?.classList.remove("is-hidden");
+      guideReturnBtn?.classList.add("is-hidden");
+      showGuideTip(guideTipIndex);
+    }
+
     function showGuide() {
       guideTipIndex = 0;
-      setGuideHidden(false);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      state.guideHidden = false;
+      saveState();
+      siteGuideEl?.classList.remove("is-hidden");
+      guideReturnBtn?.classList.add("is-hidden");
+      window.scrollTo({ top: 0, behavior: "auto" });
       showGuideTip(guideTipIndex);
     }
 
@@ -4436,6 +4465,11 @@
       setGuideHidden(true);
     });
 
+    guideRepeatBtn?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      repeatGuideInstructions();
+    });
+
     guideReturnBtn?.addEventListener("click", (event) => {
       event.stopPropagation();
       showGuide();
@@ -4446,7 +4480,11 @@
       advanceGuideTip();
     });
 
-    document.addEventListener("click", () => {
+    document.addEventListener("click", (event) => {
+      if (event.target.closest("#siteGuide, #guideReturnBtn")) {
+        return;
+      }
+
       if (!state.guideHidden) {
         setGuideHidden(true);
       }
