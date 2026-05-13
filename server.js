@@ -17,6 +17,10 @@ app.use(bodyParser.json());
 const minigamesDataFile =
   process.env.MINIGAMES_DATA_FILE ||
   path.join(process.cwd(), "minigames-data.json");
+const minigamesDataUrl =
+  process.env.MINIGAMES_DATA_URL ||
+  process.env.JSONBLOB_MINIGAMES_URL ||
+  "https://jsonblob.com/api/jsonBlob/019e1a1c-73f2-78b8-b1f6-65f34135684e";
 let minigamesWriteQueue = Promise.resolve();
 const roomCodeAlphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const notificationsDataFile =
@@ -180,6 +184,24 @@ function cleanCustomGamePayload(body) {
 }
 
 async function readMinigamesData() {
+  if (minigamesDataUrl) {
+    const remoteData = await readRemoteMinigamesData();
+    const localData = await readLocalMinigamesData().catch(() => null);
+
+    if (isEmptyMinigamesData(remoteData) && !isEmptyMinigamesData(localData)) {
+      await writeRemoteMinigamesData(localData).catch((err) => {
+        console.warn("Minigames remote migration failed:", err);
+      });
+      return localData;
+    }
+
+    return remoteData;
+  }
+
+  return readLocalMinigamesData();
+}
+
+async function readLocalMinigamesData() {
   try {
     const raw = await fs.readFile(minigamesDataFile, "utf8");
     const data = JSON.parse(raw);
@@ -193,10 +215,76 @@ async function readMinigamesData() {
 }
 
 async function writeMinigamesData(data) {
+  if (minigamesDataUrl) {
+    await writeRemoteMinigamesData(data);
+    await writeLocalMinigamesData(data).catch((err) => {
+      console.warn("Minigames local backup write failed:", err);
+    });
+    return;
+  }
+
+  await writeLocalMinigamesData(data);
+}
+
+async function writeLocalMinigamesData(data) {
   await fs.mkdir(path.dirname(minigamesDataFile), { recursive: true });
   const tempFile = `${minigamesDataFile}.${process.pid}.${Date.now()}.tmp`;
   await fs.writeFile(tempFile, JSON.stringify(data, null, 2), "utf8");
   await fs.rename(tempFile, minigamesDataFile);
+}
+
+async function readRemoteMinigamesData() {
+  const response = await fetch(minigamesDataUrl, {
+    headers: {
+      Accept: "application/json",
+      "User-Agent": "DexterBainMinigames/1.0",
+    },
+  });
+
+  if (response.status === 404) {
+    return minigamesInitialData();
+  }
+
+  if (!response.ok) {
+    throw new Error(`Remote minigames store returned ${response.status}`);
+  }
+
+  const raw = await response.text();
+  if (!raw.trim()) {
+    return minigamesInitialData();
+  }
+
+  return normalizeMinigamesData(JSON.parse(raw));
+}
+
+async function writeRemoteMinigamesData(data) {
+  const response = await fetch(minigamesDataUrl, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "User-Agent": "DexterBainMinigames/1.0",
+    },
+    body: JSON.stringify(data, null, 2),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Remote minigames store save failed with ${response.status}`);
+  }
+}
+
+function isEmptyMinigamesData(data) {
+  if (!data || typeof data !== "object") {
+    return true;
+  }
+
+  const gameCount =
+    data.games && typeof data.games === "object" && !Array.isArray(data.games)
+      ? Object.keys(data.games).length
+      : 0;
+  const customGameCount = Array.isArray(data.customGames) ? data.customGames.length : 0;
+
+  return gameCount === 0 && customGameCount === 0;
 }
 
 async function updateMinigamesData(mutator) {
