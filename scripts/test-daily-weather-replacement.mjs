@@ -33,6 +33,17 @@ function dailyWeatherIds(html) {
   return [...html.matchAll(/id: "daily-weather-(\d{8})"/g)].map((match) => match[1]);
 }
 
+function generatedWeatherBlock(html) {
+  const startMarker = "      // DAILY_WEATHER_GAME_START";
+  const endMarker = "      // DAILY_WEATHER_GAME_END";
+  const start = html.indexOf(startMarker);
+  const end = html.indexOf(endMarker);
+  if (start === -1 || end === -1 || end < start) {
+    throw new Error("Could not find the generated daily weather block.");
+  }
+  return html.slice(start, end);
+}
+
 fs.copyFileSync(sourceHtml, testHtml);
 
 runGenerator("2026-05-12");
@@ -44,6 +55,7 @@ if (!firstRunHtml.includes('id: "daily-weather-20260512"')) {
 runGenerator("2026-05-13");
 const secondRunHtml = fs.readFileSync(testHtml, "utf8");
 const ids = dailyWeatherIds(secondRunHtml);
+const block = generatedWeatherBlock(secondRunHtml);
 
 if (!secondRunHtml.includes('id: "daily-weather-20260513"')) {
   throw new Error("The May 13 generated weather game was not created.");
@@ -55,6 +67,17 @@ if (secondRunHtml.includes('id: "daily-weather-20260512"')) {
 
 if (ids.length !== 1) {
   throw new Error(`Expected exactly one generated daily weather game, found ${ids.length}.`);
+}
+
+for (const questionId of ["high-temp", "sky", "rain", "wind", "night"]) {
+  if (!block.includes(`"20260513-${questionId}"`)) {
+    throw new Error(`Generated weather game is missing the ${questionId} question.`);
+  }
+}
+
+const autoScoredQuestions = [...block.matchAll(/autoSource: menloParkWeatherSource/g)].length;
+if (autoScoredQuestions !== 5) {
+  throw new Error(`Expected 5 auto-scored weather questions, found ${autoScoredQuestions}.`);
 }
 
 console.log("Daily weather replacement test passed.");

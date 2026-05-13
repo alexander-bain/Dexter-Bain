@@ -27,7 +27,10 @@ jobs:
           node-version: 22
 
       - name: Generate weather game
-        run: npm run generate:weather-game
+        run: node scripts/generate-daily-weather-game.mjs "$(TZ=America/Los_Angeles date +%F)"
+
+      - name: Check today's weather game exists
+        run: node scripts/test-daily-weather-current.mjs "$(TZ=America/Los_Angeles date +%F)"
 
       - name: Check old daily game is removed
         run: npm run test:weather-replacement

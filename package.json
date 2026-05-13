@@ -7,6 +7,7 @@
   "scripts": {
     "generate:weather-game": "node scripts/generate-daily-weather-game.mjs",
     "test:weather-game": "node scripts/test-daily-weather-game.mjs",
+    "test:weather-current": "node scripts/test-daily-weather-current.mjs",
     "test:weather-replacement": "node scripts/test-daily-weather-replacement.mjs",
     "test:weekend-sharing": "node scripts/test-weekend-weather-sharing.mjs",
     "start": "node server.js"

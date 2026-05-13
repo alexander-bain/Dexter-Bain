@@ -15,7 +15,7 @@ The future version should make the daily weather game feel like a real daily hab
 
 ## Daily Weather Automation
 
-The GitHub Action for the daily weather game runs several times through the morning instead of trusting one exact 6:00 AM start. GitHub can start scheduled jobs late, so the workflow is safe to retry: the first run that needs a new game commits it, and later runs do nothing if the game is already current.
+The GitHub Action for the daily weather game runs several times through the morning instead of trusting one exact 6:00 AM start. GitHub can start scheduled jobs late, so the workflow is safe to retry: the first run that needs a new game commits it, and later runs do nothing if the game is already current. The workflow uses the Pacific date and verifies that today's generated weather game is actually present before it commits.
 
 ## Fix List
 

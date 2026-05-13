@@ -921,10 +921,6 @@ async function getStoredOrGeneratedVapidKeys() {
     return { publicKey: vapidPublicKey, privateKey: vapidPrivateKey };
   }
 
-  if (!notificationsDataUrl) {
-    return null;
-  }
-
   vapidKeysPromise ||= updateNotificationsData(async (data) => {
     if (data.vapidKeys?.publicKey && data.vapidKeys?.privateKey) {
       return data.vapidKeys;
