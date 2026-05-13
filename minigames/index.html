@@ -796,6 +796,17 @@
       gap: 10px;
     }
 
+    .signin-fields {
+      display: grid;
+      gap: 10px;
+    }
+
+    .signin-code-row {
+      display: grid;
+      grid-template-columns: minmax(0, 0.74fr) minmax(0, 1fr);
+      gap: 10px;
+    }
+
     .signin-panel .room-actions {
       margin-top: 0;
     }
@@ -1900,15 +1911,19 @@
       <aside class="side-stack">
         <section class="panel signin-panel" aria-labelledby="signInTitle">
           <h3 class="section-title" id="signInTitle">Player sign in</h3>
-          <p class="signin-status" id="signInStatus">Sign in with a player name so your picks use the same identity.</p>
-          <form class="signin-actions" id="signInForm">
-            <input class="name-input" id="signInName" maxlength="24" autocomplete="name" placeholder="Player name" required />
-            <button class="btn small" type="submit" id="signInBtn">Sign in</button>
+          <p class="signin-status" id="signInStatus">Enter your email and we will send a verification code.</p>
+          <form class="signin-fields" id="signInForm">
+            <input class="name-input" id="signInEmail" type="email" maxlength="120" autocomplete="email" placeholder="Email address" required />
+            <div class="signin-code-row">
+              <input class="name-input" id="signInCode" inputmode="numeric" maxlength="8" autocomplete="one-time-code" placeholder="Email code" hidden />
+              <input class="name-input" id="signInName" maxlength="24" autocomplete="name" placeholder="Leaderboard name" required />
+            </div>
+            <button class="btn small" type="submit" id="signInBtn">Send code</button>
           </form>
           <div class="room-actions">
             <button class="btn small secondary" type="button" id="signOutBtn">Sign out</button>
           </div>
-          <p class="empty-state">This keeps your name and saved picks on this device. Full password accounts can come later.</p>
+          <p class="empty-state">Your email stays private. The leaderboard only shows your player name.</p>
         </section>
 
         <section class="panel creator-panel is-collapsed" id="creatorPanel" aria-labelledby="creatorTitle">
@@ -2950,6 +2965,8 @@
     const playerNameEl = document.getElementById("playerName");
     const profileNoteEl = document.getElementById("profileNote");
     const signInFormEl = document.getElementById("signInForm");
+    const signInEmailEl = document.getElementById("signInEmail");
+    const signInCodeEl = document.getElementById("signInCode");
     const signInNameEl = document.getElementById("signInName");
     const signInStatusEl = document.getElementById("signInStatus");
     const signInBtn = document.getElementById("signInBtn");
@@ -3092,7 +3109,15 @@
     }
 
     function loadState() {
-      const fallback = { entries: {}, activeRoomByGame: {}, playerName: "", signedInPlayer: null, notify: "none", notificationReceipts: {} };
+      const fallback = {
+        entries: {},
+        activeRoomByGame: {},
+        playerName: "",
+        signedInPlayer: null,
+        pendingSignInEmail: "",
+        notify: "none",
+        notificationReceipts: {}
+      };
       try {
         return { ...fallback, ...(JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}) };
       } catch {
@@ -3118,8 +3143,16 @@
       return String(value || "").replace(/\s+/g, " ").trim().slice(0, 24);
     }
 
+    function normalizeEmail(value) {
+      return String(value || "").trim().toLowerCase().slice(0, 120);
+    }
+
     function signedInPlayerName() {
       return normalizePlayerName(state.signedInPlayer?.name);
+    }
+
+    function signedInEmail() {
+      return normalizeEmail(state.signedInPlayer?.email);
     }
 
     function isSignedIn() {
@@ -3142,21 +3175,79 @@
     function renderSignInPanel() {
       const name = signedInPlayerName();
       if (name) {
-        signInStatusEl.innerHTML = `Signed in as <strong>${escapeHtml(name)}</strong>. Your picks will use this name.`;
+        const email = signedInEmail();
+        signInStatusEl.innerHTML = `Verified as <strong>${escapeHtml(name)}</strong>${email ? ` with ${escapeHtml(email)}` : ""}. Your picks use this name.`;
+        signInEmailEl.value = email;
         signInNameEl.value = name;
-        signInBtn.textContent = "Switch";
+        signInCodeEl.value = "";
+        signInCodeEl.hidden = true;
+        signInBtn.textContent = "Switch account";
         signOutBtn.hidden = false;
         playerNameEl.readOnly = true;
         return;
       }
 
-      signInStatusEl.textContent = "Sign in with a player name so your picks use the same identity.";
-      signInBtn.textContent = "Sign in";
+      const pendingEmail = normalizeEmail(state.pendingSignInEmail);
+      signInEmailEl.value = pendingEmail || signInEmailEl.value;
+      signInCodeEl.hidden = !pendingEmail;
+      signInStatusEl.textContent = pendingEmail
+        ? `Check ${pendingEmail} for the verification code, then enter it here.`
+        : "Enter your email and we will send a verification code.";
+      signInBtn.textContent = pendingEmail ? "Verify email" : "Send code";
       signOutBtn.hidden = true;
       playerNameEl.readOnly = false;
     }
 
-    function signInPlayer(name) {
+    async function sendSignInCode(email, name) {
+      if (!hasSupabase()) {
+        throw new Error("Email sign-in needs Supabase to be connected.");
+      }
+
+      const response = await fetch(`${supabaseBaseUrl()}/auth/v1/otp`, {
+        method: "POST",
+        headers: supabaseHeaders({
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        }),
+        body: JSON.stringify({
+          email,
+          create_user: true,
+          data: { player_name: name },
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.msg || data.error_description || data.error || `Could not send code (${response.status}).`);
+      }
+    }
+
+    async function verifySignInCode(email, token) {
+      if (!hasSupabase()) {
+        throw new Error("Email sign-in needs Supabase to be connected.");
+      }
+
+      const response = await fetch(`${supabaseBaseUrl()}/auth/v1/verify`, {
+        method: "POST",
+        headers: supabaseHeaders({
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        }),
+        body: JSON.stringify({
+          email,
+          token,
+          type: "email",
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.msg || data.error_description || data.error || `Could not verify code (${response.status}).`);
+      }
+      return data;
+    }
+
+    function signInPlayer(name, email, userId = "") {
       const cleanName = normalizePlayerName(name);
       if (!cleanName) {
         showToast("Enter a player name to sign in.");
@@ -3165,8 +3256,11 @@
 
       state.signedInPlayer = {
         name: cleanName,
+        email: normalizeEmail(email),
+        userId: String(userId || ""),
         signedInAt: new Date().toISOString(),
       };
+      state.pendingSignInEmail = "";
       state.playerName = cleanName;
       playerNameEl.value = cleanName;
       saveState();
@@ -3177,6 +3271,7 @@
     function signOutPlayer() {
       const name = signedInPlayerName();
       state.signedInPlayer = null;
+      state.pendingSignInEmail = "";
       state.playerName = "";
       playerNameEl.value = "";
       saveState();
@@ -4955,7 +5050,56 @@
 
     signInFormEl.addEventListener("submit", (event) => {
       event.preventDefault();
-      signInPlayer(signInNameEl.value);
+      const email = normalizeEmail(signInEmailEl.value);
+      const name = normalizePlayerName(signInNameEl.value);
+      const code = String(signInCodeEl.value || "").replace(/\s+/g, "").trim();
+
+      if (!email || !email.includes("@")) {
+        showToast("Enter a real email address first.");
+        return;
+      }
+
+      if (!name) {
+        showToast("Enter the leaderboard name for this account.");
+        return;
+      }
+
+      signInBtn.disabled = true;
+      if (!state.pendingSignInEmail || state.pendingSignInEmail !== email) {
+        sendSignInCode(email, name)
+          .then(() => {
+            state.pendingSignInEmail = email;
+            state.playerName = name;
+            saveState();
+            showToast("Verification code sent. Check your email.");
+            renderSignInPanel();
+            signInCodeEl.focus();
+          })
+          .catch((err) => {
+            showToast(err.message || "Could not send the email code.");
+          })
+          .finally(() => {
+            signInBtn.disabled = false;
+          });
+        return;
+      }
+
+      if (!code) {
+        showToast("Enter the code from your email.");
+        signInBtn.disabled = false;
+        return;
+      }
+
+      verifySignInCode(email, code)
+        .then((data) => {
+          signInPlayer(name, data.user?.email || email, data.user?.id || "");
+        })
+        .catch((err) => {
+          showToast(err.message || "That code did not verify.");
+        })
+        .finally(() => {
+          signInBtn.disabled = false;
+        });
     });
 
     signOutBtn.addEventListener("click", () => {
