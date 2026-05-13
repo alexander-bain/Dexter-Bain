@@ -27,7 +27,7 @@ const minigamesDataFile =
 const minigamesDataUrl =
   process.env.MINIGAMES_DATA_URL ||
   process.env.JSONBLOB_MINIGAMES_URL ||
-  "https://jsonblob.com/api/jsonBlob/019e1a1c-73f2-78b8-b1f6-65f34135684e";
+  "https://jsonblob.com/api/jsonBlob/019e21af-3cb6-7800-a7b6-87088450104d";
 const databaseUrl =
   process.env.DATABASE_URL ||
   process.env.POSTGRES_URL ||
@@ -359,7 +359,11 @@ async function writeMinigamesData(data) {
   }
 
   if (minigamesDataUrl) {
-    await writeRemoteMinigamesData(data);
+    try {
+      await writeRemoteMinigamesData(data);
+    } catch (err) {
+      console.warn("Minigames remote store write failed; using local backup:", err);
+    }
     await writeLocalMinigamesData(data).catch((err) => {
       console.warn("Minigames local backup write failed:", err);
     });
