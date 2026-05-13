@@ -11,8 +11,15 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const app = express();
+app.set("trust proxy", 1);
 app.use(cors());
 app.use(bodyParser.json());
+app.use((req, res, next) => {
+  if (req.path.startsWith("/api/minigames") || req.path.startsWith("/api/notifications")) {
+    res.set("Cache-Control", "no-store");
+  }
+  next();
+});
 
 const minigamesDataFile =
   process.env.MINIGAMES_DATA_FILE ||
@@ -26,6 +33,10 @@ const roomCodeAlphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const notificationsDataFile =
   process.env.NOTIFICATIONS_DATA_FILE ||
   path.join(process.cwd(), "notifications-data.json");
+const notificationsDataUrl =
+  process.env.NOTIFICATIONS_DATA_URL ||
+  process.env.JSONBLOB_NOTIFICATIONS_URL ||
+  "";
 let notificationsWriteQueue = Promise.resolve();
 const vapidPublicKey = process.env.VAPID_PUBLIC_KEY || "";
 const vapidPrivateKey = process.env.VAPID_PRIVATE_KEY || "";
@@ -34,6 +45,8 @@ const vapidSubject =
 const notificationAdminToken = process.env.NOTIFICATION_ADMIN_TOKEN || "";
 let webpushClientPromise = null;
 let vapidKeysPromise = null;
+const resultCheckCooldowns = new Map();
+const resultCheckCooldownMs = Number(process.env.MINIGAMES_RESULT_CHECK_COOLDOWN_MS) || 60000;
 
 // IMPORTANT: set this in your environment on Render, don't hardcode it in code
 const openai = new OpenAI({
@@ -559,6 +572,46 @@ function roomSummary(room, roomCode) {
   };
 }
 
+function resultCheckKey(req, gameId) {
+  const forwardedFor = cleanText(req.get("x-forwarded-for"), 120).split(",")[0].trim();
+  return `${gameId}:${forwardedFor || req.ip || "unknown"}`;
+}
+
+function shouldThrottleResultCheck(req, gameId) {
+  const key = resultCheckKey(req, gameId);
+  const now = Date.now();
+  const lastChecked = resultCheckCooldowns.get(key) || 0;
+  if (now - lastChecked < resultCheckCooldownMs) {
+    return true;
+  }
+
+  resultCheckCooldowns.set(key, now);
+  if (resultCheckCooldowns.size > 500) {
+    const cutoff = now - resultCheckCooldownMs * 2;
+    for (const [storedKey, checkedAt] of resultCheckCooldowns.entries()) {
+      if (checkedAt < cutoff) {
+        resultCheckCooldowns.delete(storedKey);
+      }
+    }
+  }
+  return false;
+}
+
+function cleanAutoResultQuestion(question, questionIndex) {
+  const questionId = cleanText(question?.id || `q-${questionIndex}`, 80).replace(/[^a-zA-Z0-9_-]/g, "");
+  const lockAt = question?.lockAt ? new Date(question.lockAt) : null;
+  if (!questionId || (lockAt && Number.isFinite(lockAt.getTime()) && lockAt > new Date())) {
+    return null;
+  }
+
+  return {
+    id: questionId,
+    text: cleanText(question?.text, 160),
+    autoSource: cleanResultSourceUrl(question?.autoSource),
+    answers: cleanResultAnswers(question),
+  };
+}
+
 function makeRoomCode() {
   return Array.from({ length: 6 }, () => {
     const index = crypto.randomInt(roomCodeAlphabet.length);
@@ -578,6 +631,24 @@ function uniqueRoomCode(data, gameId) {
 }
 
 async function readNotificationsData() {
+  if (notificationsDataUrl) {
+    const remoteData = await readRemoteNotificationsData();
+    const localData = await readLocalNotificationsData().catch(() => null);
+
+    if (isEmptyNotificationsData(remoteData) && !isEmptyNotificationsData(localData)) {
+      await writeRemoteNotificationsData(localData).catch((err) => {
+        console.warn("Notifications remote migration failed:", err);
+      });
+      return localData;
+    }
+
+    return remoteData;
+  }
+
+  return readLocalNotificationsData();
+}
+
+async function readLocalNotificationsData() {
   try {
     const raw = await fs.readFile(notificationsDataFile, "utf8");
     const data = JSON.parse(raw);
@@ -591,10 +662,76 @@ async function readNotificationsData() {
 }
 
 async function writeNotificationsData(data) {
+  if (notificationsDataUrl) {
+    await writeRemoteNotificationsData(data);
+    await writeLocalNotificationsData(data).catch((err) => {
+      console.warn("Notifications local backup write failed:", err);
+    });
+    return;
+  }
+
+  await writeLocalNotificationsData(data);
+}
+
+async function writeLocalNotificationsData(data) {
   await fs.mkdir(path.dirname(notificationsDataFile), { recursive: true });
   const tempFile = `${notificationsDataFile}.${process.pid}.${Date.now()}.tmp`;
   await fs.writeFile(tempFile, JSON.stringify(data, null, 2), "utf8");
   await fs.rename(tempFile, notificationsDataFile);
+}
+
+async function readRemoteNotificationsData() {
+  const response = await fetch(notificationsDataUrl, {
+    headers: {
+      Accept: "application/json",
+      "User-Agent": "DexterBainNotifications/1.0",
+    },
+  });
+
+  if (response.status === 404) {
+    return { subscriptions: [] };
+  }
+
+  if (!response.ok) {
+    throw new Error(`Remote notifications store returned ${response.status}`);
+  }
+
+  const raw = await response.text();
+  if (!raw.trim()) {
+    return { subscriptions: [] };
+  }
+
+  const data = JSON.parse(raw);
+  return data && typeof data === "object" && !Array.isArray(data)
+    ? data
+    : { subscriptions: [] };
+}
+
+async function writeRemoteNotificationsData(data) {
+  const response = await fetch(notificationsDataUrl, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "User-Agent": "DexterBainNotifications/1.0",
+    },
+    body: JSON.stringify(data, null, 2),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Remote notifications store save failed with ${response.status}`);
+  }
+}
+
+function isEmptyNotificationsData(data) {
+  if (!data || typeof data !== "object") {
+    return true;
+  }
+
+  const subscriptionCount = Array.isArray(data.subscriptions)
+    ? data.subscriptions.length
+    : 0;
+  return subscriptionCount === 0 && !data.vapidKeys;
 }
 
 async function updateNotificationsData(mutator) {
@@ -615,6 +752,10 @@ async function updateNotificationsData(mutator) {
 async function getStoredOrGeneratedVapidKeys() {
   if (vapidPublicKey && vapidPrivateKey) {
     return { publicKey: vapidPublicKey, privateKey: vapidPrivateKey };
+  }
+
+  if (!notificationsDataUrl) {
+    return null;
   }
 
   vapidKeysPromise ||= updateNotificationsData(async (data) => {
@@ -1422,7 +1563,9 @@ app.get("/api/minigames/:gameId/results", async (req, res) => {
 
 app.post("/api/minigames/:gameId/results/check", async (req, res) => {
   const gameId = cleanGameId(req.params.gameId);
-  const questions = Array.isArray(req.body?.questions) ? req.body.questions.slice(0, 30) : [];
+  const questions = Array.isArray(req.body?.questions)
+    ? req.body.questions.slice(0, 8).map(cleanAutoResultQuestion).filter(Boolean)
+    : [];
 
   if (!gameId) {
     res.status(400).json({ error: "Missing game id" });
@@ -1430,12 +1573,18 @@ app.post("/api/minigames/:gameId/results/check", async (req, res) => {
   }
 
   try {
+    if (shouldThrottleResultCheck(req, gameId)) {
+      const data = await readMinigamesData();
+      res.json({ gameId, results: publicResultsForGame(data, gameId), throttled: true });
+      return;
+    }
+
     const payload = await updateMinigamesData(async (data) => {
       const game = ensureGame(data, gameId);
       game.results ||= {};
 
       await Promise.all(questions.map(async (question, questionIndex) => {
-        const questionId = cleanText(question?.id || `q-${questionIndex}`, 80).replace(/[^a-zA-Z0-9_-]/g, "");
+        const questionId = question.id || `q-${questionIndex}`;
         if (!questionId || game.results[questionId]?.status === "resolved") {
           return;
         }
@@ -1486,8 +1635,10 @@ app.post("/api/minigames/:gameId/results", async (req, res) => {
 });
 
 app.post("/api/minigames/:gameId/rooms", async (req, res) => {
+  const token = cleanText(req.get("authorization"), 300).replace(/^Bearer\s+/i, "");
   const gameId = cleanGameId(req.params.gameId);
-  const requestedCode = cleanRoomCode(req.body?.roomCode);
+  const canRequestCode = notificationAdminToken && token === notificationAdminToken;
+  const requestedCode = canRequestCode ? cleanRoomCode(req.body?.roomCode) : "";
 
   if (!gameId) {
     res.status(400).json({ error: "Missing game id" });

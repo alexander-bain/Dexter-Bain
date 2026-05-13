@@ -2249,6 +2249,7 @@
           id: getQuestionId(question, index),
           text: getQuestionText(question),
           autoSource: question.autoSource || "",
+          lockAt: question.lockAt || game.date.toISOString(),
           answers: getAnswers(question).map((answerOption) => ({
             id: answerOption.id,
             label: answerOption.label,
@@ -3627,7 +3628,7 @@
       const savedToServer = await saveEntryForScope(game, entry);
       if (!savedToServer) {
         saveLocalEntry(game, entry);
-        showToast("Server is unavailable, so your picks were saved on this device.");
+        showToast("Server save failed. Picks are only on this device, not the public leaderboard.");
       }
 
       state.playerName = name;
@@ -3644,7 +3645,11 @@
         showToast("Picks saved to the server.");
       }
       render();
-      await handleNotifications(notify, entry, allEntries(game), game);
+      if (savedToServer) {
+        await handleNotifications(notify, entry, allEntries(game), game);
+      } else if (notify !== "none") {
+        showToast("Notifications need a server save first. Try locking picks again when online.");
+      }
     });
 
     formEl.addEventListener("change", () => {
