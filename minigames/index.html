@@ -777,6 +777,10 @@
       gap: 12px;
     }
 
+    .signin-panel.is-hidden {
+      display: none;
+    }
+
     .signin-status {
       margin: 0;
       color: #d8dee9;
@@ -790,20 +794,8 @@
       font-weight: 950;
     }
 
-    .signin-actions {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 10px;
-    }
-
     .signin-fields {
       display: grid;
-      gap: 10px;
-    }
-
-    .signin-code-row {
-      display: grid;
-      grid-template-columns: minmax(0, 0.74fr) minmax(0, 1fr);
       gap: 10px;
     }
 
@@ -1399,6 +1391,25 @@
       backdrop-filter: blur(18px);
     }
 
+    .signin-launch {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 17px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #dbeafe;
+      background: rgba(6, 8, 15, 0.72);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.95rem;
+      font-weight: 950;
+      backdrop-filter: blur(18px);
+      pointer-events: auto;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+    }
+
     .guide-return.is-hidden {
       display: none;
     }
@@ -1766,6 +1777,24 @@
       <button class="guide-skip" id="guideSkipBtn" type="button">Skip</button>
       <button class="guide-repeat is-hidden" id="guideRepeatBtn" type="button">Repeat instructions</button>
     </div>
+    <button class="signin-launch" id="openSignInBtn" type="button">Sign in</button>
+    <section class="panel signin-panel is-hidden" id="signInPanel" aria-labelledby="signInTitle">
+      <h3 class="section-title" id="signInTitle">Player sign in</h3>
+      <p class="signin-status" id="signInStatus">Type your email first.</p>
+      <form class="signin-fields" id="signInForm">
+        <input class="name-input" id="signInEmail" type="email" maxlength="120" autocomplete="email" placeholder="Email address" required />
+        <input class="name-input" id="signInCode" inputmode="numeric" maxlength="5" autocomplete="one-time-code" placeholder="5 digit code" hidden />
+        <input class="name-input" id="signInPassword" type="password" maxlength="72" autocomplete="new-password" placeholder="Password" hidden />
+        <input class="name-input" id="signInPasswordConfirm" type="password" maxlength="72" autocomplete="new-password" placeholder="Verify password" hidden />
+        <input class="name-input" id="signInName" maxlength="24" autocomplete="name" placeholder="Leaderboard name" hidden />
+        <button class="btn small" type="submit" id="signInBtn">Send email code</button>
+      </form>
+      <div class="room-actions">
+        <button class="btn small secondary" type="button" id="signOutBtn">Sign out</button>
+        <button class="btn small secondary" type="button" id="closeSignInBtn">Close</button>
+      </div>
+      <p class="empty-state">Your email stays private. The leaderboard only shows your player name.</p>
+    </section>
   </div>
   <button class="guide-return is-hidden" id="guideReturnBtn" type="button">Show Pip</button>
   <main class="page-shell">
@@ -1909,23 +1938,6 @@
       </div>
 
       <aside class="side-stack">
-        <section class="panel signin-panel" aria-labelledby="signInTitle">
-          <h3 class="section-title" id="signInTitle">Player sign in</h3>
-          <p class="signin-status" id="signInStatus">Enter your email and we will send a verification code.</p>
-          <form class="signin-fields" id="signInForm">
-            <input class="name-input" id="signInEmail" type="email" maxlength="120" autocomplete="email" placeholder="Email address" required />
-            <div class="signin-code-row">
-              <input class="name-input" id="signInCode" inputmode="numeric" maxlength="8" autocomplete="one-time-code" placeholder="Email code" hidden />
-              <input class="name-input" id="signInName" maxlength="24" autocomplete="name" placeholder="Leaderboard name" required />
-            </div>
-            <button class="btn small" type="submit" id="signInBtn">Send code</button>
-          </form>
-          <div class="room-actions">
-            <button class="btn small secondary" type="button" id="signOutBtn">Sign out</button>
-          </div>
-          <p class="empty-state">Your email stays private. The leaderboard only shows your player name.</p>
-        </section>
-
         <section class="panel creator-panel is-collapsed" id="creatorPanel" aria-labelledby="creatorTitle">
           <div class="creator-compact">
             <h3 class="section-title" id="creatorTitle">Create a minigame</h3>
@@ -2964,13 +2976,18 @@
     const formEl = document.getElementById("predictionForm");
     const playerNameEl = document.getElementById("playerName");
     const profileNoteEl = document.getElementById("profileNote");
+    const signInPanelEl = document.getElementById("signInPanel");
     const signInFormEl = document.getElementById("signInForm");
     const signInEmailEl = document.getElementById("signInEmail");
     const signInCodeEl = document.getElementById("signInCode");
+    const signInPasswordEl = document.getElementById("signInPassword");
+    const signInPasswordConfirmEl = document.getElementById("signInPasswordConfirm");
     const signInNameEl = document.getElementById("signInName");
     const signInStatusEl = document.getElementById("signInStatus");
     const signInBtn = document.getElementById("signInBtn");
     const signOutBtn = document.getElementById("signOutBtn");
+    const openSignInBtn = document.getElementById("openSignInBtn");
+    const closeSignInBtn = document.getElementById("closeSignInBtn");
     const saveNoteEl = document.getElementById("saveNote");
     const liveStatusEl = document.getElementById("liveStatus");
     const toastEl = document.getElementById("toast");
@@ -3115,6 +3132,7 @@
         playerName: "",
         signedInPlayer: null,
         pendingSignInEmail: "",
+        pendingAuthSession: null,
         notify: "none",
         notificationReceipts: {}
       };
@@ -3174,28 +3192,55 @@
 
     function renderSignInPanel() {
       const name = signedInPlayerName();
+      const hasPanelOpen = !signInPanelEl.classList.contains("is-hidden");
       if (name) {
         const email = signedInEmail();
         signInStatusEl.innerHTML = `Verified as <strong>${escapeHtml(name)}</strong>${email ? ` with ${escapeHtml(email)}` : ""}. Your picks use this name.`;
         signInEmailEl.value = email;
         signInNameEl.value = name;
         signInCodeEl.value = "";
+        signInPasswordEl.value = "";
+        signInPasswordConfirmEl.value = "";
         signInCodeEl.hidden = true;
+        signInPasswordEl.hidden = true;
+        signInPasswordConfirmEl.hidden = true;
+        signInNameEl.hidden = true;
         signInBtn.textContent = "Switch account";
+        openSignInBtn.textContent = `Signed in: ${name}`;
         signOutBtn.hidden = false;
         playerNameEl.readOnly = true;
         return;
       }
 
       const pendingEmail = normalizeEmail(state.pendingSignInEmail);
+      const hasVerifiedEmail = Boolean(state.pendingAuthSession?.accessToken);
       signInEmailEl.value = pendingEmail || signInEmailEl.value;
-      signInCodeEl.hidden = !pendingEmail;
-      signInStatusEl.textContent = pendingEmail
-        ? `Check ${pendingEmail} for the verification code, then enter it here.`
-        : "Enter your email and we will send a verification code.";
-      signInBtn.textContent = pendingEmail ? "Verify email" : "Send code";
+      signInCodeEl.hidden = !pendingEmail || hasVerifiedEmail;
+      signInPasswordEl.hidden = !hasVerifiedEmail;
+      signInPasswordConfirmEl.hidden = !hasVerifiedEmail;
+      signInNameEl.hidden = !hasVerifiedEmail;
+      signInStatusEl.textContent = hasVerifiedEmail
+        ? "Email verified. Now create a password, verify it, and choose your leaderboard name."
+        : pendingEmail
+          ? `Check ${pendingEmail} for the 5 digit verification code, then enter it here.`
+          : "Type your email first.";
+      signInBtn.textContent = hasVerifiedEmail ? "Finish sign in" : pendingEmail ? "Verify email" : "Send email code";
+      openSignInBtn.textContent = hasPanelOpen ? "Close sign in" : "Sign in";
       signOutBtn.hidden = true;
       playerNameEl.readOnly = false;
+    }
+
+    function setSignInPanelOpen(open) {
+      signInPanelEl.classList.toggle("is-hidden", !open);
+      renderSignInPanel();
+      if (open) {
+        (state.pendingAuthSession?.accessToken
+          ? signInPasswordEl
+          : state.pendingSignInEmail
+            ? signInCodeEl
+            : signInEmailEl
+        ).focus();
+      }
     }
 
     async function sendSignInCode(email, name) {
@@ -3247,6 +3292,24 @@
       return data;
     }
 
+    async function setSupabasePassword(accessToken, password) {
+      const response = await fetch(`${supabaseBaseUrl()}/auth/v1/user`, {
+        method: "PUT",
+        headers: supabaseHeaders({
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        }),
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.msg || data.error_description || data.error || `Could not save password (${response.status}).`);
+      }
+      return data;
+    }
+
     function signInPlayer(name, email, userId = "") {
       const cleanName = normalizePlayerName(name);
       if (!cleanName) {
@@ -3261,6 +3324,7 @@
         signedInAt: new Date().toISOString(),
       };
       state.pendingSignInEmail = "";
+      state.pendingAuthSession = null;
       state.playerName = cleanName;
       playerNameEl.value = cleanName;
       saveState();
@@ -3272,6 +3336,7 @@
       const name = signedInPlayerName();
       state.signedInPlayer = null;
       state.pendingSignInEmail = "";
+      state.pendingAuthSession = null;
       state.playerName = "";
       playerNameEl.value = "";
       saveState();
@@ -5052,24 +5117,20 @@
       event.preventDefault();
       const email = normalizeEmail(signInEmailEl.value);
       const name = normalizePlayerName(signInNameEl.value);
-      const code = String(signInCodeEl.value || "").replace(/\s+/g, "").trim();
+      const code = String(signInCodeEl.value || "").replace(/\D+/g, "").slice(0, 5);
+      const password = String(signInPasswordEl.value || "");
+      const passwordConfirm = String(signInPasswordConfirmEl.value || "");
 
       if (!email || !email.includes("@")) {
         showToast("Enter a real email address first.");
         return;
       }
 
-      if (!name) {
-        showToast("Enter the leaderboard name for this account.");
-        return;
-      }
-
       signInBtn.disabled = true;
       if (!state.pendingSignInEmail || state.pendingSignInEmail !== email) {
-        sendSignInCode(email, name)
+        sendSignInCode(email, name || "")
           .then(() => {
             state.pendingSignInEmail = email;
-            state.playerName = name;
             saveState();
             showToast("Verification code sent. Check your email.");
             renderSignInPanel();
@@ -5084,18 +5145,60 @@
         return;
       }
 
-      if (!code) {
-        showToast("Enter the code from your email.");
+      if (!state.pendingAuthSession?.accessToken) {
+        if (!code) {
+          showToast("Enter the 5 digit code from your email.");
+          signInBtn.disabled = false;
+          return;
+        }
+
+        verifySignInCode(email, code)
+          .then((data) => {
+            state.pendingAuthSession = {
+              accessToken: data.access_token || "",
+              userId: data.user?.id || "",
+              email: data.user?.email || email,
+            };
+            signInCodeEl.value = "";
+            saveState();
+            showToast("Email verified. Now create your password.");
+            renderSignInPanel();
+            signInPasswordEl.focus();
+          })
+          .catch((err) => {
+            showToast(err.message || "That code did not verify.");
+          })
+          .finally(() => {
+            signInBtn.disabled = false;
+          });
+        return;
+      }
+
+      if (!password || password.length < 8) {
+        showToast("Password needs at least 8 characters.");
         signInBtn.disabled = false;
         return;
       }
 
-      verifySignInCode(email, code)
+      if (password !== passwordConfirm) {
+        showToast("Passwords do not match.");
+        signInBtn.disabled = false;
+        return;
+      }
+
+      if (!name) {
+        showToast("Enter the leaderboard name for this account.");
+        signInBtn.disabled = false;
+        return;
+      }
+
+      setSupabasePassword(state.pendingAuthSession.accessToken, password)
         .then((data) => {
-          signInPlayer(name, data.user?.email || email, data.user?.id || "");
+          signInPlayer(name, data.email || state.pendingAuthSession.email || email, data.id || state.pendingAuthSession.userId || "");
+          setSignInPanelOpen(false);
         })
         .catch((err) => {
-          showToast(err.message || "That code did not verify.");
+          showToast(err.message || "Could not save that password.");
         })
         .finally(() => {
           signInBtn.disabled = false;
@@ -5104,6 +5207,16 @@
 
     signOutBtn.addEventListener("click", () => {
       signOutPlayer();
+    });
+
+    openSignInBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      setSignInPanelOpen(signInPanelEl.classList.contains("is-hidden"));
+    });
+
+    closeSignInBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      setSignInPanelOpen(false);
     });
 
     document.getElementById("randomizeBtn").addEventListener("click", () => {
