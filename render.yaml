@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: dexter-bain
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: dexterbain-minigames-db
+          property: connectionString
+
+databases:
+  - name: dexterbain-minigames-db
+    plan: free
