@@ -26,3 +26,5 @@ If Dexter asks to push and the first push attempt fails, keep trying safe approv
 The minigames backend can use a real Postgres database when the server has `DATABASE_URL` or `POSTGRES_URL` set. Picks, rooms, custom games, results, notification subscriptions, and generated notification keys move into the database automatically. If no database URL is set yet, the site falls back to the old JSON storage so it can keep running.
 
 The Render deployment is wired in `render.yaml` to attach a Postgres database named `dexterbain-minigames-db` to the backend as `DATABASE_URL`. After Render applies that Blueprint, `/api/minigames/storage/status` should report `minigames: "postgres"` and `databaseReady: true`.
+
+The public `/minigames` page is also wired directly to Supabase for leaderboard entries and private rooms. Supabase tables `minigame_entries` and `minigame_rooms` use Row Level Security with public read/insert/update policies, and the page only includes the safe publishable browser key. The old Node API remains as a fallback if Supabase is unavailable.
