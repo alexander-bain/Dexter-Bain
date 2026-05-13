@@ -15,4 +15,8 @@ The future version should make the daily weather game feel like a real daily hab
 
 ## Fix List
 
-- Minigames: rename event titles so they make more sense, like "World Series" instead of "Baseball Championship Opener", and add a short explanation below each game.
+No current items.
+
+## Push Preference
+
+If Dexter asks to push and the first push attempt fails, keep trying safe approved push paths until it is pushed or there is a true blocker that needs Dexter. Do not stop just to report that the push was unsuccessful.
