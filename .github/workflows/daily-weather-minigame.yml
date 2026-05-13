@@ -41,6 +41,10 @@ jobs:
         if: steps.pacific-time.outputs.should_run == 'true'
         run: npm run generate:weather-game
 
+      - name: Check old daily game is removed
+        if: steps.pacific-time.outputs.should_run == 'true'
+        run: npm run test:weather-replacement
+
       - name: Commit generated game
         if: steps.pacific-time.outputs.should_run == 'true'
         run: |

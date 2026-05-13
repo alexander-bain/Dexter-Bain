@@ -3,7 +3,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const minigamesPath = path.join(repoRoot, "minigames", "index.html");
+const minigamesPath =
+  process.env.MINIGAMES_HTML_PATH ||
+  path.join(repoRoot, "minigames", "index.html");
 const sourceUrl = "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182";
 const pointsUrl = "https://api.weather.gov/points/37.453,-122.182";
 const startMarker = "      // DAILY_WEATHER_GAME_START";
@@ -64,6 +66,10 @@ function isDatePeriod(period, date) {
 }
 
 async function loadForecast(date) {
+  if (process.env.MINIGAMES_WEATHER_OFFLINE === "1") {
+    return fallbackForecast();
+  }
+
   try {
     const points = await fetchJson(pointsUrl);
     const forecastUrl = points?.properties?.forecast;
@@ -87,22 +93,26 @@ async function loadForecast(date) {
     };
   } catch (error) {
     console.warn(error.message);
-    return {
-      dayPeriod: {
-        temperature: 70,
-        windSpeed: "5 to 10 mph",
-        shortForecast: "Partly Sunny",
-        detailedForecast: "Partly sunny, with a high near 70. Light west wind."
-      },
-      nightPeriod: {
-        temperature: 54,
-        windSpeed: "5 mph",
-        shortForecast: "Mostly Clear",
-        detailedForecast: "Mostly clear, with a low around 54."
-      },
-      source: "fallback"
-    };
+    return fallbackForecast();
   }
+}
+
+function fallbackForecast() {
+  return {
+    dayPeriod: {
+      temperature: 70,
+      windSpeed: "5 to 10 mph",
+      shortForecast: "Partly Sunny",
+      detailedForecast: "Partly sunny, with a high near 70. Light west wind."
+    },
+    nightPeriod: {
+      temperature: 54,
+      windSpeed: "5 mph",
+      shortForecast: "Mostly Clear",
+      detailedForecast: "Mostly clear, with a low around 54."
+    },
+    source: "fallback"
+  };
 }
 
 function includesAny(text, words) {
