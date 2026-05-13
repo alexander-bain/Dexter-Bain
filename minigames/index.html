@@ -1066,32 +1066,64 @@
     }
 
     .guide-helper {
-      position: fixed;
+      position: absolute;
+      top: 88px;
+      right: 22px;
       z-index: 24;
       display: grid;
-      grid-template-columns: auto;
       justify-items: center;
       gap: 9px;
-      width: min(230px, calc(100vw - 28px));
-      transition: top 0.24s ease, right 0.24s ease, bottom 0.24s ease, left 0.24s ease, transform 0.24s ease;
+      width: min(280px, calc(100vw - 28px));
+      pointer-events: none;
+    }
+
+    .guide-helper.is-hidden {
+      display: none;
+    }
+
+    .guide-return {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 25;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #dbeafe;
+      background: rgba(6, 8, 15, 0.72);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 850;
+      backdrop-filter: blur(18px);
+    }
+
+    .guide-return.is-hidden {
+      display: none;
     }
 
     .guide-bubble {
       position: relative;
       width: 100%;
+      min-height: 48px;
       padding: 11px 13px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 10px;
       color: #f8fafc;
       background:
         linear-gradient(135deg, rgba(96, 165, 250, 0.18), rgba(49, 208, 170, 0.12)),
-        rgba(8, 13, 24, 0.92);
+        rgba(8, 13, 24, 0.94);
       box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
       font-size: 0.86rem;
       font-weight: 850;
       line-height: 1.32;
       text-align: center;
       backdrop-filter: blur(16px);
+      pointer-events: auto;
     }
 
     .guide-bubble::after {
@@ -1103,113 +1135,233 @@
       height: 16px;
       border-right: 1px solid rgba(255, 255, 255, 0.2);
       border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(8, 13, 24, 0.92);
+      background: rgba(8, 13, 24, 0.94);
       transform: translateX(-50%) rotate(45deg);
+    }
+
+    .guide-sprite-row {
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      gap: 10px;
     }
 
     .guide-guy {
       position: relative;
       display: grid;
       place-items: center;
-      width: 72px;
-      height: 78px;
+      width: 104px;
+      height: 116px;
       padding: 0;
       border: 0;
       background: transparent;
+      pointer-events: auto;
       cursor: pointer;
       filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.34));
     }
 
     .guide-head {
       position: absolute;
-      top: 2px;
-      width: 46px;
-      height: 42px;
-      border-radius: 16px 16px 14px 14px;
+      top: 6px;
+      width: 58px;
+      height: 52px;
+      border-radius: 18px 18px 16px 16px;
       background: linear-gradient(135deg, #ffe08a, #f9c74f 68%, #f7a440);
       border: 2px solid rgba(6, 8, 15, 0.92);
+      box-shadow:
+        inset 8px -8px 0 rgba(247, 164, 64, 0.22),
+        8px 8px 0 rgba(0, 0, 0, 0.18);
     }
 
-    .guide-head::before,
-    .guide-head::after {
-      content: "";
+    .guide-hair {
       position: absolute;
-      top: 17px;
-      width: 6px;
-      height: 6px;
+      left: 9px;
+      top: -9px;
+      width: 40px;
+      height: 18px;
+      border-radius: 50% 50% 10px 10px;
+      background: #172033;
+      box-shadow:
+        9px -3px 0 #172033,
+        -4px 8px 0 rgba(23, 32, 51, 0.92);
+    }
+
+    .guide-eye {
+      position: absolute;
+      top: 21px;
+      width: 8px;
+      height: 9px;
       border-radius: 50%;
       background: #09111f;
+      transition: transform 0.18s ease, height 0.18s ease;
     }
 
-    .guide-head::before {
+    .guide-eye.left {
+      left: 15px;
+    }
+
+    .guide-eye.right {
+      right: 15px;
+    }
+
+    .guide-brow {
+      position: absolute;
+      top: 15px;
+      width: 13px;
+      height: 3px;
+      border-radius: 999px;
+      background: #09111f;
+      transition: transform 0.18s ease;
+    }
+
+    .guide-brow.left {
       left: 12px;
     }
 
-    .guide-head::after {
+    .guide-brow.right {
       right: 12px;
     }
 
-    .guide-smile {
+    .guide-mouth {
       position: absolute;
       left: 50%;
-      top: 27px;
-      width: 18px;
-      height: 9px;
+      top: 35px;
+      width: 20px;
+      height: 10px;
       border-bottom: 3px solid #09111f;
       border-radius: 0 0 999px 999px;
+      background: transparent;
       transform: translateX(-50%);
+      transition: width 0.18s ease, height 0.18s ease, border 0.18s ease, background 0.18s ease;
     }
 
     .guide-body {
       position: absolute;
-      bottom: 10px;
-      width: 42px;
-      height: 36px;
-      border-radius: 16px 16px 12px 12px;
+      bottom: 24px;
+      width: 56px;
+      height: 46px;
+      border-radius: 18px 18px 12px 12px;
       background: linear-gradient(135deg, var(--teal), var(--blue));
       border: 2px solid rgba(6, 8, 15, 0.92);
+      box-shadow:
+        inset -10px -10px 0 rgba(8, 13, 24, 0.14),
+        0 8px 0 rgba(0, 0, 0, 0.18);
+    }
+
+    .guide-body::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid rgba(6, 8, 15, 0.78);
+      background: rgba(249, 199, 79, 0.92);
+      transform: translateX(-50%);
     }
 
     .guide-arm {
       position: absolute;
-      top: 46px;
-      width: 29px;
-      height: 9px;
+      top: 66px;
+      width: 40px;
+      height: 10px;
       border-radius: 999px;
       background: #f9c74f;
       border: 2px solid rgba(6, 8, 15, 0.92);
+      transform-origin: center right;
+      transition: transform 0.18s ease, top 0.18s ease, left 0.18s ease, right 0.18s ease;
     }
 
     .guide-arm.left {
-      left: 9px;
-      transform: rotate(-28deg);
+      left: 4px;
+      transform: rotate(-22deg);
     }
 
     .guide-arm.right {
-      right: 9px;
+      right: 4px;
+      transform: rotate(22deg);
+      transform-origin: center left;
+    }
+
+    .guide-leg {
+      position: absolute;
+      bottom: 3px;
+      width: 13px;
+      height: 27px;
+      border-radius: 999px;
+      background: #172033;
+      border: 2px solid rgba(6, 8, 15, 0.92);
+      transition: transform 0.18s ease;
+    }
+
+    .guide-leg.left {
+      left: 31px;
+    }
+
+    .guide-leg.right {
+      right: 31px;
+    }
+
+    .guide-skip {
+      min-height: 34px;
+      padding: 7px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 6px;
+      color: #dbeafe;
+      background: rgba(8, 13, 24, 0.88);
+      pointer-events: auto;
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .guide-pose-1 .guide-arm.left {
+      top: 52px;
+      transform: rotate(-72deg);
+    }
+
+    .guide-pose-1 .guide-arm.right {
+      transform: rotate(34deg);
+    }
+
+    .guide-pose-1 .guide-brow.left {
+      transform: rotate(10deg);
+    }
+
+    .guide-pose-1 .guide-brow.right {
+      transform: rotate(-10deg);
+    }
+
+    .guide-pose-2 .guide-arm.left {
       transform: rotate(28deg);
     }
 
-    .guide-pos-0 {
-      top: 88px;
-      right: 22px;
+    .guide-pose-2 .guide-arm.right {
+      top: 50px;
+      transform: rotate(-72deg);
     }
 
-    .guide-pos-1 {
-      top: 46%;
-      right: 18px;
-      transform: translateY(-50%);
+    .guide-pose-2 .guide-eye.right {
+      height: 4px;
+      transform: translateY(3px);
     }
 
-    .guide-pos-2 {
-      left: 18px;
-      bottom: 24px;
+    .guide-pose-3 .guide-arm.left {
+      transform: rotate(-48deg);
     }
 
-    .guide-pos-3 {
-      left: 18px;
-      top: 44%;
-      transform: translateY(-50%);
+    .guide-pose-3 .guide-arm.right {
+      transform: rotate(48deg);
+    }
+
+    .guide-pose-3 .guide-mouth {
+      width: 12px;
+      height: 12px;
+      border: 3px solid #09111f;
+      border-radius: 50%;
+      background: rgba(9, 17, 31, 0.08);
     }
 
     @media (max-width: 860px) {
@@ -1275,42 +1427,40 @@
       }
 
       .guide-helper {
-        width: min(210px, calc(100vw - 28px));
-      }
-
-      .guide-pos-0,
-      .guide-pos-1 {
-        top: auto;
         right: 14px;
-        bottom: 18px;
-        transform: none;
-      }
-
-      .guide-pos-2,
-      .guide-pos-3 {
-        top: auto;
-        left: 14px;
-        bottom: 18px;
-        transform: none;
+        width: min(220px, calc(100vw - 28px));
       }
     }
   </style>
 </head>
 <body>
-  <div class="guide-helper guide-pos-0" id="siteGuide" aria-live="polite">
-    <div class="guide-bubble" id="guideBubble">Pick a game card, then lock your guesses before the questions start.</div>
-    <button class="guide-guy" id="guideGuy" type="button" aria-label="Show another minigames tip">
-      <span class="guide-head"><span class="guide-smile"></span></span>
-      <span class="guide-arm left"></span>
-      <span class="guide-arm right"></span>
-      <span class="guide-body"></span>
-    </button>
+  <div class="guide-helper guide-pose-0" id="siteGuide" aria-live="polite">
+    <div class="guide-bubble" id="guideBubble">I am Pip, your minigame guide.</div>
+    <div class="guide-sprite-row">
+      <button class="guide-guy" id="guideGuy" type="button" aria-label="Show another minigames tip">
+        <span class="guide-head">
+          <span class="guide-hair"></span>
+          <span class="guide-brow left"></span>
+          <span class="guide-brow right"></span>
+          <span class="guide-eye left"></span>
+          <span class="guide-eye right"></span>
+          <span class="guide-mouth"></span>
+        </span>
+        <span class="guide-arm left"></span>
+        <span class="guide-arm right"></span>
+        <span class="guide-body"></span>
+        <span class="guide-leg left"></span>
+        <span class="guide-leg right"></span>
+      </button>
+      <button class="guide-skip" id="guideSkipBtn" type="button">Skip</button>
+    </div>
   </div>
   <main class="page-shell">
     <section class="hero">
       <nav class="topbar" aria-label="Minigames navigation">
         <a class="home-link" href="../index.html">DexterBain.com</a>
         <span class="status-pill"><span class="pulse" aria-hidden="true"></span><span id="liveStatus">Finding the next big event</span></span>
+        <button class="guide-return is-hidden" id="guideReturnBtn" type="button">Show Pip</button>
       </nav>
 
       <div class="hero-visual" aria-hidden="true">
@@ -2485,30 +2635,61 @@
     const customGameStatusEl = document.getElementById("customGameStatus");
     const siteGuideEl = document.getElementById("siteGuide");
     const guideBubbleEl = document.getElementById("guideBubble");
+    const guideSkipBtn = document.getElementById("guideSkipBtn");
+    const guideReturnBtn = document.getElementById("guideReturnBtn");
 
     const guideTips = [
       {
-        position: "guide-pos-0",
+        pose: "guide-pose-0",
+        text: "I am Pip, your minigame guide.",
+      },
+      {
+        pose: "guide-pose-1",
         text: "Pick a game card, then lock your guesses before the questions start.",
       },
       {
-        position: "guide-pos-1",
-        text: "The odds show how likely an answer is. Riskier picks can be worth more points.",
-      },
-      {
-        position: "guide-pos-2",
-        text: "Use a private room code when you only want your group on the leaderboard.",
-      },
-      {
-        position: "guide-pos-3",
-        text: "Click a leaderboard name to peek at that player's picks and projected score.",
-      },
-      {
-        position: "guide-pos-0",
-        text: "Custom games let you make your own event with more than two choices per question.",
+        pose: "guide-pose-2",
+        text: "Odds show risk. Private rooms and custom games are in the side panel.",
       },
     ];
-    let guideTipIndex = Number(state.guideTipIndex || 0) % guideTips.length;
+    let guideTipIndex = 0;
+
+    function setGuideHidden(hidden) {
+      state.guideHidden = hidden;
+      saveState();
+      siteGuideEl?.classList.toggle("is-hidden", hidden);
+      guideReturnBtn?.classList.toggle("is-hidden", !hidden);
+    }
+
+    function showGuideTip(index) {
+      if (!siteGuideEl || !guideBubbleEl || state.guideHidden) {
+        siteGuideEl?.classList.add("is-hidden");
+        guideReturnBtn?.classList.remove("is-hidden");
+        return;
+      }
+
+      const tip = guideTips[index % guideTips.length];
+      siteGuideEl.classList.remove("guide-pose-0", "guide-pose-1", "guide-pose-2", "guide-pose-3");
+      siteGuideEl.classList.add(tip.pose);
+      guideBubbleEl.textContent = tip.text;
+    }
+
+    function advanceGuideTip() {
+      if (guideTipIndex >= guideTips.length - 1) {
+        setGuideHidden(true);
+        return;
+      }
+
+      guideTipIndex += 1;
+      showGuideTip(guideTipIndex);
+    }
+
+    function showGuide() {
+      guideTipIndex = 0;
+      setGuideHidden(false);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      showGuideTip(guideTipIndex);
+    }
 
     function normalizeGame(event, offsetYear = 0) {
       const gameYear = year + offsetYear;
@@ -4250,6 +4431,27 @@
       }
     });
 
+    guideSkipBtn?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      setGuideHidden(true);
+    });
+
+    guideReturnBtn?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      showGuide();
+    });
+
+    siteGuideEl?.addEventListener("click", (event) => {
+      event.stopPropagation();
+      advanceGuideTip();
+    });
+
+    document.addEventListener("click", () => {
+      if (!state.guideHidden) {
+        setGuideHidden(true);
+      }
+    });
+
     window.setInterval(() => {
       const game = currentGame();
       if (!game || !lockedQuestions(game).length) {
@@ -4265,6 +4467,7 @@
 
     window.setInterval(updateCountdowns, 1000);
 
+    showGuideTip(guideTipIndex);
     renderCustomGameBuilder();
     render();
   </script>
