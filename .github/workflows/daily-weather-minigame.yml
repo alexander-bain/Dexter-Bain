@@ -2,8 +2,7 @@ name: Daily weather minigame
 
 on:
   schedule:
-    - cron: "0 13 * * *"
-    - cron: "0 14 * * *"
+    - cron: "0 13-17 * * *"
   workflow_dispatch:
 
 permissions:
@@ -17,36 +16,23 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
-      - name: Check Pacific run time
-        id: pacific-time
-        run: |
-          if [ "${{ github.event_name }}" != "schedule" ] || [ "$(TZ=America/Los_Angeles date +%H)" = "06" ]; then
-            echo "should_run=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "Not 6 AM Pacific; skipping."
-            echo "should_run=false" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Check out repo
-        if: steps.pacific-time.outputs.should_run == 'true'
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Set up Node
-        if: steps.pacific-time.outputs.should_run == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
       - name: Generate weather game
-        if: steps.pacific-time.outputs.should_run == 'true'
         run: npm run generate:weather-game
 
       - name: Check old daily game is removed
-        if: steps.pacific-time.outputs.should_run == 'true'
         run: npm run test:weather-replacement
 
       - name: Commit generated game
-        if: steps.pacific-time.outputs.should_run == 'true'
         run: |
           if git diff --quiet -- minigames/index.html; then
             echo "Weather minigame already up to date."

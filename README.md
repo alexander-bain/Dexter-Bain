@@ -13,6 +13,10 @@ Private games should have host controls and feel actually private. A host should
 
 The future version should make the daily weather game feel like a real daily habit: make picks, watch the day happen, get notified, and check the final results.
 
+## Daily Weather Automation
+
+The GitHub Action for the daily weather game runs several times through the morning instead of trusting one exact 6:00 AM start. GitHub can start scheduled jobs late, so the workflow is safe to retry: the first run that needs a new game commits it, and later runs do nothing if the game is already current.
+
 ## Fix List
 
 No current items.
