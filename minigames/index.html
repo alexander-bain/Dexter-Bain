@@ -1975,40 +1975,40 @@
     const eventCatalog = [
       // DAILY_WEATHER_GAME_START
       {
-        id: "daily-weather-20260512",
-        name: "Menlo Park Weather - May 12",
+        id: "daily-weather-20260513",
+        name: "Menlo Park Morning Outlook - May 13",
         type: "Weather",
         month: 4,
-        day: 12,
-        summary: "A daily weather card for Menlo Park: guess the high, sky, rain chance, wind, and nighttime feel.",
+        day: 13,
+        summary: "Generated at 6 AM for May 13: Sunny, high near 70, night near 52.",
         questions: [
-          question("What will the May 12 high temperature be closest to?", [
-            answer("Under 70 degrees", 18, "under-70"),
-            answer("70 to 80 degrees", 50, "70-80"),
-            answer("81 to 88 degrees", 22, "81-88"),
-            answer("Over 88 degrees", 10, "over-88")
-          ], "20260512-high-temp", { autoSource: menloParkWeatherSource, lockAt: "2026-05-13T13:00:00.000Z" }),
+          question("What will the May 13 high temperature be closest to?", [
+            answer("Under 65 degrees", 18, "under-65"),
+            answer("65 to 75 degrees", 50, "65-75"),
+            answer("76 to 83 degrees", 22, "76-83"),
+            answer("Over 83 degrees", 10, "over-83")
+          ], "20260513-high-temp", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T13:00:00.000Z" }),
           question("What will the main daytime sky be?", [
             answer("Mostly sunny", 42, "mostly-sunny"),
             answer("Partly cloudy", 26, "partly-cloudy"),
             answer("Mostly cloudy", 19, "mostly-cloudy"),
             answer("Rain likely", 9, "rain-likely")
-          ], "20260512-sky", { autoSource: menloParkWeatherSource, lockAt: "2026-05-13T13:00:00.000Z" }),
-          question("Will rain be mentioned for May 12?", [
+          ], "20260513-sky", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T13:00:00.000Z" }),
+          question("Will rain be mentioned for May 13?", [
             answer("Yes", 18, "yes"),
             answer("No", 82, "no")
-          ], "20260512-rain", { autoSource: menloParkWeatherSource, lockAt: "2026-05-13T13:00:00.000Z" }),
+          ], "20260513-rain", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T13:00:00.000Z" }),
           question("How windy will it sound?", [
             answer("Light wind", 21, "light-wind"),
             answer("Noticeable breeze", 42, "noticeable-breeze"),
             answer("Windy", 12, "windy")
-          ], "20260512-wind", { autoSource: menloParkWeatherSource, lockAt: "2026-05-13T13:00:00.000Z" }),
-          question("What will the May 12 night feel like?", [
+          ], "20260513-wind", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T13:00:00.000Z" }),
+          question("What will the May 13 night feel like?", [
             answer("Clear and cool", 22, "clear-cool"),
             answer("Cloudy and mild", 34, "cloudy-mild"),
             answer("Chilly", 18, "chilly"),
             answer("Rainy", 12, "rainy")
-          ], "20260512-night", { autoSource: menloParkWeatherSource, lockAt: "2026-05-13T13:00:00.000Z" })
+          ], "20260513-night", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T13:00:00.000Z" })
         ]
       },
       // DAILY_WEATHER_GAME_END
@@ -3520,6 +3520,7 @@
 
     async function saveSharedEntry(game, entry) {
       try {
+        state.lastSaveError = "";
         const response = await fetch(minigamesApiUrl(game.gameId), {
           method: "POST",
           headers: {
@@ -3533,7 +3534,8 @@
           }),
         });
         if (!response.ok) {
-          throw new Error(`Shared save request failed: ${response.status}`);
+          const errorText = await response.text().catch(() => "");
+          throw new Error(errorText || `Shared save request failed: ${response.status}`);
         }
 
         const data = await response.json();
@@ -3543,6 +3545,7 @@
         return true;
       } catch (err) {
         sharedStatus = "offline";
+        state.lastSaveError = cleanToastError(err);
         console.error("Could not save minigame picks to server:", err);
         return false;
       }
@@ -3550,6 +3553,7 @@
 
     async function saveRoomEntry(game, roomCode, entry) {
       try {
+        state.lastSaveError = "";
         const response = await fetch(minigamesRoomApiUrl(game.gameId, roomCode), {
           method: "POST",
           headers: {
@@ -3572,7 +3576,8 @@
           return false;
         }
         if (!response.ok) {
-          throw new Error(`Room save request failed: ${response.status}`);
+          const errorText = await response.text().catch(() => "");
+          throw new Error(errorText || `Room save request failed: ${response.status}`);
         }
 
         const data = await response.json();
@@ -3583,9 +3588,17 @@
         return true;
       } catch (err) {
         sharedStatus = "offline";
+        state.lastSaveError = cleanToastError(err);
         console.error("Could not save room picks to server:", err);
         return false;
       }
+    }
+
+    function cleanToastError(err) {
+      return String(err?.message || err || "")
+        .replace(/\s+/g, " ")
+        .replace(/[{}"]/g, "")
+        .slice(0, 140);
     }
 
     async function saveEntryForScope(game, entry) {
@@ -4573,7 +4586,9 @@
       const savedToServer = await saveEntryForScope(game, entry);
       if (!savedToServer) {
         saveLocalEntry(game, entry);
-        showToast("Server save failed. Picks are only on this device, not the public leaderboard.");
+        showToast(state.lastSaveError
+          ? `Server save failed: ${state.lastSaveError}`
+          : "Server save failed. Picks are only on this device, not the public leaderboard.");
       }
 
       state.playerName = name;

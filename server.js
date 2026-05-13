@@ -28,6 +28,16 @@ const minigamesDataUrl =
   process.env.MINIGAMES_DATA_URL ||
   process.env.JSONBLOB_MINIGAMES_URL ||
   "https://jsonblob.com/api/jsonBlob/019e1a1c-73f2-78b8-b1f6-65f34135684e";
+const databaseUrl =
+  process.env.DATABASE_URL ||
+  process.env.POSTGRES_URL ||
+  "";
+const databaseSsl =
+  databaseUrl && process.env.DATABASE_SSL !== "false"
+    ? { rejectUnauthorized: false }
+    : false;
+let databasePoolPromise = null;
+let databaseReadyPromise = null;
 let minigamesWriteQueue = Promise.resolve();
 const roomCodeAlphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const notificationsDataFile =
@@ -85,6 +95,93 @@ function isValidRoomCode(value) {
 
 function minigamesInitialData() {
   return { games: {}, customGames: [] };
+}
+
+async function getDatabasePool() {
+  if (!databaseUrl) {
+    return null;
+  }
+
+  databasePoolPromise ||= import("pg").then(({ Pool }) => (
+    new Pool({
+      connectionString: databaseUrl,
+      ssl: databaseSsl,
+      max: 5,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 10000,
+    })
+  ));
+
+  return databasePoolPromise;
+}
+
+async function ensureDatabase() {
+  const pool = await getDatabasePool();
+  if (!pool) {
+    return null;
+  }
+
+  databaseReadyPromise ||= pool.query(`
+    CREATE TABLE IF NOT EXISTS dexterbain_kv (
+      key text PRIMARY KEY,
+      data jsonb NOT NULL,
+      updated_at timestamptz NOT NULL DEFAULT now()
+    )
+  `);
+
+  await databaseReadyPromise;
+  return pool;
+}
+
+async function readDatabaseJson(key, fallbackData) {
+  const pool = await ensureDatabase();
+  if (!pool) {
+    return null;
+  }
+
+  const result = await pool.query(
+    "SELECT data FROM dexterbain_kv WHERE key = $1",
+    [key]
+  );
+
+  return result.rows[0]?.data || fallbackData;
+}
+
+async function writeDatabaseJson(key, data) {
+  const pool = await ensureDatabase();
+  if (!pool) {
+    return false;
+  }
+
+  await pool.query(
+    `INSERT INTO dexterbain_kv (key, data, updated_at)
+     VALUES ($1, $2::jsonb, now())
+     ON CONFLICT (key)
+     DO UPDATE SET data = EXCLUDED.data, updated_at = now()`,
+    [key, JSON.stringify(data)]
+  );
+
+  return true;
+}
+
+function minigamesStorageMode() {
+  if (databaseUrl) {
+    return "postgres";
+  }
+  if (minigamesDataUrl) {
+    return "remote-json";
+  }
+  return "local-json";
+}
+
+function notificationsStorageMode() {
+  if (databaseUrl) {
+    return "postgres";
+  }
+  if (notificationsDataUrl) {
+    return "remote-json";
+  }
+  return "local-json";
 }
 
 function normalizeMinigamesData(data) {
@@ -197,6 +294,31 @@ function cleanCustomGamePayload(body) {
 }
 
 async function readMinigamesData() {
+  if (databaseUrl) {
+    const databaseData = normalizeMinigamesData(
+      await readDatabaseJson("minigames", minigamesInitialData())
+    );
+    const remoteData = minigamesDataUrl
+      ? await readRemoteMinigamesData().catch(() => null)
+      : null;
+    const localData = await readLocalMinigamesData().catch(() => null);
+
+    if (isEmptyMinigamesData(databaseData)) {
+      const migrationData = !isEmptyMinigamesData(remoteData)
+        ? remoteData
+        : !isEmptyMinigamesData(localData)
+          ? localData
+          : null;
+
+      if (migrationData) {
+        await writeDatabaseJson("minigames", migrationData);
+        return normalizeMinigamesData(migrationData);
+      }
+    }
+
+    return databaseData;
+  }
+
   if (minigamesDataUrl) {
     const remoteData = await readRemoteMinigamesData();
     const localData = await readLocalMinigamesData().catch(() => null);
@@ -228,6 +350,14 @@ async function readLocalMinigamesData() {
 }
 
 async function writeMinigamesData(data) {
+  if (databaseUrl) {
+    await writeDatabaseJson("minigames", data);
+    await writeLocalMinigamesData(data).catch((err) => {
+      console.warn("Minigames local backup write failed:", err);
+    });
+    return;
+  }
+
   if (minigamesDataUrl) {
     await writeRemoteMinigamesData(data);
     await writeLocalMinigamesData(data).catch((err) => {
@@ -631,6 +761,31 @@ function uniqueRoomCode(data, gameId) {
 }
 
 async function readNotificationsData() {
+  if (databaseUrl) {
+    const databaseData = await readDatabaseJson("notifications", { subscriptions: [] });
+    const remoteData = notificationsDataUrl
+      ? await readRemoteNotificationsData().catch(() => null)
+      : null;
+    const localData = await readLocalNotificationsData().catch(() => null);
+
+    if (isEmptyNotificationsData(databaseData)) {
+      const migrationData = !isEmptyNotificationsData(remoteData)
+        ? remoteData
+        : !isEmptyNotificationsData(localData)
+          ? localData
+          : null;
+
+      if (migrationData) {
+        await writeDatabaseJson("notifications", migrationData);
+        return migrationData;
+      }
+    }
+
+    return databaseData && typeof databaseData === "object" && !Array.isArray(databaseData)
+      ? databaseData
+      : { subscriptions: [] };
+  }
+
   if (notificationsDataUrl) {
     const remoteData = await readRemoteNotificationsData();
     const localData = await readLocalNotificationsData().catch(() => null);
@@ -662,6 +817,14 @@ async function readLocalNotificationsData() {
 }
 
 async function writeNotificationsData(data) {
+  if (databaseUrl) {
+    await writeDatabaseJson("notifications", data);
+    await writeLocalNotificationsData(data).catch((err) => {
+      console.warn("Notifications local backup write failed:", err);
+    });
+    return;
+  }
+
   if (notificationsDataUrl) {
     await writeRemoteNotificationsData(data);
     await writeLocalNotificationsData(data).catch((err) => {
@@ -1427,6 +1590,31 @@ app.post("/api/notifications/minigames/:gameId/send", async (req, res) => {
   } catch (err) {
     console.error("Notification send error:", err);
     res.status(500).json({ error: "Failed to send notification" });
+  }
+});
+
+app.get("/api/minigames/storage/status", async (req, res) => {
+  try {
+    if (databaseUrl) {
+      const pool = await ensureDatabase();
+      await pool.query("SELECT 1");
+    }
+
+    res.json({
+      ok: true,
+      minigames: minigamesStorageMode(),
+      notifications: notificationsStorageMode(),
+      databaseReady: Boolean(databaseUrl),
+    });
+  } catch (err) {
+    console.error("Minigames storage status error:", err);
+    res.status(500).json({
+      ok: false,
+      minigames: minigamesStorageMode(),
+      notifications: notificationsStorageMode(),
+      databaseReady: false,
+      error: "Storage is not healthy",
+    });
   }
 });
 

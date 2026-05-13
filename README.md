@@ -20,3 +20,7 @@ No current items.
 ## Push Preference
 
 If Dexter asks to push and the first push attempt fails, keep trying safe approved push paths until it is pushed or there is a true blocker that needs Dexter. Do not stop just to report that the push was unsuccessful.
+
+## Database
+
+The minigames backend can use a real Postgres database when the server has `DATABASE_URL` or `POSTGRES_URL` set. Picks, rooms, custom games, results, notification subscriptions, and generated notification keys move into the database automatically. If no database URL is set yet, the site falls back to the old JSON storage so it can keep running.
