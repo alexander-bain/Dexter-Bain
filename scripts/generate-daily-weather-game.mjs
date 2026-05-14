@@ -31,8 +31,8 @@ function slugDate(date) {
   return dayKey(date).replaceAll("-", "");
 }
 
-function lockDate(date) {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1, 6, 0, 0);
+function lockDate(date, hour, minute = 0) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minute, 0);
 }
 
 function labelDate(date) {
@@ -148,17 +148,24 @@ function weatherEvent(date, forecast) {
   const night = forecast.nightPeriod || day;
   const high = Number(day.temperature) || 70;
   const low = Number(night.temperature) || Math.max(45, high - 16);
-  const lowEdge = Math.max(35, high - 5);
-  const highEdge = high + 5;
   const skyText = `${day.shortForecast || ""} ${day.detailedForecast || ""}`;
   const nightText = `${night.shortForecast || ""} ${night.detailedForecast || ""}`;
   const rainLikely = includesAny(skyText, ["rain", "shower", "thunderstorm", "drizzle"]);
   const sky = skyBucket(skyText);
   const wind = windBucket(`${day.windSpeed || ""} ${day.detailedForecast || ""}`);
-  const nightFeel = nightBucket(nightText, low);
   const dateLabel = labelDate(date);
   const idDate = slugDate(date);
-  const lockAt = lockDate(date).toISOString();
+  const warmByNoonThreshold = Math.max(60, Math.round((high - 5) / 5) * 5);
+  const peakThreshold = Math.max(warmByNoonThreshold + 5, Math.round(high / 5) * 5);
+  const coolDownThreshold = Math.max(55, Math.round((high - 8) / 5) * 5);
+  const locks = {
+    warmByNoon: lockDate(date, 12).toISOString(),
+    afternoonPeak: lockDate(date, 14).toISOString(),
+    sky: lockDate(date, 15).toISOString(),
+    rain: lockDate(date, 16).toISOString(),
+    wind: lockDate(date, 17).toISOString(),
+    earlyEvening: lockDate(date, 18).toISOString()
+  };
 
   const skyOdds = {
     "mostly-sunny": [sky === "mostly-sunny" ? 42 : 18, "Mostly sunny"],
@@ -173,48 +180,45 @@ function weatherEvent(date, forecast) {
     "windy": [wind === "windy" ? 34 : 12, "Windy"]
   };
 
-  const nightOdds = {
-    "clear-cool": [nightFeel === "clear-cool" ? 38 : 22, "Clear and cool"],
-    "cloudy-mild": [nightFeel === "cloudy-mild" ? 34 : 24, "Cloudy and mild"],
-    "chilly": [nightFeel === "chilly" ? 30 : 18, "Chilly"],
-    "rainy": [nightFeel === "rainy" ? 34 : 12, "Rainy"]
-  };
+  const likelyBreaksWarmByNoon = high >= warmByNoonThreshold && !includesAny(skyText, ["fog", "cold"]);
+  const likelyBreaksPeak = high >= peakThreshold;
+  const likelyCoolsBySix = high <= coolDownThreshold || includesAny(nightText, ["cool", "clear"]);
 
   return `      {
         id: "daily-weather-${idDate}",
-        name: ${jsString(`Menlo Park Morning Outlook - ${dateLabel}`)},
+        name: ${jsString(`Menlo Park Day Watch - ${dateLabel}`)},
         type: "Weather",
         month: ${date.getMonth()},
         day: ${date.getDate()},
-        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: ${day.shortForecast || "local forecast"}, high near ${high}, night near ${low}.`)},
+        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: time-based weather calls, all settled by 6 PM. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.`)},
         questions: [
-          question(${jsString(`What will the ${dateLabel} high temperature be closest to?`)}, [
-            answer(${jsString(`Under ${lowEdge} degrees`)}, ${chance(48, 18, high < lowEdge)}, "under-${lowEdge}"),
-            answer(${jsString(`${lowEdge} to ${highEdge} degrees`)}, 50, "${lowEdge}-${highEdge}"),
-            answer(${jsString(`${highEdge + 1} to ${highEdge + 8} degrees`)}, ${chance(35, 22, high > highEdge)}, "${highEdge + 1}-${highEdge + 8}"),
-            answer(${jsString(`Over ${highEdge + 8} degrees`)}, 10, "over-${highEdge + 8}")
-          ], "${idDate}-high-temp", { autoSource: menloParkWeatherSource, lockAt: ${jsString(lockAt)} }),
-          question(${jsString("What will the main daytime sky be?")}, [
+          question(${jsString(`By noon, will it have broken ${warmByNoonThreshold} degrees?`)}, [
+            answer("Yes", ${likelyBreaksWarmByNoon ? 64 : 36}, "yes"),
+            answer("No", ${likelyBreaksWarmByNoon ? 36 : 64}, "no")
+          ], "${idDate}-warm-by-noon", { autoSource: menloParkWeatherSource, lockAt: ${jsString(locks.warmByNoon)} }),
+          question(${jsString(`By 2 PM, will it have broken ${peakThreshold} degrees?`)}, [
+            answer("Yes", ${likelyBreaksPeak ? 58 : 32}, "yes"),
+            answer("No", ${likelyBreaksPeak ? 42 : 68}, "no")
+          ], "${idDate}-afternoon-peak", { autoSource: menloParkWeatherSource, lockAt: ${jsString(locks.afternoonPeak)} }),
+          question(${jsString("At 3 PM, what will the sky feel closest to?")}, [
             answer("Mostly sunny", ${skyOdds["mostly-sunny"][0]}, "mostly-sunny"),
             answer("Partly cloudy", ${skyOdds["partly-cloudy"][0]}, "partly-cloudy"),
             answer("Mostly cloudy", ${skyOdds["mostly-cloudy"][0]}, "mostly-cloudy"),
             answer("Rain likely", ${skyOdds["rain-likely"][0]}, "rain-likely")
-          ], "${idDate}-sky", { autoSource: menloParkWeatherSource, lockAt: ${jsString(lockAt)} }),
-          question(${jsString(`Will rain be mentioned for ${dateLabel}?`)}, [
+          ], "${idDate}-sky-3pm", { autoSource: menloParkWeatherSource, lockAt: ${jsString(locks.sky)} }),
+          question(${jsString("By 4 PM, will rain have shown up in the forecast or conditions?")}, [
             answer("Yes", ${rainLikely ? 62 : 18}, "yes"),
             answer("No", ${rainLikely ? 38 : 82}, "no")
-          ], "${idDate}-rain", { autoSource: menloParkWeatherSource, lockAt: ${jsString(lockAt)} }),
-          question("How windy will it sound?", [
+          ], "${idDate}-rain-by-4pm", { autoSource: menloParkWeatherSource, lockAt: ${jsString(locks.rain)} }),
+          question("By 5 PM, how windy will it sound?", [
             answer("Light wind", ${windOdds["light-wind"][0]}, "light-wind"),
             answer("Noticeable breeze", ${windOdds["noticeable-breeze"][0]}, "noticeable-breeze"),
             answer("Windy", ${windOdds["windy"][0]}, "windy")
-          ], "${idDate}-wind", { autoSource: menloParkWeatherSource, lockAt: ${jsString(lockAt)} }),
-          question(${jsString(`What will the ${dateLabel} night feel like?`)}, [
-            answer("Clear and cool", ${nightOdds["clear-cool"][0]}, "clear-cool"),
-            answer("Cloudy and mild", ${nightOdds["cloudy-mild"][0]}, "cloudy-mild"),
-            answer("Chilly", ${nightOdds["chilly"][0]}, "chilly"),
-            answer("Rainy", ${nightOdds["rainy"][0]}, "rainy")
-          ], "${idDate}-night", { autoSource: menloParkWeatherSource, lockAt: ${jsString(lockAt)} })
+          ], "${idDate}-wind-by-5pm", { autoSource: menloParkWeatherSource, lockAt: ${jsString(locks.wind)} }),
+          question(${jsString(`At 6 PM, will it be below ${coolDownThreshold} degrees again?`)}, [
+            answer("Yes", ${likelyCoolsBySix ? 54 : 32}, "yes"),
+            answer("No", ${likelyCoolsBySix ? 46 : 68}, "no")
+          ], "${idDate}-below-${coolDownThreshold}-by-6pm", { autoSource: menloParkWeatherSource, lockAt: ${jsString(locks.earlyEvening)} })
         ]
       },`;
 }

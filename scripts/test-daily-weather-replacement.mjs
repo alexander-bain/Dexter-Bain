@@ -69,15 +69,21 @@ if (ids.length !== 1) {
   throw new Error(`Expected exactly one generated daily weather game, found ${ids.length}.`);
 }
 
-for (const questionId of ["high-temp", "sky", "rain", "wind", "night"]) {
+for (const questionId of ["warm-by-noon", "afternoon-peak", "sky-3pm", "rain-by-4pm", "wind-by-5pm", "below-60-by-6pm"]) {
   if (!block.includes(`"20260513-${questionId}"`)) {
     throw new Error(`Generated weather game is missing the ${questionId} question.`);
   }
 }
 
 const autoScoredQuestions = [...block.matchAll(/autoSource: menloParkWeatherSource/g)].length;
-if (autoScoredQuestions !== 5) {
-  throw new Error(`Expected 5 auto-scored weather questions, found ${autoScoredQuestions}.`);
+if (autoScoredQuestions !== 6) {
+  throw new Error(`Expected 6 auto-scored weather questions, found ${autoScoredQuestions}.`);
+}
+
+for (const hour of ["T19:00:00.000Z", "T21:00:00.000Z", "T22:00:00.000Z", "T23:00:00.000Z", "T00:00:00.000Z", "T01:00:00.000Z"]) {
+  if (!block.includes(hour)) {
+    throw new Error(`Generated weather game is missing lock time ${hour}.`);
+  }
 }
 
 console.log("Daily weather replacement test passed.");
