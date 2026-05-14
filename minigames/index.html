@@ -3271,6 +3271,24 @@
       }
     }
 
+    function signInErrorMessage(data, status, fallback) {
+      const rawMessage = String(data?.msg || data?.error_description || data?.error || "").trim();
+      const lowerMessage = rawMessage.toLowerCase();
+      if (status === 429 || lowerMessage.includes("rate") || lowerMessage.includes("too many")) {
+        return "Too many emails were sent too quickly. Wait a minute, then try again.";
+      }
+
+      if (status === 400 && lowerMessage.includes("email")) {
+        return "That email did not work. Check the spelling and try again.";
+      }
+
+      if (status === 403 || lowerMessage.includes("not allowed") || lowerMessage.includes("redirect")) {
+        return "Supabase blocked this email sign-in setting. Dexter needs the Supabase Auth settings checked.";
+      }
+
+      return rawMessage || fallback;
+    }
+
     async function sendSignInCode(email, name) {
       if (!hasSupabase()) {
         throw new Error("Email sign-in needs Supabase to be connected.");
@@ -3293,7 +3311,7 @@
 
       if (!response.ok) {
         const data = await response.json().catch(() => ({}));
-        throw new Error(data.msg || data.error_description || data.error || `Could not send code (${response.status}).`);
+        throw new Error(signInErrorMessage(data, response.status, `Could not send code (${response.status}).`));
       }
     }
 
@@ -3317,7 +3335,7 @@
 
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
-        throw new Error(data.msg || data.error_description || data.error || `Could not verify code (${response.status}).`);
+        throw new Error(signInErrorMessage(data, response.status, `Could not verify code (${response.status}).`));
       }
       return data;
     }
@@ -5229,7 +5247,9 @@
             signInCodeEl.focus();
           })
           .catch((err) => {
-            showToast(err.message || "Could not send the email code.");
+            const message = err.message || "Could not send the email code.";
+            signInStatusEl.textContent = message;
+            showToast(message);
           })
           .finally(() => {
             signInBtn.disabled = false;
@@ -5258,7 +5278,9 @@
             signInPasswordEl.focus();
           })
           .catch((err) => {
-            showToast(err.message || "That code did not verify.");
+            const message = err.message || "That code did not verify.";
+            signInStatusEl.textContent = message;
+            showToast(message);
           })
           .finally(() => {
             signInBtn.disabled = false;
