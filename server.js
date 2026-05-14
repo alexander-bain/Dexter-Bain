@@ -978,6 +978,67 @@ function cleanPushSubscription(value) {
   };
 }
 
+function getQuestionId(question, index) {
+  return cleanText(question?.id || `q-${index}`, 80).replace(/[^a-zA-Z0-9_-]/g, "");
+}
+
+function getQuestionAnswers(question) {
+  return (Array.isArray(question?.answers) ? question.answers : [])
+    .slice(0, 8)
+    .map((answer) => ({
+      id: cleanText(answer?.id, 80).replace(/[^a-zA-Z0-9_-]/g, ""),
+      label: cleanText(answer?.label, 80),
+      odds: clamp(Number(answer?.odds) || 50, 1, 99),
+      points: clamp(Number(answer?.points) || 10, 1, 999),
+    }))
+    .filter((answer) => answer.id && answer.label);
+}
+
+function getSavedPick(picks, question, index) {
+  if (Array.isArray(picks)) {
+    return picks[index] || "";
+  }
+
+  if (picks && typeof picks === "object") {
+    return picks[getQuestionId(question, index)] || "";
+  }
+
+  return "";
+}
+
+function normalizePickId(question, pick) {
+  const answers = getQuestionAnswers(question);
+  return answers.find((candidate) => candidate.id === pick || candidate.label === pick)?.id || cleanText(pick, 80).replace(/[^a-zA-Z0-9_-]/g, "");
+}
+
+function scorePicks(questions, resultsMap, picks) {
+  return questions.reduce((total, question, index) => {
+    const questionId = getQuestionId(question, index);
+    const result = resultsMap?.[questionId];
+    if (!result || result.status !== "resolved" || !result.answerId) {
+      return total;
+    }
+
+    const correctAnswerId = normalizePickId(question, result.answerId);
+    const pickedAnswerId = normalizePickId(question, getSavedPick(picks, question, index));
+    if (!pickedAnswerId || pickedAnswerId !== correctAnswerId) {
+      return total;
+    }
+
+    const correctAnswer = getQuestionAnswers(question).find((answerOption) => answerOption.id === correctAnswerId);
+    return total + (correctAnswer?.points || 0);
+  }, 0);
+}
+
+function leaderboardForGame(questions, resultsMap, entries) {
+  return entries
+    .map((entry) => ({
+      ...entry,
+      score: scorePicks(questions, resultsMap, entry.picks),
+    }))
+    .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+}
+
 function publicEntry(entry) {
   return {
     name: cleanText(entry?.name, 24),
@@ -1104,6 +1165,36 @@ async function sendPushNotifications(payload, filter = {}) {
   }
 
   return { sent, removed: staleEndpoints.size, skipped: false };
+}
+
+async function sendMinigameUpdateNotifications({
+  gameId,
+  gameName,
+  changedQuestionIds = [],
+}) {
+  if (!gameId || !Array.isArray(changedQuestionIds) || changedQuestionIds.length === 0) {
+    return { sent: 0, removed: 0, skipped: true };
+  }
+
+  const cleanGameName = cleanText(gameName, 80);
+  const title = cleanGameName ? `${cleanGameName} updated` : "Minigame update";
+  const body =
+    changedQuestionIds.length === 1
+      ? "One weather question just got a confirmed answer. Open the game for your updated score."
+      : `${changedQuestionIds.length} weather questions just got confirmed answers. Open the game for your updated score.`;
+
+  return sendPushNotifications(
+    {
+      title,
+      body,
+      tag: `minigames-${gameId}-updates`,
+      url: `/minigames/?game=${encodeURIComponent(gameId)}`,
+    },
+    {
+      gameId,
+      notify: "updates",
+    }
+  );
 }
 
 /**
@@ -1751,6 +1842,7 @@ app.get("/api/minigames/:gameId/results", async (req, res) => {
 
 app.post("/api/minigames/:gameId/results/check", async (req, res) => {
   const gameId = cleanGameId(req.params.gameId);
+  const gameName = cleanText(req.body?.gameName, 80);
   const questions = Array.isArray(req.body?.questions)
     ? req.body.questions.slice(0, 8).map(cleanAutoResultQuestion).filter(Boolean)
     : [];
@@ -1767,24 +1859,39 @@ app.post("/api/minigames/:gameId/results/check", async (req, res) => {
       return;
     }
 
+    let changedQuestionIds = [];
     const payload = await updateMinigamesData(async (data) => {
       const game = ensureGame(data, gameId);
       game.results ||= {};
 
       await Promise.all(questions.map(async (question, questionIndex) => {
         const questionId = question.id || `q-${questionIndex}`;
-        if (!questionId || game.results[questionId]?.status === "resolved") {
+        if (!questionId) {
           return;
         }
 
+        const previousResult = game.results[questionId];
         const result = await automaticResultForQuestion(question, questionIndex);
         if (result) {
           game.results[questionId] = result;
+          const previousKey = JSON.stringify(previousResult || null);
+          const nextKey = JSON.stringify(result || null);
+          if (previousKey !== nextKey) {
+            changedQuestionIds.push(questionId);
+          }
         }
       }));
 
       return { gameId, results: publicResultsForGame(data, gameId) };
     });
+
+    if (changedQuestionIds.length > 0) {
+      await sendMinigameUpdateNotifications({
+        gameId,
+        gameName,
+        changedQuestionIds,
+      });
+    }
 
     res.json(payload);
   } catch (err) {
@@ -1796,6 +1903,7 @@ app.post("/api/minigames/:gameId/results/check", async (req, res) => {
 app.post("/api/minigames/:gameId/results", async (req, res) => {
   const token = cleanText(req.get("authorization"), 300).replace(/^Bearer\s+/i, "");
   const gameId = cleanGameId(req.params.gameId);
+  const gameName = cleanText(req.body?.gameName, 80);
   const result = cleanResult(req.body);
 
   if (!notificationAdminToken || token !== notificationAdminToken) {
@@ -1813,6 +1921,12 @@ app.post("/api/minigames/:gameId/results", async (req, res) => {
       const game = ensureGame(data, gameId);
       game.results[result.questionId] = result;
       return { gameId, results: publicResultsForGame(data, gameId) };
+    });
+
+    await sendMinigameUpdateNotifications({
+      gameId,
+      gameName,
+      changedQuestionIds: [result.questionId],
     });
 
     res.json(payload);

@@ -3675,10 +3675,11 @@
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            questions: questionsToCheck,
-          }),
-        });
+        body: JSON.stringify({
+          gameName: game.name,
+          questions: questionsToCheck,
+        }),
+      });
 
         if (!response.ok) {
           throw new Error(`Result check failed: ${response.status}`);
@@ -4618,10 +4619,11 @@
       const scope = leaderboardScope(game);
       const roomKey = roomEntriesKey(game.gameId, scope.roomCode);
       const localEntries = Array.isArray(state.entries?.[game.gameId]) ? state.entries[game.gameId] : [];
+      const sharedGameEntries = Array.isArray(sharedEntries[game.gameId]) ? sharedEntries[game.gameId] : null;
       const sourceEntries = scope.type === "room"
         ? (Array.isArray(sharedRooms[roomKey]) ? sharedRooms[roomKey] : [])
-        : Array.isArray(sharedEntries[game.gameId])
-        ? sharedEntries[game.gameId]
+        : sharedGameEntries && sharedGameEntries.length > 0
+        ? sharedGameEntries
         : localEntries;
 
       return sourceEntries.map((entry) => ({
