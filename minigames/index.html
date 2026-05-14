@@ -2075,40 +2075,40 @@
     const eventCatalog = [
       // DAILY_WEATHER_GAME_START
       {
-        id: "daily-weather-20260513",
-        name: "Menlo Park Morning Outlook - May 13",
+        id: "daily-weather-20260514",
+        name: "Menlo Park Day Watch - May 14",
         type: "Weather",
         month: 4,
-        day: 13,
-        summary: "Generated at 6 AM for May 13: Sunny, high near 70, night near 49.",
+        day: 14,
+        summary: "Generated at 6 AM for May 14: time-based weather calls, all settled by 6 PM. Forecast: Sunny, high near 76.",
         questions: [
-          question("What will the May 13 high temperature be closest to?", [
-            answer("Under 65 degrees", 18, "under-65"),
-            answer("65 to 75 degrees", 50, "65-75"),
-            answer("76 to 83 degrees", 22, "76-83"),
-            answer("Over 83 degrees", 10, "over-83")
-          ], "20260513-high-temp", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T13:00:00.000Z" }),
-          question("What will the main daytime sky be?", [
+          question("By noon, will it have broken 70 degrees?", [
+            answer("Yes", 64, "yes"),
+            answer("No", 36, "no")
+          ], "20260514-warm-by-noon", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T19:00:00.000Z" }),
+          question("By 2 PM, will it have broken 75 degrees?", [
+            answer("Yes", 58, "yes"),
+            answer("No", 42, "no")
+          ], "20260514-afternoon-peak", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T21:00:00.000Z" }),
+          question("At 3 PM, what will the sky feel closest to?", [
             answer("Mostly sunny", 42, "mostly-sunny"),
             answer("Partly cloudy", 26, "partly-cloudy"),
             answer("Mostly cloudy", 19, "mostly-cloudy"),
             answer("Rain likely", 9, "rain-likely")
-          ], "20260513-sky", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T13:00:00.000Z" }),
-          question("Will rain be mentioned for May 13?", [
+          ], "20260514-sky-3pm", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T22:00:00.000Z" }),
+          question("By 4 PM, will rain have shown up in the forecast or conditions?", [
             answer("Yes", 18, "yes"),
             answer("No", 82, "no")
-          ], "20260513-rain", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T13:00:00.000Z" }),
-          question("How windy will it sound?", [
+          ], "20260514-rain-by-4pm", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T23:00:00.000Z" }),
+          question("By 5 PM, how windy will it sound?", [
             answer("Light wind", 21, "light-wind"),
             answer("Noticeable breeze", 42, "noticeable-breeze"),
             answer("Windy", 12, "windy")
-          ], "20260513-wind", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T13:00:00.000Z" }),
-          question("What will the May 13 night feel like?", [
-            answer("Clear and cool", 22, "clear-cool"),
-            answer("Cloudy and mild", 24, "cloudy-mild"),
-            answer("Chilly", 30, "chilly"),
-            answer("Rainy", 12, "rainy")
-          ], "20260513-night", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T13:00:00.000Z" })
+          ], "20260514-wind-by-5pm", { autoSource: menloParkWeatherSource, lockAt: "2026-05-15T00:00:00.000Z" }),
+          question("At 6 PM, will it be below 70 degrees again?", [
+            answer("Yes", 54, "yes"),
+            answer("No", 46, "no")
+          ], "20260514-below-70-by-6pm", { autoSource: menloParkWeatherSource, lockAt: "2026-05-15T01:00:00.000Z" })
         ]
       },
       // DAILY_WEATHER_GAME_END
