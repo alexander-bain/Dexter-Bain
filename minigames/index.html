@@ -3189,6 +3189,10 @@
       return String(value || "").trim().toLowerCase().slice(0, 120);
     }
 
+    function typedSignInEmail() {
+      return normalizeEmail(signInEmailEl.value);
+    }
+
     function signedInPlayerName() {
       return normalizePlayerName(state.signedInPlayer?.name);
     }
@@ -3271,6 +3275,8 @@
       if (!hasSupabase()) {
         throw new Error("Email sign-in needs Supabase to be connected.");
       }
+
+      signInStatusEl.textContent = `Sending a verification email to ${email}...`;
 
       const response = await fetch(`${supabaseBaseUrl()}/auth/v1/otp`, {
         method: "POST",
@@ -5139,7 +5145,7 @@
 
     signInFormEl.addEventListener("submit", (event) => {
       event.preventDefault();
-      const email = normalizeEmail(signInEmailEl.value);
+      const email = typedSignInEmail();
       const name = normalizePlayerName(signInNameEl.value);
       const code = String(signInCodeEl.value || "").replace(/\D+/g, "").slice(0, 5);
       const password = String(signInPasswordEl.value || "");
@@ -5156,7 +5162,7 @@
           .then(() => {
             state.pendingSignInEmail = email;
             saveState();
-            showToast("Verification code sent. Check your email.");
+            showToast(`Verification email sent to ${email}.`);
             renderSignInPanel();
             signInCodeEl.focus();
           })
