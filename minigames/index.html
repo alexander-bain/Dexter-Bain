@@ -1370,6 +1370,17 @@
       display: none;
     }
 
+    .signin-anchor {
+      position: fixed;
+      top: 18px;
+      right: 112px;
+      z-index: 26;
+      display: grid;
+      justify-items: end;
+      gap: 9px;
+      width: min(300px, calc(100vw - 132px));
+    }
+
     .guide-return {
       position: fixed;
       top: 18px;
@@ -1408,6 +1419,12 @@
       backdrop-filter: blur(18px);
       pointer-events: auto;
       box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+    }
+
+    .signin-anchor .signin-panel {
+      width: 100%;
+      max-height: calc(100vh - 86px);
+      overflow: auto;
     }
 
     .guide-return.is-hidden {
@@ -1744,6 +1761,11 @@
         display: none;
       }
 
+      .signin-anchor {
+        right: 12px;
+        width: min(300px, calc(100vw - 24px));
+      }
+
       .scoreline,
       .answers,
       .notify-options,
@@ -1777,6 +1799,8 @@
       <button class="guide-skip" id="guideSkipBtn" type="button">Skip</button>
       <button class="guide-repeat is-hidden" id="guideRepeatBtn" type="button">Repeat instructions</button>
     </div>
+  </div>
+  <div class="signin-anchor" id="signInAnchor">
     <button class="signin-launch" id="openSignInBtn" type="button">Sign in</button>
     <section class="panel signin-panel is-hidden" id="signInPanel" aria-labelledby="signInTitle">
       <h3 class="section-title" id="signInTitle">Player sign in</h3>
@@ -5345,7 +5369,7 @@
     });
 
     document.addEventListener("click", (event) => {
-      if (event.target.closest("#siteGuide, #guideReturnBtn")) {
+      if (event.target.closest("#siteGuide, #guideReturnBtn, #signInAnchor")) {
         return;
       }
 
