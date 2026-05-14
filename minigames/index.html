@@ -3193,16 +3193,6 @@
       return normalizeEmail(signInEmailEl.value);
     }
 
-    function signInRedirectUrl() {
-      const publicUrl = "https://dexterbain.com/minigames/";
-      if (!window.location.protocol.startsWith("http") || ["localhost", "127.0.0.1"].includes(window.location.hostname)) {
-        return publicUrl;
-      }
-
-      const path = window.location.pathname.replace(/index\.html$/i, "");
-      return `${window.location.origin}${path || "/minigames/"}`;
-    }
-
     function signedInPlayerName() {
       return normalizePlayerName(state.signedInPlayer?.name);
     }
@@ -3297,8 +3287,6 @@
         body: JSON.stringify({
           email,
           create_user: true,
-          redirect_to: signInRedirectUrl(),
-          options: { redirectTo: signInRedirectUrl() },
           data: { player_name: name },
         }),
       });
