@@ -1807,7 +1807,7 @@
       <p class="signin-status" id="signInStatus">Type your email first.</p>
       <form class="signin-fields" id="signInForm">
         <input class="name-input" id="signInEmail" type="email" maxlength="120" autocomplete="email" placeholder="Email address" required />
-        <input class="name-input" id="signInCode" inputmode="numeric" maxlength="5" autocomplete="one-time-code" placeholder="5 digit code" hidden />
+        <input class="name-input" id="signInCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="Email code" hidden />
         <input class="name-input" id="signInPassword" type="password" maxlength="72" autocomplete="new-password" placeholder="Password" hidden />
         <input class="name-input" id="signInPasswordConfirm" type="password" maxlength="72" autocomplete="new-password" placeholder="Verify password" hidden />
         <input class="name-input" id="signInName" maxlength="24" autocomplete="name" placeholder="Leaderboard name" hidden />
@@ -3193,6 +3193,16 @@
       return normalizeEmail(signInEmailEl.value);
     }
 
+    function signInRedirectUrl() {
+      const publicUrl = "https://dexterbain.com/minigames/";
+      if (!window.location.protocol.startsWith("http") || ["localhost", "127.0.0.1"].includes(window.location.hostname)) {
+        return publicUrl;
+      }
+
+      const path = window.location.pathname.replace(/index\.html$/i, "");
+      return `${window.location.origin}${path || "/minigames/"}`;
+    }
+
     function signedInPlayerName() {
       return normalizePlayerName(state.signedInPlayer?.name);
     }
@@ -3250,7 +3260,7 @@
       signInStatusEl.textContent = hasVerifiedEmail
         ? "Email verified. Now create a password, verify it, and choose your leaderboard name."
         : pendingEmail
-          ? `Check ${pendingEmail} for the 5 digit verification code, then enter it here.`
+          ? `Check ${pendingEmail} for the email code, or click the verify link in that email.`
           : "Type your email first.";
       signInBtn.textContent = hasVerifiedEmail ? "Finish sign in" : pendingEmail ? "Verify email" : "Send email code";
       openSignInBtn.textContent = hasPanelOpen ? "Close sign in" : "Sign in";
@@ -3287,6 +3297,8 @@
         body: JSON.stringify({
           email,
           create_user: true,
+          redirect_to: signInRedirectUrl(),
+          options: { redirectTo: signInRedirectUrl() },
           data: { player_name: name },
         }),
       });
@@ -3318,6 +3330,21 @@
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
         throw new Error(data.msg || data.error_description || data.error || `Could not verify code (${response.status}).`);
+      }
+      return data;
+    }
+
+    async function fetchSupabaseUser(accessToken) {
+      const response = await fetch(`${supabaseBaseUrl()}/auth/v1/user`, {
+        headers: supabaseHeaders({
+          Accept: "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.msg || data.error_description || data.error || `Could not read verified email (${response.status}).`);
       }
       return data;
     }
@@ -3372,6 +3399,53 @@
       saveState();
       showToast(name ? `Signed out ${name}.` : "Signed out.");
       render();
+    }
+
+    function handleSupabaseEmailRedirect() {
+      const hashParams = new URLSearchParams(String(window.location.hash || "").replace(/^#/, ""));
+      const searchParams = new URLSearchParams(window.location.search);
+      const accessToken = hashParams.get("access_token") || searchParams.get("access_token");
+      const refreshToken = hashParams.get("refresh_token") || searchParams.get("refresh_token");
+      const type = hashParams.get("type") || searchParams.get("type");
+
+      if (!accessToken || !["magiclink", "signup", "email"].includes(String(type || ""))) {
+        return;
+      }
+
+      state.pendingAuthSession = {
+        accessToken,
+        refreshToken: refreshToken || "",
+        userId: "",
+        email: normalizeEmail(hashParams.get("email") || searchParams.get("email") || state.pendingSignInEmail),
+      };
+      if (state.pendingAuthSession.email) {
+        state.pendingSignInEmail = state.pendingAuthSession.email;
+      }
+      saveState();
+
+      if (window.history?.replaceState) {
+        window.history.replaceState(null, "", window.location.pathname || "/minigames/");
+      }
+
+      setSignInPanelOpen(true);
+      showToast("Email verified. Finish with a password and player name.");
+
+      fetchSupabaseUser(accessToken)
+        .then((user) => {
+          state.pendingAuthSession = {
+            ...state.pendingAuthSession,
+            userId: user.id || "",
+            email: normalizeEmail(user.email || state.pendingAuthSession.email),
+          };
+          if (state.pendingAuthSession.email) {
+            state.pendingSignInEmail = state.pendingAuthSession.email;
+          }
+          saveState();
+          renderSignInPanel();
+        })
+        .catch(() => {
+          renderSignInPanel();
+        });
     }
 
     function minigamesApiUrl(gameId) {
@@ -5147,7 +5221,7 @@
       event.preventDefault();
       const email = typedSignInEmail();
       const name = normalizePlayerName(signInNameEl.value);
-      const code = String(signInCodeEl.value || "").replace(/\D+/g, "").slice(0, 5);
+      const code = String(signInCodeEl.value || "").replace(/\D+/g, "").slice(0, 6);
       const password = String(signInPasswordEl.value || "");
       const passwordConfirm = String(signInPasswordConfirmEl.value || "");
 
@@ -5177,7 +5251,7 @@
 
       if (!state.pendingAuthSession?.accessToken) {
         if (!code) {
-          showToast("Enter the 5 digit code from your email.");
+          showToast("Enter the code from your email, or click the verify link in that email.");
           signInBtn.disabled = false;
           return;
         }
@@ -5399,6 +5473,7 @@
 
     window.setInterval(updateCountdowns, 1000);
 
+    handleSupabaseEmailRedirect();
     showGuideTip(guideTipIndex);
     renderCustomGameBuilder();
     render();
