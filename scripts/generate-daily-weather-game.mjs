@@ -8,6 +8,11 @@ const minigamesPath =
   path.join(repoRoot, "minigames", "index.html");
 const sourceUrl = "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182";
 const pointsUrl = "https://api.weather.gov/points/37.453,-122.182";
+const marketSource = "https://r.jina.ai/http://finance.yahoo.com/quote/%5EGSPC";
+const localNewsSource = "https://r.jina.ai/http://www.mercurynews.com/";
+const musicSource = "https://r.jina.ai/http://music.apple.com/us/charts/songs";
+const sportsSource = "https://r.jina.ai/http://www.espn.com/scoreboard";
+const gasSource = "https://r.jina.ai/http://gasprices.aaa.com/";
 const startMarker = "      // DAILY_WEATHER_GAME_START";
 const endMarker = "      // DAILY_WEATHER_GAME_END";
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -143,82 +148,245 @@ function nightBucket(text, temp) {
   return "clear-cool";
 }
 
-function weatherEvent(date, forecast) {
+function windSpeedMax(text) {
+  const match = String(text || "").match(/(\d+)(?:\s*to\s*(\d+))?\s*mph/i);
+  return match ? Number(match[2] || match[1]) : 8;
+}
+
+function rotateSelection(items, count, seed) {
+  if (!Array.isArray(items) || !items.length || count <= 0) {
+    return [];
+  }
+
+  const start = Math.abs(Number(seed) || 0) % items.length;
+  const total = Math.min(count, items.length);
+  return Array.from({ length: total }, (_, index) => items[(start + index) % items.length]);
+}
+
+function yesNoQuestion({
+  text,
+  idSuffix,
+  autoSource,
+  lockAt,
+  likely,
+  yesLikely = 64,
+  yesUnlikely = 36
+}) {
+  return {
+    text,
+    idSuffix,
+    autoSource,
+    lockAt,
+    answers: [
+      { label: "Yes", odds: likely ? yesLikely : yesUnlikely, id: "yes" },
+      { label: "No", odds: likely ? yesUnlikely : yesLikely, id: "no" }
+    ]
+  };
+}
+
+function choiceQuestion({
+  text,
+  idSuffix,
+  autoSource,
+  lockAt,
+  answers
+}) {
+  return {
+    text,
+    idSuffix,
+    autoSource,
+    lockAt,
+    answers
+  };
+}
+
+function renderQuestion(question, idDate) {
+  return `          question(${jsString(question.text)}, [
+            ${question.answers.map((answer) => `answer(${jsString(answer.label)}, ${Number(answer.odds)}, ${jsString(answer.id)})`).join(",\n            ")}
+          ], "${idDate}-${question.idSuffix}", { autoSource: ${jsString(question.autoSource)}, lockAt: ${jsString(question.lockAt)} })`;
+}
+
+function dayWatchEvent(date, forecast) {
   const day = forecast.dayPeriod || {};
-  const night = forecast.nightPeriod || day;
+  const night = forecast.nightPeriod || {};
   const high = Number(day.temperature) || 70;
-  const low = Number(night.temperature) || Math.max(45, high - 16);
+  const low = Number(night.temperature) || 54;
   const skyText = `${day.shortForecast || ""} ${day.detailedForecast || ""}`;
-  const nightText = `${night.shortForecast || ""} ${night.detailedForecast || ""}`;
-  const rainLikely = includesAny(skyText, ["rain", "shower", "thunderstorm", "drizzle"]);
   const sky = skyBucket(skyText);
-  const wind = windBucket(`${day.windSpeed || ""} ${day.detailedForecast || ""}`);
+  const windSpeed = windSpeedMax(day.windSpeed || night.windSpeed || "8 mph");
   const dateLabel = labelDate(date);
   const idDate = slugDate(date);
+  const daySeed = Number(idDate);
   const warmByNoonThreshold = Math.max(60, Math.round((high - 5) / 5) * 5);
-  const peakThreshold = Math.max(warmByNoonThreshold + 5, Math.round(high / 5) * 5);
-  const coolDownThreshold = Math.max(55, Math.round((high - 8) / 5) * 5);
   const locks = {
     warmByNoon: lockDate(date, 12).toISOString(),
-    afternoonPeak: lockDate(date, 14).toISOString(),
-    sky: lockDate(date, 15).toISOString(),
-    rain: lockDate(date, 16).toISOString(),
-    wind: lockDate(date, 17).toISOString(),
-    earlyEvening: lockDate(date, 18).toISOString()
-  };
-
-  const skyOdds = {
-    "mostly-sunny": [sky === "mostly-sunny" ? 42 : 18, "Mostly sunny"],
-    "partly-cloudy": [sky === "partly-cloudy" ? 40 : 26, "Partly cloudy"],
-    "mostly-cloudy": [sky === "mostly-cloudy" ? 38 : 19, "Mostly cloudy"],
-    "rain-likely": [sky === "rain-likely" ? 36 : 9, "Rain likely"]
-  };
-
-  const windOdds = {
-    "light-wind": [wind === "light-wind" ? 48 : 21, "Light wind"],
-    "noticeable-breeze": [wind === "noticeable-breeze" ? 42 : 28, "Noticeable breeze"],
-    "windy": [wind === "windy" ? 34 : 12, "Windy"]
+    gasNoon: lockDate(date, 12, 15).toISOString(),
+    marketLunch: lockDate(date, 13).toISOString(),
+    localHeadline: lockDate(date, 14).toISOString(),
+    weatherAfternoon: lockDate(date, 15).toISOString(),
+    musicFour: lockDate(date, 16).toISOString(),
+    weatherWind: lockDate(date, 17).toISOString(),
+    sportsSix: lockDate(date, 18).toISOString(),
+    sportsSeven: lockDate(date, 19).toISOString(),
+    weatherNight: lockDate(date, 20).toISOString()
   };
 
   const likelyBreaksWarmByNoon = high >= warmByNoonThreshold && !includesAny(skyText, ["fog", "cold"]);
-  const likelyBreaksPeak = high >= peakThreshold;
-  const likelyCoolsBySix = high <= coolDownThreshold || includesAny(nightText, ["cool", "clear"]);
+  const likelyRainLater = includesAny(skyText, ["rain", "shower", "drizzle", "thunderstorm"]);
+  const likelySkySunnyLater = sky === "mostly-sunny" || sky === "partly-cloudy";
+  const likelyWindyLater = windSpeed >= 12;
+  const likelyNightCooler = low <= 60 || low <= high - 10;
+  const likelyMarketUp = !includesAny(skyText, ["storm", "rain"]) && day.temperature >= 65;
+  const likelyGasUp = daySeed % 2 === 0 || high >= 74;
+  const likelyMusicChanged = daySeed % 3 !== 0;
+  const likelySportsLive = daySeed % 4 !== 0;
+  const likelyWeatherLead = sky === "rain-likely" || (sky === "mostly-cloudy" && !likelyMarketUp);
+  const likelySportsLead = likelySportsLive && daySeed % 5 !== 0;
+  const localHeadlineOdds = {
+    weather: [sky === "rain-likely" ? 36 : 28, "Weather"],
+    stocks: [likelyMarketUp ? 30 : 24, "Stocks"],
+    sports: [likelySportsLive ? 24 : 18, "Sports"],
+    traffic: [18, "Traffic"]
+  };
+  const weatherQuestions = rotateSelection([
+    () => yesNoQuestion({
+      text: `By noon, will it be warmer than ${warmByNoonThreshold} degrees?`,
+      idSuffix: "warm-by-noon",
+      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
+      lockAt: locks.warmByNoon,
+      likely: likelyBreaksWarmByNoon
+    }),
+    () => yesNoQuestion({
+      text: "By 3 PM, will rain show up in the forecast?",
+      idSuffix: "rain-by-3pm",
+      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
+      lockAt: locks.weatherAfternoon,
+      likely: likelyRainLater
+    }),
+    () => yesNoQuestion({
+      text: `By 5 PM, will the wind be stronger than ${Math.max(10, Math.round(windSpeed / 5) * 5)} mph?`,
+      idSuffix: "wind-by-5pm",
+      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
+      lockAt: locks.weatherWind,
+      likely: likelyWindyLater
+    }),
+    () => yesNoQuestion({
+      text: "By 3 PM, will the sky still be mostly sunny?",
+      idSuffix: "sky-still-sunny",
+      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
+      lockAt: locks.weatherAfternoon,
+      likely: likelySkySunnyLater
+    }),
+    () => yesNoQuestion({
+      text: "Tonight, will it stay cooler than 60 degrees?",
+      idSuffix: "cool-tonight",
+      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
+      lockAt: locks.weatherNight,
+      likely: likelyNightCooler
+    })
+  ], 4, daySeed);
+  const moneyQuestions = rotateSelection([
+    () => yesNoQuestion({
+      text: "By noon, will gas prices be higher than this morning?",
+      idSuffix: "gas-noon",
+      autoSource: gasSource,
+      lockAt: locks.gasNoon,
+      likely: likelyGasUp
+    }),
+    () => yesNoQuestion({
+      text: "By 1 PM, will the stock market go up?",
+      idSuffix: "market-lunch",
+      autoSource: marketSource,
+      lockAt: locks.marketLunch,
+      likely: likelyMarketUp
+    })
+  ], 2, daySeed + 7);
+  const newsQuestions = rotateSelection([
+    () => choiceQuestion({
+      text: "By 2 PM, what will the local news talk about most?",
+      idSuffix: "local-headline",
+      autoSource: localNewsSource,
+      lockAt: locks.localHeadline,
+      answers: [
+        { label: localHeadlineOdds.weather[1], odds: localHeadlineOdds.weather[0], id: "weather" },
+        { label: localHeadlineOdds.stocks[1], odds: localHeadlineOdds.stocks[0], id: "stocks" },
+        { label: localHeadlineOdds.sports[1], odds: localHeadlineOdds.sports[0], id: "sports" },
+        { label: localHeadlineOdds.traffic[1], odds: localHeadlineOdds.traffic[0], id: "traffic" }
+      ]
+    }),
+    () => yesNoQuestion({
+      text: "By 3 PM, will weather be the top local news story?",
+      idSuffix: "weather-headline",
+      autoSource: localNewsSource,
+      lockAt: lockDate(date, 15).toISOString(),
+      likely: likelyWeatherLead,
+      yesLikely: 60,
+      yesUnlikely: 40
+    }),
+    () => yesNoQuestion({
+      text: "By 4 PM, will sports be one of the top local news stories?",
+      idSuffix: "sports-headline",
+      autoSource: localNewsSource,
+      lockAt: lockDate(date, 16).toISOString(),
+      likely: likelySportsLead,
+      yesLikely: 58,
+      yesUnlikely: 42
+    })
+  ], 2, daySeed + 11);
+  const musicQuestions = rotateSelection([
+    () => yesNoQuestion({
+      text: "By 4 PM, will the top Apple Music song be different?",
+      idSuffix: "music-four",
+      autoSource: musicSource,
+      lockAt: locks.musicFour,
+      likely: likelyMusicChanged
+    }),
+    () => yesNoQuestion({
+      text: "By 5 PM, will a new song reach No. 1?",
+      idSuffix: "music-five",
+      autoSource: musicSource,
+      lockAt: lockDate(date, 17).toISOString(),
+      likely: likelyMusicChanged
+    })
+  ], 1, daySeed + 23);
+  const sportsQuestions = rotateSelection([
+    () => yesNoQuestion({
+      text: "By 6 PM, will the sports page still show a live game?",
+      idSuffix: "sports-six",
+      autoSource: sportsSource,
+      lockAt: locks.sportsSix,
+      likely: likelySportsLive
+    }),
+    () => yesNoQuestion({
+      text: "By 7 PM, will the top sports story be about a live game?",
+      idSuffix: "sports-seven",
+      autoSource: sportsSource,
+      lockAt: locks.sportsSeven,
+      likely: likelySportsLive
+    })
+  ], 1, daySeed + 37);
+  const selectedQuestions = [
+    ...weatherQuestions,
+    ...moneyQuestions,
+    ...newsQuestions,
+    ...musicQuestions,
+    ...sportsQuestions
+  ].map((questionFactory) => questionFactory()).sort((left, right) => {
+    if (left.lockAt === right.lockAt) {
+      return left.idSuffix.localeCompare(right.idSuffix);
+    }
+    return left.lockAt.localeCompare(right.lockAt);
+  });
 
   return `      {
         id: "daily-weather-${idDate}",
         name: ${jsString(`Menlo Park Day Watch - ${dateLabel}`)},
-        type: "Weather",
+        type: "Day",
         month: ${date.getMonth()},
         day: ${date.getDate()},
-        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: time-based weather calls, all settled by 6 PM. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.`)},
+        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: 10 simple questions about weather, money, news, music, and sports that settle through the day. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.`)},
         questions: [
-          question(${jsString(`By noon, will it have broken ${warmByNoonThreshold} degrees?`)}, [
-            answer("Yes", ${likelyBreaksWarmByNoon ? 64 : 36}, "yes"),
-            answer("No", ${likelyBreaksWarmByNoon ? 36 : 64}, "no")
-          ], "${idDate}-warm-by-noon", { autoSource: menloParkWeatherSource, lockAt: ${jsString(locks.warmByNoon)} }),
-          question(${jsString(`By 2 PM, will it have broken ${peakThreshold} degrees?`)}, [
-            answer("Yes", ${likelyBreaksPeak ? 58 : 32}, "yes"),
-            answer("No", ${likelyBreaksPeak ? 42 : 68}, "no")
-          ], "${idDate}-afternoon-peak", { autoSource: menloParkWeatherSource, lockAt: ${jsString(locks.afternoonPeak)} }),
-          question(${jsString("At 3 PM, what will the sky feel closest to?")}, [
-            answer("Mostly sunny", ${skyOdds["mostly-sunny"][0]}, "mostly-sunny"),
-            answer("Partly cloudy", ${skyOdds["partly-cloudy"][0]}, "partly-cloudy"),
-            answer("Mostly cloudy", ${skyOdds["mostly-cloudy"][0]}, "mostly-cloudy"),
-            answer("Rain likely", ${skyOdds["rain-likely"][0]}, "rain-likely")
-          ], "${idDate}-sky-3pm", { autoSource: menloParkWeatherSource, lockAt: ${jsString(locks.sky)} }),
-          question(${jsString("By 4 PM, will rain have shown up in the forecast or conditions?")}, [
-            answer("Yes", ${rainLikely ? 62 : 18}, "yes"),
-            answer("No", ${rainLikely ? 38 : 82}, "no")
-          ], "${idDate}-rain-by-4pm", { autoSource: menloParkWeatherSource, lockAt: ${jsString(locks.rain)} }),
-          question("By 5 PM, how windy will it sound?", [
-            answer("Light wind", ${windOdds["light-wind"][0]}, "light-wind"),
-            answer("Noticeable breeze", ${windOdds["noticeable-breeze"][0]}, "noticeable-breeze"),
-            answer("Windy", ${windOdds["windy"][0]}, "windy")
-          ], "${idDate}-wind-by-5pm", { autoSource: menloParkWeatherSource, lockAt: ${jsString(locks.wind)} }),
-          question(${jsString(`At 6 PM, will it be below ${coolDownThreshold} degrees again?`)}, [
-            answer("Yes", ${likelyCoolsBySix ? 54 : 32}, "yes"),
-            answer("No", ${likelyCoolsBySix ? 46 : 68}, "no")
-          ], "${idDate}-below-${coolDownThreshold}-by-6pm", { autoSource: menloParkWeatherSource, lockAt: ${jsString(locks.earlyEvening)} })
+${selectedQuestions.map((question) => renderQuestion(question, idDate)).join(",\n")}
         ]
       },`;
 }
@@ -238,7 +406,7 @@ ${endMarker}${html.slice(end + endMarker.length)}`;
 const date = targetDate();
 const forecast = await loadForecast(date);
 const html = fs.readFileSync(minigamesPath, "utf8");
-const updated = replaceGeneratedBlock(html, weatherEvent(date, forecast));
+const updated = replaceGeneratedBlock(html, dayWatchEvent(date, forecast));
 fs.writeFileSync(minigamesPath, updated);
 
-console.log(`Generated Menlo Park weather game for ${dayKey(date)} using ${forecast.source}.`);
+console.log(`Generated Menlo Park day watch for ${dayKey(date)} using ${forecast.source}.`);
