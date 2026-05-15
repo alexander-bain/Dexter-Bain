@@ -749,7 +749,7 @@
 
     .form-row {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 1fr);
       gap: 10px;
       margin-bottom: 16px;
     }
@@ -1860,7 +1860,7 @@
           </div>
           <div class="board-weather">
             <span class="weather-mark">75</span>
-            <span class="weather-copy">Weather game<small>High temp, wind, rain</small></span>
+            <span class="weather-copy">Day watch<small>Weather, stocks, headlines</small></span>
             <span class="weather-temp">+24</span>
           </div>
           <div class="board-insights">
@@ -1924,7 +1924,6 @@
         <form class="panel form-panel" id="predictionForm">
           <div class="form-row">
             <input class="name-input" id="playerName" name="playerName" maxlength="24" autocomplete="name" placeholder="Leaderboard name" required />
-            <button class="btn" type="submit">Lock picks</button>
           </div>
           <p class="profile-note" id="profileNote">Enter a player name so the server can update your picks on the leaderboard.</p>
 
@@ -1963,6 +1962,7 @@
 
           <div class="submit-line">
             <span class="save-note" id="saveNote">Lock picks to save them to the server leaderboard.</span>
+            <button class="btn" type="submit">Lock picks</button>
           </div>
         </form>
       </div>
@@ -2081,40 +2081,41 @@
     const eventCatalog = [
       // DAILY_WEATHER_GAME_START
       {
-        id: "daily-weather-20260514",
-        name: "Menlo Park Day Watch - May 14",
-        type: "Weather",
+        id: "daily-weather-20260515",
+        name: "Menlo Park Day Watch - May 15",
+        type: "Day",
         month: 4,
-        day: 14,
-        summary: "Generated at 6 AM for May 14: time-based weather calls, all settled by 6 PM. Forecast: Sunny, high near 76.",
+        day: 15,
+        summary: "Generated at 6 AM for May 15: weather, market, and local day questions that settle through the afternoon. Forecast: Partly Sunny, high near 70.",
         questions: [
-          question("By noon, will it have broken 70 degrees?", [
+          question("By noon, will it be warmer than 65 degrees?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260514-warm-by-noon", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T19:00:00.000Z" }),
-          question("By 2 PM, will it have broken 75 degrees?", [
+          ], "20260515-warm-by-noon", { autoSource: menloParkWeatherSource, lockAt: "2026-05-15T19:00:00.000Z" }),
+          question("By 1 PM, will the stock market be up?", [
             answer("Yes", 58, "yes"),
             answer("No", 42, "no")
-          ], "20260514-afternoon-peak", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T21:00:00.000Z" }),
+          ], "20260515-market-lunch", { autoSource: marketSource, lockAt: "2026-05-15T20:00:00.000Z" }),
+          question("By 2 PM, what will the local news page talk about most?", [
+            answer("Weather", 24, "weather"),
+            answer("Stocks", 26, "stocks"),
+            answer("Sports", 22, "sports"),
+            answer("Traffic", 18, "traffic")
+          ], "20260515-local-headline", { autoSource: localNewsSource, lockAt: "2026-05-15T21:00:00.000Z" }),
           question("At 3 PM, what will the sky feel closest to?", [
-            answer("Mostly sunny", 42, "mostly-sunny"),
-            answer("Partly cloudy", 26, "partly-cloudy"),
-            answer("Mostly cloudy", 19, "mostly-cloudy"),
-            answer("Rain likely", 9, "rain-likely")
-          ], "20260514-sky-3pm", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T22:00:00.000Z" }),
-          question("By 4 PM, will rain have shown up in the forecast or conditions?", [
-            answer("Yes", 18, "yes"),
-            answer("No", 82, "no")
-          ], "20260514-rain-by-4pm", { autoSource: menloParkWeatherSource, lockAt: "2026-05-14T23:00:00.000Z" }),
-          question("By 5 PM, how windy will it sound?", [
-            answer("Light wind", 21, "light-wind"),
-            answer("Noticeable breeze", 42, "noticeable-breeze"),
-            answer("Windy", 12, "windy")
-          ], "20260514-wind-by-5pm", { autoSource: menloParkWeatherSource, lockAt: "2026-05-15T00:00:00.000Z" }),
-          question("At 6 PM, will it be below 70 degrees again?", [
+            answer("Sunny", 42, "mostly-sunny"),
+            answer("Cloudy", 26, "mostly-cloudy"),
+            answer("Rainy", 14, "rain-likely"),
+            answer("Windy", 18, "windy")
+          ], "20260515-sky-3pm", { autoSource: menloParkWeatherSource, lockAt: "2026-05-15T22:00:00.000Z" }),
+          question("By 4 PM, will the stock market still be up?", [
+            answer("Yes", 56, "yes"),
+            answer("No", 44, "no")
+          ], "20260515-market-afternoon", { autoSource: marketSource, lockAt: "2026-05-15T23:00:00.000Z" }),
+          question("At 6 PM, will it be below 60 degrees again?", [
             answer("Yes", 54, "yes"),
             answer("No", 46, "no")
-          ], "20260514-below-70-by-6pm", { autoSource: menloParkWeatherSource, lockAt: "2026-05-15T01:00:00.000Z" })
+          ], "20260515-below-60-by-6pm", { autoSource: menloParkWeatherSource, lockAt: "2026-05-16T01:00:00.000Z" })
         ]
       },
       // DAILY_WEATHER_GAME_END
