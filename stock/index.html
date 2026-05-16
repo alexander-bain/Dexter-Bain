@@ -590,7 +590,7 @@
             <input class="input" id="yearInput" type="number" min="1900" max="1999" value="1999" />
           </label>
           <label class="field search-wrap">
-            Search real stocks
+            Search today's stocks
             <input class="input" id="stockSearch" autocomplete="off" placeholder="Search AAPL, Microsoft, S&P 500..." />
             <div class="search-results" id="searchResults"></div>
           </label>
@@ -609,7 +609,7 @@
         <section class="panel">
           <h2 class="section-title">Lock score</h2>
           <button class="btn" type="button" id="lockBtn">Lock portfolio</button>
-          <p class="note">You can leave money as cash. You cannot start at 2000 or later. Stocks that did not exist in the chosen year are hidden.</p>
+          <p class="note">You can leave money as cash. You cannot start at 2000 or later. Search always shows today's stocks, even if the company was not public yet in that year.</p>
         </section>
 
         <section class="panel">
@@ -620,7 +620,7 @@
         <section class="panel">
           <h2 class="section-title">Rules</h2>
           <p class="note">One real day represents one market year. From 9 AM to 5 PM, the chart moves from January to December. When the run reaches the current year, the next round becomes a prediction round.</p>
-          <p class="note">When live historical price lookup is available, the game uses it. If the browser cannot reach the data source, it uses the built-in historical market model so the game still works.</p>
+          <p class="note">The year controls the market conditions. If a stock did not trade yet, the game still lets you use it and estimates how that kind of company would have moved in that year.</p>
         </section>
       </aside>
     </section>
@@ -638,10 +638,16 @@
       { symbol: "SPY", stooq: "spy.us", name: "SPDR S&P 500 ETF", inception: 1993, category: "Index ETF", base: 0.095, risk: 0.14 },
       { symbol: "QQQ", stooq: "qqq.us", name: "Invesco QQQ Trust", inception: 1999, category: "Index ETF", base: 0.12, risk: 0.19 },
       { symbol: "DIA", stooq: "dia.us", name: "SPDR Dow Jones Industrial Average ETF", inception: 1998, category: "Index ETF", base: 0.082, risk: 0.12 },
+      { symbol: "VOO", stooq: "voo.us", name: "Vanguard S&P 500 ETF", inception: 2010, category: "Index ETF", base: 0.095, risk: 0.14 },
       { symbol: "AAPL", stooq: "aapl.us", name: "Apple", inception: 1980, category: "Technology", base: 0.18, risk: 0.32 },
       { symbol: "MSFT", stooq: "msft.us", name: "Microsoft", inception: 1986, category: "Technology", base: 0.17, risk: 0.26 },
       { symbol: "AMZN", stooq: "amzn.us", name: "Amazon", inception: 1997, category: "Technology", base: 0.22, risk: 0.42 },
+      { symbol: "GOOGL", stooq: "googl.us", name: "Alphabet", inception: 2004, category: "Technology", base: 0.16, risk: 0.25 },
+      { symbol: "META", stooq: "meta.us", name: "Meta Platforms", inception: 2012, category: "Technology", base: 0.15, risk: 0.28 },
+      { symbol: "TSLA", stooq: "tsla.us", name: "Tesla", inception: 2010, category: "Autos", base: 0.24, risk: 0.52 },
+      { symbol: "NFLX", stooq: "nflx.us", name: "Netflix", inception: 2002, category: "Media", base: 0.2, risk: 0.42 },
       { symbol: "NVDA", stooq: "nvda.us", name: "NVIDIA", inception: 1999, category: "Semiconductors", base: 0.22, risk: 0.46 },
+      { symbol: "AMD", stooq: "amd.us", name: "Advanced Micro Devices", inception: 1972, category: "Semiconductors", base: 0.14, risk: 0.36 },
       { symbol: "INTC", stooq: "intc.us", name: "Intel", inception: 1971, category: "Semiconductors", base: 0.12, risk: 0.25 },
       { symbol: "IBM", stooq: "ibm.us", name: "IBM", inception: 1915, category: "Technology", base: 0.075, risk: 0.16 },
       { symbol: "GE", stooq: "ge.us", name: "General Electric", inception: 1892, category: "Industrial", base: 0.07, risk: 0.18 },
@@ -726,7 +732,7 @@
     }
 
     function availableStocks() {
-      return stocks.filter((stock) => stock.inception <= state.year);
+      return stocks;
     }
 
     function invested() {
@@ -772,15 +778,16 @@
     function fallbackReturn(stock, year) {
       const market = marketYears[year] ?? (0.07 + (seededRandom(`market:${year}`) - 0.5) * 0.24);
       const company = (seededRandom(`${stock.symbol}:${year}`) - 0.5) * stock.risk * 2;
-      const young = year - stock.inception < 5 ? stock.risk * 0.22 : 0;
-      return Math.max(-0.92, Math.min(3.4, market * 0.72 + stock.base * 0.38 + company + young));
+      const young = year >= stock.inception && year - stock.inception < 5 ? stock.risk * 0.22 : 0;
+      const prePublic = year < stock.inception ? stock.risk * 0.08 : 0;
+      return Math.max(-0.92, Math.min(3.4, market * 0.72 + stock.base * 0.38 + company + young + prePublic));
     }
 
     async function fetchRealReturn(stock, year) {
       const key = `${stock.symbol}:${year}`;
       if (priceCache[key] !== undefined) return priceCache[key];
       priceCache[key] = fallbackReturn(stock, year);
-      if (window.location.protocol === "file:") {
+      if (window.location.protocol === "file:" || year < stock.inception) {
         return priceCache[key];
       }
       try {
@@ -812,7 +819,7 @@
     async function portfolioValue(point = progress()) {
       const returns = await Promise.all(state.holdings.map(async (holding) => {
         const stock = stockBySymbol(holding.symbol);
-        if (!stock || stock.inception > state.year) return 0;
+        if (!stock) return 0;
         const finalReturn = await fetchRealReturn(stock, state.year);
         return (Number(holding.amount) || 0) * (1 + partialReturn(stock, finalReturn, point));
       }));
@@ -861,7 +868,7 @@
       state.year = Math.max(1900, Math.min(MAX_START_YEAR, Number(state.year) || MAX_START_YEAR));
       state.holdings = state.holdings
         .map((holding) => ({ symbol: String(holding.symbol || "").toUpperCase(), amount: Math.max(0, Number(holding.amount) || 0) }))
-        .filter((holding) => stockBySymbol(holding.symbol)?.inception <= state.year);
+        .filter((holding) => stockBySymbol(holding.symbol));
       el.yearInput.value = state.year;
       el.playerName.value = state.playerName || "";
       el.previewYear.textContent = state.year;
@@ -891,11 +898,12 @@
         const finalReturn = stock ? await fetchRealReturn(stock, state.year) : 0;
         const nowReturn = stock ? partialReturn(stock, finalReturn) : 0;
         const nowValue = (Number(holding.amount) || 0) * (1 + nowReturn);
+        const dataMode = stock && state.year < stock.inception ? "estimated" : "historical";
         return `
           <div class="holding" data-symbol="${escapeHtml(holding.symbol)}">
             <span class="holding-main">
               <span class="holding-name">${escapeHtml(holding.symbol)} · ${escapeHtml(stock?.name || "Stock")}</span>
-              <span class="meta">${escapeHtml(stock?.category || "Stock")} · ${nowReturn >= 0 ? "+" : ""}${(nowReturn * 100).toFixed(1)}% now · ${finalReturn >= 0 ? "+" : ""}${(finalReturn * 100).toFixed(1)}% full year · ${formatMoney(nowValue)}</span>
+              <span class="meta">${escapeHtml(stock?.category || "Stock")} · ${dataMode} · ${nowReturn >= 0 ? "+" : ""}${(nowReturn * 100).toFixed(1)}% now · ${finalReturn >= 0 ? "+" : ""}${(finalReturn * 100).toFixed(1)}% full year · ${formatMoney(nowValue)}</span>
             </span>
             <input class="input amount-input" type="number" min="0" max="10000" step="100" value="${holding.amount}" aria-label="Amount in ${escapeHtml(holding.symbol)}" />
             <button class="remove" type="button">Remove</button>
@@ -965,7 +973,6 @@
     el.yearInput.addEventListener("input", () => {
       const nextYear = Math.max(1900, Math.min(MAX_START_YEAR, Number(el.yearInput.value) || MAX_START_YEAR));
       state.year = nextYear;
-      state.holdings = state.holdings.filter((holding) => stockBySymbol(holding.symbol)?.inception <= nextYear);
       render();
     });
 
