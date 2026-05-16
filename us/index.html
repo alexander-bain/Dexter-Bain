@@ -162,6 +162,40 @@
       line-height: 1.5;
     }
 
+    .timeline {
+      display: grid;
+      gap: 28px;
+    }
+
+    .timeline-era {
+      display: grid;
+      gap: 12px;
+    }
+
+    .era-label {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      padding-top: 4px;
+      border-top: 1px solid rgba(33, 24, 19, 0.14);
+    }
+
+    .era-label h3 {
+      margin: 0;
+      font-size: clamp(1.25rem, 2.5vw, 2rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .era-label p {
+      max-width: 380px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
     .photo-wall {
       column-count: 3;
       column-gap: 12px;
@@ -206,6 +240,10 @@
       line-height: 1.55;
     }
 
+    .signature {
+      color: var(--rose);
+    }
+
     .footer {
       padding: 26px 0 0;
       color: var(--muted);
@@ -242,6 +280,14 @@
 
       .section-title p {
         margin-top: 10px;
+      }
+
+      .era-label {
+        display: block;
+      }
+
+      .era-label p {
+        margin-top: 8px;
       }
 
       .photo-wall {
@@ -290,52 +336,77 @@
 
     <section aria-labelledby="gallery-heading">
       <div class="section-title">
-        <h2 id="gallery-heading">Way More Us</h2>
+        <h2 id="gallery-heading">Our Timeline</h2>
         <p>
-          Trips, weird faces, proud smiles, little-kid classics, and the newer
-          photos where both of you somehow look grown up already.
+          Little-kid classics, big trips, proud smiles, weird faces, and the
+          newer photos where both of you somehow look grown up already.
         </p>
       </div>
 
-      <div class="photo-wall">
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-01.jpg" alt="Dexter and Oliver memory 01" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-02.jpg" alt="Dexter and Oliver memory 02" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-03.jpg" alt="Dexter and Oliver memory 03" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-04.jpg" alt="Dexter and Oliver memory 04" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-05.jpg" alt="Dexter and Oliver memory 05" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-06.jpg" alt="Dexter and Oliver memory 06" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-08.jpg" alt="Dexter and Oliver memory 08" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-09.jpg" alt="Dexter and Oliver memory 09" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-10.jpg" alt="Dexter and Oliver memory 10" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-11.jpg" alt="Dexter and Oliver memory 11" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-12.jpg" alt="Dexter and Oliver memory 12" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-13.jpg" alt="Dexter and Oliver memory 13" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-14.jpg" alt="Dexter and Oliver memory 14" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-15.jpg" alt="Dexter and Oliver memory 15" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-16.jpg" alt="Dexter and Oliver memory 16" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-19.jpg" alt="Dexter and Oliver memory 19" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-21.jpg" alt="Dexter and Oliver memory 21" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-22.jpg" alt="Dexter and Oliver memory 22" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-23.jpg" alt="Dexter and Oliver memory 23" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-24.jpg" alt="Dexter and Oliver memory 24" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-25.jpg" alt="Dexter and Oliver memory 25" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-26.jpg" alt="Dexter and Oliver memory 26" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-27.jpg" alt="Dexter and Oliver memory 27" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-38.jpg" alt="Dexter and Oliver memory 38" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-39.jpg" alt="Dexter and Oliver memory 39" /></figure>
+      <div class="timeline">
+        <section class="timeline-era" aria-label="Little-kid classics">
+          <div class="era-label">
+            <h3>Little-Kid Classics</h3>
+            <p>The early proof that you two were already a team.</p>
+          </div>
+          <div class="photo-wall">
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-01.jpg" alt="Dexter and Oliver memory 01" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-02.jpg" alt="Dexter and Oliver memory 02" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-03.jpg" alt="Dexter and Oliver memory 03" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-04.jpg" alt="Dexter and Oliver memory 04" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-05.jpg" alt="Dexter and Oliver memory 05" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-06.jpg" alt="Dexter and Oliver memory 06" /></figure>
+          </div>
+        </section>
+
+        <section class="timeline-era" aria-label="Growing up together">
+          <div class="era-label">
+            <h3>Growing Up Together</h3>
+            <p>Meals, screens, sports, snow, and all the regular days that stuck.</p>
+          </div>
+          <div class="photo-wall">
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-08.jpg" alt="Dexter and Oliver memory 08" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-09.jpg" alt="Dexter and Oliver memory 09" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-10.jpg" alt="Dexter and Oliver memory 10" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-11.jpg" alt="Dexter and Oliver memory 11" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-12.jpg" alt="Dexter and Oliver memory 12" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-13.jpg" alt="Dexter and Oliver memory 13" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-14.jpg" alt="Dexter and Oliver memory 14" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-15.jpg" alt="Dexter and Oliver memory 15" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-16.jpg" alt="Dexter and Oliver memory 16" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-19.jpg" alt="Dexter and Oliver memory 19" /></figure>
+          </div>
+        </section>
+
+        <section class="timeline-era" aria-label="Big trips and big smiles">
+          <div class="era-label">
+            <h3>Big Trips, Big Smiles</h3>
+            <p>The part where the memories got a little taller too.</p>
+          </div>
+          <div class="photo-wall">
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-21.jpg" alt="Dexter and Oliver memory 21" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-22.jpg" alt="Dexter and Oliver memory 22" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-23.jpg" alt="Dexter and Oliver memory 23" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-24.jpg" alt="Dexter and Oliver memory 24" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-25.jpg" alt="Dexter and Oliver memory 25" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-26.jpg" alt="Dexter and Oliver memory 26" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-27.jpg" alt="Dexter and Oliver memory 27" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-38.jpg" alt="Dexter and Oliver memory 38" /></figure>
+            <figure><img loading="lazy" src="../assets/us/moments-web/moment-39.jpg" alt="Dexter and Oliver memory 39" /></figure>
+          </div>
+        </section>
       </div>
     </section>
 
     <section class="promise" aria-label="A note for Dexter and Oliver">
       <div class="promise-copy">
         <p>
-          This page can keep growing whenever there is another photo, another
-          caption, another inside joke, another day worth saving.
+          Oliver, we have had so much fun over the course of our lives.
+          Remember when I went on your first date with you? Or when I copied
+          your YouTube channel intro almost word for word? It does not matter
+          how old we get, I will still beat you in 2K.
         </p>
-        <small>
-          Send me the words you want for any memory and I can make it sound
-          exactly like you.
-        </small>
+        <small class="signature">From your bro, Dex.</small>
       </div>
     </section>
   </main>
