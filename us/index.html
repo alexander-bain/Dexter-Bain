@@ -200,26 +200,21 @@
 
     .photo-wall {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      grid-auto-flow: dense;
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      align-items: start;
     }
 
     .photo-wall figure {
-      min-height: 230px;
       margin: 0;
       overflow: hidden;
       border: 1px solid rgba(33, 24, 19, 0.1);
       background: #efe4d6;
     }
 
-    .photo-wall figure:nth-child(5n + 1) {
-      grid-row: span 2;
-      min-height: 470px;
-    }
-
-    .photo-wall figure:nth-child(9n + 4) {
-      grid-column: span 2;
+    .photo-wall img {
+      height: auto;
+      object-fit: contain;
     }
 
     .promise {
@@ -303,17 +298,8 @@
       }
 
       .photo-wall {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1fr;
         gap: 8px;
-      }
-
-      .photo-wall figure,
-      .photo-wall figure:nth-child(5n + 1) {
-        min-height: 250px;
-      }
-
-      .photo-wall figure:nth-child(9n + 4) {
-        grid-column: span 1;
       }
 
       .memory {
