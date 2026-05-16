@@ -489,17 +489,17 @@
       <p class="tagline">Six tricks. Zero explanations. Pure impossibility.</p>
     </header>
 
-    <div class="trick-nav">
-      <button class="active" onclick="showTrick(0)">🔮 The Prophecy</button>
-      <button onclick="showTrick(1)">🧠 Mind Reader</button>
-      <button onclick="showTrick(2)">🃏 Card Force</button>
-      <button onclick="showTrick(3)">📖 The Tutorial</button>
-      <button onclick="showTrick(4)">🎯 Number Sniper</button>
-      <button onclick="showTrick(5)">⏱ The Time Sentence</button>
+    <div class="trick-nav" role="tablist" aria-label="Choose a magic trick">
+      <button class="active" type="button" role="tab" aria-selected="true" aria-controls="trick-0" id="trick-tab-0" onclick="showTrick(0)">🔮 The Prophecy</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="trick-1" id="trick-tab-1" onclick="showTrick(1)">🧠 Mind Reader</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="trick-2" id="trick-tab-2" onclick="showTrick(2)">🃏 Card Force</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="trick-3" id="trick-tab-3" onclick="showTrick(3)">📖 The Tutorial</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="trick-4" id="trick-tab-4" onclick="showTrick(4)">🎯 Number Sniper</button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="trick-5" id="trick-tab-5" onclick="showTrick(5)">⏱ The Time Sentence</button>
     </div>
 
     <!-- TRICK 1: The Prophecy (1089 trick disguised) -->
-    <div class="trick active" id="trick-0">
+    <div class="trick active" id="trick-0" role="tabpanel" aria-labelledby="trick-tab-0">
       <div class="trick-label">Trick 01 · Prediction</div>
       <h2 class="trick-title" style="color: var(--gold)">The Prophecy</h2>
       <p class="trick-desc">Before you do anything, I've already written your answer down. Follow the steps — then see if I was right.</p>
@@ -543,7 +543,7 @@
     </div>
 
     <!-- TRICK 2: Mind Reader (digital root / always 9) -->
-    <div class="trick" id="trick-1">
+    <div class="trick" id="trick-1" role="tabpanel" aria-labelledby="trick-tab-1">
       <div class="trick-label">Trick 02 · Mind Reading</div>
       <h2 class="trick-title" style="color: var(--cyan)">The Mind Reader</h2>
       <p class="trick-desc">Think freely. I'll follow your thoughts from the inside.</p>
@@ -588,7 +588,7 @@
     </div>
 
     <!-- TRICK 3: Card Force -->
-    <div class="trick" id="trick-2">
+    <div class="trick" id="trick-2" role="tabpanel" aria-labelledby="trick-tab-2">
       <div class="trick-label">Trick 03 · Forced Choice</div>
       <h2 class="trick-title" style="color: var(--pink)">The Card Force</h2>
       <p class="trick-desc">Pick any card. You have complete freedom. I promise I won't interfere.</p>
@@ -610,7 +610,7 @@
     </div>
 
     <!-- TRICK 4: The Tutorial That Isn't -->
-    <div class="trick" id="trick-3">
+    <div class="trick" id="trick-3" role="tabpanel" aria-labelledby="trick-tab-3">
       <div class="trick-label">Trick 04 · Misdirection</div>
       <h2 class="trick-title" style="color: var(--green)">The Tutorial</h2>
       <p class="trick-desc">I'm going to explain exactly how a magic trick works. No secrets. Full transparency.</p>
@@ -652,7 +652,7 @@
     </div>
 
     <!-- TRICK 5: Number Sniper (grid forcing) -->
-    <div class="trick" id="trick-4">
+    <div class="trick" id="trick-4" role="tabpanel" aria-labelledby="trick-tab-4">
       <div class="trick-label">Trick 05 · Impossible</div>
       <h2 class="trick-title" style="color: var(--purple)">Number Sniper</h2>
       <p class="trick-desc">I've already picked a number in this grid. Follow the instructions — and let's see if you land on it.</p>
@@ -678,7 +678,7 @@
     </div>
 
     <!-- TRICK 6: The Time Sentence -->
-    <div class="trick" id="trick-5">
+    <div class="trick" id="trick-5" role="tabpanel" aria-labelledby="trick-tab-5">
       <div class="trick-label">Trick 06 · Storytelling</div>
       <h2 class="trick-title" style="color: var(--cyan)">The Time Sentence</h2>
       <p class="trick-desc">Stop the counter whenever you want. Completely random. I'll tell you a story — and somehow, your number will be in it.</p>
@@ -724,9 +724,14 @@
     // ─── Navigation ───────────────────────────────────────────────────────────
     function showTrick(n) {
       document.querySelectorAll('.trick').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.trick-nav button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.trick-nav button').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
       document.getElementById('trick-' + n).classList.add('active');
-      document.querySelectorAll('.trick-nav button')[n].classList.add('active');
+      const selectedTab = document.querySelectorAll('.trick-nav button')[n];
+      selectedTab.classList.add('active');
+      selectedTab.setAttribute('aria-selected', 'true');
     }
 
     function setStep(prefix, n) {

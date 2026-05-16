@@ -331,6 +331,12 @@
       box-shadow: none;
     }
 
+    .btn:focus-visible,
+    .move-button:focus-visible {
+      outline: 2px solid var(--accent-strong);
+      outline-offset: 3px;
+    }
+
     .status-text {
       min-height: 18px;
       font-size: 13px;
@@ -574,7 +580,7 @@
             </div>
 
             <div class="primary-actions">
-              <select id="target-select" class="select-input">
+              <select id="target-select" class="select-input" aria-label="Score needed to win">
                 <option value="1">First to 1</option>
                 <option value="2">First to 2</option>
                 <option value="3" selected>First to 3</option>

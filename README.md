@@ -17,6 +17,12 @@ The future version should make the daily weather game feel like a real daily hab
 
 The GitHub Action for the daily weather game runs several times through the morning instead of trusting one exact 6:00 AM start. GitHub can start scheduled jobs late, so the workflow is safe to retry: the first run that needs a new game commits it, and later runs do nothing if the game is already current. The workflow uses the Pacific date and verifies that today's generated weather game is actually present before it commits.
 
+## Static Pages
+
+The site now includes `/stock`, the Market Time Machine page for exploring historical market moves.
+
+To preview the static pages locally, run a simple local web server from the repo root, then open the matching path in a browser. For example, `python3 -m http.server 8000` serves the site at `http://localhost:8000/`, with `/stock` available at `http://localhost:8000/stock/`.
+
 ## Fix List
 
 No current items.

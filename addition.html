@@ -18,6 +18,18 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     body {
       background: var(--bg);
       color: #f0f0f0;
@@ -387,22 +399,22 @@
       <div class="menu-card">
         <h2>Choose a level</h2>
         <div class="level-grid">
-          <button class="level-btn selected" data-level="0" onclick="selectLevel(0)">
+          <button class="level-btn selected" data-level="0" aria-pressed="true" onclick="selectLevel(0)">
             <span class="lvl-num">1️⃣</span>
             <span class="lvl-name">Easy</span>
             <span class="lvl-desc">Numbers 1–10, 60 sec</span>
           </button>
-          <button class="level-btn" data-level="1" onclick="selectLevel(1)">
+          <button class="level-btn" data-level="1" aria-pressed="false" onclick="selectLevel(1)">
             <span class="lvl-num">2️⃣</span>
             <span class="lvl-name">Medium</span>
             <span class="lvl-desc">Numbers 1–20, 45 sec</span>
           </button>
-          <button class="level-btn" data-level="2" onclick="selectLevel(2)">
+          <button class="level-btn" data-level="2" aria-pressed="false" onclick="selectLevel(2)">
             <span class="lvl-num">3️⃣</span>
             <span class="lvl-name">Hard</span>
             <span class="lvl-desc">Numbers 1–50, 45 sec</span>
           </button>
-          <button class="level-btn" data-level="3" onclick="selectLevel(3)">
+          <button class="level-btn" data-level="3" aria-pressed="false" onclick="selectLevel(3)">
             <span class="lvl-num">🔥</span>
             <span class="lvl-name">Blitz</span>
             <span class="lvl-desc">Numbers 1–99, 30 sec</span>
@@ -432,13 +444,14 @@
 
       <div class="timer-bar-wrap"><div class="timer-bar" id="timer-bar"></div></div>
 
-      <div class="lives" id="lives-row"></div>
+      <div class="lives" id="lives-row" aria-label="Lives remaining"></div>
 
       <div class="streak-banner" id="streak-banner"></div>
 
       <div class="problem-card" id="problem-card">
-        <div class="problem-num" id="problem-text"></div>
-        <div class="feedback" id="feedback"></div>
+        <div class="problem-num" id="problem-text" role="status" aria-live="polite"></div>
+        <div class="feedback" id="feedback" aria-live="assertive"></div>
+        <label class="sr-only" for="answer-input">Type your answer</label>
         <input class="answer-input" id="answer-input" type="number" inputmode="numeric"
                placeholder="?" autocomplete="off" autofocus />
       </div>
@@ -528,8 +541,11 @@
     // ── Level select ──
     function selectLevel(n) {
       selectedLevel = n;
-      document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('selected'));
-      document.querySelector(`[data-level="${n}"]`).classList.add('selected');
+      document.querySelectorAll('.level-btn').forEach(b => {
+        const isSelected = b.dataset.level === String(n);
+        b.classList.toggle('selected', isSelected);
+        b.setAttribute('aria-pressed', String(isSelected));
+      });
     }
 
     // ── Screen routing ──
@@ -597,8 +613,9 @@
 
     function renderLives() {
       const row = document.getElementById('lives-row');
+      row.setAttribute('aria-label', `${lives} of ${maxLives} lives remaining`);
       row.innerHTML = Array.from({ length: maxLives }, (_, i) =>
-        `<span class="life ${i >= lives ? 'lost' : ''}">❤️</span>`
+        `<span class="life ${i >= lives ? 'lost' : ''}" aria-hidden="true">❤️</span>`
       ).join('');
     }
 
@@ -663,7 +680,7 @@
       const isNewHS = saveHS(selectedLevel, score);
 
       document.getElementById('results-title').textContent =
-        reason === 'lives' ? '💀 Out of Lives' : '⏱ Time's Up!';
+        reason === 'lives' ? '💀 Out of Lives' : "⏱ Time's Up!";
       document.getElementById('results-subtitle').textContent =
         `Level: ${LEVELS[selectedLevel].name}`;
       document.getElementById('res-score').textContent = score;
