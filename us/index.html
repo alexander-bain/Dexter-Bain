@@ -270,6 +270,12 @@
       border: 1px solid rgba(33, 24, 19, 0.1);
       background: #efe4d6;
       break-inside: avoid;
+      cursor: zoom-in;
+    }
+
+    .photo-wall figure:focus-visible {
+      outline: 3px solid var(--rose);
+      outline-offset: 3px;
     }
 
     .promise {
@@ -303,6 +309,70 @@
 
     .signature {
       color: var(--rose);
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 380px);
+      gap: 0;
+      background: rgba(33, 24, 19, 0.9);
+    }
+
+    .lightbox[hidden] {
+      display: none;
+    }
+
+    .lightbox-image-wrap {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: 18px;
+    }
+
+    .lightbox-image-wrap img {
+      width: auto;
+      max-width: 100%;
+      max-height: calc(100vh - 36px);
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.36);
+    }
+
+    .lightbox-details {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100vh;
+      padding: clamp(24px, 4vw, 44px);
+      background: var(--paper);
+    }
+
+    .lightbox-details h3 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1;
+    }
+
+    .lightbox-details p {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.55;
+    }
+
+    .close-lightbox {
+      align-self: flex-start;
+      margin-top: 24px;
+      border: 1px solid rgba(33, 24, 19, 0.16);
+      border-radius: 999px;
+      padding: 11px 16px;
+      background: var(--ink);
+      color: var(--paper);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 800;
+      line-height: 1;
     }
 
     .footer {
@@ -361,6 +431,24 @@
       .photo-wall {
         column-count: 2;
         column-gap: 10px;
+      }
+
+      .lightbox {
+        grid-template-columns: 1fr;
+        overflow: auto;
+      }
+
+      .lightbox-image-wrap {
+        min-height: auto;
+        padding: 12px;
+      }
+
+      .lightbox-image-wrap img {
+        max-height: 70vh;
+      }
+
+      .lightbox-details {
+        min-height: auto;
       }
     }
 
@@ -442,55 +530,73 @@
   <footer class="footer">
     Made with a lot of care for Dexter and Oliver.
   </footer>
+  <div class="lightbox" hidden>
+    <div class="lightbox-image-wrap">
+      <img alt="" />
+    </div>
+    <div class="lightbox-details">
+      <h3></h3>
+      <p class="lightbox-date"></p>
+      <p class="lightbox-location"></p>
+      <button class="close-lightbox" type="button">Close</button>
+    </div>
+  </div>
   <script>
     const photos = [
-      { src: "../assets/us/moments-web/moment-01.jpg", alt: "Dexter and Oliver memory 01", year: "2016" },
-      { src: "../assets/us/moments-web/moment-02.jpg", alt: "Dexter and Oliver memory 02", year: "2016" },
-      { src: "../assets/us/moments-web/moment-03.jpg", alt: "Dexter and Oliver memory 03", year: "2017" },
-      { src: "../assets/us/moments-web/moment-04.jpg", alt: "Dexter and Oliver memory 04", year: "2017" },
-      { src: "../assets/us/moments-web/moment-05.jpg", alt: "Dexter and Oliver memory 05", year: "2018" },
-      { src: "../assets/us/moments-web/moment-06.jpg", alt: "Dexter and Oliver memory 06", year: "2018" },
-      { src: "../assets/us/moments-web/moment-08.jpg", alt: "Dexter and Oliver memory 08", year: "2019" },
-      { src: "../assets/us/moments-web/moment-09.jpg", alt: "Dexter and Oliver memory 09", year: "2019" },
-      { src: "../assets/us/moments-web/moment-10.jpg", alt: "Dexter and Oliver memory 10", year: "2020" },
-      { src: "../assets/us/moments-web/moment-11.jpg", alt: "Dexter and Oliver memory 11", year: "2020" },
-      { src: "../assets/us/moments-web/moment-12.jpg", alt: "Dexter and Oliver memory 12", year: "2021" },
-      { src: "../assets/us/moments-web/moment-13.jpg", alt: "Dexter and Oliver memory 13", year: "2021" },
-      { src: "../assets/us/moments-web/moment-14.jpg", alt: "Dexter and Oliver memory 14", year: "2022" },
-      { src: "../assets/us/moments-web/moment-15.jpg", alt: "Dexter and Oliver memory 15", year: "2022" },
-      { src: "../assets/us/moments-web/moment-16.jpg", alt: "Dexter and Oliver memory 16", year: "2023" },
-      { src: "../assets/us/moments-web/moment-19.jpg", alt: "Dexter and Oliver memory 19", year: "2023" },
-      { src: "../assets/us/moments-web/moment-21.jpg", alt: "Dexter and Oliver memory 21", year: "2024" },
-      { src: "../assets/us/moments-web/moment-22.jpg", alt: "Dexter and Oliver memory 22", year: "2024" },
-      { src: "../assets/us/moments-web/moment-23.jpg", alt: "Dexter and Oliver memory 23", year: "2025" },
-      { src: "../assets/us/moments-web/moment-24.jpg", alt: "Dexter and Oliver memory 24", year: "2025" },
-      { src: "../assets/us/moments-web/moment-25.jpg", alt: "Dexter and Oliver memory 25", year: "2026" },
-      { src: "../assets/us/moments-web/moment-26.jpg", alt: "Dexter and Oliver memory 26", year: "2026" },
-      { src: "../assets/us/moments-web/moment-27.jpg", alt: "Dexter and Oliver memory 27", year: "2026" },
-      { src: "../assets/us/moments-web/moment-38.jpg", alt: "Dexter and Oliver memory 38", year: "2026" },
-      { src: "../assets/us/moments-web/moment-39.jpg", alt: "Dexter and Oliver memory 39", year: "2026" },
+      { src: "../assets/us/moments-web/moment-06.jpg", alt: "Dexter and Oliver in matching Hawaiian shirts", year: "2016", date: "September 30, 2016", location: "Menlo Park - Suburban Park" },
+      { src: "../assets/us/moments-web/moment-05.jpg", alt: "Dexter and Oliver with Mickey", year: "2017", date: "April 14, 2017", location: "Aulani, A Disney Resort & Spa" },
+      { src: "../assets/us/moments-web/moment-01.jpg", alt: "Dexter and Oliver on a playground", year: "2017", date: "August 31, 2017", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web/moment-02.jpg", alt: "Dexter and Oliver in front of red doors", year: "2017", date: "September 3, 2017", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web/moment-03.jpg", alt: "Dexter and Oliver smiling outside", year: "2019", date: "May 5, 2019", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web/moment-04.jpg", alt: "Dexter and Oliver at Flood Park", year: "2019", date: "May 25, 2019", location: "Flood Park" },
+      { src: "../assets/us/moments-web/moment-16.jpg", alt: "Dexter and Oliver by a fountain", year: "2019", date: "November 17, 2019", location: "Mountain View" },
+      { src: "../assets/us/moments-web/moment-14.jpg", alt: "Dexter and Oliver in jiu-jitsu uniforms", year: "2017", date: "2017", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web/moment-12.jpg", alt: "Dexter and Oliver in jiu-jitsu gear", year: "2017", date: "2017", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web/moment-15.jpg", alt: "Dexter and Oliver on FaceTime", year: "2020", date: "2020", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web/moment-11.jpg", alt: "Dexter and Oliver in snow gear", year: "2021", date: "2021", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web/moment-19.jpg", alt: "Dexter and Oliver in the car", year: "2025", date: "2025", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web/moment-10.jpg", alt: "Dexter and Oliver at the University of Michigan", year: "2025", date: "August 30, 2025", location: "University of Michigan" },
+      { src: "../assets/us/moments-web/moment-23.jpg", alt: "Dexter and Oliver after golf", year: "2025", date: "August 30, 2025", location: "University of Michigan" },
+      { src: "../assets/us/moments-web/moment-13.jpg", alt: "Dexter and Oliver at dinner", year: "2026", date: "April 3, 2026", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web/moment-22.jpg", alt: "Dexter and Oliver inside St. Peter's Basilica", year: "2026", date: "April 7, 2026", location: "Vatican City" },
+      { src: "../assets/us/moments-web/moment-24.jpg", alt: "Dexter and Oliver by a statue", year: "2026", date: "April 8, 2026", location: "Relais Piazza Signoria" },
+      { src: "../assets/us/moments-web/moment-21.jpg", alt: "Dexter and Oliver dressed up", year: "2026", date: "April 9, 2026", location: "Barberino Tavarnelle" },
+      { src: "../assets/us/moments-web/moment-08.jpg", alt: "Dexter and Oliver at a table in Italy", year: "2026", date: "April 9, 2026", location: "Barberino Tavarnelle" },
+      { src: "../assets/us/moments-web/moment-09.jpg", alt: "Dexter and Oliver at dinner in Italy", year: "2026", date: "April 3, 2026", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web/moment-25.jpg", alt: "Dexter and Oliver at home", year: "2026", date: "April 2026", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web/moment-26.jpg", alt: "Dexter and Oliver making pasta", year: "2026", date: "April 9, 2026", location: "Barberino Tavarnelle" },
+      { src: "../assets/us/moments-web/moment-27.jpg", alt: "Dexter and Oliver on a boat in Venice", year: "2026", date: "April 10, 2026", location: "Canal Grande" },
+      { src: "../assets/us/moments-web/moment-38.jpg", alt: "Dexter and Oliver dressed for dinner", year: "2026", date: "April 2026", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web/moment-39.jpg", alt: "Dexter and Oliver eating pastries", year: "2026", date: "April 10, 2026", location: "Rio Nuovo" },
     ];
 
     const captions = {
       "2016": "The tiny-years beginning.",
       "2017": "Still little, already a team.",
-      "2018": "Trips, characters, and kid classics.",
       "2019": "The everyday stuff that became memory.",
-      "2020": "Growing up, but still fully yourselves.",
-      "2021": "Sports, snow, and big smiles.",
-      "2022": "The funny middle chapters.",
-      "2023": "More confidence, more stories.",
-      "2024": "The memories started getting taller.",
+      "2020": "Even the screen memories still count.",
+      "2021": "Snow gear and big smiles.",
       "2025": "Big trips and bigger brother energy.",
       "2026": "The newest chapter so far.",
     };
 
-    const createFigure = ({ src, alt }) => {
+    const createFigure = (photo) => {
       const figure = document.createElement("figure");
+      figure.tabIndex = 0;
+      figure.setAttribute("role", "button");
+      figure.setAttribute("aria-label", `${photo.alt}. ${photo.date}. ${photo.location}.`);
+      figure.addEventListener("click", () => openLightbox(photo));
+      figure.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openLightbox(photo);
+        }
+      });
+
       const image = document.createElement("img");
       image.loading = "lazy";
-      image.src = src;
-      image.alt = alt;
+      image.src = photo.src;
+      image.alt = photo.alt;
       figure.append(image);
       return figure;
     };
@@ -528,6 +634,39 @@
       content.append(heading, copy, createPhotoWall(photos.filter((photo) => photo.year === year)));
       era.append(marker, content);
       timeline.append(era);
+    });
+
+    const lightbox = document.querySelector(".lightbox");
+    const lightboxImage = lightbox.querySelector("img");
+    const lightboxTitle = lightbox.querySelector("h3");
+    const lightboxDate = lightbox.querySelector(".lightbox-date");
+    const lightboxLocation = lightbox.querySelector(".lightbox-location");
+    const closeLightboxButton = lightbox.querySelector(".close-lightbox");
+    let lastFocusedPhoto = null;
+
+    function openLightbox(photo) {
+      lastFocusedPhoto = document.activeElement;
+      lightboxImage.src = photo.src;
+      lightboxImage.alt = photo.alt;
+      lightboxTitle.textContent = photo.year;
+      lightboxDate.textContent = photo.date;
+      lightboxLocation.textContent = photo.location;
+      lightbox.hidden = false;
+      closeLightboxButton.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.hidden = true;
+      lightboxImage.removeAttribute("src");
+      if (lastFocusedPhoto) lastFocusedPhoto.focus();
+    }
+
+    closeLightboxButton.addEventListener("click", closeLightbox);
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !lightbox.hidden) closeLightbox();
     });
 
     const button = document.querySelector(".timeline-button");
