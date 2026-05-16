@@ -109,6 +109,30 @@
       line-height: 1.6;
     }
 
+    .top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .timeline-button {
+      appearance: none;
+      border: 1px solid rgba(33, 24, 19, 0.16);
+      border-radius: 999px;
+      padding: 12px 18px;
+      background: var(--ink);
+      color: var(--paper);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .timeline-button:hover {
+      background: #3b2a22;
+    }
+
     .hero-photo {
       position: relative;
       min-height: 560px;
@@ -163,32 +187,69 @@
     }
 
     .timeline {
-      display: grid;
+      display: none;
       gap: 28px;
     }
 
+    .timeline.is-visible {
+      display: grid;
+    }
+
+    .gallery-view.is-hidden {
+      display: none;
+    }
+
     .timeline-era {
+      position: relative;
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .timeline-era::before {
+      position: absolute;
+      top: 8px;
+      bottom: -28px;
+      left: 45px;
+      width: 2px;
+      content: "";
+      background: rgba(33, 24, 19, 0.14);
+    }
+
+    .timeline-era:last-child::before {
+      bottom: 0;
+    }
+
+    .year-marker {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 90px;
+      height: 90px;
+      border: 1px solid rgba(33, 24, 19, 0.14);
+      border-radius: 50%;
+      background: var(--paper);
+      color: var(--rose);
+      font-size: 1.1rem;
+      font-weight: 900;
+      z-index: 1;
+    }
+
+    .timeline-content {
       display: grid;
       gap: 12px;
+      min-width: 0;
     }
 
-    .era-label {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 18px;
-      padding-top: 4px;
-      border-top: 1px solid rgba(33, 24, 19, 0.14);
-    }
-
-    .era-label h3 {
+    .timeline-content h3 {
       margin: 0;
       font-size: clamp(1.25rem, 2.5vw, 2rem);
       line-height: 1;
       letter-spacing: 0;
     }
 
-    .era-label p {
+    .timeline-content p {
       max-width: 380px;
       margin: 0;
       color: var(--muted);
@@ -282,12 +343,19 @@
         margin-top: 10px;
       }
 
-      .era-label {
-        display: block;
+      .timeline-era {
+        grid-template-columns: 64px minmax(0, 1fr);
+        gap: 12px;
       }
 
-      .era-label p {
-        margin-top: 8px;
+      .timeline-era::before {
+        left: 31px;
+      }
+
+      .year-marker {
+        width: 64px;
+        height: 64px;
+        font-size: 0.9rem;
       }
 
       .photo-wall {
@@ -322,6 +390,16 @@
           Built for the two people who can turn a meal, a boat ride, or a day
           outside into a memory worth keeping.
         </p>
+        <div class="top-actions">
+          <button
+            class="timeline-button"
+            type="button"
+            aria-controls="literal-timeline"
+            aria-expanded="false"
+          >
+            Show Timeline
+          </button>
+        </div>
       </div>
       <figure class="hero-photo">
         <img
@@ -336,66 +414,16 @@
 
     <section aria-labelledby="gallery-heading">
       <div class="section-title">
-        <h2 id="gallery-heading">Our Timeline</h2>
+        <h2 id="gallery-heading">The Gallery</h2>
         <p>
-          Little-kid classics, big trips, proud smiles, weird faces, and the
-          newer photos where both of you somehow look grown up already.
+          Little-kid classics, big trips, proud smiles, weird faces, and newer
+          photos where both of you somehow look grown up already.
         </p>
       </div>
 
-      <div class="timeline">
-        <section class="timeline-era" aria-label="Little-kid classics">
-          <div class="era-label">
-            <h3>Little-Kid Classics</h3>
-            <p>The early proof that you two were already a team.</p>
-          </div>
-          <div class="photo-wall">
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-01.jpg" alt="Dexter and Oliver memory 01" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-02.jpg" alt="Dexter and Oliver memory 02" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-03.jpg" alt="Dexter and Oliver memory 03" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-04.jpg" alt="Dexter and Oliver memory 04" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-05.jpg" alt="Dexter and Oliver memory 05" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-06.jpg" alt="Dexter and Oliver memory 06" /></figure>
-          </div>
-        </section>
+      <div class="gallery-view" id="gallery-view"></div>
 
-        <section class="timeline-era" aria-label="Growing up together">
-          <div class="era-label">
-            <h3>Growing Up Together</h3>
-            <p>Meals, screens, sports, snow, and all the regular days that stuck.</p>
-          </div>
-          <div class="photo-wall">
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-08.jpg" alt="Dexter and Oliver memory 08" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-09.jpg" alt="Dexter and Oliver memory 09" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-10.jpg" alt="Dexter and Oliver memory 10" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-11.jpg" alt="Dexter and Oliver memory 11" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-12.jpg" alt="Dexter and Oliver memory 12" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-13.jpg" alt="Dexter and Oliver memory 13" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-14.jpg" alt="Dexter and Oliver memory 14" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-15.jpg" alt="Dexter and Oliver memory 15" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-16.jpg" alt="Dexter and Oliver memory 16" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-19.jpg" alt="Dexter and Oliver memory 19" /></figure>
-          </div>
-        </section>
-
-        <section class="timeline-era" aria-label="Big trips and big smiles">
-          <div class="era-label">
-            <h3>Big Trips, Big Smiles</h3>
-            <p>The part where the memories got a little taller too.</p>
-          </div>
-          <div class="photo-wall">
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-21.jpg" alt="Dexter and Oliver memory 21" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-22.jpg" alt="Dexter and Oliver memory 22" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-23.jpg" alt="Dexter and Oliver memory 23" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-24.jpg" alt="Dexter and Oliver memory 24" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-25.jpg" alt="Dexter and Oliver memory 25" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-26.jpg" alt="Dexter and Oliver memory 26" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-27.jpg" alt="Dexter and Oliver memory 27" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-38.jpg" alt="Dexter and Oliver memory 38" /></figure>
-            <figure><img loading="lazy" src="../assets/us/moments-web/moment-39.jpg" alt="Dexter and Oliver memory 39" /></figure>
-          </div>
-        </section>
-      </div>
+      <div class="timeline" id="literal-timeline" aria-label="Year-by-year photo timeline"></div>
     </section>
 
     <section class="promise" aria-label="A note for Dexter and Oliver">
@@ -414,5 +442,103 @@
   <footer class="footer">
     Made with a lot of care for Dexter and Oliver.
   </footer>
+  <script>
+    const photos = [
+      { src: "../assets/us/moments-web/moment-01.jpg", alt: "Dexter and Oliver memory 01", year: "2016" },
+      { src: "../assets/us/moments-web/moment-02.jpg", alt: "Dexter and Oliver memory 02", year: "2016" },
+      { src: "../assets/us/moments-web/moment-03.jpg", alt: "Dexter and Oliver memory 03", year: "2017" },
+      { src: "../assets/us/moments-web/moment-04.jpg", alt: "Dexter and Oliver memory 04", year: "2017" },
+      { src: "../assets/us/moments-web/moment-05.jpg", alt: "Dexter and Oliver memory 05", year: "2018" },
+      { src: "../assets/us/moments-web/moment-06.jpg", alt: "Dexter and Oliver memory 06", year: "2018" },
+      { src: "../assets/us/moments-web/moment-08.jpg", alt: "Dexter and Oliver memory 08", year: "2019" },
+      { src: "../assets/us/moments-web/moment-09.jpg", alt: "Dexter and Oliver memory 09", year: "2019" },
+      { src: "../assets/us/moments-web/moment-10.jpg", alt: "Dexter and Oliver memory 10", year: "2020" },
+      { src: "../assets/us/moments-web/moment-11.jpg", alt: "Dexter and Oliver memory 11", year: "2020" },
+      { src: "../assets/us/moments-web/moment-12.jpg", alt: "Dexter and Oliver memory 12", year: "2021" },
+      { src: "../assets/us/moments-web/moment-13.jpg", alt: "Dexter and Oliver memory 13", year: "2021" },
+      { src: "../assets/us/moments-web/moment-14.jpg", alt: "Dexter and Oliver memory 14", year: "2022" },
+      { src: "../assets/us/moments-web/moment-15.jpg", alt: "Dexter and Oliver memory 15", year: "2022" },
+      { src: "../assets/us/moments-web/moment-16.jpg", alt: "Dexter and Oliver memory 16", year: "2023" },
+      { src: "../assets/us/moments-web/moment-19.jpg", alt: "Dexter and Oliver memory 19", year: "2023" },
+      { src: "../assets/us/moments-web/moment-21.jpg", alt: "Dexter and Oliver memory 21", year: "2024" },
+      { src: "../assets/us/moments-web/moment-22.jpg", alt: "Dexter and Oliver memory 22", year: "2024" },
+      { src: "../assets/us/moments-web/moment-23.jpg", alt: "Dexter and Oliver memory 23", year: "2025" },
+      { src: "../assets/us/moments-web/moment-24.jpg", alt: "Dexter and Oliver memory 24", year: "2025" },
+      { src: "../assets/us/moments-web/moment-25.jpg", alt: "Dexter and Oliver memory 25", year: "2026" },
+      { src: "../assets/us/moments-web/moment-26.jpg", alt: "Dexter and Oliver memory 26", year: "2026" },
+      { src: "../assets/us/moments-web/moment-27.jpg", alt: "Dexter and Oliver memory 27", year: "2026" },
+      { src: "../assets/us/moments-web/moment-38.jpg", alt: "Dexter and Oliver memory 38", year: "2026" },
+      { src: "../assets/us/moments-web/moment-39.jpg", alt: "Dexter and Oliver memory 39", year: "2026" },
+    ];
+
+    const captions = {
+      "2016": "The tiny-years beginning.",
+      "2017": "Still little, already a team.",
+      "2018": "Trips, characters, and kid classics.",
+      "2019": "The everyday stuff that became memory.",
+      "2020": "Growing up, but still fully yourselves.",
+      "2021": "Sports, snow, and big smiles.",
+      "2022": "The funny middle chapters.",
+      "2023": "More confidence, more stories.",
+      "2024": "The memories started getting taller.",
+      "2025": "Big trips and bigger brother energy.",
+      "2026": "The newest chapter so far.",
+    };
+
+    const createFigure = ({ src, alt }) => {
+      const figure = document.createElement("figure");
+      const image = document.createElement("img");
+      image.loading = "lazy";
+      image.src = src;
+      image.alt = alt;
+      figure.append(image);
+      return figure;
+    };
+
+    const createPhotoWall = (items) => {
+      const wall = document.createElement("div");
+      wall.className = "photo-wall";
+      items.forEach((photo) => wall.append(createFigure(photo)));
+      return wall;
+    };
+
+    const galleryView = document.querySelector("#gallery-view");
+    galleryView.append(createPhotoWall(photos));
+
+    const timeline = document.querySelector("#literal-timeline");
+    const years = [...new Set(photos.map((photo) => photo.year))];
+    years.forEach((year) => {
+      const era = document.createElement("section");
+      era.className = "timeline-era";
+      era.setAttribute("aria-label", `${year} photos`);
+
+      const marker = document.createElement("div");
+      marker.className = "year-marker";
+      marker.textContent = year;
+
+      const content = document.createElement("div");
+      content.className = "timeline-content";
+
+      const heading = document.createElement("h3");
+      heading.textContent = year;
+
+      const copy = document.createElement("p");
+      copy.textContent = captions[year];
+
+      content.append(heading, copy, createPhotoWall(photos.filter((photo) => photo.year === year)));
+      era.append(marker, content);
+      timeline.append(era);
+    });
+
+    const button = document.querySelector(".timeline-button");
+    button.addEventListener("click", () => {
+      const showingTimeline = timeline.classList.toggle("is-visible");
+      galleryView.classList.toggle("is-hidden", showingTimeline);
+      button.setAttribute("aria-expanded", String(showingTimeline));
+      button.textContent = showingTimeline ? "Show Gallery" : "Show Timeline";
+      document.querySelector("#gallery-heading").textContent = showingTimeline ? "The Timeline" : "The Gallery";
+      document.querySelector("#gallery-heading").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  </script>
 </body>
 </html>
