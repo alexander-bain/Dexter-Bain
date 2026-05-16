@@ -198,6 +198,30 @@
       line-height: 1.45;
     }
 
+    .photo-wall {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-auto-flow: dense;
+      gap: 10px;
+    }
+
+    .photo-wall figure {
+      min-height: 230px;
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid rgba(33, 24, 19, 0.1);
+      background: #efe4d6;
+    }
+
+    .photo-wall figure:nth-child(5n + 1) {
+      grid-row: span 2;
+      min-height: 470px;
+    }
+
+    .photo-wall figure:nth-child(9n + 4) {
+      grid-column: span 2;
+    }
+
     .promise {
       display: grid;
       grid-template-columns: 0.68fr 1fr;
@@ -276,6 +300,20 @@
 
       .memory-grid {
         grid-template-columns: 1fr;
+      }
+
+      .photo-wall {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .photo-wall figure,
+      .photo-wall figure:nth-child(5n + 1) {
+        min-height: 250px;
+      }
+
+      .photo-wall figure:nth-child(9n + 4) {
+        grid-column: span 1;
       }
 
       .memory {
@@ -376,6 +414,58 @@
             </figcaption>
           </figure>
         </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="gallery-heading">
+      <div class="section-title">
+        <h2 id="gallery-heading">Way More Us</h2>
+        <p>
+          Trips, weird faces, proud smiles, little-kid classics, and the newer
+          photos where both of you somehow look grown up already.
+        </p>
+      </div>
+
+      <div class="photo-wall">
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-01.jpg" alt="Dexter and Oliver memory 01" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-02.jpg" alt="Dexter and Oliver memory 02" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-03.jpg" alt="Dexter and Oliver memory 03" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-04.jpg" alt="Dexter and Oliver memory 04" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-05.jpg" alt="Dexter and Oliver memory 05" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-06.jpg" alt="Dexter and Oliver memory 06" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-07.jpg" alt="Dexter and Oliver memory 07" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-08.jpg" alt="Dexter and Oliver memory 08" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-09.jpg" alt="Dexter and Oliver memory 09" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-10.jpg" alt="Dexter and Oliver memory 10" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-11.jpg" alt="Dexter and Oliver memory 11" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-12.jpg" alt="Dexter and Oliver memory 12" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-13.jpg" alt="Dexter and Oliver memory 13" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-14.jpg" alt="Dexter and Oliver memory 14" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-15.jpg" alt="Dexter and Oliver memory 15" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-16.jpg" alt="Dexter and Oliver memory 16" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-17.jpg" alt="Dexter and Oliver memory 17" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-18.jpg" alt="Dexter and Oliver memory 18" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-19.jpg" alt="Dexter and Oliver memory 19" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-20.jpg" alt="Dexter and Oliver memory 20" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-21.jpg" alt="Dexter and Oliver memory 21" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-22.jpg" alt="Dexter and Oliver memory 22" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-23.jpg" alt="Dexter and Oliver memory 23" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-24.jpg" alt="Dexter and Oliver memory 24" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-25.jpg" alt="Dexter and Oliver memory 25" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-26.jpg" alt="Dexter and Oliver memory 26" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-27.jpg" alt="Dexter and Oliver memory 27" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-28.jpg" alt="Dexter and Oliver memory 28" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-29.jpg" alt="Dexter and Oliver memory 29" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-30.jpg" alt="Dexter and Oliver memory 30" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-31.jpg" alt="Dexter and Oliver memory 31" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-32.jpg" alt="Dexter and Oliver memory 32" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-33.jpg" alt="Dexter and Oliver memory 33" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-34.jpg" alt="Dexter and Oliver memory 34" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-35.jpg" alt="Dexter and Oliver memory 35" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-36.jpg" alt="Dexter and Oliver memory 36" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-37.jpg" alt="Dexter and Oliver memory 37" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-38.jpg" alt="Dexter and Oliver memory 38" /></figure>
+        <figure><img loading="lazy" src="../assets/us/moments-web/moment-39.jpg" alt="Dexter and Oliver memory 39" /></figure>
       </div>
     </section>
 
