@@ -163,18 +163,18 @@
     }
 
     .photo-wall {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 18px;
-      max-width: 900px;
-      margin: 0 auto;
+      column-count: 3;
+      column-gap: 12px;
     }
 
     .photo-wall figure {
-      margin: 0;
+      display: inline-block;
+      width: 100%;
+      margin: 0 0 12px;
       overflow: hidden;
       border: 1px solid rgba(33, 24, 19, 0.1);
       background: #efe4d6;
+      break-inside: avoid;
     }
 
     .promise {
@@ -245,8 +245,18 @@
       }
 
       .photo-wall {
-        grid-template-columns: 1fr;
-        gap: 12px;
+        column-count: 2;
+        column-gap: 10px;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .photo-wall {
+        column-gap: 8px;
+      }
+
+      .photo-wall figure {
+        margin-bottom: 8px;
       }
     }
   </style>
