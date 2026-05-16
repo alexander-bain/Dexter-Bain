@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Market Time Machine</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #05070b;
+      --panel: #0b121d;
+      --panel-2: #101a28;
+      --line: rgba(255, 255, 255, 0.12);
+      --ink: #f7fbff;
+      --muted: #9fb0c6;
+      --green: #6ee7a8;
+      --red: #fca5a5;
+      --gold: #f8d66d;
+      --cyan: #53d8ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 64px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 64px),
+        radial-gradient(circle at 18% 16%, rgba(83, 216, 255, 0.18), transparent 28%),
+        radial-gradient(circle at 84% 12%, rgba(110, 231, 168, 0.14), transparent 26%),
+        linear-gradient(135deg, #08111e, #05070b 54%, #081017);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .shell {
+      width: min(1240px, calc(100vw - 28px));
+      margin: 0 auto;
+      padding: 18px 0 42px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .home-link,
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(8, 14, 23, 0.76);
+      text-decoration: none;
+      font-weight: 900;
+      backdrop-filter: blur(14px);
+    }
+
+    .status-pill {
+      color: #dbeafe;
+      font-size: 0.9rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(340px, 0.98fr);
+      gap: 18px;
+      align-items: stretch;
+      min-height: 420px;
+      margin-bottom: 18px;
+    }
+
+    .hero-copy,
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(83, 216, 255, 0.08), rgba(110, 231, 168, 0.04)), rgba(9, 16, 27, 0.88);
+      box-shadow: 0 22px 54px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-copy {
+      display: grid;
+      align-content: end;
+      padding: clamp(22px, 4vw, 42px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-copy::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 4px;
+      background: linear-gradient(90deg, var(--green), var(--cyan), var(--gold));
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--green);
+      font-size: 0.82rem;
+      font-weight: 950;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(3rem, 7vw, 6.3rem);
+      line-height: 0.9;
+      letter-spacing: 0;
+    }
+
+    .hero-copy p {
+      max-width: 590px;
+      margin: 20px 0 0;
+      color: #c9d6e6;
+      font-size: clamp(1rem, 1.5vw, 1.18rem);
+      line-height: 1.55;
+    }
+
+    .phone-preview {
+      display: grid;
+      align-content: stretch;
+      padding: 18px;
+    }
+
+    .terminal {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100%;
+      border: 1px solid rgba(110, 231, 168, 0.26);
+      border-radius: 8px;
+      background: #050a12;
+      overflow: hidden;
+    }
+
+    .terminal-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .mini-ticker {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+    }
+
+    .mini-row {
+      display: grid;
+      grid-template-columns: 70px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 38px;
+    }
+
+    .mini-bar {
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(110, 231, 168, 0.22), var(--green));
+    }
+
+    .mini-value {
+      color: var(--green);
+      font-weight: 950;
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(315px, 0.65fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 18px;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+    }
+
+    .market-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .stat {
+      min-height: 82px;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .stat-label {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .stat-value {
+      margin: 0;
+      font-size: clamp(1.15rem, 2.2vw, 1.7rem);
+      font-weight: 950;
+      line-height: 1.05;
+    }
+
+    .good {
+      color: var(--green);
+    }
+
+    .bad {
+      color: var(--red);
+    }
+
+    .chart-wrap {
+      margin-bottom: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 25%),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 16.66%),
+        #050a12;
+      overflow: hidden;
+    }
+
+    .chart {
+      display: block;
+      width: 100%;
+      height: 290px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 130px minmax(220px, 1fr) 128px auto;
+      gap: 10px;
+      align-items: end;
+      margin-bottom: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .input {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.07);
+      outline: none;
+    }
+
+    .input:focus {
+      border-color: rgba(83, 216, 255, 0.78);
+      box-shadow: 0 0 0 3px rgba(83, 216, 255, 0.12);
+    }
+
+    .search-wrap {
+      position: relative;
+    }
+
+    .search-results {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      z-index: 20;
+      max-height: 300px;
+      overflow: auto;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      background: #08111e;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.44);
+    }
+
+    .search-results:empty {
+      display: none;
+    }
+
+    .result {
+      display: grid;
+      grid-template-columns: 76px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      width: 100%;
+      min-height: 50px;
+      padding: 10px;
+      border: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--ink);
+      background: transparent;
+      text-align: left;
+    }
+
+    .result:hover {
+      background: rgba(83, 216, 255, 0.08);
+    }
+
+    .symbol {
+      color: var(--green);
+      font-weight: 950;
+    }
+
+    .result-name,
+    .holding-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 900;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 850;
+    }
+
+    .btn {
+      min-height: 44px;
+      padding: 10px 14px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      color: #03100b;
+      background: linear-gradient(135deg, var(--green), var(--cyan));
+      font-weight: 950;
+    }
+
+    .btn.secondary {
+      color: var(--ink);
+      border-color: rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .holdings {
+      display: grid;
+      gap: 8px;
+    }
+
+    .holding {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 122px 88px;
+      gap: 10px;
+      align-items: center;
+      min-height: 70px;
+      padding: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .holding-main {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .remove {
+      min-height: 38px;
+      border: 1px solid rgba(252, 165, 165, 0.22);
+      border-radius: 8px;
+      color: var(--red);
+      background: rgba(252, 165, 165, 0.08);
+      font-weight: 900;
+    }
+
+    .note {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 760;
+      line-height: 1.45;
+    }
+
+    .warning {
+      color: var(--gold);
+      font-weight: 900;
+    }
+
+    .side-stack {
+      display: grid;
+      gap: 18px;
+      position: sticky;
+      top: 14px;
+    }
+
+    .leaderboard {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .leader-row {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 52px;
+      padding: 9px;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .rank {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      color: #04100b;
+      background: linear-gradient(135deg, var(--gold), var(--green));
+      font-weight: 950;
+    }
+
+    .leader-name {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: 950;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      z-index: 50;
+      width: min(520px, calc(100vw - 28px));
+      padding: 13px 15px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      color: var(--ink);
+      background: #0c1522;
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.48);
+      transform: translateX(-50%) translateY(140%);
+      transition: transform 0.18s ease;
+      font-weight: 850;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .app-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .side-stack {
+        position: static;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .shell {
+        width: min(100vw - 18px, 1240px);
+        padding-top: 10px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      h1 {
+        font-size: clamp(2.35rem, 12vw, 3rem);
+        overflow-wrap: break-word;
+      }
+
+      .hero-copy {
+        padding: 22px;
+      }
+
+      .hero-copy p {
+        max-width: 100%;
+      }
+
+      .market-stats,
+      .controls,
+      .holding {
+        grid-template-columns: 1fr;
+      }
+
+      .phone-preview {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <nav class="topbar" aria-label="Stock game navigation">
+      <a class="home-link" href="../index.html">DexterBain.com</a>
+      <span class="status-pill" id="marketStatus">Market opening...</span>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Daily investing time machine</p>
+        <h1>Market Time Machine</h1>
+        <p>Start with $10,000, pick a year before 2000, and spread your money across real stocks and index funds. The chosen year plays out across today's market hours.</p>
+      </div>
+      <div class="panel phone-preview" aria-hidden="true">
+        <div class="terminal">
+          <div class="terminal-head">
+            <span>Watchlist</span>
+            <span id="previewYear">1999</span>
+          </div>
+          <div class="mini-ticker" id="miniTicker"></div>
+          <div class="terminal-head">
+            <span>Goal</span>
+            <span>Beat $10,000</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-grid">
+      <section class="panel" aria-labelledby="terminalTitle">
+        <h2 class="section-title" id="terminalTitle">Trading screen</h2>
+        <div class="market-stats">
+          <div class="stat">
+            <p class="stat-label">Portfolio</p>
+            <p class="stat-value" id="portfolioValue">$10,000</p>
+          </div>
+          <div class="stat">
+            <p class="stat-label">Change</p>
+            <p class="stat-value" id="portfolioChange">$0</p>
+          </div>
+          <div class="stat">
+            <p class="stat-label">Sim date</p>
+            <p class="stat-value" id="simDate">Jan 1</p>
+          </div>
+          <div class="stat">
+            <p class="stat-label">Cash</p>
+            <p class="stat-value" id="cashValue">$0</p>
+          </div>
+        </div>
+
+        <div class="chart-wrap" id="chartWrap"></div>
+
+        <div class="controls">
+          <label class="field">
+            Start year
+            <input class="input" id="yearInput" type="number" min="1900" max="1999" value="1999" />
+          </label>
+          <label class="field search-wrap">
+            Search real stocks
+            <input class="input" id="stockSearch" autocomplete="off" placeholder="Search AAPL, Microsoft, S&P 500..." />
+            <div class="search-results" id="searchResults"></div>
+          </label>
+          <label class="field">
+            Player name
+            <input class="input" id="playerName" maxlength="24" placeholder="Name" />
+          </label>
+          <button class="btn secondary" type="button" id="resetBtn">Reset</button>
+        </div>
+
+        <div class="holdings" id="holdings"></div>
+        <p class="note" id="budgetNote"></p>
+      </section>
+
+      <aside class="side-stack">
+        <section class="panel">
+          <h2 class="section-title">Lock score</h2>
+          <button class="btn" type="button" id="lockBtn">Lock portfolio</button>
+          <p class="note">You can leave money as cash. You cannot start at 2000 or later. Stocks that did not exist in the chosen year are hidden.</p>
+        </section>
+
+        <section class="panel">
+          <h2 class="section-title">Leaderboard</h2>
+          <ol class="leaderboard" id="leaderboard"></ol>
+        </section>
+
+        <section class="panel">
+          <h2 class="section-title">Rules</h2>
+          <p class="note">One real day represents one market year. From 9 AM to 5 PM, the chart moves from January to December. When the run reaches the current year, the next round becomes a prediction round.</p>
+          <p class="note">When live historical price lookup is available, the game uses it. If the browser cannot reach the data source, it uses the built-in historical market model so the game still works.</p>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const STORAGE_KEY = "market-time-machine-v1";
+    const STARTING_CASH = 10000;
+    const MAX_START_YEAR = 1999;
+    const DATA_SOURCE = "https://stooq.com/q/d/l/";
+
+    const stocks = [
+      { symbol: "SPY", stooq: "spy.us", name: "SPDR S&P 500 ETF", inception: 1993, category: "Index ETF", base: 0.095, risk: 0.14 },
+      { symbol: "QQQ", stooq: "qqq.us", name: "Invesco QQQ Trust", inception: 1999, category: "Index ETF", base: 0.12, risk: 0.19 },
+      { symbol: "DIA", stooq: "dia.us", name: "SPDR Dow Jones Industrial Average ETF", inception: 1998, category: "Index ETF", base: 0.082, risk: 0.12 },
+      { symbol: "AAPL", stooq: "aapl.us", name: "Apple", inception: 1980, category: "Technology", base: 0.18, risk: 0.32 },
+      { symbol: "MSFT", stooq: "msft.us", name: "Microsoft", inception: 1986, category: "Technology", base: 0.17, risk: 0.26 },
+      { symbol: "AMZN", stooq: "amzn.us", name: "Amazon", inception: 1997, category: "Technology", base: 0.22, risk: 0.42 },
+      { symbol: "NVDA", stooq: "nvda.us", name: "NVIDIA", inception: 1999, category: "Semiconductors", base: 0.22, risk: 0.46 },
+      { symbol: "INTC", stooq: "intc.us", name: "Intel", inception: 1971, category: "Semiconductors", base: 0.12, risk: 0.25 },
+      { symbol: "IBM", stooq: "ibm.us", name: "IBM", inception: 1915, category: "Technology", base: 0.075, risk: 0.16 },
+      { symbol: "GE", stooq: "ge.us", name: "General Electric", inception: 1892, category: "Industrial", base: 0.07, risk: 0.18 },
+      { symbol: "F", stooq: "f.us", name: "Ford Motor", inception: 1956, category: "Autos", base: 0.06, risk: 0.24 },
+      { symbol: "KO", stooq: "ko.us", name: "Coca-Cola", inception: 1919, category: "Consumer", base: 0.085, risk: 0.12 },
+      { symbol: "PEP", stooq: "pep.us", name: "PepsiCo", inception: 1919, category: "Consumer", base: 0.088, risk: 0.13 },
+      { symbol: "MCD", stooq: "mcd.us", name: "McDonald's", inception: 1965, category: "Consumer", base: 0.105, risk: 0.16 },
+      { symbol: "DIS", stooq: "dis.us", name: "Disney", inception: 1957, category: "Media", base: 0.095, risk: 0.2 },
+      { symbol: "WMT", stooq: "wmt.us", name: "Walmart", inception: 1970, category: "Retail", base: 0.13, risk: 0.18 },
+      { symbol: "HD", stooq: "hd.us", name: "Home Depot", inception: 1981, category: "Retail", base: 0.145, risk: 0.22 },
+      { symbol: "JPM", stooq: "jpm.us", name: "JPMorgan Chase", inception: 1969, category: "Financials", base: 0.09, risk: 0.2 },
+      { symbol: "BAC", stooq: "bac.us", name: "Bank of America", inception: 1973, category: "Financials", base: 0.078, risk: 0.23 },
+      { symbol: "BRK.B", stooq: "brk-b.us", name: "Berkshire Hathaway", inception: 1996, category: "Financials", base: 0.12, risk: 0.16 },
+      { symbol: "XOM", stooq: "xom.us", name: "Exxon Mobil", inception: 1920, category: "Energy", base: 0.08, risk: 0.2 },
+      { symbol: "CVX", stooq: "cvx.us", name: "Chevron", inception: 1921, category: "Energy", base: 0.08, risk: 0.19 },
+      { symbol: "JNJ", stooq: "jnj.us", name: "Johnson & Johnson", inception: 1944, category: "Healthcare", base: 0.1, risk: 0.13 },
+      { symbol: "PFE", stooq: "pfe.us", name: "Pfizer", inception: 1942, category: "Healthcare", base: 0.082, risk: 0.17 },
+      { symbol: "MRK", stooq: "mrk.us", name: "Merck", inception: 1946, category: "Healthcare", base: 0.085, risk: 0.17 },
+      { symbol: "T", stooq: "t.us", name: "AT&T", inception: 1984, category: "Telecom", base: 0.055, risk: 0.14 },
+      { symbol: "VZ", stooq: "vz.us", name: "Verizon", inception: 1983, category: "Telecom", base: 0.062, risk: 0.13 }
+    ];
+
+    const marketYears = {
+      1929: -0.47, 1930: -0.28, 1931: -0.43, 1933: 0.54, 1937: -0.35, 1945: 0.31, 1949: 0.19,
+      1950: 0.22, 1954: 0.45, 1957: -0.11, 1958: 0.38, 1962: -0.09, 1966: -0.13, 1969: -0.11,
+      1973: -0.17, 1974: -0.30, 1975: 0.32, 1976: 0.19, 1980: 0.26, 1981: -0.10, 1982: 0.15,
+      1983: 0.17, 1987: 0.05, 1990: -0.06, 1991: 0.26, 1994: -0.02, 1995: 0.34, 1996: 0.20,
+      1997: 0.31, 1998: 0.27, 1999: 0.20
+    };
+
+    const el = {
+      marketStatus: document.getElementById("marketStatus"),
+      previewYear: document.getElementById("previewYear"),
+      miniTicker: document.getElementById("miniTicker"),
+      portfolioValue: document.getElementById("portfolioValue"),
+      portfolioChange: document.getElementById("portfolioChange"),
+      simDate: document.getElementById("simDate"),
+      cashValue: document.getElementById("cashValue"),
+      chartWrap: document.getElementById("chartWrap"),
+      yearInput: document.getElementById("yearInput"),
+      stockSearch: document.getElementById("stockSearch"),
+      searchResults: document.getElementById("searchResults"),
+      playerName: document.getElementById("playerName"),
+      resetBtn: document.getElementById("resetBtn"),
+      holdings: document.getElementById("holdings"),
+      budgetNote: document.getElementById("budgetNote"),
+      lockBtn: document.getElementById("lockBtn"),
+      leaderboard: document.getElementById("leaderboard"),
+      toast: document.getElementById("toast")
+    };
+
+    let state = loadState();
+    let priceCache = {};
+
+    function defaultState() {
+      return {
+        playerName: "",
+        year: 1999,
+        holdings: [
+          { symbol: "SPY", amount: 5000 },
+          { symbol: "AAPL", amount: 2500 },
+          { symbol: "MSFT", amount: 2500 }
+        ],
+        leaderboard: []
+      };
+    }
+
+    function loadState() {
+      try {
+        return { ...defaultState(), ...(JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}) };
+      } catch {
+        return defaultState();
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function stockBySymbol(symbol) {
+      return stocks.find((stock) => stock.symbol === String(symbol || "").toUpperCase());
+    }
+
+    function availableStocks() {
+      return stocks.filter((stock) => stock.inception <= state.year);
+    }
+
+    function invested() {
+      return state.holdings.reduce((sum, holding) => sum + (Number(holding.amount) || 0), 0);
+    }
+
+    function progress() {
+      const now = new Date();
+      const open = new Date(now);
+      open.setHours(9, 0, 0, 0);
+      const close = new Date(now);
+      close.setHours(17, 0, 0, 0);
+      return Math.max(0, Math.min(1, (now - open) / (close - open)));
+    }
+
+    function formatMoney(value) {
+      return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value || 0);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    function seededRandom(seed) {
+      let value = 2166136261;
+      for (const char of String(seed)) {
+        value ^= char.charCodeAt(0);
+        value = Math.imul(value, 16777619);
+      }
+      value += 0x6D2B79F5;
+      let next = value;
+      next = Math.imul(next ^ (next >>> 15), next | 1);
+      next ^= next + Math.imul(next ^ (next >>> 7), next | 61);
+      return ((next ^ (next >>> 14)) >>> 0) / 4294967296;
+    }
+
+    function fallbackReturn(stock, year) {
+      const market = marketYears[year] ?? (0.07 + (seededRandom(`market:${year}`) - 0.5) * 0.24);
+      const company = (seededRandom(`${stock.symbol}:${year}`) - 0.5) * stock.risk * 2;
+      const young = year - stock.inception < 5 ? stock.risk * 0.22 : 0;
+      return Math.max(-0.92, Math.min(3.4, market * 0.72 + stock.base * 0.38 + company + young));
+    }
+
+    async function fetchRealReturn(stock, year) {
+      const key = `${stock.symbol}:${year}`;
+      if (priceCache[key] !== undefined) return priceCache[key];
+      try {
+        const url = `${DATA_SOURCE}?s=${encodeURIComponent(stock.stooq)}&d1=${year}0101&d2=${year}1231&i=d`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("price request failed");
+        const rows = (await response.text()).trim().split(/\n+/).slice(1);
+        const closes = rows.map((row) => Number(row.split(",")[4])).filter(Number.isFinite);
+        if (closes.length < 2) throw new Error("not enough data");
+        priceCache[key] = closes[closes.length - 1] / closes[0] - 1;
+      } catch {
+        priceCache[key] = fallbackReturn(stock, year);
+      }
+      return priceCache[key];
+    }
+
+    function smooth(value) {
+      return value < 0.5 ? 2 * value * value : 1 - Math.pow(-2 * value + 2, 2) / 2;
+    }
+
+    function partialReturn(stock, finalReturn, point = progress()) {
+      const pulse = Math.sin(point * Math.PI * 5 + seededRandom(`${stock.symbol}:pulse:${state.year}`) * 3) * stock.risk * 0.1;
+      return finalReturn * smooth(point) + pulse * (1 - Math.abs(point - 0.5));
+    }
+
+    async function portfolioValue(point = progress()) {
+      const returns = await Promise.all(state.holdings.map(async (holding) => {
+        const stock = stockBySymbol(holding.symbol);
+        if (!stock || stock.inception > state.year) return 0;
+        const finalReturn = await fetchRealReturn(stock, state.year);
+        return (Number(holding.amount) || 0) * (1 + partialReturn(stock, finalReturn, point));
+      }));
+      return Math.max(0, STARTING_CASH - invested()) + returns.reduce((sum, value) => sum + value, 0);
+    }
+
+    async function chartPoints() {
+      const points = [];
+      for (let i = 0; i < 42; i += 1) {
+        points.push(await portfolioValue(i / 41));
+      }
+      return points;
+    }
+
+    async function renderChart() {
+      const points = await chartPoints();
+      const min = Math.min(...points, 9000);
+      const max = Math.max(...points, 11000);
+      const spread = Math.max(1, max - min);
+      const path = points.map((value, index) => {
+        const x = 20 + (index / (points.length - 1)) * 560;
+        const y = 232 - ((value - min) / spread) * 190;
+        return `${index === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)}`;
+      }).join(" ");
+      const value = await portfolioValue();
+      const lineX = 20 + progress() * 560;
+      const color = value >= STARTING_CASH ? "#6ee7a8" : "#fca5a5";
+      el.chartWrap.innerHTML = `
+        <svg class="chart" viewBox="0 0 600 280" role="img" aria-label="Portfolio value chart">
+          <path d="M20 232H580" stroke="rgba(255,255,255,.18)" />
+          <path d="M20 42H580" stroke="rgba(255,255,255,.12)" />
+          <path d="${path}" fill="none" stroke="${color}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+          <line x1="${lineX.toFixed(1)}" x2="${lineX.toFixed(1)}" y1="28" y2="240" stroke="rgba(248,214,109,.78)" stroke-width="2" />
+          <text x="24" y="30" fill="#9fb0c6" font-size="13" font-weight="700">Start ${formatMoney(STARTING_CASH)}</text>
+          <text x="576" y="30" fill="#dce8f7" font-size="13" font-weight="700" text-anchor="end">Close ${formatMoney(points.at(-1))}</text>
+        </svg>
+      `;
+    }
+
+    function simDateLabel() {
+      const day = Math.max(1, Math.min(365, Math.round(progress() * 364) + 1));
+      return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(new Date(state.year, 0, day));
+    }
+
+    async function render() {
+      state.year = Math.max(1900, Math.min(MAX_START_YEAR, Number(state.year) || MAX_START_YEAR));
+      state.holdings = state.holdings
+        .map((holding) => ({ symbol: String(holding.symbol || "").toUpperCase(), amount: Math.max(0, Number(holding.amount) || 0) }))
+        .filter((holding) => stockBySymbol(holding.symbol)?.inception <= state.year);
+      el.yearInput.value = state.year;
+      el.playerName.value = state.playerName || "";
+      el.previewYear.textContent = state.year;
+
+      const value = await portfolioValue();
+      const change = value - STARTING_CASH;
+      const cash = Math.max(0, STARTING_CASH - invested());
+      el.portfolioValue.textContent = formatMoney(value);
+      el.portfolioValue.className = `stat-value ${change >= 0 ? "good" : "bad"}`;
+      el.portfolioChange.textContent = `${change >= 0 ? "+" : ""}${formatMoney(change)}`;
+      el.portfolioChange.className = `stat-value ${change >= 0 ? "good" : "bad"}`;
+      el.simDate.textContent = `${simDateLabel()} ${state.year}`;
+      el.cashValue.textContent = formatMoney(cash);
+      el.marketStatus.textContent = `${Math.round(progress() * 100)}% through ${state.year} · ${formatMoney(value)}`;
+
+      await renderChart();
+      await renderHoldings();
+      renderSearch();
+      renderPreview();
+      renderLeaderboard();
+      saveState();
+    }
+
+    async function renderHoldings() {
+      const rows = await Promise.all(state.holdings.map(async (holding) => {
+        const stock = stockBySymbol(holding.symbol);
+        const finalReturn = stock ? await fetchRealReturn(stock, state.year) : 0;
+        const nowReturn = stock ? partialReturn(stock, finalReturn) : 0;
+        const nowValue = (Number(holding.amount) || 0) * (1 + nowReturn);
+        return `
+          <div class="holding" data-symbol="${escapeHtml(holding.symbol)}">
+            <span class="holding-main">
+              <span class="holding-name">${escapeHtml(holding.symbol)} · ${escapeHtml(stock?.name || "Stock")}</span>
+              <span class="meta">${escapeHtml(stock?.category || "Stock")} · ${nowReturn >= 0 ? "+" : ""}${(nowReturn * 100).toFixed(1)}% now · ${finalReturn >= 0 ? "+" : ""}${(finalReturn * 100).toFixed(1)}% full year · ${formatMoney(nowValue)}</span>
+            </span>
+            <input class="input amount-input" type="number" min="0" max="10000" step="100" value="${holding.amount}" aria-label="Amount in ${escapeHtml(holding.symbol)}" />
+            <button class="remove" type="button">Remove</button>
+          </div>
+        `;
+      }));
+      el.holdings.innerHTML = rows.join("") || `<p class="note">Search for stocks, add them, then place your money.</p>`;
+      const left = STARTING_CASH - invested();
+      el.budgetNote.innerHTML = left >= 0
+        ? `Invested ${formatMoney(invested())}. Cash left: <strong>${formatMoney(left)}</strong>.`
+        : `<span class="warning">You are over budget by ${formatMoney(Math.abs(left))}. Lower an amount before locking.</span>`;
+    }
+
+    function renderSearch() {
+      const query = el.stockSearch.value.trim().toLowerCase();
+      const owned = new Set(state.holdings.map((holding) => holding.symbol));
+      const matches = availableStocks()
+        .filter((stock) => !owned.has(stock.symbol))
+        .filter((stock) => !query || `${stock.symbol} ${stock.name} ${stock.category}`.toLowerCase().includes(query))
+        .slice(0, 8);
+      el.searchResults.innerHTML = query
+        ? matches.map((stock) => `
+          <button class="result" type="button" data-add="${escapeHtml(stock.symbol)}">
+            <span class="symbol">${escapeHtml(stock.symbol)}</span>
+            <span class="result-name">${escapeHtml(stock.name)}</span>
+            <span class="meta">${escapeHtml(stock.category)}</span>
+          </button>
+        `).join("")
+        : "";
+    }
+
+    function renderPreview() {
+      el.miniTicker.innerHTML = state.holdings.slice(0, 5).map((holding) => `
+        <div class="mini-row">
+          <strong>${escapeHtml(holding.symbol)}</strong>
+          <span class="mini-bar" style="width:${Math.max(18, Math.min(100, (Number(holding.amount) || 0) / 80))}%"></span>
+          <span class="mini-value">${formatMoney(holding.amount)}</span>
+        </div>
+      `).join("") || `<p class="note">No holdings yet.</p>`;
+    }
+
+    function renderLeaderboard() {
+      const rows = [...(state.leaderboard || [])]
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 8);
+      el.leaderboard.innerHTML = rows.length
+        ? rows.map((entry, index) => `
+          <li class="leader-row">
+            <span class="rank">${index + 1}</span>
+            <span>
+              <span class="leader-name">${escapeHtml(entry.name)}</span>
+              <span class="meta">${escapeHtml(entry.year)} · ${entry.holdings} holdings</span>
+            </span>
+            <strong class="${entry.value >= STARTING_CASH ? "good" : "bad"}">${formatMoney(entry.value)}</strong>
+          </li>
+        `).join("")
+        : `<li class="leader-row"><span class="rank">1</span><span><span class="leader-name">No portfolios yet</span><span class="meta">Lock one to start.</span></span><strong>$0</strong></li>`;
+    }
+
+    function showToast(message) {
+      el.toast.textContent = message;
+      el.toast.classList.add("show");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => el.toast.classList.remove("show"), 3200);
+    }
+
+    el.yearInput.addEventListener("input", () => {
+      const nextYear = Math.max(1900, Math.min(MAX_START_YEAR, Number(el.yearInput.value) || MAX_START_YEAR));
+      state.year = nextYear;
+      state.holdings = state.holdings.filter((holding) => stockBySymbol(holding.symbol)?.inception <= nextYear);
+      render();
+    });
+
+    el.stockSearch.addEventListener("input", renderSearch);
+    el.stockSearch.addEventListener("focus", renderSearch);
+    el.searchResults.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-add]");
+      if (!button) return;
+      state.holdings.push({ symbol: button.dataset.add, amount: 0 });
+      el.stockSearch.value = "";
+      render();
+    });
+
+    el.holdings.addEventListener("input", (event) => {
+      const row = event.target.closest("[data-symbol]");
+      if (!row || !event.target.classList.contains("amount-input")) return;
+      const holding = state.holdings.find((item) => item.symbol === row.dataset.symbol);
+      if (holding) holding.amount = Math.max(0, Number(event.target.value) || 0);
+      saveState();
+    });
+
+    el.holdings.addEventListener("change", render);
+    el.holdings.addEventListener("click", (event) => {
+      const row = event.target.closest("[data-symbol]");
+      if (!row || !event.target.classList.contains("remove")) return;
+      state.holdings = state.holdings.filter((holding) => holding.symbol !== row.dataset.symbol);
+      render();
+    });
+
+    el.playerName.addEventListener("input", () => {
+      state.playerName = el.playerName.value.replace(/\s+/g, " ").trim().slice(0, 24);
+      saveState();
+    });
+
+    el.resetBtn.addEventListener("click", () => {
+      state = { ...state, year: 1999, holdings: defaultState().holdings };
+      render();
+    });
+
+    el.lockBtn.addEventListener("click", async () => {
+      const name = (state.playerName || "").trim();
+      if (!name) {
+        showToast("Add a player name first.");
+        return;
+      }
+      if (state.year >= 2000) {
+        showToast("Pick a start year before 2000.");
+        return;
+      }
+      if (invested() > STARTING_CASH) {
+        showToast("You only get $10,000. Lower one amount first.");
+        return;
+      }
+      if (!state.holdings.some((holding) => Number(holding.amount) > 0)) {
+        showToast("Put money into at least one stock first.");
+        return;
+      }
+      const value = Math.round(await portfolioValue());
+      state.leaderboard = [
+        { name, year: state.year, value, holdings: state.holdings.filter((holding) => holding.amount > 0).length, savedAt: new Date().toISOString() },
+        ...(state.leaderboard || []).filter((entry) => entry.name.toLowerCase() !== name.toLowerCase())
+      ].slice(0, 30);
+      saveState();
+      renderLeaderboard();
+      showToast("Portfolio locked.");
+    });
+
+    window.setInterval(render, 30000);
+    render();
+  </script>
+</body>
+</html>
