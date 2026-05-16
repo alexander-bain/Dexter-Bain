@@ -82,10 +82,10 @@
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.02fr) minmax(340px, 0.98fr);
+      grid-template-columns: 1fr;
       gap: 18px;
       align-items: stretch;
-      min-height: 420px;
+      min-height: 0;
       margin-bottom: 18px;
     }
 
@@ -100,8 +100,8 @@
 
     .hero-copy {
       display: grid;
-      align-content: end;
-      padding: clamp(22px, 4vw, 42px);
+      align-content: start;
+      padding: clamp(18px, 3vw, 28px);
       overflow: hidden;
       position: relative;
     }
@@ -126,21 +126,21 @@
     h1 {
       max-width: 720px;
       margin: 0;
-      font-size: clamp(3rem, 7vw, 6.3rem);
-      line-height: 0.9;
+      font-size: clamp(2.1rem, 5vw, 4.2rem);
+      line-height: 0.95;
       letter-spacing: 0;
     }
 
     .hero-copy p {
       max-width: 590px;
-      margin: 20px 0 0;
+      margin: 12px 0 0;
       color: #c9d6e6;
       font-size: clamp(1rem, 1.5vw, 1.18rem);
       line-height: 1.55;
     }
 
     .phone-preview {
-      display: grid;
+      display: none;
       align-content: stretch;
       padding: 18px;
     }
@@ -779,16 +779,23 @@
     async function fetchRealReturn(stock, year) {
       const key = `${stock.symbol}:${year}`;
       if (priceCache[key] !== undefined) return priceCache[key];
+      priceCache[key] = fallbackReturn(stock, year);
+      if (window.location.protocol === "file:") {
+        return priceCache[key];
+      }
       try {
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 1200);
         const url = `${DATA_SOURCE}?s=${encodeURIComponent(stock.stooq)}&d1=${year}0101&d2=${year}1231&i=d`;
-        const response = await fetch(url);
+        const response = await fetch(url, { signal: controller.signal });
+        window.clearTimeout(timeout);
         if (!response.ok) throw new Error("price request failed");
         const rows = (await response.text()).trim().split(/\n+/).slice(1);
         const closes = rows.map((row) => Number(row.split(",")[4])).filter(Number.isFinite);
         if (closes.length < 2) throw new Error("not enough data");
         priceCache[key] = closes[closes.length - 1] / closes[0] - 1;
       } catch {
-        priceCache[key] = fallbackReturn(stock, year);
+        return priceCache[key];
       }
       return priceCache[key];
     }
