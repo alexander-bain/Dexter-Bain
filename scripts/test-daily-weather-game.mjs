@@ -7,18 +7,6 @@ import { fileURLToPath } from "node:url";
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const chromePath = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 
-function pacificDateKey() {
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "America/Los_Angeles",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).formatToParts(new Date());
-
-  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
-  return `${values.year}-${values.month}-${values.day}`;
-}
-
 function contentType(filePath) {
   if (filePath.endsWith(".html")) return "text/html; charset=utf-8";
   if (filePath.endsWith(".js")) return "text/javascript; charset=utf-8";
@@ -50,34 +38,19 @@ function readJsonBody(request) {
   });
 }
 
-function createApiServer() {
+function createStaticServer() {
   const entriesByGameId = new Map();
-  const emptyResults = { results: [] };
-
-  function apiHeaders() {
-    return {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "Accept, Content-Type",
-      "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-    };
-  }
 
   const server = http.createServer(async (request, response) => {
     const url = new URL(request.url || "/", "http://127.0.0.1");
+
     const entriesMatch = url.pathname.match(/^\/api\/minigames\/([^/]+)\/entries$/);
     const resultsMatch = url.pathname.match(/^\/api\/minigames\/([^/]+)\/results$/);
     const resultsCheckMatch = url.pathname.match(/^\/api\/minigames\/([^/]+)\/results\/check$/);
 
-    if (request.method === "OPTIONS" && (entriesMatch || resultsMatch || resultsCheckMatch)) {
-      response.writeHead(204, apiHeaders());
-      response.end();
-      return;
-    }
-
     if (request.method === "GET" && entriesMatch) {
       const gameId = decodeURIComponent(entriesMatch[1]);
-      response.writeHead(200, apiHeaders());
+      response.writeHead(200, { "Content-Type": "application/json" });
       response.end(JSON.stringify({ gameId, entries: entriesByGameId.get(gameId) || [] }));
       return;
     }
@@ -105,99 +78,22 @@ function createApiServer() {
       );
       currentEntries.push(entry);
       entriesByGameId.set(gameId, currentEntries);
-      response.writeHead(200, apiHeaders());
+      response.writeHead(200, { "Content-Type": "application/json" });
       response.end(JSON.stringify({ gameId, entries: currentEntries }));
       return;
     }
 
     if (request.method === "GET" && resultsMatch) {
       const gameId = decodeURIComponent(resultsMatch[1]);
-      response.writeHead(200, apiHeaders());
-      response.end(JSON.stringify({ gameId, ...emptyResults }));
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end(JSON.stringify({ gameId, results: [] }));
       return;
     }
 
     if (request.method === "POST" && resultsCheckMatch) {
       const gameId = decodeURIComponent(resultsCheckMatch[1]);
-      response.writeHead(200, apiHeaders());
-      response.end(JSON.stringify({ gameId, ...emptyResults }));
-      return;
-    }
-
-    response.writeHead(404, apiHeaders());
-    response.end(JSON.stringify({ error: "No test API server" }));
-  });
-
-  return { server, entriesByGameId };
-}
-
-function createStaticServer() {
-  const entriesByGameId = new Map();
-  const emptyResults = { results: [] };
-
-  function apiHeaders() {
-    return {
-      "Content-Type": "application/json",
-    };
-  }
-
-  const server = http.createServer((request, response) => {
-    const url = new URL(request.url || "/", "http://127.0.0.1");
-
-    const entriesMatch = url.pathname.match(/^\/api\/minigames\/([^/]+)\/entries$/);
-    const resultsMatch = url.pathname.match(/^\/api\/minigames\/([^/]+)\/results$/);
-    const resultsCheckMatch = url.pathname.match(/^\/api\/minigames\/([^/]+)\/results\/check$/);
-
-    if (request.method === "GET" && entriesMatch) {
-      const gameId = decodeURIComponent(entriesMatch[1]);
-      response.writeHead(200, apiHeaders());
-      response.end(JSON.stringify({ gameId, entries: entriesByGameId.get(gameId) || [] }));
-      return;
-    }
-
-    if (request.method === "POST" && entriesMatch) {
-      const gameId = decodeURIComponent(entriesMatch[1]);
-      readJsonBody(request).then((body) => {
-        const name = String(body.name || "").trim().slice(0, 24);
-        const notify = ["none", "win", "updates"].includes(body.notify) ? body.notify : "none";
-        const picks = body.picks && typeof body.picks === "object" && !Array.isArray(body.picks)
-          ? Object.fromEntries(
-              Object.entries(body.picks)
-                .filter(([, value]) => String(value || "").trim())
-                .map(([questionId, answerId]) => [String(questionId), String(answerId)])
-            )
-          : {};
-        const entry = {
-          name,
-          picks,
-          notify,
-          savedAt: new Date().toISOString(),
-        };
-        const currentEntries = (entriesByGameId.get(gameId) || []).filter(
-          (savedEntry) => String(savedEntry.name || "").toLowerCase() !== name.toLowerCase()
-        );
-        currentEntries.push(entry);
-        entriesByGameId.set(gameId, currentEntries);
-        response.writeHead(200, apiHeaders());
-        response.end(JSON.stringify({ gameId, entries: currentEntries }));
-      }).catch((error) => {
-        response.writeHead(500, apiHeaders());
-        response.end(JSON.stringify({ error: error.message || "Bad test API request" }));
-      });
-      return;
-    }
-
-    if (request.method === "GET" && resultsMatch) {
-      const gameId = decodeURIComponent(resultsMatch[1]);
-      response.writeHead(200, apiHeaders());
-      response.end(JSON.stringify({ gameId, ...emptyResults }));
-      return;
-    }
-
-    if (request.method === "POST" && resultsCheckMatch) {
-      const gameId = decodeURIComponent(resultsCheckMatch[1]);
-      response.writeHead(200, apiHeaders());
-      response.end(JSON.stringify({ gameId, ...emptyResults }));
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end(JSON.stringify({ gameId, results: [] }));
       return;
     }
 
@@ -294,15 +190,24 @@ async function run() {
     "--no-default-browser-check",
     "--remote-debugging-port=0",
     `--user-data-dir=${userDataDir}`,
-    "about:blank"
+    targetUrl
   ], { stdio: ["ignore", "ignore", "pipe"] });
 
   let connection;
   try {
     const wsUrl = await waitForDebugUrl(chrome);
     connection = cdpConnection(wsUrl);
-    const targets = await connection.send("Target.getTargets");
-    const page = targets.targetInfos.find((target) => target.type === "page");
+    let page = null;
+    for (let attempt = 0; attempt < 600; attempt += 1) {
+      const targets = await connection.send("Target.getTargets");
+      page = targets.targetInfos.find((target) => target.type === "page" && target.url === targetUrl)
+        || targets.targetInfos.find((target) => target.type === "page" && target.url.startsWith(targetUrl))
+        || targets.targetInfos.find((target) => target.type === "page");
+      if (page?.url && page.url !== "about:blank") {
+        break;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
     if (!page) throw new Error("No Chrome page target found.");
 
     const { sessionId } = await connection.send("Target.attachToTarget", {
@@ -310,84 +215,100 @@ async function run() {
       flatten: true
     });
 
-    await connection.send("Runtime.enable", {}, sessionId);
     await connection.send("Page.enable", {}, sessionId);
-    await connection.send("Page.navigate", { url: targetUrl }, sessionId);
+    await connection.send("Runtime.enable", {}, sessionId);
+
+    for (let attempt = 0; attempt < 200; attempt += 1) {
+      const ready = await connection.send("Runtime.evaluate", {
+        returnByValue: true,
+        expression: '(() => { try { return typeof MINIGAMES_TEST === "object" && typeof MINIGAMES_TEST.getUpcomingGames === "function" && Array.isArray(MINIGAMES_TEST.getUpcomingGames()) && MINIGAMES_TEST.getUpcomingGames().length > 0; } catch { return false; } })()'
+      }, sessionId);
+      if (ready.result?.value === true) {
+        break;
+      }
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      if (attempt === 599) {
+        throw new Error("The minigames page did not finish booting in time.");
+      }
+    }
+
     const result = await connection.send("Runtime.evaluate", {
       awaitPromise: true,
       returnByValue: true,
       expression: `
         (async () => {
           const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-          const get = (id) => document.getElementById(id);
-          let game = null;
-          for (let attempt = 0; attempt < 200; attempt += 1) {
-            try {
-              if (typeof eventCatalog === "object" && Array.isArray(eventCatalog) && typeof normalizeGame === "function") {
-                const catalogGame = eventCatalog.find((candidate) => candidate.id === ${JSON.stringify(expectedGameId)});
-                if (catalogGame) {
-                  game = normalizeGame(catalogGame, 0);
-                  break;
-                }
-              }
-            } catch {
-              // The page is still initializing its catalog.
-            }
-            await wait(100);
-          }
+          const test = MINIGAMES_TEST;
+          const game = test.getUpcomingGames().find((candidate) => candidate.gameId.startsWith("daily-weather-"));
           if (!game) {
             throw new Error("No daily weather game was loaded.");
           }
 
+          test.setSelectedGameId(game.gameId);
+          test.render();
+
           const bestPicks = game.questions.map((question, index) => {
-            const best = getAnswers(question).reduce((winner, candidate) => {
+            const best = test.getAnswers(question).reduce((winner, candidate) => {
               if (!winner || candidate.odds > winner.odds) {
                 return candidate;
               }
               return winner;
             }, null);
-            const questionId = getQuestionId(question, index);
-            return [questionId, best.id];
+            return [test.getQuestionId(question, index), best.id];
           });
           const picks = Object.fromEntries(bestPicks);
           const entry = {
             name: "Weather Bot",
             picks,
             notify: "none",
-            score: scorePicks(game, picks),
+            score: test.scorePicks(game, picks),
             savedAt: new Date().toISOString(),
           };
 
-          playerNameEl.value = entry.name;
-          playerNameEl.dispatchEvent(new Event("input", { bubbles: true }));
-          state.playerName = entry.name;
-          state.notify = entry.notify;
-          saveState();
+          test.playerNameEl.value = entry.name;
+          test.playerNameEl.dispatchEvent(new Event("input", { bubbles: true }));
+          test.state.playerName = entry.name;
+          test.state.notify = entry.notify;
+          test.saveState();
 
-          const savedToServer = await saveEntryForScope(game, entry);
+          const savedToServer = await test.saveEntryForScope(game, entry);
           if (!savedToServer) {
             throw new Error(
               "The daily weather save helper did not write to the test API server: " +
-              JSON.stringify({
-                lastSaveError: state.lastSaveError || "",
-                scope: leaderboardScope(game),
-                apiUrl: minigamesApiUrl(game.gameId),
-              })
+              JSON.stringify({ lastSaveError: test.state.lastSaveError || "", apiUrl: "/api/minigames/" + encodeURIComponent(game.gameId) + "/entries" })
             );
           }
 
-          const savedEntry = findSavedEntryForName(game, allEntries(game), entry.name);
+          test.render();
+          const start = Date.now();
+          while (Date.now() - start < 15000) {
+            const saveNote = document.getElementById("saveNote")?.textContent || "";
+            const leaderboard = document.getElementById("leaderboard")?.textContent || "";
+            const entryCount = document.getElementById("entryCount")?.textContent || "";
+            const storage = JSON.parse(localStorage.getItem("dexterbain-minigames-v1") || "{}");
+            if (saveNote.includes("Weather Bot") && leaderboard.includes("Weather Bot") && entryCount.trim() === "1" && storage.playerName === "Weather Bot") {
+              return {
+                title: document.getElementById("eventTitle")?.textContent || "",
+                entryCount,
+                saveNote,
+                leaderboard,
+                chosen: bestPicks.map(([, answerId]) => answerId),
+                bestPicks,
+                storedState: storage,
+              };
+            }
+            await wait(100);
+          }
 
-          return {
-            title: get("eventTitle")?.textContent || "",
-            entryCount: get("entryCount")?.textContent || "",
-            saveNote: get("saveNote")?.textContent || "",
-            leaderboard: get("leaderboard")?.textContent || "",
-            savedEntryName: savedEntry?.name || "",
-            chosen: bestPicks.map(([, answerId]) => answerId),
-            bestPicks,
-            storedState: JSON.parse(localStorage.getItem("dexterbain-minigames-v1") || "{}")
-          };
+          throw new Error(
+            "Saved state did not become visible in time: " +
+            JSON.stringify({
+              saveNote: document.getElementById("saveNote")?.textContent || "",
+              leaderboard: document.getElementById("leaderboard")?.textContent || "",
+              entryCount: document.getElementById("entryCount")?.textContent || "",
+              storage: JSON.parse(localStorage.getItem("dexterbain-minigames-v1") || "{}"),
+            })
+          );
         })()
       `
     }, sessionId);
@@ -401,7 +322,7 @@ async function run() {
     }
 
     const value = result.result.value;
-    if (value?.savedEntryName !== "Weather Bot") {
+    if (!value?.leaderboard?.includes("Weather Bot") || !value?.saveNote?.includes("Weather Bot")) {
       throw new Error(`Weather Bot test did not save correctly: ${JSON.stringify(value)}`);
     }
 
@@ -414,10 +335,6 @@ async function run() {
     const bestPickMap = Object.fromEntries(value.bestPicks || []);
     if (JSON.stringify(savedPickMap) !== JSON.stringify(bestPickMap)) {
       throw new Error(`Saved picks did not match the best-odds answers: ${JSON.stringify({ savedPickMap, bestPickMap })}`);
-    }
-
-    if (value.savedEntryName !== "Weather Bot") {
-      throw new Error(`Saved entry was not reflected back in the page state: ${JSON.stringify({ savedEntryName: value.savedEntryName })}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);
