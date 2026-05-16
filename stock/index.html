@@ -619,7 +619,7 @@
 
         <section class="panel">
           <h2 class="section-title">Rules</h2>
-          <p class="note">One real day represents one market year. From 9 AM to 5 PM, the chart moves from January to December. When the run reaches the current year, the next round becomes a prediction round.</p>
+          <p class="note">When you lock a portfolio, the year starts at January 1 and reveals slowly over the next 8 hours. Editing your picks resets the run to the starting line.</p>
           <p class="note">The year controls the market conditions. If a stock did not trade yet, the game still lets you use it and estimates how that kind of company would have moved in that year.</p>
         </section>
       </aside>
@@ -632,6 +632,7 @@
     const STORAGE_KEY = "market-time-machine-v1";
     const STARTING_CASH = 10000;
     const MAX_START_YEAR = 1999;
+    const RUN_DURATION_MS = 8 * 60 * 60 * 1000;
     const DATA_SOURCE = "https://stooq.com/q/d/l/";
 
     const stocks = [
@@ -711,6 +712,7 @@
           { symbol: "AAPL", amount: 2500 },
           { symbol: "MSFT", amount: 2500 }
         ],
+        runStartedAt: "",
         leaderboard: []
       };
     }
@@ -740,12 +742,20 @@
     }
 
     function progress() {
-      const now = new Date();
-      const open = new Date(now);
-      open.setHours(9, 0, 0, 0);
-      const close = new Date(now);
-      close.setHours(17, 0, 0, 0);
-      return Math.max(0, Math.min(1, (now - open) / (close - open)));
+      if (!state.runStartedAt) {
+        return 0;
+      }
+
+      const startedAt = new Date(state.runStartedAt).getTime();
+      if (!Number.isFinite(startedAt)) {
+        return 0;
+      }
+
+      return Math.max(0, Math.min(1, (Date.now() - startedAt) / RUN_DURATION_MS));
+    }
+
+    function resetRunProgress() {
+      state.runStartedAt = "";
     }
 
     function formatMoney(value) {
@@ -812,6 +822,9 @@
     }
 
     function partialReturn(stock, finalReturn, point = progress()) {
+      if (point <= 0) {
+        return 0;
+      }
       const pulse = Math.sin(point * Math.PI * 5 + seededRandom(`${stock.symbol}:pulse:${state.year}`) * 3) * stock.risk * 0.1;
       return finalReturn * smooth(point) + pulse * (1 - Math.abs(point - 0.5));
     }
@@ -882,7 +895,9 @@
       el.portfolioChange.className = `stat-value ${change >= 0 ? "good" : "bad"}`;
       el.simDate.textContent = `${simDateLabel()} ${state.year}`;
       el.cashValue.textContent = formatMoney(cash);
-      el.marketStatus.textContent = `${Math.round(progress() * 100)}% through ${state.year} · ${formatMoney(value)}`;
+      el.marketStatus.textContent = state.runStartedAt
+        ? `${Math.round(progress() * 100)}% through ${state.year} · ${formatMoney(value)}`
+        : `Lock portfolio to start ${state.year}`;
 
       await renderChart();
       await renderHoldings();
@@ -973,6 +988,7 @@
     el.yearInput.addEventListener("input", () => {
       const nextYear = Math.max(1900, Math.min(MAX_START_YEAR, Number(el.yearInput.value) || MAX_START_YEAR));
       state.year = nextYear;
+      resetRunProgress();
       render();
     });
 
@@ -982,6 +998,7 @@
       const button = event.target.closest("[data-add]");
       if (!button) return;
       state.holdings.push({ symbol: button.dataset.add, amount: 0 });
+      resetRunProgress();
       el.stockSearch.value = "";
       render();
     });
@@ -991,6 +1008,7 @@
       if (!row || !event.target.classList.contains("amount-input")) return;
       const holding = state.holdings.find((item) => item.symbol === row.dataset.symbol);
       if (holding) holding.amount = Math.max(0, Number(event.target.value) || 0);
+      resetRunProgress();
       saveState();
     });
 
@@ -999,6 +1017,7 @@
       const row = event.target.closest("[data-symbol]");
       if (!row || !event.target.classList.contains("remove")) return;
       state.holdings = state.holdings.filter((holding) => holding.symbol !== row.dataset.symbol);
+      resetRunProgress();
       render();
     });
 
@@ -1008,7 +1027,7 @@
     });
 
     el.resetBtn.addEventListener("click", () => {
-      state = { ...state, year: 1999, holdings: defaultState().holdings };
+      state = { ...state, year: 1999, holdings: defaultState().holdings, runStartedAt: "" };
       render();
     });
 
@@ -1030,14 +1049,15 @@
         showToast("Put money into at least one stock first.");
         return;
       }
+      state.runStartedAt = new Date().toISOString();
       const value = Math.round(await portfolioValue());
       state.leaderboard = [
-        { name, year: state.year, value, holdings: state.holdings.filter((holding) => holding.amount > 0).length, savedAt: new Date().toISOString() },
+        { name, year: state.year, value, holdings: state.holdings.filter((holding) => holding.amount > 0).length, savedAt: state.runStartedAt },
         ...(state.leaderboard || []).filter((entry) => entry.name.toLowerCase() !== name.toLowerCase())
       ].slice(0, 30);
       saveState();
-      renderLeaderboard();
-      showToast("Portfolio locked.");
+      render();
+      showToast("Portfolio locked. The year is starting now.");
     });
 
     window.setInterval(render, 30000);
