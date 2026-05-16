@@ -46,9 +46,7 @@
       height: auto;
     }
 
-    .hero-photo img,
-    .memory img,
-    .promise-photo img {
+    .hero-photo img {
       height: 100%;
       object-fit: cover;
     }
@@ -164,46 +162,6 @@
       line-height: 1.5;
     }
 
-    .memory-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .memory {
-      min-height: 440px;
-      overflow: hidden;
-      border: 1px solid rgba(33, 24, 19, 0.1);
-      background: #efe4d6;
-    }
-
-    .memory figure {
-      display: grid;
-      grid-template-rows: 1fr auto;
-      height: 100%;
-      margin: 0;
-    }
-
-    .memory figcaption {
-      min-height: 112px;
-      padding: 18px;
-      background: rgba(255, 250, 243, 0.94);
-    }
-
-    .memory strong {
-      display: block;
-      font-size: 1.05rem;
-      line-height: 1.25;
-    }
-
-    .memory span {
-      display: block;
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 0.92rem;
-      line-height: 1.45;
-    }
-
     .photo-wall {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -220,17 +178,9 @@
     }
 
     .promise {
-      display: grid;
-      grid-template-columns: 0.68fr 1fr;
-      gap: 18px;
       margin-top: 18px;
       border: 1px solid rgba(33, 24, 19, 0.1);
       background: rgba(255, 250, 243, 0.82);
-    }
-
-    .promise-photo {
-      min-height: 360px;
-      background: var(--soft);
     }
 
     .promise-copy {
@@ -269,8 +219,7 @@
         padding-top: 10px;
       }
 
-      .hero,
-      .promise {
+      .hero {
         grid-template-columns: 1fr;
       }
 
@@ -295,25 +244,9 @@
         margin-top: 10px;
       }
 
-      .memory-grid {
-        grid-template-columns: 1fr;
-      }
-
       .photo-wall {
         grid-template-columns: 1fr;
         gap: 12px;
-      }
-
-      .memory {
-        min-height: 0;
-      }
-
-      .memory figure {
-        grid-template-rows: minmax(300px, 62vh) auto;
-      }
-
-      .promise-photo {
-        min-height: 320px;
       }
     }
   </style>
@@ -345,66 +278,6 @@
       </figure>
     </section>
 
-    <section aria-labelledby="memories-heading">
-      <div class="section-title">
-        <h2 id="memories-heading">Little Proofs</h2>
-        <p>
-          Proof that the best days do not need to be perfect. They just need
-          the right people in the frame.
-        </p>
-      </div>
-
-      <div class="memory-grid">
-        <article class="memory">
-          <figure>
-            <img
-              src="../assets/us/web/tahoe-fishing.jpeg"
-              alt="Young Dexter and Oliver holding a fishing sign in Tahoe"
-            />
-            <figcaption>
-              <strong>Big catch energy.</strong>
-              <span>
-                A sky full of blue, a boat full of fish, and two smiles doing
-                all the talking.
-              </span>
-            </figcaption>
-          </figure>
-        </article>
-
-        <article class="memory">
-          <figure>
-            <img
-              src="../assets/us/web/facetime-2020.jpeg"
-              alt="A FaceTime photo of Oliver with Dexter visible in the corner"
-            />
-            <figcaption>
-              <strong>FaceTime proof.</strong>
-              <span>
-                Even from different corners of the screen, it still counts as
-                being together.
-              </span>
-            </figcaption>
-          </figure>
-        </article>
-
-        <article class="memory">
-          <figure>
-            <img
-              src="../assets/us/web/together.png"
-              alt="A small older photo of Dexter and Oliver together"
-            />
-            <figcaption>
-              <strong>Before the tall years.</strong>
-              <span>
-                Tiny faces, huge future. Some photos get sweeter every time
-                you come back to them.
-              </span>
-            </figcaption>
-          </figure>
-        </article>
-      </div>
-    </section>
-
     <section aria-labelledby="gallery-heading">
       <div class="section-title">
         <h2 id="gallery-heading">Way More Us</h2>
@@ -430,7 +303,6 @@
         <figure><img loading="lazy" src="../assets/us/moments-web/moment-14.jpg" alt="Dexter and Oliver memory 14" /></figure>
         <figure><img loading="lazy" src="../assets/us/moments-web/moment-15.jpg" alt="Dexter and Oliver memory 15" /></figure>
         <figure><img loading="lazy" src="../assets/us/moments-web/moment-16.jpg" alt="Dexter and Oliver memory 16" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-18.jpg" alt="Dexter and Oliver memory 18" /></figure>
         <figure><img loading="lazy" src="../assets/us/moments-web/moment-19.jpg" alt="Dexter and Oliver memory 19" /></figure>
         <figure><img loading="lazy" src="../assets/us/moments-web/moment-21.jpg" alt="Dexter and Oliver memory 21" /></figure>
         <figure><img loading="lazy" src="../assets/us/moments-web/moment-22.jpg" alt="Dexter and Oliver memory 22" /></figure>
@@ -439,19 +311,12 @@
         <figure><img loading="lazy" src="../assets/us/moments-web/moment-25.jpg" alt="Dexter and Oliver memory 25" /></figure>
         <figure><img loading="lazy" src="../assets/us/moments-web/moment-26.jpg" alt="Dexter and Oliver memory 26" /></figure>
         <figure><img loading="lazy" src="../assets/us/moments-web/moment-27.jpg" alt="Dexter and Oliver memory 27" /></figure>
-        <figure><img loading="lazy" src="../assets/us/moments-web/moment-28.jpg" alt="Dexter and Oliver memory 28" /></figure>
         <figure><img loading="lazy" src="../assets/us/moments-web/moment-38.jpg" alt="Dexter and Oliver memory 38" /></figure>
         <figure><img loading="lazy" src="../assets/us/moments-web/moment-39.jpg" alt="Dexter and Oliver memory 39" /></figure>
       </div>
     </section>
 
     <section class="promise" aria-label="A note for Dexter and Oliver">
-      <div class="promise-photo">
-        <img
-          src="../assets/us/web/facetime-2020.jpeg"
-          alt="A FaceTime memory of Dexter and Oliver"
-        />
-      </div>
       <div class="promise-copy">
         <p>
           This page can keep growing whenever there is another photo, another
