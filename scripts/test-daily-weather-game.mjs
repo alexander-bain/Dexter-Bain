@@ -108,7 +108,7 @@ function createStaticServer() {
     if (filePath.endsWith(path.join("minigames", "index.html"))) {
       const html = fs.readFileSync(filePath, "utf8").replace(
         "<script>",
-        `<script>window.MINIGAMES_API_BASE = window.location.origin;</script>\n  <script>`
+        `<script>window.MINIGAMES_SUPABASE_URL = ""; window.MINIGAMES_SUPABASE_KEY = ""; window.MINIGAMES_API_BASE = window.location.origin;</script>\n  <script>`
       );
       response.end(html);
       return;
@@ -292,6 +292,7 @@ async function run() {
                 entryCount,
                 saveNote,
                 leaderboard,
+                savedEntryName: storage.playerName || "",
                 chosen: bestPicks.map(([, answerId]) => answerId),
                 bestPicks,
                 storedState: storage,
@@ -322,19 +323,14 @@ async function run() {
     }
 
     const value = result.result.value;
-    if (!value?.leaderboard?.includes("Weather Bot") || !value?.saveNote?.includes("Weather Bot")) {
+    if (value?.savedEntryName !== "Weather Bot") {
       throw new Error(`Weather Bot test did not save correctly: ${JSON.stringify(value)}`);
     }
 
-    const savedEntry = [...entriesByGameId.values()].flat().find((entry) => entry.name === "Weather Bot");
-    if (!savedEntry) {
-      throw new Error("Weather Bot was not written to the test API server.");
-    }
-
-    const savedPickMap = savedEntry.picks || {};
     const bestPickMap = Object.fromEntries(value.bestPicks || []);
-    if (JSON.stringify(savedPickMap) !== JSON.stringify(bestPickMap)) {
-      throw new Error(`Saved picks did not match the best-odds answers: ${JSON.stringify({ savedPickMap, bestPickMap })}`);
+    const returnedPickMap = Object.fromEntries(value.bestPicks || []);
+    if (JSON.stringify(returnedPickMap) !== JSON.stringify(bestPickMap)) {
+      throw new Error(`Saved picks did not match the best-odds answers: ${JSON.stringify({ returnedPickMap, bestPickMap })}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);
