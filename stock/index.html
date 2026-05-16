@@ -619,7 +619,7 @@
 
         <section class="panel">
           <h2 class="section-title">Rules</h2>
-          <p class="note">When you lock a portfolio, the year starts at January 1 and reveals slowly over the next 8 hours. Editing your picks resets the run to the starting line.</p>
+          <p class="note">When you lock a portfolio, the year starts at January 1. Every 79 seconds, the game advances exactly one in-game day. Editing your picks resets the run to the starting line.</p>
           <p class="note">The year controls the market conditions. If a stock did not trade yet, the game still lets you use it and estimates how that kind of company would have moved in that year.</p>
         </section>
       </aside>
@@ -632,7 +632,8 @@
     const STORAGE_KEY = "market-time-machine-v1";
     const STARTING_CASH = 10000;
     const MAX_START_YEAR = 1999;
-    const RUN_DURATION_MS = 8 * 60 * 60 * 1000;
+    const SIMULATED_YEAR_DAYS = 365;
+    const SIMULATED_DAY_MS = 79 * 1000;
     const DATA_SOURCE = "https://stooq.com/q/d/l/";
 
     const stocks = [
@@ -742,6 +743,11 @@
     }
 
     function progress() {
+      const dayIndex = simulatedDayIndex();
+      return dayIndex / (SIMULATED_YEAR_DAYS - 1);
+    }
+
+    function simulatedDayIndex() {
       if (!state.runStartedAt) {
         return 0;
       }
@@ -751,7 +757,7 @@
         return 0;
       }
 
-      return Math.max(0, Math.min(1, (Date.now() - startedAt) / RUN_DURATION_MS));
+      return Math.max(0, Math.min(SIMULATED_YEAR_DAYS - 1, Math.floor((Date.now() - startedAt) / SIMULATED_DAY_MS)));
     }
 
     function resetRunProgress() {
@@ -873,8 +879,7 @@
     }
 
     function simDateLabel() {
-      const day = Math.max(1, Math.min(365, Math.round(progress() * 364) + 1));
-      return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(new Date(state.year, 0, day));
+      return new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(new Date(state.year, 0, simulatedDayIndex() + 1));
     }
 
     async function render() {
@@ -896,7 +901,7 @@
       el.simDate.textContent = `${simDateLabel()} ${state.year}`;
       el.cashValue.textContent = formatMoney(cash);
       el.marketStatus.textContent = state.runStartedAt
-        ? `${Math.round(progress() * 100)}% through ${state.year} · ${formatMoney(value)}`
+        ? `Day ${simulatedDayIndex() + 1} of ${SIMULATED_YEAR_DAYS} · ${formatMoney(value)}`
         : `Lock portfolio to start ${state.year}`;
 
       await renderChart();
@@ -1060,7 +1065,7 @@
       showToast("Portfolio locked. The year is starting now.");
     });
 
-    window.setInterval(render, 30000);
+    window.setInterval(render, SIMULATED_DAY_MS);
     render();
   </script>
 </body>
