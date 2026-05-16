@@ -619,7 +619,7 @@
 
         <section class="panel">
           <h2 class="section-title">Rules</h2>
-          <p class="note">When you lock a portfolio, the year starts at January 1. Every 79 seconds, the game advances exactly one in-game day. Editing your picks resets the run to the starting line.</p>
+          <p class="note">When you lock a portfolio, the year starts at January 1. Every 65 seconds, the game advances exactly one in-game day, scaling 360 market days across 9:30 AM to 4:00 PM. Editing your picks resets the run to the starting line.</p>
           <p class="note">The year controls the market conditions. If a stock did not trade yet, the game still lets you use it and estimates how that kind of company would have moved in that year.</p>
         </section>
       </aside>
@@ -632,8 +632,8 @@
     const STORAGE_KEY = "market-time-machine-v1";
     const STARTING_CASH = 10000;
     const MAX_START_YEAR = 1999;
-    const SIMULATED_YEAR_DAYS = 365;
-    const SIMULATED_DAY_MS = 79 * 1000;
+    const SIMULATED_YEAR_DAYS = 360;
+    const SIMULATED_DAY_MS = 65 * 1000;
     const DATA_SOURCE = "https://stooq.com/q/d/l/";
 
     const stocks = [
