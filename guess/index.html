@@ -502,44 +502,6 @@
       clip-path: polygon(50% 0, 100% 100%, 0 100%);
     }
 
-    .curling-sheet {
-      width: min(620px, 86%);
-      min-height: 160px;
-      position: relative;
-      border-radius: 8px;
-      background:
-        linear-gradient(90deg, rgba(255, 255, 255, 0.92), rgba(199, 235, 255, 0.92)),
-        #dff6ff;
-      box-shadow: inset 0 0 0 5px rgba(10, 25, 45, 0.15), 0 18px 45px rgba(0, 0, 0, 0.35);
-      overflow: hidden;
-    }
-
-    .curling-sheet::before {
-      content: "";
-      position: absolute;
-      right: 9%;
-      top: 50%;
-      width: 138px;
-      height: 138px;
-      border-radius: 50%;
-      transform: translateY(-50%);
-      background:
-        radial-gradient(circle, #fff 0 22%, #e31e24 23% 42%, #fff 43% 62%, #1d4ed8 63% 100%);
-      box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.85);
-    }
-
-    .curling-sheet::after {
-      content: "";
-      position: absolute;
-      left: 12%;
-      top: 48%;
-      width: 78px;
-      height: 42px;
-      border-radius: 50% 50% 42% 42%;
-      background: #5b6678;
-      box-shadow: 14px -12px 0 -9px #ff5b55, 0 10px 0 -2px rgba(0, 0, 0, 0.22);
-    }
-
     .vaduz-card {
       width: min(560px, 82%);
       min-height: 160px;
@@ -1093,7 +1055,7 @@
         category: "Weird Sports",
         difficulty: "Olympic vocabulary",
         question: "In which sport do players slide stones toward the house?",
-        visual: '<div class="curling-sheet" role="img" aria-label="An ice sheet with a target house and a sliding stone"></div>',
+        visual: "",
         options: ["Lacrosse", "Bocce", "Curling", "Cricket", "Water polo"],
         answer: 2,
         fact: "Curling uses stones, brooms, and a target called the house."
@@ -1207,6 +1169,7 @@
       els.difficulty.textContent = item.difficulty;
       els.questionText.textContent = item.question;
       els.visual.innerHTML = item.visual;
+      els.visual.hidden = !item.visual;
       els.status.textContent = "Kids or adults: click an answer, then lock it in.";
       els.nextBtn.textContent = "Reveal";
       els.kidsState.textContent = "Ready to guess";
@@ -1303,6 +1266,7 @@
 
       if (item.revealedVisual) {
         els.visual.innerHTML = item.revealedVisual;
+        els.visual.hidden = false;
       }
       els.status.textContent = item.fact;
       els.nextBtn.textContent = hasWinner() ? "Final Scores" : "Next Round";
