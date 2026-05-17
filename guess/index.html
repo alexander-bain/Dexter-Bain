@@ -880,6 +880,99 @@
       background: var(--adults);
     }
 
+    .celebration {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(255, 230, 111, 0.34), transparent 24%),
+        linear-gradient(135deg, rgba(255, 94, 168, 0.44), rgba(37, 211, 192, 0.38), rgba(255, 176, 46, 0.42)),
+        rgba(5, 7, 12, 0.82);
+      backdrop-filter: blur(7px);
+      pointer-events: none;
+    }
+
+    .celebration.hidden {
+      display: none;
+    }
+
+    .winner-card {
+      position: relative;
+      z-index: 2;
+      width: min(1120px, 92vw);
+      min-height: min(430px, 70vh);
+      display: grid;
+      place-items: center;
+      gap: 18px;
+      padding: clamp(24px, 4vw, 56px);
+      border: 2px solid rgba(255, 255, 255, 0.34);
+      border-radius: 8px;
+      text-align: center;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent),
+        rgba(8, 13, 24, 0.82);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.58), 0 0 80px rgba(255, 230, 111, 0.24);
+      animation: winnerPop 560ms cubic-bezier(.2, 1.3, .35, 1) both;
+    }
+
+    .winner-kicker {
+      color: var(--gold);
+      font-size: clamp(1rem, 1.8vw, 1.45rem);
+      font-weight: 1000;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .winner-text {
+      margin: 0;
+      font-size: clamp(4rem, 12vw, 12rem);
+      line-height: 0.83;
+      text-transform: uppercase;
+      text-shadow: 0 8px 0 rgba(0, 0, 0, 0.3), 0 0 34px rgba(255, 255, 255, 0.28);
+    }
+
+    .winner-subtext {
+      margin: 0;
+      color: var(--ink);
+      font-size: clamp(1.2rem, 2.5vw, 2.5rem);
+      font-weight: 1000;
+    }
+
+    .confetti {
+      position: absolute;
+      top: -12vh;
+      width: 14px;
+      height: 24px;
+      border-radius: 3px;
+      background: var(--gold);
+      opacity: 0.95;
+      animation: confettiFall var(--fall-duration, 3.6s) linear var(--fall-delay, 0s) infinite;
+      transform: rotate(var(--spin-start, 0deg));
+    }
+
+    @keyframes winnerPop {
+      from {
+        transform: scale(0.78) rotate(-2deg);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translate3d(0, -12vh, 0) rotate(var(--spin-start, 0deg));
+      }
+      100% {
+        transform: translate3d(var(--drift, 0px), 122vh, 0) rotate(var(--spin-end, 720deg));
+      }
+    }
+
     @media (max-width: 1180px) {
       .topbar {
         grid-template-columns: 1fr 1fr;
@@ -1018,6 +1111,14 @@
     </div>
   </div>
 
+  <div class="celebration hidden" id="celebration" aria-live="assertive" aria-label="Winner celebration">
+    <div class="winner-card">
+      <div class="winner-kicker">First to 5</div>
+      <h2 class="winner-text" id="winnerText">Kids Win!</h2>
+      <p class="winner-subtext" id="winnerSubtext">Final score: 5 to 4</p>
+    </div>
+  </div>
+
   <script>
     const walesFlagImage = "../assets/guess/wales-flag.svg";
     const walesBlurredVisual = `<div class="flag-wales-photo blurred" role="img" aria-label="Blurred Welsh flag clue"><img src="${walesFlagImage}" alt="" /></div>`;
@@ -1087,6 +1188,96 @@
         options: ["Bhutan", "Qatar", "Nepal", "Vatican City", "Sri Lanka"],
         answer: 2,
         fact: "Nepal's national flag is made of two stacked pennant shapes."
+      },
+      {
+        category: "World Food",
+        difficulty: "Breakfast curveball",
+        question: "Which country is most famous for inventing pasteis de nata?",
+        visual: "",
+        options: ["Portugal", "Argentina", "Greece", "South Korea", "Egypt"],
+        answer: 0,
+        fact: "Pasteis de nata are Portuguese custard tarts."
+      },
+      {
+        category: "Niche Geography",
+        difficulty: "Island name",
+        question: "Which island is shared by Haiti and the Dominican Republic?",
+        visual: "",
+        options: ["Borneo", "Hispaniola", "Sicily", "Cyprus", "Madagascar"],
+        answer: 1,
+        fact: "Hispaniola is shared by Haiti and the Dominican Republic."
+      },
+      {
+        category: "Brand Names",
+        difficulty: "Restaurant lore",
+        question: "What does the IHOP name stand for?",
+        visual: "",
+        options: ["International House of Pancakes", "Island House of Pizza", "Instant Hot Oatmeal Place", "Italian House of Pasta", "Independent Hotel of Phoenix"],
+        answer: 0,
+        fact: "IHOP stands for International House of Pancakes."
+      },
+      {
+        category: "World Capitals",
+        difficulty: "Sounds fictional",
+        question: "Ulaanbaatar is the capital of which country?",
+        visual: "",
+        options: ["Kazakhstan", "Mongolia", "Nepal", "Georgia", "Laos"],
+        answer: 1,
+        fact: "Ulaanbaatar is the capital of Mongolia."
+      },
+      {
+        category: "Fast Food",
+        difficulty: "Regional chain",
+        question: "Which burger chain is strongly associated with Texas and orange-and-white stripes?",
+        visual: "",
+        options: ["Culver's", "Whataburger", "Shake Shack", "In-N-Out", "Cook Out"],
+        answer: 1,
+        fact: "Whataburger is the Texas-famous chain with orange-and-white branding."
+      },
+      {
+        category: "Tiny Places",
+        difficulty: "Small but real",
+        question: "Which country is completely surrounded by South Africa?",
+        visual: "",
+        options: ["Lesotho", "Eswatini", "Botswana", "Namibia", "Malawi"],
+        answer: 0,
+        fact: "Lesotho is completely surrounded by South Africa."
+      },
+      {
+        category: "Snack Names",
+        difficulty: "UK aisle",
+        question: "In the United Kingdom, what are potato chips usually called?",
+        visual: "",
+        options: ["Crisps", "Fries", "Crackers", "Rounds", "Chippers"],
+        answer: 0,
+        fact: "In the UK, chips are usually called crisps."
+      },
+      {
+        category: "Sports Rules",
+        difficulty: "Court clue",
+        question: "In tennis, what score comes right after deuce if one player wins the next point?",
+        visual: "",
+        options: ["Match", "Advantage", "Forty", "Break", "Set"],
+        answer: 1,
+        fact: "After deuce, the next point gives a player advantage."
+      },
+      {
+        category: "Map Facts",
+        difficulty: "Border brain",
+        question: "Which country has the longest coastline in the world?",
+        visual: "",
+        options: ["Australia", "Russia", "Canada", "Indonesia", "Norway"],
+        answer: 2,
+        fact: "Canada has the world's longest coastline."
+      },
+      {
+        category: "Food Origins",
+        difficulty: "Dessert detective",
+        question: "Mochi is most closely associated with which country?",
+        visual: "",
+        options: ["Japan", "Peru", "Sweden", "Kenya", "Turkey"],
+        answer: 0,
+        fact: "Mochi is a Japanese rice cake."
       }
     ];
 
@@ -1100,7 +1291,8 @@
       seconds: 60,
       timerId: null,
       pendingOption: null,
-      finishedRounds: 0
+      finishedRounds: 0,
+      celebrationShown: false
     };
 
     const els = {
@@ -1126,7 +1318,10 @@
       nextBtn: document.querySelector("#nextBtn"),
       restartBtn: document.querySelector("#restartBtn"),
       teamPicker: document.querySelector("#teamPicker"),
-      pickerOption: document.querySelector("#pickerOption")
+      pickerOption: document.querySelector("#pickerOption"),
+      celebration: document.querySelector("#celebration"),
+      winnerText: document.querySelector("#winnerText"),
+      winnerSubtext: document.querySelector("#winnerSubtext")
     };
 
     function startTimer() {
@@ -1272,6 +1467,9 @@
       els.nextBtn.textContent = hasWinner() ? "Final Scores" : "Next Round";
       renderScores();
       renderHistory();
+      if (hasWinner()) {
+        showCelebration();
+      }
     }
 
     function renderScores() {
@@ -1309,6 +1507,59 @@
       return state.scores.kids >= targetScore || state.scores.adults >= targetScore;
     }
 
+    function winningTeam() {
+      if (state.scores.kids >= targetScore && state.scores.adults >= targetScore) {
+        return state.scores.kids === state.scores.adults
+          ? "tie"
+          : state.scores.kids > state.scores.adults ? "kids" : "adults";
+      }
+      if (state.scores.kids >= targetScore) return "kids";
+      if (state.scores.adults >= targetScore) return "adults";
+      return null;
+    }
+
+    function showCelebration() {
+      if (state.celebrationShown) return;
+      const winnerTeam = winningTeam();
+      if (!winnerTeam) return;
+
+      state.celebrationShown = true;
+      els.celebration.classList.remove("hidden");
+      els.celebration.querySelectorAll(".confetti").forEach((piece) => piece.remove());
+
+      if (winnerTeam === "kids") {
+        els.winnerText.textContent = "Kids Win!";
+        els.winnerText.style.color = "var(--kids)";
+      } else if (winnerTeam === "adults") {
+        els.winnerText.textContent = "Adults Win!";
+        els.winnerText.style.color = "var(--adults)";
+      } else {
+        els.winnerText.textContent = "Tie Game!";
+        els.winnerText.style.color = "var(--gold)";
+      }
+
+      els.winnerSubtext.textContent = `Final score: Kids ${state.scores.kids} - Adults ${state.scores.adults}`;
+      dropConfetti();
+    }
+
+    function dropConfetti() {
+      const colors = ["#25d3c0", "#ffb02e", "#ff5ea8", "#5ca8ff", "#99e65f", "#ffe66f", "#9b6dff", "#ff8a3d"];
+      for (let i = 0; i < 120; i += 1) {
+        const piece = document.createElement("span");
+        piece.className = "confetti";
+        piece.style.left = `${Math.random() * 100}%`;
+        piece.style.background = colors[i % colors.length];
+        piece.style.width = `${8 + Math.random() * 12}px`;
+        piece.style.height = `${14 + Math.random() * 22}px`;
+        piece.style.setProperty("--fall-delay", `${Math.random() * 2.2}s`);
+        piece.style.setProperty("--fall-duration", `${2.8 + Math.random() * 2.4}s`);
+        piece.style.setProperty("--drift", `${Math.round((Math.random() - 0.5) * 260)}px`);
+        piece.style.setProperty("--spin-start", `${Math.round(Math.random() * 360)}deg`);
+        piece.style.setProperty("--spin-end", `${720 + Math.round(Math.random() * 720)}deg`);
+        els.celebration.appendChild(piece);
+      }
+    }
+
     function nextAction() {
       if (!state.revealed) {
         revealRound();
@@ -1333,6 +1584,8 @@
       state.round = 0;
       state.scores = { kids: 0, adults: 0 };
       state.finishedRounds = 0;
+      state.celebrationShown = false;
+      els.celebration.classList.add("hidden");
       els.nextBtn.disabled = false;
       renderHistory();
       renderRound();
