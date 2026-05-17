@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guess Battle | DexterBain</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07090f;
+      --ink: #fff8ec;
+      --muted: #bac4d6;
+      --line: rgba(255, 255, 255, 0.16);
+      --panel: rgba(13, 19, 33, 0.86);
+      --panel-strong: #111827;
+      --kids: #25d3c0;
+      --adults: #ffb02e;
+      --pink: #ff5ea8;
+      --blue: #5ca8ff;
+      --green: #99e65f;
+      --red: #ff5b55;
+      --gold: #ffe66f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(90deg, rgba(255, 94, 168, 0.12) 0 1px, transparent 1px 100%),
+        linear-gradient(180deg, rgba(92, 168, 255, 0.1) 0 1px, transparent 1px 100%),
+        linear-gradient(135deg, #161327 0%, #071320 45%, #0d130b 100%);
+      background-size: 64px 64px, 64px 64px, auto;
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .game {
+      min-height: 100vh;
+      padding: clamp(12px, 1.5vw, 28px);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: clamp(10px, 1.35vw, 18px);
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(230px, 1fr) auto minmax(230px, 1fr);
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border: 2px solid rgba(255, 255, 255, 0.28);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, var(--pink) 0 38%, transparent 38%),
+        linear-gradient(225deg, var(--blue) 0 42%, transparent 42%),
+        linear-gradient(45deg, var(--green), var(--gold));
+      color: #090b10;
+      font-size: 1.45rem;
+      font-weight: 1000;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.4rem, 3.1vw, 3rem);
+      line-height: 0.95;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: clamp(0.82rem, 1.1vw, 1rem);
+    }
+
+    .round-counter,
+    .timer {
+      justify-self: center;
+      min-width: 180px;
+      text-align: center;
+      border: 1px solid var(--line);
+      background: rgba(7, 9, 15, 0.72);
+      border-radius: 8px;
+      padding: 10px 16px;
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.28);
+    }
+
+    .timer {
+      justify-self: end;
+    }
+
+    .label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .round-counter strong,
+    .timer strong {
+      display: block;
+      font-size: clamp(1.35rem, 2.4vw, 2.4rem);
+      line-height: 1;
+    }
+
+    .timer.low strong {
+      color: var(--red);
+    }
+
+    .stage {
+      display: grid;
+      grid-template-columns: minmax(210px, 0.76fr) minmax(520px, 1.8fr) minmax(250px, 0.88fr);
+      gap: clamp(14px, 1.7vw, 24px);
+      min-height: 0;
+    }
+
+    .team-panel,
+    .question-panel,
+    .scoreboard {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.34);
+      border-radius: 8px;
+    }
+
+    .team-panel {
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto 1fr auto 1fr;
+      gap: 12px;
+      min-height: 0;
+    }
+
+    .team-card {
+      display: grid;
+      align-content: center;
+      gap: 10px;
+      min-height: 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .team-card.kids {
+      border-color: rgba(37, 211, 192, 0.5);
+    }
+
+    .team-card.adults {
+      border-color: rgba(255, 176, 46, 0.5);
+    }
+
+    .team-name {
+      margin: 0;
+      font-size: clamp(1.45rem, 2vw, 2rem);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .team-score {
+      font-size: clamp(3.8rem, 6vw, 6.7rem);
+      line-height: 0.9;
+      font-weight: 1000;
+    }
+
+    .kids .team-score {
+      color: var(--kids);
+    }
+
+    .adults .team-score {
+      color: var(--adults);
+    }
+
+    .lock-state {
+      color: var(--muted);
+      font-weight: 850;
+      min-height: 2.5em;
+    }
+
+    .question-panel {
+      display: grid;
+      grid-template-rows: auto auto minmax(132px, 0.68fr) minmax(174px, 0.92fr) auto;
+      gap: clamp(9px, 1vw, 14px);
+      padding: clamp(14px, 1.55vw, 28px);
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .kicker {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: clamp(0.86rem, 1vw, 1rem);
+      font-weight: 950;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .category {
+      color: #10151d;
+      background: var(--gold);
+      border-radius: 6px;
+      padding: 5px 9px;
+    }
+
+    .question {
+      margin: 0;
+      font-size: clamp(2rem, 3.75vw, 4.25rem);
+      line-height: 0.98;
+      letter-spacing: 0;
+      max-width: 1050px;
+    }
+
+    .visual {
+      display: grid;
+      place-items: center;
+      min-height: 132px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent),
+        rgba(255, 255, 255, 0.035);
+      overflow: hidden;
+    }
+
+    .flag-wallis {
+      position: relative;
+      width: min(390px, 58%);
+      aspect-ratio: 3 / 2;
+      background: #d0181f;
+      border: 5px solid #fff;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.38);
+    }
+
+    .flag-wallis::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 43%;
+      height: 45%;
+      background:
+        linear-gradient(90deg, #002395 0 33.33%, #fff 33.33% 66.66%, #ed2939 66.66%);
+      border-right: 4px solid #fff;
+      border-bottom: 4px solid #fff;
+    }
+
+    .flag-wallis::after {
+      content: "";
+      position: absolute;
+      right: 17%;
+      top: 26%;
+      width: 25%;
+      height: 38%;
+      background: #fff;
+      clip-path: polygon(36% 0, 64% 0, 64% 36%, 100% 36%, 100% 64%, 64% 64%, 64% 100%, 36% 100%, 36% 64%, 0 64%, 0 36%, 36% 36%);
+    }
+
+    .visual-word {
+      display: grid;
+      place-items: center;
+      width: min(580px, 86%);
+      min-height: 130px;
+      padding: 20px;
+      border: 4px solid currentColor;
+      border-radius: 8px;
+      font-size: clamp(2.4rem, 6vw, 6.4rem);
+      font-weight: 1000;
+      line-height: 0.9;
+      text-align: center;
+      text-transform: uppercase;
+      background: #0a0d14;
+      box-shadow: inset 0 0 0 8px rgba(255, 255, 255, 0.06);
+    }
+
+    .visual-word.small {
+      font-size: clamp(1.9rem, 4.2vw, 4.6rem);
+    }
+
+    .visual-word span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.26em;
+      line-height: 1.2;
+      margin-top: 8px;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      align-content: stretch;
+    }
+
+    .option {
+      position: relative;
+      min-height: 96px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.07);
+      cursor: pointer;
+      padding: 14px 12px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 8px;
+      text-align: left;
+      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+    }
+
+    .option:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.11);
+    }
+
+    .letter {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      color: #10151d;
+      background: var(--gold);
+      font-weight: 1000;
+    }
+
+    .option-text {
+      align-self: center;
+      font-size: clamp(1rem, 1.25vw, 1.28rem);
+      font-weight: 950;
+      line-height: 1.08;
+      overflow-wrap: anywhere;
+    }
+
+    .picks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      min-height: 22px;
+    }
+
+    .pick {
+      display: inline-flex;
+      align-items: center;
+      min-height: 20px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      color: #071014;
+      font-size: 0.72rem;
+      font-weight: 1000;
+    }
+
+    .pick.kids {
+      background: var(--kids);
+    }
+
+    .pick.adults {
+      background: var(--adults);
+    }
+
+    .option.correct {
+      border-color: rgba(153, 230, 95, 0.9);
+      background: rgba(153, 230, 95, 0.2);
+    }
+
+    .option.wrong-picked {
+      border-color: rgba(255, 91, 85, 0.78);
+      background: rgba(255, 91, 85, 0.14);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status {
+      min-height: 32px;
+      color: var(--muted);
+      font-size: clamp(0.95rem, 1.2vw, 1.12rem);
+      font-weight: 800;
+    }
+
+    .primary,
+    .secondary {
+      min-height: 44px;
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-weight: 1000;
+      cursor: pointer;
+    }
+
+    .primary {
+      color: #09100e;
+      background: var(--green);
+    }
+
+    .secondary {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid var(--line);
+    }
+
+    .scoreboard {
+      padding: 16px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 14px;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .score-title {
+      margin: 0;
+      font-size: clamp(1.5rem, 2.2vw, 2.4rem);
+      text-transform: uppercase;
+      line-height: 0.95;
+    }
+
+    .winner-strip {
+      min-height: 60px;
+      display: grid;
+      align-content: center;
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: linear-gradient(90deg, rgba(37, 211, 192, 0.2), rgba(255, 176, 46, 0.2));
+      border: 1px solid var(--line);
+      font-weight: 950;
+      font-size: clamp(1rem, 1.35vw, 1.25rem);
+    }
+
+    .bars {
+      display: grid;
+      align-content: end;
+      gap: 18px;
+      min-height: 0;
+    }
+
+    .bar-row {
+      display: grid;
+      gap: 8px;
+    }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-weight: 1000;
+      text-transform: uppercase;
+    }
+
+    .bar-track {
+      height: clamp(48px, 8vh, 86px);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      display: grid;
+      align-items: center;
+      padding: 0 12px;
+      color: #071014;
+      font-size: clamp(1.55rem, 2.8vw, 3rem);
+      font-weight: 1000;
+      transition: width 260ms ease;
+    }
+
+    .bar-fill.kids {
+      background: linear-gradient(90deg, var(--kids), #b9fff3);
+    }
+
+    .bar-fill.adults {
+      background: linear-gradient(90deg, var(--adults), #ffe2a3);
+    }
+
+    .round-history {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+
+    .dot {
+      min-height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 1000;
+    }
+
+    .dot.done {
+      color: #071014;
+      background: var(--gold);
+      border-color: transparent;
+    }
+
+    .team-picker {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(3, 5, 10, 0.7);
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+
+    .team-picker.hidden {
+      display: none;
+    }
+
+    .picker-card {
+      width: min(760px, 100%);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: clamp(22px, 4vw, 42px);
+      background: #10151f;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+    }
+
+    .picker-card h2 {
+      margin: 0 0 10px;
+      font-size: clamp(2.1rem, 5vw, 4.6rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+
+    .picker-card p {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+
+    .picker-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .picker-actions button {
+      min-height: 88px;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #071014;
+      font-size: clamp(1.25rem, 2vw, 1.8rem);
+      font-weight: 1000;
+    }
+
+    .kids-choice {
+      background: var(--kids);
+    }
+
+    .adults-choice {
+      background: var(--adults);
+    }
+
+    @media (max-width: 1180px) {
+      .topbar {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .brand {
+        grid-column: 1 / -1;
+      }
+
+      .round-counter {
+        justify-self: start;
+      }
+
+      .stage {
+        grid-template-columns: 1fr;
+      }
+
+      .team-panel {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: auto 1fr;
+      }
+
+      .team-panel .label {
+        grid-column: 1 / -1;
+      }
+
+      .options {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .game {
+        padding: 10px;
+      }
+
+      .topbar,
+      .controls,
+      .picker-actions,
+      .team-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .timer,
+      .round-counter {
+        justify-self: stretch;
+      }
+
+      .question-panel {
+        grid-template-rows: auto auto auto auto auto;
+      }
+
+      .options {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="game">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">?</div>
+        <div>
+          <h1>Guess Battle</h1>
+          <p class="subtitle">Adults vs kids, seven weird questions, one minute per round.</p>
+        </div>
+      </div>
+      <div class="round-counter" aria-live="polite">
+        <span class="label">Round</span>
+        <strong id="roundCount">1 / 7</strong>
+      </div>
+      <div class="timer" id="timerBox" aria-live="polite">
+        <span class="label">Clock</span>
+        <strong id="timer">60</strong>
+      </div>
+    </header>
+
+    <section class="stage" aria-label="Guess Battle game board">
+      <aside class="team-panel" aria-label="Team scores">
+        <span class="label">Pick Status</span>
+        <article class="team-card kids">
+          <h2 class="team-name">Kids</h2>
+          <div class="team-score" id="kidsScore">0</div>
+          <div class="lock-state" id="kidsState">Ready to guess</div>
+        </article>
+        <span class="label"> </span>
+        <article class="team-card adults">
+          <h2 class="team-name">Adults</h2>
+          <div class="team-score" id="adultsScore">0</div>
+          <div class="lock-state" id="adultsState">Ready to guess</div>
+        </article>
+      </aside>
+
+      <section class="question-panel">
+        <div class="kicker">
+          <span id="category">Niche Flag</span>
+          <span class="category" id="difficulty">Oddball opener</span>
+        </div>
+        <h2 class="question" id="questionText">Which place uses this mostly unknown flag?</h2>
+        <div class="visual" id="visual" aria-label="Question clue"></div>
+        <div class="options" id="options"></div>
+        <div class="controls">
+          <div class="status" id="status">Kids or adults: click an answer, then lock it in.</div>
+          <button class="secondary" id="restartBtn" type="button">Restart</button>
+          <button class="primary" id="nextBtn" type="button">Reveal</button>
+        </div>
+      </section>
+
+      <aside class="scoreboard" aria-label="Leaderboard">
+        <h2 class="score-title">Big Leaderboard</h2>
+        <div class="winner-strip" id="winner">First team to flex gets bragging rights.</div>
+        <div class="bars">
+          <div class="bar-row">
+            <div class="bar-label"><span>Kids</span><span id="kidsBarScore">0</span></div>
+            <div class="bar-track"><div class="bar-fill kids" id="kidsBar">0</div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label"><span>Adults</span><span id="adultsBarScore">0</span></div>
+            <div class="bar-track"><div class="bar-fill adults" id="adultsBar">0</div></div>
+          </div>
+        </div>
+        <div class="round-history" id="history" aria-label="Completed rounds"></div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="team-picker hidden" id="teamPicker" role="dialog" aria-modal="true" aria-labelledby="pickerTitle">
+    <div class="picker-card">
+      <h2 id="pickerTitle">Who picked this?</h2>
+      <p id="pickerOption">Choose the team that wants to lock in the answer.</p>
+      <div class="picker-actions">
+        <button class="kids-choice" type="button" data-team="kids">Kids</button>
+        <button class="adults-choice" type="button" data-team="adults">Adults</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        category: "Niche Flag",
+        difficulty: "Oddball opener",
+        question: "Which place uses this mostly unknown flag?",
+        visual: '<div class="flag-wallis" role="img" aria-label="Red flag with a French tricolor canton and a white cross"></div>',
+        options: ["Faroe Islands", "Tuvalu", "Wallis and Futuna", "Samoa", "Saint Pierre and Miquelon"],
+        answer: 2,
+        fact: "It is Wallis and Futuna, a French territory in the South Pacific."
+      },
+      {
+        category: "Niche Fast Food",
+        difficulty: "Burger geography",
+        question: "MOS Burger is a real fast-food chain that started in which country?",
+        visual: '<div class="visual-word" style="color: var(--green)">MOS<span>mystery burger chain</span></div>',
+        options: ["Canada", "Japan", "Brazil", "Iceland", "Morocco"],
+        answer: 1,
+        fact: "MOS Burger started in Japan and became famous for very local menu twists."
+      },
+      {
+        category: "Snack Lore",
+        difficulty: "Party food",
+        question: "Fairy bread is a classic birthday-party snack from where?",
+        visual: '<div class="visual-word small" style="color: var(--pink)">Fairy Bread<span>white bread + butter + sprinkles</span></div>',
+        options: ["Norway", "Australia", "Mexico", "South Africa", "Thailand"],
+        answer: 1,
+        fact: "Australia claims fairy bread: buttered bread covered in colorful sprinkles."
+      },
+      {
+        category: "Weird Sports",
+        difficulty: "Olympic vocabulary",
+        question: "In which sport do players slide stones toward the house?",
+        visual: '<div class="visual-word" style="color: var(--blue)">The House<span>not a building</span></div>',
+        options: ["Lacrosse", "Bocce", "Curling", "Cricket", "Water polo"],
+        answer: 2,
+        fact: "Curling uses stones, brooms, and a target called the house."
+      },
+      {
+        category: "Animal Symbols",
+        difficulty: "Flag but not a flag round",
+        question: "What animal is on the Welsh flag?",
+        visual: '<div class="visual-word" style="color: var(--red)">Wales<span>the flag goes hard</span></div>',
+        options: ["Lion", "Dragon", "Goat", "Falcon", "Wolf"],
+        answer: 1,
+        fact: "The Welsh flag has a red dragon. Excellent flag energy."
+      },
+      {
+        category: "Tiny Countries",
+        difficulty: "Capital chaos",
+        question: "Which tiny country has a capital named Vaduz?",
+        visual: '<div class="visual-word small" style="color: var(--gold)">Vaduz<span>sounds made up, is not</span></div>',
+        options: ["Andorra", "Monaco", "Liechtenstein", "Luxembourg", "Malta"],
+        answer: 2,
+        fact: "Vaduz is the capital of Liechtenstein."
+      },
+      {
+        category: "Final Boss",
+        difficulty: "Flag shape",
+        question: "Which country has the only non-rectangular national flag?",
+        visual: '<div class="visual-word" style="color: var(--kids)">Not A Box<span>final round</span></div>',
+        options: ["Bhutan", "Qatar", "Nepal", "Vatican City", "Sri Lanka"],
+        answer: 2,
+        fact: "Nepal's national flag is made of two stacked pennant shapes."
+      }
+    ];
+
+    const state = {
+      round: 0,
+      scores: { kids: 0, adults: 0 },
+      picks: { kids: null, adults: null },
+      revealed: false,
+      seconds: 60,
+      timerId: null,
+      pendingOption: null,
+      finishedRounds: 0
+    };
+
+    const els = {
+      roundCount: document.querySelector("#roundCount"),
+      timer: document.querySelector("#timer"),
+      timerBox: document.querySelector("#timerBox"),
+      kidsScore: document.querySelector("#kidsScore"),
+      adultsScore: document.querySelector("#adultsScore"),
+      kidsState: document.querySelector("#kidsState"),
+      adultsState: document.querySelector("#adultsState"),
+      kidsBarScore: document.querySelector("#kidsBarScore"),
+      adultsBarScore: document.querySelector("#adultsBarScore"),
+      kidsBar: document.querySelector("#kidsBar"),
+      adultsBar: document.querySelector("#adultsBar"),
+      winner: document.querySelector("#winner"),
+      history: document.querySelector("#history"),
+      category: document.querySelector("#category"),
+      difficulty: document.querySelector("#difficulty"),
+      questionText: document.querySelector("#questionText"),
+      visual: document.querySelector("#visual"),
+      options: document.querySelector("#options"),
+      status: document.querySelector("#status"),
+      nextBtn: document.querySelector("#nextBtn"),
+      restartBtn: document.querySelector("#restartBtn"),
+      teamPicker: document.querySelector("#teamPicker"),
+      pickerOption: document.querySelector("#pickerOption")
+    };
+
+    function startTimer() {
+      clearInterval(state.timerId);
+      state.seconds = 60;
+      updateTimer();
+      state.timerId = setInterval(() => {
+        state.seconds -= 1;
+        updateTimer();
+        if (state.seconds <= 0) {
+          revealRound();
+        }
+      }, 1000);
+    }
+
+    function updateTimer() {
+      els.timer.textContent = state.seconds;
+      els.timerBox.classList.toggle("low", state.seconds <= 10);
+    }
+
+    function renderHistory() {
+      els.history.innerHTML = "";
+      questions.forEach((_, index) => {
+        const dot = document.createElement("div");
+        dot.className = "dot" + (index < state.finishedRounds ? " done" : "");
+        dot.textContent = index + 1;
+        els.history.appendChild(dot);
+      });
+    }
+
+    function renderRound() {
+      const item = questions[state.round];
+      state.picks = { kids: null, adults: null };
+      state.revealed = false;
+      state.pendingOption = null;
+
+      els.roundCount.textContent = `${state.round + 1} / ${questions.length}`;
+      els.category.textContent = item.category;
+      els.difficulty.textContent = item.difficulty;
+      els.questionText.textContent = item.question;
+      els.visual.innerHTML = item.visual;
+      els.status.textContent = "Kids or adults: click an answer, then lock it in.";
+      els.nextBtn.textContent = "Reveal";
+      els.kidsState.textContent = "Ready to guess";
+      els.adultsState.textContent = "Ready to guess";
+      renderOptions();
+      renderScores();
+      startTimer();
+    }
+
+    function renderOptions() {
+      const item = questions[state.round];
+      els.options.innerHTML = "";
+      item.options.forEach((option, index) => {
+        const button = document.createElement("button");
+        button.className = "option";
+        button.type = "button";
+        button.dataset.index = index;
+        button.innerHTML = `
+          <span class="letter">${String.fromCharCode(65 + index)}</span>
+          <span class="option-text">${option}</span>
+          <span class="picks" aria-label="Teams that picked this answer"></span>
+        `;
+        button.addEventListener("click", () => chooseOption(index));
+        els.options.appendChild(button);
+      });
+      paintPicks();
+    }
+
+    function chooseOption(index) {
+      if (state.revealed) return;
+      state.pendingOption = index;
+      els.pickerOption.textContent = `Lock in ${String.fromCharCode(65 + index)} for which team?`;
+      els.teamPicker.classList.remove("hidden");
+    }
+
+    function setPick(team) {
+      if (state.pendingOption === null) return;
+      state.picks[team] = state.pendingOption;
+      state.pendingOption = null;
+      els.teamPicker.classList.add("hidden");
+      paintPicks();
+
+      const teamName = team === "kids" ? "Kids" : "Adults";
+      const optionName = String.fromCharCode(65 + state.picks[team]);
+      els[`${team}State`].textContent = `${teamName} locked ${optionName}`;
+
+      if (state.picks.kids !== null && state.picks.adults !== null) {
+        els.status.textContent = "Both teams are locked. Reveal whenever the room is ready.";
+      } else {
+        els.status.textContent = `${teamName} are locked. Waiting for the other team.`;
+      }
+    }
+
+    function paintPicks() {
+      document.querySelectorAll(".option").forEach((button) => {
+        const index = Number(button.dataset.index);
+        const picks = button.querySelector(".picks");
+        picks.innerHTML = "";
+        ["kids", "adults"].forEach((team) => {
+          if (state.picks[team] === index) {
+            const tag = document.createElement("span");
+            tag.className = `pick ${team}`;
+            tag.textContent = team === "kids" ? "Kids" : "Adults";
+            picks.appendChild(tag);
+          }
+        });
+      });
+    }
+
+    function revealRound() {
+      if (state.revealed) return;
+      clearInterval(state.timerId);
+      state.revealed = true;
+      state.finishedRounds = Math.max(state.finishedRounds, state.round + 1);
+      const item = questions[state.round];
+
+      ["kids", "adults"].forEach((team) => {
+        if (state.picks[team] === item.answer) {
+          state.scores[team] += 1;
+          els[`${team}State`].textContent = "Correct!";
+        } else if (state.picks[team] === null) {
+          els[`${team}State`].textContent = "No answer locked";
+        } else {
+          els[`${team}State`].textContent = "Missed it";
+        }
+      });
+
+      document.querySelectorAll(".option").forEach((button) => {
+        const index = Number(button.dataset.index);
+        button.classList.toggle("correct", index === item.answer);
+        const wasPickedWrong = index !== item.answer && (state.picks.kids === index || state.picks.adults === index);
+        button.classList.toggle("wrong-picked", wasPickedWrong);
+      });
+
+      els.status.textContent = item.fact;
+      els.nextBtn.textContent = state.round === questions.length - 1 ? "Final Scores" : "Next Round";
+      renderScores();
+      renderHistory();
+    }
+
+    function renderScores() {
+      const maxScore = questions.length;
+      els.kidsScore.textContent = state.scores.kids;
+      els.adultsScore.textContent = state.scores.adults;
+      els.kidsBarScore.textContent = state.scores.kids;
+      els.adultsBarScore.textContent = state.scores.adults;
+      els.kidsBar.textContent = state.scores.kids;
+      els.adultsBar.textContent = state.scores.adults;
+      els.kidsBar.style.width = `${Math.max(8, (state.scores.kids / maxScore) * 100)}%`;
+      els.adultsBar.style.width = `${Math.max(8, (state.scores.adults / maxScore) * 100)}%`;
+
+      if (state.finishedRounds === questions.length) {
+        if (state.scores.kids > state.scores.adults) {
+          els.winner.textContent = "Kids win! Adults must now pretend the questions were unfair.";
+        } else if (state.scores.adults > state.scores.kids) {
+          els.winner.textContent = "Adults win! The kids may request an instant rematch.";
+        } else {
+          els.winner.textContent = "Tie game! Everyone gets to argue about the tiebreaker.";
+        }
+      } else if (state.scores.kids > state.scores.adults) {
+        els.winner.textContent = "Kids are leading.";
+      } else if (state.scores.adults > state.scores.kids) {
+        els.winner.textContent = "Adults are leading.";
+      } else {
+        els.winner.textContent = "All tied up.";
+      }
+    }
+
+    function nextAction() {
+      if (!state.revealed) {
+        revealRound();
+        return;
+      }
+
+      if (state.round < questions.length - 1) {
+        state.round += 1;
+        renderRound();
+        return;
+      }
+
+      clearInterval(state.timerId);
+      els.status.textContent = "Game over. Big leaderboard is final.";
+      els.nextBtn.textContent = "Game Over";
+      els.nextBtn.disabled = true;
+      renderScores();
+    }
+
+    function restartGame() {
+      clearInterval(state.timerId);
+      state.round = 0;
+      state.scores = { kids: 0, adults: 0 };
+      state.finishedRounds = 0;
+      els.nextBtn.disabled = false;
+      renderHistory();
+      renderRound();
+    }
+
+    els.nextBtn.addEventListener("click", nextAction);
+    els.restartBtn.addEventListener("click", restartGame);
+    els.teamPicker.addEventListener("click", (event) => {
+      if (event.target === els.teamPicker) {
+        els.teamPicker.classList.add("hidden");
+        state.pendingOption = null;
+      }
+    });
+    document.querySelectorAll("[data-team]").forEach((button) => {
+      button.addEventListener("click", () => setPick(button.dataset.team));
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        els.teamPicker.classList.add("hidden");
+        state.pendingOption = null;
+      }
+      if (event.key === "Enter" && !els.teamPicker.classList.contains("hidden")) {
+        setPick("kids");
+      }
+    });
+
+    renderHistory();
+    renderRound();
+  </script>
+</body>
+</html>
