@@ -69,18 +69,40 @@ if (ids.length !== 1) {
   throw new Error(`Expected exactly one generated daily weather game, found ${ids.length}.`);
 }
 
-for (const questionId of ["warm-by-noon", "afternoon-peak", "sky-3pm", "rain-by-4pm", "wind-by-5pm", "below-60-by-6pm"]) {
+for (const questionId of [
+  "warm-by-noon",
+  "gas-noon",
+  "market-lunch",
+  "local-headline",
+  "rain-by-3pm",
+  "sky-still-sunny",
+  "weather-headline",
+  "music-four",
+  "sports-six",
+  "cool-tonight",
+]) {
   if (!block.includes(`"20260513-${questionId}"`)) {
     throw new Error(`Generated weather game is missing the ${questionId} question.`);
   }
 }
 
-const autoScoredQuestions = [...block.matchAll(/autoSource: menloParkWeatherSource/g)].length;
-if (autoScoredQuestions !== 6) {
-  throw new Error(`Expected 6 auto-scored weather questions, found ${autoScoredQuestions}.`);
+const autoScoredQuestions = [
+  ...block.matchAll(/autoSource: "https:\/\/forecast\.weather\.gov\/MapClick\.php\?lat=37\.453&lon=-122\.182"/g)
+].length;
+if (autoScoredQuestions !== 4) {
+  throw new Error(`Expected 4 auto-scored weather questions, found ${autoScoredQuestions}.`);
 }
 
-for (const hour of ["T19:00:00.000Z", "T21:00:00.000Z", "T22:00:00.000Z", "T23:00:00.000Z", "T00:00:00.000Z", "T01:00:00.000Z"]) {
+for (const hour of [
+  "T19:00:00.000Z",
+  "T19:15:00.000Z",
+  "T20:00:00.000Z",
+  "T21:00:00.000Z",
+  "T22:00:00.000Z",
+  "T23:00:00.000Z",
+  "T01:00:00.000Z",
+  "T03:00:00.000Z",
+]) {
   if (!block.includes(hour)) {
     throw new Error(`Generated weather game is missing lock time ${hour}.`);
   }
