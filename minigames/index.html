@@ -3714,6 +3714,16 @@
       }
     }
 
+    async function refreshLockedGameResults() {
+      const games = upcomingGames().filter((game) => lockedQuestions(game).length > 0);
+      if (!games.length) {
+        return false;
+      }
+
+      const results = await Promise.all(games.map((game) => checkResultsForGame(game)));
+      return results.some(Boolean);
+    }
+
     function cleanRoomCode(value) {
       return String(value || "").replace(/[^A-HJ-NP-Z2-9]/gi, "").toUpperCase().slice(0, 6);
     }
@@ -4945,9 +4955,9 @@
         }
       });
       if (lockedQuestions(game).length > 0) {
-        checkResultsForGame(game).then((loaded) => {
-          if (loaded && currentGame().gameId === game.gameId) {
-            renderGame(game);
+        refreshLockedGameResults().then((loaded) => {
+          if (loaded) {
+            renderGame(currentGame());
           }
         });
       }
@@ -5499,14 +5509,9 @@
     });
 
     window.setInterval(() => {
-      const game = currentGame();
-      if (!game || !lockedQuestions(game).length) {
-        return;
-      }
-
-      checkResultsForGame(game).then((loaded) => {
-        if (loaded && currentGame()?.gameId === game.gameId) {
-          renderGame(game);
+      refreshLockedGameResults().then((loaded) => {
+        if (loaded && currentGame()) {
+          renderGame(currentGame());
         }
       });
     }, 60000);

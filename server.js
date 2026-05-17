@@ -57,6 +57,7 @@ let webpushClientPromise = null;
 let vapidKeysPromise = null;
 const resultCheckCooldowns = new Map();
 const resultCheckCooldownMs = Number(process.env.MINIGAMES_RESULT_CHECK_COOLDOWN_MS) || 60000;
+const maxAutoResultQuestions = 12;
 
 // IMPORTANT: set this in your environment on Render, don't hardcode it in code
 const openai = new OpenAI({
@@ -1844,7 +1845,7 @@ app.post("/api/minigames/:gameId/results/check", async (req, res) => {
   const gameId = cleanGameId(req.params.gameId);
   const gameName = cleanText(req.body?.gameName, 80);
   const questions = Array.isArray(req.body?.questions)
-    ? req.body.questions.slice(0, 8).map(cleanAutoResultQuestion).filter(Boolean)
+    ? req.body.questions.slice(0, maxAutoResultQuestions).map(cleanAutoResultQuestion).filter(Boolean)
     : [];
 
   if (!gameId) {
