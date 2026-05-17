@@ -20,6 +20,8 @@
       --green: #99e65f;
       --red: #ff5b55;
       --gold: #ffe66f;
+      --violet: #9b6dff;
+      --orange: #ff8a3d;
     }
 
     * {
@@ -35,10 +37,14 @@
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background:
-        linear-gradient(90deg, rgba(255, 94, 168, 0.12) 0 1px, transparent 1px 100%),
-        linear-gradient(180deg, rgba(92, 168, 255, 0.1) 0 1px, transparent 1px 100%),
-        linear-gradient(135deg, #161327 0%, #071320 45%, #0d130b 100%);
-      background-size: 64px 64px, 64px 64px, auto;
+        linear-gradient(120deg, rgba(255, 94, 168, 0.34), transparent 28%),
+        linear-gradient(240deg, rgba(92, 168, 255, 0.32), transparent 34%),
+        linear-gradient(26deg, transparent 0 46%, rgba(255, 230, 111, 0.18) 46% 49%, transparent 49% 100%),
+        linear-gradient(154deg, transparent 0 34%, rgba(153, 230, 95, 0.16) 34% 37%, transparent 37% 100%),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.11) 0 1px, transparent 1px 100%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 100%),
+        linear-gradient(135deg, #150d2f 0%, #06192b 42%, #101606 100%);
+      background-size: auto, auto, auto, auto, 58px 58px, 58px 58px, auto;
       color: var(--ink);
       overflow-x: hidden;
     }
@@ -48,11 +54,39 @@
     }
 
     .game {
+      position: relative;
       min-height: 100vh;
       padding: clamp(12px, 1.5vw, 28px);
       display: grid;
       grid-template-rows: auto 1fr;
       gap: clamp(10px, 1.35vw, 18px);
+      isolation: isolate;
+    }
+
+    .game::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(90deg, rgba(255, 94, 168, 0.38) 0 12px, rgba(92, 168, 255, 0.34) 12px 24px, rgba(153, 230, 95, 0.32) 24px 36px, rgba(255, 230, 111, 0.36) 36px 48px),
+        linear-gradient(180deg, transparent, rgba(7, 9, 15, 0.92));
+      height: 12px;
+      box-shadow: 0 0 26px rgba(255, 94, 168, 0.45), 0 0 34px rgba(92, 168, 255, 0.35);
+    }
+
+    .game::after {
+      content: "";
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      height: 14px;
+      pointer-events: none;
+      background: repeating-linear-gradient(90deg, var(--kids) 0 18px, var(--adults) 18px 36px, var(--pink) 36px 54px, var(--violet) 54px 72px);
+      box-shadow: 0 0 24px rgba(153, 230, 95, 0.35);
     }
 
     .topbar {
@@ -74,7 +108,7 @@
       height: 48px;
       display: grid;
       place-items: center;
-      border: 2px solid rgba(255, 255, 255, 0.28);
+      border: 2px solid rgba(255, 255, 255, 0.58);
       border-radius: 8px;
       background:
         linear-gradient(135deg, var(--pink) 0 38%, transparent 38%),
@@ -83,7 +117,7 @@
       color: #090b10;
       font-size: 1.45rem;
       font-weight: 1000;
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35), 0 0 24px rgba(255, 94, 168, 0.38);
     }
 
     h1 {
@@ -107,10 +141,12 @@
       min-width: 180px;
       text-align: center;
       border: 1px solid var(--line);
-      background: rgba(7, 9, 15, 0.72);
+      background:
+        linear-gradient(135deg, rgba(255, 94, 168, 0.13), rgba(92, 168, 255, 0.13)),
+        rgba(7, 9, 15, 0.74);
       border-radius: 8px;
       padding: 10px 16px;
-      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.28);
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.28), inset 0 0 0 2px rgba(255, 255, 255, 0.035);
     }
 
     .timer {
@@ -148,7 +184,10 @@
     .question-panel,
     .scoreboard {
       border: 1px solid var(--line);
-      background: var(--panel);
+      background:
+        linear-gradient(135deg, rgba(255, 94, 168, 0.1), transparent 32%),
+        linear-gradient(225deg, rgba(92, 168, 255, 0.12), transparent 38%),
+        var(--panel);
       box-shadow: 0 22px 60px rgba(0, 0, 0, 0.34);
       border-radius: 8px;
     }
@@ -169,7 +208,9 @@
       padding: 18px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.055);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.1), transparent),
+        rgba(255, 255, 255, 0.055);
     }
 
     .team-card.kids {
@@ -208,12 +249,22 @@
     }
 
     .question-panel {
+      position: relative;
       display: grid;
       grid-template-rows: auto auto minmax(132px, 0.68fr) minmax(174px, 0.92fr) auto;
       gap: clamp(9px, 1vw, 14px);
       padding: clamp(14px, 1.55vw, 28px);
       min-height: 0;
       overflow: hidden;
+    }
+
+    .question-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 7px;
+      background: linear-gradient(90deg, var(--pink), var(--gold), var(--kids), var(--blue), var(--violet));
+      opacity: 0.95;
     }
 
     .kicker {
@@ -231,9 +282,10 @@
 
     .category {
       color: #10151d;
-      background: var(--gold);
+      background: linear-gradient(90deg, var(--gold), #fff0a6);
       border-radius: 6px;
       padding: 5px 9px;
+      box-shadow: 0 0 18px rgba(255, 230, 111, 0.3);
     }
 
     .question {
@@ -245,15 +297,35 @@
     }
 
     .visual {
+      position: relative;
       display: grid;
       place-items: center;
       min-height: 132px;
       border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 8px;
       background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent),
+        repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.035) 0 12px, transparent 12px 24px),
         rgba(255, 255, 255, 0.035);
       overflow: hidden;
+    }
+
+    .visual::before,
+    .visual::after {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border-radius: 8px;
+      pointer-events: none;
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+    }
+
+    .visual::after {
+      inset: auto 14px 12px;
+      height: 4px;
+      border: 0;
+      background: linear-gradient(90deg, transparent, var(--pink), var(--gold), var(--kids), transparent);
+      opacity: 0.8;
     }
 
     .flag-wallis {
@@ -318,6 +390,246 @@
       margin-top: 8px;
     }
 
+    .mos-logo-card {
+      width: min(560px, 82%);
+      min-height: 154px;
+      display: grid;
+      grid-template-columns: 138px 1fr;
+      align-items: center;
+      gap: 22px;
+      padding: 22px 28px;
+      border-radius: 8px;
+      color: #008346;
+      background: #fffdf6;
+      border: 7px solid #e31e24;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35), inset 0 0 0 4px rgba(0, 131, 70, 0.12);
+      transform: rotate(-1deg);
+    }
+
+    .mos-badge {
+      width: 118px;
+      height: 118px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 42%),
+        #e31e24;
+      font-size: 4.7rem;
+      line-height: 1;
+      font-weight: 1000;
+      box-shadow: 0 10px 26px rgba(227, 30, 36, 0.38);
+    }
+
+    .mos-text {
+      display: grid;
+      gap: 2px;
+      line-height: 0.9;
+      font-size: clamp(1.4rem, 3vw, 3.2rem);
+      font-weight: 1000;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .mos-text span {
+      color: #e31e24;
+      font-size: 0.5em;
+      letter-spacing: 0.12em;
+    }
+
+    .logo-stripes {
+      display: grid;
+      gap: 9px;
+    }
+
+    .logo-stripes i {
+      display: block;
+      height: 18px;
+      border-radius: 999px;
+      background: #008346;
+    }
+
+    .logo-stripes i:nth-child(2) {
+      width: 72%;
+      background: #e31e24;
+    }
+
+    .logo-stripes i:nth-child(3) {
+      width: 56%;
+      background: #f4c430;
+    }
+
+    .fairy-plate {
+      position: relative;
+      width: min(520px, 78%);
+      min-height: 160px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background:
+        radial-gradient(ellipse at center, #f8fbff 0 58%, #95d5ff 59% 100%);
+      box-shadow: inset 0 0 0 8px rgba(255, 255, 255, 0.55), 0 18px 45px rgba(0, 0, 0, 0.35);
+      transform: rotate(1deg);
+    }
+
+    .bread {
+      position: absolute;
+      width: 42%;
+      aspect-ratio: 1.25 / 1;
+      background:
+        radial-gradient(circle at 20% 24%, #ff5ea8 0 3px, transparent 4px),
+        radial-gradient(circle at 70% 30%, #5ca8ff 0 3px, transparent 4px),
+        radial-gradient(circle at 46% 58%, #99e65f 0 3px, transparent 4px),
+        radial-gradient(circle at 82% 74%, #ffe66f 0 3px, transparent 4px),
+        radial-gradient(circle at 30% 78%, #9b6dff 0 3px, transparent 4px),
+        #fff7e1;
+      border: 7px solid #d59b55;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+    }
+
+    .bread.one {
+      left: 23%;
+      top: 25%;
+      transform: rotate(-12deg);
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    }
+
+    .bread.two {
+      right: 21%;
+      top: 24%;
+      transform: rotate(12deg);
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    }
+
+    .curling-sheet {
+      width: min(620px, 86%);
+      min-height: 160px;
+      position: relative;
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.92), rgba(199, 235, 255, 0.92)),
+        #dff6ff;
+      box-shadow: inset 0 0 0 5px rgba(10, 25, 45, 0.15), 0 18px 45px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+    }
+
+    .curling-sheet::before {
+      content: "";
+      position: absolute;
+      right: 9%;
+      top: 50%;
+      width: 138px;
+      height: 138px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      background:
+        radial-gradient(circle, #fff 0 22%, #e31e24 23% 42%, #fff 43% 62%, #1d4ed8 63% 100%);
+      box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.85);
+    }
+
+    .curling-sheet::after {
+      content: "";
+      position: absolute;
+      left: 12%;
+      top: 48%;
+      width: 78px;
+      height: 42px;
+      border-radius: 50% 50% 42% 42%;
+      background: #5b6678;
+      box-shadow: 14px -12px 0 -9px #ff5b55, 0 10px 0 -2px rgba(0, 0, 0, 0.22);
+    }
+
+    .vaduz-card {
+      width: min(560px, 82%);
+      min-height: 160px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, #7dd3fc 0 48%, #7bbf59 49% 100%);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+    }
+
+    .vaduz-card::before {
+      content: "";
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      bottom: 46%;
+      height: 42%;
+      background: #f8fafc;
+      clip-path: polygon(0 100%, 16% 38%, 27% 78%, 41% 25%, 56% 82%, 72% 34%, 100% 100%);
+    }
+
+    .vaduz-card::after {
+      content: "VADUZ";
+      position: absolute;
+      left: 28px;
+      bottom: 18px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      color: #10151d;
+      background: #fff8ec;
+      font-size: clamp(2rem, 4vw, 4.8rem);
+      font-weight: 1000;
+      line-height: 0.9;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+    }
+
+    .nepal-card {
+      width: min(520px, 76%);
+      min-height: 170px;
+      display: grid;
+      place-items: center;
+    }
+
+    .nepal-shape {
+      width: min(230px, 46%);
+      aspect-ratio: 0.82 / 1;
+      background: #dc143c;
+      border: 7px solid #003893;
+      clip-path: polygon(0 0, 96% 31%, 31% 31%, 100% 100%, 0 100%);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.38);
+    }
+
+    .flag-wales {
+      position: relative;
+      width: min(520px, 72%);
+      aspect-ratio: 5 / 3;
+      overflow: hidden;
+      border: 5px solid #fff;
+      background: linear-gradient(#fff 0 50%, #00a650 50% 100%);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.38);
+    }
+
+    .flag-wales .dragon-blur {
+      position: absolute;
+      left: 21%;
+      top: 18%;
+      width: 58%;
+      height: 64%;
+      background: #d71920;
+      filter: blur(15px);
+      transform: rotate(-5deg);
+      opacity: 0.96;
+      clip-path: polygon(2% 58%, 14% 42%, 31% 44%, 42% 21%, 54% 36%, 72% 16%, 68% 42%, 94% 37%, 77% 54%, 96% 72%, 64% 68%, 53% 91%, 42% 69%, 20% 78%);
+    }
+
+    .flag-wales .blur-label {
+      position: absolute;
+      right: 12px;
+      bottom: 10px;
+      border-radius: 6px;
+      padding: 6px 9px;
+      color: #10151d;
+      background: var(--gold);
+      font-weight: 1000;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+    }
+
     .options {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -331,7 +643,9 @@
       border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 8px;
       color: var(--ink);
-      background: rgba(255, 255, 255, 0.07);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent),
+        rgba(255, 255, 255, 0.07);
       cursor: pointer;
       padding: 14px 12px;
       display: grid;
@@ -343,7 +657,10 @@
 
     .option:hover {
       transform: translateY(-2px);
-      background: rgba(255, 255, 255, 0.11);
+      background:
+        linear-gradient(145deg, rgba(255, 94, 168, 0.14), rgba(92, 168, 255, 0.12)),
+        rgba(255, 255, 255, 0.11);
+      border-color: rgba(255, 230, 111, 0.55);
     }
 
     .letter {
@@ -353,8 +670,9 @@
       place-items: center;
       border-radius: 6px;
       color: #10151d;
-      background: var(--gold);
+      background: linear-gradient(135deg, var(--gold), #fff3aa);
       font-weight: 1000;
+      box-shadow: 0 0 16px rgba(255, 230, 111, 0.22);
     }
 
     .option-text {
@@ -427,7 +745,8 @@
 
     .primary {
       color: #09100e;
-      background: var(--green);
+      background: linear-gradient(135deg, var(--green), var(--gold));
+      box-shadow: 0 10px 24px rgba(153, 230, 95, 0.26);
     }
 
     .secondary {
@@ -458,7 +777,7 @@
       align-content: center;
       border-radius: 8px;
       padding: 10px 12px;
-      background: linear-gradient(90deg, rgba(37, 211, 192, 0.2), rgba(255, 176, 46, 0.2));
+      background: linear-gradient(90deg, rgba(37, 211, 192, 0.28), rgba(255, 94, 168, 0.18), rgba(255, 176, 46, 0.26));
       border: 1px solid var(--line);
       font-weight: 950;
       font-size: clamp(1rem, 1.35vw, 1.25rem);
@@ -514,7 +833,7 @@
 
     .round-history {
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(32px, 1fr));
       gap: 6px;
     }
 
@@ -662,12 +981,12 @@
         <div class="mark" aria-hidden="true">?</div>
         <div>
           <h1>Guess Battle</h1>
-          <p class="subtitle">Adults vs kids, seven weird questions, one minute per round.</p>
+          <p class="subtitle">Adults vs kids, weird questions, one minute per round. First to 5 wins.</p>
         </div>
       </div>
       <div class="round-counter" aria-live="polite">
         <span class="label">Round</span>
-        <strong id="roundCount">1 / 7</strong>
+        <strong id="roundCount">Round 1</strong>
       </div>
       <div class="timer" id="timerBox" aria-live="polite">
         <span class="label">Clock</span>
@@ -748,18 +1067,18 @@
       },
       {
         category: "Niche Fast Food",
-        difficulty: "Burger geography",
-        question: "MOS Burger is a real fast-food chain that started in which country?",
-        visual: '<div class="visual-word" style="color: var(--green)">MOS<span>mystery burger chain</span></div>',
-        options: ["Canada", "Japan", "Brazil", "Iceland", "Morocco"],
-        answer: 1,
-        fact: "MOS Burger started in Japan and became famous for very local menu twists."
+        difficulty: "Logo hunt",
+        question: "What fast-food chain uses this logo mark?",
+        visual: '<div class="mos-logo-card" role="img" aria-label="A red, green, and yellow fast-food logo mark"><div class="mos-badge">M</div><div class="logo-stripes" aria-hidden="true"><i></i><i></i><i></i></div></div>',
+        options: ["BurgerFuel", "Lotteria", "MOS Burger", "Wimpy", "Jollibee"],
+        answer: 2,
+        fact: "It is MOS Burger, a Japanese fast-food chain with a very recognizable green-and-red logo."
       },
       {
         category: "Snack Lore",
         difficulty: "Party food",
         question: "Fairy bread is a classic birthday-party snack from where?",
-        visual: '<div class="visual-word small" style="color: var(--pink)">Fairy Bread<span>white bread + butter + sprinkles</span></div>',
+        visual: '<div class="fairy-plate" role="img" aria-label="Two pieces of bread covered with colorful sprinkles"><div class="bread one"></div><div class="bread two"></div></div>',
         options: ["Norway", "Australia", "Mexico", "South Africa", "Thailand"],
         answer: 1,
         fact: "Australia claims fairy bread: buttered bread covered in colorful sprinkles."
@@ -768,7 +1087,7 @@
         category: "Weird Sports",
         difficulty: "Olympic vocabulary",
         question: "In which sport do players slide stones toward the house?",
-        visual: '<div class="visual-word" style="color: var(--blue)">The House<span>not a building</span></div>',
+        visual: '<div class="curling-sheet" role="img" aria-label="An ice sheet with a target house and a sliding stone"></div>',
         options: ["Lacrosse", "Bocce", "Curling", "Cricket", "Water polo"],
         answer: 2,
         fact: "Curling uses stones, brooms, and a target called the house."
@@ -777,7 +1096,7 @@
         category: "Animal Symbols",
         difficulty: "Flag but not a flag round",
         question: "What animal is on the Welsh flag?",
-        visual: '<div class="visual-word" style="color: var(--red)">Wales<span>the flag goes hard</span></div>',
+        visual: '<div class="flag-wales" role="img" aria-label="Welsh flag with its central animal blurred out"><div class="dragon-blur"></div><div class="blur-label">animal blurred</div></div>',
         options: ["Lion", "Dragon", "Goat", "Falcon", "Wolf"],
         answer: 1,
         fact: "The Welsh flag has a red dragon. Excellent flag energy."
@@ -786,7 +1105,7 @@
         category: "Tiny Countries",
         difficulty: "Capital chaos",
         question: "Which tiny country has a capital named Vaduz?",
-        visual: '<div class="visual-word small" style="color: var(--gold)">Vaduz<span>sounds made up, is not</span></div>',
+        visual: '<div class="vaduz-card" role="img" aria-label="A mountain postcard labeled Vaduz"></div>',
         options: ["Andorra", "Monaco", "Liechtenstein", "Luxembourg", "Malta"],
         answer: 2,
         fact: "Vaduz is the capital of Liechtenstein."
@@ -795,12 +1114,14 @@
         category: "Final Boss",
         difficulty: "Flag shape",
         question: "Which country has the only non-rectangular national flag?",
-        visual: '<div class="visual-word" style="color: var(--kids)">Not A Box<span>final round</span></div>',
+        visual: '<div class="nepal-card" role="img" aria-label="A non-rectangular double-pennant flag silhouette"><div class="nepal-shape"></div></div>',
         options: ["Bhutan", "Qatar", "Nepal", "Vatican City", "Sri Lanka"],
         answer: 2,
         fact: "Nepal's national flag is made of two stacked pennant shapes."
       }
     ];
+
+    const targetScore = 5;
 
     const state = {
       round: 0,
@@ -859,7 +1180,8 @@
 
     function renderHistory() {
       els.history.innerHTML = "";
-      questions.forEach((_, index) => {
+      const roundsToShow = Math.max(targetScore, state.finishedRounds + 1);
+      Array.from({ length: roundsToShow }).forEach((_, index) => {
         const dot = document.createElement("div");
         dot.className = "dot" + (index < state.finishedRounds ? " done" : "");
         dot.textContent = index + 1;
@@ -868,12 +1190,12 @@
     }
 
     function renderRound() {
-      const item = questions[state.round];
+      const item = currentQuestion();
       state.picks = { kids: null, adults: null };
       state.revealed = false;
       state.pendingOption = null;
 
-      els.roundCount.textContent = `${state.round + 1} / ${questions.length}`;
+      els.roundCount.textContent = `Round ${state.round + 1}`;
       els.category.textContent = item.category;
       els.difficulty.textContent = item.difficulty;
       els.questionText.textContent = item.question;
@@ -888,7 +1210,7 @@
     }
 
     function renderOptions() {
-      const item = questions[state.round];
+      const item = currentQuestion();
       els.options.innerHTML = "";
       item.options.forEach((option, index) => {
         const button = document.createElement("button");
@@ -952,7 +1274,7 @@
       clearInterval(state.timerId);
       state.revealed = true;
       state.finishedRounds = Math.max(state.finishedRounds, state.round + 1);
-      const item = questions[state.round];
+      const item = currentQuestion();
 
       ["kids", "adults"].forEach((team) => {
         if (state.picks[team] === item.answer) {
@@ -973,37 +1295,44 @@
       });
 
       els.status.textContent = item.fact;
-      els.nextBtn.textContent = state.round === questions.length - 1 ? "Final Scores" : "Next Round";
+      els.nextBtn.textContent = hasWinner() ? "Final Scores" : "Next Round";
       renderScores();
       renderHistory();
     }
 
     function renderScores() {
-      const maxScore = questions.length;
       els.kidsScore.textContent = state.scores.kids;
       els.adultsScore.textContent = state.scores.adults;
       els.kidsBarScore.textContent = state.scores.kids;
       els.adultsBarScore.textContent = state.scores.adults;
       els.kidsBar.textContent = state.scores.kids;
       els.adultsBar.textContent = state.scores.adults;
-      els.kidsBar.style.width = `${Math.max(8, (state.scores.kids / maxScore) * 100)}%`;
-      els.adultsBar.style.width = `${Math.max(8, (state.scores.adults / maxScore) * 100)}%`;
+      els.kidsBar.style.width = `${Math.max(8, (state.scores.kids / targetScore) * 100)}%`;
+      els.adultsBar.style.width = `${Math.max(8, (state.scores.adults / targetScore) * 100)}%`;
 
-      if (state.finishedRounds === questions.length) {
+      if (hasWinner()) {
         if (state.scores.kids > state.scores.adults) {
-          els.winner.textContent = "Kids win! Adults must now pretend the questions were unfair.";
+          els.winner.textContent = "Kids hit 5 first! Adults must now pretend the questions were unfair.";
         } else if (state.scores.adults > state.scores.kids) {
-          els.winner.textContent = "Adults win! The kids may request an instant rematch.";
+          els.winner.textContent = "Adults hit 5 first! The kids may request an instant rematch.";
         } else {
-          els.winner.textContent = "Tie game! Everyone gets to argue about the tiebreaker.";
+          els.winner.textContent = "Somehow tied at 5. Everyone gets to argue about the tiebreaker.";
         }
       } else if (state.scores.kids > state.scores.adults) {
-        els.winner.textContent = "Kids are leading.";
+        els.winner.textContent = `Kids are leading. First to ${targetScore}.`;
       } else if (state.scores.adults > state.scores.kids) {
-        els.winner.textContent = "Adults are leading.";
+        els.winner.textContent = `Adults are leading. First to ${targetScore}.`;
       } else {
-        els.winner.textContent = "All tied up.";
+        els.winner.textContent = `All tied up. First to ${targetScore}.`;
       }
+    }
+
+    function currentQuestion() {
+      return questions[state.round % questions.length];
+    }
+
+    function hasWinner() {
+      return state.scores.kids >= targetScore || state.scores.adults >= targetScore;
     }
 
     function nextAction() {
@@ -1012,7 +1341,7 @@
         return;
       }
 
-      if (state.round < questions.length - 1) {
+      if (!hasWinner()) {
         state.round += 1;
         renderRound();
         return;
