@@ -593,30 +593,31 @@
       box-shadow: 0 18px 45px rgba(0, 0, 0, 0.38);
     }
 
-    .flag-wales {
+    .flag-wales-photo {
       position: relative;
-      width: min(520px, 72%);
-      aspect-ratio: 5 / 3;
+      width: min(560px, 76%);
+      aspect-ratio: 1.66 / 1;
       overflow: hidden;
       border: 5px solid #fff;
       background: linear-gradient(#fff 0 50%, #00a650 50% 100%);
       box-shadow: 0 18px 45px rgba(0, 0, 0, 0.38);
     }
 
-    .flag-wales .dragon-blur {
+    .flag-wales-photo svg {
       position: absolute;
-      left: 21%;
-      top: 18%;
-      width: 58%;
-      height: 64%;
-      background: #d71920;
-      filter: blur(15px);
-      transform: rotate(-5deg);
-      opacity: 0.96;
-      clip-path: polygon(2% 58%, 14% 42%, 31% 44%, 42% 21%, 54% 36%, 72% 16%, 68% 42%, 94% 37%, 77% 54%, 96% 72%, 64% 68%, 53% 91%, 42% 69%, 20% 78%);
+      inset: 0;
+      width: 100%;
+      height: 100%;
     }
 
-    .flag-wales .blur-label {
+    .flag-wales-photo.blurred svg {
+      filter: blur(13px);
+      transform: scale(1.06);
+      opacity: 0.9;
+    }
+
+    .flag-wales-photo.blurred::after {
+      content: "blurred clue";
       position: absolute;
       right: 12px;
       bottom: 10px;
@@ -1055,6 +1056,41 @@
   </div>
 
   <script>
+    const walesDragonSvg = `
+      <svg viewBox="0 0 500 300" aria-hidden="true">
+        <rect width="500" height="150" fill="#ffffff"></rect>
+        <rect y="150" width="500" height="150" fill="#00a650"></rect>
+        <g fill="#d1112a" stroke="#71101b" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M96 160c-18-14-34-19-49-13 17-21 37-27 58-16 10-31 34-54 67-68-14 17-15 33-2 48 18-25 44-43 79-54-15 21-18 41-8 61 34-31 76-58 126-78-20 28-30 54-30 78 25-24 54-41 88-51-24 30-34 61-30 93 18 3 36 2 55-4-14 18-31 32-52 41 21 13 33 29 36 48-34-15-65-22-95-21-9 22-25 37-49 45 8-20 8-40 0-61-42 10-86 9-131-4-13 20-29 35-48 44 2-24-2-45-13-64-28-3-52-11-72-24z"></path>
+          <path d="M138 126c-24-21-58-26-91-12 17-29 48-44 91-46 10-25 29-43 58-54-6 26 0 48 18 65"></path>
+          <path d="M175 110c-18-18-20-44-6-78 22 29 38 56 47 82"></path>
+          <path d="M238 114c36-41 84-68 144-82-25 40-36 84-34 132"></path>
+          <path d="M255 120c37-21 78-39 121-53-24 32-42 64-53 97"></path>
+          <path d="M90 161c-22 23-45 30-68 22 22 20 52 25 90 16"></path>
+          <path d="M93 196c-18 21-22 45-12 72 16-22 31-38 45-49"></path>
+          <path d="M181 220c-6 27-19 49-39 66 34-8 59-24 75-49"></path>
+          <path d="M278 232c-12 25-32 42-60 52 36 4 66-6 90-29"></path>
+          <path d="M369 219c9 28 7 54-7 78 28-17 45-40 51-69"></path>
+          <path d="M61 101l-33-22 39 3 20-32 8 38 37 10-35 18-2 40z"></path>
+          <path d="M95 61c-18-4-33-1-45 11 5-20 17-34 37-43"></path>
+          <path d="M127 78c10-24 28-38 53-43"></path>
+          <circle cx="88" cy="88" r="5" fill="#111827" stroke="none"></circle>
+          <path d="M67 103c16 4 31 4 45 0"></path>
+          <path d="M138 133c32 19 69 31 110 36 39 5 79 3 120-6"></path>
+          <path d="M161 147c22 18 49 30 82 35 45 7 87 3 126-12"></path>
+          <path d="M199 94c-9 32-6 74 9 128"></path>
+          <path d="M229 89c-7 38-2 82 14 132"></path>
+          <path d="M259 78c-8 42-2 89 19 140"></path>
+          <path d="M296 63c-8 43-1 91 22 143"></path>
+          <path d="M333 50c-7 39 0 81 22 126"></path>
+          <path d="M407 167c25-5 47-16 67-34"></path>
+          <path d="M419 190c25 5 45 18 59 39"></path>
+        </g>
+      </svg>
+    `;
+    const walesBlurredVisual = `<div class="flag-wales-photo blurred" role="img" aria-label="Blurred Welsh flag clue">${walesDragonSvg}</div>`;
+    const walesRevealedVisual = `<div class="flag-wales-photo real" role="img" aria-label="Welsh flag with a clear red dragon">${walesDragonSvg}</div>`;
+
     const questions = [
       {
         category: "Niche Flag",
@@ -1096,7 +1132,8 @@
         category: "Animal Symbols",
         difficulty: "Flag but not a flag round",
         question: "What animal is on the Welsh flag?",
-        visual: '<div class="flag-wales" role="img" aria-label="Welsh flag with its central animal blurred out"><div class="dragon-blur"></div><div class="blur-label">animal blurred</div></div>',
+        visual: walesBlurredVisual,
+        revealedVisual: walesRevealedVisual,
         options: ["Lion", "Dragon", "Goat", "Falcon", "Wolf"],
         answer: 1,
         fact: "The Welsh flag has a red dragon. Excellent flag energy."
@@ -1294,6 +1331,9 @@
         button.classList.toggle("wrong-picked", wasPickedWrong);
       });
 
+      if (item.revealedVisual) {
+        els.visual.innerHTML = item.revealedVisual;
+      }
       els.status.textContent = item.fact;
       els.nextBtn.textContent = hasWinner() ? "Final Scores" : "Next Round";
       renderScores();
