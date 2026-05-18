@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 450" role="img" aria-label="Flag of Canada">
+  <rect width="900" height="450" fill="#fff"/>
+  <rect width="225" height="450" fill="#f00"/>
+  <rect x="675" width="225" height="450" fill="#f00"/>
+  <path fill="#f00" d="M450 54 486 156l72-40-34 86 96 13-77 61 25 88-84-24-34 78-34-78-84 24 25-88-77-61 96-13-34-86 72 40z"/>
+  <rect x="442" y="300" width="16" height="92" fill="#f00"/>
+</svg>
