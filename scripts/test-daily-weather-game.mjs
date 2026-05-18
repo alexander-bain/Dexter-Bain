@@ -247,16 +247,12 @@ async function run() {
           test.setSelectedGameId(game.gameId);
           test.render();
 
-          const bestPicks = game.questions.map((question, index) => {
-            const best = test.getAnswers(question).reduce((winner, candidate) => {
-              if (!winner || candidate.odds > winner.odds) {
-                return candidate;
-              }
-              return winner;
-            }, null);
-            return [test.getQuestionId(question, index), best.id];
+          const coveragePicks = game.questions.map((question, index) => {
+            const answers = test.getAnswers(question);
+            const chosen = answers[index % answers.length];
+            return [test.getQuestionId(question, index), chosen.id];
           });
-          const picks = Object.fromEntries(bestPicks);
+          const picks = Object.fromEntries(coveragePicks);
           const entry = {
             name: "Weather Bot",
             picks,
@@ -293,8 +289,8 @@ async function run() {
                 saveNote,
                 leaderboard,
                 savedEntryName: storage.playerName || "",
-                chosen: bestPicks.map(([, answerId]) => answerId),
-                bestPicks,
+                chosen: coveragePicks.map(([, answerId]) => answerId),
+                coveragePicks,
                 storedState: storage,
               };
             }
@@ -327,10 +323,10 @@ async function run() {
       throw new Error(`Weather Bot test did not save correctly: ${JSON.stringify(value)}`);
     }
 
-    const bestPickMap = Object.fromEntries(value.bestPicks || []);
-    const returnedPickMap = Object.fromEntries(value.bestPicks || []);
-    if (JSON.stringify(returnedPickMap) !== JSON.stringify(bestPickMap)) {
-      throw new Error(`Saved picks did not match the best-odds answers: ${JSON.stringify({ returnedPickMap, bestPickMap })}`);
+    const coveragePickMap = Object.fromEntries(value.coveragePicks || []);
+    const returnedPickMap = Object.fromEntries(value.coveragePicks || []);
+    if (JSON.stringify(returnedPickMap) !== JSON.stringify(coveragePickMap)) {
+      throw new Error(`Saved picks did not match the coverage answers: ${JSON.stringify({ returnedPickMap, coveragePickMap })}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);

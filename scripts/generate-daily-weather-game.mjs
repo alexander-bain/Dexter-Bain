@@ -153,16 +153,6 @@ function windSpeedMax(text) {
   return match ? Number(match[2] || match[1]) : 8;
 }
 
-function rotateSelection(items, count, seed) {
-  if (!Array.isArray(items) || !items.length || count <= 0) {
-    return [];
-  }
-
-  const start = Math.abs(Number(seed) || 0) % items.length;
-  const total = Math.min(count, items.length);
-  return Array.from({ length: total }, (_, index) => items[(start + index) % items.length]);
-}
-
 function yesNoQuestion({
   text,
   idSuffix,
@@ -206,6 +196,11 @@ function renderQuestion(question, idDate) {
           ], "${idDate}-${question.idSuffix}", { autoSource: ${jsString(question.autoSource)}, lockAt: ${jsString(question.lockAt)} })`;
 }
 
+function isWeekend(date) {
+  const day = date.getDay();
+  return day === 0 || day === 6;
+}
+
 function dayWatchEvent(date, forecast) {
   const day = forecast.dayPeriod || {};
   const night = forecast.nightPeriod || {};
@@ -217,6 +212,7 @@ function dayWatchEvent(date, forecast) {
   const dateLabel = labelDate(date);
   const idDate = slugDate(date);
   const daySeed = Number(idDate);
+  const weekend = isWeekend(date);
   const warmByNoonThreshold = Math.max(60, Math.round((high - 5) / 5) * 5);
   const locks = {
     warmByNoon: lockDate(date, 12).toISOString(),
@@ -248,7 +244,7 @@ function dayWatchEvent(date, forecast) {
     sports: [likelySportsLive ? 24 : 18, "Sports"],
     traffic: [18, "Traffic"]
   };
-  const weatherQuestions = rotateSelection([
+  const weatherQuestions = [
     () => yesNoQuestion({
       text: `By noon, will it be warmer than ${warmByNoonThreshold} degrees?`,
       idSuffix: "warm-by-noon",
@@ -284,24 +280,26 @@ function dayWatchEvent(date, forecast) {
       lockAt: locks.weatherNight,
       likely: likelyNightCooler
     })
-  ], 4, daySeed);
-  const moneyQuestions = rotateSelection([
+  ];
+  const moneyQuestions = [
     () => yesNoQuestion({
       text: "By noon, will gas prices be higher than this morning?",
       idSuffix: "gas-noon",
       autoSource: gasSource,
       lockAt: locks.gasNoon,
       likely: likelyGasUp
-    }),
-    () => yesNoQuestion({
+    })
+  ];
+  if (!weekend) {
+    moneyQuestions.push(() => yesNoQuestion({
       text: "By 1 PM, will the stock market go up?",
       idSuffix: "market-lunch",
       autoSource: marketSource,
       lockAt: locks.marketLunch,
       likely: likelyMarketUp
-    })
-  ], 2, daySeed + 7);
-  const newsQuestions = rotateSelection([
+    }));
+  }
+  const newsQuestions = [
     () => choiceQuestion({
       text: "By 2 PM, what will the local news talk about most?",
       idSuffix: "local-headline",
@@ -332,8 +330,8 @@ function dayWatchEvent(date, forecast) {
       yesLikely: 58,
       yesUnlikely: 42
     })
-  ], 2, daySeed + 11);
-  const musicQuestions = rotateSelection([
+  ];
+  const musicQuestions = [
     () => yesNoQuestion({
       text: "By 4 PM, will the top Apple Music song be different?",
       idSuffix: "music-four",
@@ -348,8 +346,8 @@ function dayWatchEvent(date, forecast) {
       lockAt: lockDate(date, 17).toISOString(),
       likely: likelyMusicChanged
     })
-  ], 1, daySeed + 23);
-  const sportsQuestions = rotateSelection([
+  ];
+  const sportsQuestions = [
     () => yesNoQuestion({
       text: "By 6 PM, will the sports page still show a live game?",
       idSuffix: "sports-six",
@@ -364,7 +362,7 @@ function dayWatchEvent(date, forecast) {
       lockAt: locks.sportsSeven,
       likely: likelySportsLive
     })
-  ], 1, daySeed + 37);
+  ];
   const selectedQuestions = [
     ...weatherQuestions,
     ...moneyQuestions,
@@ -377,6 +375,8 @@ function dayWatchEvent(date, forecast) {
     }
     return left.lockAt.localeCompare(right.lockAt);
   });
+  const summaryCount = selectedQuestions.length;
+  const stockSummary = weekend ? " Weather, gas, news, music, and sports only today because the market is closed." : "";
 
   return `      {
         id: "daily-weather-${idDate}",
@@ -384,7 +384,7 @@ function dayWatchEvent(date, forecast) {
         type: "Day",
         month: ${date.getMonth()},
         day: ${date.getDate()},
-        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: 10 simple questions about weather, money, news, music, and sports that settle through the day. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.`)},
+        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: ${summaryCount} simple questions about weather, money, news, music, and sports that settle through the day. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.${stockSummary}`)},
         questions: [
 ${selectedQuestions.map((question) => renderQuestion(question, idDate)).join(",\n")}
         ]
