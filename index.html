@@ -23,6 +23,18 @@
       box-sizing: border-box;
     }
 
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
@@ -57,6 +69,51 @@
       margin: 0 0 24px;
       color: #c9d1d9;
       font-size: 0.98rem;
+    }
+
+    .search-wrap {
+      margin: 0 0 22px;
+    }
+
+    .game-search {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 16px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.92);
+      color: #f8fafc;
+      font: inherit;
+      font-size: 0.96rem;
+      outline: none;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .game-search::placeholder {
+      color: #94a3b8;
+    }
+
+    .game-search:focus {
+      border-color: rgba(74, 222, 128, 0.95);
+      box-shadow:
+        0 0 0 3px rgba(34, 197, 94, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .game-card.is-hidden {
+      display: none;
+    }
+
+    .empty-search {
+      display: none;
+      margin: 18px 0 0;
+      color: #c9d1d9;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .empty-search.is-visible {
+      display: block;
     }
 
     .games-grid {
@@ -167,6 +224,10 @@
   <main class="container">
     <h1>DexterBain.com Arcade</h1>
     <p class="subtitle">Choose your adventure: outsmart your friends or survive a year at Hillview.</p>
+    <div class="search-wrap">
+      <label class="sr-only" for="gameSearch">Search games</label>
+      <input class="game-search" id="gameSearch" type="search" placeholder="Search games..." autocomplete="off" />
+    </div>
 
     <section class="games-grid">
       <!-- Shadow Boxing -->
@@ -363,9 +424,36 @@
           View Events 📋
         </a>
       </article>
+    <p class="empty-search" id="emptySearch">No games found.</p>
     <div class="footer-note">
       Built for Dexter & friends.
     </div>
   </main>
+  <script>
+    const gameSearch = document.querySelector("#gameSearch");
+    const emptySearch = document.querySelector("#emptySearch");
+    const gameCards = [...document.querySelectorAll(".game-card")];
+
+    gameCards.forEach((card) => {
+      card.dataset.searchText = card.textContent.toLowerCase();
+    });
+
+    function filterGames() {
+      const query = gameSearch.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      gameCards.forEach((card) => {
+        const isVisible = !query || card.dataset.searchText.includes(query);
+        card.classList.toggle("is-hidden", !isVisible);
+        if (isVisible) visibleCount += 1;
+      });
+
+      emptySearch?.classList.toggle("is-visible", visibleCount === 0);
+    }
+
+    gameSearch?.addEventListener("input", filterGames);
+    gameSearch?.addEventListener("search", filterGames);
+    gameSearch?.addEventListener("change", filterGames);
+  </script>
 </body>
 </html>
