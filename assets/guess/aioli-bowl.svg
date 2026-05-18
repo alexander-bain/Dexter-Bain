@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" role="img" aria-label="Bowl of creamy aioli with breadsticks">
+  <rect width="520" height="360" fill="#087b94"/>
+  <circle cx="246" cy="184" r="143" fill="#143849" opacity=".42"/>
+  <circle cx="246" cy="164" r="138" fill="#24394a"/>
+  <circle cx="246" cy="154" r="126" fill="#e9eef2"/>
+  <circle cx="246" cy="154" r="110" fill="#ffe6a8"/>
+  <path fill="#fff0bf" d="M156 151c30-56 138-74 184-20 34 40 8 103-59 118-61 13-134-14-138-61-1-12 3-25 13-37z"/>
+  <path fill="#f4c870" d="M171 172c34-35 96-47 145-26 21 9 32 24 24 38-11 19-52 24-83 13-25-9-55-4-74 14-12 12-31-17-12-39z" opacity=".55"/>
+  <path fill="none" stroke="#fff8dc" stroke-width="19" stroke-linecap="round" d="M171 157c35-36 107-50 150-20 34 24 10 73-50 75-45 2-74-23-49-48 20-20 62-18 78-1"/>
+  <path fill="none" stroke="#e8ae56" stroke-width="10" stroke-linecap="round" opacity=".55" d="M167 202c37 37 123 46 169 9M152 126c39-31 118-45 170-15"/>
+  <g stroke-linecap="round">
+    <path d="M340 152 491 20" stroke="#f7c15a" stroke-width="24"/>
+    <path d="M368 169 520 65" stroke="#ffd678" stroke-width="24"/>
+    <path d="M386 190 506 129" stroke="#f4bd50" stroke-width="24"/>
+    <path d="M343 153 489 19" stroke="#d88a2a" stroke-width="5" opacity=".45"/>
+    <path d="M371 169 518 66" stroke="#d88a2a" stroke-width="5" opacity=".45"/>
+    <path d="M389 190 504 130" stroke="#d88a2a" stroke-width="5" opacity=".45"/>
+  </g>
+  <ellipse cx="246" cy="294" rx="144" ry="28" fill="#061f2b" opacity=".32"/>
+</svg>
