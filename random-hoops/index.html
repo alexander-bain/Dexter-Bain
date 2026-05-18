@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Random Hoops | DexterBain</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f8fafc;
+      --muted: #d5dfef;
+      --court: #2e7d58;
+      --court-dark: #174936;
+      --paint: #e86f2f;
+      --line: #fff6d6;
+      --left: #31d6c5;
+      --right: #ffcf3f;
+      --panel: rgba(7, 12, 20, 0.74);
+      --panel-line: rgba(255, 255, 255, 0.22);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #11161f;
+      color: var(--ink);
+      font-family: "Trebuchet MS", "Avenir Next", Verdana, sans-serif;
+      touch-action: none;
+      user-select: none;
+    }
+
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      background: #1d6f50;
+    }
+
+    .hud {
+      position: fixed;
+      top: max(10px, env(safe-area-inset-top));
+      left: max(10px, env(safe-area-inset-left));
+      right: max(10px, env(safe-area-inset-right));
+      display: grid;
+      grid-template-columns: minmax(92px, 1fr) auto minmax(92px, 1fr);
+      gap: 10px;
+      align-items: start;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .score {
+      min-height: 66px;
+      padding: 8px 10px;
+      border: 1px solid var(--panel-line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    .score.right {
+      text-align: right;
+    }
+
+    .team {
+      margin: 0 0 2px;
+      font-size: clamp(0.68rem, 1.8vw, 0.82rem);
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .points {
+      font-size: clamp(1.75rem, 7vw, 3rem);
+      line-height: 0.92;
+      font-weight: 900;
+    }
+
+    .score.left .points {
+      color: var(--left);
+    }
+
+    .score.right .points {
+      color: var(--right);
+    }
+
+    .center-board {
+      width: min(44vw, 320px);
+      min-height: 78px;
+      padding: 8px 10px;
+      border: 1px solid var(--panel-line);
+      border-radius: 8px;
+      background: var(--panel);
+      text-align: center;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(0.9rem, 2.8vw, 1.35rem);
+      line-height: 1;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .round {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: clamp(0.66rem, 1.8vw, 0.82rem);
+      line-height: 1.2;
+      min-height: 2.4em;
+    }
+
+    .toolbar {
+      position: fixed;
+      top: max(100px, calc(env(safe-area-inset-top) + 96px));
+      right: max(10px, env(safe-area-inset-right));
+      display: flex;
+      gap: 7px;
+      z-index: 3;
+    }
+
+    .tool,
+    .touch-button {
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 8px;
+      background: rgba(7, 12, 20, 0.78);
+      color: var(--ink);
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.26);
+    }
+
+    .tool {
+      min-width: 54px;
+      height: 38px;
+      padding: 0 10px;
+      pointer-events: auto;
+    }
+
+    .tool:active,
+    .touch-button.is-down {
+      transform: translateY(2px);
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.34);
+    }
+
+    .touch-controls {
+      position: fixed;
+      left: max(12px, env(safe-area-inset-left));
+      right: max(12px, env(safe-area-inset-right));
+      bottom: max(12px, env(safe-area-inset-bottom));
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .touch-button {
+      pointer-events: auto;
+      min-height: 54px;
+      font-size: 1.05rem;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .touch-button.left {
+      color: #062622;
+      background: linear-gradient(180deg, #76fff1, var(--left));
+    }
+
+    .touch-button.right {
+      color: #2c1d00;
+      background: linear-gradient(180deg, #fff2a8, var(--right));
+    }
+
+    .flash {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: rgba(255, 255, 255, 0);
+      transition: background 180ms ease;
+    }
+
+    .flash.is-on {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    @media (max-width: 620px) {
+      .hud {
+        grid-template-columns: 74px minmax(120px, 1fr) 74px;
+        gap: 7px;
+      }
+
+      .score {
+        min-height: 58px;
+        padding: 7px 8px;
+      }
+
+      .center-board {
+        width: auto;
+        min-height: 70px;
+        padding: 7px 8px;
+      }
+
+      .toolbar {
+        top: auto;
+        right: max(12px, env(safe-area-inset-right));
+        bottom: max(78px, calc(env(safe-area-inset-bottom) + 78px));
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="game" aria-label="Random Hoops game court"></canvas>
+
+  <div class="hud" aria-live="polite">
+    <section class="score left">
+      <p class="team">Teal</p>
+      <div class="points" id="leftScore">0</div>
+    </section>
+    <section class="center-board">
+      <h1 class="title">Random Hoops</h1>
+      <p class="round" id="roundLabel">Opening tip</p>
+    </section>
+    <section class="score right">
+      <p class="team">Gold</p>
+      <div class="points" id="rightScore">0</div>
+    </section>
+  </div>
+
+  <div class="toolbar">
+    <button class="tool" id="modeButton" type="button">CPU</button>
+    <button class="tool" id="resetButton" type="button">Reset</button>
+  </div>
+
+  <div class="touch-controls">
+    <button class="touch-button left" id="leftButton" type="button">Teal</button>
+    <button class="touch-button right" id="rightButton" type="button">Gold</button>
+  </div>
+
+  <div class="flash" id="flash"></div>
+
+  <script>
+    (() => {
+      const canvas = document.querySelector("#game");
+      const ctx = canvas.getContext("2d");
+      const leftScoreEl = document.querySelector("#leftScore");
+      const rightScoreEl = document.querySelector("#rightScore");
+      const roundLabelEl = document.querySelector("#roundLabel");
+      const modeButton = document.querySelector("#modeButton");
+      const resetButton = document.querySelector("#resetButton");
+      const leftButton = document.querySelector("#leftButton");
+      const rightButton = document.querySelector("#rightButton");
+      const flashEl = document.querySelector("#flash");
+
+      const TAU = Math.PI * 2;
+      const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+      const rand = (min, max) => min + Math.random() * (max - min);
+      const pick = (items) => items[Math.floor(Math.random() * items.length)];
+
+      const state = {
+        width: 0,
+        height: 0,
+        dpr: 1,
+        ground: 0,
+        leftScore: 0,
+        rightScore: 0,
+        targetScore: 5,
+        mode: "cpu",
+        freeze: 0,
+        messageTimer: 0,
+        message: "Opening tip",
+        lastTime: 0,
+        nextCpuAction: 0,
+        winningTeam: null,
+      };
+
+      const themes = [
+        {
+          name: "Blacktop",
+          sky: "#9fd8ff",
+          wall: "#587180",
+          court: "#2e7d58",
+          courtDark: "#174936",
+          paint: "#e86f2f",
+          line: "#fff6d6",
+        },
+        {
+          name: "Sunset",
+          sky: "#f6b17a",
+          wall: "#7e4d50",
+          court: "#456c4a",
+          courtDark: "#223b30",
+          paint: "#f3c144",
+          line: "#fff7df",
+        },
+        {
+          name: "Gym Night",
+          sky: "#202632",
+          wall: "#384353",
+          court: "#1f6f64",
+          courtDark: "#133d3a",
+          paint: "#d95f3e",
+          line: "#f6f0db",
+        },
+        {
+          name: "Lunch Rush",
+          sky: "#c9edf2",
+          wall: "#66785f",
+          court: "#6a8e3f",
+          courtDark: "#395429",
+          paint: "#e96b38",
+          line: "#fff9df",
+        },
+      ];
+
+      const modifiers = [
+        { label: "Moon hops", gravity: 0.74, jump: 1.18, wind: 0, ball: 1 },
+        { label: "Heavy ball", gravity: 1.05, jump: 0.95, wind: 0, ball: 1.22 },
+        { label: "Tiny ball", gravity: 0.95, jump: 1.02, wind: 0, ball: 0.78 },
+        { label: "Side wind", gravity: 0.9, jump: 1.05, wind: 24, ball: 1 },
+        { label: "Slippery shoes", gravity: 0.9, jump: 1.08, wind: 0, ball: 1, slide: 1.18 },
+        { label: "Low rims", gravity: 0.92, jump: 1, wind: 0, ball: 1, rimDrop: 34 },
+      ];
+
+      let round = {
+        theme: themes[0],
+        modifier: modifiers[0],
+        number: 1,
+      };
+
+      const players = {
+        left: makePlayer("left"),
+        right: makePlayer("right"),
+      };
+
+      const ball = {
+        x: 0,
+        y: 0,
+        vx: 0,
+        vy: 0,
+        radius: 18,
+        spin: 0,
+        lastTouch: null,
+      };
+
+      const keys = new Set();
+
+      function makePlayer(side) {
+        return {
+          side,
+          x: 0,
+          y: 0,
+          vx: 0,
+          vy: 0,
+          width: 34,
+          height: 72,
+          angle: 0,
+          spin: 0,
+          grounded: false,
+          cooldown: 0,
+          actionHeld: false,
+          actionPulse: 0,
+          color: side === "left" ? "#31d6c5" : "#ffcf3f",
+          dark: side === "left" ? "#08766b" : "#9a6500",
+        };
+      }
+
+      function resize() {
+        state.dpr = Math.min(window.devicePixelRatio || 1, 2);
+        state.width = window.innerWidth;
+        state.height = window.innerHeight;
+        canvas.width = Math.floor(state.width * state.dpr);
+        canvas.height = Math.floor(state.height * state.dpr);
+        canvas.style.width = `${state.width}px`;
+        canvas.style.height = `${state.height}px`;
+        ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
+        state.ground = state.height - clamp(state.height * 0.16, 86, 136);
+        placePlayers();
+        keepInBounds(ball);
+      }
+
+      function placePlayers() {
+        const spacing = clamp(state.width * 0.18, 96, 170);
+        players.left.x = spacing;
+        players.left.y = state.ground - players.left.height / 2;
+        players.left.vx = 0;
+        players.left.vy = 0;
+        players.left.angle = 0;
+        players.left.spin = 0;
+        players.left.grounded = true;
+
+        players.right.x = state.width - spacing;
+        players.right.y = state.ground - players.right.height / 2;
+        players.right.vx = 0;
+        players.right.vy = 0;
+        players.right.angle = 0;
+        players.right.spin = 0;
+        players.right.grounded = true;
+      }
+
+      function resetBall(direction = 1) {
+        ball.radius = 18 * round.modifier.ball;
+        ball.x = state.width / 2;
+        ball.y = state.ground - clamp(state.height * 0.26, 128, 190);
+        ball.vx = direction * rand(70, 110);
+        ball.vy = -rand(140, 220);
+        ball.spin = 0;
+        ball.lastTouch = null;
+      }
+
+      function newRound(scoredBy = null) {
+        round.number += scoredBy ? 1 : 0;
+        round.theme = pick(themes);
+        round.modifier = pick(modifiers);
+        const lead = state.leftScore === state.rightScore
+          ? "Tie game"
+          : state.leftScore > state.rightScore
+            ? "Teal leads"
+            : "Gold leads";
+        state.message = scoredBy ? `${scoredBy} scores - ${round.modifier.label}` : round.modifier.label;
+        state.messageTimer = 1.8;
+        roundLabelEl.textContent = `${lead}. ${round.modifier.label}.`;
+        placePlayers();
+        resetBall(scoredBy === "Teal" ? -1 : 1);
+        state.freeze = scoredBy ? 0.6 : 0.2;
+        flash();
+      }
+
+      function flash() {
+        flashEl.classList.add("is-on");
+        window.setTimeout(() => flashEl.classList.remove("is-on"), 120);
+      }
+
+      function resetMatch() {
+        state.leftScore = 0;
+        state.rightScore = 0;
+        state.winningTeam = null;
+        round.number = 0;
+        updateScore();
+        newRound();
+      }
+
+      function updateScore() {
+        leftScoreEl.textContent = state.leftScore;
+        rightScoreEl.textContent = state.rightScore;
+      }
+
+      function action(player) {
+        if (state.winningTeam) {
+          resetMatch();
+          return;
+        }
+
+        if (player.cooldown > 0) return;
+        const direction = player.side === "left" ? 1 : -1;
+        const jumpPower = (player.grounded ? 520 : 245) * round.modifier.jump;
+        const sideKick = (player.grounded ? 230 : 120) * (round.modifier.slide || 1);
+
+        player.vy = -jumpPower;
+        player.vx += direction * sideKick;
+        player.spin += direction * rand(3.4, 5.2);
+        player.grounded = false;
+        player.cooldown = 0.26;
+        player.actionPulse = 0.16;
+
+        hitBall(player, true);
+      }
+
+      function updatePlayer(player, dt) {
+        player.cooldown = Math.max(0, player.cooldown - dt);
+        player.actionPulse = Math.max(0, player.actionPulse - dt);
+        const gravity = 1260 * round.modifier.gravity;
+
+        player.vy += gravity * dt;
+        player.x += player.vx * dt;
+        player.y += player.vy * dt;
+        player.angle += player.spin * dt;
+        player.spin *= Math.pow(0.08, dt);
+
+        const floor = state.ground - player.height / 2;
+        if (player.y >= floor) {
+          player.y = floor;
+          player.vy = 0;
+          player.grounded = true;
+          player.angle *= Math.pow(0.02, dt);
+          player.spin = 0;
+          player.vx *= Math.pow(0.18 / (round.modifier.slide || 1), dt);
+        } else {
+          player.grounded = false;
+          player.vx *= Math.pow(0.92, dt);
+        }
+
+        const minX = player.width / 2 + 8;
+        const maxX = state.width - player.width / 2 - 8;
+        if (player.x < minX) {
+          player.x = minX;
+          player.vx = Math.abs(player.vx) * 0.5;
+        }
+        if (player.x > maxX) {
+          player.x = maxX;
+          player.vx = -Math.abs(player.vx) * 0.5;
+        }
+
+        hitBall(player, false);
+      }
+
+      function hitBall(player, force) {
+        const dx = ball.x - player.x;
+        const dy = ball.y - (player.y - player.height * 0.18);
+        const reach = force ? 76 : 48;
+        const distance = Math.hypot(dx, dy);
+        if (distance > reach + ball.radius) return;
+
+        const direction = player.side === "left" ? 1 : -1;
+        const closeness = clamp(1 - distance / (reach + ball.radius), 0.1, 1);
+        const lift = force ? rand(420, 610) : rand(190, 280);
+        const push = (force ? rand(410, 570) : rand(120, 220)) * closeness;
+
+        ball.vx += direction * push + player.vx * 0.16;
+        ball.vy -= lift * closeness;
+        ball.spin += direction * rand(4, 8) * closeness;
+        ball.lastTouch = player.side;
+      }
+
+      function updateBall(dt) {
+        const gravity = 940 * round.modifier.gravity;
+        ball.vx += round.modifier.wind * dt;
+        ball.vy += gravity * dt;
+        ball.x += ball.vx * dt;
+        ball.y += ball.vy * dt;
+        ball.spin += ball.vx * dt * 0.035;
+
+        const bounce = 0.68;
+        if (ball.x < ball.radius) {
+          ball.x = ball.radius;
+          ball.vx = Math.abs(ball.vx) * bounce;
+        }
+        if (ball.x > state.width - ball.radius) {
+          ball.x = state.width - ball.radius;
+          ball.vx = -Math.abs(ball.vx) * bounce;
+        }
+        if (ball.y < ball.radius + 28) {
+          ball.y = ball.radius + 28;
+          ball.vy = Math.abs(ball.vy) * 0.58;
+        }
+        if (ball.y > state.ground - ball.radius) {
+          ball.y = state.ground - ball.radius;
+          ball.vy = -Math.abs(ball.vy) * 0.62;
+          ball.vx *= 0.84;
+          if (Math.abs(ball.vy) < 80) ball.vy = -80;
+        }
+
+        collidePlayers();
+        collideRims();
+        checkScore();
+      }
+
+      function collidePlayers() {
+        Object.values(players).forEach((player) => {
+          const closestX = clamp(ball.x, player.x - player.width / 2, player.x + player.width / 2);
+          const closestY = clamp(ball.y, player.y - player.height / 2, player.y + player.height / 2);
+          const dx = ball.x - closestX;
+          const dy = ball.y - closestY;
+          const distance = Math.hypot(dx, dy) || 1;
+          if (distance >= ball.radius) return;
+          const nx = dx / distance;
+          const ny = dy / distance;
+          const overlap = ball.radius - distance;
+          ball.x += nx * overlap;
+          ball.y += ny * overlap;
+          const impulse = 180;
+          ball.vx += nx * impulse + player.vx * 0.32;
+          ball.vy += ny * impulse + player.vy * 0.14;
+          ball.lastTouch = player.side;
+        });
+      }
+
+      function hoopPositions() {
+        const rimY = clamp(state.height * 0.36, 190, 280) + (round.modifier.rimDrop || 0);
+        return {
+          left: { x: clamp(state.width * 0.1, 62, 126), y: rimY },
+          right: { x: state.width - clamp(state.width * 0.1, 62, 126), y: rimY },
+        };
+      }
+
+      function collideRims() {
+        const hoops = hoopPositions();
+        Object.entries(hoops).forEach(([side, hoop]) => {
+          const rimPoints = side === "left"
+            ? [{ x: hoop.x + 4, y: hoop.y }, { x: hoop.x + 62, y: hoop.y }]
+            : [{ x: hoop.x - 4, y: hoop.y }, { x: hoop.x - 62, y: hoop.y }];
+          rimPoints.forEach((rim) => {
+            const dx = ball.x - rim.x;
+            const dy = ball.y - rim.y;
+            const distance = Math.hypot(dx, dy) || 1;
+            const radius = ball.radius + 7;
+            if (distance >= radius) return;
+            const nx = dx / distance;
+            const ny = dy / distance;
+            const overlap = radius - distance;
+            ball.x += nx * overlap;
+            ball.y += ny * overlap;
+            const dot = ball.vx * nx + ball.vy * ny;
+            if (dot < 0) {
+              ball.vx -= dot * nx * 1.72;
+              ball.vy -= dot * ny * 1.72;
+            }
+            ball.spin += nx * 4;
+          });
+        });
+      }
+
+      function checkScore() {
+        const hoops = hoopPositions();
+        const leftHoop = hoops.left;
+        const rightHoop = hoops.right;
+        const rimWidth = 70;
+        const verticalWindow = 30;
+
+        if (
+          ball.vy > 0 &&
+          ball.x > rightHoop.x - rimWidth &&
+          ball.x < rightHoop.x + 4 &&
+          ball.y > rightHoop.y - verticalWindow &&
+          ball.y < rightHoop.y + verticalWindow
+        ) {
+          score("left");
+        }
+
+        if (
+          ball.vy > 0 &&
+          ball.x < leftHoop.x + rimWidth &&
+          ball.x > leftHoop.x - 4 &&
+          ball.y > leftHoop.y - verticalWindow &&
+          ball.y < leftHoop.y + verticalWindow
+        ) {
+          score("right");
+        }
+      }
+
+      function score(side) {
+        if (state.freeze > 0 || state.winningTeam) return;
+        if (side === "left") {
+          state.leftScore += 1;
+        } else {
+          state.rightScore += 1;
+        }
+        updateScore();
+
+        if (state.leftScore >= state.targetScore || state.rightScore >= state.targetScore) {
+          state.winningTeam = state.leftScore > state.rightScore ? "Teal" : "Gold";
+          state.message = `${state.winningTeam} wins`;
+          roundLabelEl.textContent = `${state.winningTeam} wins.`;
+          state.freeze = 1.1;
+          flash();
+          return;
+        }
+
+        newRound(side === "left" ? "Teal" : "Gold");
+      }
+
+      function keepInBounds(object) {
+        if (!state.width || !state.height) return;
+        object.x = clamp(object.x || state.width / 2, object.radius, state.width - object.radius);
+        object.y = clamp(object.y || state.height / 2, object.radius + 28, state.ground - object.radius);
+      }
+
+      function updateCpu(dt) {
+        if (state.mode !== "cpu" || state.freeze > 0 || state.winningTeam) return;
+        state.nextCpuAction -= dt;
+        const player = players.right;
+        const targetHoop = hoopPositions().left;
+        const ballNear = Math.abs(ball.x - player.x) < 115 && ball.y < player.y + 24;
+        const ballThreat = ball.x < state.width * 0.52 && ball.vx < 120;
+        const hasShot = ball.lastTouch === "right" && ball.x < player.x;
+
+        if (state.nextCpuAction <= 0 && (ballNear || ballThreat || hasShot)) {
+          const aimLooksGood = Math.abs(ball.x - targetHoop.x) > 90 || Math.random() > 0.32;
+          if (aimLooksGood) action(player);
+          state.nextCpuAction = rand(0.24, 0.58);
+        }
+      }
+
+      function update(dt) {
+        if (state.freeze > 0) {
+          state.freeze = Math.max(0, state.freeze - dt);
+          return;
+        }
+
+        if (keys.has("KeyW") || keys.has("KeyA")) action(players.left);
+        if (state.mode === "2p" && (keys.has("ArrowUp") || keys.has("KeyL"))) action(players.right);
+
+        updateCpu(dt);
+        updatePlayer(players.left, dt);
+        updatePlayer(players.right, dt);
+        updateBall(dt);
+      }
+
+      function draw() {
+        drawCourt();
+        drawHoop("left");
+        drawHoop("right");
+        drawPlayer(players.left);
+        drawPlayer(players.right);
+        drawBall();
+        if (state.winningTeam) drawWinner();
+      }
+
+      function drawCourt() {
+        const t = round.theme;
+        const w = state.width;
+        const h = state.height;
+        ctx.fillStyle = t.sky;
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.fillStyle = t.wall;
+        ctx.fillRect(0, h * 0.18, w, state.ground - h * 0.18);
+
+        ctx.fillStyle = t.court;
+        ctx.fillRect(0, state.ground, w, h - state.ground);
+        ctx.fillStyle = t.courtDark;
+        ctx.fillRect(0, state.ground + 32, w, h - state.ground - 32);
+
+        ctx.strokeStyle = t.line;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(w / 2, state.ground);
+        ctx.lineTo(w / 2, h);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(w / 2, state.ground + 36, clamp(w * 0.1, 54, 92), 0, TAU);
+        ctx.stroke();
+
+        ctx.fillStyle = t.paint;
+        const paintW = clamp(w * 0.19, 112, 190);
+        ctx.fillRect(0, state.ground, paintW, h - state.ground);
+        ctx.fillRect(w - paintW, state.ground, paintW, h - state.ground);
+
+        ctx.strokeStyle = "rgba(255, 246, 214, 0.82)";
+        ctx.lineWidth = 2;
+        for (let x = -80; x < w + 80; x += 38) {
+          ctx.beginPath();
+          ctx.moveTo(x, state.ground + 18);
+          ctx.lineTo(x + 24, state.ground + 46);
+          ctx.stroke();
+        }
+
+        ctx.fillStyle = "rgba(0, 0, 0, 0.22)";
+        ctx.fillRect(0, state.ground - 12, w, 12);
+      }
+
+      function drawHoop(side) {
+        const hoop = hoopPositions()[side];
+        const dir = side === "left" ? 1 : -1;
+        const boardX = hoop.x - dir * 14;
+        const boardY = hoop.y - 55;
+
+        ctx.save();
+        ctx.strokeStyle = "#293241";
+        ctx.lineWidth = 7;
+        ctx.beginPath();
+        ctx.moveTo(boardX, boardY);
+        ctx.lineTo(boardX, state.ground);
+        ctx.stroke();
+
+        ctx.fillStyle = "#f8fafc";
+        ctx.strokeStyle = "#263445";
+        ctx.lineWidth = 4;
+        ctx.fillRect(boardX - dir * 8 - (dir < 0 ? 52 : 0), boardY, 52, 38);
+        ctx.strokeRect(boardX - dir * 8 - (dir < 0 ? 52 : 0), boardY, 52, 38);
+
+        ctx.strokeStyle = "#f15f2a";
+        ctx.lineWidth = 7;
+        ctx.beginPath();
+        ctx.moveTo(hoop.x, hoop.y);
+        ctx.lineTo(hoop.x + dir * 64, hoop.y);
+        ctx.stroke();
+
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.74)";
+        ctx.lineWidth = 2;
+        for (let i = 0; i < 5; i += 1) {
+          const x = hoop.x + dir * (8 + i * 12);
+          ctx.beginPath();
+          ctx.moveTo(x, hoop.y + 4);
+          ctx.lineTo(x + dir * 6, hoop.y + 36);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      function drawPlayer(player) {
+        const pulse = player.actionPulse > 0 ? 1 + player.actionPulse * 1.4 : 1;
+        ctx.save();
+        ctx.translate(player.x, player.y);
+        ctx.rotate(player.angle);
+
+        ctx.fillStyle = "rgba(0, 0, 0, 0.22)";
+        ctx.beginPath();
+        ctx.ellipse(0, player.height / 2 + 9, player.width * 0.7, 9, 0, 0, TAU);
+        ctx.fill();
+
+        ctx.fillStyle = player.dark;
+        ctx.fillRect(-player.width * 0.48, -player.height * 0.16, player.width * 0.96, player.height * 0.66);
+
+        ctx.fillStyle = player.color;
+        ctx.fillRect(-player.width * 0.45, -player.height * 0.48, player.width * 0.9, player.height * 0.44);
+
+        ctx.fillStyle = "#f4b383";
+        ctx.beginPath();
+        ctx.arc(0, -player.height * 0.62, 15 * pulse, 0, TAU);
+        ctx.fill();
+
+        ctx.strokeStyle = "#f4b383";
+        ctx.lineWidth = 7;
+        ctx.lineCap = "round";
+        const armDir = player.side === "left" ? 1 : -1;
+        ctx.beginPath();
+        ctx.moveTo(armDir * 13, -player.height * 0.34);
+        ctx.lineTo(armDir * 29 * pulse, -player.height * 0.54 - player.actionPulse * 48);
+        ctx.stroke();
+
+        ctx.strokeStyle = "#1c2635";
+        ctx.lineWidth = 8;
+        ctx.beginPath();
+        ctx.moveTo(-9, player.height * 0.46);
+        ctx.lineTo(-17, player.height * 0.62);
+        ctx.moveTo(9, player.height * 0.46);
+        ctx.lineTo(17, player.height * 0.62);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawBall() {
+        ctx.save();
+        ctx.translate(ball.x, ball.y);
+        ctx.rotate(ball.spin);
+        ctx.fillStyle = "#d96b2b";
+        ctx.beginPath();
+        ctx.arc(0, 0, ball.radius, 0, TAU);
+        ctx.fill();
+        ctx.strokeStyle = "#5c2b16";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(0, 0, ball.radius * 0.72, -Math.PI / 2, Math.PI / 2);
+        ctx.arc(0, 0, ball.radius * 0.72, Math.PI / 2, Math.PI * 1.5);
+        ctx.moveTo(-ball.radius, 0);
+        ctx.lineTo(ball.radius, 0);
+        ctx.moveTo(0, -ball.radius);
+        ctx.lineTo(0, ball.radius);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawWinner() {
+        ctx.save();
+        ctx.fillStyle = "rgba(7, 12, 20, 0.58)";
+        ctx.fillRect(0, 0, state.width, state.height);
+        ctx.fillStyle = state.winningTeam === "Teal" ? "#31d6c5" : "#ffcf3f";
+        ctx.font = `900 ${clamp(state.width * 0.09, 42, 86)}px Trebuchet MS, sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(`${state.winningTeam} wins`, state.width / 2, state.height / 2);
+        ctx.restore();
+      }
+
+      function frame(time) {
+        if (!state.lastTime) state.lastTime = time;
+        const dt = Math.min((time - state.lastTime) / 1000, 0.033);
+        state.lastTime = time;
+        update(dt);
+        draw();
+        requestAnimationFrame(frame);
+      }
+
+      function bindButton(button, player) {
+        const down = (event) => {
+          event.preventDefault();
+          button.classList.add("is-down");
+          action(player);
+        };
+        const up = (event) => {
+          event.preventDefault();
+          button.classList.remove("is-down");
+        };
+        button.addEventListener("pointerdown", down);
+        button.addEventListener("pointerup", up);
+        button.addEventListener("pointercancel", up);
+        button.addEventListener("pointerleave", up);
+      }
+
+      window.addEventListener("resize", resize);
+      window.addEventListener("keydown", (event) => {
+        keys.add(event.code);
+        if (["KeyW", "KeyA", "ArrowUp", "KeyL", "Space"].includes(event.code)) {
+          event.preventDefault();
+        }
+        if (event.code === "Space") action(players.left);
+      });
+      window.addEventListener("keyup", (event) => {
+        keys.delete(event.code);
+      });
+
+      modeButton.addEventListener("click", () => {
+        state.mode = state.mode === "cpu" ? "2p" : "cpu";
+        modeButton.textContent = state.mode === "cpu" ? "CPU" : "2P";
+      });
+
+      resetButton.addEventListener("click", resetMatch);
+      bindButton(leftButton, players.left);
+      bindButton(rightButton, players.right);
+
+      resize();
+      resetMatch();
+      requestAnimationFrame(frame);
+    })();
+  </script>
+</body>
+</html>
