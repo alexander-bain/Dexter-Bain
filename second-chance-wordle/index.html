@@ -406,10 +406,37 @@
         "VOICE", "WASTE", "WATCH", "WATER", "WHEEL", "WHERE", "WHICH", "WHILE", "WHITE", "WHOLE",
         "WHOSE", "WOMAN", "WORLD", "WORRY", "WORTH", "WOULD", "WRITE", "WRONG", "YOUNG", "YOUTH"
       ];
+      const EXTRA_GUESSES = [
+        "AAHED", "AALII", "AARGH", "ABACA", "ABACI", "ABACS", "ABAFT", "ABAKA", "ABAMP", "ABAYA",
+        "ABBES", "ABDAL", "ABELE", "ABHOR", "ABIDE", "ABIES", "ABJAD", "ABLET", "ABMHO", "ABNET",
+        "ABOHM", "ABOIL", "ABOMA", "ABOON", "ABORD", "ABRAY", "ABRIM", "ABRIN", "ABRIS", "ABSEY",
+        "ABSIT", "ABUNA", "ABUNE", "ABURA", "ABUZZ", "ABYDE", "ABYED", "ABYES", "ABYME", "ABYSM",
+        "ACARI", "ACEDY", "ACERB", "ACHAR", "ACHOO", "ACINI", "ACMIC", "ACNED", "ACNES", "ACOEL",
+        "ACOLD", "ACRAL", "ACRED", "ACRID", "ACRON", "ACRUX", "ACTIN", "ACTUS", "ACYLS", "ADDAX",
+        "ADDLE", "ADEEM", "ADEPS", "ADEPT", "ADIEU", "ADIOS", "ADITS", "ADIVE", "ADLAY", "ADLIB",
+        "ADZES", "AECIA", "AERIE", "AESIR", "AGAMA", "AGAMI", "AGAPE", "AGARS", "AGATE", "AGAVE",
+        "AGLET", "AGLEY", "AGLUS", "AGONE", "AGONS", "AGORA", "AGREE", "AGRIA", "AHENT", "AHURU",
+        "AIDOS", "AILED", "AIMED", "AINEE", "AIOLI", "AITCH", "AITUS", "AIVER", "AJIVA", "AJUGA",
+        "AKENE", "ALAAP", "ALACK", "ALAMO", "ALATE", "ALCID", "ALDEA", "ALEPH", "ALGID", "ALKYD",
+        "ALKYL", "ALLAY", "ALLEE", "ALOES", "ALOHA", "ALOIN", "ALTHO", "ALULA", "AMAIN", "AMATE",
+        "AMBOS", "AMICE", "AMIDE", "AMIDO", "AMINE", "AMINO", "AMIRS", "AMITY", "AMOLE", "AMOUR",
+        "AMRIT", "ANCHO", "ANCON", "ANENT", "ANGST", "ANILE", "ANILS", "ANIMA", "ANIME", "ANION",
+        "ANKHS", "ANLAS", "ANNAL", "ANTAE", "ANTAS", "ANTRE", "AORTA", "APACE", "APAGE", "APERS",
+        "APERT", "APERY", "APHID", "APIAN", "APISH", "APODE", "APORT", "APPAL", "APPAY", "APPUI",
+        "AREAL", "AREIC", "AREPA", "ARGAL", "ARGAN", "ARGIL", "ARGLE", "ARGOT", "ARIEL", "ARILS",
+        "ARLES", "ARMET", "ARNAS", "ARNUT", "AROBA", "AROHA", "AROID", "ARPAS", "ARRIS", "ARUHE",
+        "ARVOS", "ASANA", "ASCOT", "ASDIC", "ASHET", "ASKEW", "ASKOI", "ASPEN", "ASPER", "ASPIC",
+        "ASSAI", "ATILT", "ATMAN", "ATMAS", "ATOLL", "ATOMS", "ATONY", "ATTAR", "AUGER", "AUGHT",
+        "AURAE", "AURAL", "AURAR", "AURAS", "AUREI", "AURES", "AURIC", "AVENS", "AVERS", "AVISO",
+        "AVIZE", "AWARN", "AWATO", "AWOLS", "AXELS", "AXILE", "AXILS", "AXING", "AXIOM", "AXION",
+        "BAIZE", "BODES", "BOOED", "BOORS", "BORER", "BOUSE", "BOWSE", "BROOS", "BROSE", "BURDS",
+        "BURSE", "CEROS", "COOER", "CORSE", "COSES", "COUDE", "CREDO", "CRORE", "CRUDO", "CRUOR",
+        "CRUSE", "CUSSO", "ZORIL"
+      ];
 
       const ROWS = 6;
       const COLS = 5;
-      const WORD_LIST = new Set(WORDS);
+      const WORD_LIST = new Set([...WORDS, ...EXTRA_GUESSES]);
       const board = document.querySelector("#board");
       const keyboard = document.querySelector("#keyboard");
       const toast = document.querySelector("#toast");
