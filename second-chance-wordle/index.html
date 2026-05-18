@@ -120,7 +120,7 @@
     }
 
     .tile.flip {
-      animation: flip 620ms ease-in-out;
+      animation: flip 900ms ease-in-out;
     }
 
     .row.shake {
@@ -206,12 +206,28 @@
       transform: translateX(-50%) translateY(0);
     }
 
+    .toast.expand {
+      animation: toast-expand 520ms ease-out;
+    }
+
     @keyframes pop {
       0% {
         transform: scale(0.9);
       }
       100% {
         transform: scale(1);
+      }
+    }
+
+    @keyframes toast-expand {
+      0% {
+        transform: translateX(-50%) translateY(0) scale(0.78);
+      }
+      58% {
+        transform: translateX(-50%) translateY(0) scale(1.16);
+      }
+      100% {
+        transform: translateX(-50%) translateY(0) scale(1);
       }
     }
 
@@ -349,7 +365,7 @@
   <script>
     (() => {
       const WORDS = [
-        "ABOUT", "ABOVE", "ACTOR", "ACUTE", "ADMIT", "ADOPT", "AFTER", "AGAIN", "AGENT", "AGREE",
+        "ABOUT", "ABOVE", "ACTOR", "ACUTE", "ADIEU", "ADMIT", "ADOPT", "AFTER", "AGAIN", "AGENT", "AGREE",
         "AHEAD", "ALARM", "ALBUM", "ALERT", "ALIEN", "ALIVE", "ALLOW", "ALONE", "ALTER", "AMONG",
         "APPLE", "APPLY", "ARENA", "ARGUE", "ARISE", "ARRAY", "AUDIO", "AVOID", "AWARD", "AWARE",
         "BADGE", "BAKER", "BASIC", "BEACH", "BEGAN", "BEGIN", "BEING", "BELOW", "BENCH", "BIRTH",
@@ -460,11 +476,14 @@
         });
       }
 
-      function showToast(message, linger = 1100) {
+      function showToast(message, linger = 1100, expand = false) {
         toast.textContent = message;
+        toast.classList.remove("expand");
+        void toast.offsetWidth;
         toast.classList.add("show");
+        if (expand) toast.classList.add("expand");
         clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => toast.classList.remove("show"), linger);
+        toastTimer = setTimeout(() => toast.classList.remove("show", "expand"), linger);
       }
 
       function press(key) {
@@ -504,7 +523,7 @@
 
         if (!WORD_LIST.has(currentGuess)) {
           shake();
-          showToast("Not on word list");
+          showToast("Not on word list", 1400, true);
           return;
         }
 
@@ -530,8 +549,8 @@
       }
 
       function revealGuess(guess, result) {
-        const flipDelay = 260;
-        const flipDuration = 620;
+        const flipDelay = 420;
+        const flipDuration = 900;
         revealing = true;
 
         result.forEach((status, index) => {
