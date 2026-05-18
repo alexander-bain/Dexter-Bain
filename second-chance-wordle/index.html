@@ -127,6 +127,26 @@
       animation: shake 340ms ease-in-out;
     }
 
+    .row.win .tile {
+      animation: win-hop 620ms ease-out;
+    }
+
+    .row.win .tile:nth-child(2) {
+      animation-delay: 70ms;
+    }
+
+    .row.win .tile:nth-child(3) {
+      animation-delay: 140ms;
+    }
+
+    .row.win .tile:nth-child(4) {
+      animation-delay: 210ms;
+    }
+
+    .row.win .tile:nth-child(5) {
+      animation-delay: 280ms;
+    }
+
     .keyboard {
       display: grid;
       gap: 16px;
@@ -210,6 +230,23 @@
       animation: toast-expand 520ms ease-out;
     }
 
+    .celebration {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .confetti {
+      position: absolute;
+      top: -18px;
+      width: 10px;
+      height: 18px;
+      border-radius: 2px;
+      animation: confetti-fall 1600ms cubic-bezier(0.12, 0.6, 0.3, 1) forwards;
+    }
+
     @keyframes pop {
       0% {
         transform: scale(0.9);
@@ -243,6 +280,30 @@
       }
       100% {
         transform: rotateX(0);
+      }
+    }
+
+    @keyframes win-hop {
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+      32% {
+        transform: translateY(-18px) scale(1.04);
+      }
+      64% {
+        transform: translateY(4px) scale(0.98);
+      }
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate3d(var(--drift), 112vh, 0) rotate(var(--spin));
       }
     }
 
@@ -360,6 +421,7 @@
     </section>
     <section class="keyboard" id="keyboard" aria-label="Keyboard"></section>
   </main>
+  <div class="celebration" id="celebration" aria-hidden="true"></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
@@ -436,13 +498,16 @@
 
       const ROWS = 6;
       const COLS = 5;
+      const STATS_KEY = "second-chance-wordle-stats-v1";
       const WORD_LIST = new Set([...WORDS, ...EXTRA_GUESSES]);
       const board = document.querySelector("#board");
       const keyboard = document.querySelector("#keyboard");
       const toast = document.querySelector("#toast");
+      const celebration = document.querySelector("#celebration");
       const keyRows = ["QWERTYUIOP", "ASDFGHJKL", "ENTERZXCVBNM<"];
       const rank = { absent: 1, present: 2, correct: 3 };
       const keyState = {};
+      const confettiColors = ["#6aaa64", "#c9b458", "#787c7e", "#f97316", "#2563eb", "#e11d48"];
       let answer = "";
       let currentRow = 0;
       let currentGuess = "";
@@ -451,6 +516,7 @@
       let toastTimer = 0;
       let tiles = [];
       let keys = {};
+      let stats = loadStats();
 
       function chooseAnswer() {
         const today = new Date();
@@ -513,6 +579,67 @@
         toastTimer = setTimeout(() => toast.classList.remove("show", "expand"), linger);
       }
 
+      function loadStats() {
+        const fallback = {
+          played: 0,
+          wins: 0,
+          streak: 0,
+          bestStreak: 0,
+          distribution: Array(ROWS).fill(0),
+        };
+        try {
+          const saved = JSON.parse(localStorage.getItem(STATS_KEY) || "null");
+          if (!saved || !Array.isArray(saved.distribution)) return fallback;
+          return {
+            ...fallback,
+            ...saved,
+            distribution: [...fallback.distribution].map((value, index) => saved.distribution[index] || value),
+          };
+        } catch {
+          return fallback;
+        }
+      }
+
+      function saveStats() {
+        try {
+          localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+        } catch {
+          // Stats are a bonus; gameplay should continue if storage is blocked.
+        }
+      }
+
+      function recordGame(won, attempts = 0) {
+        stats.played += 1;
+        if (won) {
+          stats.wins += 1;
+          stats.streak += 1;
+          stats.bestStreak = Math.max(stats.bestStreak, stats.streak);
+          if (attempts >= 1 && attempts <= ROWS) {
+            stats.distribution[attempts - 1] += 1;
+          }
+        } else {
+          stats.streak = 0;
+        }
+        saveStats();
+      }
+
+      function celebrateWin() {
+        celebration.innerHTML = "";
+        for (let index = 0; index < 72; index += 1) {
+          const piece = document.createElement("span");
+          piece.className = "confetti";
+          piece.style.left = `${Math.random() * 100}%`;
+          piece.style.background = confettiColors[index % confettiColors.length];
+          piece.style.animationDelay = `${Math.random() * 260}ms`;
+          piece.style.setProperty("--drift", `${Math.random() * 240 - 120}px`);
+          piece.style.setProperty("--spin", `${Math.random() * 720 + 240}deg`);
+          celebration.appendChild(piece);
+        }
+        setTimeout(() => {
+          celebration.innerHTML = "";
+        }, 2100);
+      }
+
       function press(key) {
         if (revealing) return;
         if (done) {
@@ -561,8 +688,12 @@
 
       function finishGuess(guess) {
         if (guess === answer) {
+          const attempts = currentRow + 1;
           done = true;
-          showToast("You got it", 1800);
+          board.children[currentRow]?.classList.add("win");
+          recordGame(true, attempts);
+          celebrateWin();
+          showToast(`Won in ${attempts} - Streak ${stats.streak}`, 2800, true);
           return;
         }
 
@@ -571,7 +702,8 @@
 
         if (currentRow >= ROWS) {
           done = true;
-          showToast(answer, 2400);
+          recordGame(false);
+          showToast(`${answer} - Streak ended`, 2800, true);
         }
       }
 
@@ -646,6 +778,7 @@
         currentGuess = "";
         done = false;
         revealing = false;
+        celebration.innerHTML = "";
         buildBoard();
         buildKeyboard();
       }
