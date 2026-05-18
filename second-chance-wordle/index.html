@@ -119,6 +119,10 @@
       animation: pop 100ms ease-out;
     }
 
+    .tile.flip {
+      animation: flip 620ms ease-in-out;
+    }
+
     .row.shake {
       animation: shake 340ms ease-in-out;
     }
@@ -208,6 +212,21 @@
       }
       100% {
         transform: scale(1);
+      }
+    }
+
+    @keyframes flip {
+      0% {
+        transform: rotateX(0);
+      }
+      48% {
+        transform: rotateX(90deg);
+      }
+      52% {
+        transform: rotateX(90deg);
+      }
+      100% {
+        transform: rotateX(0);
       }
     }
 
@@ -385,6 +404,7 @@
       let currentRow = 0;
       let currentGuess = "";
       let done = false;
+      let revealing = false;
       let toastTimer = 0;
       let tiles = [];
       let keys = {};
@@ -448,6 +468,7 @@
       }
 
       function press(key) {
+        if (revealing) return;
         if (done) {
           if (key === "ENTER") reset();
           return;
@@ -487,14 +508,13 @@
           return;
         }
 
-        const result = scoreGuess(currentGuess, answer);
-        result.forEach((status, index) => {
-          const tile = tiles[currentRow][index];
-          tile.className = `tile ${status}`;
-          paintKey(currentGuess[index], status);
-        });
+        const guess = currentGuess;
+        const result = scoreGuess(guess, answer);
+        revealGuess(guess, result);
+      }
 
-        if (currentGuess === answer) {
+      function finishGuess(guess) {
+        if (guess === answer) {
           done = true;
           showToast("You got it", 1800);
           return;
@@ -507,6 +527,33 @@
           done = true;
           showToast(answer, 2400);
         }
+      }
+
+      function revealGuess(guess, result) {
+        const flipDelay = 260;
+        const flipDuration = 620;
+        revealing = true;
+
+        result.forEach((status, index) => {
+          const tile = tiles[currentRow][index];
+          const delay = index * flipDelay;
+          setTimeout(() => {
+            tile.classList.add("flip");
+          }, delay);
+          setTimeout(() => {
+            tile.classList.remove("filled");
+            tile.classList.add(status);
+            paintKey(guess[index], status);
+          }, delay + flipDuration / 2);
+          setTimeout(() => {
+            tile.classList.remove("flip");
+          }, delay + flipDuration);
+        });
+
+        setTimeout(() => {
+          revealing = false;
+          finishGuess(guess);
+        }, (COLS - 1) * flipDelay + flipDuration + 60);
       }
 
       function scoreGuess(guess, target) {
@@ -552,6 +599,7 @@
         currentRow = 0;
         currentGuess = "";
         done = false;
+        revealing = false;
         buildBoard();
         buildKeyboard();
       }
