@@ -1126,158 +1126,157 @@
 
     const questions = [
       {
-        category: "Niche Flag",
-        difficulty: "Oddball opener",
-        question: "Which place uses this mostly unknown flag?",
-        visual: '<div class="flag-wallis" role="img" aria-label="Red flag with a French tricolor canton and a white cross"></div>',
-        options: ["Faroe Islands", "Tuvalu", "Wallis and Futuna", "Samoa", "Saint Pierre and Miquelon"],
-        answer: 2,
-        fact: "It is Wallis and Futuna, a French territory in the South Pacific."
-      },
-      {
-        category: "Niche Fast Food",
-        difficulty: "Logo hunt",
-        question: "What fast-food chain uses this logo mark?",
-        visual: '<div class="mos-logo-card" role="img" aria-label="A red, green, and yellow fast-food logo mark"><div class="mos-badge">M</div><div class="logo-stripes" aria-hidden="true"><i></i><i></i><i></i></div></div>',
-        options: ["BurgerFuel", "Lotteria", "MOS Burger", "Wimpy", "Jollibee"],
-        answer: 2,
-        fact: "It is MOS Burger, a Japanese fast-food chain with a very recognizable green-and-red logo."
-      },
-      {
-        category: "Snack Lore",
-        difficulty: "Party food",
-        question: "Fairy bread is a classic birthday-party snack from where?",
-        visual: '<div class="fairy-plate" role="img" aria-label="Two pieces of bread covered with colorful sprinkles"><div class="bread one"></div><div class="bread two"></div></div>',
-        options: ["Norway", "Australia", "Mexico", "South Africa", "Thailand"],
-        answer: 1,
-        fact: "Australia claims fairy bread: buttered bread covered in colorful sprinkles."
-      },
-      {
-        category: "Weird Sports",
-        difficulty: "Olympic vocabulary",
-        question: "In which sport do players slide stones toward the house?",
+        category: "Flag Placeholder",
+        difficulty: "Dexter adds flag later",
+        question: "When Dexter adds the flag here, which place will it belong to?",
         visual: "",
-        options: ["Lacrosse", "Bocce", "Curling", "Cricket", "Water polo"],
+        options: ["Barbados", "Kosovo", "Seychelles", "Albania", "Cyprus"],
         answer: 2,
-        fact: "Curling uses stones, brooms, and a target called the house."
-      },
-      {
-        category: "Animal Symbols",
-        difficulty: "Flag but not a flag round",
-        question: "What animal is on the Welsh flag?",
-        visual: walesBlurredVisual,
-        revealedVisual: walesRevealedVisual,
-        options: ["Lion", "Dragon", "Goat", "Falcon", "Wolf"],
-        answer: 1,
-        fact: "The Welsh flag has a red dragon. Excellent flag energy."
-      },
-      {
-        category: "Tiny Countries",
-        difficulty: "Capital chaos",
-        question: "Which tiny country has a capital named Vaduz?",
-        visual: '<div class="vaduz-card" role="img" aria-label="A mountain postcard labeled Vaduz"></div>',
-        options: ["Andorra", "Monaco", "Liechtenstein", "Luxembourg", "Malta"],
-        answer: 2,
-        fact: "Vaduz is the capital of Liechtenstein."
-      },
-      {
-        category: "Final Boss",
-        difficulty: "Flag shape",
-        question: "Which country has the only non-rectangular national flag?",
-        visual: '<div class="nepal-card" role="img" aria-label="A non-rectangular double-pennant flag silhouette"><div class="nepal-shape"></div></div>',
-        options: ["Bhutan", "Qatar", "Nepal", "Vatican City", "Sri Lanka"],
-        answer: 2,
-        fact: "Nepal's national flag is made of two stacked pennant shapes."
-      },
-      {
-        category: "World Food",
-        difficulty: "Breakfast curveball",
-        question: "Which country is most famous for inventing pasteis de nata?",
-        visual: "",
-        options: ["Portugal", "Argentina", "Greece", "South Korea", "Egypt"],
-        answer: 0,
-        fact: "Pasteis de nata are Portuguese custard tarts."
-      },
-      {
-        category: "Niche Geography",
-        difficulty: "Island name",
-        question: "Which island is shared by Haiti and the Dominican Republic?",
-        visual: "",
-        options: ["Borneo", "Hispaniola", "Sicily", "Cyprus", "Madagascar"],
-        answer: 1,
-        fact: "Hispaniola is shared by Haiti and the Dominican Republic."
-      },
-      {
-        category: "Brand Names",
-        difficulty: "Restaurant lore",
-        question: "What does the IHOP name stand for?",
-        visual: "",
-        options: ["International House of Pancakes", "Island House of Pizza", "Instant Hot Oatmeal Place", "Italian House of Pasta", "Independent Hotel of Phoenix"],
-        answer: 0,
-        fact: "IHOP stands for International House of Pancakes."
-      },
-      {
-        category: "World Capitals",
-        difficulty: "Sounds fictional",
-        question: "Ulaanbaatar is the capital of which country?",
-        visual: "",
-        options: ["Kazakhstan", "Mongolia", "Nepal", "Georgia", "Laos"],
-        answer: 1,
-        fact: "Ulaanbaatar is the capital of Mongolia."
+        fact: "Placeholder answer: Seychelles. Dexter can swap in the flag image later."
       },
       {
         category: "Fast Food",
-        difficulty: "Regional chain",
-        question: "Which burger chain is strongly associated with Texas and orange-and-white stripes?",
+        difficulty: "Secret menu energy",
+        question: "Which fast-food chain is famous for the Animal Style order?",
         visual: "",
-        options: ["Culver's", "Whataburger", "Shake Shack", "In-N-Out", "Cook Out"],
-        answer: 1,
-        fact: "Whataburger is the Texas-famous chain with orange-and-white branding."
-      },
-      {
-        category: "Tiny Places",
-        difficulty: "Small but real",
-        question: "Which country is completely surrounded by South Africa?",
-        visual: "",
-        options: ["Lesotho", "Eswatini", "Botswana", "Namibia", "Malawi"],
-        answer: 0,
-        fact: "Lesotho is completely surrounded by South Africa."
-      },
-      {
-        category: "Snack Names",
-        difficulty: "UK aisle",
-        question: "In the United Kingdom, what are potato chips usually called?",
-        visual: "",
-        options: ["Crisps", "Fries", "Crackers", "Rounds", "Chippers"],
-        answer: 0,
-        fact: "In the UK, chips are usually called crisps."
-      },
-      {
-        category: "Sports Rules",
-        difficulty: "Court clue",
-        question: "In tennis, what score comes right after deuce if one player wins the next point?",
-        visual: "",
-        options: ["Match", "Advantage", "Forty", "Break", "Set"],
-        answer: 1,
-        fact: "After deuce, the next point gives a player advantage."
-      },
-      {
-        category: "Map Facts",
-        difficulty: "Border brain",
-        question: "Which country has the longest coastline in the world?",
-        visual: "",
-        options: ["Australia", "Russia", "Canada", "Indonesia", "Norway"],
+        options: ["Sonic", "Culver's", "In-N-Out", "Five Guys", "Shake Shack"],
         answer: 2,
-        fact: "Canada has the world's longest coastline."
+        fact: "Animal Style is the famous In-N-Out secret-menu order."
+      },
+      {
+        category: "Snack World",
+        difficulty: "Lunchbox lore",
+        question: "Pocky, the chocolate-covered biscuit stick snack, started in which country?",
+        visual: "",
+        options: ["France", "Mexico", "Canada", "Japan", "India"],
+        answer: 3,
+        fact: "Pocky started in Japan."
+      },
+      {
+        category: "Map Trap",
+        difficulty: "Tiny but mighty",
+        question: "Which country is smaller than New York City's Central Park?",
+        visual: "",
+        options: ["Iceland", "Malta", "Monaco", "Singapore", "Ireland"],
+        answer: 2,
+        fact: "Monaco is smaller than Central Park."
+      },
+      {
+        category: "Sports Weirdness",
+        difficulty: "Not a typo",
+        question: "In baseball scorekeeping, what letter is used for a strikeout?",
+        visual: "",
+        options: ["S", "X", "K", "O", "B"],
+        answer: 2,
+        fact: "A strikeout is marked with a K."
+      },
+      {
+        category: "Food Names",
+        difficulty: "Sounds fancy",
+        question: "What is aioli basically closest to?",
+        visual: "",
+        options: ["Tomato soup", "Fried cheese", "Garlic mayo", "Sweet bread", "Spicy rice"],
+        answer: 2,
+        fact: "Aioli is closest to garlic mayo."
+      },
+      {
+        category: "World Capitals",
+        difficulty: "Small country",
+        question: "San Marino's capital is called what?",
+        visual: "",
+        options: ["Valletta", "Vaduz", "Riga", "San Marino", "Tallinn"],
+        answer: 3,
+        fact: "The capital of San Marino is also called San Marino."
+      },
+      {
+        category: "Flag Placeholder",
+        difficulty: "Add image later",
+        question: "When the flag appears here, which country has a maple leaf in the middle?",
+        visual: "",
+        options: ["Switzerland", "Denmark", "Canada", "Austria", "Lebanon"],
+        answer: 2,
+        fact: "Canada's flag has the maple leaf."
+      },
+      {
+        category: "Movie Trivia",
+        difficulty: "Theme park brain",
+        question: "Which movie has the line, 'To infinity and beyond'?",
+        visual: "",
+        options: ["Shrek", "Frozen", "Toy Story", "Cars", "Finding Nemo"],
+        answer: 2,
+        fact: "Buzz Lightyear says it in Toy Story."
+      },
+      {
+        category: "Animal Facts",
+        difficulty: "Odd but true",
+        question: "Which animal has fingerprints very similar to humans?",
+        visual: "",
+        options: ["Penguin", "Horse", "Snake", "Koala", "Frog"],
+        answer: 3,
+        fact: "Koalas have fingerprints that can look surprisingly human."
+      },
+      {
+        category: "Brand Names",
+        difficulty: "Logo brain",
+        question: "Which company uses the slogan 'Just Do It'?",
+        visual: "",
+        options: ["Adidas", "Apple", "Nike", "Target", "Lego"],
+        answer: 2,
+        fact: "Just Do It is Nike's slogan."
+      },
+      {
+        category: "Geography",
+        difficulty: "Desert check",
+        question: "Which is the largest hot desert in the world?",
+        visual: "",
+        options: ["Gobi", "Sahara", "Kalahari", "Mojave", "Atacama"],
+        answer: 1,
+        fact: "The Sahara is the largest hot desert."
+      },
+      {
+        category: "Music",
+        difficulty: "Instrument family",
+        question: "A saxophone is usually made of brass, but it belongs to which instrument family?",
+        visual: "",
+        options: ["Brass", "String", "Woodwind", "Percussion", "Keyboard"],
+        answer: 2,
+        fact: "A saxophone is a woodwind because it uses a reed."
       },
       {
         category: "Food Origins",
-        difficulty: "Dessert detective",
-        question: "Mochi is most closely associated with which country?",
+        difficulty: "Dinner table debate",
+        question: "Sushi is most closely associated with which country?",
         visual: "",
-        options: ["Japan", "Peru", "Sweden", "Kenya", "Turkey"],
-        answer: 0,
-        fact: "Mochi is a Japanese rice cake."
+        options: ["Thailand", "Italy", "Japan", "Peru", "Greece"],
+        answer: 2,
+        fact: "Sushi is most closely associated with Japan."
+      },
+      {
+        category: "Space",
+        difficulty: "Planet order",
+        question: "Which planet is known as the Red Planet?",
+        visual: "",
+        options: ["Venus", "Jupiter", "Mars", "Mercury", "Neptune"],
+        answer: 2,
+        fact: "Mars is known as the Red Planet."
+      },
+      {
+        category: "Kid vs Adult",
+        difficulty: "School classic",
+        question: "How many sides does a hexagon have?",
+        visual: "",
+        options: ["5", "7", "6", "8", "10"],
+        answer: 2,
+        fact: "A hexagon has 6 sides."
+      },
+      {
+        category: "Niche Country",
+        difficulty: "Double landlocked",
+        question: "Which country is one of only two double-landlocked countries in the world?",
+        visual: "",
+        options: ["Brazil", "Norway", "Uzbekistan", "Japan", "Egypt"],
+        answer: 2,
+        fact: "Uzbekistan and Liechtenstein are the two double-landlocked countries."
       }
     ];
 
