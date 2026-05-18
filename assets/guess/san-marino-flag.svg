@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" role="img" aria-label="Flag of San Marino with coat of arms">
+  <rect width="560" height="210" fill="#fff"/>
+  <rect y="210" width="560" height="210" fill="#62b5dd"/>
+  <g transform="translate(280 208)">
+    <path d="M-82 75c-34-36-42-88-18-130 18-31 54-48 100-48s82 17 100 48c24 42 16 94-18 130-24 25-54 37-82 37s-58-12-82-37z" fill="#d6a22a" stroke="#8a6616" stroke-width="5"/>
+    <path d="M-58 59c-24-26-30-65-13-95 14-24 39-36 71-36s57 12 71 36c17 30 11 69-13 95-17 18-38 27-58 27s-41-9-58-27z" fill="#ccecf8" stroke="#fff" stroke-width="7"/>
+    <path d="M-52 73c35-21 69-21 104 0l-18 29h-68z" fill="#7ec35e" stroke="#487c38" stroke-width="3"/>
+    <g fill="#a9adb5" stroke="#5f6670" stroke-width="3">
+      <rect x="-45" y="-8" width="20" height="64" rx="4"/>
+      <rect x="-10" y="-18" width="20" height="74" rx="4"/>
+      <rect x="25" y="-8" width="20" height="64" rx="4"/>
+      <path d="M-49-8h28l-5-18h-18zM-14-18h28L9-38H-9zM21-8h28l-5-18H26z"/>
+    </g>
+    <path d="M-72-112c19-32 125-32 144 0 9 16 0 31-17 25-22-8-88-8-110 0-17 6-26-9-17-25z" fill="#f4c842" stroke="#8a6616" stroke-width="4"/>
+    <path d="M-52-121c10-28 94-28 104 0" fill="none" stroke="#8a6616" stroke-width="4"/>
+    <path d="M0-159v42M-17-143h34" stroke="#8a6616" stroke-width="7" stroke-linecap="round"/>
+    <path d="M0-163v42M-17-147h34" stroke="#f4c842" stroke-width="4" stroke-linecap="round"/>
+    <path d="M-112 14c-29-11-54-30-70-58 35 3 66 17 91 42M112 14c29-11 54-30 70-58-35 3-66 17-91 42" fill="none" stroke="#3e8b5f" stroke-width="13" stroke-linecap="round"/>
+    <path d="M-111 41c-37 9-70 2-98-22 36-12 72-9 107 9M111 41c37 9 70 2 98-22-36-12-72-9-107 9" fill="none" stroke="#3e8b5f" stroke-width="13" stroke-linecap="round"/>
+    <path d="M-70 116h140l-18 23H-52z" fill="#fff" stroke="#888" stroke-width="3"/>
+    <text x="0" y="134" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#454545">LIBERTAS</text>
+  </g>
+</svg>
