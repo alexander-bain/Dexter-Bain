@@ -374,6 +374,7 @@
 
       const ROWS = 6;
       const COLS = 5;
+      const WORD_LIST = new Set(WORDS);
       const board = document.querySelector("#board");
       const keyboard = document.querySelector("#keyboard");
       const toast = document.querySelector("#toast");
@@ -477,6 +478,12 @@
         if (currentGuess.length !== COLS) {
           shake();
           showToast("Not enough letters");
+          return;
+        }
+
+        if (!WORD_LIST.has(currentGuess)) {
+          shake();
+          showToast("Not on word list");
           return;
         }
 
