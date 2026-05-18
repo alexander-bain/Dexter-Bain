@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 520" role="img" aria-label="Cartoon saxophone">
+  <rect width="520" height="520" fill="#f7f7f6"/>
+  <g transform="translate(76 38)">
+    <path d="M82 42c55 19 92 67 92 133v142c0 44 34 80 79 80 45 0 82-37 82-82 0-36-23-67-58-78l-25 57c12 4 20 15 20 28 0 17-14 31-31 31s-31-14-31-31V176C210 75 153 16 68 0z" fill="#f5bd38" stroke="#23327f" stroke-width="18" stroke-linejoin="round"/>
+    <path d="M201 167c35-9 68-7 99 8" fill="none" stroke="#23327f" stroke-width="18" stroke-linecap="round"/>
+    <path d="M296 179c33-10 67-4 98 18-33 34-70 43-111 28z" fill="#f5bd38" stroke="#f5bd38" stroke-width="22" stroke-linejoin="round"/>
+    <path d="M307 181c31-12 59-7 84 15-29 17-58 21-88 12z" fill="#681828"/>
+    <path d="M71 41 0 15" stroke="#f5bd38" stroke-width="18" stroke-linecap="round"/>
+    <path d="M71 41 0 15" stroke="#23327f" stroke-width="7" stroke-linecap="round"/>
+    <path d="M21 28 35 3M46 37 60 12M70 49 84 24" stroke="#1d2766" stroke-width="6" stroke-linecap="round"/>
+    <path d="M165 185h48M165 242h48M165 299h48" stroke="#23327f" stroke-width="10" stroke-linecap="round"/>
+    <path d="M148 185h52M148 242h52M148 299h52" stroke="#f5bd38" stroke-width="5" stroke-linecap="round"/>
+    <g fill="#d84779">
+      <circle cx="196" cy="97" r="17"/>
+      <circle cx="208" cy="140" r="17"/>
+      <circle cx="210" cy="184" r="17"/>
+      <circle cx="210" cy="228" r="17"/>
+      <circle cx="210" cy="272" r="17"/>
+      <circle cx="210" cy="316" r="17"/>
+    </g>
+    <path d="M156 131c26 65 26 142 0 230" fill="none" stroke="#1d2766" stroke-width="9" stroke-linecap="round"/>
+    <path d="M177 363c27 31 67 45 106 35" fill="none" stroke="#23327f" stroke-width="10" stroke-linecap="round"/>
+    <ellipse cx="292" cy="290" rx="12" ry="25" fill="#ffe08a" opacity=".85"/>
+    <ellipse cx="321" cy="326" rx="9" ry="18" fill="#ffe08a" opacity=".8"/>
+  </g>
+</svg>
