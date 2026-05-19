@@ -387,7 +387,7 @@
 
     .answer-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 12px;
     }
 
@@ -429,6 +429,10 @@
 
     .answer-button[data-outcome="wrong"] {
       background: #ffe0ea;
+    }
+
+    .answer-button[data-outcome="manualSkip"] {
+      background: #eaf7ff;
     }
 
     .answer-button.selected {
@@ -596,6 +600,7 @@
           <button class="answer-button" type="button" data-outcome="right">Got it right first try</button>
           <button class="answer-button" type="button" data-outcome="hint">Needed a hint, then got it</button>
           <button class="answer-button" type="button" data-outcome="wrong">Really struggled</button>
+          <button class="answer-button" type="button" data-outcome="manualSkip">Skip this one</button>
         </div>
 
         <section class="result" id="resultBox" aria-live="polite">
@@ -660,59 +665,63 @@
           delta: 0,
           note: "The wheel skipped tonight's problem. Daphne is free.",
         },
+        manualSkip: {
+          delta: 0,
+          note: "Skipped this one. Daphne is free, and tomorrow stays the same level.",
+        },
       };
       const NUMBER_PROBLEMS = [
         {
           level: 1,
-          text: "32 + 67 - 67 = ?",
-          answer: "32",
-        },
-        {
-          level: 2,
-          text: "67 - 32 + 32 = ?",
-          answer: "67",
-        },
-        {
-          level: 3,
-          text: "32 + 67 - 67 - 32 = ?",
-          answer: "0",
-        },
-        {
-          level: 4,
-          text: "67 + 32 - 67 + 32 = ?",
+          text: "32 + 67 + 32 - 67 = ?",
           answer: "64",
         },
         {
+          level: 2,
+          text: "67 + 32 + 67 - 32 = ?",
+          answer: "134",
+        },
+        {
+          level: 3,
+          text: "32 + 67 + 67 - 32 + 32 = ?",
+          answer: "166",
+        },
+        {
+          level: 4,
+          text: "67 + 67 + 32 - 67 + 32 = ?",
+          answer: "131",
+        },
+        {
           level: 5,
-          text: "67 + 67 - 32 - 32 + 67 = ?",
-          answer: "137",
+          text: "67 + 32 + 67 + 32 - 32 + 67 = ?",
+          answer: "233",
         },
       ];
       const WORD_PROBLEMS = [
         {
           level: 1,
-          text: "Bob has 32 bagels and tries to eat 67 bagels. Is that possible?",
-          answer: "No, because he only has 32 bagels.",
+          text: "Bob has 67 bagels, gives away 32, then finds 32 more. How many bagels does he have?",
+          answer: "67 bagels",
         },
         {
           level: 2,
-          text: "Bob has 67 bagels and gives away 32 bagels. How many are left?",
-          answer: "35 bagels",
+          text: "Bob has 32 bagels, gets 67 more, then eats 32. How many bagels are left?",
+          answer: "67 bagels",
         },
         {
           level: 3,
-          text: "Bob has 32 bagels, gets 67 more, then gives away 32. How many are left?",
-          answer: "67 bagels",
+          text: "Bob has 67 bagels, buys 32 more, then gives 67 to friends. How many remain?",
+          answer: "32 bagels",
         },
         {
           level: 4,
-          text: "Bob has 67 bagels, eats 32, then gets 32 more. How many bagels does he have?",
-          answer: "67 bagels",
+          text: "Bob has 67 bagels in one box and 32 in another, then doubles the 32-bagel box. How many bagels is that?",
+          answer: "131 bagels",
         },
         {
           level: 5,
-          text: "Bob has 67 bagels and wants to split them evenly between 32 kids. Can everyone get 2 whole bagels?",
-          answer: "Yes, because 32 x 2 = 64 and 67 is enough.",
+          text: "Bob has 67 bagels, adds 32, gets another 67, but 32 are stale. How many good bagels are left?",
+          answer: "134 bagels",
         },
       ];
 
