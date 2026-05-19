@@ -1103,9 +1103,11 @@
       function normalizeWheelRoll(wheelData) {
         if (!wheelData || !WHEEL_TYPES[wheelData.type]) return null;
         const landingAngle = Number(wheelData.landingAngle);
-        if (Number.isFinite(landingAngle) && getWheelSegmentForAngle(landingAngle).type === wheelData.type) {
+        if (Number.isFinite(landingAngle)) {
+          const type = getWheelSegmentForAngle(landingAngle).type;
           return {
             ...wheelData,
+            type,
             landingAngle,
           };
         }
@@ -1224,12 +1226,14 @@
       }
 
       function revealQuestion(celebrateSkip = false) {
-        const wheelData = state.wheels[QUESTION_DAY_ID];
+        const wheelData = normalizeWheelRoll(state.wheels[QUESTION_DAY_ID]);
         if (!wheelData) {
           showWheelIntro();
           return;
         }
 
+        state.wheels[QUESTION_DAY_ID] = wheelData;
+        saveState();
         spinScreen.classList.add("hidden");
         questionCard.classList.add("visible");
         questionCard.setAttribute("aria-hidden", "false");
@@ -1292,8 +1296,9 @@
 
       function loadAnotherQuestion() {
         if (state.answers[QUESTION_DAY_ID]) return;
-        const wheelData = state.wheels[QUESTION_DAY_ID];
+        const wheelData = normalizeWheelRoll(state.wheels[QUESTION_DAY_ID]);
         if (!wheelData || wheelData.type === "skip") return;
+        state.wheels[QUESTION_DAY_ID] = wheelData;
         const level = ensureDailyLevel();
         const questionCount = getQuestionCount(wheelData.type, level);
         state.rerolls[QUESTION_DAY_ID] = ((Number(state.rerolls[QUESTION_DAY_ID]) || 0) + 1) % Math.max(1, questionCount);
