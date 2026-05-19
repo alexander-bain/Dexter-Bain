@@ -800,14 +800,15 @@
       }
 
       function startSpin() {
-        if (state.wheels[QUESTION_DAY_ID]) return;
+        if (state.wheels[QUESTION_DAY_ID]) {
+          revealQuestion(false);
+          return;
+        }
         spinButton.disabled = true;
         spinResult.textContent = "Spinning...";
         const type = chooseWheelType();
         const result = WHEEL_TYPES[type];
-        const turns = 6;
-        const rotation = turns * 360 - result.centerAngle;
-        wheel.style.transform = `rotate(${rotation}deg)`;
+        landWheelOn(result, true);
 
         window.setTimeout(() => {
           state.wheels[QUESTION_DAY_ID] = {
@@ -821,12 +822,42 @@
         }, 2750);
       }
 
+      function landWheelOn(result, animated) {
+        const turns = 6;
+        const rotation = turns * 360 - result.centerAngle;
+        if (!animated) {
+          wheel.style.transition = "none";
+          wheel.style.transform = `rotate(${rotation}deg)`;
+          void wheel.offsetWidth;
+          wheel.style.transition = "";
+          return;
+        }
+        wheel.style.transform = `rotate(${rotation}deg)`;
+      }
+
+      function showWheelIntro() {
+        const wheelData = state.wheels[QUESTION_DAY_ID];
+        spinScreen.classList.remove("hidden");
+        questionCard.classList.remove("visible");
+        questionCard.setAttribute("aria-hidden", "true");
+        spinButton.disabled = false;
+
+        if (!wheelData) {
+          spinButton.textContent = "Spin the wheel";
+          spinResult.textContent = "";
+          return;
+        }
+
+        const wheelType = WHEEL_TYPES[wheelData.type] || WHEEL_TYPES.number;
+        landWheelOn(wheelType, false);
+        spinButton.textContent = "Show today's question";
+        spinResult.textContent = `Today's wheel landed on: ${wheelType.label}.`;
+      }
+
       function revealQuestion(celebrateSkip = false) {
         const wheelData = state.wheels[QUESTION_DAY_ID];
         if (!wheelData) {
-          spinScreen.classList.remove("hidden");
-          questionCard.classList.remove("visible");
-          questionCard.setAttribute("aria-hidden", "true");
+          showWheelIntro();
           return;
         }
 
@@ -929,7 +960,7 @@
         button.addEventListener("click", () => pickOutcome(button.dataset.outcome));
       });
 
-      revealQuestion(false);
+      showWheelIntro();
     })();
   </script>
 </body>
