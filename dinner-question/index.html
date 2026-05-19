@@ -454,19 +454,34 @@
 
     .result.show {
       display: grid;
+      position: fixed;
+      inset: 0;
+      z-index: 7;
+      place-items: center;
+      align-content: center;
+      border: 0;
+      border-radius: 0;
+      background:
+        radial-gradient(circle at 50% 34%, rgba(255, 211, 107, 0.52), transparent 32%),
+        radial-gradient(circle at 18% 22%, rgba(123, 220, 181, 0.38), transparent 28%),
+        radial-gradient(circle at 82% 78%, rgba(133, 199, 255, 0.36), transparent 28%),
+        rgba(255, 247, 223, 0.96);
+      padding: 26px;
     }
 
     .freedom {
       color: var(--berry);
-      font-size: clamp(1.7rem, 6vw, 3.2rem);
+      font-size: clamp(3.3rem, 13vw, 9.5rem);
       font-weight: 950;
-      line-height: 1;
+      line-height: 0.9;
+      max-width: 1050px;
       text-transform: uppercase;
     }
 
     .next-note {
       margin: 0;
       color: var(--soft-ink);
+      font-size: clamp(1.1rem, 3vw, 1.8rem);
       font-weight: 850;
     }
 
@@ -494,7 +509,7 @@
     .confetti-layer {
       position: fixed;
       inset: 0;
-      z-index: 5;
+      z-index: 8;
       overflow: hidden;
       pointer-events: none;
     }
@@ -667,7 +682,7 @@
         },
         manualSkip: {
           delta: 0,
-          note: "Skipped this one. Daphne is free, and tomorrow stays the same level.",
+          note: "Loading another question at this same level.",
         },
       };
       const NUMBER_PROBLEMS = [
@@ -677,9 +692,19 @@
           answer: "64",
         },
         {
+          level: 1,
+          text: "67 + 32 - 32 + 67 = ?",
+          answer: "134",
+        },
+        {
           level: 2,
           text: "67 + 32 + 67 - 32 = ?",
           answer: "134",
+        },
+        {
+          level: 2,
+          text: "32 + 32 + 67 - 32 = ?",
+          answer: "99",
         },
         {
           level: 3,
@@ -687,14 +712,29 @@
           answer: "166",
         },
         {
+          level: 3,
+          text: "67 + 32 + 67 - 67 + 32 = ?",
+          answer: "131",
+        },
+        {
           level: 4,
           text: "67 + 67 + 32 - 67 + 32 = ?",
+          answer: "131",
+        },
+        {
+          level: 4,
+          text: "32 + 67 + 67 + 32 - 67 = ?",
           answer: "131",
         },
         {
           level: 5,
           text: "67 + 32 + 67 + 32 - 32 + 67 = ?",
           answer: "233",
+        },
+        {
+          level: 5,
+          text: "67 + 67 + 32 + 32 - 67 + 32 = ?",
+          answer: "163",
         },
       ];
       const WORD_PROBLEMS = [
@@ -704,9 +744,19 @@
           answer: "67 bagels",
         },
         {
+          level: 1,
+          text: "Bob has 32 bagels, gets 67 more, then gives away 32. How many bagels are left?",
+          answer: "67 bagels",
+        },
+        {
           level: 2,
           text: "Bob has 32 bagels, gets 67 more, then eats 32. How many bagels are left?",
           answer: "67 bagels",
+        },
+        {
+          level: 2,
+          text: "Bob has 67 bagels, buys 32, then gives away 67. How many remain?",
+          answer: "32 bagels",
         },
         {
           level: 3,
@@ -714,14 +764,29 @@
           answer: "32 bagels",
         },
         {
+          level: 3,
+          text: "Bob has 32 bagels, buys 67, then another 32 go missing. How many remain?",
+          answer: "67 bagels",
+        },
+        {
           level: 4,
           text: "Bob has 67 bagels in one box and 32 in another, then doubles the 32-bagel box. How many bagels is that?",
           answer: "131 bagels",
         },
         {
+          level: 4,
+          text: "Bob has 67 bagels, gets 67 more, then gives away 32. How many bagels does he have?",
+          answer: "102 bagels",
+        },
+        {
           level: 5,
           text: "Bob has 67 bagels, adds 32, gets another 67, but 32 are stale. How many good bagels are left?",
           answer: "134 bagels",
+        },
+        {
+          level: 5,
+          text: "Bob has 32 bagels in each of 2 boxes, then gets 67 more. How many bagels does he have?",
+          answer: "131 bagels",
         },
       ];
 
@@ -757,6 +822,7 @@
             nextLevel: clampLevel(saved?.nextLevel || DEFAULT_LEVEL),
             answers: saved?.answers || {},
             levels: saved?.levels || {},
+            rerolls: saved?.rerolls || {},
             wheels: saved?.wheels || {},
           };
         } catch {
@@ -764,6 +830,7 @@
             nextLevel: DEFAULT_LEVEL,
             answers: {},
             levels: {},
+            rerolls: {},
             wheels: {},
           };
         }
@@ -796,7 +863,16 @@
       function getQuestion(type, level) {
         const wantedLevel = clampLevel(level);
         const bank = type === "word" || type === "pushups" ? WORD_PROBLEMS : NUMBER_PROBLEMS;
-        return bank.find((item) => item.level === wantedLevel) || bank[DEFAULT_LEVEL - 1];
+        const candidates = bank.filter((item) => item.level === wantedLevel);
+        const fallback = bank.find((item) => item.level === DEFAULT_LEVEL) || bank[0];
+        const offset = Number(state.rerolls[QUESTION_DAY_ID]) || 0;
+        if (!candidates.length) return fallback;
+        return candidates[offset % candidates.length];
+      }
+
+      function getQuestionCount(type, level) {
+        const bank = type === "word" || type === "pushups" ? WORD_PROBLEMS : NUMBER_PROBLEMS;
+        return bank.filter((item) => item.level === clampLevel(level)).length;
       }
 
       function startSpin() {
@@ -915,6 +991,11 @@
         const info = OUTCOMES[outcome];
         if (!info) return;
 
+        if (outcome === "manualSkip") {
+          loadAnotherQuestion();
+          return;
+        }
+
         const alreadyAnswered = Boolean(state.answers[QUESTION_DAY_ID]);
         if (!alreadyAnswered) {
           state.nextLevel = clampLevel(state.nextLevel + info.delta);
@@ -927,6 +1008,17 @@
         };
         saveState();
         showResult(outcome, true);
+      }
+
+      function loadAnotherQuestion() {
+        if (state.answers[QUESTION_DAY_ID]) return;
+        const wheelData = state.wheels[QUESTION_DAY_ID];
+        if (!wheelData || wheelData.type === "skip") return;
+        const level = ensureDailyLevel();
+        const questionCount = getQuestionCount(wheelData.type, level);
+        state.rerolls[QUESTION_DAY_ID] = ((Number(state.rerolls[QUESTION_DAY_ID]) || 0) + 1) % Math.max(1, questionCount);
+        saveState();
+        renderQuestion(wheelData.type, false);
       }
 
       function showResult(outcome, celebrate) {
