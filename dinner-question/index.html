@@ -196,6 +196,31 @@
       width: min(250px, 100%);
     }
 
+    .open-question-button {
+      justify-self: center;
+      min-height: 50px;
+      width: min(250px, 100%);
+      padding: 10px 18px;
+      border: 3px solid var(--ink);
+      border-radius: 20px;
+      background: linear-gradient(135deg, #dbffe9, #eaf7ff);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 950;
+      box-shadow: 0 7px 0 rgba(39, 48, 68, 0.16);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .open-question-button.hidden {
+      display: none;
+    }
+
+    .open-question-button:active {
+      transform: translateY(4px);
+      box-shadow: 0 3px 0 rgba(39, 48, 68, 0.16);
+    }
+
     .iphone-toggle {
       min-height: 42px;
       padding: 8px 14px;
@@ -253,6 +278,7 @@
     .wheel-frame:focus-visible,
     .iphone-toggle:focus-visible,
     .spin-button:focus-visible,
+    .open-question-button:focus-visible,
     .answer-button:focus-visible,
     .reroll-button:focus-visible {
       outline: 5px solid rgba(133, 199, 255, 0.6);
@@ -710,6 +736,7 @@
               <span class="wheel-center">Spin<br />me</span>
             </button>
             <button class="spin-button" id="spinButton" type="button">Spin the wheel</button>
+            <button class="open-question-button hidden" id="openQuestionButton" type="button">Open today's question</button>
           </div>
           <div class="wheel-copy">
             <h2>Most days are number problems. Sometimes the wheel gets weird.</h2>
@@ -941,6 +968,7 @@
       const wheel = document.querySelector("#wheel");
       const iphoneToggle = document.querySelector("#iphoneToggle");
       const spinButton = document.querySelector("#spinButton");
+      const openQuestionButton = document.querySelector("#openQuestionButton");
       const spinResult = document.querySelector("#spinResult");
       const difficultyPill = document.querySelector("#difficultyPill");
       const eventEyebrow = document.querySelector("#eventEyebrow");
@@ -1053,14 +1081,24 @@
         return bank.filter((item) => item.level === clampLevel(level)).length;
       }
 
+      function formatWheelResult(type) {
+        const wheelType = WHEEL_TYPES[type] || WHEEL_TYPES.number;
+        return `The wheel landed on: ${wheelType.label}.`;
+      }
+
+      function canOpenQuestion(type) {
+        return type === "number" || type === "word" || type === "pushups";
+      }
+
       function startSpin() {
         if (isSpinning) return;
         if (state.wheels[QUESTION_DAY_ID]) {
-          revealQuestion(false);
+          showWheelIntro();
           return;
         }
         isSpinning = true;
         spinButton.disabled = true;
+        openQuestionButton.classList.add("hidden");
         wheelFrame.classList.add("is-spinning");
         spinResult.textContent = "Spinning...";
         const type = chooseWheelType();
@@ -1074,10 +1112,9 @@
           };
           ensureDailyLevel();
           saveState();
-          spinResult.textContent = result.result;
           isSpinning = false;
           wheelFrame.classList.remove("is-spinning");
-          window.setTimeout(() => revealQuestion(true), 700);
+          showWheelIntro();
         }, 2750);
       }
 
@@ -1099,12 +1136,13 @@
         spinScreen.classList.remove("hidden");
         questionCard.classList.remove("visible");
         questionCard.setAttribute("aria-hidden", "true");
-        spinButton.disabled = false;
         wheelFrame.classList.remove("is-spinning");
-        wheelFrame.setAttribute("aria-label", wheelData ? "Show today's dinner question" : "Spin the dinner wheel");
+        wheelFrame.setAttribute("aria-label", wheelData ? `Wheel result: ${(WHEEL_TYPES[wheelData.type] || WHEEL_TYPES.number).label}` : "Spin the dinner wheel");
 
         if (!wheelData) {
           spinButton.textContent = "Spin the wheel";
+          spinButton.disabled = false;
+          openQuestionButton.classList.add("hidden");
           spinResult.textContent = "";
           return;
         }
@@ -1112,7 +1150,9 @@
         const wheelType = WHEEL_TYPES[wheelData.type] || WHEEL_TYPES.number;
         landWheelOn(wheelType, false);
         spinButton.textContent = "Spin the wheel";
-        spinResult.textContent = `Today's wheel landed on: ${wheelType.label}.`;
+        spinButton.disabled = true;
+        openQuestionButton.classList.toggle("hidden", !canOpenQuestion(wheelData.type));
+        spinResult.textContent = formatWheelResult(wheelData.type);
       }
 
       function revealQuestion(celebrateSkip = false) {
@@ -1231,6 +1271,7 @@
 
       spinButton.addEventListener("click", startSpin);
       wheelFrame.addEventListener("click", startSpin);
+      openQuestionButton.addEventListener("click", () => revealQuestion(false));
       iphoneToggle.addEventListener("click", togglePhonePreview);
       rerollButton.addEventListener("click", loadAnotherQuestion);
       buttons.forEach((button) => {
