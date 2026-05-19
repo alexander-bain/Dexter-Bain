@@ -185,6 +185,35 @@
       align-items: center;
     }
 
+    .wheel-stack {
+      display: grid;
+      gap: 12px;
+      justify-items: center;
+    }
+
+    .iphone-toggle {
+      min-height: 42px;
+      padding: 8px 14px;
+      border: 3px solid rgba(39, 48, 68, 0.86);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 950;
+      box-shadow: 0 5px 0 rgba(39, 48, 68, 0.14);
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    }
+
+    .iphone-toggle[aria-pressed="true"] {
+      background: #eaf7ff;
+    }
+
+    .iphone-toggle:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 rgba(39, 48, 68, 0.14);
+    }
+
     .wheel-frame {
       position: relative;
       display: grid;
@@ -192,6 +221,11 @@
       width: min(280px, 76vw);
       aspect-ratio: 1;
       justify-self: center;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      padding: 0;
     }
 
     .wheel-frame::before {
@@ -205,6 +239,18 @@
       border-right: 18px solid transparent;
       border-top: 34px solid var(--ink);
       filter: drop-shadow(0 4px 0 rgba(39, 48, 68, 0.14));
+    }
+
+    .wheel-frame.is-spinning {
+      cursor: wait;
+    }
+
+    .wheel-frame:focus-visible,
+    .iphone-toggle:focus-visible,
+    .spin-button:focus-visible,
+    .answer-button:focus-visible {
+      outline: 5px solid rgba(133, 199, 255, 0.6);
+      outline-offset: 5px;
     }
 
     .wheel {
@@ -534,6 +580,67 @@
       }
     }
 
+    body.iphone-preview {
+      display: grid;
+      place-items: center;
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    body.iphone-preview .page {
+      width: min(402px, 100%);
+      height: min(874px, calc(100vh - 24px));
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 5px solid rgba(39, 48, 68, 0.9);
+      border-radius: 48px;
+      background:
+        radial-gradient(circle at 20% 6%, rgba(255, 211, 107, 0.46), transparent 24%),
+        radial-gradient(circle at 88% 18%, rgba(133, 199, 255, 0.34), transparent 26%),
+        rgba(255, 247, 223, 0.7);
+      box-shadow: 0 20px 70px rgba(39, 48, 68, 0.25);
+      padding: 12px;
+    }
+
+    body.iphone-preview .card,
+    body.iphone-preview .spin-screen {
+      width: 100%;
+      border-radius: 28px;
+    }
+
+    body.iphone-preview .card-inner,
+    body.iphone-preview .spin-inner {
+      gap: 18px;
+      padding: 26px 18px;
+    }
+
+    body.iphone-preview .spin-title,
+    body.iphone-preview h1 {
+      font-size: clamp(2.15rem, 13vw, 3.35rem);
+    }
+
+    body.iphone-preview .wheel-layout {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    body.iphone-preview .wheel-frame {
+      width: min(252px, 76vw);
+    }
+
+    body.iphone-preview .question-text {
+      font-size: clamp(2rem, 12vw, 3.2rem);
+    }
+
+    body.iphone-preview .question-text.wordy {
+      font-size: clamp(1.25rem, 6vw, 1.7rem);
+    }
+
+    body.iphone-preview .answer-row {
+      grid-template-columns: 1fr;
+    }
+
     @media (max-width: 760px) {
       .wheel-layout {
         grid-template-columns: 1fr;
@@ -566,9 +673,12 @@
         </div>
 
         <div class="wheel-layout">
-          <div class="wheel-frame" aria-hidden="true">
-            <div class="wheel" id="wheel"></div>
-            <span class="wheel-center">Spin<br />me</span>
+          <div class="wheel-stack">
+            <button class="iphone-toggle" id="iphoneToggle" type="button" aria-pressed="false">iPhone 17 size</button>
+            <button class="wheel-frame" id="wheelFrame" type="button" aria-label="Spin the dinner wheel">
+              <span class="wheel" id="wheel"></span>
+              <span class="wheel-center">Spin<br />me</span>
+            </button>
           </div>
           <div class="wheel-copy">
             <h2>Most days are number problems. Sometimes the wheel gets weird.</h2>
@@ -637,6 +747,7 @@
       const QUESTION_DAY_ID = "2026-05-18-dinner-question-wheel";
       const QUESTION_DATE_LABEL = "May 18 dinner question";
       const STORAGE_KEY = "daphne-dinner-question-v2";
+      const PHONE_PREVIEW_KEY = "daphne-dinner-question-iphone-17-preview";
       const MIN_LEVEL = 1;
       const MAX_LEVEL = 5;
       const DEFAULT_LEVEL = 3;
@@ -792,7 +903,9 @@
 
       const spinScreen = document.querySelector("#spinScreen");
       const questionCard = document.querySelector("#questionCard");
+      const wheelFrame = document.querySelector("#wheelFrame");
       const wheel = document.querySelector("#wheel");
+      const iphoneToggle = document.querySelector("#iphoneToggle");
       const spinButton = document.querySelector("#spinButton");
       const spinResult = document.querySelector("#spinResult");
       const difficultyPill = document.querySelector("#difficultyPill");
@@ -810,6 +923,7 @@
       const confettiLayer = document.querySelector("#confettiLayer");
       const buttons = [...document.querySelectorAll(".answer-button")];
       let state = loadState();
+      let isSpinning = false;
 
       function clampLevel(level) {
         return Math.min(MAX_LEVEL, Math.max(MIN_LEVEL, Number(level) || DEFAULT_LEVEL));
@@ -844,6 +958,34 @@
         }
       }
 
+      function loadPhonePreview() {
+        try {
+          return localStorage.getItem(PHONE_PREVIEW_KEY) === "true";
+        } catch {
+          return false;
+        }
+      }
+
+      function savePhonePreview(enabled) {
+        try {
+          localStorage.setItem(PHONE_PREVIEW_KEY, String(enabled));
+        } catch {
+          // Preview sizing is optional if storage is unavailable.
+        }
+      }
+
+      function setPhonePreview(enabled) {
+        document.body.classList.toggle("iphone-preview", enabled);
+        iphoneToggle.setAttribute("aria-pressed", String(enabled));
+        iphoneToggle.textContent = enabled ? "Full size" : "iPhone 17 size";
+      }
+
+      function togglePhonePreview() {
+        const enabled = !document.body.classList.contains("iphone-preview");
+        setPhonePreview(enabled);
+        savePhonePreview(enabled);
+      }
+
       function chooseWheelType() {
         const roll = Math.floor(Math.random() * 100);
         if (roll < 80) return "number";
@@ -876,11 +1018,14 @@
       }
 
       function startSpin() {
+        if (isSpinning) return;
         if (state.wheels[QUESTION_DAY_ID]) {
           revealQuestion(false);
           return;
         }
+        isSpinning = true;
         spinButton.disabled = true;
+        wheelFrame.classList.add("is-spinning");
         spinResult.textContent = "Spinning...";
         const type = chooseWheelType();
         const result = WHEEL_TYPES[type];
@@ -894,6 +1039,8 @@
           ensureDailyLevel();
           saveState();
           spinResult.textContent = result.result;
+          isSpinning = false;
+          wheelFrame.classList.remove("is-spinning");
           window.setTimeout(() => revealQuestion(true), 700);
         }, 2750);
       }
@@ -917,6 +1064,8 @@
         questionCard.classList.remove("visible");
         questionCard.setAttribute("aria-hidden", "true");
         spinButton.disabled = false;
+        wheelFrame.classList.remove("is-spinning");
+        wheelFrame.setAttribute("aria-label", wheelData ? "Show today's dinner question" : "Spin the dinner wheel");
 
         if (!wheelData) {
           spinButton.textContent = "Spin the wheel";
@@ -1048,10 +1197,13 @@
       }
 
       spinButton.addEventListener("click", startSpin);
+      wheelFrame.addEventListener("click", startSpin);
+      iphoneToggle.addEventListener("click", togglePhonePreview);
       buttons.forEach((button) => {
         button.addEventListener("click", () => pickOutcome(button.dataset.outcome));
       });
 
+      setPhonePreview(loadPhonePreview());
       showWheelIntro();
     })();
   </script>
