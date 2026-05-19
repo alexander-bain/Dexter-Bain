@@ -189,7 +189,9 @@
       position: relative;
       display: grid;
       place-items: center;
-      min-height: 286px;
+      width: min(280px, 76vw);
+      aspect-ratio: 1;
+      justify-self: center;
     }
 
     .wheel-frame::before {
@@ -206,10 +208,9 @@
     }
 
     .wheel {
-      position: relative;
-      display: grid;
-      place-items: center;
-      width: min(280px, 76vw);
+      position: absolute;
+      inset: 0;
+      width: 100%;
       aspect-ratio: 1;
       border: 7px solid var(--ink);
       border-radius: 50%;
@@ -235,7 +236,7 @@
 
     .wheel-center {
       position: relative;
-      z-index: 1;
+      z-index: 3;
       display: grid;
       place-items: center;
       width: 88px;
@@ -551,9 +552,8 @@
 
         <div class="wheel-layout">
           <div class="wheel-frame" aria-hidden="true">
-            <div class="wheel" id="wheel">
-              <span class="wheel-center">Spin<br />me</span>
-            </div>
+            <div class="wheel" id="wheel"></div>
+            <span class="wheel-center">Spin<br />me</span>
           </div>
           <div class="wheel-copy">
             <h2>Most days are number problems. Sometimes the wheel gets weird.</h2>
