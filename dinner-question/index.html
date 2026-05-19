@@ -839,6 +839,7 @@
       const MAX_LEVEL = 5;
       const DEFAULT_LEVEL = 3;
       const WHEEL_SPIN_MS = 3400;
+      const WHEEL_VISUAL_OFFSET_DEG = 90;
       const COLORS = ["#e94f7d", "#ffd66b", "#7bdcb5", "#85c7ff", "#ffb38a"];
       const ANSWER_OUTCOMES = new Set(["right", "hint", "wrong"]);
       const WHEEL_SEGMENTS = [
@@ -1178,7 +1179,7 @@
         const landingAngle = Number.isFinite(Number(roll?.landingAngle))
           ? Number(roll.landingAngle)
           : randomAngleInSegment(roll?.type);
-        const rotation = turns * 360 - landingAngle;
+        const rotation = turns * 360 + WHEEL_VISUAL_OFFSET_DEG - landingAngle;
         if (!animated) {
           wheel.style.transition = "none";
           wheel.style.transform = `rotate(${rotation}deg)`;
