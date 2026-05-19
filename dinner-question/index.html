@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Daffy's Dinner Question | DexterBain</title>
+  <title>Daphne's Dinner Question | DexterBain</title>
   <style>
     :root {
       color-scheme: light;
@@ -75,18 +75,20 @@
       transform: rotate(-12deg);
     }
 
-    .card {
+    .card,
+    .spin-screen {
       position: relative;
       z-index: 1;
       width: min(780px, 100%);
       border: 3px solid rgba(39, 48, 68, 0.88);
       border-radius: 34px;
-      background: rgba(255, 255, 255, 0.86);
+      background: rgba(255, 255, 255, 0.88);
       box-shadow: var(--shadow);
       overflow: hidden;
     }
 
-    .card::before {
+    .card::before,
+    .spin-screen::before {
       content: "";
       position: absolute;
       inset: 0 0 auto;
@@ -100,7 +102,20 @@
       );
     }
 
-    .card-inner {
+    .question-card {
+      display: none;
+    }
+
+    .question-card.visible {
+      display: block;
+    }
+
+    .spin-screen.hidden {
+      display: none;
+    }
+
+    .card-inner,
+    .spin-inner {
       display: grid;
       gap: 22px;
       padding: clamp(28px, 5vw, 48px);
@@ -121,7 +136,8 @@
       text-decoration: none;
     }
 
-    .difficulty-pill {
+    .difficulty-pill,
+    .wheel-pill {
       display: inline-flex;
       align-items: center;
       min-height: 34px;
@@ -145,20 +161,181 @@
       text-transform: uppercase;
     }
 
-    h1 {
-      max-width: 640px;
+    h1,
+    .spin-title {
+      max-width: 660px;
       margin: 0;
-      font-size: clamp(2.5rem, 10vw, 5.4rem);
-      line-height: 0.88;
+      font-size: clamp(2.45rem, 9vw, 5.2rem);
+      line-height: 0.9;
       letter-spacing: -0.06em;
     }
 
     .intro {
-      max-width: 580px;
+      max-width: 600px;
       margin: 0;
       color: var(--soft-ink);
       font-size: clamp(1rem, 2.8vw, 1.2rem);
       line-height: 1.55;
+    }
+
+    .wheel-layout {
+      display: grid;
+      grid-template-columns: minmax(230px, 0.9fr) minmax(0, 1fr);
+      gap: 26px;
+      align-items: center;
+    }
+
+    .wheel-frame {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 286px;
+    }
+
+    .wheel-frame::before {
+      content: "";
+      position: absolute;
+      top: 1px;
+      z-index: 2;
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-top: 34px solid var(--ink);
+      filter: drop-shadow(0 4px 0 rgba(39, 48, 68, 0.14));
+    }
+
+    .wheel {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: min(280px, 76vw);
+      aspect-ratio: 1;
+      border: 7px solid var(--ink);
+      border-radius: 50%;
+      background: conic-gradient(
+        from -90deg,
+        var(--mint) 0deg 288deg,
+        var(--sky) 288deg 342deg,
+        var(--butter) 342deg 356.4deg,
+        var(--berry) 356.4deg 360deg
+      );
+      box-shadow: 0 16px 0 rgba(39, 48, 68, 0.12);
+      transition: transform 2700ms cubic-bezier(0.13, 0.78, 0.12, 1);
+    }
+
+    .wheel::before {
+      content: "";
+      position: absolute;
+      inset: 18%;
+      border: 4px solid rgba(39, 48, 68, 0.8);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.74);
+    }
+
+    .wheel-center {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 88px;
+      height: 88px;
+      border: 4px solid var(--ink);
+      border-radius: 50%;
+      background: var(--paper);
+      font-size: 0.82rem;
+      font-weight: 950;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .wheel-copy {
+      display: grid;
+      gap: 14px;
+    }
+
+    .wheel-copy h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 5vw, 2.4rem);
+      line-height: 1;
+    }
+
+    .wheel-copy p {
+      margin: 0;
+      color: var(--soft-ink);
+      font-size: 1rem;
+      line-height: 1.45;
+    }
+
+    .legend {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .legend li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--soft-ink);
+      font-size: 0.92rem;
+      font-weight: 900;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(39, 48, 68, 0.7);
+      border-radius: 50%;
+    }
+
+    .dot.number {
+      background: var(--mint);
+    }
+
+    .dot.word {
+      background: var(--sky);
+    }
+
+    .dot.skip {
+      background: var(--butter);
+    }
+
+    .dot.pushups {
+      background: var(--berry);
+    }
+
+    .spin-button {
+      justify-self: start;
+      min-height: 64px;
+      padding: 12px 24px;
+      border: 3px solid var(--ink);
+      border-radius: 22px;
+      background: linear-gradient(135deg, var(--butter), var(--peach));
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 950;
+      box-shadow: 0 8px 0 rgba(39, 48, 68, 0.18);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .spin-button:active {
+      transform: translateY(4px);
+      box-shadow: 0 3px 0 rgba(39, 48, 68, 0.18);
+    }
+
+    .spin-button:disabled {
+      cursor: wait;
+      opacity: 0.72;
+    }
+
+    .spin-result {
+      min-height: 24px;
+      color: var(--berry);
+      font-weight: 950;
     }
 
     .question-box {
@@ -187,10 +364,15 @@
 
     .question-text {
       margin: 0;
-      font-size: clamp(1.45rem, 4.7vw, 2.45rem);
+      font-size: clamp(2rem, 7vw, 4.6rem);
       font-weight: 950;
-      line-height: 1.18;
+      line-height: 1.02;
       text-wrap: balance;
+    }
+
+    .question-text.wordy {
+      font-size: clamp(1.45rem, 4.7vw, 2.45rem);
+      line-height: 1.18;
     }
 
     .duration {
@@ -207,6 +389,10 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
+    }
+
+    .answer-row.hidden {
+      display: none;
     }
 
     .answer-button {
@@ -287,6 +473,10 @@
       text-align: center;
     }
 
+    .answer-key.hidden {
+      display: none;
+    }
+
     .answer-key summary {
       cursor: pointer;
       font-weight: 950;
@@ -324,6 +514,16 @@
       }
     }
 
+    @media (max-width: 760px) {
+      .wheel-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .spin-button {
+        justify-self: stretch;
+      }
+    }
+
     @media (max-width: 700px) {
       .answer-row {
         grid-template-columns: 1fr;
@@ -333,7 +533,41 @@
 </head>
 <body>
   <main class="page">
-    <section class="card" aria-labelledby="pageTitle">
+    <section class="spin-screen" id="spinScreen" aria-labelledby="spinTitle">
+      <div class="spin-inner">
+        <div class="top-row">
+          <a class="home-link" href="../index.html">DexterBain.com</a>
+          <span class="wheel-pill">Spin before opening</span>
+        </div>
+
+        <div>
+          <p class="eyebrow">Daphne's dinner wheel</p>
+          <h1 class="spin-title" id="spinTitle">Spin for tonight's math fate</h1>
+        </div>
+
+        <div class="wheel-layout">
+          <div class="wheel-frame" aria-hidden="true">
+            <div class="wheel" id="wheel">
+              <span class="wheel-center">Spin<br />me</span>
+            </div>
+          </div>
+          <div class="wheel-copy">
+            <h2>Most days are number problems. Sometimes the wheel gets weird.</h2>
+            <p>The result is saved for this daily question, so refreshing the page will not re-spin it.</p>
+            <ul class="legend">
+              <li><span class="dot number"></span>80% number problem</li>
+              <li><span class="dot word"></span>15% word problem</li>
+              <li><span class="dot skip"></span>4% skip the problem</li>
+              <li><span class="dot pushups"></span>1% word problem plus everyone does 10 pushups</li>
+            </ul>
+            <button class="spin-button" id="spinButton" type="button">Spin the wheel</button>
+            <div class="spin-result" id="spinResult" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card question-card" id="questionCard" aria-hidden="true" aria-labelledby="pageTitle">
       <div class="card-inner">
         <div class="top-row">
           <a class="home-link" href="../index.html">DexterBain.com</a>
@@ -341,24 +575,24 @@
         </div>
 
         <div>
-          <p class="eyebrow">One dinner question per day</p>
-          <h1 id="pageTitle">Daffy's Math Question</h1>
+          <p class="eyebrow" id="eventEyebrow">One dinner question per day</p>
+          <h1 id="pageTitle">Daphne's Math Question</h1>
         </div>
 
-        <p class="intro">
-          A no-timer dinner brain teaser for Daffy. Read the story, solve it out loud, then tap how it went.
+        <p class="intro" id="introText">
+          Spin first, then solve one short dinner math problem. No timer.
         </p>
 
         <section class="question-box" aria-label="Daily dinner question">
           <div class="question-label">
             <span id="questionDate">Daily question</span>
-            <span id="questionSkill">Somewhat advanced</span>
+            <span id="questionSkill">Number problem</span>
           </div>
           <p class="question-text" id="questionText"></p>
           <span class="duration" id="durationText">Should take about 20 to 30 seconds.</span>
         </section>
 
-        <div class="answer-row" aria-label="Question result">
+        <div class="answer-row" id="answerRow" aria-label="Question result">
           <button class="answer-button" type="button" data-outcome="right">Got it right first try</button>
           <button class="answer-button" type="button" data-outcome="hint">Needed a hint, then got it</button>
           <button class="answer-button" type="button" data-outcome="wrong">Did not get it first try</button>
@@ -369,7 +603,7 @@
           <p class="next-note" id="nextNote"></p>
         </section>
 
-        <details class="answer-key">
+        <details class="answer-key" id="answerDetails">
           <summary>Grown-up answer key</summary>
           <p id="answerKey"></p>
         </details>
@@ -380,13 +614,35 @@
 
   <script>
     (() => {
-      const QUESTION_DAY_ID = "2026-05-18-dinner-question";
+      const QUESTION_DAY_ID = "2026-05-18-dinner-question-wheel";
       const QUESTION_DATE_LABEL = "May 18 dinner question";
-      const STORAGE_KEY = "daffy-dinner-question-v1";
+      const STORAGE_KEY = "daphne-dinner-question-v2";
       const MIN_LEVEL = 1;
       const MAX_LEVEL = 5;
       const DEFAULT_LEVEL = 3;
       const COLORS = ["#e94f7d", "#ffd66b", "#7bdcb5", "#85c7ff", "#ffb38a"];
+      const WHEEL_TYPES = {
+        number: {
+          label: "Number problem",
+          result: "Number problem!",
+          centerAngle: 144,
+        },
+        word: {
+          label: "Word problem",
+          result: "Word problem!",
+          centerAngle: 315,
+        },
+        skip: {
+          label: "Skip the problem",
+          result: "Skip the problem!",
+          centerAngle: 349.2,
+        },
+        pushups: {
+          label: "Word problem + 10 pushups",
+          result: "Word problem... and everyone does 10 pushups!",
+          centerAngle: 358.2,
+        },
+      };
       const OUTCOMES = {
         right: {
           delta: 1,
@@ -400,55 +656,86 @@
           delta: -1,
           note: "No problem. Next dinner question will be a little easier.",
         },
+        skip: {
+          delta: 0,
+          note: "The wheel skipped tonight's problem. Daphne is free.",
+        },
       };
-      const QUESTIONS = [
+      const NUMBER_PROBLEMS = [
         {
           level: 1,
-          label: "Warm-up",
-          text: "Daffy has two dinner jobs. She folds napkins for 32 seconds, then carries plates for 67 seconds. How many seconds do the two jobs take altogether?",
-          answer: "99 seconds",
+          text: "32 + 67 - 67 = ?",
+          answer: "32",
         },
         {
           level: 2,
-          label: "Ready",
-          text: "Daffy has 67 seconds before the pasta timer beeps. She spends 32 seconds washing strawberries. How many seconds are left before the beep?",
-          answer: "35 seconds",
+          text: "67 - 32 + 32 = ?",
+          answer: "67",
         },
         {
           level: 3,
-          label: "Somewhat advanced",
-          text: "Daffy has two dinner tasks. First she rinses grapes for 32 seconds, then she sets the table for 67 seconds. Oliver started waiting 32 seconds before she began. From Oliver's waiting time through the end of Daffy's jobs, how many seconds pass?",
-          answer: "131 seconds",
+          text: "32 + 67 - 67 - 32 = ?",
+          answer: "0",
         },
         {
           level: 4,
-          label: "Tricky",
-          text: "The rolls warm for 67 seconds. While they warm, Daffy pours water for 32 seconds and then puts napkins out for 32 seconds. Does she finish before the rolls, and by how many seconds?",
-          answer: "Yes, by 3 seconds",
+          text: "67 + 32 - 67 + 32 = ?",
+          answer: "64",
         },
         {
           level: 5,
-          label: "Brain stretch",
-          text: "Daffy mixes salad for 67 seconds. Oliver starts at the same time and sets plates for 32 seconds, then fills cups for 32 more seconds. Who finishes first, and how many seconds apart are they?",
-          answer: "Oliver finishes 3 seconds before Daffy",
+          text: "67 + 67 - 32 - 32 + 67 = ?",
+          answer: "137",
+        },
+      ];
+      const WORD_PROBLEMS = [
+        {
+          level: 1,
+          text: "Bob has 32 bagels and tries to eat 67 bagels. Is that possible?",
+          answer: "No, because he only has 32 bagels.",
+        },
+        {
+          level: 2,
+          text: "Bob has 67 bagels and gives away 32 bagels. How many are left?",
+          answer: "35 bagels",
+        },
+        {
+          level: 3,
+          text: "Bob has 32 bagels, gets 67 more, then gives away 32. How many are left?",
+          answer: "67 bagels",
+        },
+        {
+          level: 4,
+          text: "Bob has 67 bagels, eats 32, then gets 32 more. How many bagels does he have?",
+          answer: "67 bagels",
+        },
+        {
+          level: 5,
+          text: "Bob has 67 bagels and wants to split them evenly between 32 kids. Can everyone get 2 whole bagels?",
+          answer: "Yes, because 32 x 2 = 64 and 67 is enough.",
         },
       ];
 
+      const spinScreen = document.querySelector("#spinScreen");
+      const questionCard = document.querySelector("#questionCard");
+      const wheel = document.querySelector("#wheel");
+      const spinButton = document.querySelector("#spinButton");
+      const spinResult = document.querySelector("#spinResult");
       const difficultyPill = document.querySelector("#difficultyPill");
+      const eventEyebrow = document.querySelector("#eventEyebrow");
+      const introText = document.querySelector("#introText");
       const questionDate = document.querySelector("#questionDate");
       const questionSkill = document.querySelector("#questionSkill");
       const questionText = document.querySelector("#questionText");
+      const durationText = document.querySelector("#durationText");
+      const answerRow = document.querySelector("#answerRow");
+      const answerDetails = document.querySelector("#answerDetails");
       const answerKey = document.querySelector("#answerKey");
       const resultBox = document.querySelector("#resultBox");
       const nextNote = document.querySelector("#nextNote");
       const confettiLayer = document.querySelector("#confettiLayer");
       const buttons = [...document.querySelectorAll(".answer-button")];
       let state = loadState();
-      if (!state.levels[QUESTION_DAY_ID]) {
-        state.levels[QUESTION_DAY_ID] = state.nextLevel;
-        saveState();
-      }
-      const question = getQuestionForLevel(state.levels[QUESTION_DAY_ID]);
 
       function clampLevel(level) {
         return Math.min(MAX_LEVEL, Math.max(MIN_LEVEL, Number(level) || DEFAULT_LEVEL));
@@ -461,12 +748,14 @@
             nextLevel: clampLevel(saved?.nextLevel || DEFAULT_LEVEL),
             answers: saved?.answers || {},
             levels: saved?.levels || {},
+            wheels: saved?.wheels || {},
           };
         } catch {
           return {
             nextLevel: DEFAULT_LEVEL,
             answers: {},
             levels: {},
+            wheels: {},
           };
         }
       }
@@ -479,19 +768,106 @@
         }
       }
 
-      function getQuestionForLevel(level) {
-        const wantedLevel = clampLevel(level);
-        return QUESTIONS.find((item) => item.level === wantedLevel) || QUESTIONS[DEFAULT_LEVEL - 1];
+      function chooseWheelType() {
+        const roll = Math.floor(Math.random() * 100);
+        if (roll < 80) return "number";
+        if (roll < 95) return "word";
+        if (roll < 99) return "skip";
+        return "pushups";
       }
 
-      function renderQuestion() {
-        difficultyPill.textContent = `Dinner level ${question.level}`;
+      function ensureDailyLevel() {
+        if (!state.levels[QUESTION_DAY_ID]) {
+          state.levels[QUESTION_DAY_ID] = state.nextLevel;
+          saveState();
+        }
+        return clampLevel(state.levels[QUESTION_DAY_ID]);
+      }
+
+      function getQuestion(type, level) {
+        const wantedLevel = clampLevel(level);
+        const bank = type === "word" || type === "pushups" ? WORD_PROBLEMS : NUMBER_PROBLEMS;
+        return bank.find((item) => item.level === wantedLevel) || bank[DEFAULT_LEVEL - 1];
+      }
+
+      function startSpin() {
+        if (state.wheels[QUESTION_DAY_ID]) return;
+        spinButton.disabled = true;
+        spinResult.textContent = "Spinning...";
+        const type = chooseWheelType();
+        const result = WHEEL_TYPES[type];
+        const turns = 6;
+        const rotation = turns * 360 - result.centerAngle;
+        wheel.style.transform = `rotate(${rotation}deg)`;
+
+        window.setTimeout(() => {
+          state.wheels[QUESTION_DAY_ID] = {
+            type,
+            spunAt: new Date().toISOString(),
+          };
+          ensureDailyLevel();
+          saveState();
+          spinResult.textContent = result.result;
+          window.setTimeout(() => revealQuestion(true), 700);
+        }, 2750);
+      }
+
+      function revealQuestion(celebrateSkip = false) {
+        const wheelData = state.wheels[QUESTION_DAY_ID];
+        if (!wheelData) {
+          spinScreen.classList.remove("hidden");
+          questionCard.classList.remove("visible");
+          questionCard.setAttribute("aria-hidden", "true");
+          return;
+        }
+
+        spinScreen.classList.add("hidden");
+        questionCard.classList.add("visible");
+        questionCard.setAttribute("aria-hidden", "false");
+        renderQuestion(wheelData.type, celebrateSkip);
+      }
+
+      function renderQuestion(type, celebrateSkip) {
+        const wheelType = WHEEL_TYPES[type] || WHEEL_TYPES.number;
+        const level = ensureDailyLevel();
+        const question = getQuestion(type, level);
+        const savedAnswer = state.answers[QUESTION_DAY_ID];
+        const isSkip = type === "skip";
+        const isWordy = type === "word" || type === "pushups";
+
+        difficultyPill.textContent = isSkip ? "Dinner skip" : `Dinner level ${level}`;
+        eventEyebrow.textContent = wheelType.label;
+        introText.textContent = isSkip
+          ? "The wheel gave Daphne a skip tonight. No timer, no problem."
+          : "Solve one short dinner math problem. No timer.";
         questionDate.textContent = QUESTION_DATE_LABEL;
-        questionSkill.textContent = question.label;
-        questionText.textContent = question.text;
+        questionSkill.textContent = wheelType.label;
+        questionText.classList.toggle("wordy", isWordy || isSkip);
+        questionText.textContent = isSkip
+          ? "No math problem tonight. The wheel says Daphne skips it."
+          : question.text;
+        durationText.textContent = isSkip
+          ? "Skipped by the dinner wheel."
+          : "Should take about 20 to 30 seconds.";
+        answerRow.classList.toggle("hidden", isSkip);
+        answerDetails.classList.toggle("hidden", isSkip);
         answerKey.textContent = question.answer;
 
-        const savedAnswer = state.answers[QUESTION_DAY_ID];
+        if (type === "pushups") {
+          introText.textContent = "Solve the word problem, then everyone does 10 pushups. No timer.";
+        }
+
+        if (isSkip) {
+          state.answers[QUESTION_DAY_ID] = state.answers[QUESTION_DAY_ID] || {
+            outcome: "skip",
+            level,
+            answeredAt: new Date().toISOString(),
+          };
+          saveState();
+          showResult("skip", celebrateSkip);
+          return;
+        }
+
         if (savedAnswer) showResult(savedAnswer.outcome, false);
       }
 
@@ -506,7 +882,7 @@
 
         state.answers[QUESTION_DAY_ID] = {
           outcome,
-          level: question.level,
+          level: ensureDailyLevel(),
           answeredAt: new Date().toISOString(),
         };
         saveState();
@@ -539,11 +915,12 @@
         }, 2500);
       }
 
+      spinButton.addEventListener("click", startSpin);
       buttons.forEach((button) => {
         button.addEventListener("click", () => pickOutcome(button.dataset.outcome));
       });
 
-      renderQuestion();
+      revealQuestion(false);
     })();
   </script>
 </body>
