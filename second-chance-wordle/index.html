@@ -424,6 +424,7 @@
   <div class="celebration" id="celebration" aria-hidden="true"></div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <script src="dictionaries.js"></script>
   <script>
     (() => {
       const WORDS = [
@@ -499,7 +500,9 @@
       const ROWS = 6;
       const COLS = 5;
       const STATS_KEY = "second-chance-wordle-stats-v1";
-      const WORD_LIST = new Set([...WORDS, ...EXTRA_GUESSES]);
+      const DICTIONARY_DATA = window.SECOND_CHANCE_DICTIONARIES || { guesses: [], fourLetterBases: [] };
+      const WORD_LIST = new Set([...WORDS, ...EXTRA_GUESSES, ...DICTIONARY_DATA.guesses]);
+      const FOUR_LETTER_BASES = new Set(DICTIONARY_DATA.fourLetterBases || []);
       const board = document.querySelector("#board");
       const keyboard = document.querySelector("#keyboard");
       const toast = document.querySelector("#toast");
@@ -675,7 +678,7 @@
           return;
         }
 
-        if (!WORD_LIST.has(currentGuess)) {
+        if (!isAcceptedGuess(currentGuess)) {
           shake();
           showToast("Not on word list", 1400, true);
           return;
@@ -684,6 +687,11 @@
         const guess = currentGuess;
         const result = scoreGuess(guess, answer);
         revealGuess(guess, result);
+      }
+
+      function isAcceptedGuess(guess) {
+        if (WORD_LIST.has(guess)) return true;
+        return guess.endsWith("S") && FOUR_LETTER_BASES.has(guess.slice(0, -1));
       }
 
       function finishGuess(guess) {
