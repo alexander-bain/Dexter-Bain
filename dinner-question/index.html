@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Daffy's Dinner Question | DexterBain</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #273044;
+      --soft-ink: #667085;
+      --cream: #fff7df;
+      --paper: #ffffff;
+      --peach: #ffb38a;
+      --berry: #e94f7d;
+      --mint: #7bdcb5;
+      --sky: #85c7ff;
+      --butter: #ffd66b;
+      --line: rgba(39, 48, 68, 0.14);
+      --shadow: 0 24px 70px rgba(111, 76, 41, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: "Trebuchet MS", "Avenir Next", Verdana, sans-serif;
+      background:
+        radial-gradient(circle at 16% 12%, rgba(255, 211, 107, 0.6), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(133, 199, 255, 0.5), transparent 24%),
+        radial-gradient(circle at 64% 88%, rgba(123, 220, 181, 0.46), transparent 26%),
+        linear-gradient(135deg, #fff7df, #ffe6dc 48%, #eaf7ff);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .page {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      padding: 28px 16px;
+    }
+
+    .page::before,
+    .page::after {
+      content: "";
+      position: fixed;
+      z-index: 0;
+      width: 240px;
+      height: 240px;
+      border-radius: 48% 52% 44% 56%;
+      opacity: 0.34;
+      pointer-events: none;
+    }
+
+    .page::before {
+      left: -72px;
+      top: 10%;
+      background: var(--mint);
+      transform: rotate(18deg);
+    }
+
+    .page::after {
+      right: -86px;
+      bottom: 8%;
+      background: var(--peach);
+      transform: rotate(-12deg);
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: min(780px, 100%);
+      border: 3px solid rgba(39, 48, 68, 0.88);
+      border-radius: 34px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 12px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--berry) 0 46px,
+        var(--butter) 46px 92px,
+        var(--mint) 92px 138px,
+        var(--sky) 138px 184px
+      );
+    }
+
+    .card-inner {
+      display: grid;
+      gap: 22px;
+      padding: clamp(28px, 5vw, 48px);
+    }
+
+    .top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .home-link {
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .difficulty-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 7px 12px;
+      border: 2px solid rgba(39, 48, 68, 0.82);
+      border-radius: 999px;
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--berry);
+      font-size: 0.85rem;
+      font-weight: 950;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 640px;
+      margin: 0;
+      font-size: clamp(2.5rem, 10vw, 5.4rem);
+      line-height: 0.88;
+      letter-spacing: -0.06em;
+    }
+
+    .intro {
+      max-width: 580px;
+      margin: 0;
+      color: var(--soft-ink);
+      font-size: clamp(1rem, 2.8vw, 1.2rem);
+      line-height: 1.55;
+    }
+
+    .question-box {
+      display: grid;
+      gap: 16px;
+      border: 3px solid rgba(39, 48, 68, 0.82);
+      border-radius: 26px;
+      background:
+        linear-gradient(135deg, rgba(255, 211, 107, 0.28), rgba(133, 199, 255, 0.16)),
+        var(--paper);
+      padding: clamp(22px, 4vw, 34px);
+    }
+
+    .question-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--soft-ink);
+      font-size: 0.82rem;
+      font-weight: 950;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .question-text {
+      margin: 0;
+      font-size: clamp(1.45rem, 4.7vw, 2.45rem);
+      font-weight: 950;
+      line-height: 1.18;
+      text-wrap: balance;
+    }
+
+    .duration {
+      justify-self: start;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 900;
+    }
+
+    .answer-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .answer-button {
+      min-height: 70px;
+      border: 3px solid rgba(39, 48, 68, 0.86);
+      border-radius: 20px;
+      background: var(--paper);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: clamp(0.95rem, 2.5vw, 1.08rem);
+      font-weight: 950;
+      line-height: 1.15;
+      box-shadow: 0 8px 0 rgba(39, 48, 68, 0.16);
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    }
+
+    .answer-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 0 rgba(39, 48, 68, 0.16);
+    }
+
+    .answer-button:active {
+      transform: translateY(4px);
+      box-shadow: 0 3px 0 rgba(39, 48, 68, 0.16);
+    }
+
+    .answer-button[data-outcome="right"] {
+      background: #dbffe9;
+    }
+
+    .answer-button[data-outcome="hint"] {
+      background: #fff2be;
+    }
+
+    .answer-button[data-outcome="wrong"] {
+      background: #ffe0ea;
+    }
+
+    .answer-button.selected {
+      outline: 5px solid rgba(233, 79, 125, 0.18);
+      transform: translateY(2px);
+      box-shadow: 0 4px 0 rgba(39, 48, 68, 0.16);
+    }
+
+    .result {
+      display: none;
+      gap: 8px;
+      border: 3px dashed rgba(233, 79, 125, 0.46);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.78);
+      padding: 18px;
+      text-align: center;
+    }
+
+    .result.show {
+      display: grid;
+    }
+
+    .freedom {
+      color: var(--berry);
+      font-size: clamp(1.7rem, 6vw, 3.2rem);
+      font-weight: 950;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .next-note {
+      margin: 0;
+      color: var(--soft-ink);
+      font-weight: 850;
+    }
+
+    .answer-key {
+      margin: 0;
+      color: rgba(39, 48, 68, 0.72);
+      font-size: 0.86rem;
+      font-weight: 850;
+      text-align: center;
+    }
+
+    .answer-key summary {
+      cursor: pointer;
+      font-weight: 950;
+    }
+
+    .answer-key p {
+      margin: 8px 0 0;
+    }
+
+    .confetti-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .confetti {
+      position: absolute;
+      top: -22px;
+      width: 11px;
+      height: 18px;
+      border-radius: 3px;
+      animation: fall 1900ms cubic-bezier(0.16, 0.66, 0.26, 1) forwards;
+    }
+
+    @keyframes fall {
+      0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate3d(var(--drift), 110vh, 0) rotate(var(--spin));
+      }
+    }
+
+    @media (max-width: 700px) {
+      .answer-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="card" aria-labelledby="pageTitle">
+      <div class="card-inner">
+        <div class="top-row">
+          <a class="home-link" href="../index.html">DexterBain.com</a>
+          <span class="difficulty-pill" id="difficultyPill">Dinner level 3</span>
+        </div>
+
+        <div>
+          <p class="eyebrow">One dinner question per day</p>
+          <h1 id="pageTitle">Daffy's Math Question</h1>
+        </div>
+
+        <p class="intro">
+          A no-timer dinner brain teaser for Daffy. Read the story, solve it out loud, then tap how it went.
+        </p>
+
+        <section class="question-box" aria-label="Daily dinner question">
+          <div class="question-label">
+            <span id="questionDate">Daily question</span>
+            <span id="questionSkill">Somewhat advanced</span>
+          </div>
+          <p class="question-text" id="questionText"></p>
+          <span class="duration" id="durationText">Should take about 20 to 30 seconds.</span>
+        </section>
+
+        <div class="answer-row" aria-label="Question result">
+          <button class="answer-button" type="button" data-outcome="right">Got it right first try</button>
+          <button class="answer-button" type="button" data-outcome="hint">Needed a hint, then got it</button>
+          <button class="answer-button" type="button" data-outcome="wrong">Did not get it first try</button>
+        </div>
+
+        <section class="result" id="resultBox" aria-live="polite">
+          <strong class="freedom">YOUR FREE OLIVER!</strong>
+          <p class="next-note" id="nextNote"></p>
+        </section>
+
+        <details class="answer-key">
+          <summary>Grown-up answer key</summary>
+          <p id="answerKey"></p>
+        </details>
+      </div>
+    </section>
+  </main>
+  <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
+  <script>
+    (() => {
+      const QUESTION_DAY_ID = "2026-05-18-dinner-question";
+      const QUESTION_DATE_LABEL = "May 18 dinner question";
+      const STORAGE_KEY = "daffy-dinner-question-v1";
+      const MIN_LEVEL = 1;
+      const MAX_LEVEL = 5;
+      const DEFAULT_LEVEL = 3;
+      const COLORS = ["#e94f7d", "#ffd66b", "#7bdcb5", "#85c7ff", "#ffb38a"];
+      const OUTCOMES = {
+        right: {
+          delta: 1,
+          note: "Nice. Next dinner question will be a little harder.",
+        },
+        hint: {
+          delta: 0,
+          note: "Good recovery. Next dinner question will stay about the same.",
+        },
+        wrong: {
+          delta: -1,
+          note: "No problem. Next dinner question will be a little easier.",
+        },
+      };
+      const QUESTIONS = [
+        {
+          level: 1,
+          label: "Warm-up",
+          text: "Daffy has two dinner jobs. She folds napkins for 32 seconds, then carries plates for 67 seconds. How many seconds do the two jobs take altogether?",
+          answer: "99 seconds",
+        },
+        {
+          level: 2,
+          label: "Ready",
+          text: "Daffy has 67 seconds before the pasta timer beeps. She spends 32 seconds washing strawberries. How many seconds are left before the beep?",
+          answer: "35 seconds",
+        },
+        {
+          level: 3,
+          label: "Somewhat advanced",
+          text: "Daffy has two dinner tasks. First she rinses grapes for 32 seconds, then she sets the table for 67 seconds. Oliver started waiting 32 seconds before she began. From Oliver's waiting time through the end of Daffy's jobs, how many seconds pass?",
+          answer: "131 seconds",
+        },
+        {
+          level: 4,
+          label: "Tricky",
+          text: "The rolls warm for 67 seconds. While they warm, Daffy pours water for 32 seconds and then puts napkins out for 32 seconds. Does she finish before the rolls, and by how many seconds?",
+          answer: "Yes, by 3 seconds",
+        },
+        {
+          level: 5,
+          label: "Brain stretch",
+          text: "Daffy mixes salad for 67 seconds. Oliver starts at the same time and sets plates for 32 seconds, then fills cups for 32 more seconds. Who finishes first, and how many seconds apart are they?",
+          answer: "Oliver finishes 3 seconds before Daffy",
+        },
+      ];
+
+      const difficultyPill = document.querySelector("#difficultyPill");
+      const questionDate = document.querySelector("#questionDate");
+      const questionSkill = document.querySelector("#questionSkill");
+      const questionText = document.querySelector("#questionText");
+      const answerKey = document.querySelector("#answerKey");
+      const resultBox = document.querySelector("#resultBox");
+      const nextNote = document.querySelector("#nextNote");
+      const confettiLayer = document.querySelector("#confettiLayer");
+      const buttons = [...document.querySelectorAll(".answer-button")];
+      let state = loadState();
+      if (!state.levels[QUESTION_DAY_ID]) {
+        state.levels[QUESTION_DAY_ID] = state.nextLevel;
+        saveState();
+      }
+      const question = getQuestionForLevel(state.levels[QUESTION_DAY_ID]);
+
+      function clampLevel(level) {
+        return Math.min(MAX_LEVEL, Math.max(MIN_LEVEL, Number(level) || DEFAULT_LEVEL));
+      }
+
+      function loadState() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+          return {
+            nextLevel: clampLevel(saved?.nextLevel || DEFAULT_LEVEL),
+            answers: saved?.answers || {},
+            levels: saved?.levels || {},
+          };
+        } catch {
+          return {
+            nextLevel: DEFAULT_LEVEL,
+            answers: {},
+            levels: {},
+          };
+        }
+      }
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch {
+          // The question still works if the browser blocks storage.
+        }
+      }
+
+      function getQuestionForLevel(level) {
+        const wantedLevel = clampLevel(level);
+        return QUESTIONS.find((item) => item.level === wantedLevel) || QUESTIONS[DEFAULT_LEVEL - 1];
+      }
+
+      function renderQuestion() {
+        difficultyPill.textContent = `Dinner level ${question.level}`;
+        questionDate.textContent = QUESTION_DATE_LABEL;
+        questionSkill.textContent = question.label;
+        questionText.textContent = question.text;
+        answerKey.textContent = question.answer;
+
+        const savedAnswer = state.answers[QUESTION_DAY_ID];
+        if (savedAnswer) showResult(savedAnswer.outcome, false);
+      }
+
+      function pickOutcome(outcome) {
+        const info = OUTCOMES[outcome];
+        if (!info) return;
+
+        const alreadyAnswered = Boolean(state.answers[QUESTION_DAY_ID]);
+        if (!alreadyAnswered) {
+          state.nextLevel = clampLevel(state.nextLevel + info.delta);
+        }
+
+        state.answers[QUESTION_DAY_ID] = {
+          outcome,
+          level: question.level,
+          answeredAt: new Date().toISOString(),
+        };
+        saveState();
+        showResult(outcome, true);
+      }
+
+      function showResult(outcome, celebrate) {
+        buttons.forEach((button) => {
+          button.classList.toggle("selected", button.dataset.outcome === outcome);
+        });
+        resultBox.classList.add("show");
+        nextNote.textContent = OUTCOMES[outcome]?.note || "";
+        if (celebrate) dropConfetti();
+      }
+
+      function dropConfetti() {
+        confettiLayer.innerHTML = "";
+        for (let index = 0; index < 120; index += 1) {
+          const piece = document.createElement("span");
+          piece.className = "confetti";
+          piece.style.left = `${Math.random() * 100}%`;
+          piece.style.background = COLORS[index % COLORS.length];
+          piece.style.animationDelay = `${Math.random() * 360}ms`;
+          piece.style.setProperty("--drift", `${Math.random() * 260 - 130}px`);
+          piece.style.setProperty("--spin", `${Math.random() * 800 + 260}deg`);
+          confettiLayer.appendChild(piece);
+        }
+        setTimeout(() => {
+          confettiLayer.innerHTML = "";
+        }, 2500);
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => pickOutcome(button.dataset.outcome));
+      });
+
+      renderQuestion();
+    })();
+  </script>
+</body>
+</html>
