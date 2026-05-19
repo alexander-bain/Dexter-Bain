@@ -300,7 +300,8 @@
         var(--berry) 356.4deg 360deg
       );
       box-shadow: 0 16px 0 rgba(39, 48, 68, 0.12);
-      transition: transform 2700ms cubic-bezier(0.13, 0.78, 0.12, 1);
+      transition: transform 3400ms cubic-bezier(0.13, 0.78, 0.12, 1);
+      will-change: transform;
     }
 
     .wheel::before {
@@ -811,6 +812,7 @@
       const MIN_LEVEL = 1;
       const MAX_LEVEL = 5;
       const DEFAULT_LEVEL = 3;
+      const WHEEL_SPIN_MS = 3400;
       const COLORS = ["#e94f7d", "#ffd66b", "#7bdcb5", "#85c7ff", "#ffb38a"];
       const ANSWER_OUTCOMES = new Set(["right", "hint", "wrong"]);
       const WHEEL_TYPES = {
@@ -988,6 +990,7 @@
       const buttons = [...document.querySelectorAll(".answer-button")];
       let state = loadState();
       let isSpinning = false;
+      let spinReplayCount = 0;
 
       function clampLevel(level) {
         return Math.min(MAX_LEVEL, Math.max(MIN_LEVEL, Number(level) || DEFAULT_LEVEL));
@@ -1092,21 +1095,19 @@
 
       function startSpin() {
         if (isSpinning) return;
-        if (state.wheels[QUESTION_DAY_ID]) {
-          showWheelIntro();
-          return;
-        }
         isSpinning = true;
         spinButton.disabled = true;
         openQuestionButton.classList.add("hidden");
         wheelFrame.classList.add("is-spinning");
         spinResult.textContent = "Spinning...";
-        const type = chooseWheelType();
+        const existingWheel = state.wheels[QUESTION_DAY_ID];
+        const hasSavedWheel = Boolean(WHEEL_TYPES[existingWheel?.type]);
+        const type = hasSavedWheel ? existingWheel.type : chooseWheelType();
         const result = WHEEL_TYPES[type];
         landWheelOn(result, true);
 
         window.setTimeout(() => {
-          state.wheels[QUESTION_DAY_ID] = {
+          state.wheels[QUESTION_DAY_ID] = hasSavedWheel ? existingWheel : {
             type,
             spunAt: new Date().toISOString(),
           };
@@ -1115,11 +1116,11 @@
           isSpinning = false;
           wheelFrame.classList.remove("is-spinning");
           showWheelIntro();
-        }, 2750);
+        }, WHEEL_SPIN_MS + 80);
       }
 
       function landWheelOn(result, animated) {
-        const turns = 6;
+        const turns = animated ? 7 + (spinReplayCount % 3) : 0;
         const rotation = turns * 360 - result.centerAngle;
         if (!animated) {
           wheel.style.transition = "none";
@@ -1128,6 +1129,11 @@
           wheel.style.transition = "";
           return;
         }
+        spinReplayCount += 1;
+        wheel.style.transition = "none";
+        wheel.style.transform = `rotate(${rotation - 2160}deg)`;
+        void wheel.offsetWidth;
+        wheel.style.transition = "";
         wheel.style.transform = `rotate(${rotation}deg)`;
       }
 
@@ -1150,7 +1156,7 @@
         const wheelType = WHEEL_TYPES[wheelData.type] || WHEEL_TYPES.number;
         landWheelOn(wheelType, false);
         spinButton.textContent = "Spin the wheel";
-        spinButton.disabled = true;
+        spinButton.disabled = false;
         openQuestionButton.classList.toggle("hidden", !canOpenQuestion(wheelData.type));
         spinResult.textContent = formatWheelResult(wheelData.type);
       }
