@@ -767,7 +767,7 @@
           </div>
           <div class="wheel-copy">
             <h2>Most days are number problems. Sometimes the wheel gets weird.</h2>
-            <p>The result is saved for this daily question, so refreshing the page will not re-spin it.</p>
+            <p>Refreshing keeps the latest result. Pressing spin again rolls a fresh 80/15/4/1 chance.</p>
             <ul class="legend">
               <li><span class="dot number"></span>80% number problem</li>
               <li><span class="dot word"></span>15% word problem</li>
@@ -1156,18 +1156,17 @@
         openQuestionButton.classList.add("hidden");
         wheelFrame.classList.add("is-spinning");
         spinResult.textContent = "Spinning...";
-        const existingWheel = normalizeWheelRoll(state.wheels[QUESTION_DAY_ID]);
-        const roll = existingWheel
-          ? { ...existingWheel, landingAngle: randomAngleInSegment(existingWheel.type) }
-          : createWheelRoll();
+        const roll = createWheelRoll();
         landWheelOn(roll, true);
 
         window.setTimeout(() => {
-          state.wheels[QUESTION_DAY_ID] = existingWheel ? roll : {
+          state.wheels[QUESTION_DAY_ID] = {
             type: roll.type,
             landingAngle: roll.landingAngle,
             spunAt: new Date().toISOString(),
           };
+          delete state.answers[QUESTION_DAY_ID];
+          delete state.rerolls[QUESTION_DAY_ID];
           ensureDailyLevel();
           saveState();
           isSpinning = false;
