@@ -1214,7 +1214,6 @@
         const wheelType = WHEEL_TYPES[type] || WHEEL_TYPES.number;
         const level = ensureDailyLevel();
         const question = getQuestion(type, level);
-        const savedAnswer = state.answers[QUESTION_DAY_ID];
         const isSkip = type === "skip";
         const isWordy = type === "word" || type === "pushups";
 
@@ -1244,8 +1243,6 @@
         if (isSkip) {
           return;
         }
-
-        if (savedAnswer && ANSWER_OUTCOMES.has(savedAnswer.outcome)) showResult(savedAnswer.outcome, false);
       }
 
       function pickOutcome(outcome) {
