@@ -815,26 +815,28 @@
       const WHEEL_SPIN_MS = 3400;
       const COLORS = ["#e94f7d", "#ffd66b", "#7bdcb5", "#85c7ff", "#ffb38a"];
       const ANSWER_OUTCOMES = new Set(["right", "hint", "wrong"]);
+      const WHEEL_SEGMENTS = [
+        { type: "number", start: 0, end: 288 },
+        { type: "word", start: 288, end: 342 },
+        { type: "skip", start: 342, end: 356.4 },
+        { type: "pushups", start: 356.4, end: 360 },
+      ];
       const WHEEL_TYPES = {
         number: {
           label: "Number problem",
           result: "Number problem!",
-          centerAngle: 144,
         },
         word: {
           label: "Word problem",
           result: "Word problem!",
-          centerAngle: 315,
         },
         skip: {
           label: "Skip the problem",
           result: "Skip the problem!",
-          centerAngle: 349.2,
         },
         pushups: {
           label: "Word problem + 10 pushups",
           result: "Word problem... and everyone does 10 pushups!",
-          centerAngle: 358.2,
         },
       };
       const OUTCOMES = {
@@ -1053,12 +1055,37 @@
         savePhonePreview(enabled);
       }
 
-      function chooseWheelType() {
-        const roll = Math.floor(Math.random() * 100);
-        if (roll < 80) return "number";
-        if (roll < 95) return "word";
-        if (roll < 99) return "skip";
-        return "pushups";
+      function getWheelSegmentForAngle(angle) {
+        const normalized = ((Number(angle) % 360) + 360) % 360;
+        return WHEEL_SEGMENTS.find((segment) => normalized >= segment.start && normalized < segment.end) || WHEEL_SEGMENTS[0];
+      }
+
+      function randomAngleInSegment(type) {
+        const segment = WHEEL_SEGMENTS.find((item) => item.type === type) || WHEEL_SEGMENTS[0];
+        return segment.start + Math.random() * (segment.end - segment.start);
+      }
+
+      function createWheelRoll() {
+        const landingAngle = Math.random() * 360;
+        return {
+          type: getWheelSegmentForAngle(landingAngle).type,
+          landingAngle,
+        };
+      }
+
+      function normalizeWheelRoll(wheelData) {
+        if (!wheelData || !WHEEL_TYPES[wheelData.type]) return null;
+        const landingAngle = Number(wheelData.landingAngle);
+        if (Number.isFinite(landingAngle) && getWheelSegmentForAngle(landingAngle).type === wheelData.type) {
+          return {
+            ...wheelData,
+            landingAngle,
+          };
+        }
+        return {
+          ...wheelData,
+          landingAngle: randomAngleInSegment(wheelData.type),
+        };
       }
 
       function ensureDailyLevel() {
@@ -1100,15 +1127,16 @@
         openQuestionButton.classList.add("hidden");
         wheelFrame.classList.add("is-spinning");
         spinResult.textContent = "Spinning...";
-        const existingWheel = state.wheels[QUESTION_DAY_ID];
-        const hasSavedWheel = Boolean(WHEEL_TYPES[existingWheel?.type]);
-        const type = hasSavedWheel ? existingWheel.type : chooseWheelType();
-        const result = WHEEL_TYPES[type];
-        landWheelOn(result, true);
+        const existingWheel = normalizeWheelRoll(state.wheels[QUESTION_DAY_ID]);
+        const roll = existingWheel
+          ? { ...existingWheel, landingAngle: randomAngleInSegment(existingWheel.type) }
+          : createWheelRoll();
+        landWheelOn(roll, true);
 
         window.setTimeout(() => {
-          state.wheels[QUESTION_DAY_ID] = hasSavedWheel ? existingWheel : {
-            type,
+          state.wheels[QUESTION_DAY_ID] = existingWheel ? roll : {
+            type: roll.type,
+            landingAngle: roll.landingAngle,
             spunAt: new Date().toISOString(),
           };
           ensureDailyLevel();
@@ -1119,9 +1147,12 @@
         }, WHEEL_SPIN_MS + 80);
       }
 
-      function landWheelOn(result, animated) {
+      function landWheelOn(roll, animated) {
         const turns = animated ? 7 + (spinReplayCount % 3) : 0;
-        const rotation = turns * 360 - result.centerAngle;
+        const landingAngle = Number.isFinite(Number(roll?.landingAngle))
+          ? Number(roll.landingAngle)
+          : randomAngleInSegment(roll?.type);
+        const rotation = turns * 360 - landingAngle;
         if (!animated) {
           wheel.style.transition = "none";
           wheel.style.transform = `rotate(${rotation}deg)`;
@@ -1143,9 +1174,14 @@
         questionCard.classList.remove("visible");
         questionCard.setAttribute("aria-hidden", "true");
         wheelFrame.classList.remove("is-spinning");
-        wheelFrame.setAttribute("aria-label", wheelData ? `Wheel result: ${(WHEEL_TYPES[wheelData.type] || WHEEL_TYPES.number).label}` : "Spin the dinner wheel");
+        const normalizedWheel = normalizeWheelRoll(wheelData);
+        if (normalizedWheel && normalizedWheel !== wheelData) {
+          state.wheels[QUESTION_DAY_ID] = normalizedWheel;
+          saveState();
+        }
+        wheelFrame.setAttribute("aria-label", normalizedWheel ? `Wheel result: ${(WHEEL_TYPES[normalizedWheel.type] || WHEEL_TYPES.number).label}` : "Spin the dinner wheel");
 
-        if (!wheelData) {
+        if (!normalizedWheel) {
           spinButton.textContent = "Spin the wheel";
           spinButton.disabled = false;
           openQuestionButton.classList.add("hidden");
@@ -1153,12 +1189,11 @@
           return;
         }
 
-        const wheelType = WHEEL_TYPES[wheelData.type] || WHEEL_TYPES.number;
-        landWheelOn(wheelType, false);
+        landWheelOn(normalizedWheel, false);
         spinButton.textContent = "Spin the wheel";
         spinButton.disabled = false;
-        openQuestionButton.classList.toggle("hidden", !canOpenQuestion(wheelData.type));
-        spinResult.textContent = formatWheelResult(wheelData.type);
+        openQuestionButton.classList.toggle("hidden", !canOpenQuestion(normalizedWheel.type));
+        spinResult.textContent = formatWheelResult(normalizedWheel.type);
       }
 
       function revealQuestion(celebrateSkip = false) {
