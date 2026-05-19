@@ -108,4 +108,42 @@ for (const hour of [
   }
 }
 
+runGenerator("2026-05-16");
+const weekendHtml = fs.readFileSync(testHtml, "utf8");
+const weekendBlock = generatedWeatherBlock(weekendHtml);
+
+if (!weekendHtml.includes('id: "daily-weather-20260516"')) {
+  throw new Error("The May 16 generated weather game was not created.");
+}
+
+if (weekendBlock.includes('"20260516-market-lunch"')) {
+  throw new Error("Weekend generated weather game should not include the stock market question.");
+}
+
+for (const weekendQuestionId of [
+  "warm-by-noon",
+  "gas-noon",
+  "local-headline",
+  "rain-by-3pm",
+  "sky-still-sunny",
+  "wind-by-5pm",
+  "cool-tonight",
+]) {
+  if (!weekendBlock.includes(`"20260516-${weekendQuestionId}"`)) {
+    throw new Error(`Weekend generated weather game is missing the ${weekendQuestionId} question.`);
+  }
+}
+
+if (!weekendBlock.includes('"20260516-weather-headline"') && !weekendBlock.includes('"20260516-sports-headline"')) {
+  throw new Error("Weekend generated weather game is missing the second news question.");
+}
+
+if (!weekendBlock.includes('"20260516-music-four"') && !weekendBlock.includes('"20260516-music-five"')) {
+  throw new Error("Weekend generated weather game is missing the music question.");
+}
+
+if (!weekendBlock.includes('"20260516-sports-six"') && !weekendBlock.includes('"20260516-sports-seven"')) {
+  throw new Error("Weekend generated weather game is missing the sports question.");
+}
+
 console.log("Daily weather replacement test passed.");

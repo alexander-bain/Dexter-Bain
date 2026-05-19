@@ -286,13 +286,19 @@ async function run() {
             const leaderboard = document.getElementById("leaderboard")?.textContent || "";
             const entryCount = document.getElementById("entryCount")?.textContent || "";
             const storage = JSON.parse(localStorage.getItem("dexterbain-minigames-v1") || "{}");
+            const visiblePicks = Object.fromEntries(
+              [...document.querySelectorAll('#questions input[type="radio"]:checked')]
+                .map((input) => [input.name, input.value])
+            );
             if (saveNote.includes("Weather Bot") && leaderboard.includes("Weather Bot") && entryCount.trim() === "1" && storage.playerName === "Weather Bot") {
               return {
+                gameId: game.gameId,
                 title: document.getElementById("eventTitle")?.textContent || "",
                 entryCount,
                 saveNote,
                 leaderboard,
                 savedEntryName: storage.playerName || "",
+                visiblePicks,
                 chosen: bestPicks.map(([, answerId]) => answerId),
                 bestPicks,
                 storedState: storage,
@@ -328,7 +334,7 @@ async function run() {
     }
 
     const bestPickMap = Object.fromEntries(value.bestPicks || []);
-    const returnedPickMap = Object.fromEntries(value.bestPicks || []);
+    const returnedPickMap = value.visiblePicks || {};
     if (JSON.stringify(returnedPickMap) !== JSON.stringify(bestPickMap)) {
       throw new Error(`Saved picks did not match the best-odds answers: ${JSON.stringify({ returnedPickMap, bestPickMap })}`);
     }
