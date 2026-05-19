@@ -191,6 +191,11 @@
       justify-items: center;
     }
 
+    .wheel-stack .spin-button {
+      justify-self: center;
+      width: min(250px, 100%);
+    }
+
     .iphone-toggle {
       min-height: 42px;
       padding: 8px 14px;
@@ -248,7 +253,8 @@
     .wheel-frame:focus-visible,
     .iphone-toggle:focus-visible,
     .spin-button:focus-visible,
-    .answer-button:focus-visible {
+    .answer-button:focus-visible,
+    .reroll-button:focus-visible {
       outline: 5px solid rgba(133, 199, 255, 0.6);
       outline-offset: 5px;
     }
@@ -434,11 +440,20 @@
 
     .answer-row {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
     }
 
     .answer-row.hidden {
+      display: none;
+    }
+
+    .reroll-row {
+      display: flex;
+      justify-content: center;
+    }
+
+    .reroll-row.hidden {
       display: none;
     }
 
@@ -478,14 +493,29 @@
       background: #ffe0ea;
     }
 
-    .answer-button[data-outcome="manualSkip"] {
-      background: #eaf7ff;
-    }
-
     .answer-button.selected {
       outline: 5px solid rgba(233, 79, 125, 0.18);
       transform: translateY(2px);
       box-shadow: 0 4px 0 rgba(39, 48, 68, 0.16);
+    }
+
+    .reroll-button {
+      min-height: 48px;
+      padding: 10px 16px;
+      border: 2px solid rgba(39, 48, 68, 0.72);
+      border-radius: 999px;
+      background: #eaf7ff;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 950;
+      box-shadow: 0 5px 0 rgba(39, 48, 68, 0.12);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+
+    .reroll-button:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 rgba(39, 48, 68, 0.12);
     }
 
     .result {
@@ -679,6 +709,7 @@
               <span class="wheel" id="wheel"></span>
               <span class="wheel-center">Spin<br />me</span>
             </button>
+            <button class="spin-button" id="spinButton" type="button">Spin the wheel</button>
           </div>
           <div class="wheel-copy">
             <h2>Most days are number problems. Sometimes the wheel gets weird.</h2>
@@ -689,7 +720,6 @@
               <li><span class="dot skip"></span>4% skip the problem</li>
               <li><span class="dot pushups"></span>1% word problem plus everyone does 10 pushups</li>
             </ul>
-            <button class="spin-button" id="spinButton" type="button">Spin the wheel</button>
             <div class="spin-result" id="spinResult" aria-live="polite"></div>
           </div>
         </div>
@@ -725,7 +755,10 @@
           <button class="answer-button" type="button" data-outcome="right">Got it right first try</button>
           <button class="answer-button" type="button" data-outcome="hint">Needed a hint, then got it</button>
           <button class="answer-button" type="button" data-outcome="wrong">Really struggled</button>
-          <button class="answer-button" type="button" data-outcome="manualSkip">Skip this one</button>
+        </div>
+
+        <div class="reroll-row" id="rerollRow">
+          <button class="reroll-button" id="rerollButton" type="button">Skip this one</button>
         </div>
 
         <section class="result" id="resultBox" aria-live="polite">
@@ -752,6 +785,7 @@
       const MAX_LEVEL = 5;
       const DEFAULT_LEVEL = 3;
       const COLORS = ["#e94f7d", "#ffd66b", "#7bdcb5", "#85c7ff", "#ffb38a"];
+      const ANSWER_OUTCOMES = new Set(["right", "hint", "wrong"]);
       const WHEEL_TYPES = {
         number: {
           label: "Number problem",
@@ -916,6 +950,8 @@
       const questionText = document.querySelector("#questionText");
       const durationText = document.querySelector("#durationText");
       const answerRow = document.querySelector("#answerRow");
+      const rerollRow = document.querySelector("#rerollRow");
+      const rerollButton = document.querySelector("#rerollButton");
       const answerDetails = document.querySelector("#answerDetails");
       const answerKey = document.querySelector("#answerKey");
       const resultBox = document.querySelector("#resultBox");
@@ -1075,7 +1111,7 @@
 
         const wheelType = WHEEL_TYPES[wheelData.type] || WHEEL_TYPES.number;
         landWheelOn(wheelType, false);
-        spinButton.textContent = "Show today's question";
+        spinButton.textContent = "Spin the wheel";
         spinResult.textContent = `Today's wheel landed on: ${wheelType.label}.`;
       }
 
@@ -1093,6 +1129,7 @@
       }
 
       function renderQuestion(type, celebrateSkip) {
+        hideResult();
         const wheelType = WHEEL_TYPES[type] || WHEEL_TYPES.number;
         const level = ensureDailyLevel();
         const question = getQuestion(type, level);
@@ -1115,6 +1152,7 @@
           ? "Skipped by the dinner wheel."
           : "Should take about 20 to 30 seconds.";
         answerRow.classList.toggle("hidden", isSkip);
+        rerollRow.classList.toggle("hidden", isSkip);
         answerDetails.classList.toggle("hidden", isSkip);
         answerKey.textContent = question.answer;
 
@@ -1123,27 +1161,15 @@
         }
 
         if (isSkip) {
-          state.answers[QUESTION_DAY_ID] = state.answers[QUESTION_DAY_ID] || {
-            outcome: "skip",
-            level,
-            answeredAt: new Date().toISOString(),
-          };
-          saveState();
-          showResult("skip", celebrateSkip);
           return;
         }
 
-        if (savedAnswer) showResult(savedAnswer.outcome, false);
+        if (savedAnswer && ANSWER_OUTCOMES.has(savedAnswer.outcome)) showResult(savedAnswer.outcome, false);
       }
 
       function pickOutcome(outcome) {
         const info = OUTCOMES[outcome];
-        if (!info) return;
-
-        if (outcome === "manualSkip") {
-          loadAnotherQuestion();
-          return;
-        }
+        if (!info || !ANSWER_OUTCOMES.has(outcome)) return;
 
         const alreadyAnswered = Boolean(state.answers[QUESTION_DAY_ID]);
         if (!alreadyAnswered) {
@@ -1171,12 +1197,19 @@
       }
 
       function showResult(outcome, celebrate) {
+        if (!ANSWER_OUTCOMES.has(outcome)) return;
         buttons.forEach((button) => {
           button.classList.toggle("selected", button.dataset.outcome === outcome);
         });
         resultBox.classList.add("show");
         nextNote.textContent = OUTCOMES[outcome]?.note || "";
         if (celebrate) dropConfetti();
+      }
+
+      function hideResult() {
+        resultBox.classList.remove("show");
+        nextNote.textContent = "";
+        buttons.forEach((button) => button.classList.remove("selected"));
       }
 
       function dropConfetti() {
@@ -1199,6 +1232,7 @@
       spinButton.addEventListener("click", startSpin);
       wheelFrame.addEventListener("click", startSpin);
       iphoneToggle.addEventListener("click", togglePhonePreview);
+      rerollButton.addEventListener("click", loadAnotherQuestion);
       buttons.forEach((button) => {
         button.addEventListener("click", () => pickOutcome(button.dataset.outcome));
       });
