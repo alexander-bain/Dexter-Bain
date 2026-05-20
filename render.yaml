@@ -11,6 +11,12 @@ services:
         fromDatabase:
           name: dexterbain-minigames-db
           property: connectionString
+  - type: cron
+    name: dexter-bain-minigame-results
+    runtime: node
+    schedule: "*/10 * * * *"
+    buildCommand: npm install
+    startCommand: node scripts/check-daily-weather-results.mjs
 
 databases:
   - name: dexterbain-minigames-db

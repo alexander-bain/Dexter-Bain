@@ -8,7 +8,7 @@ const minigamesPath =
   path.join(repoRoot, "minigames", "index.html");
 const sourceUrl = "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182";
 const pointsUrl = "https://api.weather.gov/points/37.453,-122.182";
-const marketSource = "https://r.jina.ai/http://finance.yahoo.com/quote/%5EGSPC";
+const marketSource = "https://r.jina.ai/http://www.google.com/finance/quote/.INX:INDEXSP";
 const localNewsSource = "https://r.jina.ai/http://www.mercurynews.com/";
 const musicSource = "https://r.jina.ai/http://music.apple.com/us/charts/songs";
 const sportsSource = "https://r.jina.ai/http://www.espn.com/scoreboard";
@@ -64,6 +64,20 @@ async function fetchJson(url) {
   }
 
   return response.json();
+}
+
+async function fetchText(url) {
+  const response = await fetch(url, {
+    headers: {
+      "User-Agent": "dexterbain.com minigames weather generator"
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`Text fetch failed: ${response.status} ${response.statusText}`);
+  }
+
+  return response.text();
 }
 
 function isDatePeriod(period, date) {
@@ -201,9 +215,43 @@ function isWeekend(date) {
   return day === 0 || day === 6;
 }
 
-function dayWatchEvent(date, forecast) {
+async function loadDailyReferenceData() {
+  const fallback = {
+    gasThreshold: 4.5,
+    topSong: "the morning No. 1 song"
+  };
+
+  try {
+    const gasText = await fetchText(gasSource);
+    const gasMatch = gasText.match(/Current Avg\.\s*\$([0-9]+\.[0-9]+)/i);
+    if (gasMatch) {
+      fallback.gasThreshold = Number(gasMatch[1]);
+    }
+  } catch (error) {
+    console.warn(error.message);
+  }
+
+  try {
+    const musicText = await fetchText(musicSource);
+    const songMatch = musicText.match(/\[([^\]]+)\]\(https:\/\/music\.apple\.com\/us\/song\//);
+    if (songMatch?.[1]) {
+      fallback.topSong = songMatch[1].trim();
+    }
+  } catch (error) {
+    console.warn(error.message);
+  }
+
+  return fallback;
+}
+
+function quoteSongTitle(title) {
+  return `"${String(title || "the morning No. 1 song").replace(/"/g, "'")}"`;
+}
+
+async function dayWatchEvent(date, forecast) {
   const day = forecast.dayPeriod || {};
   const night = forecast.nightPeriod || {};
+  const referenceData = await loadDailyReferenceData();
   const high = Number(day.temperature) || 70;
   const low = Number(night.temperature) || 54;
   const skyText = `${day.shortForecast || ""} ${day.detailedForecast || ""}`;
@@ -214,10 +262,12 @@ function dayWatchEvent(date, forecast) {
   const daySeed = Number(idDate);
   const weekend = isWeekend(date);
   const warmByNoonThreshold = Math.max(60, Math.round((high - 5) / 5) * 5);
+  const gasThreshold = Number(referenceData.gasThreshold) || 4.5;
+  const topSong = quoteSongTitle(referenceData.topSong);
   const locks = {
     warmByNoon: lockDate(date, 12).toISOString(),
     gasNoon: lockDate(date, 12, 15).toISOString(),
-    marketLunch: lockDate(date, 13).toISOString(),
+    marketLunch: lockDate(date, 16).toISOString(),
     localHeadline: lockDate(date, 14).toISOString(),
     weatherAfternoon: lockDate(date, 15).toISOString(),
     musicFour: lockDate(date, 16).toISOString(),
@@ -283,7 +333,7 @@ function dayWatchEvent(date, forecast) {
   ];
   const moneyQuestions = [
     () => yesNoQuestion({
-      text: "By noon, will gas prices be higher than this morning?",
+      text: `By noon, will AAA's national regular gas average still be above $${gasThreshold.toFixed(3)}?`,
       idSuffix: "gas-noon",
       autoSource: gasSource,
       lockAt: locks.gasNoon,
@@ -292,7 +342,7 @@ function dayWatchEvent(date, forecast) {
   ];
   if (!weekend) {
     moneyQuestions.push(() => yesNoQuestion({
-      text: "By 1 PM, will the stock market go up?",
+      text: "By 4 PM, will the S&P 500 finish up for the day?",
       idSuffix: "market-lunch",
       autoSource: marketSource,
       lockAt: locks.marketLunch,
@@ -301,7 +351,7 @@ function dayWatchEvent(date, forecast) {
   }
   const newsQuestions = [
     () => choiceQuestion({
-      text: "By 2 PM, what will the local news talk about most?",
+      text: "By 2 PM, which topic best matches Mercury News' main featured homepage story?",
       idSuffix: "local-headline",
       autoSource: localNewsSource,
       lockAt: locks.localHeadline,
@@ -313,7 +363,7 @@ function dayWatchEvent(date, forecast) {
       ]
     }),
     () => yesNoQuestion({
-      text: "By 3 PM, will weather be the top local news story?",
+      text: "By 3 PM, will Mercury News' main featured homepage story be weather-related?",
       idSuffix: "weather-headline",
       autoSource: localNewsSource,
       lockAt: lockDate(date, 15).toISOString(),
@@ -322,7 +372,7 @@ function dayWatchEvent(date, forecast) {
       yesUnlikely: 40
     }),
     () => yesNoQuestion({
-      text: "By 4 PM, will sports be one of the top local news stories?",
+      text: "By 4 PM, will one of Mercury News' top homepage stories be sports-related?",
       idSuffix: "sports-headline",
       autoSource: localNewsSource,
       lockAt: lockDate(date, 16).toISOString(),
@@ -333,14 +383,14 @@ function dayWatchEvent(date, forecast) {
   ];
   const musicQuestions = [
     () => yesNoQuestion({
-      text: "By 4 PM, will the top Apple Music song be different?",
+      text: `By 4 PM, will ${topSong} still be the top Apple Music song?`,
       idSuffix: "music-four",
       autoSource: musicSource,
       lockAt: locks.musicFour,
       likely: likelyMusicChanged
     }),
     () => yesNoQuestion({
-      text: "By 5 PM, will a new song reach No. 1?",
+      text: `By 5 PM, will ${topSong} still be No. 1 on Apple Music?`,
       idSuffix: "music-five",
       autoSource: musicSource,
       lockAt: lockDate(date, 17).toISOString(),
@@ -406,7 +456,7 @@ ${endMarker}${html.slice(end + endMarker.length)}`;
 const date = targetDate();
 const forecast = await loadForecast(date);
 const html = fs.readFileSync(minigamesPath, "utf8");
-const updated = replaceGeneratedBlock(html, dayWatchEvent(date, forecast));
+const updated = replaceGeneratedBlock(html, await dayWatchEvent(date, forecast));
 fs.writeFileSync(minigamesPath, updated);
 
 console.log(`Generated Menlo Park day watch for ${dayKey(date)} using ${forecast.source}.`);

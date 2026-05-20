@@ -130,7 +130,6 @@ assertIncludesQuestions(secondBlock, "20260513", [
 assertIncludesLockTimes(secondBlock, [
   "T19:00:00.000Z",
   "T19:15:00.000Z",
-  "T20:00:00.000Z",
   "T21:00:00.000Z",
   "T22:00:00.000Z",
   "T23:00:00.000Z",
