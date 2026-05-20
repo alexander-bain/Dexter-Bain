@@ -4664,6 +4664,8 @@
       const sharedGameEntries = Array.isArray(sharedEntries[game.gameId]) ? sharedEntries[game.gameId] : null;
       const sourceEntries = scope.type === "room"
         ? (Array.isArray(sharedRooms[roomKey]) ? sharedRooms[roomKey] : [])
+        : sharedStatus === "online"
+        ? (sharedGameEntries || [])
         : [
             ...(sharedGameEntries || []),
             ...localEntries.filter((localEntry) => {
