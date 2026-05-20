@@ -3673,10 +3673,8 @@
             .map((result) => [result.questionId, result])
         );
         resultsCheckedAt[game.gameId] = Date.now();
-        sharedStatus = "online";
         return true;
       } catch (err) {
-        sharedStatus = "offline";
         return false;
       }
     }
@@ -3724,10 +3722,8 @@
             .map((result) => [result.questionId, result])
         );
         resultsCheckedAt[game.gameId] = Date.now();
-        sharedStatus = "online";
         return true;
       } catch (err) {
-        sharedStatus = "offline";
         return false;
       }
     }
