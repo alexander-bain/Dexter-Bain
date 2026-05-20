@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Last Minute Ladder</title>
+  <style>
+    :root {
+      --bg: #08111f;
+      --panel: rgba(11, 26, 46, 0.84);
+      --panel-strong: rgba(16, 35, 61, 0.96);
+      --line: rgba(149, 196, 255, 0.2);
+      --text: #f4f7fb;
+      --muted: #9eb4cf;
+      --mint: #7cf0b8;
+      --gold: #ffd36e;
+      --rose: #ff7b95;
+      --sky: #71d8ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(113, 216, 255, 0.2), transparent 28%),
+        radial-gradient(circle at 20% 80%, rgba(255, 123, 149, 0.15), transparent 22%),
+        linear-gradient(180deg, #0c1730 0%, #07111d 100%);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .shell {
+      width: min(960px, 100%);
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero,
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(16px);
+    }
+
+    .hero {
+      padding: 28px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-top,
+    .scoreboard,
+    .button-row,
+    .move-grid,
+    .stat-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .hero-top {
+      grid-template-columns: 1.25fr 0.75fr;
+      align-items: end;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(124, 240, 184, 0.12);
+      color: var(--mint);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 10px 0 8px;
+      font-size: clamp(2.2rem, 5vw, 4.4rem);
+      line-height: 0.94;
+    }
+
+    .subcopy {
+      margin: 0;
+      max-width: 34rem;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.45;
+    }
+
+    .scoreboard {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .score-card,
+    .stat,
+    .feed,
+    .controls {
+      background: var(--panel-strong);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+    }
+
+    .score-card {
+      padding: 18px;
+    }
+
+    .score-label {
+      color: var(--muted);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .score-value {
+      margin-top: 8px;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-weight: 800;
+    }
+
+    .status-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .status-pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .status-pill strong {
+      color: var(--text);
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .button-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .move {
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
+        rgba(6, 15, 29, 0.85);
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+    }
+
+    .move:hover,
+    .move:focus-visible {
+      transform: translateY(-4px);
+      border-color: rgba(113, 216, 255, 0.6);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.22);
+      outline: none;
+    }
+
+    .move:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .move-tag {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .move.safe .move-tag {
+      background: rgba(124, 240, 184, 0.14);
+      color: var(--mint);
+    }
+
+    .move.spicy .move-tag {
+      background: rgba(255, 211, 110, 0.14);
+      color: var(--gold);
+    }
+
+    .move.chaos .move-tag {
+      background: rgba(255, 123, 149, 0.14);
+      color: var(--rose);
+    }
+
+    .move-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .move-copy {
+      margin-top: 8px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .controls {
+      padding: 18px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .meter-label {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    .meter {
+      width: 100%;
+      height: 14px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .meter-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--rose), var(--gold), var(--mint));
+      transition: width 220ms ease;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .cta {
+      border: 0;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .cta.primary {
+      background: linear-gradient(135deg, var(--sky), #5f9cff);
+      color: #08111f;
+    }
+
+    .cta.secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .stat-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .stat {
+      padding: 16px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.8rem;
+      margin-top: 6px;
+    }
+
+    .feed {
+      padding: 18px;
+      min-height: 122px;
+      display: grid;
+      align-content: start;
+      gap: 10px;
+    }
+
+    .feed-entry {
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .feed-entry strong {
+      color: var(--text);
+    }
+
+    @media (max-width: 760px) {
+      .hero-top,
+      .button-row,
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <span class="eyebrow">New Game</span>
+          <h1>Last Minute Ladder</h1>
+          <p class="subcopy">
+            Three buttons. Forty-five seconds. Build a run, bank the score when it feels right, and see how long your nerve holds up.
+          </p>
+        </div>
+        <div class="scoreboard">
+          <div class="score-card">
+            <div class="score-label">Current Score</div>
+            <div class="score-value" id="scoreValue">0</div>
+          </div>
+          <div class="score-card">
+            <div class="score-label">Best Run</div>
+            <div class="score-value" id="bestValue">0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="status-strip">
+        <div class="status-pill">Round <strong id="roundValue">1</strong></div>
+        <div class="status-pill">Heat <strong id="heatValue">0</strong></div>
+        <div class="status-pill">Combo <strong id="comboValue">0</strong></div>
+        <div class="status-pill">Shields <strong id="shieldValue">0</strong></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="button-row">
+        <button class="move safe" id="safeMove" type="button">
+          <span class="move-tag">Safe</span>
+          <div class="move-title">Bank Builder</div>
+          <div class="move-copy">Low drama. Steady points. Keeps your run alive.</div>
+        </button>
+        <button class="move spicy" id="spicyMove" type="button">
+          <span class="move-tag">Spicy</span>
+          <div class="move-title">Coin Flip</div>
+          <div class="move-copy">Bigger gains, bigger hits. Usually worth it until it really is not.</div>
+        </button>
+        <button class="move chaos" id="chaosMove" type="button">
+          <span class="move-tag">Chaos</span>
+          <div class="move-title">Red Button</div>
+          <div class="move-copy">Huge swings, shield jackpots, and occasional disasters.</div>
+        </button>
+      </div>
+    </section>
+
+    <section class="controls">
+      <div>
+        <div class="meter-label">
+          <span>Clock</span>
+          <span id="timeValue">45.0s</span>
+        </div>
+        <div class="meter">
+          <div class="meter-fill" id="timeFill"></div>
+        </div>
+      </div>
+      <div class="cta-row">
+        <button class="cta primary" id="bankButton" type="button">Bank Score</button>
+        <button class="cta secondary" id="restartButton" type="button">Restart Run</button>
+      </div>
+    </section>
+
+    <section class="stat-grid">
+      <div class="stat">
+        Heat
+        <strong id="heatStat">0</strong>
+      </div>
+      <div class="stat">
+        Combo Peak
+        <strong id="comboPeakStat">0</strong>
+      </div>
+      <div class="stat">
+        Banked
+        <strong id="bankedStat">0</strong>
+      </div>
+    </section>
+
+    <section class="feed" id="feed" aria-live="polite"></section>
+  </main>
+
+  <script>
+    (() => {
+      const GAME_MS = 45000;
+      const BEST_KEY = "last-minute-ladder-best";
+      const scoreValue = document.querySelector("#scoreValue");
+      const bestValue = document.querySelector("#bestValue");
+      const roundValue = document.querySelector("#roundValue");
+      const heatValue = document.querySelector("#heatValue");
+      const comboValue = document.querySelector("#comboValue");
+      const shieldValue = document.querySelector("#shieldValue");
+      const heatStat = document.querySelector("#heatStat");
+      const comboPeakStat = document.querySelector("#comboPeakStat");
+      const bankedStat = document.querySelector("#bankedStat");
+      const timeValue = document.querySelector("#timeValue");
+      const timeFill = document.querySelector("#timeFill");
+      const feed = document.querySelector("#feed");
+      const bankButton = document.querySelector("#bankButton");
+      const restartButton = document.querySelector("#restartButton");
+      const moveButtons = {
+        safe: document.querySelector("#safeMove"),
+        spicy: document.querySelector("#spicyMove"),
+        chaos: document.querySelector("#chaosMove"),
+      };
+
+      let best = Number(localStorage.getItem(BEST_KEY) || 0);
+      let game = freshGame();
+      let timer = 0;
+      let endAt = 0;
+
+      function freshGame() {
+        return {
+          score: 0,
+          banked: 0,
+          round: 1,
+          heat: 0,
+          combo: 0,
+          comboPeak: 0,
+          shields: 0,
+          active: true,
+        };
+      }
+
+      function pushFeed(message) {
+        const entry = document.createElement("div");
+        entry.className = "feed-entry";
+        entry.innerHTML = message;
+        feed.prepend(entry);
+        while (feed.children.length > 5) {
+          feed.removeChild(feed.lastChild);
+        }
+      }
+
+      function updateScoreboard() {
+        scoreValue.textContent = game.score;
+        bestValue.textContent = best;
+        roundValue.textContent = game.round;
+        heatValue.textContent = game.heat;
+        comboValue.textContent = game.combo;
+        shieldValue.textContent = game.shields;
+        heatStat.textContent = game.heat;
+        comboPeakStat.textContent = game.comboPeak;
+        bankedStat.textContent = game.banked;
+      }
+
+      function updateClock() {
+        const remaining = Math.max(0, endAt - Date.now());
+        const pct = (remaining / GAME_MS) * 100;
+        timeValue.textContent = `${(remaining / 1000).toFixed(1)}s`;
+        timeFill.style.width = `${pct}%`;
+        if (remaining <= 0 && game.active) endGame("Time.");
+      }
+
+      function saveBest() {
+        if (game.score <= best) return;
+        best = game.score;
+        localStorage.setItem(BEST_KEY, String(best));
+        bestValue.textContent = best;
+      }
+
+      function setButtonsDisabled(disabled) {
+        Object.values(moveButtons).forEach((button) => {
+          button.disabled = disabled;
+        });
+        bankButton.disabled = disabled;
+      }
+
+      function startGame() {
+        clearInterval(timer);
+        game = freshGame();
+        endAt = Date.now() + GAME_MS;
+        setButtonsDisabled(false);
+        feed.innerHTML = "";
+        pushFeed("<strong>Run started.</strong> Pick a lane and see what survives.");
+        updateScoreboard();
+        updateClock();
+        timer = setInterval(updateClock, 100);
+      }
+
+      function endGame(reason) {
+        game.active = false;
+        clearInterval(timer);
+        saveBest();
+        setButtonsDisabled(true);
+        pushFeed(`<strong>${reason}</strong> Final score: ${game.score}.`);
+        updateClock();
+      }
+
+      function takeHit(amount) {
+        if (game.shields > 0) {
+          game.shields -= 1;
+          pushFeed(`<strong>Shield burned.</strong> Blocked a ${amount}-point hit.`);
+          return;
+        }
+        game.score = Math.max(0, game.score - amount);
+        game.combo = 0;
+        game.heat = Math.max(0, game.heat - 1);
+      }
+
+      function reward(points, heatGain, comboGain) {
+        game.score += points;
+        game.heat += heatGain;
+        game.combo += comboGain;
+        game.comboPeak = Math.max(game.comboPeak, game.combo);
+      }
+
+      function playMove(type) {
+        if (!game.active) return;
+
+        if (type === "safe") {
+          const points = 8 + Math.floor(Math.random() * 9) + game.combo;
+          reward(points, 1, 1);
+          pushFeed(`<strong>Bank Builder.</strong> +${points} points and the floor stays steady.`);
+        }
+
+        if (type === "spicy") {
+          if (Math.random() < 0.58) {
+            const points = 18 + Math.floor(Math.random() * 16) + game.heat * 2;
+            reward(points, 2, 2);
+            pushFeed(`<strong>Coin Flip hits.</strong> +${points} and the room gets louder.`);
+          } else {
+            const loss = 12 + Math.floor(Math.random() * 14);
+            takeHit(loss);
+            pushFeed(`<strong>Coin Flip misses.</strong> Lost ${loss}.`);
+          }
+        }
+
+        if (type === "chaos") {
+          const roll = Math.random();
+          if (roll < 0.18) {
+            game.shields += 1;
+            reward(10 + game.heat, 1, 1);
+            pushFeed("<strong>Red Button jackpot.</strong> Shield gained and the run stayed hot.");
+          } else if (roll < 0.62) {
+            const points = 26 + Math.floor(Math.random() * 26) + game.combo * 2;
+            reward(points, 3, 3);
+            pushFeed(`<strong>Red Button lands.</strong> +${points} in one swing.`);
+          } else {
+            const loss = 18 + Math.floor(Math.random() * 18) + game.heat;
+            takeHit(loss);
+            pushFeed(`<strong>Red Button backfires.</strong> Lost ${loss}.`);
+          }
+        }
+
+        game.round += 1;
+        updateScoreboard();
+        saveBest();
+      }
+
+      function bankScore() {
+        if (!game.active) return;
+        const bonus = 10 + game.combo * 3 + game.heat;
+        game.score += bonus;
+        game.banked += bonus;
+        game.combo = 0;
+        game.heat = Math.max(0, game.heat - 2);
+        pushFeed(`<strong>Banked.</strong> Locked in +${bonus} and cooled the run a little.`);
+        updateScoreboard();
+        saveBest();
+      }
+
+      moveButtons.safe.addEventListener("click", () => playMove("safe"));
+      moveButtons.spicy.addEventListener("click", () => playMove("spicy"));
+      moveButtons.chaos.addEventListener("click", () => playMove("chaos"));
+      bankButton.addEventListener("click", bankScore);
+      restartButton.addEventListener("click", startGame);
+
+      updateScoreboard();
+      updateClock();
+      startGame();
+    })();
+  </script>
+</body>
+</html>
