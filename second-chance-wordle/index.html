@@ -972,7 +972,9 @@
         try {
           const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "null");
           const savedPuzzle = getPuzzleById(saved?.puzzleId);
-          if (!savedPuzzle || saved.word !== savedPuzzle.word) return freshProgress(DAILY_PUZZLE);
+          const restoreCurrentDaily = saved?.puzzleId === DAILY_PUZZLE.id && saved?.word === DAILY_PUZZLE.word;
+          const restoreCurrentJohn = isJohnPuzzleId(saved?.puzzleId) && savedPuzzle && saved?.word === savedPuzzle.word;
+          if (!restoreCurrentDaily && !restoreCurrentJohn) return freshProgress(DAILY_PUZZLE);
           currentPuzzle = savedPuzzle;
           answer = currentPuzzle.word;
           const guesses = (saved.guesses || []).filter((guess) => /^[A-Z]{5}$/.test(guess)).slice(0, ROWS);
@@ -1279,6 +1281,7 @@
         currentPuzzle = DAILY_PUZZLE;
         answer = currentPuzzle.word;
         progress = loadProgress();
+        saveProgress();
         currentRow = 0;
         currentGuess = "";
         done = false;
