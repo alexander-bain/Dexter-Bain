@@ -831,8 +831,21 @@
 
   <script>
     (() => {
-      const QUESTION_DAY_ID = "2026-05-18-dinner-question-wheel";
-      const QUESTION_DATE_LABEL = "May 18 dinner question";
+      const PACIFIC_TIME_ZONE = "America/Los_Angeles";
+      const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const todayParts = new Intl.DateTimeFormat("en-US", {
+        timeZone: PACIFIC_TIME_ZONE,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).formatToParts(new Date()).reduce((parts, part) => {
+        if (part.type !== "literal") parts[part.type] = part.value;
+        return parts;
+      }, {});
+      const QUESTION_DAY_ISO = `${todayParts.year}-${todayParts.month}-${todayParts.day}`;
+      const QUESTION_DAY_NUMBER = Number(QUESTION_DAY_ISO.replaceAll("-", ""));
+      const QUESTION_DAY_ID = `${QUESTION_DAY_ISO}-dinner-question-wheel`;
+      const QUESTION_DATE_LABEL = `${MONTH_NAMES[Number(todayParts.month) - 1]} ${Number(todayParts.day)} dinner question`;
       const STORAGE_KEY = "daphne-dinner-question-v2";
       const PHONE_PREVIEW_KEY = "daphne-dinner-question-iphone-17-preview";
       const MIN_LEVEL = 1;
@@ -891,105 +904,155 @@
       const NUMBER_PROBLEMS = [
         {
           level: 1,
-          text: "32 + 67 + 32 - 67 = ?",
-          answer: "64",
+          text: "32 + 15 = ?",
+          answer: "47",
         },
         {
           level: 1,
-          text: "67 + 32 - 32 + 67 = ?",
-          answer: "134",
+          text: "67 - 20 = ?",
+          answer: "47",
+        },
+        {
+          level: 1,
+          text: "12 + 32 = ?",
+          answer: "44",
         },
         {
           level: 2,
-          text: "67 + 32 + 67 - 32 = ?",
-          answer: "134",
+          text: "25 + 42 = ?",
+          answer: "67",
         },
         {
           level: 2,
-          text: "32 + 32 + 67 - 32 = ?",
+          text: "32 + 18 = ?",
+          answer: "50",
+        },
+        {
+          level: 2,
+          text: "81 - 14 = ?",
+          answer: "67",
+        },
+        {
+          level: 3,
+          text: "48 + 19 = ?",
+          answer: "67",
+        },
+        {
+          level: 3,
+          text: "32 + 27 = ?",
+          answer: "59",
+        },
+        {
+          level: 3,
+          text: "67 - 19 = ?",
+          answer: "48",
+        },
+        {
+          level: 4,
+          text: "86 - 19 = ?",
+          answer: "67",
+        },
+        {
+          level: 4,
+          text: "32 + 47 = ?",
+          answer: "79",
+        },
+        {
+          level: 4,
+          text: "58 + 32 = ?",
+          answer: "90",
+        },
+        {
+          level: 5,
+          text: "125 - 58 = ?",
+          answer: "67",
+        },
+        {
+          level: 5,
+          text: "32 + 49 + 18 = ?",
           answer: "99",
         },
         {
-          level: 3,
-          text: "32 + 67 + 67 - 32 + 32 = ?",
-          answer: "166",
-        },
-        {
-          level: 3,
-          text: "67 + 32 + 67 - 67 + 32 = ?",
-          answer: "131",
-        },
-        {
-          level: 4,
-          text: "67 + 67 + 32 - 67 + 32 = ?",
-          answer: "131",
-        },
-        {
-          level: 4,
-          text: "32 + 67 + 67 + 32 - 67 = ?",
-          answer: "131",
-        },
-        {
           level: 5,
-          text: "67 + 32 + 67 + 32 - 32 + 67 = ?",
-          answer: "233",
-        },
-        {
-          level: 5,
-          text: "67 + 67 + 32 + 32 - 67 + 32 = ?",
-          answer: "163",
+          text: "67 + 24 - 9 = ?",
+          answer: "82",
         },
       ];
       const WORD_PROBLEMS = [
         {
           level: 1,
-          text: "Bob has 67 bagels, gives away 32, then finds 32 more. How many bagels does he have?",
-          answer: "67 bagels",
+          text: "Daphne has 32 grapes and eats 5. How many grapes are left?",
+          answer: "27 grapes",
         },
         {
           level: 1,
-          text: "Bob has 32 bagels, gets 67 more, then gives away 32. How many bagels are left?",
-          answer: "67 bagels",
+          text: "There are 12 fries on each of 2 plates. How many fries is that total?",
+          answer: "24 fries",
+        },
+        {
+          level: 1,
+          text: "Daphne has 9 cookies and gets 32 more. How many cookies does she have?",
+          answer: "41 cookies",
         },
         {
           level: 2,
-          text: "Bob has 32 bagels, gets 67 more, then eats 32. How many bagels are left?",
-          answer: "67 bagels",
+          text: "A basket has 32 strawberries. Daphne shares 10. How many are left?",
+          answer: "22 strawberries",
         },
         {
           level: 2,
-          text: "Bob has 67 bagels, buys 32, then gives away 67. How many remain?",
-          answer: "32 bagels",
+          text: "Three friends split 27 nuggets equally. How many nuggets does each person get?",
+          answer: "9 nuggets",
+        },
+        {
+          level: 2,
+          text: "Daphne stacks 25 pancakes and adds 42 more. How many pancakes are there?",
+          answer: "67 pancakes",
         },
         {
           level: 3,
-          text: "Bob has 67 bagels, buys 32 more, then gives 67 to friends. How many remain?",
-          answer: "32 bagels",
+          text: "Daphne sets out 32 tater tots and puts 8 on each plate. How many plates can she fill?",
+          answer: "4 plates",
         },
         {
           level: 3,
-          text: "Bob has 32 bagels, buys 67, then another 32 go missing. How many remain?",
-          answer: "67 bagels",
+          text: "A table has 18 tacos, and 7 more arrive. How many tacos are there now?",
+          answer: "25 tacos",
+        },
+        {
+          level: 3,
+          text: "Daphne has 67 fries and gives 19 to Dexter. How many fries does she still have?",
+          answer: "48 fries",
         },
         {
           level: 4,
-          text: "Bob has 67 bagels in one box and 32 in another, then doubles the 32-bagel box. How many bagels is that?",
-          answer: "131 bagels",
+          text: "Four friends each get 16 mozzarella sticks. How many sticks did they get total?",
+          answer: "64 mozzarella sticks",
         },
         {
           level: 4,
-          text: "Bob has 67 bagels, gets 67 more, then gives away 32. How many bagels does he have?",
-          answer: "102 bagels",
+          text: "Daphne bakes 67 cookies and packs them into bags of 10. How many full bags can she make?",
+          answer: "6 full bags",
+        },
+        {
+          level: 4,
+          text: "A cart has 32 juice boxes on each of 3 shelves. How many juice boxes are there?",
+          answer: "96 juice boxes",
         },
         {
           level: 5,
-          text: "Bob has 67 bagels, adds 32, gets another 67, but 32 are stale. How many good bagels are left?",
-          answer: "134 bagels",
+          text: "Daphne has 32 cupcakes in each of 3 boxes, then buys 7 more. How many cupcakes does she have?",
+          answer: "103 cupcakes",
         },
         {
           level: 5,
-          text: "Bob has 32 bagels in each of 2 boxes, then gets 67 more. How many bagels does he have?",
-          answer: "131 bagels",
+          text: "A tray holds 67 wings. Another tray has 24. Then 9 wings get eaten. How many remain?",
+          answer: "82 wings",
+        },
+        {
+          level: 5,
+          text: "Daphne pours 48 drinks and then makes 19 more. How many drinks did she make total?",
+          answer: "67 drinks",
         },
       ];
 
@@ -1132,7 +1195,8 @@
         const fallback = bank.find((item) => item.level === DEFAULT_LEVEL) || bank[0];
         const offset = Number(state.rerolls[QUESTION_DAY_ID]) || 0;
         if (!candidates.length) return fallback;
-        return candidates[offset % candidates.length];
+        const dayOffset = QUESTION_DAY_NUMBER % candidates.length;
+        return candidates[(dayOffset + offset) % candidates.length];
       }
 
       function getQuestionCount(type, level) {
