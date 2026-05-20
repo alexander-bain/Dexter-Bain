@@ -711,9 +711,14 @@
       const ROWS = 6;
       const COLS = 5;
       // Change these when Dexter asks for the next daily word.
-      const DAILY_WORD = "TODAY";
-      const DAILY_WORD_ID = "2026-05-19-today";
+      const DAILY_PUZZLE = { id: "2026-05-19-today", word: "TODAY" };
+      const JOHN_PUZZLE = { id: "2026-05-19-john", word: "LUCKY" };
+      const PUZZLES = [DAILY_PUZZLE, JOHN_PUZZLE];
+      const PUZZLES_BY_ID = new Map(PUZZLES.map((puzzle) => [puzzle.id, puzzle]));
       const RESET_CODE = "CENA";
+      const ALT_WORD_CODE = "JOHN";
+      const RESET_STATS_CODE = "DEX";
+      const SECRET_BUFFER_LIMIT = Math.max(RESET_CODE.length, ALT_WORD_CODE.length, RESET_STATS_CODE.length);
       const STATS_KEY = "second-chance-wordle-stats-v2";
       const LEGACY_STATS_KEY = "second-chance-wordle-stats-v1";
       const PROGRESS_KEY = "second-chance-wordle-progress-v1";
@@ -736,7 +741,8 @@
       const rank = { absent: 1, present: 2, correct: 3 };
       const keyState = {};
       const confettiColors = ["#6aaa64", "#c9b458", "#787c7e", "#f97316", "#2563eb", "#e11d48"];
-      let answer = DAILY_WORD;
+      let currentPuzzle = DAILY_PUZZLE;
+      let answer = currentPuzzle.word;
       let currentRow = 0;
       let currentGuess = "";
       let done = false;
@@ -892,10 +898,22 @@
         }
       }
 
+      function resetStats() {
+        stats = blankStats();
+        try {
+          localStorage.removeItem(STATS_KEY);
+          localStorage.removeItem(LEGACY_STATS_KEY);
+        } catch {
+          // If storage is blocked, at least reset the in-memory panel.
+        }
+        updateStatsPanel();
+        showToast("Stats reset", 1500, true);
+      }
+
       function recordGame(won, attempts = 0) {
-        if (stats.results.some((result) => result.puzzleId === DAILY_WORD_ID)) return;
+        if (stats.results.some((result) => result.puzzleId === currentPuzzle.id)) return;
         stats.results.push({
-          puzzleId: DAILY_WORD_ID,
+          puzzleId: currentPuzzle.id,
           word: answer,
           won,
           attempts: won ? attempts : 0,
@@ -907,7 +925,7 @@
       }
 
       function removeCurrentResultFromStats() {
-        const nextResults = stats.results.filter((result) => result.puzzleId !== DAILY_WORD_ID);
+        const nextResults = stats.results.filter((result) => result.puzzleId !== currentPuzzle.id);
         if (nextResults.length === stats.results.length) return;
         stats.results = nextResults;
         saveStats();
@@ -915,10 +933,10 @@
         updateStatsPanel();
       }
 
-      function freshProgress() {
+      function freshProgress(puzzle = currentPuzzle) {
         return {
-          puzzleId: DAILY_WORD_ID,
-          word: DAILY_WORD,
+          puzzleId: puzzle.id,
+          word: puzzle.word,
           guesses: [],
           done: false,
           won: false,
@@ -928,20 +946,23 @@
       function loadProgress() {
         try {
           const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "null");
-          if (!saved || saved.puzzleId !== DAILY_WORD_ID || saved.word !== DAILY_WORD) return freshProgress();
+          const savedPuzzle = PUZZLES_BY_ID.get(saved?.puzzleId);
+          if (!savedPuzzle || saved.word !== savedPuzzle.word) return freshProgress(DAILY_PUZZLE);
+          currentPuzzle = savedPuzzle;
+          answer = currentPuzzle.word;
           const guesses = (saved.guesses || []).filter((guess) => /^[A-Z]{5}$/.test(guess)).slice(0, ROWS);
           const lastGuess = guesses[guesses.length - 1] || "";
-          const won = lastGuess === DAILY_WORD;
+          const won = lastGuess === currentPuzzle.word;
           const doneGame = Boolean(saved.done || won || guesses.length >= ROWS);
           return {
-            puzzleId: DAILY_WORD_ID,
-            word: DAILY_WORD,
+            puzzleId: currentPuzzle.id,
+            word: currentPuzzle.word,
             guesses,
             done: doneGame,
             won: doneGame ? Boolean(saved.won || won) : false,
           };
         } catch {
-          return freshProgress();
+          return freshProgress(DAILY_PUZZLE);
         }
       }
 
@@ -978,8 +999,10 @@
         }
       }
 
-      function resetCurrentPuzzle() {
-        progress = freshProgress();
+      function beginPuzzle(puzzle, toastMessage = "Fresh start") {
+        currentPuzzle = puzzle;
+        answer = currentPuzzle.word;
+        progress = freshProgress(currentPuzzle);
         removeCurrentResultFromStats();
         saveProgress();
         Object.keys(keyState).forEach((letter) => delete keyState[letter]);
@@ -992,7 +1015,15 @@
         buildBoard();
         buildKeyboard();
         updateStatsPanel();
-        showToast("Fresh start", 1300, true);
+        showToast(toastMessage, 1300, true);
+      }
+
+      function resetCurrentPuzzle() {
+        beginPuzzle(currentPuzzle, "Fresh start");
+      }
+
+      function switchToJohnPuzzle() {
+        beginPuzzle(JOHN_PUZZLE, "New word");
       }
 
       function updateStatsPanel() {
@@ -1052,22 +1083,20 @@
 
         if (done) {
           if (/^[A-Z]$/.test(key)) {
-            doneSecretBuffer = `${doneSecretBuffer}${key}`.slice(-RESET_CODE.length);
+            doneSecretBuffer = `${doneSecretBuffer}${key}`.slice(-SECRET_BUFFER_LIMIT);
             return;
           }
-          if (key === "ENTER" && doneSecretBuffer === RESET_CODE) {
-            resetCurrentPuzzle();
-            return;
-          }
+          if (key === "ENTER" && doneSecretBuffer === RESET_CODE) return resetCurrentPuzzle();
+          if (key === "ENTER" && doneSecretBuffer === ALT_WORD_CODE) return switchToJohnPuzzle();
+          if (key === "ENTER" && doneSecretBuffer === RESET_STATS_CODE) return resetStats();
           if (key === "<") doneSecretBuffer = "";
           showToast(progress.won ? "Already solved" : answer, 1400, true);
           return;
         }
 
-        if (key === "ENTER" && currentGuess === RESET_CODE) {
-          resetCurrentPuzzle();
-          return;
-        }
+        if (key === "ENTER" && currentGuess === RESET_CODE) return resetCurrentPuzzle();
+        if (key === "ENTER" && currentGuess === ALT_WORD_CODE) return switchToJohnPuzzle();
+        if (key === "ENTER" && currentGuess === RESET_STATS_CODE) return resetStats();
 
         if (/^[A-Z]$/.test(key)) addLetter(key);
         if (key === "<") removeLetter();
@@ -1094,6 +1123,14 @@
       function submitGuess() {
         if (currentGuess === RESET_CODE) {
           resetCurrentPuzzle();
+          return;
+        }
+        if (currentGuess === ALT_WORD_CODE) {
+          switchToJohnPuzzle();
+          return;
+        }
+        if (currentGuess === RESET_STATS_CODE) {
+          resetStats();
           return;
         }
 
@@ -1214,7 +1251,8 @@
 
       function startGame() {
         Object.keys(keyState).forEach((letter) => delete keyState[letter]);
-        answer = DAILY_WORD;
+        currentPuzzle = DAILY_PUZZLE;
+        answer = currentPuzzle.word;
         progress = loadProgress();
         currentRow = 0;
         currentGuess = "";
