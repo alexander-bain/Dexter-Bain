@@ -324,7 +324,7 @@
           <span class="eyebrow">New Game</span>
           <h1>Last Minute Ladder</h1>
           <p class="subcopy">
-            Three buttons. Forty-five seconds. Build a run, bank the score when it feels right, and see how long your nerve holds up.
+            Three buttons. Thirty-five seconds. Build a run, bank the score when it feels right, and see how long your nerve holds up.
           </p>
         </div>
         <div class="scoreboard">
@@ -371,7 +371,7 @@
       <div>
         <div class="meter-label">
           <span>Clock</span>
-          <span id="timeValue">45.0s</span>
+          <span id="timeValue">35.0s</span>
         </div>
         <div class="meter">
           <div class="meter-fill" id="timeFill"></div>
@@ -403,7 +403,8 @@
 
   <script>
     (() => {
-      const GAME_MS = 45000;
+      const GAME_MS = 35000;
+      const BURNOUT_HEAT = 12;
       const BEST_KEY = "last-minute-ladder-best";
       const scoreValue = document.querySelector("#scoreValue");
       const bestValue = document.querySelector("#bestValue");
@@ -530,18 +531,18 @@
         if (!game.active) return;
 
         if (type === "safe") {
-          const points = 8 + Math.floor(Math.random() * 9) + game.combo;
-          reward(points, 1, 1);
-          pushFeed(`<strong>Bank Builder.</strong> +${points} points and the floor stays steady.`);
+          const points = 5 + Math.floor(Math.random() * 5) + Math.floor(game.combo / 2);
+          reward(points, 2, 1);
+          pushFeed(`<strong>Bank Builder.</strong> +${points} points, but the clock still gets hotter.`);
         }
 
         if (type === "spicy") {
-          if (Math.random() < 0.58) {
-            const points = 18 + Math.floor(Math.random() * 16) + game.heat * 2;
+          if (Math.random() < 0.48) {
+            const points = 14 + Math.floor(Math.random() * 12) + game.heat;
             reward(points, 2, 2);
             pushFeed(`<strong>Coin Flip hits.</strong> +${points} and the room gets louder.`);
           } else {
-            const loss = 12 + Math.floor(Math.random() * 14);
+            const loss = 18 + Math.floor(Math.random() * 18) + game.heat;
             takeHit(loss);
             pushFeed(`<strong>Coin Flip misses.</strong> Lost ${loss}.`);
           }
@@ -549,16 +550,16 @@
 
         if (type === "chaos") {
           const roll = Math.random();
-          if (roll < 0.18) {
+          if (roll < 0.12) {
             game.shields += 1;
-            reward(10 + game.heat, 1, 1);
+            reward(8 + Math.floor(game.heat / 2), 2, 1);
             pushFeed("<strong>Red Button jackpot.</strong> Shield gained and the run stayed hot.");
-          } else if (roll < 0.62) {
-            const points = 26 + Math.floor(Math.random() * 26) + game.combo * 2;
+          } else if (roll < 0.5) {
+            const points = 20 + Math.floor(Math.random() * 20) + game.combo;
             reward(points, 3, 3);
             pushFeed(`<strong>Red Button lands.</strong> +${points} in one swing.`);
           } else {
-            const loss = 18 + Math.floor(Math.random() * 18) + game.heat;
+            const loss = 24 + Math.floor(Math.random() * 22) + game.heat;
             takeHit(loss);
             pushFeed(`<strong>Red Button backfires.</strong> Lost ${loss}.`);
           }
@@ -567,16 +568,19 @@
         game.round += 1;
         updateScoreboard();
         saveBest();
+        if (game.heat >= BURNOUT_HEAT) {
+          endGame("Burnout.");
+        }
       }
 
       function bankScore() {
         if (!game.active) return;
-        const bonus = 10 + game.combo * 3 + game.heat;
+        const bonus = 6 + game.combo * 2 + Math.floor(game.heat / 2);
         game.score += bonus;
         game.banked += bonus;
         game.combo = 0;
-        game.heat = Math.max(0, game.heat - 2);
-        pushFeed(`<strong>Banked.</strong> Locked in +${bonus} and cooled the run a little.`);
+        game.heat = Math.max(0, game.heat - 1);
+        pushFeed(`<strong>Banked.</strong> Locked in +${bonus}, but barely cooled the run.`);
         updateScoreboard();
         saveBest();
       }
