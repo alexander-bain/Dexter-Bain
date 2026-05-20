@@ -712,9 +712,8 @@
       const COLS = 5;
       // Change these when Dexter asks for the next daily word.
       const DAILY_PUZZLE = { id: "2026-05-19-today", word: "TODAY" };
-      const JOHN_PUZZLE = { id: "2026-05-19-john", word: "LUCKY" };
-      const PUZZLES = [DAILY_PUZZLE, JOHN_PUZZLE];
-      const PUZZLES_BY_ID = new Map(PUZZLES.map((puzzle) => [puzzle.id, puzzle]));
+      const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
+      const JOHN_WORDS = ["LUCKY", "BLAZE", "COMET", "RIVER", "SPARK", "GHOST", "CANDY", "BRICK"];
       const RESET_CODE = "CENA";
       const ALT_WORD_CODE = "JOHN";
       const RESET_STATS_CODE = "DEX";
@@ -910,6 +909,32 @@
         showToast("Stats reset", 1500, true);
       }
 
+      function isJohnPuzzleId(puzzleId) {
+        return typeof puzzleId === "string" && puzzleId.startsWith(JOHN_PUZZLE_PREFIX);
+      }
+
+      function johnPuzzleAt(index) {
+        const normalizedIndex = ((index % JOHN_WORDS.length) + JOHN_WORDS.length) % JOHN_WORDS.length;
+        return {
+          id: `${JOHN_PUZZLE_PREFIX}-${normalizedIndex}`,
+          word: JOHN_WORDS[normalizedIndex],
+          johnIndex: normalizedIndex,
+        };
+      }
+
+      function getPuzzleById(puzzleId) {
+        if (puzzleId === DAILY_PUZZLE.id) return DAILY_PUZZLE;
+        if (puzzleId === `${JOHN_PUZZLE_PREFIX}`) return johnPuzzleAt(0);
+        if (!isJohnPuzzleId(puzzleId)) return null;
+        const suffix = Number.parseInt(puzzleId.slice(JOHN_PUZZLE_PREFIX.length + 1), 10);
+        return johnPuzzleAt(Number.isFinite(suffix) ? suffix : 0);
+      }
+
+      function nextJohnPuzzle() {
+        const currentIndex = isJohnPuzzleId(currentPuzzle.id) ? currentPuzzle.johnIndex || 0 : -1;
+        return johnPuzzleAt(currentIndex + 1);
+      }
+
       function recordGame(won, attempts = 0) {
         if (stats.results.some((result) => result.puzzleId === currentPuzzle.id)) return;
         stats.results.push({
@@ -946,7 +971,7 @@
       function loadProgress() {
         try {
           const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "null");
-          const savedPuzzle = PUZZLES_BY_ID.get(saved?.puzzleId);
+          const savedPuzzle = getPuzzleById(saved?.puzzleId);
           if (!savedPuzzle || saved.word !== savedPuzzle.word) return freshProgress(DAILY_PUZZLE);
           currentPuzzle = savedPuzzle;
           answer = currentPuzzle.word;
@@ -999,11 +1024,11 @@
         }
       }
 
-      function beginPuzzle(puzzle, toastMessage = "Fresh start") {
+      function beginPuzzle(puzzle, toastMessage = "Fresh start", clearRecordedResult = true) {
         currentPuzzle = puzzle;
         answer = currentPuzzle.word;
         progress = freshProgress(currentPuzzle);
-        removeCurrentResultFromStats();
+        if (clearRecordedResult) removeCurrentResultFromStats();
         saveProgress();
         Object.keys(keyState).forEach((letter) => delete keyState[letter]);
         currentRow = 0;
@@ -1019,11 +1044,11 @@
       }
 
       function resetCurrentPuzzle() {
-        beginPuzzle(currentPuzzle, "Fresh start");
+        beginPuzzle(currentPuzzle, "Fresh start", true);
       }
 
       function switchToJohnPuzzle() {
-        beginPuzzle(JOHN_PUZZLE, "New word");
+        beginPuzzle(nextJohnPuzzle(), "New word", false);
       }
 
       function updateStatsPanel() {
