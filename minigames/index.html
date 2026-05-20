@@ -4942,45 +4942,47 @@
       return games.find((game) => game.gameId === selectedGameId) || games[0];
     }
 
-    function render() {
+    let renderRequestId = 0;
+
+    async function render() {
+      const requestId = ++renderRequestId;
+      const initialGames = upcomingGames();
+      selectedGameId = selectedGameId || hydrateGameFromUrl(initialGames) || initialGames[0].gameId;
+      renderTabs(initialGames);
+
+      await loadPublishedCustomGames();
+      if (requestId !== renderRequestId) {
+        return;
+      }
+
       const games = upcomingGames();
-      selectedGameId = selectedGameId || hydrateGameFromUrl(games) || games[0].gameId;
+      if (!games.some((candidate) => candidate.gameId === selectedGameId)) {
+        selectedGameId = games[0]?.gameId || selectedGameId;
+      }
       const game = currentGame();
       renderTabs(games);
-      renderGame(game);
-      loadPublishedCustomGames().then((loaded) => {
-        if (loaded) {
-          const refreshedGames = upcomingGames();
-          if (!refreshedGames.some((candidate) => candidate.gameId === selectedGameId)) {
-            selectedGameId = refreshedGames[0]?.gameId || selectedGameId;
-          }
-          renderTabs(refreshedGames);
-          renderGame(currentGame());
-        }
-      });
+
       const urlRoomCode = cleanRoomCode(new URLSearchParams(window.location.search).get("room"));
       const urlRoomKey = roomEntriesKey(game.gameId, urlRoomCode);
       if (urlRoomCode && activeRoomCode(game) !== urlRoomCode && !checkedUrlRooms.has(urlRoomKey)) {
         checkedUrlRooms.add(urlRoomKey);
         joinRoom(game, urlRoomCode, { silent: true });
       }
-      loadEntriesForScope(game).then((loaded) => {
-        if (loaded && currentGame().gameId === game.gameId) {
-          renderGame(game);
-        }
-      });
-      loadResultsForGame(game).then((loaded) => {
-        if (loaded && currentGame().gameId === game.gameId) {
-          renderGame(game);
-        }
-      });
+
+      await Promise.all([
+        loadEntriesForScope(game),
+        loadResultsForGame(game),
+      ]);
+
       if (lockedQuestions(game).length > 0) {
-        refreshLockedGameResults().then((loaded) => {
-          if (loaded) {
-            renderGame(currentGame());
-          }
-        });
+        await refreshLockedGameResults();
       }
+
+      if (requestId !== renderRequestId) {
+        return;
+      }
+
+      renderGame(currentGame());
     }
 
     function showToast(message) {
