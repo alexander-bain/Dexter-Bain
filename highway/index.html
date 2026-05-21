@@ -382,6 +382,10 @@
           <b id="speedText">0</b>
           <span>MPH</span>
         </div>
+        <div class="readout">
+          <b id="wantedText">0</b>
+          <span>Wanted</span>
+        </div>
       </div>
       <div class="meter">
         <div class="meter-label">
@@ -438,6 +442,7 @@
       const hud = {
         score: document.getElementById("scoreText"),
         speed: document.getElementById("speedText"),
+        wanted: document.getElementById("wantedText"),
         health: document.getElementById("healthText"),
         healthFill: document.getElementById("healthFill"),
         state: document.getElementById("stateText"),
@@ -476,8 +481,10 @@
 
       const keys = new Set();
       const traffic = [];
+      const police = [];
       const stripes = [];
       const roadBits = [];
+      const exitMarkers = [];
       const sceneryBits = [];
       const clouds = [];
       const laneCenters = [-4.8, -1.6, 1.6, 4.8];
@@ -493,10 +500,20 @@
         x: 0,
         y: 0,
         z: 5,
+        steerAngle: 0,
         jumpVelocity: 0,
         spawnTimer: 0,
+        policeTimer: 0,
         hitTimer: 0,
+        policeHitTimer: 0,
+        wanted: 0,
+        escapeTimer: 0,
         nextLane: 0,
+        routeSeed: 0,
+        roadShift: 0,
+        roadTargetShift: 0,
+        exitCooldown: 0,
+        exitNotice: 0,
       };
 
       const road = new THREE.Group();
@@ -509,6 +526,9 @@
       const curbMat = new THREE.MeshStandardMaterial({ color: 0xffd166, roughness: 0.56, emissive: 0xff9f1c, emissiveIntensity: 0.07 });
       const reflectorMat = new THREE.MeshStandardMaterial({ color: 0x7dd3fc, roughness: 0.24, emissive: 0x38bdf8, emissiveIntensity: 0.72 });
       const shadowMat = new THREE.MeshStandardMaterial({ color: 0x0b111a, roughness: 1 });
+      const exitMat = new THREE.MeshStandardMaterial({ color: 0x243423, roughness: 0.9 });
+      const signMat = new THREE.MeshStandardMaterial({ color: 0x104e37, roughness: 0.36, metalness: 0.08 });
+      const signTextMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, emissive: 0xf8fafc, emissiveIntensity: 0.35 });
 
       function box(w, h, d, mat, x = 0, y = 0, z = 0) {
         const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
@@ -516,6 +536,70 @@
         mesh.castShadow = true;
         mesh.receiveShadow = true;
         return mesh;
+      }
+
+      function roadPose(z) {
+        const p = z + state.routeSeed;
+        const broadTurn = Math.sin(p * 0.014 + 0.7) * 5.2;
+        const quickBend = Math.sin(p * 0.043 + 1.9) * 2.1;
+        const centerX = state.roadShift + broadTurn + quickBend;
+        const heading = Math.cos(p * 0.014 + 0.7) * 0.18 + Math.cos(p * 0.043 + 1.9) * 0.16;
+        return { x: centerX, heading };
+      }
+
+      function rememberRouteObject(object, baseX = object.position.x, baseZ = object.position.z, baseRotationY = object.rotation.y) {
+        object.userData.baseX = baseX;
+        object.userData.baseZ = baseZ;
+        object.userData.baseRotationY = baseRotationY;
+        return object;
+      }
+
+      function placeRouteObject(object, turnScale = 1) {
+        if (object.userData.baseX === undefined) rememberRouteObject(object);
+        const pose = roadPose(object.userData.baseZ);
+        const lateral = object.userData.baseX;
+        object.position.x = pose.x + lateral * Math.cos(pose.heading);
+        object.position.z = object.userData.baseZ - lateral * Math.sin(pose.heading) * 0.24;
+        object.rotation.y = object.userData.baseRotationY + pose.heading * turnScale;
+      }
+
+      function advanceRouteObject(object, scroll, wrapAt, loopLength, turnScale = 1) {
+        if (object.userData.baseX === undefined) rememberRouteObject(object);
+        object.userData.baseZ += scroll;
+        if (object.userData.baseZ > wrapAt) object.userData.baseZ -= loopLength;
+        placeRouteObject(object, turnScale);
+      }
+
+      function setRoadActor(actor, roadX, roadZ, facing = Math.PI) {
+        actor.userData.roadX = roadX;
+        actor.userData.roadZ = roadZ;
+        actor.userData.facing = facing;
+        placeRoadActor(actor);
+      }
+
+      function placeRoadActor(actor) {
+        const pose = roadPose(actor.userData.roadZ);
+        const lateral = actor.userData.roadX;
+        actor.position.x = pose.x + lateral * Math.cos(pose.heading);
+        actor.position.z = actor.userData.roadZ - lateral * Math.sin(pose.heading) * 0.24;
+        actor.rotation.y = pose.heading + actor.userData.facing + (actor.userData.turnBias || 0);
+      }
+
+      function makeExitRamp(z, side) {
+        const ramp = new THREE.Group();
+        ramp.add(box(5.6, 0.1, 28, exitMat, side * 3.2, -0.08, -2.5));
+        ramp.add(box(0.18, 0.045, 24, stripeMat, side * 0.68, 0.03, -2.8));
+        ramp.add(box(0.22, 0.055, 25, curbMat, side * 5.9, 0.03, -3.2));
+        ramp.add(box(2.7, 1.04, 0.16, signMat, side * 6.4, 2.72, -9.2));
+        ramp.add(box(1.7, 0.15, 0.18, signTextMat, side * 6.42, 2.9, -9.32));
+        ramp.add(box(0.78, 0.15, 0.18, signTextMat, side * 6.42, 2.55, -9.32));
+        ramp.add(box(0.13, 2.35, 0.13, railMat, side * 5.35, 1.14, -9.0));
+        ramp.add(box(0.13, 2.35, 0.13, railMat, side * 7.5, 1.14, -9.0));
+        rememberRouteObject(ramp, side * 8.2, z, side * 0.62);
+        ramp.userData.side = side;
+        road.add(ramp);
+        roadBits.push(ramp);
+        exitMarkers.push(ramp);
       }
 
       function makeRoad() {
@@ -560,6 +644,10 @@
               road.add(post);
               roadBits.push(post);
             }
+          }
+
+          if (i === 2 || i === 6) {
+            makeExitRamp(z - 8, i === 2 ? 1 : -1);
           }
         }
       }
@@ -615,6 +703,18 @@
 
         group.userData.wheels = wheels;
         return group;
+      }
+
+      function makePoliceCar() {
+        const car = makeCar(0xf8fafc, 0x172554);
+        const blueMat = new THREE.MeshStandardMaterial({ color: 0x2563eb, emissive: 0x2563eb, emissiveIntensity: 0.95, roughness: 0.2 });
+        const redMat = new THREE.MeshStandardMaterial({ color: 0xef233c, emissive: 0xef233c, emissiveIntensity: 0.95, roughness: 0.2 });
+        const stripeBlue = box(0.08, 0.16, 2.38, blueMat, -0.78, 0.72, 0);
+        const stripeRed = box(0.08, 0.16, 2.38, redMat, 0.78, 0.72, 0);
+        const lightbarBlue = box(0.46, 0.16, 0.18, blueMat, -0.28, 1.24, 0.05);
+        const lightbarRed = box(0.46, 0.16, 0.18, redMat, 0.28, 1.24, 0.05);
+        car.add(stripeBlue, stripeRed, lightbarBlue, lightbarRed);
+        return car;
       }
 
       function makeScenery() {
@@ -748,12 +848,11 @@
         if (isTruck) {
           car.scale.set(1.12, 1.12, 1.42);
         }
-        car.position.set(lane + (Math.random() - 0.5) * 0.42, 0.52, zOverride ?? -150 - Math.random() * 28);
-        car.rotation.y = Math.PI;
         car.userData.speed = 5 + Math.random() * 18;
         car.userData.hit = false;
         car.userData.width = carSize.width * car.scale.x;
         car.userData.length = carSize.length * car.scale.z;
+        setRoadActor(car, lane + (Math.random() - 0.5) * 0.42, zOverride ?? -150 - Math.random() * 28, Math.PI);
         traffic.push(car);
         scene.add(car);
       }
@@ -769,11 +868,68 @@
         }
       }
 
+      function spawnPolice() {
+        if (police.length >= Math.min(7, state.wanted + 1)) return;
+        const car = makePoliceCar();
+        car.userData.speed = state.speed + 12 + state.wanted * 2.7 + Math.random() * 5;
+        car.userData.width = carSize.width * 1.06;
+        car.userData.length = carSize.length * 1.06;
+        car.userData.hitCooldown = 0;
+        const sideOffset = (Math.random() - 0.5) * 5.2;
+        setRoadActor(car, Math.max(bounds.left, Math.min(bounds.right, state.x + sideOffset)), 27 + Math.random() * 20, 0);
+        police.push(car);
+        scene.add(car);
+      }
+
+      function summonPolice(count = 1) {
+        state.wanted = Math.min(6, state.wanted + count);
+        state.escapeTimer = 9.5 + state.wanted * 1.5;
+        state.policeTimer = 0.05;
+        for (let i = 0; i < count; i += 1) spawnPolice();
+      }
+
+      function removePoliceCar(car) {
+        scene.remove(car);
+        const index = police.indexOf(car);
+        if (index >= 0) police.splice(index, 1);
+      }
+
+      function reduceWanted(amount = 1) {
+        state.wanted = Math.max(0, state.wanted - amount);
+        const targetPolice = state.wanted > 0 ? Math.min(7, state.wanted + 1) : 0;
+        while (police.length > targetPolice) {
+          removePoliceCar(police[0]);
+        }
+        state.escapeTimer = state.wanted > 0 ? 8 + state.wanted : 0;
+      }
+
       function performJump() {
         if (!state.playing || state.y > 0.001 || state.jumpVelocity !== 0) return;
         state.jumpVelocity = 11.4;
         state.y = 0.02;
         hud.jump.classList.add("is-down");
+      }
+
+      function getActiveExitSide() {
+        for (const marker of exitMarkers) {
+          const dz = Math.abs(marker.userData.baseZ - state.z);
+          if (dz < 18) return marker.userData.side;
+        }
+        return 0;
+      }
+
+      function takeExit(side) {
+        state.exitCooldown = 4.2;
+        state.exitNotice = 2.4;
+        state.routeSeed += side * (38 + Math.random() * 24);
+        state.roadTargetShift = Math.max(-7, Math.min(7, state.roadTargetShift + side * 4.8));
+        state.x = -side * 3.7;
+        state.speed = Math.max(state.speed, 44);
+        state.score += 180;
+        if (state.wanted > 0) {
+          reduceWanted(1);
+          state.score += 260;
+        }
       }
 
       function updateInput(dt) {
@@ -783,10 +939,19 @@
         const brake = keys.has("KeyS") || keys.has("ArrowDown");
         const steer = (right ? 1 : 0) - (left ? 1 : 0);
         const targetSpeed = gas ? 62 : brake ? 20 : 36;
+        const exitSide = getActiveExitSide();
+        const exitLeft = exitSide === -1 ? -11.4 : bounds.left;
+        const exitRight = exitSide === 1 ? 11.4 : bounds.right;
 
         state.speed += (targetSpeed - state.speed) * Math.min(1, dt * 2.4);
-        state.x += steer * dt * (8.4 + state.speed * 0.12);
-        state.x = Math.max(bounds.left, Math.min(bounds.right, state.x));
+        state.steerAngle += (steer * 0.72 - state.steerAngle) * Math.min(1, dt * 7.5);
+        state.x += Math.sin(state.steerAngle) * dt * (state.speed * 0.54);
+        state.x += steer * dt * 1.25;
+        state.x = Math.max(exitLeft, Math.min(exitRight, state.x));
+        state.exitCooldown = Math.max(0, state.exitCooldown - dt);
+        if (exitSide !== 0 && state.exitCooldown <= 0 && Math.sign(state.x) === exitSide && Math.abs(state.x) > 8.2) {
+          takeExit(exitSide);
+        }
 
         if (state.y > 0 || state.jumpVelocity > 0) {
           state.jumpVelocity -= 22 * dt;
@@ -801,18 +966,17 @@
 
       function updateWorld(dt) {
         const scroll = state.speed * dt;
+        state.roadShift += (state.roadTargetShift - state.roadShift) * Math.min(1, dt * 0.62);
+        state.exitNotice = Math.max(0, state.exitNotice - dt);
         for (const item of roadBits) {
-          item.position.z += scroll;
-          if (item.position.z > 35) item.position.z -= 288;
+          advanceRouteObject(item, scroll, 35, 288);
         }
         for (const stripe of stripes) {
-          stripe.position.z += scroll;
-          if (stripe.position.z > 35) stripe.position.z -= 288;
+          advanceRouteObject(stripe, scroll, 35, 288);
         }
 
         for (const item of sceneryBits) {
-          item.position.z += scroll * 0.82;
-          if (item.position.z > 46) item.position.z -= 438;
+          advanceRouteObject(item, scroll * 0.82, 46, 438, 0.42);
         }
 
         for (const cloud of clouds) {
@@ -830,11 +994,12 @@
 
         for (let i = traffic.length - 1; i >= 0; i -= 1) {
           const car = traffic[i];
-          car.position.z += Math.max(12, state.speed - car.userData.speed) * dt;
+          car.userData.roadZ += Math.max(12, state.speed - car.userData.speed) * dt;
+          placeRoadActor(car);
           car.userData.wheels.forEach((wheel) => {
             wheel.rotation.x -= dt * state.speed * 1.25;
           });
-          if (car.position.z > 22) {
+          if (car.userData.roadZ > 24) {
             scene.remove(car);
             traffic.splice(i, 1);
             state.score += 35;
@@ -842,54 +1007,138 @@
         }
       }
 
+      function updatePolice(dt) {
+        if (state.wanted > 0) {
+          state.policeTimer -= dt;
+          if (state.policeTimer <= 0) {
+            spawnPolice();
+            state.policeTimer = Math.max(0.8, 2.7 - state.wanted * 0.25);
+          }
+
+          state.escapeTimer -= dt;
+          const closeCop = police.some((car) => Math.abs(car.userData.roadZ - state.z) < 15 && Math.abs(car.userData.roadX - state.x) < 5.5);
+          if (state.escapeTimer <= 0 && !closeCop) {
+            reduceWanted(1);
+            state.score += 320;
+          } else if (closeCop) {
+            state.escapeTimer = Math.max(state.escapeTimer, 4.5);
+          }
+        }
+
+        state.policeHitTimer = Math.max(0, state.policeHitTimer - dt);
+
+        for (let i = police.length - 1; i >= 0; i -= 1) {
+          const car = police[i];
+          car.userData.hitCooldown = Math.max(0, car.userData.hitCooldown - dt);
+          car.userData.speed += ((state.speed + 15 + state.wanted * 3) - car.userData.speed) * Math.min(1, dt * 1.8);
+          car.userData.roadZ += (state.speed - car.userData.speed) * dt;
+          const chasePull = 0.85 + state.wanted * 0.18;
+          car.userData.roadX += (state.x - car.userData.roadX) * Math.min(1, dt * chasePull);
+          car.userData.roadX += Math.sin(clock.elapsedTime * 3.2 + i) * dt * 0.9;
+          car.userData.turnBias = (state.x - car.userData.roadX) * -0.08;
+          placeRoadActor(car);
+          car.userData.wheels.forEach((wheel) => {
+            wheel.rotation.x -= dt * car.userData.speed * 1.55;
+          });
+
+          if (car.userData.roadZ < -28 || car.userData.roadZ > 52) {
+            removePoliceCar(car);
+          }
+        }
+      }
+
       function updatePlayer(dt) {
-        player.position.x += (state.x - player.position.x) * Math.min(1, dt * 12);
+        const pose = roadPose(state.z);
+        const targetX = pose.x + state.x * Math.cos(pose.heading);
+        const targetZ = state.z - state.x * Math.sin(pose.heading) * 0.24;
+        player.position.x += (targetX - player.position.x) * Math.min(1, dt * 12);
+        player.position.z += (targetZ - player.position.z) * Math.min(1, dt * 12);
         player.position.y = 0.52 + state.y;
-        player.rotation.z = THREE.MathUtils.lerp(player.rotation.z, (player.position.x - state.x) * -0.08, dt * 6);
+        player.rotation.y = THREE.MathUtils.lerp(player.rotation.y, pose.heading - state.steerAngle * 0.92, dt * 7);
+        player.rotation.z = THREE.MathUtils.lerp(player.rotation.z, -state.steerAngle * 0.28, dt * 7);
         player.userData.wheels.forEach((wheel) => {
           wheel.rotation.x -= dt * state.speed * 1.7;
         });
 
         state.hitTimer = Math.max(0, state.hitTimer - dt);
-        const flash = state.hitTimer > 0 && Math.floor(state.hitTimer * 16) % 2 === 0;
+        const flash = (state.hitTimer > 0 || state.policeHitTimer > 0) && Math.floor((state.hitTimer + state.policeHitTimer) * 16) % 2 === 0;
         player.visible = !flash;
       }
 
       function checkCollisions() {
-        if (state.hitTimer > 0 || state.y > 0.95) return;
-        for (const car of traffic) {
-          if (car.userData.hit) continue;
-          const dx = Math.abs(car.position.x - player.position.x);
-          const dz = Math.abs(car.position.z - player.position.z);
-          const hitWidth = (car.userData.width + carSize.width) * 0.54;
-          const hitLength = (car.userData.length + carSize.length) * 0.5;
-          if (dx < hitWidth && dz < hitLength) {
-            car.userData.hit = true;
-            state.hitTimer = 1.05;
-            state.health = Math.max(0, state.health - 18);
-            state.speed = Math.max(18, state.speed * 0.7);
-            car.rotation.z = (car.position.x > player.position.x ? -1 : 1) * 0.45;
-            car.position.x += car.position.x > player.position.x ? 1.6 : -1.6;
-            if (state.health <= 0) endGame();
-            break;
+        if (state.y > 0.95) return;
+
+        if (state.hitTimer <= 0) {
+          for (const car of traffic) {
+            if (car.userData.hit) continue;
+            const dx = Math.abs(car.userData.roadX - state.x);
+            const dz = Math.abs(car.userData.roadZ - state.z);
+            const hitWidth = (car.userData.width + carSize.width) * 0.54;
+            const hitLength = (car.userData.length + carSize.length) * 0.5;
+            if (dx < hitWidth && dz < hitLength) {
+              car.userData.hit = true;
+              state.hitTimer = 0.82;
+              state.speed = Math.max(20, state.speed * 0.78);
+              car.rotation.z = (car.userData.roadX > state.x ? -1 : 1) * 0.45;
+              car.userData.roadX += car.userData.roadX > state.x ? 1.6 : -1.6;
+              summonPolice(1);
+              break;
+            }
+          }
+        }
+
+        if (state.policeHitTimer <= 0) {
+          for (const car of police) {
+            if (car.userData.hitCooldown > 0) continue;
+            const dx = Math.abs(car.userData.roadX - state.x);
+            const dz = Math.abs(car.userData.roadZ - state.z);
+            if (dx < 1.52 && dz < 2.72) {
+              car.userData.hitCooldown = 1.45;
+              state.policeHitTimer = 1.05;
+              state.health = Math.max(0, state.health - (12 + Math.min(12, state.wanted * 2)));
+              state.speed = Math.max(16, state.speed * 0.72);
+              car.userData.roadZ += 5.4;
+              car.userData.roadX += car.userData.roadX > state.x ? 1.7 : -1.7;
+              if (state.health <= 0) endGame();
+              break;
+            }
           }
         }
       }
 
       function updateCamera(dt) {
-        const targetX = player.position.x * 0.38;
+        const pose = roadPose(state.z);
+        const behindX = Math.sin(pose.heading) * 14.5;
+        const behindZ = Math.cos(pose.heading) * 14.5;
+        const lookX = player.position.x - Math.sin(pose.heading) * 20;
+        const lookZ = player.position.z - Math.cos(pose.heading) * 24;
+        const targetX = player.position.x * 0.26 + behindX + state.steerAngle * 1.4;
         camera.position.x += (targetX - camera.position.x) * Math.min(1, dt * 4.5);
         camera.position.y += (4.9 + state.y * 0.3 - camera.position.y) * Math.min(1, dt * 4.2);
-        camera.position.z += (14.5 - camera.position.z) * Math.min(1, dt * 4.2);
-        camera.lookAt(player.position.x * 0.22, 1.15 + state.y * 0.18, -14);
+        camera.position.z += (player.position.z + behindZ - camera.position.z) * Math.min(1, dt * 4.2);
+        camera.lookAt(lookX, 1.15 + state.y * 0.18, lookZ);
       }
 
       function updateHud() {
         hud.score.textContent = Math.floor(state.score).toString();
         hud.speed.textContent = Math.round(state.speed).toString();
+        hud.wanted.textContent = state.wanted.toString();
         hud.health.textContent = `${Math.round(state.health)}%`;
         hud.healthFill.style.transform = `scaleX(${state.health / 100})`;
-        hud.state.textContent = state.hitTimer > 0 ? "Impact" : state.y > 0.2 ? "Airborne" : "Engine live";
+        const exitSide = getActiveExitSide();
+        hud.state.textContent = state.policeHitTimer > 0
+          ? "Police ram"
+          : state.hitTimer > 0
+            ? "Wanted up"
+            : state.exitNotice > 0
+              ? "Exit taken"
+              : state.wanted > 0
+                ? `Police chase x${police.length}`
+                : state.y > 0.2
+                  ? "Airborne"
+                  : exitSide !== 0
+                    ? "Exit open"
+                    : "Engine live";
         hud.jump.classList.toggle("is-airborne", state.y > 0.08);
       }
 
@@ -905,6 +1154,9 @@
         for (const car of traffic.splice(0)) {
           scene.remove(car);
         }
+        for (const car of police.splice(0)) {
+          scene.remove(car);
+        }
         state.playing = true;
         state.speed = 33;
         state.health = 100;
@@ -912,12 +1164,23 @@
         state.x = 0;
         state.y = 0;
         state.z = 5;
+        state.steerAngle = 0;
         state.jumpVelocity = 0;
         state.spawnTimer = 0.18;
+        state.policeTimer = 0;
         state.hitTimer = 0;
+        state.policeHitTimer = 0;
+        state.wanted = 0;
+        state.escapeTimer = 0;
         state.nextLane = Math.floor(Math.random() * laneCenters.length);
+        state.routeSeed = Math.random() * 120;
+        state.roadShift = 0;
+        state.roadTargetShift = 0;
+        state.exitCooldown = 1.8;
+        state.exitNotice = 0;
         player.visible = true;
         player.position.set(0, 0.52, state.z);
+        player.rotation.set(0, 0, 0);
         [-48, -74, -102, -132, -164, -198, -234].forEach((z) => spawnTrafficPack(z));
         hud.overlay.classList.remove("is-visible");
       }
@@ -927,6 +1190,7 @@
         if (state.playing) {
           updateInput(dt);
           updateWorld(dt);
+          updatePolice(dt);
           updatePlayer(dt);
           checkCollisions();
           state.score += dt * state.speed * 0.4;
