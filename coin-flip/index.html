@@ -531,31 +531,6 @@
       top: 28%;
     }
 
-    .spark-field {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .spark-field span {
-      position: absolute;
-      left: calc(50% + var(--x, 0px));
-      top: calc(52% + var(--y, 0px));
-      width: var(--size, 7px);
-      height: var(--size, 7px);
-      border-radius: 50%;
-      background: var(--spark, #fff4a6);
-      box-shadow: 0 0 18px var(--spark, #fff4a6);
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.4);
-    }
-
-    .stage.is-flipping .spark-field span {
-      animation: coinSpark 1.05s cubic-bezier(0.18, 0.86, 0.28, 1) var(--delay, 0s) both;
-    }
-
     .stage.is-flipping .trajectory::before {
       animation: spark 1.3s ease 0.4s both;
     }
@@ -607,80 +582,6 @@
       pointer-events: none;
       background: radial-gradient(circle at 50% 44%, rgba(255, 244, 166, 0.35), transparent 26%);
       opacity: 0;
-    }
-
-    .impact-ring {
-      position: absolute;
-      left: 58%;
-      top: 77%;
-      z-index: 1;
-      width: min(420px, 58vw);
-      aspect-ratio: 4 / 1;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 244, 166, 0.45);
-      box-shadow: 0 0 34px rgba(255, 244, 166, 0.22), inset 0 0 24px rgba(64, 214, 255, 0.12);
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.34);
-      pointer-events: none;
-    }
-
-    .stage.is-flipping .impact-ring {
-      animation: impactRing 5.4s ease both;
-    }
-
-    .result-beacon {
-      position: absolute;
-      right: clamp(18px, 4vw, 48px);
-      top: clamp(90px, 17vh, 160px);
-      z-index: 4;
-      display: grid;
-      gap: 6px;
-      min-width: 150px;
-      padding: 13px 14px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      color: #eef6ff;
-      background: rgba(6, 9, 15, 0.58);
-      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28), inset 0 0 0 1px rgba(255, 244, 166, 0.08);
-      backdrop-filter: blur(16px);
-    }
-
-    .beacon-label {
-      color: #aebbd0;
-      font-size: 0.72rem;
-      font-weight: 900;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .beacon-value {
-      color: #fff6bc;
-      font-size: clamp(1.3rem, 3vw, 2rem);
-      font-weight: 950;
-      line-height: 1;
-    }
-
-    .beacon-bar {
-      height: 5px;
-      overflow: hidden;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.09);
-    }
-
-    .beacon-bar span {
-      display: block;
-      width: 0;
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--gold-1), var(--cyan), var(--copper));
-    }
-
-    .stage.is-flipping .beacon-bar span {
-      animation: beaconLoad 5.4s linear both;
-    }
-
-    .stage.is-flipping .beacon-value {
-      animation: beaconFlicker 5.4s steps(1, end) both;
     }
 
     .stage.is-flipping .flash {
@@ -738,53 +639,6 @@
       100% { opacity: 0; transform: scale(0.7); }
     }
 
-    @keyframes coinSpark {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.2);
-      }
-
-      28% {
-        opacity: 0.95;
-      }
-
-      100% {
-        opacity: 0;
-        transform: translate(calc(-50% + var(--tx, 0px)), calc(-50% + var(--ty, 0px))) scale(1);
-      }
-    }
-
-    @keyframes impactRing {
-      0%, 78% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.34);
-      }
-
-      84% {
-        opacity: 0.9;
-        transform: translate(-50%, -50%) scale(0.62);
-      }
-
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(1.25);
-      }
-    }
-
-    @keyframes beaconLoad {
-      0% { width: 0; }
-      82% { width: 82%; }
-      100% { width: 100%; }
-    }
-
-    @keyframes beaconFlicker {
-      0% { opacity: 0.72; filter: blur(0.6px); }
-      18% { opacity: 1; filter: blur(0); }
-      40% { opacity: 0.76; filter: blur(0.4px); }
-      64% { opacity: 1; filter: blur(0); }
-      100% { opacity: 1; filter: blur(0); }
-    }
-
     @media (max-width: 760px) {
       .topbar {
         padding: 12px 14px;
@@ -818,18 +672,6 @@
         left: 50%;
         top: 58%;
         width: min(330px, 76vw);
-      }
-
-      .impact-ring {
-        left: 50%;
-        top: 79%;
-      }
-
-      .result-beacon {
-        top: auto;
-        right: 16px;
-        bottom: 128px;
-        min-width: 128px;
       }
 
       .phase-strip {
@@ -874,21 +716,6 @@
 
         <div class="cinema" aria-hidden="true">
           <div class="trajectory"></div>
-          <div class="spark-field">
-            <span style="--x:-180px;--y:18px;--tx:-64px;--ty:-46px;--delay:.18s;--spark:#fff4a6"></span>
-            <span style="--x:-120px;--y:-28px;--tx:-42px;--ty:-88px;--delay:.38s;--size:5px;--spark:#40d6ff"></span>
-            <span style="--x:-40px;--y:-90px;--tx:22px;--ty:-72px;--delay:.72s;--spark:#ff805d"></span>
-            <span style="--x:96px;--y:-112px;--tx:58px;--ty:-38px;--delay:1.04s;--size:6px;--spark:#fff4a6"></span>
-            <span style="--x:190px;--y:-48px;--tx:74px;--ty:34px;--delay:1.36s;--spark:#9df06d"></span>
-            <span style="--x:160px;--y:66px;--tx:38px;--ty:84px;--delay:1.68s;--size:5px;--spark:#40d6ff"></span>
-            <span style="--x:58px;--y:104px;--tx:-20px;--ty:94px;--delay:2.06s;--spark:#fff4a6"></span>
-            <span style="--x:-92px;--y:86px;--tx:-72px;--ty:52px;--delay:2.48s;--size:6px;--spark:#ff805d"></span>
-            <span style="--x:-164px;--y:-64px;--tx:-44px;--ty:-66px;--delay:3.02s;--spark:#fff4a6"></span>
-            <span style="--x:210px;--y:12px;--tx:66px;--ty:-12px;--delay:3.44s;--size:5px;--spark:#40d6ff"></span>
-            <span style="--x:122px;--y:118px;--tx:48px;--ty:62px;--delay:4.28s;--spark:#fff4a6"></span>
-            <span style="--x:-30px;--y:138px;--tx:-36px;--ty:52px;--delay:4.42s;--size:6px;--spark:#9df06d"></span>
-          </div>
-          <div class="impact-ring"></div>
           <div class="camera">
             <div class="shadow"></div>
             <div class="coin-rig">
@@ -930,11 +757,6 @@
           </div>
         </div>
 
-        <div class="result-beacon" aria-hidden="true">
-          <span class="beacon-label">Final side</span>
-          <span class="beacon-value" id="beaconValue">WAITING</span>
-          <span class="beacon-bar"><span></span></span>
-        </div>
         <div class="phase-strip" aria-hidden="true">
           <span class="phase" data-phase="launch"><strong>Launch</strong>camera dives in</span>
           <span class="phase" data-phase="heads"><strong>Heads</strong>portrait pass</span>
@@ -952,7 +774,6 @@
     const flipButton = document.querySelector("#flipButton");
     const resultText = document.querySelector("#resultText");
     const soundButton = document.querySelector("#soundButton");
-    const beaconValue = document.querySelector("#beaconValue");
     const phases = [...document.querySelectorAll(".phase")];
     const flipLength = 5400;
     let soundOn = false;
@@ -1005,7 +826,6 @@
       flipButton.disabled = true;
       flipButton.textContent = "In the air...";
       resultText.textContent = "Launch: zooming into the gold.";
-      beaconValue.textContent = "SPINNING";
       coin.style.setProperty("--final-rotation", finalRotation);
       coin.classList.remove("is-flipping", "is-heads", "is-tails");
       stage.classList.remove("is-flipping");
@@ -1033,7 +853,6 @@
           coin.classList.add(lastResult === "heads" ? "is-heads" : "is-tails");
           stage.classList.remove("is-flipping");
           resultText.textContent = `It landed on ${lastResult.toUpperCase()}.`;
-          beaconValue.textContent = lastResult.toUpperCase();
           flipButton.disabled = false;
           flipButton.textContent = "Flip again";
         }, flipLength)
