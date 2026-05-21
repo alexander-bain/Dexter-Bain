@@ -178,6 +178,52 @@ function cdpConnection(wsUrl) {
   };
 }
 
+function seededRandom(seed) {
+  let value = 2166136261;
+  for (const char of String(seed)) {
+    value ^= char.charCodeAt(0);
+    value = Math.imul(value, 16777619);
+  }
+  return () => {
+    value += 0x6D2B79F5;
+    let next = value;
+    next = Math.imul(next ^ (next >>> 15), next | 1);
+    next ^= next + Math.imul(next ^ (next >>> 7), next | 61);
+    return ((next ^ (next >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function weatherBotPick(question, index, getAnswers) {
+  const answers = getAnswers(question);
+  const fallback = answers.reduce((winner, candidate) => {
+    if (!winner || candidate.odds > winner.odds) {
+      return candidate;
+    }
+    return winner;
+  }, null);
+  if (!answers.length) {
+    return null;
+  }
+  if (answers.length === 1) {
+    return answers[0];
+  }
+
+  const random = seededRandom(`${question.id || question.text || "question"}:${index}`);
+  const weighted = answers.map((answer) => ({
+    answer,
+    weight: Math.max(1, Math.round((answer.odds || 1) * Math.sqrt(answer.points || 1)))
+  }));
+  const total = weighted.reduce((sum, entry) => sum + entry.weight, 0);
+  let bucket = random() * total;
+  for (const entry of weighted) {
+    bucket -= entry.weight;
+    if (bucket <= 0) {
+      return entry.answer;
+    }
+  }
+  return fallback || answers[answers.length - 1];
+}
+
 async function run() {
   const { server, entriesByGameId } = createStaticServer();
   const port = await waitForServer(server);
@@ -237,6 +283,8 @@ async function run() {
       returnByValue: true,
       expression: `
         (async () => {
+          const seededRandom = ${seededRandom.toString()};
+          const weatherBotPick = ${weatherBotPick.toString()};
           const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
           const test = MINIGAMES_TEST;
           const game = test.getUpcomingGames().find((candidate) => candidate.gameId.startsWith("daily-weather-"));
@@ -247,12 +295,11 @@ async function run() {
           test.setSelectedGameId(game.gameId);
           test.render();
 
-          const coveragePicks = game.questions.map((question, index) => {
-            const answers = test.getAnswers(question);
-            const chosen = answers[index % answers.length];
-            return [test.getQuestionId(question, index), chosen.id];
+          const botPicks = game.questions.map((question, index) => {
+            const choice = weatherBotPick(question, index, test.getAnswers);
+            return [test.getQuestionId(question, index), choice.id];
           });
-          const picks = Object.fromEntries(coveragePicks);
+          const picks = Object.fromEntries(botPicks);
           const entry = {
             name: "Weather Bot",
             picks,
@@ -289,8 +336,7 @@ async function run() {
                 saveNote,
                 leaderboard,
                 savedEntryName: storage.playerName || "",
-                chosen: coveragePicks.map(([, answerId]) => answerId),
-                coveragePicks,
+                botPicks,
                 storedState: storage,
               };
             }
@@ -323,10 +369,26 @@ async function run() {
       throw new Error(`Weather Bot test did not save correctly: ${JSON.stringify(value)}`);
     }
 
-    const coveragePickMap = Object.fromEntries(value.coveragePicks || []);
-    const returnedPickMap = Object.fromEntries(value.coveragePicks || []);
-    if (JSON.stringify(returnedPickMap) !== JSON.stringify(coveragePickMap)) {
-      throw new Error(`Saved picks did not match the coverage answers: ${JSON.stringify({ returnedPickMap, coveragePickMap })}`);
+    const botPickMap = Object.fromEntries(value.botPicks || []);
+    if (!Object.keys(botPickMap).length) {
+      throw new Error(`Weather Bot picks were empty: ${JSON.stringify(value)}`);
+    }
+
+    const sourceHtml = fs.readFileSync(path.join(repoRoot, "minigames", "index.html"), "utf8");
+    const answerBlocks = [...sourceHtml.matchAll(/question\("([^"]+)", \[\s*([\s\S]*?)\s*\], "(\d{8}-[^"]+)"/g)];
+    const favoriteByQuestionId = Object.fromEntries(answerBlocks.map(([, , rawAnswers, questionId]) => {
+      const answers = [...rawAnswers.matchAll(/answer\("([^"]+)",\s*(\d+),\s*"([^"]+)"/g)].map((match) => ({
+        label: match[1],
+        odds: Number(match[2]),
+        id: match[3],
+      }));
+      answers.sort((left, right) => right.odds - left.odds);
+      return [questionId, answers[0]?.id || ""];
+    }));
+    const pickedQuestionIds = Object.keys(botPickMap);
+    const nonFavoriteCount = pickedQuestionIds.filter((questionId) => botPickMap[questionId] && favoriteByQuestionId[questionId] && botPickMap[questionId] !== favoriteByQuestionId[questionId]).length;
+    if (pickedQuestionIds.length > 1 && nonFavoriteCount === 0) {
+      throw new Error(`Weather Bot only picked favorites: ${JSON.stringify({ botPickMap, favoriteByQuestionId })}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);

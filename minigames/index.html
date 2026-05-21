@@ -2081,71 +2081,55 @@
     const eventCatalog = [
       // DAILY_WEATHER_GAME_START
       {
-        id: "daily-weather-20260520",
-        name: "Menlo Park Day Watch - May 20",
+        id: "daily-weather-20260521",
+        name: "Menlo Park Day Watch - May 21",
         type: "Day",
         month: 4,
-        day: 20,
-        summary: "Generated at 6 AM for May 20: 14 simple questions about weather, money, news, music, and sports that settle through the day. Forecast: Sunny, high near 89.",
+        day: 21,
+        summary: "Generated at 6 AM for May 21: 10 simple questions about weather, money, news, music, and sports that settle through the day. Forecast: Sunny, high near 81.",
         questions: [
-          question("By noon, will it be warmer than 85 degrees?", [
-            answer("Yes", 64, "yes"),
-            answer("No", 36, "no")
-          ], "20260520-warm-by-noon", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-20T19:00:00.000Z" }),
           question("By noon, will gas prices be higher than this morning?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260520-gas-noon", { autoSource: "https://r.jina.ai/http://gasprices.aaa.com/", lockAt: "2026-05-20T19:15:00.000Z" }),
+          ], "20260521-gas-noon", { autoSource: "https://r.jina.ai/http://gasprices.aaa.com/", lockAt: "2026-05-21T19:15:00.000Z" }),
           question("By 1 PM, will the stock market go up?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260520-market-lunch", { autoSource: "https://r.jina.ai/http://finance.yahoo.com/quote/%5EGSPC", lockAt: "2026-05-20T20:00:00.000Z" }),
+          ], "20260521-market-lunch", { autoSource: "https://r.jina.ai/http://finance.yahoo.com/quote/%5EGSPC", lockAt: "2026-05-21T20:00:00.000Z" }),
           question("By 2 PM, what will the local news talk about most?", [
             answer("Weather", 28, "weather"),
             answer("Stocks", 30, "stocks"),
-            answer("Sports", 18, "sports"),
+            answer("Sports", 24, "sports"),
             answer("Traffic", 18, "traffic")
-          ], "20260520-local-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-05-20T21:00:00.000Z" }),
+          ], "20260521-local-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-05-21T21:00:00.000Z" }),
           question("By 3 PM, will rain show up in the forecast?", [
             answer("Yes", 36, "yes"),
             answer("No", 64, "no")
-          ], "20260520-rain-by-3pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-20T22:00:00.000Z" }),
+          ], "20260521-rain-by-3pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-21T22:00:00.000Z" }),
           question("By 3 PM, will the sky still be mostly sunny?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260520-sky-still-sunny", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-20T22:00:00.000Z" }),
-          question("By 3 PM, will weather be the top local news story?", [
-            answer("Yes", 40, "yes"),
-            answer("No", 60, "no")
-          ], "20260520-weather-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-05-20T22:00:00.000Z" }),
+          ], "20260521-sky-still-sunny", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-21T22:00:00.000Z" }),
           question("By 4 PM, will the top Apple Music song be different?", [
-            answer("Yes", 64, "yes"),
-            answer("No", 36, "no")
-          ], "20260520-music-four", { autoSource: "https://r.jina.ai/http://music.apple.com/us/charts/songs", lockAt: "2026-05-20T23:00:00.000Z" }),
+            answer("Yes", 36, "yes"),
+            answer("No", 64, "no")
+          ], "20260521-music-four", { autoSource: "https://r.jina.ai/http://music.apple.com/us/charts/songs", lockAt: "2026-05-21T23:00:00.000Z" }),
           question("By 4 PM, will sports be one of the top local news stories?", [
-            answer("Yes", 42, "yes"),
-            answer("No", 58, "no")
-          ], "20260520-sports-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-05-20T23:00:00.000Z" }),
-          question("By 5 PM, will a new song reach No. 1?", [
-            answer("Yes", 64, "yes"),
-            answer("No", 36, "no")
-          ], "20260520-music-five", { autoSource: "https://r.jina.ai/http://music.apple.com/us/charts/songs", lockAt: "2026-05-21T00:00:00.000Z" }),
+            answer("Yes", 58, "yes"),
+            answer("No", 42, "no")
+          ], "20260521-sports-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-05-21T23:00:00.000Z" }),
           question("By 5 PM, will the wind be stronger than 10 mph?", [
             answer("Yes", 36, "yes"),
             answer("No", 64, "no")
-          ], "20260520-wind-by-5pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-21T00:00:00.000Z" }),
+          ], "20260521-wind-by-5pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-22T00:00:00.000Z" }),
           question("By 6 PM, will the sports page still show a live game?", [
-            answer("Yes", 36, "yes"),
-            answer("No", 64, "no")
-          ], "20260520-sports-six", { autoSource: "https://r.jina.ai/http://www.espn.com/scoreboard", lockAt: "2026-05-21T01:00:00.000Z" }),
-          question("By 7 PM, will the top sports story be about a live game?", [
-            answer("Yes", 36, "yes"),
-            answer("No", 64, "no")
-          ], "20260520-sports-seven", { autoSource: "https://r.jina.ai/http://www.espn.com/scoreboard", lockAt: "2026-05-21T02:00:00.000Z" }),
+            answer("Yes", 64, "yes"),
+            answer("No", 36, "no")
+          ], "20260521-sports-six", { autoSource: "https://r.jina.ai/http://www.espn.com/scoreboard", lockAt: "2026-05-22T01:00:00.000Z" }),
           question("Tonight, will it stay cooler than 60 degrees?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260520-cool-tonight", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-21T03:00:00.000Z" })
+          ], "20260521-cool-tonight", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-22T03:00:00.000Z" })
         ]
       },
       // DAILY_WEATHER_GAME_END
@@ -3673,8 +3657,10 @@
             .map((result) => [result.questionId, result])
         );
         resultsCheckedAt[game.gameId] = Date.now();
+        sharedStatus = "online";
         return true;
       } catch (err) {
+        sharedStatus = "offline";
         return false;
       }
     }
@@ -3722,8 +3708,10 @@
             .map((result) => [result.questionId, result])
         );
         resultsCheckedAt[game.gameId] = Date.now();
+        sharedStatus = "online";
         return true;
       } catch (err) {
+        sharedStatus = "offline";
         return false;
       }
     }
@@ -4485,6 +4473,21 @@
         .filter(({ question, index }) => resultForQuestion(game, question, index)?.status !== "resolved");
     }
 
+    function maxPossibleScore(game, picks) {
+      return game.questions.reduce((total, question, index) => {
+        const result = resultForQuestion(game, question, index);
+        if (result?.status === "resolved" && result.answerId) {
+          const correctAnswerId = normalizePickId(question, result.answerId);
+          const correctAnswer = getAnswers(question).find((answerOption) => answerOption.id === correctAnswerId);
+          const savedPick = normalizePickId(question, getSavedPick(picks, question, index));
+          return total + (savedPick === correctAnswerId ? (correctAnswer?.points || 0) : 0);
+        }
+
+        const pickedAnswer = pickedAnswerForQuestion(question, getSavedPick(picks, question, index));
+        return total + (pickedAnswer?.points || 0);
+      }, 0);
+    }
+
     function seededRandom(seed) {
       let value = 2166136261;
       for (const char of String(seed)) {
@@ -4585,6 +4588,8 @@
         return;
       }
 
+      const maxPossible = maxPossibleScore(game, entry.picks);
+
       const rows = game.questions.map((question, questionIndex) => {
         const pick = getSavedPick(entry.picks, question, questionIndex);
         const pickedAnswer = pickedAnswerForQuestion(question, pick);
@@ -4600,7 +4605,7 @@
       }).join("");
 
       leaderboardPicksEl.innerHTML = `
-        <h4 class="pick-view-title">${escapeHtml(entry.name)}'s picks · ${escapeHtml(formatWinChance(winChance))} chance to win</h4>
+        <h4 class="pick-view-title">${escapeHtml(entry.name)}'s picks · ${escapeHtml(formatWinChance(winChance))} chance to win · ${escapeHtml(String(maxPossible))} max possible pts</h4>
         <ul class="pick-list">${rows}</ul>
       `;
     }
@@ -4660,8 +4665,6 @@
       const sharedGameEntries = Array.isArray(sharedEntries[game.gameId]) ? sharedEntries[game.gameId] : null;
       const sourceEntries = scope.type === "room"
         ? (Array.isArray(sharedRooms[roomKey]) ? sharedRooms[roomKey] : [])
-        : sharedStatus === "online"
-        ? (sharedGameEntries || [])
         : [
             ...(sharedGameEntries || []),
             ...localEntries.filter((localEntry) => {
@@ -4891,7 +4894,7 @@
             <span class="rank">${index + 1}</span>
             <span>
               <span class="leader-name">${escapeHtml(entry.name)}</span>
-              <div class="leader-details">${scope.type === "room" ? `Room ${scope.roomCode}` : "Public board"} · ${entry.score}/${maxPoints} weighted points · click for picks</div>
+              <div class="leader-details">${scope.type === "room" ? `Room ${scope.roomCode}` : "Public board"} · ${entry.score}/${maxPoints} scored · ${maxPossibleScore(game, entry.picks)} max possible · click for picks</div>
             </span>
             <span class="points">
               ${entry.score}
@@ -4938,47 +4941,45 @@
       return games.find((game) => game.gameId === selectedGameId) || games[0];
     }
 
-    let renderRequestId = 0;
-
-    async function render() {
-      const requestId = ++renderRequestId;
-      const initialGames = upcomingGames();
-      selectedGameId = selectedGameId || hydrateGameFromUrl(initialGames) || initialGames[0].gameId;
-      renderTabs(initialGames);
-
-      await loadPublishedCustomGames();
-      if (requestId !== renderRequestId) {
-        return;
-      }
-
+    function render() {
       const games = upcomingGames();
-      if (!games.some((candidate) => candidate.gameId === selectedGameId)) {
-        selectedGameId = games[0]?.gameId || selectedGameId;
-      }
+      selectedGameId = selectedGameId || hydrateGameFromUrl(games) || games[0].gameId;
       const game = currentGame();
       renderTabs(games);
-
+      renderGame(game);
+      loadPublishedCustomGames().then((loaded) => {
+        if (loaded) {
+          const refreshedGames = upcomingGames();
+          if (!refreshedGames.some((candidate) => candidate.gameId === selectedGameId)) {
+            selectedGameId = refreshedGames[0]?.gameId || selectedGameId;
+          }
+          renderTabs(refreshedGames);
+          renderGame(currentGame());
+        }
+      });
       const urlRoomCode = cleanRoomCode(new URLSearchParams(window.location.search).get("room"));
       const urlRoomKey = roomEntriesKey(game.gameId, urlRoomCode);
       if (urlRoomCode && activeRoomCode(game) !== urlRoomCode && !checkedUrlRooms.has(urlRoomKey)) {
         checkedUrlRooms.add(urlRoomKey);
         joinRoom(game, urlRoomCode, { silent: true });
       }
-
-      await Promise.all([
-        loadEntriesForScope(game),
-        loadResultsForGame(game),
-      ]);
-
+      loadEntriesForScope(game).then((loaded) => {
+        if (loaded && currentGame().gameId === game.gameId) {
+          renderGame(game);
+        }
+      });
+      loadResultsForGame(game).then((loaded) => {
+        if (loaded && currentGame().gameId === game.gameId) {
+          renderGame(game);
+        }
+      });
       if (lockedQuestions(game).length > 0) {
-        await refreshLockedGameResults();
+        refreshLockedGameResults().then((loaded) => {
+          if (loaded) {
+            renderGame(currentGame());
+          }
+        });
       }
-
-      if (requestId !== renderRequestId) {
-        return;
-      }
-
-      renderGame(currentGame());
     }
 
     function showToast(message) {

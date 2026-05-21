@@ -8,7 +8,7 @@ const minigamesPath =
   path.join(repoRoot, "minigames", "index.html");
 const sourceUrl = "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182";
 const pointsUrl = "https://api.weather.gov/points/37.453,-122.182";
-const marketSource = "https://r.jina.ai/http://www.google.com/finance/quote/.INX:INDEXSP";
+const marketSource = "https://r.jina.ai/http://finance.yahoo.com/quote/%5EGSPC";
 const localNewsSource = "https://r.jina.ai/http://www.mercurynews.com/";
 const musicSource = "https://r.jina.ai/http://music.apple.com/us/charts/songs";
 const sportsSource = "https://r.jina.ai/http://www.espn.com/scoreboard";
@@ -40,6 +40,11 @@ function lockDate(date, hour, minute = 0) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minute, 0);
 }
 
+function isWeekend(date) {
+  const day = date.getDay();
+  return day === 0 || day === 6;
+}
+
 function labelDate(date) {
   return `${monthNames[date.getMonth()]} ${date.getDate()}`;
 }
@@ -64,20 +69,6 @@ async function fetchJson(url) {
   }
 
   return response.json();
-}
-
-async function fetchText(url) {
-  const response = await fetch(url, {
-    headers: {
-      "User-Agent": "dexterbain.com minigames weather generator"
-    }
-  });
-
-  if (!response.ok) {
-    throw new Error(`Text fetch failed: ${response.status} ${response.statusText}`);
-  }
-
-  return response.text();
 }
 
 function isDatePeriod(period, date) {
@@ -167,6 +158,16 @@ function windSpeedMax(text) {
   return match ? Number(match[2] || match[1]) : 8;
 }
 
+function rotateSelection(items, count, seed) {
+  if (!Array.isArray(items) || !items.length || count <= 0) {
+    return [];
+  }
+
+  const start = Math.abs(Number(seed) || 0) % items.length;
+  const total = Math.min(count, items.length);
+  return Array.from({ length: total }, (_, index) => items[(start + index) % items.length]);
+}
+
 function yesNoQuestion({
   text,
   idSuffix,
@@ -210,48 +211,9 @@ function renderQuestion(question, idDate) {
           ], "${idDate}-${question.idSuffix}", { autoSource: ${jsString(question.autoSource)}, lockAt: ${jsString(question.lockAt)} })`;
 }
 
-function isWeekend(date) {
-  const day = date.getDay();
-  return day === 0 || day === 6;
-}
-
-async function loadDailyReferenceData() {
-  const fallback = {
-    gasThreshold: 4.5,
-    topSong: "the morning No. 1 song"
-  };
-
-  try {
-    const gasText = await fetchText(gasSource);
-    const gasMatch = gasText.match(/Current Avg\.\s*\$([0-9]+\.[0-9]+)/i);
-    if (gasMatch) {
-      fallback.gasThreshold = Number(gasMatch[1]);
-    }
-  } catch (error) {
-    console.warn(error.message);
-  }
-
-  try {
-    const musicText = await fetchText(musicSource);
-    const songMatch = musicText.match(/\[([^\]]+)\]\(https:\/\/music\.apple\.com\/us\/song\//);
-    if (songMatch?.[1]) {
-      fallback.topSong = songMatch[1].trim();
-    }
-  } catch (error) {
-    console.warn(error.message);
-  }
-
-  return fallback;
-}
-
-function quoteSongTitle(title) {
-  return `"${String(title || "the morning No. 1 song").replace(/"/g, "'")}"`;
-}
-
-async function dayWatchEvent(date, forecast) {
+function dayWatchEvent(date, forecast) {
   const day = forecast.dayPeriod || {};
   const night = forecast.nightPeriod || {};
-  const referenceData = await loadDailyReferenceData();
   const high = Number(day.temperature) || 70;
   const low = Number(night.temperature) || 54;
   const skyText = `${day.shortForecast || ""} ${day.detailedForecast || ""}`;
@@ -262,12 +224,10 @@ async function dayWatchEvent(date, forecast) {
   const daySeed = Number(idDate);
   const weekend = isWeekend(date);
   const warmByNoonThreshold = Math.max(60, Math.round((high - 5) / 5) * 5);
-  const gasThreshold = Number(referenceData.gasThreshold) || 4.5;
-  const topSong = quoteSongTitle(referenceData.topSong);
   const locks = {
     warmByNoon: lockDate(date, 12).toISOString(),
     gasNoon: lockDate(date, 12, 15).toISOString(),
-    marketLunch: lockDate(date, 16).toISOString(),
+    marketLunch: lockDate(date, 13).toISOString(),
     localHeadline: lockDate(date, 14).toISOString(),
     weatherAfternoon: lockDate(date, 15).toISOString(),
     musicFour: lockDate(date, 16).toISOString(),
@@ -294,7 +254,7 @@ async function dayWatchEvent(date, forecast) {
     sports: [likelySportsLive ? 24 : 18, "Sports"],
     traffic: [18, "Traffic"]
   };
-  const weatherQuestions = [
+  const weatherQuestions = rotateSelection([
     () => yesNoQuestion({
       text: `By noon, will it be warmer than ${warmByNoonThreshold} degrees?`,
       idSuffix: "warm-by-noon",
@@ -330,28 +290,31 @@ async function dayWatchEvent(date, forecast) {
       lockAt: locks.weatherNight,
       likely: likelyNightCooler
     })
-  ];
-  const moneyQuestions = [
+  ], 4, daySeed);
+  const moneyQuestionFactories = [
     () => yesNoQuestion({
-      text: `By noon, will AAA's national regular gas average still be above $${gasThreshold.toFixed(3)}?`,
+      text: "By noon, will gas prices be higher than this morning?",
       idSuffix: "gas-noon",
       autoSource: gasSource,
       lockAt: locks.gasNoon,
       likely: likelyGasUp
-    })
+    }),
+    ...(
+      weekend
+        ? []
+        : [() => yesNoQuestion({
+            text: "By 1 PM, will the stock market go up?",
+            idSuffix: "market-lunch",
+            autoSource: marketSource,
+            lockAt: locks.marketLunch,
+            likely: likelyMarketUp
+          })]
+    )
   ];
-  if (!weekend) {
-    moneyQuestions.push(() => yesNoQuestion({
-      text: "By 4 PM, will the S&P 500 finish up for the day?",
-      idSuffix: "market-lunch",
-      autoSource: marketSource,
-      lockAt: locks.marketLunch,
-      likely: likelyMarketUp
-    }));
-  }
-  const newsQuestions = [
+  const moneyQuestions = rotateSelection(moneyQuestionFactories, moneyQuestionFactories.length, daySeed + 7);
+  const newsQuestions = rotateSelection([
     () => choiceQuestion({
-      text: "By 2 PM, which topic best matches Mercury News' main featured homepage story?",
+      text: "By 2 PM, what will the local news talk about most?",
       idSuffix: "local-headline",
       autoSource: localNewsSource,
       lockAt: locks.localHeadline,
@@ -363,7 +326,7 @@ async function dayWatchEvent(date, forecast) {
       ]
     }),
     () => yesNoQuestion({
-      text: "By 3 PM, will Mercury News' main featured homepage story be weather-related?",
+      text: "By 3 PM, will weather be the top local news story?",
       idSuffix: "weather-headline",
       autoSource: localNewsSource,
       lockAt: lockDate(date, 15).toISOString(),
@@ -372,7 +335,7 @@ async function dayWatchEvent(date, forecast) {
       yesUnlikely: 40
     }),
     () => yesNoQuestion({
-      text: "By 4 PM, will one of Mercury News' top homepage stories be sports-related?",
+      text: "By 4 PM, will sports be one of the top local news stories?",
       idSuffix: "sports-headline",
       autoSource: localNewsSource,
       lockAt: lockDate(date, 16).toISOString(),
@@ -380,24 +343,25 @@ async function dayWatchEvent(date, forecast) {
       yesLikely: 58,
       yesUnlikely: 42
     })
-  ];
-  const musicQuestions = [
+  ], 2, daySeed + 11);
+  const musicQuestionFactories = [
     () => yesNoQuestion({
-      text: `By 4 PM, will ${topSong} still be the top Apple Music song?`,
+      text: "By 4 PM, will the top Apple Music song be different?",
       idSuffix: "music-four",
       autoSource: musicSource,
       lockAt: locks.musicFour,
       likely: likelyMusicChanged
     }),
     () => yesNoQuestion({
-      text: `By 5 PM, will ${topSong} still be No. 1 on Apple Music?`,
+      text: "By 5 PM, will a new song reach No. 1?",
       idSuffix: "music-five",
       autoSource: musicSource,
       lockAt: lockDate(date, 17).toISOString(),
       likely: likelyMusicChanged
     })
   ];
-  const sportsQuestions = [
+  const musicQuestions = rotateSelection(musicQuestionFactories, weekend ? 2 : 1, daySeed + 23);
+  const sportsQuestionFactories = [
     () => yesNoQuestion({
       text: "By 6 PM, will the sports page still show a live game?",
       idSuffix: "sports-six",
@@ -413,6 +377,7 @@ async function dayWatchEvent(date, forecast) {
       likely: likelySportsLive
     })
   ];
+  const sportsQuestions = rotateSelection(sportsQuestionFactories, 1, daySeed + 37);
   const selectedQuestions = [
     ...weatherQuestions,
     ...moneyQuestions,
@@ -425,8 +390,6 @@ async function dayWatchEvent(date, forecast) {
     }
     return left.lockAt.localeCompare(right.lockAt);
   });
-  const summaryCount = selectedQuestions.length;
-  const stockSummary = weekend ? " Weather, gas, news, music, and sports only today because the market is closed." : "";
 
   return `      {
         id: "daily-weather-${idDate}",
@@ -434,7 +397,7 @@ async function dayWatchEvent(date, forecast) {
         type: "Day",
         month: ${date.getMonth()},
         day: ${date.getDate()},
-        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: ${summaryCount} simple questions about weather, money, news, music, and sports that settle through the day. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.${stockSummary}`)},
+        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: 10 simple questions about weather, money, news, music, and sports that settle through the day. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.`)},
         questions: [
 ${selectedQuestions.map((question) => renderQuestion(question, idDate)).join(",\n")}
         ]
@@ -456,7 +419,7 @@ ${endMarker}${html.slice(end + endMarker.length)}`;
 const date = targetDate();
 const forecast = await loadForecast(date);
 const html = fs.readFileSync(minigamesPath, "utf8");
-const updated = replaceGeneratedBlock(html, await dayWatchEvent(date, forecast));
+const updated = replaceGeneratedBlock(html, dayWatchEvent(date, forecast));
 fs.writeFileSync(minigamesPath, updated);
 
 console.log(`Generated Menlo Park day watch for ${dayKey(date)} using ${forecast.source}.`);
