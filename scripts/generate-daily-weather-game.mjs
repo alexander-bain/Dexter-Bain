@@ -40,6 +40,11 @@ function lockDate(date, hour, minute = 0) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minute, 0);
 }
 
+function isWeekend(date) {
+  const day = date.getDay();
+  return day === 0 || day === 6;
+}
+
 function labelDate(date) {
   return `${monthNames[date.getMonth()]} ${date.getDate()}`;
 }
@@ -217,6 +222,7 @@ function dayWatchEvent(date, forecast) {
   const dateLabel = labelDate(date);
   const idDate = slugDate(date);
   const daySeed = Number(idDate);
+  const weekend = isWeekend(date);
   const warmByNoonThreshold = Math.max(60, Math.round((high - 5) / 5) * 5);
   const locks = {
     warmByNoon: lockDate(date, 12).toISOString(),
@@ -285,7 +291,7 @@ function dayWatchEvent(date, forecast) {
       likely: likelyNightCooler
     })
   ], 4, daySeed);
-  const moneyQuestions = rotateSelection([
+  const moneyQuestionFactories = [
     () => yesNoQuestion({
       text: "By noon, will gas prices be higher than this morning?",
       idSuffix: "gas-noon",
@@ -293,14 +299,19 @@ function dayWatchEvent(date, forecast) {
       lockAt: locks.gasNoon,
       likely: likelyGasUp
     }),
-    () => yesNoQuestion({
-      text: "By 1 PM, will the stock market go up?",
-      idSuffix: "market-lunch",
-      autoSource: marketSource,
-      lockAt: locks.marketLunch,
-      likely: likelyMarketUp
-    })
-  ], 2, daySeed + 7);
+    ...(
+      weekend
+        ? []
+        : [() => yesNoQuestion({
+            text: "By 1 PM, will the stock market go up?",
+            idSuffix: "market-lunch",
+            autoSource: marketSource,
+            lockAt: locks.marketLunch,
+            likely: likelyMarketUp
+          })]
+    )
+  ];
+  const moneyQuestions = rotateSelection(moneyQuestionFactories, moneyQuestionFactories.length, daySeed + 7);
   const newsQuestions = rotateSelection([
     () => choiceQuestion({
       text: "By 2 PM, what will the local news talk about most?",
@@ -333,7 +344,7 @@ function dayWatchEvent(date, forecast) {
       yesUnlikely: 42
     })
   ], 2, daySeed + 11);
-  const musicQuestions = rotateSelection([
+  const musicQuestionFactories = [
     () => yesNoQuestion({
       text: "By 4 PM, will the top Apple Music song be different?",
       idSuffix: "music-four",
@@ -348,8 +359,9 @@ function dayWatchEvent(date, forecast) {
       lockAt: lockDate(date, 17).toISOString(),
       likely: likelyMusicChanged
     })
-  ], 1, daySeed + 23);
-  const sportsQuestions = rotateSelection([
+  ];
+  const musicQuestions = rotateSelection(musicQuestionFactories, weekend ? 2 : 1, daySeed + 23);
+  const sportsQuestionFactories = [
     () => yesNoQuestion({
       text: "By 6 PM, will the sports page still show a live game?",
       idSuffix: "sports-six",
@@ -364,7 +376,8 @@ function dayWatchEvent(date, forecast) {
       lockAt: locks.sportsSeven,
       likely: likelySportsLive
     })
-  ], 1, daySeed + 37);
+  ];
+  const sportsQuestions = rotateSelection(sportsQuestionFactories, 1, daySeed + 37);
   const selectedQuestions = [
     ...weatherQuestions,
     ...moneyQuestions,
