@@ -680,6 +680,28 @@
         "VOICE", "WASTE", "WATCH", "WATER", "WHEEL", "WHERE", "WHICH", "WHILE", "WHITE", "WHOLE",
         "WHOSE", "WOMAN", "WORLD", "WORRY", "WORTH", "WOULD", "WRITE", "WRONG", "YOUNG", "YOUTH"
       ];
+      const DAILY_EXTRA_WORDS = [
+        "ABACK", "ABBEY", "ABODE", "ABORT", "ABUSE", "ADAPT", "ADULT", "AGILE", "AGLOW", "AGONY",
+        "ALIBI", "ALIGN", "ALIKE", "ALLOT", "ALLOY", "ALONG", "ALOOF", "ALOUD", "ALPHA", "ALTAR",
+        "AMAZE", "AMBER", "AMBLE", "AMEND", "AMISS", "AMPLE", "AMPLY", "AMUSE", "ANGEL", "ANGER",
+        "ANGLE", "ANGRY", "ANKLE", "ANNEX", "ANODE", "ANTIC", "ANTSY", "APART", "APNEA", "APRON",
+        "APTLY", "ARBOR", "ARMOR", "AROMA", "ARROW", "ARSON", "ASIDE", "ASSET", "ATLAS", "ATONE",
+        "ATTIC", "AWAIT", "AWAKE", "AWFUL", "AXIAL", "BACON", "BAGEL", "BALMY", "BANAL", "BANJO",
+        "BARGE", "BARON", "BASIL", "BASIN", "BASTE", "BATCH", "BATHE", "BATON", "BEARD", "BEAST",
+        "BEECH", "BEEFY", "BEIGE", "BELCH", "BELIE", "BELLE", "BELLY", "BERET", "BERRY", "BINGE",
+        "BINGO", "BIOME", "BISON", "BLAST", "BLAZE", "BLEAK", "BLEAR", "BLEAT", "BLEED", "BLEEP",
+        "BLIMP", "BLIND", "BLINK", "BLISS", "BLITZ", "BLOAT", "BLOOD", "BLOWN", "BLUFF", "BLUNT",
+        "BLURB", "BLURT", "BLUSH", "BOAST", "BOBBY", "BONUS", "BOOTH", "BOOTY", "BOOZE", "BOXER",
+        "BRACE", "BRAID", "BRAKE", "BRAND", "BRASH", "BRASS", "BRAWN", "BRAWL", "BRAZE", "BRIAR",
+        "BRIBE", "BRIDE", "BRIEF", "BRINE", "BRINK", "BRISK", "BROIL", "BROOD", "BROOK", "BROOM",
+        "BROTH", "BUNCH", "BUNNY", "BURST", "BUTCH", "BUYER", "CABIN", "CACAO", "CACHE", "CADET",
+        "CAMEL", "CANAL", "CANOE", "CANON", "CAPER", "CARGO", "CAROL", "CARVE", "CASTE", "CATER",
+        "CAULK", "CEDAR", "CHAFE", "CHANT", "CHAOS", "CHARD", "CHARM", "CHASM", "CHEAT", "CHEEK",
+        "CHEER", "CHESS", "CHICK", "CHIDE", "CHILI", "CHILL", "CHIME", "CHINA", "CHIRP", "CHOCK",
+        "CHOIR", "CHOKE", "CHORD", "CHORE", "CHOSE", "CHUCK", "CHUMP", "CHUNK", "CHURN", "CHUTE",
+        "CIDER", "CIGAR", "CINCH", "CIRCA", "CIVIL", "CLAIM", "CLAMP", "CLANG", "CLANK", "CLASH",
+        "CLASP", "CLEAT", "CLEFT", "CLERK", "CLICK", "CLIFF", "CLING", "CLINK", "CLONE", "CLOUT"
+      ];
       const EXTRA_GUESSES = [
         "AAHED", "AALII", "AARGH", "ABACA", "ABACI", "ABACS", "ABAFT", "ABAKA", "ABAMP", "ABAYA",
         "ABBES", "ABDAL", "ABELE", "ABHOR", "ABIDE", "ABIES", "ABJAD", "ABLET", "ABMHO", "ABNET",
@@ -712,8 +734,21 @@
       const COLS = 5;
       const DAILY_WORD_ANCHOR_DATE = "2026-05-20";
       const DAILY_WORD_ANCHOR = "FRESH";
+      const DAILY_WORD_STEP = 137;
       const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
-      const JOHN_WORDS = ["LUCKY", "BLAZE", "COMET", "RIVER", "SPARK", "GHOST", "CANDY", "BRICK"];
+      const JOHN_WORDS = [
+        "LUCKY", "BLAZE", "COMET", "RIVER", "SPARK", "GHOST", "CANDY", "BRICK",
+        "CLOVE", "CLOWN", "CLUCK", "CLUMP", "CLUNG", "COCOA", "COLON", "COMIC", "COMMA", "CONCH",
+        "CONDO", "COPSE", "CORAL", "CORER", "CORNY", "COUCH", "COUGH", "COVEN", "COVET", "COVEY",
+        "COWER", "COYLY", "CRACK", "CRAFT", "CRAMP", "CRANE", "CRANK", "CRATE", "CRAVE", "CRAWL",
+        "CRAZE", "CRAZY", "CREAK", "CREAM", "CREEP", "CREPE", "CREST", "CRICK", "CRIED", "CRIME",
+        "CRIMP", "CROAK", "CROCK", "CRONY", "CROUP", "CRUDE", "CRUEL", "CRUMB", "CRUSH", "CRUST",
+        "CRYPT", "CUBIC", "CURLY", "CURVE", "CURVY", "CUTIE", "CYBER", "CYCLE", "CYNIC", "DAILY",
+        "DAIRY", "DAISY", "DANDY", "DENSE", "DEITY", "DELTA", "DEMON", "DENIM", "DETOX", "DEVIL",
+        "DIGIT", "DINER", "DINGO", "DISCO", "DITTO", "DIZZY", "DODGE", "DOGMA", "DOILY", "DONOR",
+        "DONUT", "DOPEY", "DOUGH", "DOWEL", "DOWNY", "DOZEN", "DRAIN", "DRAKE", "DRAMA", "DRAWL",
+        "DRAWN", "DREAD", "DRIER", "DRIFT", "DRILL", "DROID", "DRONE", "DROWN", "DRUID", "DRUNK"
+      ];
       const RESET_CODE = "CENA";
       const ALT_WORD_CODE = "JOHN";
       const RESET_STATS_CODE = "DEX";
@@ -722,7 +757,8 @@
       const LEGACY_STATS_KEY = "second-chance-wordle-stats-v1";
       const PROGRESS_KEY = "second-chance-wordle-progress-v1";
       const DICTIONARY_DATA = window.SECOND_CHANCE_DICTIONARIES || { guesses: [], fourLetterBases: [] };
-      const WORD_LIST = new Set([...WORDS, ...EXTRA_GUESSES, ...DICTIONARY_DATA.guesses]);
+      const DAILY_ANSWER_WORDS = [...WORDS, ...DAILY_EXTRA_WORDS];
+      const WORD_LIST = new Set([...DAILY_ANSWER_WORDS, ...JOHN_WORDS, ...EXTRA_GUESSES, ...DICTIONARY_DATA.guesses]);
       const FOUR_LETTER_BASES = new Set(DICTIONARY_DATA.fourLetterBases || []);
       const board = document.querySelector("#board");
       const keyboard = document.querySelector("#keyboard");
@@ -782,10 +818,10 @@
 
       function getDailyPuzzle() {
         const today = pacificDateParts();
-        const anchorIndex = WORDS.indexOf(DAILY_WORD_ANCHOR);
+        const anchorIndex = DAILY_ANSWER_WORDS.indexOf(DAILY_WORD_ANCHOR);
         const safeAnchorIndex = anchorIndex >= 0 ? anchorIndex : 0;
         const dayOffset = daysSincePacificDate(DAILY_WORD_ANCHOR_DATE, today.id);
-        const word = WORDS[wrapIndex(safeAnchorIndex + dayOffset, WORDS.length)];
+        const word = DAILY_ANSWER_WORDS[wrapIndex(safeAnchorIndex + dayOffset * DAILY_WORD_STEP, DAILY_ANSWER_WORDS.length)];
         return {
           id: `${today.id}-${word.toLowerCase()}`,
           word,
