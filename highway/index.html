@@ -16,6 +16,7 @@
       --bad: #ff4d6d;
       --road: #222831;
       --paint: #f7f7f2;
+      --neon: #7dd3fc;
     }
 
     * {
@@ -30,7 +31,10 @@
     body {
       margin: 0;
       overflow: hidden;
-      background: #09111c;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(255, 220, 132, 0.68), transparent 17%),
+        radial-gradient(circle at 72% 20%, rgba(125, 211, 252, 0.35), transparent 24%),
+        linear-gradient(180deg, #69b8ff 0%, #bde4ff 42%, #f8d59f 68%, #29351e 100%);
       color: var(--ink);
       font-family: "Trebuchet MS", "Avenir Next", Verdana, sans-serif;
       letter-spacing: 0;
@@ -68,6 +72,7 @@
       width: max-content;
       max-width: 100%;
       padding: 10px 13px;
+      border-radius: 14px;
     }
 
     h1 {
@@ -97,6 +102,7 @@
     .readout {
       min-width: 86px;
       padding: 9px 12px;
+      border-radius: 14px;
       text-align: center;
     }
 
@@ -119,6 +125,7 @@
       justify-self: end;
       width: min(260px, 100%);
       padding: 10px;
+      border-radius: 14px;
     }
 
     .meter-label {
@@ -236,6 +243,69 @@
       background: rgba(71, 227, 143, 0.32);
     }
 
+    .jump-action {
+      position: fixed;
+      right: 26px;
+      bottom: 26px;
+      z-index: 3;
+      display: grid;
+      place-items: center;
+      width: 116px;
+      height: 116px;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.86), transparent 16%),
+        linear-gradient(145deg, rgba(255, 209, 102, 0.96), rgba(255, 77, 109, 0.9));
+      color: #1d1112;
+      box-shadow:
+        0 18px 42px rgba(255, 77, 109, 0.36),
+        inset 0 -10px 18px rgba(125, 30, 42, 0.24),
+        inset 0 9px 14px rgba(255, 255, 255, 0.35);
+      font: inherit;
+      font-weight: 1000;
+      text-transform: uppercase;
+      cursor: pointer;
+      touch-action: none;
+      transform: translateY(0) scale(1);
+      transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease;
+    }
+
+    .jump-action span {
+      display: block;
+      font-size: 1.36rem;
+      letter-spacing: -0.04em;
+      line-height: 0.9;
+    }
+
+    .jump-action small {
+      display: block;
+      margin-top: 4px;
+      color: rgba(29, 17, 18, 0.72);
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+    }
+
+    .jump-action:active,
+    .jump-action.is-down {
+      filter: saturate(1.22);
+      transform: translateY(4px) scale(0.96);
+      box-shadow:
+        0 9px 24px rgba(255, 77, 109, 0.34),
+        inset 0 -5px 10px rgba(125, 30, 42, 0.26),
+        inset 0 7px 12px rgba(255, 255, 255, 0.35);
+    }
+
+    .jump-action.is-airborne {
+      background:
+        radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.86), transparent 16%),
+        linear-gradient(145deg, rgba(125, 211, 252, 0.96), rgba(71, 227, 143, 0.88));
+      box-shadow:
+        0 18px 42px rgba(71, 227, 143, 0.25),
+        inset 0 -10px 18px rgba(20, 83, 45, 0.22),
+        inset 0 9px 14px rgba(255, 255, 255, 0.32);
+    }
+
     .fatal {
       position: fixed;
       inset: 0;
@@ -274,6 +344,24 @@
 
       .touch-controls {
         display: grid;
+      }
+
+      .jump-action {
+        right: auto;
+        left: 50%;
+        bottom: 18px;
+        width: 88px;
+        height: 88px;
+        transform: translateX(-50%) scale(1);
+      }
+
+      .jump-action:active,
+      .jump-action.is-down {
+        transform: translateX(-50%) translateY(4px) scale(0.96);
+      }
+
+      .jump-action span {
+        font-size: 1.02rem;
       }
     }
   </style>
@@ -314,9 +402,13 @@
       <div class="touch-pad">
         <button class="touch-key" data-key="ArrowDown" type="button" aria-label="Brake">↓</button>
         <button class="touch-key" data-key="ArrowUp" type="button" aria-label="Gas">↑</button>
-        <button class="touch-key" data-key="Space" type="button" aria-label="Jump">⤴</button>
       </div>
     </div>
+
+    <button class="jump-action" id="jumpButton" type="button" aria-label="Jump the car">
+      <span>Jump</span>
+      <small>Space</small>
+    </button>
 
     <div class="overlay" id="gameOver">
       <section class="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="gameOverTitle">
@@ -352,18 +444,21 @@
         overlay: document.getElementById("gameOver"),
         final: document.getElementById("finalStats"),
         restart: document.getElementById("restartButton"),
+        jump: document.getElementById("jumpButton"),
       };
 
       const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x96c7ff);
-      scene.fog = new THREE.Fog(0x96c7ff, 34, 178);
+      scene.fog = new THREE.Fog(0x88cfff, 40, 214);
 
       const camera = new THREE.PerspectiveCamera(64, window.innerWidth / window.innerHeight, 0.1, 260);
-      const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: true });
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance", preserveDrawingBuffer: true });
+      renderer.setClearColor(0x000000, 0);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.18;
       document.body.prepend(renderer.domElement);
 
       const hemi = new THREE.HemisphereLight(0xbfdcff, 0x263018, 2.3);
@@ -383,6 +478,8 @@
       const traffic = [];
       const stripes = [];
       const roadBits = [];
+      const sceneryBits = [];
+      const clouds = [];
       const laneCenters = [-4.8, -1.6, 1.6, 4.8];
       const clock = new THREE.Clock();
       const bounds = { left: -6.15, right: 6.15 };
@@ -405,10 +502,13 @@
       const road = new THREE.Group();
       scene.add(road);
 
-      const roadMat = new THREE.MeshStandardMaterial({ color: 0x20252d, roughness: 0.94, metalness: 0.02 });
-      const shoulderMat = new THREE.MeshStandardMaterial({ color: 0x63713d, roughness: 0.9 });
-      const stripeMat = new THREE.MeshStandardMaterial({ color: 0xf7f7f2, roughness: 0.62 });
-      const railMat = new THREE.MeshStandardMaterial({ color: 0xaab2bf, roughness: 0.38, metalness: 0.2 });
+      const roadMat = new THREE.MeshStandardMaterial({ color: 0x171b23, roughness: 0.88, metalness: 0.04 });
+      const shoulderMat = new THREE.MeshStandardMaterial({ color: 0x42512f, roughness: 0.92 });
+      const stripeMat = new THREE.MeshStandardMaterial({ color: 0xf7f7f2, roughness: 0.5, emissive: 0xffffdd, emissiveIntensity: 0.06 });
+      const railMat = new THREE.MeshStandardMaterial({ color: 0xb4becd, roughness: 0.28, metalness: 0.32 });
+      const curbMat = new THREE.MeshStandardMaterial({ color: 0xffd166, roughness: 0.56, emissive: 0xff9f1c, emissiveIntensity: 0.07 });
+      const reflectorMat = new THREE.MeshStandardMaterial({ color: 0x7dd3fc, roughness: 0.24, emissive: 0x38bdf8, emissiveIntensity: 0.72 });
+      const shadowMat = new THREE.MeshStandardMaterial({ color: 0x0b111a, roughness: 1 });
 
       function box(w, h, d, mat, x = 0, y = 0, z = 0) {
         const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
@@ -427,6 +527,13 @@
           road.add(slab, leftShoulder, rightShoulder);
           roadBits.push(slab, leftShoulder, rightShoulder);
 
+          for (const x of [-6.72, 6.72]) {
+            const edgeLine = box(0.16, 0.04, 31, stripeMat, x, 0.04, z);
+            const curb = box(0.34, 0.08, 31.5, curbMat, x * 1.03, 0.04, z);
+            road.add(edgeLine, curb);
+            roadBits.push(edgeLine, curb);
+          }
+
           for (const x of [-3.2, 0, 3.2]) {
             for (let j = 0; j < 4; j += 1) {
               const stripe = box(0.18, 0.035, 3.8, stripeMat, x, 0.035, z - 12 + j * 8);
@@ -435,10 +542,24 @@
             }
           }
 
+          for (const x of [-7.02, 7.02]) {
+            for (let j = 0; j < 5; j += 1) {
+              const reflector = box(0.16, 0.08, 0.48, reflectorMat, x, 0.11, z - 13 + j * 6.4);
+              road.add(reflector);
+              roadBits.push(reflector);
+            }
+          }
+
           for (const x of [-7.3, 7.3]) {
             const rail = box(0.24, 0.42, 31, railMat, x, 0.35, z);
             road.add(rail);
             roadBits.push(rail);
+
+            for (let j = 0; j < 4; j += 1) {
+              const post = box(0.2, 0.92, 0.2, shadowMat, x, 0.5, z - 11 + j * 8);
+              road.add(post);
+              roadBits.push(post);
+            }
           }
         }
       }
@@ -449,17 +570,32 @@
 
       function makeCar(color, glassColor) {
         const group = new THREE.Group();
-        const bodyMat = new THREE.MeshStandardMaterial({ color, roughness: 0.32, metalness: 0.28 });
-        const trimMat = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.55 });
-        const glassMat = new THREE.MeshStandardMaterial({ color: glassColor, roughness: 0.1, metalness: 0.05 });
+        const bodyMat = new THREE.MeshStandardMaterial({ color, roughness: 0.23, metalness: 0.42 });
+        const darkBodyMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.42, metalness: 0.18 });
+        const trimMat = new THREE.MeshStandardMaterial({ color: 0x0b1018, roughness: 0.5, metalness: 0.28 });
+        const glassMat = new THREE.MeshStandardMaterial({ color: glassColor, roughness: 0.08, metalness: 0.08, transparent: true, opacity: 0.86 });
         const wheelMat = new THREE.MeshStandardMaterial({ color: 0x101318, roughness: 0.72 });
+        const rimMat = new THREE.MeshStandardMaterial({ color: 0xd8e1ec, roughness: 0.28, metalness: 0.62 });
+        const headlightMat = new THREE.MeshStandardMaterial({ color: 0xfff5ca, emissive: 0xfff0a8, emissiveIntensity: 0.92, roughness: 0.24 });
+        const tailMat = new THREE.MeshStandardMaterial({ color: 0xff3355, emissive: 0xff3355, emissiveIntensity: 0.68, roughness: 0.3 });
 
-        group.add(box(1.42, 0.54, 2.86, bodyMat, 0, 0.34, 0));
-        group.add(box(1.05, 0.52, 1.18, glassMat, 0, 0.85, -0.22));
-        group.add(box(1.0, 0.12, 0.22, trimMat, 0, 0.73, -1.36));
-        group.add(box(1.0, 0.12, 0.22, trimMat, 0, 0.73, 1.36));
+        group.add(box(1.48, 0.5, 2.92, bodyMat, 0, 0.34, 0));
+        group.add(box(1.28, 0.18, 2.34, darkBodyMat, 0, 0.62, -0.08));
+        group.add(box(1.12, 0.5, 1.12, glassMat, 0, 0.92, -0.24));
+        group.add(box(1.02, 0.24, 0.62, bodyMat, 0, 0.73, 0.74));
+        group.add(box(1.0, 0.12, 0.22, trimMat, 0, 0.78, -1.39));
+        group.add(box(1.0, 0.12, 0.22, trimMat, 0, 0.78, 1.38));
+        group.add(box(1.32, 0.07, 0.14, trimMat, 0, 1.18, 0.24));
+        group.add(box(0.46, 0.11, 0.1, headlightMat, -0.42, 0.48, -1.5));
+        group.add(box(0.46, 0.11, 0.1, headlightMat, 0.42, 0.48, -1.5));
+        group.add(box(0.38, 0.13, 0.1, tailMat, -0.42, 0.5, 1.5));
+        group.add(box(0.38, 0.13, 0.1, tailMat, 0.42, 0.5, 1.5));
+        group.add(box(1.72, 0.08, 0.16, trimMat, 0, 0.5, 1.58));
+        group.add(box(1.76, 0.07, 0.12, trimMat, 0, 0.5, -1.58));
 
         const wheelGeo = new THREE.CylinderGeometry(0.27, 0.27, 0.28, 18);
+        const rimGeo = new THREE.CylinderGeometry(0.14, 0.14, 0.3, 16);
+        const wheels = [];
         for (const x of [-0.82, 0.82]) {
           for (const z of [-0.95, 0.95]) {
             const wheel = new THREE.Mesh(wheelGeo, wheelMat);
@@ -467,46 +603,177 @@
             wheel.position.set(x, 0.22, z);
             wheel.castShadow = true;
             group.add(wheel);
+            wheels.push(wheel);
+
+            const rim = new THREE.Mesh(rimGeo, rimMat);
+            rim.rotation.z = Math.PI / 2;
+            rim.position.set(x + (x > 0 ? 0.01 : -0.01), 0.22, z);
+            rim.castShadow = true;
+            group.add(rim);
           }
         }
 
-        group.userData.wheels = group.children.filter((child) => child.geometry?.type === "CylinderGeometry");
+        group.userData.wheels = wheels;
         return group;
       }
 
       function makeScenery() {
-        const hillMat = new THREE.MeshStandardMaterial({ color: 0x59713d, roughness: 1 });
-        const buildingMat = new THREE.MeshStandardMaterial({ color: 0x8594a8, roughness: 0.9 });
-        const windowMat = new THREE.MeshStandardMaterial({ color: 0xffe8a3, emissive: 0xffd166, emissiveIntensity: 0.14 });
+        const hillMat = new THREE.MeshStandardMaterial({ color: 0x536d38, roughness: 1 });
+        const darkHillMat = new THREE.MeshStandardMaterial({ color: 0x314424, roughness: 1 });
+        const buildingMat = new THREE.MeshStandardMaterial({ color: 0x71839b, roughness: 0.82, metalness: 0.08 });
+        const towerMat = new THREE.MeshStandardMaterial({ color: 0x9caabd, roughness: 0.74, metalness: 0.12 });
+        const windowMat = new THREE.MeshStandardMaterial({ color: 0xffe8a3, emissive: 0xffd166, emissiveIntensity: 0.48 });
+        const trunkMat = new THREE.MeshStandardMaterial({ color: 0x5b351d, roughness: 0.94 });
+        const leafMat = new THREE.MeshStandardMaterial({ color: 0x1f8a4c, roughness: 0.9 });
+        const lampMat = new THREE.MeshStandardMaterial({ color: 0xf8fafc, emissive: 0x7dd3fc, emissiveIntensity: 0.96 });
+        const billboardMat = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.46, metalness: 0.22 });
+        const billboardGlowMat = new THREE.MeshStandardMaterial({ color: 0xff4d6d, emissive: 0xff4d6d, emissiveIntensity: 0.66 });
 
-        for (let i = 0; i < 42; i += 1) {
-          const side = i % 2 === 0 ? -1 : 1;
-          const z = -8 - i * 9;
-          const height = 1.3 + Math.random() * 5.2;
-          const building = box(2 + Math.random() * 2.6, height, 2 + Math.random() * 4, i % 4 === 0 ? hillMat : buildingMat, side * (13 + Math.random() * 16), height / 2 - 0.08, z);
-          building.castShadow = false;
-          scene.add(building);
-          if (i % 3 === 0) {
-            const glow = box(0.7, 0.16, 0.06, windowMat, building.position.x, height * 0.7, z + 1.05);
-            glow.castShadow = false;
-            scene.add(glow);
+        const sunDisc = new THREE.Mesh(
+          new THREE.SphereGeometry(5.4, 32, 16),
+          new THREE.MeshBasicMaterial({ color: 0xffd166 })
+        );
+        sunDisc.position.set(-34, 43, -118);
+        scene.add(sunDisc);
+
+        function track(object) {
+          sceneryBits.push(object);
+          scene.add(object);
+          return object;
+        }
+
+        function makeTree(x, z, scale = 1) {
+          const tree = new THREE.Group();
+          const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.16 * scale, 0.22 * scale, 1.2 * scale, 8), trunkMat);
+          trunk.position.y = 0.55 * scale;
+          trunk.castShadow = true;
+          const crown = new THREE.Mesh(new THREE.ConeGeometry(0.92 * scale, 2.3 * scale, 10), leafMat);
+          crown.position.y = 2 * scale;
+          crown.castShadow = true;
+          tree.add(trunk, crown);
+          tree.position.set(x, -0.08, z);
+          return track(tree);
+        }
+
+        function makeLamp(x, z) {
+          const lamp = new THREE.Group();
+          const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.07, 4.1, 10), railMat);
+          pole.position.y = 1.9;
+          const arm = box(1.05, 0.08, 0.08, railMat, x > 0 ? -0.45 : 0.45, 3.9, 0);
+          const bulb = new THREE.Mesh(new THREE.SphereGeometry(0.18, 16, 10), lampMat);
+          bulb.position.set(x > 0 ? -0.98 : 0.98, 3.83, 0);
+          lamp.add(pole, arm, bulb);
+          lamp.position.set(x, 0, z);
+          return track(lamp);
+        }
+
+        function makeBillboard(x, z, accent) {
+          const board = new THREE.Group();
+          const postA = box(0.12, 2.4, 0.12, railMat, -0.85, 1.1, 0);
+          const postB = box(0.12, 2.4, 0.12, railMat, 0.85, 1.1, 0);
+          const panel = box(2.5, 1.18, 0.16, billboardMat, 0, 2.6, 0);
+          const glow = box(1.82, 0.18, 0.18, accent, 0, 2.64, -0.12);
+          const slash = box(0.24, 0.84, 0.2, billboardGlowMat, -0.72, 2.64, -0.14);
+          slash.rotation.z = -0.45;
+          board.add(postA, postB, panel, glow, slash);
+          board.position.set(x, 0, z);
+          board.rotation.y = x > 0 ? -0.18 : 0.18;
+          return track(board);
+        }
+
+        function makeCloud(x, y, z, scale = 1) {
+          const cloudMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 1, transparent: true, opacity: 0.76 });
+          const cloud = new THREE.Group();
+          for (let i = 0; i < 5; i += 1) {
+            const puff = new THREE.Mesh(new THREE.SphereGeometry((0.75 + Math.random() * 0.45) * scale, 12, 8), cloudMat);
+            puff.position.set((i - 2) * 0.78 * scale, Math.sin(i) * 0.16 * scale, Math.cos(i) * 0.28 * scale);
+            puff.castShadow = false;
+            cloud.add(puff);
           }
+          cloud.position.set(x, y, z);
+          clouds.push(cloud);
+          scene.add(cloud);
+        }
+
+        for (let i = 0; i < 18; i += 1) {
+          const z = -38 - i * 23;
+          const leftHill = new THREE.Mesh(new THREE.ConeGeometry(8 + Math.random() * 5, 6 + Math.random() * 6, 7), i % 2 ? darkHillMat : hillMat);
+          leftHill.position.set(-25 - Math.random() * 14, 2.3, z);
+          leftHill.rotation.y = Math.random() * Math.PI;
+          leftHill.castShadow = false;
+          track(leftHill);
+
+          const rightHill = new THREE.Mesh(new THREE.ConeGeometry(8 + Math.random() * 5, 6 + Math.random() * 6, 7), i % 2 ? hillMat : darkHillMat);
+          rightHill.position.set(25 + Math.random() * 14, 2.3, z - 12);
+          rightHill.rotation.y = Math.random() * Math.PI;
+          rightHill.castShadow = false;
+          track(rightHill);
+        }
+
+        for (let i = 0; i < 58; i += 1) {
+          const side = i % 2 === 0 ? -1 : 1;
+          const z = -10 - i * 7.3;
+          if (i % 4 === 0) {
+            makeLamp(side * 8.6, z);
+          } else if (i % 5 === 0) {
+            makeBillboard(side * (12.8 + Math.random() * 3), z, i % 2 ? reflectorMat : curbMat);
+          } else if (i % 3 === 0) {
+            makeTree(side * (10.5 + Math.random() * 10), z, 0.75 + Math.random() * 0.9);
+          } else {
+            const height = 1.8 + Math.random() * 6.8;
+            const building = box(2 + Math.random() * 2.7, height, 2 + Math.random() * 4.4, i % 4 === 1 ? towerMat : buildingMat, side * (14 + Math.random() * 15), height / 2 - 0.08, z);
+            building.castShadow = false;
+            track(building);
+            if (i % 2 === 0) {
+              const glow = box(0.7 + Math.random() * 0.7, 0.14, 0.08, windowMat, building.position.x, height * 0.68, z + 1.08);
+              glow.castShadow = false;
+              track(glow);
+            }
+          }
+        }
+
+        for (let i = 0; i < 12; i += 1) {
+          makeCloud(-30 + Math.random() * 60, 17 + Math.random() * 12, -24 - i * 34, 1.15 + Math.random() * 1.1);
         }
       }
 
-      const trafficColors = [0xff5c5c, 0xf6c85f, 0x42d392, 0xffffff, 0x8b5cf6, 0xf97316, 0x14b8a6];
+      const trafficColors = [0xff5c5c, 0xf6c85f, 0x42d392, 0xffffff, 0x8b5cf6, 0xf97316, 0x14b8a6, 0xf43f5e, 0x38bdf8];
 
-      function spawnTraffic(zOverride = null) {
-        const lane = laneCenters[state.nextLane % laneCenters.length];
+      function spawnTraffic(zOverride = null, laneOverride = null) {
+        const lane = laneOverride ?? laneCenters[state.nextLane % laneCenters.length];
         state.nextLane = (state.nextLane + 1 + Math.floor(Math.random() * 3)) % laneCenters.length;
         const color = trafficColors[Math.floor(Math.random() * trafficColors.length)];
         const car = makeCar(color, 0x243449);
-        car.position.set(lane + (Math.random() - 0.5) * 0.5, 0.52, zOverride ?? -150 - Math.random() * 28);
+        const isTruck = Math.random() < 0.18;
+        if (isTruck) {
+          car.scale.set(1.12, 1.12, 1.42);
+        }
+        car.position.set(lane + (Math.random() - 0.5) * 0.42, 0.52, zOverride ?? -150 - Math.random() * 28);
         car.rotation.y = Math.PI;
-        car.userData.speed = 8 + Math.random() * 13;
+        car.userData.speed = 5 + Math.random() * 18;
         car.userData.hit = false;
+        car.userData.width = carSize.width * car.scale.x;
+        car.userData.length = carSize.length * car.scale.z;
         traffic.push(car);
         scene.add(car);
+      }
+
+      function spawnTrafficPack(zOverride = null) {
+        if (traffic.length > 42) return;
+        const shuffledLanes = [...laneCenters].sort(() => Math.random() - 0.5);
+        const leaveGap = Math.random() > 0.22;
+        const laneCount = leaveGap ? 2 + Math.floor(Math.random() * 2) : laneCenters.length;
+        for (let i = 0; i < laneCount; i += 1) {
+          const stagger = i * (5.8 + Math.random() * 5.4);
+          spawnTraffic((zOverride ?? -154 - Math.random() * 34) - stagger, shuffledLanes[i]);
+        }
+      }
+
+      function performJump() {
+        if (!state.playing || state.y > 0.001 || state.jumpVelocity !== 0) return;
+        state.jumpVelocity = 11.4;
+        state.y = 0.02;
+        hud.jump.classList.add("is-down");
       }
 
       function updateInput(dt) {
@@ -521,17 +788,13 @@
         state.x += steer * dt * (8.4 + state.speed * 0.12);
         state.x = Math.max(bounds.left, Math.min(bounds.right, state.x));
 
-        if (keys.has("Space") && state.y <= 0.001) {
-          state.jumpVelocity = 9.2;
-          state.y = 0.02;
-        }
-
         if (state.y > 0 || state.jumpVelocity > 0) {
           state.jumpVelocity -= 22 * dt;
           state.y += state.jumpVelocity * dt;
           if (state.y <= 0) {
             state.y = 0;
             state.jumpVelocity = 0;
+            hud.jump.classList.remove("is-down");
           }
         }
       }
@@ -547,11 +810,22 @@
           if (stripe.position.z > 35) stripe.position.z -= 288;
         }
 
+        for (const item of sceneryBits) {
+          item.position.z += scroll * 0.82;
+          if (item.position.z > 46) item.position.z -= 438;
+        }
+
+        for (const cloud of clouds) {
+          cloud.position.z += scroll * 0.22;
+          cloud.position.x += Math.sin(clock.elapsedTime * 0.14 + cloud.position.z) * dt * 0.28;
+          if (cloud.position.z > 36) cloud.position.z -= 424;
+        }
+
         state.spawnTimer -= dt;
         if (state.spawnTimer <= 0) {
-          spawnTraffic();
-          const pressure = Math.min(0.62, state.score / 2400);
-          state.spawnTimer = 0.92 - pressure + Math.random() * 0.42;
+          spawnTrafficPack();
+          const pressure = Math.min(0.34, state.score / 5000);
+          state.spawnTimer = 0.52 - pressure + Math.random() * 0.22;
         }
 
         for (let i = traffic.length - 1; i >= 0; i -= 1) {
@@ -587,7 +861,9 @@
           if (car.userData.hit) continue;
           const dx = Math.abs(car.position.x - player.position.x);
           const dz = Math.abs(car.position.z - player.position.z);
-          if (dx < carSize.width && dz < carSize.length) {
+          const hitWidth = (car.userData.width + carSize.width) * 0.54;
+          const hitLength = (car.userData.length + carSize.length) * 0.5;
+          if (dx < hitWidth && dz < hitLength) {
             car.userData.hit = true;
             state.hitTimer = 1.05;
             state.health = Math.max(0, state.health - 18);
@@ -614,6 +890,7 @@
         hud.health.textContent = `${Math.round(state.health)}%`;
         hud.healthFill.style.transform = `scaleX(${state.health / 100})`;
         hud.state.textContent = state.hitTimer > 0 ? "Impact" : state.y > 0.2 ? "Airborne" : "Engine live";
+        hud.jump.classList.toggle("is-airborne", state.y > 0.08);
       }
 
       function endGame() {
@@ -636,12 +913,12 @@
         state.y = 0;
         state.z = 5;
         state.jumpVelocity = 0;
-        state.spawnTimer = 0.25;
+        state.spawnTimer = 0.18;
         state.hitTimer = 0;
         state.nextLane = Math.floor(Math.random() * laneCenters.length);
         player.visible = true;
         player.position.set(0, 0.52, state.z);
-        [-62, -96, -132].forEach((z) => spawnTraffic(z));
+        [-48, -74, -102, -132, -164, -198, -234].forEach((z) => spawnTrafficPack(z));
         hud.overlay.classList.remove("is-visible");
       }
 
@@ -671,12 +948,17 @@
         return event.code;
       }
 
+      const controlCodes = ["KeyW", "KeyA", "KeyS", "KeyD", "ArrowUp", "ArrowLeft", "ArrowDown", "ArrowRight", "Space"];
+
       window.addEventListener("keydown", (event) => {
         const code = normalizeKey(event);
-        if (["KeyW", "KeyA", "KeyS", "KeyD", "ArrowUp", "ArrowLeft", "ArrowDown", "ArrowRight", "Space"].includes(code)) {
-          event.preventDefault();
-          keys.add(code);
+        if (!controlCodes.includes(code)) return;
+        event.preventDefault();
+        if (code === "Space") {
+          if (!event.repeat) performJump();
+          return;
         }
+        keys.add(code);
       });
 
       window.addEventListener("keyup", (event) => {
@@ -701,6 +983,22 @@
         button.addEventListener("pointerleave", release);
       });
 
+      const liftJumpButton = (event) => {
+        event.preventDefault();
+        hud.jump.classList.remove("is-down");
+      };
+      hud.jump.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        hud.jump.classList.add("is-down");
+        performJump();
+      });
+      hud.jump.addEventListener("pointerup", liftJumpButton);
+      hud.jump.addEventListener("pointercancel", liftJumpButton);
+      hud.jump.addEventListener("pointerleave", liftJumpButton);
+      hud.jump.addEventListener("click", (event) => {
+        event.preventDefault();
+        performJump();
+      });
       hud.restart.addEventListener("click", restart);
       window.addEventListener("resize", onResize);
 
