@@ -12,6 +12,7 @@
 - If the workspace has unrelated local changes, leave them alone.
 - If Dexter says to push, commit and push only the relevant changes.
 - If a push fails, do not stop after saying it was unsuccessful. Keep trying safe approved push paths until it is pushed or there is a true blocker that needs Dexter.
+- When adding a new game, add it to the main arcade/home screen so it is discoverable.
 
 ## Background Agent Jobs
 - Cicero: frontend coding for minigames. Own the player-facing experience when assigned, including layout, buttons, forms, leaderboard display, custom game UI, wording, and daily weather game presentation. Main safe area: `minigames/index.html`. Avoid `server.js` unless specifically assigned.
