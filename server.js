@@ -645,7 +645,7 @@ async function createPotRaceCheckoutSession({ name, amount, charity }) {
   params.append("line_items[0][price_data][product_data][name]", "Pot Race donation");
   params.append(
     "line_items[0][price_data][product_data][description]",
-    "Recognition-only donation leaderboard. No cash prize or payout."
+    "Recognition-only donation leaderboard. Apple Pay and cards supported through Stripe Checkout. No cash prize or payout."
   );
   params.append("metadata[name]", name);
   params.append("metadata[amount]", String(amount));

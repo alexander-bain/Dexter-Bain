@@ -486,7 +486,7 @@
             Charity you would choose if you lead
             <input id="charity" maxlength="60" placeholder="Local food bank, classroom fund..." />
           </label>
-          <button class="primary" type="submit" id="donateButton">Donate with card</button>
+          <button class="primary" type="submit" id="donateButton">Donate with Apple Pay or card</button>
         </div>
         <p class="status-text" id="statusText"></p>
         <p class="small-note">
@@ -614,7 +614,7 @@
         paymentsEnabled = Boolean(config.paymentsEnabled);
         paymentMode.textContent = paymentsEnabled ? "Live donations enabled" : "Payments need setup";
         paymentMode.classList.toggle("is-live", paymentsEnabled);
-        donateButton.textContent = paymentsEnabled ? "Donate with card" : "Stripe setup needed";
+        donateButton.textContent = paymentsEnabled ? "Donate with Apple Pay or card" : "Stripe setup needed";
         donateButton.disabled = false;
         if (!paymentsEnabled) {
           setStatus("Stripe is not configured yet. The leaderboard can still show verified donations once the server keys are added.", true);
@@ -650,7 +650,7 @@
       }
 
       donateButton.disabled = true;
-      setStatus("Starting secure card checkout...");
+      setStatus("Starting secure Apple Pay/card checkout...");
 
       try {
         const response = await fetch(apiUrl("/api/pot-race/checkout"), {
