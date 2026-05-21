@@ -710,8 +710,8 @@
 
       const ROWS = 6;
       const COLS = 5;
-      // Change these when Dexter asks for the next daily word.
-      const DAILY_PUZZLE = { id: "2026-05-20-fresh", word: "FRESH" };
+      const DAILY_WORD_ANCHOR_DATE = "2026-05-20";
+      const DAILY_WORD_ANCHOR = "FRESH";
       const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
       const JOHN_WORDS = ["LUCKY", "BLAZE", "COMET", "RIVER", "SPARK", "GHOST", "CANDY", "BRICK"];
       const RESET_CODE = "CENA";
@@ -740,6 +740,7 @@
       const rank = { absent: 1, present: 2, correct: 3 };
       const keyState = {};
       const confettiColors = ["#6aaa64", "#c9b458", "#787c7e", "#f97316", "#2563eb", "#e11d48"];
+      const DAILY_PUZZLE = getDailyPuzzle();
       let currentPuzzle = DAILY_PUZZLE;
       let answer = currentPuzzle.word;
       let currentRow = 0;
@@ -752,6 +753,44 @@
       let keys = {};
       let stats = loadStats();
       let progress = loadProgress();
+
+      function pacificDateParts(date = new Date()) {
+        const parts = new Intl.DateTimeFormat("en-CA", {
+          timeZone: "America/Los_Angeles",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).formatToParts(date);
+        const lookup = Object.fromEntries(parts.filter((part) => part.type !== "literal").map((part) => [part.type, part.value]));
+        return {
+          year: Number(lookup.year),
+          month: Number(lookup.month),
+          day: Number(lookup.day),
+          id: `${lookup.year}-${lookup.month}-${lookup.day}`,
+        };
+      }
+
+      function daysSincePacificDate(anchorId, currentId) {
+        const anchorDate = new Date(`${anchorId}T12:00:00Z`);
+        const currentDate = new Date(`${currentId}T12:00:00Z`);
+        return Math.round((currentDate - anchorDate) / 86400000);
+      }
+
+      function wrapIndex(index, length) {
+        return ((index % length) + length) % length;
+      }
+
+      function getDailyPuzzle() {
+        const today = pacificDateParts();
+        const anchorIndex = WORDS.indexOf(DAILY_WORD_ANCHOR);
+        const safeAnchorIndex = anchorIndex >= 0 ? anchorIndex : 0;
+        const dayOffset = daysSincePacificDate(DAILY_WORD_ANCHOR_DATE, today.id);
+        const word = WORDS[wrapIndex(safeAnchorIndex + dayOffset, WORDS.length)];
+        return {
+          id: `${today.id}-${word.toLowerCase()}`,
+          word,
+        };
+      }
 
       function buildBoard() {
         board.innerHTML = "";
