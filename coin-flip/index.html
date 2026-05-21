@@ -236,7 +236,7 @@
     }
 
     .stage.is-flipping .camera {
-      animation: cameraDive 5.4s cubic-bezier(0.2, 0.78, 0.18, 1) both;
+      animation: cameraDive 7.2s cubic-bezier(0.2, 0.78, 0.18, 1) both;
     }
 
     .coin-rig {
@@ -259,7 +259,7 @@
     }
 
     .coin.is-flipping {
-      animation: coinFlip 5.4s cubic-bezier(0.18, 0.88, 0.15, 1) both;
+      animation: coinFlip 7.2s linear both;
     }
 
     .coin.is-tails {
@@ -477,7 +477,7 @@
     }
 
     .coin.is-flipping .glint {
-      animation: glintSweep 5.4s ease both;
+      animation: glintSweep 7.2s ease both;
     }
 
     .shadow {
@@ -494,7 +494,7 @@
     }
 
     .stage.is-flipping .shadow {
-      animation: shadowPulse 5.4s ease both;
+      animation: shadowPulse 7.2s ease both;
     }
 
     .trajectory {
@@ -564,21 +564,19 @@
       animation: spark 1.5s ease 1.35s both;
     }
 
-    .phase-strip {
+    .motion-strip {
       position: absolute;
       left: 50%;
       bottom: clamp(18px, 4vw, 42px);
       z-index: 5;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 8px;
       width: min(640px, calc(100vw - 36px));
       transform: translateX(-50%);
     }
 
-    .phase {
-      min-height: 48px;
-      padding: 8px 10px;
+    .motion-readout {
+      min-height: 56px;
+      padding: 10px 12px;
       border-radius: 8px;
       border: 1px solid rgba(255, 255, 255, 0.12);
       color: #dce8f7;
@@ -588,16 +586,33 @@
       backdrop-filter: blur(14px);
     }
 
-    .phase strong {
+    .motion-readout strong {
       display: block;
       color: #fff6bc;
-      font-size: 0.9rem;
+      font-size: 1rem;
       line-height: 1.2;
     }
 
-    .phase.is-active {
-      border-color: rgba(255, 244, 166, 0.66);
-      background: linear-gradient(135deg, rgba(255, 244, 166, 0.17), rgba(64, 214, 255, 0.09)), rgba(6, 8, 13, 0.78);
+    .motion-track {
+      display: block;
+      height: 7px;
+      margin-top: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .motion-track span {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--gold-1), var(--cyan), var(--copper), var(--green));
+      box-shadow: 0 0 18px rgba(255, 244, 166, 0.32);
+    }
+
+    .stage.is-flipping .motion-track span {
+      animation: motionLoad 7.2s linear both;
     }
 
     .flash {
@@ -625,7 +640,7 @@
     }
 
     .stage.is-flipping .impact-ring {
-      animation: impactRing 5.4s ease both;
+      animation: impactRing 7.2s ease both;
     }
 
     .result-beacon {
@@ -676,35 +691,36 @@
     }
 
     .stage.is-flipping .beacon-bar span {
-      animation: beaconLoad 5.4s linear both;
+      animation: beaconLoad 7.2s linear both;
     }
 
     .stage.is-flipping .beacon-value {
-      animation: beaconFlicker 5.4s steps(1, end) both;
+      animation: beaconFlicker 7.2s steps(1, end) both;
     }
 
     .stage.is-flipping .flash {
-      animation: flashPop 5.4s ease both;
+      animation: flashPop 7.2s ease both;
     }
 
     @keyframes cameraDive {
       0% { transform: translate3d(0, 0, 0) scale(1); }
-      18% { transform: translate3d(-6vw, 2vh, 0) scale(1.68); }
-      43% { transform: translate3d(7vw, -4vh, 0) scale(2.24); }
-      64% { transform: translate3d(-3vw, -1vh, 0) scale(1.86); }
+      18% { transform: translate3d(-6vw, 2vh, 0) scale(1.55); }
+      42% { transform: translate3d(7vw, -4vh, 0) scale(2.2); }
+      64% { transform: translate3d(-3vw, -1vh, 0) scale(1.8); }
       84% { transform: translate3d(0, 5vh, 0) scale(1.14); }
       100% { transform: translate3d(0, 0, 0) scale(1); }
     }
 
     @keyframes coinFlip {
       0% { transform: translate3d(0, 0, 0) rotateY(0deg) rotateX(0deg) rotateZ(0deg); }
-      16% { transform: translate3d(-9vw, -16vh, 170px) rotateY(550deg) rotateX(14deg) rotateZ(-8deg); }
-      35% { transform: translate3d(8vw, -22vh, 250px) rotateY(930deg) rotateX(-12deg) rotateZ(12deg); }
-      51% { transform: translate3d(0, -10vh, 165px) rotateY(1260deg) rotateX(6deg) rotateZ(-4deg); }
-      67% { transform: translate3d(3vw, 2vh, 65px) rotateY(1620deg) rotateX(0deg) rotateZ(2deg); }
-      82% { transform: translate3d(0, 15vh, 16px) rotateY(1648deg) rotateX(82deg) rotateZ(-6deg); }
-      91% { transform: translate3d(0, 12vh, 10px) rotateY(1710deg) rotateX(38deg) rotateZ(3deg); }
-      100% { transform: translate3d(0, 10vh, 0) rotateY(var(--final-rotation, 1800deg)) rotateX(0deg) rotateZ(0deg); }
+      14% { transform: translate3d(-8vw, -12vh, 140px) rotateY(504deg) rotateX(12deg) rotateZ(-7deg); }
+      28% { transform: translate3d(5vw, -22vh, 240px) rotateY(1008deg) rotateX(-8deg) rotateZ(9deg); }
+      42% { transform: translate3d(9vw, -18vh, 245px) rotateY(1512deg) rotateX(8deg) rotateZ(-6deg); }
+      56% { transform: translate3d(2vw, -8vh, 165px) rotateY(2016deg) rotateX(-6deg) rotateZ(5deg); }
+      70% { transform: translate3d(-2vw, 4vh, 82px) rotateY(2520deg) rotateX(4deg) rotateZ(-3deg); }
+      84% { transform: translate3d(0, 14vh, 24px) rotateY(3024deg) rotateX(22deg) rotateZ(2deg); }
+      92% { transform: translate3d(0, 11vh, 10px) rotateY(3312deg) rotateX(10deg) rotateZ(-1deg); }
+      100% { transform: translate3d(0, 10vh, 0) rotateY(var(--final-rotation, 3600deg)) rotateX(0deg) rotateZ(0deg); }
     }
 
     @keyframes shadowPulse {
@@ -777,6 +793,11 @@
       100% { width: 100%; }
     }
 
+    @keyframes motionLoad {
+      0% { width: 0; }
+      100% { width: 100%; }
+    }
+
     @keyframes beaconFlicker {
       0% { opacity: 0.72; filter: blur(0.6px); }
       18% { opacity: 1; filter: blur(0); }
@@ -832,11 +853,7 @@
         min-width: 128px;
       }
 
-      .phase-strip {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .phase {
+      .motion-readout {
         min-height: 42px;
       }
     }
@@ -935,11 +952,12 @@
           <span class="beacon-value" id="beaconValue">WAITING</span>
           <span class="beacon-bar"><span></span></span>
         </div>
-        <div class="phase-strip" aria-hidden="true">
-          <span class="phase" data-phase="launch"><strong>Launch</strong>camera dives in</span>
-          <span class="phase" data-phase="heads"><strong>Heads</strong>portrait pass</span>
-          <span class="phase" data-phase="tails"><strong>Tails</strong>eagle pass</span>
-          <span class="phase" data-phase="land"><strong>Land</strong>final reveal</span>
+        <div class="motion-strip" aria-hidden="true">
+          <span class="motion-readout">
+            <strong>Slow motion spin</strong>
+            One continuous toss. Heads and tails pass through the light until the final side settles.
+            <span class="motion-track"><span></span></span>
+          </span>
         </div>
         <div class="flash"></div>
       </section>
@@ -953,17 +971,10 @@
     const resultText = document.querySelector("#resultText");
     const soundButton = document.querySelector("#soundButton");
     const beaconValue = document.querySelector("#beaconValue");
-    const phases = [...document.querySelectorAll(".phase")];
-    const flipLength = 5400;
+    const flipLength = 7200;
     let soundOn = false;
     let audioContext = null;
     let lastResult = "heads";
-
-    function setPhase(name) {
-      phases.forEach((phase) => {
-        phase.classList.toggle("is-active", phase.dataset.phase === name);
-      });
-    }
 
     function tone(frequency, start, duration, gain = 0.05) {
       if (!soundOn || !audioContext) return;
@@ -1000,11 +1011,11 @@
       clearTimers(activeTimers);
       activeTimers = [];
       lastResult = Math.random() > 0.5 ? "heads" : "tails";
-      const finalRotation = lastResult === "heads" ? "1800deg" : "1980deg";
+      const finalRotation = lastResult === "heads" ? "3600deg" : "3780deg";
 
       flipButton.disabled = true;
       flipButton.textContent = "In the air...";
-      resultText.textContent = "Launch: zooming into the gold.";
+      resultText.textContent = "Slow motion spin: the coin keeps rotating.";
       beaconValue.textContent = "SPINNING";
       coin.style.setProperty("--final-rotation", finalRotation);
       coin.classList.remove("is-flipping", "is-heads", "is-tails");
@@ -1012,22 +1023,18 @@
       void coin.offsetWidth;
       coin.classList.add("is-flipping");
       stage.classList.add("is-flipping");
-      setPhase("launch");
       playFlipSound();
 
       activeTimers = [
         window.setTimeout(() => {
-          setPhase("heads");
-          resultText.textContent = "Slow motion: the head catches the light.";
-        }, 850),
+          resultText.textContent = "Still spinning: heads and tails are rolling through the light.";
+        }, 1800),
         window.setTimeout(() => {
-          setPhase("tails");
-          resultText.textContent = "The tails side rolls through the camera.";
-        }, 2300),
+          resultText.textContent = "Slow motion spin: no pause, just the coin in the air.";
+        }, 3600),
         window.setTimeout(() => {
-          setPhase("land");
-          resultText.textContent = "Landing: waiting for the side to settle.";
-        }, 4100),
+          resultText.textContent = "Final turn: the coin is about to settle.";
+        }, 5600),
         window.setTimeout(() => {
           coin.classList.remove("is-flipping");
           coin.classList.add(lastResult === "heads" ? "is-heads" : "is-tails");
@@ -1055,7 +1062,6 @@
       }
     });
 
-    setPhase("launch");
   </script>
 </body>
 </html>
