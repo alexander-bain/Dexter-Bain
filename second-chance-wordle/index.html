@@ -732,8 +732,8 @@
 
       const ROWS = 6;
       const COLS = 5;
-      const DAILY_WORD_ANCHOR_DATE = "2026-05-20";
-      const DAILY_WORD_ANCHOR = "FRESH";
+      const DAILY_WORD_ANCHOR_DATE = "2026-05-22";
+      const DAILY_WORD_ANCHOR = "TRICK";
       const DAILY_WORD_STEP = 137;
       const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
       const JOHN_WORDS = [
@@ -756,6 +756,7 @@
       const STATS_KEY = "second-chance-wordle-stats-v2";
       const LEGACY_STATS_KEY = "second-chance-wordle-stats-v1";
       const PROGRESS_KEY = "second-chance-wordle-progress-v1";
+      const ACTIVE_PUZZLE_KEY = "second-chance-wordle-active-puzzle-v1";
       const DICTIONARY_DATA = window.SECOND_CHANCE_DICTIONARIES || { guesses: [], fourLetterBases: [] };
       const DAILY_ANSWER_WORDS = [...WORDS, ...DAILY_EXTRA_WORDS];
       const WORD_LIST = new Set([...DAILY_ANSWER_WORDS, ...JOHN_WORDS, ...EXTRA_GUESSES, ...DICTIONARY_DATA.guesses]);
@@ -1005,6 +1006,27 @@
         return johnPuzzleAt(Number.isFinite(suffix) ? suffix : 0);
       }
 
+      function loadActivePuzzle() {
+        try {
+          const savedPuzzleId = localStorage.getItem(ACTIVE_PUZZLE_KEY);
+          return getPuzzleById(savedPuzzleId) || DAILY_PUZZLE;
+        } catch {
+          return DAILY_PUZZLE;
+        }
+      }
+
+      function saveActivePuzzle(puzzle = currentPuzzle) {
+        try {
+          if (isJohnPuzzleId(puzzle?.id)) {
+            localStorage.setItem(ACTIVE_PUZZLE_KEY, puzzle.id);
+            return;
+          }
+          localStorage.removeItem(ACTIVE_PUZZLE_KEY);
+        } catch {
+          // Active puzzle persistence is optional when storage is blocked.
+        }
+      }
+
       function nextJohnPuzzle() {
         const currentIndex = isJohnPuzzleId(currentPuzzle.id) ? currentPuzzle.johnIndex || 0 : -1;
         return johnPuzzleAt(currentIndex + 1);
@@ -1045,11 +1067,17 @@
 
       function loadProgress() {
         try {
+          const activePuzzle = loadActivePuzzle();
           const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "null");
           const savedPuzzle = getPuzzleById(saved?.puzzleId);
+          const activeJohnPuzzle = isJohnPuzzleId(activePuzzle?.id) ? activePuzzle : null;
           const restoreCurrentDaily = saved?.puzzleId === DAILY_PUZZLE.id && saved?.word === DAILY_PUZZLE.word;
           const restoreCurrentJohn = isJohnPuzzleId(saved?.puzzleId) && savedPuzzle && saved?.word === savedPuzzle.word;
-          if (!restoreCurrentDaily && !restoreCurrentJohn) return freshProgress(DAILY_PUZZLE);
+          if (!restoreCurrentDaily && !restoreCurrentJohn) {
+            currentPuzzle = activeJohnPuzzle || DAILY_PUZZLE;
+            answer = currentPuzzle.word;
+            return freshProgress(currentPuzzle);
+          }
           currentPuzzle = savedPuzzle;
           answer = currentPuzzle.word;
           const guesses = (saved.guesses || []).filter((guess) => /^[A-Z]{5}$/.test(guess)).slice(0, ROWS);
@@ -1106,6 +1134,7 @@
         answer = currentPuzzle.word;
         progress = freshProgress(currentPuzzle);
         if (clearRecordedResult) removeCurrentResultFromStats();
+        saveActivePuzzle(currentPuzzle);
         saveProgress();
         Object.keys(keyState).forEach((letter) => delete keyState[letter]);
         currentRow = 0;
@@ -1353,9 +1382,10 @@
 
       function startGame() {
         Object.keys(keyState).forEach((letter) => delete keyState[letter]);
-        currentPuzzle = DAILY_PUZZLE;
+        currentPuzzle = loadActivePuzzle();
         answer = currentPuzzle.word;
         progress = loadProgress();
+        saveActivePuzzle(currentPuzzle);
         saveProgress();
         currentRow = 0;
         currentGuess = "";
