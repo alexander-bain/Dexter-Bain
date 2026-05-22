@@ -560,6 +560,8 @@
         y: 0,
         z: 5,
         steerAngle: 0,
+        headingOffset: 0,
+        driveFactor: 1,
         jumpVelocity: 0,
         spawnTimer: 0,
         policeTimer: 0,
@@ -1052,8 +1054,13 @@
 
         state.speed += (targetSpeed - state.speed) * Math.min(1, dt * 2.4);
         state.steerAngle += (steer * 0.72 - state.steerAngle) * Math.min(1, dt * 7.5);
-        state.x += Math.sin(state.steerAngle) * dt * (state.speed * 0.54);
-        state.x += steer * dt * 1.25;
+        state.headingOffset += steer * dt * (1.65 + state.speed * 0.024);
+        if (steer === 0) {
+          state.headingOffset += (0 - state.headingOffset) * Math.min(1, dt * 0.85);
+        }
+        state.headingOffset = THREE.MathUtils.clamp(state.headingOffset, -Math.PI * 0.98, Math.PI * 0.98);
+        state.driveFactor = Math.cos(state.headingOffset);
+        state.x += Math.sin(state.headingOffset) * dt * (state.speed * 0.44);
         state.x = Math.max(bounds.left, Math.min(bounds.right, state.x));
 
         if (state.y > 0 || state.jumpVelocity > 0) {
@@ -1068,7 +1075,7 @@
       }
 
       function updateWorld(dt) {
-        const scroll = state.speed * dt;
+        const scroll = state.speed * state.driveFactor * dt;
         for (const item of roadBits) {
           advanceRouteObject(item, scroll, 35, roadLoopLength);
         }
@@ -1095,10 +1102,10 @@
 
         for (let i = traffic.length - 1; i >= 0; i -= 1) {
           const car = traffic[i];
-          car.userData.roadZ += Math.max(12, state.speed - car.userData.speed) * dt;
+          car.userData.roadZ += (state.speed * state.driveFactor - car.userData.speed) * dt;
           placeRoadActor(car);
           car.userData.wheels.forEach((wheel) => {
-            wheel.rotation.x -= dt * state.speed * 1.25;
+            wheel.rotation.x -= dt * Math.abs(state.speed * state.driveFactor) * 1.25;
           });
           if (car.userData.roadZ > 24) {
             scene.remove(car);
@@ -1170,7 +1177,7 @@
               : state.speed + 2.8 + state.wanted * 0.65 + car.userData.speedBias;
           const accel = car.userData.mode === "attack" ? 2.6 : car.userData.mode === "recover" ? 3.2 : 1.5;
           car.userData.speed += (targetSpeed - car.userData.speed) * Math.min(1, dt * accel);
-          car.userData.roadZ += (state.speed - car.userData.speed) * dt;
+          car.userData.roadZ += (state.speed * state.driveFactor - car.userData.speed) * dt;
 
           const targetDeltaX = car.userData.targetRoadX - car.userData.roadX;
           const lateralAccel = car.userData.mode === "attack" ? 18 : car.userData.mode === "recover" ? 10 : 14;
@@ -1198,14 +1205,14 @@
         player.position.x += (targetX - player.position.x) * Math.min(1, dt * 12);
         player.position.z += (targetZ - player.position.z) * Math.min(1, dt * 12);
         player.position.y = 0.52 + state.y;
-        const targetHeading = pose.heading - state.steerAngle * 0.92;
+        const targetHeading = pose.heading + state.headingOffset;
         player.rotation.y = player.rotation.y + Math.atan2(
           Math.sin(targetHeading - player.rotation.y),
           Math.cos(targetHeading - player.rotation.y)
-        ) * Math.min(1, dt * 7);
-        player.rotation.z = THREE.MathUtils.lerp(player.rotation.z, -state.steerAngle * 0.28, dt * 7);
+        ) * Math.min(1, dt * 9.5);
+        player.rotation.z = THREE.MathUtils.lerp(player.rotation.z, -state.steerAngle * 0.22, dt * 8);
         player.userData.wheels.forEach((wheel) => {
-          wheel.rotation.x -= dt * state.speed * 1.7;
+          wheel.rotation.x -= dt * Math.abs(state.speed * state.driveFactor) * 1.7;
         });
 
         state.hitTimer = Math.max(0, state.hitTimer - dt);
@@ -1258,13 +1265,13 @@
       }
 
       function updateCamera(dt) {
-        const pose = roadPose(state.z);
+        const heading = player.rotation.y;
         const rearDistance = state.wanted > 0 ? 30 : 24;
-        const behindX = -Math.sin(pose.heading) * rearDistance;
-        const behindZ = -Math.cos(pose.heading) * rearDistance;
-        const lookX = player.position.x + Math.sin(pose.heading) * 15;
-        const lookZ = player.position.z + Math.cos(pose.heading) * 16;
-        const targetX = player.position.x * 0.18 + behindX - state.steerAngle * 1.2;
+        const behindX = Math.sin(heading) * rearDistance;
+        const behindZ = Math.cos(heading) * rearDistance;
+        const lookX = player.position.x - Math.sin(heading) * 15;
+        const lookZ = player.position.z - Math.cos(heading) * 16;
+        const targetX = player.position.x * 0.18 + behindX + state.steerAngle * 1.2;
         camera.position.x += (targetX - camera.position.x) * Math.min(1, dt * 4.2);
         camera.position.y += (6.6 + state.y * 0.24 + state.wanted * 0.18 - camera.position.y) * Math.min(1, dt * 4.0);
         camera.position.z += (player.position.z + behindZ - camera.position.z) * Math.min(1, dt * 4.0);
@@ -1312,6 +1319,8 @@
         state.y = 0;
         state.z = 0;
         state.steerAngle = 0;
+        state.headingOffset = 0;
+        state.driveFactor = 1;
         state.jumpVelocity = 0;
         state.spawnTimer = 1.05;
         state.policeTimer = 0;
