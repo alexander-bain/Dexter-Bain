@@ -400,8 +400,8 @@
 
     <div class="touch-controls" aria-hidden="true">
       <div class="touch-pad">
-        <button class="touch-key" data-key="ArrowLeft" type="button" aria-label="Left">‹</button>
-        <button class="touch-key" data-key="ArrowRight" type="button" aria-label="Right">›</button>
+        <button class="touch-key" data-key="ArrowRight" type="button" aria-label="Left">‹</button>
+        <button class="touch-key" data-key="ArrowLeft" type="button" aria-label="Right">›</button>
       </div>
       <div class="touch-pad">
         <button class="touch-key" data-key="ArrowDown" type="button" aria-label="Brake">↓</button>
@@ -1043,8 +1043,8 @@
       }
 
       function updateInput(dt) {
-        const left = keys.has("KeyA") || keys.has("ArrowLeft");
-        const right = keys.has("KeyD") || keys.has("ArrowRight");
+        const left = keys.has("KeyD") || keys.has("ArrowRight");
+        const right = keys.has("KeyA") || keys.has("ArrowLeft");
         const gas = keys.has("KeyW") || keys.has("ArrowUp");
         const brake = keys.has("KeyS") || keys.has("ArrowDown");
         const steer = (right ? 1 : 0) - (left ? 1 : 0);
@@ -1401,11 +1401,11 @@
           } else if (code === "KeyS" || code === "ArrowDown") {
             state.speed = Math.max(18, state.speed - 6);
           } else if (code === "KeyA" || code === "ArrowLeft") {
-            state.x = Math.max(bounds.left, state.x - 0.9);
-            state.steerAngle = Math.max(-0.72, state.steerAngle - 0.18);
-          } else if (code === "KeyD" || code === "ArrowRight") {
             state.x = Math.min(bounds.right, state.x + 0.9);
             state.steerAngle = Math.min(0.72, state.steerAngle + 0.18);
+          } else if (code === "KeyD" || code === "ArrowRight") {
+            state.x = Math.max(bounds.left, state.x - 0.9);
+            state.steerAngle = Math.max(-0.72, state.steerAngle - 0.18);
           }
         }
         keys.add(code);
