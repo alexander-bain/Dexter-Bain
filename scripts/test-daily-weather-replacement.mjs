@@ -76,9 +76,13 @@ for (const questionId of [
   "local-headline",
   "rain-by-3pm",
   "sky-still-sunny",
+  "wind-by-5pm",
   "weather-headline",
+  "sports-headline",
   "music-four",
+  "music-five",
   "sports-six",
+  "sports-seven",
   "cool-tonight",
 ]) {
   if (!block.includes(`"20260513-${questionId}"`)) {
@@ -89,8 +93,8 @@ for (const questionId of [
 const autoScoredQuestions = [
   ...block.matchAll(/autoSource: "https:\/\/forecast\.weather\.gov\/MapClick\.php\?lat=37\.453&lon=-122\.182"/g)
 ].length;
-if (autoScoredQuestions !== 4) {
-  throw new Error(`Expected 4 auto-scored weather questions, found ${autoScoredQuestions}.`);
+if (autoScoredQuestions !== 5) {
+  throw new Error(`Expected 5 auto-scored weather questions, found ${autoScoredQuestions}.`);
 }
 
 for (const hour of [
@@ -100,12 +104,27 @@ for (const hour of [
   "T21:00:00.000Z",
   "T22:00:00.000Z",
   "T23:00:00.000Z",
+  "T00:00:00.000Z",
   "T01:00:00.000Z",
+  "T02:00:00.000Z",
   "T03:00:00.000Z",
 ]) {
   if (!block.includes(hour)) {
     throw new Error(`Generated weather game is missing lock time ${hour}.`);
   }
+}
+
+fs.copyFileSync(sourceHtml, testHtml);
+runGenerator("2026-05-17");
+const weekendHtml = fs.readFileSync(testHtml, "utf8");
+const weekendBlock = generatedWeatherBlock(weekendHtml);
+
+if (weekendBlock.includes('"20260517-market-lunch"')) {
+  throw new Error("Weekend weather game should not include the stock market question.");
+}
+
+if (weekendBlock.includes('answer("Stocks"')) {
+  throw new Error("Weekend weather game should not include Stocks as a local-news answer.");
 }
 
 console.log("Daily weather replacement test passed.");
