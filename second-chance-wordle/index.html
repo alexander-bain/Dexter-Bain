@@ -1157,6 +1157,13 @@
         beginPuzzle(nextJohnPuzzle(), "New word", false);
       }
 
+      function syncDailyPuzzle(forceToast = false) {
+        const latestDailyPuzzle = getDailyPuzzle();
+        const onCustomPuzzle = isJohnPuzzleId(currentPuzzle?.id);
+        if (onCustomPuzzle || currentPuzzle?.id === latestDailyPuzzle.id) return;
+        beginPuzzle(latestDailyPuzzle, forceToast ? "New daily word" : "Fresh start", false);
+      }
+
       function updateStatsPanel() {
         const winRate = stats.played ? Math.round((stats.wins / stats.played) * 100) : 0;
         const maxCount = Math.max(1, ...stats.distribution);
@@ -1385,6 +1392,7 @@
         currentPuzzle = loadActivePuzzle();
         answer = currentPuzzle.word;
         progress = loadProgress();
+        syncDailyPuzzle(false);
         saveActivePuzzle(currentPuzzle);
         saveProgress();
         currentRow = 0;
@@ -1415,6 +1423,13 @@
         if (event.key === "Backspace") press("<");
         if (event.key === "Enter") press("ENTER");
       });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") syncDailyPuzzle(true);
+      });
+
+      window.addEventListener("focus", () => syncDailyPuzzle(true));
+      window.addEventListener("pageshow", () => syncDailyPuzzle(true));
 
       startGame();
     })();
