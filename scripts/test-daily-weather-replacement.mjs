@@ -19,6 +19,7 @@ function runGenerator(date) {
         ...process.env,
         MINIGAMES_HTML_PATH: testHtml,
         MINIGAMES_WEATHER_OFFLINE: "1",
+        MINIGAMES_ALLOW_NON_MAIN: "1",
       },
       encoding: "utf8",
     }
