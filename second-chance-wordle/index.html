@@ -791,6 +791,10 @@
       let stats = loadStats();
       let progress = loadProgress();
 
+      function todayKey() {
+        return pacificDateParts().id;
+      }
+
       function pacificDateParts(date = new Date()) {
         const parts = new Intl.DateTimeFormat("en-CA", {
           timeZone: "America/Los_Angeles",
@@ -1008,8 +1012,9 @@
 
       function loadActivePuzzle() {
         try {
-          const savedPuzzleId = localStorage.getItem(ACTIVE_PUZZLE_KEY);
-          return getPuzzleById(savedPuzzleId) || DAILY_PUZZLE;
+          const saved = JSON.parse(localStorage.getItem(ACTIVE_PUZZLE_KEY) || "null");
+          if (saved?.dayKey !== todayKey()) return DAILY_PUZZLE;
+          return getPuzzleById(saved?.puzzleId) || DAILY_PUZZLE;
         } catch {
           return DAILY_PUZZLE;
         }
@@ -1018,7 +1023,10 @@
       function saveActivePuzzle(puzzle = currentPuzzle) {
         try {
           if (isJohnPuzzleId(puzzle?.id)) {
-            localStorage.setItem(ACTIVE_PUZZLE_KEY, puzzle.id);
+            localStorage.setItem(ACTIVE_PUZZLE_KEY, JSON.stringify({
+              dayKey: todayKey(),
+              puzzleId: puzzle.id,
+            }));
             return;
           }
           localStorage.removeItem(ACTIVE_PUZZLE_KEY);
@@ -1057,6 +1065,7 @@
 
       function freshProgress(puzzle = currentPuzzle) {
         return {
+          dayKey: todayKey(),
           puzzleId: puzzle.id,
           word: puzzle.word,
           guesses: [],
@@ -1070,11 +1079,13 @@
           const activePuzzle = loadActivePuzzle();
           const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "null");
           const savedPuzzle = getPuzzleById(saved?.puzzleId);
-          const activeJohnPuzzle = isJohnPuzzleId(activePuzzle?.id) ? activePuzzle : null;
-          const restoreCurrentDaily = saved?.puzzleId === DAILY_PUZZLE.id && saved?.word === DAILY_PUZZLE.word;
-          const restoreCurrentJohn = isJohnPuzzleId(saved?.puzzleId) && savedPuzzle && saved?.word === savedPuzzle.word;
+          const savedDayKey = typeof saved?.dayKey === "string" ? saved.dayKey : "";
+          const sameDay = savedDayKey === todayKey();
+          const restoreLegacyDaily = !savedDayKey && saved?.puzzleId === DAILY_PUZZLE.id && saved?.word === DAILY_PUZZLE.word;
+          const restoreCurrentDaily = saved?.puzzleId === DAILY_PUZZLE.id && saved?.word === DAILY_PUZZLE.word && (sameDay || restoreLegacyDaily);
+          const restoreCurrentJohn = isJohnPuzzleId(saved?.puzzleId) && savedPuzzle && saved?.word === savedPuzzle.word && sameDay;
           if (!restoreCurrentDaily && !restoreCurrentJohn) {
-            currentPuzzle = activeJohnPuzzle || DAILY_PUZZLE;
+            currentPuzzle = activePuzzle;
             answer = currentPuzzle.word;
             return freshProgress(currentPuzzle);
           }
@@ -1085,6 +1096,7 @@
           const won = lastGuess === currentPuzzle.word;
           const doneGame = Boolean(saved.done || won || guesses.length >= ROWS);
           return {
+            dayKey: sameDay ? savedDayKey : todayKey(),
             puzzleId: currentPuzzle.id,
             word: currentPuzzle.word,
             guesses,
