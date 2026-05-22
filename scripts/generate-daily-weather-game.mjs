@@ -248,9 +248,11 @@ function dayWatchEvent(date, forecast) {
   const likelySportsLive = daySeed % 4 !== 0;
   const likelyWeatherLead = sky === "rain-likely" || (sky === "mostly-cloudy" && !likelyMarketUp);
   const likelySportsLead = likelySportsLive && daySeed % 5 !== 0;
+  const localBusinessLabel = weekend ? "Community" : "Stocks";
+  const localBusinessId = weekend ? "community" : "stocks";
   const localHeadlineOdds = {
     weather: [sky === "rain-likely" ? 36 : 28, "Weather"],
-    stocks: [likelyMarketUp ? 30 : 24, "Stocks"],
+    business: [weekend ? 24 : (likelyMarketUp ? 30 : 24), localBusinessLabel],
     sports: [likelySportsLive ? 24 : 18, "Sports"],
     traffic: [18, "Traffic"]
   };
@@ -320,7 +322,7 @@ function dayWatchEvent(date, forecast) {
       lockAt: locks.localHeadline,
       answers: [
         { label: localHeadlineOdds.weather[1], odds: localHeadlineOdds.weather[0], id: "weather" },
-        { label: localHeadlineOdds.stocks[1], odds: localHeadlineOdds.stocks[0], id: "stocks" },
+        { label: localHeadlineOdds.business[1], odds: localHeadlineOdds.business[0], id: localBusinessId },
         { label: localHeadlineOdds.sports[1], odds: localHeadlineOdds.sports[0], id: "sports" },
         { label: localHeadlineOdds.traffic[1], odds: localHeadlineOdds.traffic[0], id: "traffic" }
       ]
