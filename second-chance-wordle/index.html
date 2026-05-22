@@ -732,8 +732,8 @@
 
       const ROWS = 6;
       const COLS = 5;
-      const DAILY_WORD_ANCHOR_DATE = "2026-05-21";
-      const DAILY_WORD_ANCHOR = "CANDY";
+      const DAILY_WORD_ANCHOR_DATE = "2026-05-20";
+      const DAILY_WORD_ANCHOR = "FRESH";
       const DAILY_WORD_STEP = 137;
       const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
       const JOHN_WORDS = [
@@ -1043,24 +1043,13 @@
         };
       }
 
-      function replaceWithCurrentDailyProgress() {
-        const nextProgress = freshProgress(DAILY_PUZZLE);
-        currentPuzzle = DAILY_PUZZLE;
-        answer = DAILY_PUZZLE.word;
-        try {
-          localStorage.setItem(PROGRESS_KEY, JSON.stringify(nextProgress));
-        } catch {
-          // If storage is blocked, still return the fresh in-memory puzzle.
-        }
-        return nextProgress;
-      }
       function loadProgress() {
         try {
           const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "null");
           const savedPuzzle = getPuzzleById(saved?.puzzleId);
           const restoreCurrentDaily = saved?.puzzleId === DAILY_PUZZLE.id && saved?.word === DAILY_PUZZLE.word;
           const restoreCurrentJohn = isJohnPuzzleId(saved?.puzzleId) && savedPuzzle && saved?.word === savedPuzzle.word;
-          if (!restoreCurrentDaily && !restoreCurrentJohn) return replaceWithCurrentDailyProgress();
+          if (!restoreCurrentDaily && !restoreCurrentJohn) return freshProgress(DAILY_PUZZLE);
           currentPuzzle = savedPuzzle;
           answer = currentPuzzle.word;
           const guesses = (saved.guesses || []).filter((guess) => /^[A-Z]{5}$/.test(guess)).slice(0, ROWS);
@@ -1075,7 +1064,7 @@
             won: doneGame ? Boolean(saved.won || won) : false,
           };
         } catch {
-          return replaceWithCurrentDailyProgress();
+          return freshProgress(DAILY_PUZZLE);
         }
       }
 
