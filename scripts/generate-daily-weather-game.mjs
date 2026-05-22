@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -55,6 +56,41 @@ function jsString(value) {
 
 function chance(highConfidence, lowConfidence, isLikely) {
   return isLikely ? highConfidence : lowConfidence;
+}
+
+function assertSafePublishBranch() {
+  if (process.env.MINIGAMES_ALLOW_NON_MAIN === "1") {
+    return;
+  }
+
+  let branch = "unknown";
+  let head = "unknown";
+  let originMain = null;
+
+  try {
+    branch = execSync("git rev-parse --abbrev-ref HEAD", {
+      cwd: repoRoot,
+      stdio: ["ignore", "pipe", "ignore"],
+    }).toString("utf8").trim();
+    head = execSync("git rev-parse HEAD", {
+      cwd: repoRoot,
+      stdio: ["ignore", "pipe", "ignore"],
+    }).toString("utf8").trim();
+    originMain = execSync("git rev-parse origin/main", {
+      cwd: repoRoot,
+      stdio: ["ignore", "pipe", "ignore"],
+    }).toString("utf8").trim();
+  } catch {
+    throw new Error("Could not verify the current Git branch for daily weather publishing.");
+  }
+
+  const isMainBranch = branch === "main";
+  const isMainDetachedHead = branch === "HEAD" && head === originMain;
+  if (!isMainBranch && !isMainDetachedHead) {
+    throw new Error(
+      `Refusing to generate the daily weather game from ${branch}. Run it on main, or set MINIGAMES_ALLOW_NON_MAIN=1 for local test runs.`
+    );
+  }
 }
 
 async function fetchJson(url) {
@@ -419,6 +455,7 @@ ${endMarker}${html.slice(end + endMarker.length)}`;
 }
 
 const date = targetDate();
+assertSafePublishBranch();
 const forecast = await loadForecast(date);
 const html = fs.readFileSync(minigamesPath, "utf8");
 const updated = replaceGeneratedBlock(html, dayWatchEvent(date, forecast));

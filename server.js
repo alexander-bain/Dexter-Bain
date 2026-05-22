@@ -13,11 +13,17 @@ import path from "node:path";
 const app = express();
 app.set("trust proxy", 1);
 app.use(cors());
+app.post(
+  "/api/pot-race/webhook",
+  bodyParser.raw({ type: "application/json" }),
+  handlePotRaceWebhook
+);
 app.use(bodyParser.json());
 app.use((req, res, next) => {
   if (
     req.path.startsWith("/api/minigames") ||
-    req.path.startsWith("/api/notifications")
+    req.path.startsWith("/api/notifications") ||
+    req.path.startsWith("/api/pot-race")
   ) {
     res.set("Cache-Control", "no-store");
   }
@@ -61,6 +67,16 @@ let vapidKeysPromise = null;
 const resultCheckCooldowns = new Map();
 const resultCheckCooldownMs = Number(process.env.MINIGAMES_RESULT_CHECK_COOLDOWN_MS) || 60000;
 const maxAutoResultQuestions = 24;
+const potRaceDataFile =
+  process.env.POT_RACE_DATA_FILE ||
+  path.join(process.cwd(), "pot-race-data.json");
+const potRaceDonationTarget =
+  cleanText(process.env.POT_RACE_DONATION_TARGET, 80) || "the top donor's chosen charity";
+const potRaceStripeSecretKey = process.env.STRIPE_SECRET_KEY || "";
+const potRaceStripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
+const potRacePublicUrl =
+  (process.env.POT_RACE_PUBLIC_URL || process.env.PUBLIC_URL || "").replace(/\/+$/, "");
+let potRaceWriteQueue = Promise.resolve();
 
 // IMPORTANT: set this in your environment on Render, don't hardcode it in code
 const openai = new OpenAI({
@@ -448,6 +464,243 @@ async function updateMinigamesData(mutator) {
 
   minigamesWriteQueue = run.catch(() => {});
   return run;
+}
+
+function potRaceInitialData() {
+  return { donations: [], processedPayments: {} };
+}
+
+function normalizePotRaceData(data) {
+  const normalized = data && typeof data === "object" && !Array.isArray(data)
+    ? data
+    : potRaceInitialData();
+
+  normalized.donations = Array.isArray(normalized.donations)
+    ? normalized.donations
+        .map((donation) => ({
+          id: cleanText(donation?.id, 120),
+          name: cleanText(donation?.name, 36),
+          amount: Math.max(0, Math.round(Number(donation?.amount) || 0)),
+          charity: cleanText(donation?.charity, 60),
+          paidAt: donation?.paidAt || null,
+        }))
+        .filter((donation) => donation.id && donation.name && donation.amount > 0)
+    : [];
+  normalized.processedPayments =
+    normalized.processedPayments &&
+    typeof normalized.processedPayments === "object" &&
+    !Array.isArray(normalized.processedPayments)
+      ? normalized.processedPayments
+      : {};
+
+  return normalized;
+}
+
+async function readPotRaceData() {
+  if (databaseUrl) {
+    return normalizePotRaceData(
+      await readDatabaseJson("pot-race", potRaceInitialData())
+    );
+  }
+
+  try {
+    const raw = await fs.readFile(potRaceDataFile, "utf8");
+    return normalizePotRaceData(JSON.parse(raw));
+  } catch (err) {
+    if (err.code === "ENOENT") {
+      return potRaceInitialData();
+    }
+    throw err;
+  }
+}
+
+async function writePotRaceData(data) {
+  if (databaseUrl) {
+    await writeDatabaseJson("pot-race", data);
+    return;
+  }
+
+  await fs.mkdir(path.dirname(potRaceDataFile), { recursive: true });
+  const tempFile = `${potRaceDataFile}.${process.pid}.${Date.now()}.tmp`;
+  await fs.writeFile(tempFile, JSON.stringify(data, null, 2), "utf8");
+  await fs.rename(tempFile, potRaceDataFile);
+}
+
+async function updatePotRaceData(mutator) {
+  const run = potRaceWriteQueue.then(async () => {
+    const data = await readPotRaceData();
+    const result = await mutator(data);
+    await writePotRaceData(data);
+    return result;
+  });
+
+  potRaceWriteQueue = run.catch(() => {});
+  return run;
+}
+
+function potRaceLeaderboard(data) {
+  const byName = new Map();
+
+  for (const donation of data.donations || []) {
+    const key = donation.name.toLowerCase();
+    const existing = byName.get(key) || {
+      name: donation.name,
+      total: 0,
+      charity: donation.charity,
+      lastPaidAt: donation.paidAt,
+    };
+
+    existing.total += donation.amount;
+    if (donation.charity) {
+      existing.charity = donation.charity;
+    }
+    if (!existing.lastPaidAt || donation.paidAt > existing.lastPaidAt) {
+      existing.lastPaidAt = donation.paidAt;
+    }
+    byName.set(key, existing);
+  }
+
+  const players = [...byName.values()]
+    .sort((a, b) => b.total - a.total || a.name.localeCompare(b.name));
+  const total = players.reduce((sum, player) => sum + player.total, 0);
+
+  return {
+    total,
+    target: potRaceDonationTarget,
+    leader: players[0] || null,
+    players,
+  };
+}
+
+async function recordPotRaceDonation({ paymentId, name, amount, charity, paidAt }) {
+  if (!paymentId || !name || amount < 1) {
+    return null;
+  }
+
+  return updatePotRaceData((data) => {
+    data.processedPayments ||= {};
+    if (data.processedPayments[paymentId]) {
+      return potRaceLeaderboard(data);
+    }
+
+    data.processedPayments[paymentId] = true;
+    data.donations ||= [];
+    data.donations.push({
+      id: paymentId,
+      name,
+      amount,
+      charity,
+      paidAt: paidAt || new Date().toISOString(),
+    });
+
+    return potRaceLeaderboard(data);
+  });
+}
+
+function stripeWebhookEvent(rawBody, signatureHeader) {
+  if (!potRaceStripeWebhookSecret || !signatureHeader) {
+    throw new Error("Missing Stripe webhook signature");
+  }
+
+  const parts = Object.fromEntries(
+    signatureHeader.split(",").map((part) => {
+      const [key, value] = part.split("=");
+      return [key, value];
+    })
+  );
+  const timestamp = parts.t;
+  const signature = parts.v1;
+
+  if (!timestamp || !signature) {
+    throw new Error("Invalid Stripe webhook signature");
+  }
+
+  const signedPayload = `${timestamp}.${rawBody.toString("utf8")}`;
+  const expected = crypto
+    .createHmac("sha256", potRaceStripeWebhookSecret)
+    .update(signedPayload)
+    .digest("hex");
+  const expectedBuffer = Buffer.from(expected, "hex");
+  const signatureBuffer = Buffer.from(signature, "hex");
+
+  if (
+    expectedBuffer.length !== signatureBuffer.length ||
+    !crypto.timingSafeEqual(expectedBuffer, signatureBuffer)
+  ) {
+    throw new Error("Invalid Stripe webhook signature");
+  }
+
+  return JSON.parse(rawBody.toString("utf8"));
+}
+
+async function createPotRaceCheckoutSession({ name, amount, charity }) {
+  const params = new URLSearchParams();
+  params.append("mode", "payment");
+  params.append("success_url", `${potRacePublicUrl}/pot-race/?paid=success`);
+  params.append("cancel_url", `${potRacePublicUrl}/pot-race/?paid=cancelled`);
+  params.append("submit_type", "donate");
+  params.append("line_items[0][quantity]", "1");
+  params.append("line_items[0][price_data][currency]", "usd");
+  params.append("line_items[0][price_data][unit_amount]", String(amount * 100));
+  params.append("line_items[0][price_data][product_data][name]", "Pot Race donation");
+  params.append(
+    "line_items[0][price_data][product_data][description]",
+    "Recognition-only donation leaderboard. No cash prize or payout."
+  );
+  params.append("metadata[name]", name);
+  params.append("metadata[amount]", String(amount));
+  params.append("metadata[charity]", charity);
+  params.append("payment_intent_data[metadata][name]", name);
+  params.append("payment_intent_data[metadata][amount]", String(amount));
+  params.append("payment_intent_data[metadata][charity]", charity);
+  params.append("payment_intent_data[metadata][game]", "pot-race");
+
+  const response = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${potRaceStripeSecretKey}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: params,
+  });
+  const payload = await response.json();
+
+  if (!response.ok) {
+    throw new Error(payload?.error?.message || "Stripe checkout failed");
+  }
+
+  return payload;
+}
+
+async function handlePotRaceWebhook(req, res) {
+  if (!potRaceStripeSecretKey || !potRaceStripeWebhookSecret) {
+    res.status(503).json({ error: "Stripe webhook is not configured" });
+    return;
+  }
+
+  let event;
+  try {
+    event = stripeWebhookEvent(req.body, req.get("stripe-signature"));
+  } catch (err) {
+    res.status(400).send(`Webhook Error: ${err.message}`);
+    return;
+  }
+
+  if (event.type === "checkout.session.completed") {
+    const session = event.data.object;
+    if (session.payment_status === "paid") {
+      const metadata = session.metadata || {};
+      await recordPotRaceDonation({
+        paymentId: session.payment_intent || session.id,
+        name: cleanText(metadata.name, 36),
+        amount: Math.round(Number(metadata.amount) || session.amount_total / 100 || 0),
+        charity: cleanText(metadata.charity, 60),
+        paidAt: new Date((session.created || Math.floor(Date.now() / 1000)) * 1000).toISOString(),
+      });
+    }
+  }
+
+  res.json({ received: true });
 }
 
 function ensureGame(data, gameId) {
@@ -2110,6 +2363,52 @@ app.post("/api/minigames/:gameId/rooms/:roomCode/entries", async (req, res) => {
     }
     console.error("Minigames room save error:", err);
     res.status(500).json({ error: "Failed to save minigame room entry" });
+  }
+});
+
+app.get("/api/pot-race/leaderboard", async (req, res) => {
+  try {
+    const data = await readPotRaceData();
+    res.json(potRaceLeaderboard(data));
+  } catch (err) {
+    console.error("Pot Race leaderboard error:", err);
+    res.status(500).json({ error: "Failed to load Pot Race leaderboard" });
+  }
+});
+
+app.get("/api/pot-race/config", async (req, res) => {
+  res.json({
+    paymentsEnabled: Boolean(potRaceStripeSecretKey && potRaceStripeWebhookSecret && potRacePublicUrl),
+    target: potRaceDonationTarget,
+    winnerPrize: "Recognition and choosing the charity",
+    cashPayoutsEnabled: false,
+  });
+});
+
+app.post("/api/pot-race/checkout", async (req, res) => {
+  const name = cleanText(req.body?.name, 36);
+  const amount = Math.round(Number(req.body?.amount) || 0);
+  const charity = cleanText(req.body?.charity, 60);
+
+  if (!potRaceStripeSecretKey || !potRaceStripeWebhookSecret || !potRacePublicUrl) {
+    res.status(503).json({
+      error: "Real donations are not configured yet.",
+      setup: "Set STRIPE_SECRET_KEY and POT_RACE_PUBLIC_URL. Set STRIPE_WEBHOOK_SECRET before accepting live donations.",
+    });
+    return;
+  }
+
+  if (!name || amount < 1) {
+    res.status(400).json({ error: "Player name and a positive amount are required." });
+    return;
+  }
+
+  try {
+    const session = await createPotRaceCheckoutSession({ name, amount, charity });
+    res.json({ checkoutUrl: session.url });
+  } catch (err) {
+    console.error("Pot Race checkout error:", err);
+    res.status(500).json({ error: "Failed to start donation checkout" });
   }
 });
 

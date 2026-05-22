@@ -387,6 +387,10 @@
       background: var(--berry);
     }
 
+    .dot.random {
+      background: var(--peach);
+    }
+
     .spin-button {
       justify-self: start;
       min-height: 64px;
@@ -890,12 +894,13 @@
           </div>
           <div class="wheel-copy">
             <h2>Most days are number problems. Sometimes the wheel gets weird.</h2>
-            <p>Refreshing keeps the latest result. Pressing spin again rolls a fresh 80/15/4/1 chance.</p>
+            <p>Refreshing keeps the latest result. Pressing spin again rolls a fresh 60/25/4/1/10 chance.</p>
             <ul class="legend">
-              <li><span class="dot number"></span>80% number problem</li>
-              <li><span class="dot word"></span>15% word problem</li>
-              <li><span class="dot skip"></span>4% skip the problem</li>
+              <li><span class="dot number"></span>60% number problem</li>
+              <li><span class="dot word"></span>25% word problem</li>
+              <li><span class="dot skip"></span>4% no problem</li>
               <li><span class="dot pushups"></span>1% word problem plus everyone does 10 pushups</li>
+              <li><span class="dot random"></span>10% random number or word problem</li>
             </ul>
             <div class="spin-result" id="spinResult" aria-live="polite"></div>
           </div>
@@ -991,10 +996,11 @@
       const COLORS = ["#e94f7d", "#ffd66b", "#7bdcb5", "#85c7ff", "#ffb38a"];
       const ANSWER_OUTCOMES = new Set(["right", "hint", "wrong"]);
       const WHEEL_SEGMENTS = [
-        { type: "number", start: 0, end: 288 },
-        { type: "word", start: 288, end: 342 },
-        { type: "skip", start: 342, end: 356.4 },
-        { type: "pushups", start: 356.4, end: 360 },
+        { type: "number", start: 0, end: 216 },
+        { type: "word", start: 216, end: 306 },
+        { type: "skip", start: 306, end: 320.4 },
+        { type: "pushups", start: 320.4, end: 324 },
+        { type: "random", start: 324, end: 360 },
       ];
       const WHEEL_TYPES = {
         number: {
@@ -1006,12 +1012,16 @@
           result: "Word problem!",
         },
         skip: {
-          label: "Skip the problem",
-          result: "Skip the problem!",
+          label: "No problem",
+          result: "No problem!",
         },
         pushups: {
           label: "Word problem + 10 pushups",
           result: "Word problem... and everyone does 10 pushups!",
+        },
+        random: {
+          label: "Random problem",
+          result: "Random problem!",
         },
       };
       const OUTCOMES = {
@@ -1321,6 +1331,32 @@
         };
       }
 
+      function resolveQuestionType(wheelData, persist = true) {
+        if (!wheelData) return null;
+        if (wheelData.type !== "random") return wheelData.type;
+        if (wheelData.questionType === "number" || wheelData.questionType === "word") {
+          return wheelData.questionType;
+        }
+        const questionType = Math.random() < 0.5 ? "number" : "word";
+        if (persist) {
+          state.wheels[QUESTION_DAY_ID] = {
+            ...wheelData,
+            questionType,
+          };
+          saveState();
+        }
+        return questionType;
+      }
+
+      function getWheelLabel(wheelData) {
+        if (!wheelData) return WHEEL_TYPES.number.label;
+        if (wheelData.type === "random") {
+          const questionType = resolveQuestionType(wheelData);
+          return questionType === "word" ? "Random word problem" : "Random number problem";
+        }
+        return WHEEL_TYPES[wheelData.type]?.label || WHEEL_TYPES.number.label;
+      }
+
       function ensureDailyLevel() {
         if (!state.levels[QUESTION_DAY_ID]) {
           state.levels[QUESTION_DAY_ID] = state.nextLevel;
@@ -1412,12 +1448,12 @@
       }
 
       function formatWheelResult(type) {
-        const wheelType = WHEEL_TYPES[type] || WHEEL_TYPES.number;
-        return `The wheel landed on: ${wheelType.label}.`;
+        const wheelData = typeof type === "string" ? { type } : type;
+        return `The wheel landed on: ${getWheelLabel(wheelData)}.`;
       }
 
       function canOpenQuestion(type) {
-        return type === "number" || type === "word" || type === "pushups";
+        return type === "number" || type === "word" || type === "pushups" || type === "random";
       }
 
       function startSpin() {
@@ -1478,7 +1514,7 @@
           state.wheels[QUESTION_DAY_ID] = normalizedWheel;
           saveState();
         }
-        wheelFrame.setAttribute("aria-label", normalizedWheel ? `Wheel result: ${(WHEEL_TYPES[normalizedWheel.type] || WHEEL_TYPES.number).label}` : "Spin the dinner wheel");
+        wheelFrame.setAttribute("aria-label", normalizedWheel ? `Wheel result: ${getWheelLabel(normalizedWheel)}` : "Spin the dinner wheel");
 
         if (!normalizedWheel) {
           spinButton.textContent = "Spin the wheel";
@@ -1492,7 +1528,7 @@
         spinButton.textContent = "Spin the wheel";
         spinButton.disabled = false;
         openQuestionButton.classList.toggle("hidden", !canOpenQuestion(normalizedWheel.type));
-        spinResult.textContent = formatWheelResult(normalizedWheel.type);
+        spinResult.textContent = formatWheelResult(normalizedWheel);
       }
 
       function revealQuestion(celebrateSkip = false) {
@@ -1507,21 +1543,31 @@
         spinScreen.classList.add("hidden");
         questionCard.classList.add("visible");
         questionCard.setAttribute("aria-hidden", "false");
-        renderQuestion(wheelData.type, celebrateSkip);
+        renderQuestion(wheelData, celebrateSkip);
       }
 
-      function renderQuestion(type, celebrateSkip) {
+      function renderQuestion(wheelData, celebrateSkip) {
         hideResult();
-        const wheelType = WHEEL_TYPES[type] || WHEEL_TYPES.number;
+        const type = wheelData?.type || "number";
+        const questionType = resolveQuestionType(wheelData);
+        const effectiveType = type === "random" ? questionType : type;
+        const wheelType = type === "random"
+          ? {
+              label: questionType === "word" ? "Random word problem" : "Random number problem",
+              result: "Random problem!",
+            }
+          : (WHEEL_TYPES[type] || WHEEL_TYPES.number);
         const level = ensureDailyLevel();
-        const question = getQuestion(type, level);
+        const question = getQuestion(effectiveType, level);
         const isSkip = type === "skip";
-        const isWordy = type === "word" || type === "pushups";
+        const isWordy = effectiveType === "word" || type === "pushups";
 
         difficultyPill.textContent = isSkip ? "Dinner skip" : `Dinner level ${level}`;
         eventEyebrow.textContent = wheelType.label;
         introText.textContent = isSkip
           ? "The wheel gave Daphne a skip tonight. No timer, no problem."
+          : type === "random"
+            ? `Randomly pulled a ${questionType} problem. No timer.`
           : "Solve one short dinner math problem. No timer.";
         questionDate.textContent = QUESTION_DATE_LABEL;
         questionSkill.textContent = wheelType.label;
@@ -1576,10 +1622,11 @@
         state.wheels[QUESTION_DAY_ID] = wheelData;
         delete state.answers[QUESTION_DAY_ID];
         const level = ensureDailyLevel();
-        const questionCount = getQuestionCount(wheelData.type, level);
+        const questionType = resolveQuestionType(wheelData);
+        const questionCount = getQuestionCount(questionType, level);
         state.rerolls[QUESTION_DAY_ID] = ((Number(state.rerolls[QUESTION_DAY_ID]) || 0) + 1) % Math.max(1, questionCount);
         saveState();
-        renderQuestion(wheelData.type, false);
+        renderQuestion(wheelData, false);
       }
 
       function showResult(outcome, celebrate) {
