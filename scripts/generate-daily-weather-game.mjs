@@ -44,6 +44,11 @@ function labelDate(date) {
   return `${monthNames[date.getMonth()]} ${date.getDate()}`;
 }
 
+function isWeekend(date) {
+  const day = date.getDay();
+  return day === 0 || day === 6;
+}
+
 function jsString(value) {
   return JSON.stringify(String(value ?? ""));
 }
@@ -209,6 +214,7 @@ function renderQuestion(question, idDate) {
 function dayWatchEvent(date, forecast) {
   const day = forecast.dayPeriod || {};
   const night = forecast.nightPeriod || {};
+  const weekend = isWeekend(date);
   const high = Number(day.temperature) || 70;
   const low = Number(night.temperature) || 54;
   const skyText = `${day.shortForecast || ""} ${day.detailedForecast || ""}`;
@@ -285,22 +291,25 @@ function dayWatchEvent(date, forecast) {
       likely: likelyNightCooler
     })
   ], 4, daySeed);
-  const moneyQuestions = rotateSelection([
+  const moneyQuestionPool = [
     () => yesNoQuestion({
       text: "By noon, will gas prices be higher than this morning?",
       idSuffix: "gas-noon",
       autoSource: gasSource,
       lockAt: locks.gasNoon,
       likely: likelyGasUp
-    }),
-    () => yesNoQuestion({
+    })
+  ];
+  if (!weekend) {
+    moneyQuestionPool.push(() => yesNoQuestion({
       text: "By 1 PM, will the stock market go up?",
       idSuffix: "market-lunch",
       autoSource: marketSource,
       lockAt: locks.marketLunch,
       likely: likelyMarketUp
-    })
-  ], 2, daySeed + 7);
+    }));
+  }
+  const moneyQuestions = rotateSelection(moneyQuestionPool, moneyQuestionPool.length, daySeed + 7);
   const newsQuestions = rotateSelection([
     () => choiceQuestion({
       text: "By 2 PM, what will the local news talk about most?",
@@ -348,7 +357,7 @@ function dayWatchEvent(date, forecast) {
       lockAt: lockDate(date, 17).toISOString(),
       likely: likelyMusicChanged
     })
-  ], 1, daySeed + 23);
+  ], weekend ? 2 : 1, daySeed + 23);
   const sportsQuestions = rotateSelection([
     () => yesNoQuestion({
       text: "By 6 PM, will the sports page still show a live game?",
@@ -377,6 +386,10 @@ function dayWatchEvent(date, forecast) {
     }
     return left.lockAt.localeCompare(right.lockAt);
   });
+  const questionCount = selectedQuestions.length;
+  const categorySummary = weekend
+    ? "weather, gas, news, music, and sports"
+    : "weather, money, news, music, and sports";
 
   return `      {
         id: "daily-weather-${idDate}",
@@ -384,7 +397,7 @@ function dayWatchEvent(date, forecast) {
         type: "Day",
         month: ${date.getMonth()},
         day: ${date.getDate()},
-        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: 10 simple questions about weather, money, news, music, and sports that settle through the day. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.`)},
+        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: ${questionCount} simple questions about ${categorySummary} that settle through the day. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.`)},
         questions: [
 ${selectedQuestions.map((question) => renderQuestion(question, idDate)).join(",\n")}
         ]

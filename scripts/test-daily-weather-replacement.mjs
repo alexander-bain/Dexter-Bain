@@ -109,3 +109,26 @@ for (const hour of [
 }
 
 console.log("Daily weather replacement test passed.");
+
+runGenerator("2026-05-16");
+const weekendHtml = fs.readFileSync(testHtml, "utf8");
+const weekendBlock = generatedWeatherBlock(weekendHtml);
+const weekendQuestionCount = [...weekendBlock.matchAll(/question\(/g)].length;
+
+if (!weekendHtml.includes('id: "daily-weather-20260516"')) {
+  throw new Error("The weekend generated weather game was not created.");
+}
+
+if (weekendBlock.includes('"20260516-market-lunch"')) {
+  throw new Error("Weekend daily weather game still included the stock question.");
+}
+
+if (!weekendBlock.includes('"20260516-gas-noon"')) {
+  throw new Error("Weekend daily weather game is missing the gas question.");
+}
+
+if (weekendQuestionCount !== 10) {
+  throw new Error(`Expected 10 weekend daily weather questions, found ${weekendQuestionCount}.`);
+}
+
+console.log("Weekend daily weather replacement test passed.");

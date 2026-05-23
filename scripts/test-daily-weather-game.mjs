@@ -247,16 +247,34 @@ async function run() {
           test.setSelectedGameId(game.gameId);
           test.render();
 
-          const bestPicks = game.questions.map((question, index) => {
-            const best = test.getAnswers(question).reduce((winner, candidate) => {
+          const favoritePicks = game.questions.map((question, index) => {
+            const favorite = test.getAnswers(question).reduce((winner, candidate) => {
               if (!winner || candidate.odds > winner.odds) {
                 return candidate;
               }
               return winner;
             }, null);
-            return [test.getQuestionId(question, index), best.id];
+            return [test.getQuestionId(question, index), favorite.id];
           });
-          const picks = Object.fromEntries(bestPicks);
+          const botPicks = game.questions.map((question, index) => {
+            const answers = test.getAnswers(question).slice();
+            const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
+            const risks = answers
+              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
+              .sort((left, right) => right.points - left.points || right.odds - left.odds);
+            const choice = index % 3 === 1
+              ? (risks[0] || favorites[0])
+              : index % 4 === 3
+              ? (risks[1] || favorites[0])
+              : favorites[0];
+            return [test.getQuestionId(question, index), choice.id];
+          });
+          const picks = Object.fromEntries(botPicks);
+          const favoritePickMap = Object.fromEntries(favoritePicks);
+          const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
+          if (!usedRiskPick) {
+            throw new Error("Weather Bot only picked favorites.");
+          }
           const entry = {
             name: "Weather Bot",
             picks,
@@ -285,16 +303,32 @@ async function run() {
             const saveNote = document.getElementById("saveNote")?.textContent || "";
             const leaderboard = document.getElementById("leaderboard")?.textContent || "";
             const entryCount = document.getElementById("entryCount")?.textContent || "";
+            const leaderButton = document.querySelector('[data-leader-name="Weather Bot"]');
+            if (leaderButton) {
+              leaderButton.click();
+            }
+            const pickView = document.getElementById("leaderboardPicks")?.textContent || "";
             const storage = JSON.parse(localStorage.getItem("dexterbain-minigames-v1") || "{}");
-            if (saveNote.includes("Weather Bot") && leaderboard.includes("Weather Bot") && entryCount.trim() === "1" && storage.playerName === "Weather Bot") {
+            if (
+              saveNote.includes("Weather Bot") &&
+              leaderboard.includes("Weather Bot") &&
+              leaderboard.includes("100% win") &&
+              leaderboard.includes("max from picks") &&
+              pickView.includes("chance to win") &&
+              pickView.includes("max from picks") &&
+              entryCount.trim() === "1" &&
+              storage.playerName === "Weather Bot"
+            ) {
               return {
                 title: document.getElementById("eventTitle")?.textContent || "",
                 entryCount,
                 saveNote,
                 leaderboard,
+                pickView,
                 savedEntryName: storage.playerName || "",
-                chosen: bestPicks.map(([, answerId]) => answerId),
-                bestPicks,
+                chosen: botPicks.map(([, answerId]) => answerId),
+                botPicks,
+                favoritePicks,
                 storedState: storage,
               };
             }
@@ -306,6 +340,7 @@ async function run() {
             JSON.stringify({
               saveNote: document.getElementById("saveNote")?.textContent || "",
               leaderboard: document.getElementById("leaderboard")?.textContent || "",
+              pickView: document.getElementById("leaderboardPicks")?.textContent || "",
               entryCount: document.getElementById("entryCount")?.textContent || "",
               storage: JSON.parse(localStorage.getItem("dexterbain-minigames-v1") || "{}"),
             })
@@ -327,10 +362,10 @@ async function run() {
       throw new Error(`Weather Bot test did not save correctly: ${JSON.stringify(value)}`);
     }
 
-    const bestPickMap = Object.fromEntries(value.bestPicks || []);
-    const returnedPickMap = Object.fromEntries(value.bestPicks || []);
-    if (JSON.stringify(returnedPickMap) !== JSON.stringify(bestPickMap)) {
-      throw new Error(`Saved picks did not match the best-odds answers: ${JSON.stringify({ returnedPickMap, bestPickMap })}`);
+    const botPickMap = Object.fromEntries(value.botPicks || []);
+    const favoritePickMap = Object.fromEntries(value.favoritePicks || []);
+    if (!Object.keys(botPickMap).some((questionId) => botPickMap[questionId] !== favoritePickMap[questionId])) {
+      throw new Error(`Saved picks only used favorites: ${JSON.stringify({ botPickMap, favoritePickMap })}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);
