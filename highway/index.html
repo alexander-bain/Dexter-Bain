@@ -1059,7 +1059,7 @@
           state.headingOffset += (0 - state.headingOffset) * Math.min(1, dt * 0.85);
         }
         state.headingOffset = THREE.MathUtils.euclideanModulo(state.headingOffset + Math.PI, Math.PI * 2) - Math.PI;
-        state.driveFactor = Math.max(0.22, Math.abs(Math.cos(state.headingOffset)));
+        state.driveFactor = Math.cos(state.headingOffset);
         state.x += Math.sin(state.headingOffset) * dt * (state.speed * 0.44);
         state.x = Math.max(bounds.left, Math.min(bounds.right, state.x));
 
