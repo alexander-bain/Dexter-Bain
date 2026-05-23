@@ -1006,9 +1006,11 @@
         car.userData.recoverTimer = 0;
         car.userData.attackSide = Math.random() > 0.5 ? 1 : -1;
         car.userData.speedBias = (Math.random() - 0.5) * 1.8;
-        car.userData.lateralSpeed = 0;
-        car.userData.maxLateralSpeed = 5.4;
+        car.userData.steerAngle = 0;
+        car.userData.headingOffset = 0;
+        car.userData.motionHeadingOffset = 0;
         car.userData.targetRoadX = state.x;
+        car.userData.targetRoadZ = state.z + 8;
         car.userData.tagCooldown = 0;
         const sideOffset = (Math.random() - 0.5) * 8.8;
         setRoadActor(car, Math.max(bounds.left, Math.min(bounds.right, state.x + sideOffset)), 42 + Math.random() * 34, 0);
@@ -1145,20 +1147,21 @@
           car.userData.tagCooldown = Math.max(0, car.userData.tagCooldown - dt);
           const dzToPlayer = state.z - car.userData.roadZ;
           const dxToPlayer = state.x - car.userData.roadX;
-          const playerTrendX = state.x + state.steerAngle * 2.2;
+          const playerTrendX = state.x + state.steerAngle * 2.2 + Math.sin(state.motionHeadingOffset) * 1.4;
+          const playerTrendZ = state.z - Math.cos(state.motionHeadingOffset) * 2.4;
 
           if (car.userData.mode === "recover") {
             car.userData.recoverTimer -= dt;
-            car.userData.targetRoadX = state.x + car.userData.attackSide * 2.4;
-            car.userData.maxLateralSpeed = 4.6;
+            car.userData.targetRoadX = state.x + car.userData.attackSide * 3.2;
+            car.userData.targetRoadZ = state.z + 10;
             if (car.userData.recoverTimer <= 0) {
               car.userData.mode = "approach";
               car.userData.modeTimer = 0.85 + Math.random() * 0.35;
             }
           } else if (car.userData.mode === "attack") {
             car.userData.modeTimer -= dt;
-            car.userData.targetRoadX = state.x + car.userData.attackSide * 0.75;
-            car.userData.maxLateralSpeed = 7.6;
+            car.userData.targetRoadX = playerTrendX + car.userData.attackSide * 0.8;
+            car.userData.targetRoadZ = playerTrendZ + 0.8;
             if (Math.abs(dzToPlayer) < 0.9 || car.userData.modeTimer <= 0) {
               car.userData.mode = "recover";
               car.userData.recoverTimer = 0.78;
@@ -1166,7 +1169,7 @@
           } else {
             car.userData.modeTimer -= dt;
             car.userData.targetRoadX = playerTrendX;
-            car.userData.maxLateralSpeed = 5.6;
+            car.userData.targetRoadZ = state.z + 5.6;
             if (Math.abs(dzToPlayer) < 9 && Math.abs(dxToPlayer) < 5.8 && car.userData.modeTimer <= 0) {
               car.userData.mode = "attack";
               car.userData.modeTimer = 0.95 + Math.random() * 0.35;
@@ -1181,17 +1184,39 @@
               : state.speed + 2.8 + state.wanted * 0.65 + car.userData.speedBias;
           const accel = car.userData.mode === "attack" ? 2.6 : car.userData.mode === "recover" ? 3.2 : 1.5;
           car.userData.speed += (targetSpeed - car.userData.speed) * Math.min(1, dt * accel);
-          car.userData.roadZ += (state.speed * state.driveFactor - car.userData.speed) * dt;
-
           const targetDeltaX = car.userData.targetRoadX - car.userData.roadX;
-          const lateralAccel = car.userData.mode === "attack" ? 18 : car.userData.mode === "recover" ? 10 : 14;
-          const lateralDrag = car.userData.mode === "attack" ? 6.5 : car.userData.mode === "recover" ? 9 : 8;
-          car.userData.lateralSpeed += targetDeltaX * lateralAccel * dt;
-          car.userData.lateralSpeed *= Math.max(0, 1 - lateralDrag * dt);
-          car.userData.lateralSpeed = THREE.MathUtils.clamp(car.userData.lateralSpeed, -car.userData.maxLateralSpeed, car.userData.maxLateralSpeed);
-          car.userData.roadX = THREE.MathUtils.clamp(car.userData.roadX + car.userData.lateralSpeed * dt, bounds.left, bounds.right);
-          car.userData.turnBias = THREE.MathUtils.clamp(-car.userData.lateralSpeed * 0.075, -0.34, 0.34);
-          placeRoadActor(car);
+          const targetDeltaZ = car.userData.targetRoadZ - car.userData.roadZ;
+          const desiredHeading = Math.atan2(targetDeltaX * 1.08, -targetDeltaZ);
+          const headingDelta = Math.atan2(
+            Math.sin(desiredHeading - car.userData.headingOffset),
+            Math.cos(desiredHeading - car.userData.headingOffset)
+          );
+          const steerCommand = THREE.MathUtils.clamp(headingDelta * 1.6, -1, 1);
+          car.userData.steerAngle += (steerCommand * 0.72 - car.userData.steerAngle) * Math.min(1, dt * 7.5);
+          car.userData.headingOffset += steerCommand * dt * (1.45 + car.userData.speed * 0.022);
+          car.userData.headingOffset = THREE.MathUtils.euclideanModulo(car.userData.headingOffset + Math.PI, Math.PI * 2) - Math.PI;
+          const motionDelta = Math.atan2(
+            Math.sin(car.userData.headingOffset - car.userData.motionHeadingOffset),
+            Math.cos(car.userData.headingOffset - car.userData.motionHeadingOffset)
+          );
+          car.userData.motionHeadingOffset += motionDelta * Math.min(1, dt * 7.6);
+          car.userData.motionHeadingOffset = THREE.MathUtils.euclideanModulo(car.userData.motionHeadingOffset + Math.PI, Math.PI * 2) - Math.PI;
+          const forwardFactor = Math.cos(car.userData.motionHeadingOffset);
+          car.userData.roadZ += (state.speed * state.driveFactor - car.userData.speed * forwardFactor) * dt;
+          car.userData.roadX = THREE.MathUtils.clamp(
+            car.userData.roadX + Math.sin(car.userData.motionHeadingOffset) * dt * (car.userData.speed * 0.44),
+            bounds.left,
+            bounds.right
+          );
+          const pose = roadPose(car.userData.roadZ);
+          car.position.x = pose.x + car.userData.roadX * Math.cos(pose.heading);
+          car.position.z = pose.z + car.userData.roadX * Math.sin(pose.heading);
+          const targetRotation = pose.heading + car.userData.motionHeadingOffset;
+          car.rotation.y += Math.atan2(
+            Math.sin(targetRotation - car.rotation.y),
+            Math.cos(targetRotation - car.rotation.y)
+          ) * Math.min(1, dt * 8.2);
+          car.rotation.z = THREE.MathUtils.lerp(car.rotation.z, -car.userData.steerAngle * 0.22, dt * 8);
           car.userData.wheels.forEach((wheel) => {
             wheel.rotation.x -= dt * car.userData.speed * 1.55;
           });
