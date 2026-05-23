@@ -526,17 +526,25 @@
       const roadBits = [];
       const sceneryBits = [];
       const clouds = [];
-      const laneCenters = [-7.2, -3.6, 0, 3.6, 7.2];
+      const laneWidth = 3.6;
+      const laneCount = 15;
+      const laneHalfCount = (laneCount - 1) / 2;
+      const laneCenters = Array.from({ length: laneCount }, (_, index) => (index - laneHalfCount) * laneWidth);
       const clock = new THREE.Clock();
-      const bounds = { left: -9.4, right: 9.4 };
+      const bounds = {
+        left: laneCenters[0] - (laneWidth * 0.6),
+        right: laneCenters[laneCenters.length - 1] + (laneWidth * 0.6),
+      };
       const carSize = { width: 1.38, length: 3.0 };
-      const highwayWidth = 24;
-      const shoulderWidth = 9.5;
+      const highwayWidth = Math.abs(laneCenters[0]) * 2 + laneWidth + 2.4;
+      const shoulderWidth = 11.5;
       const roadHalfWidth = highwayWidth / 2;
-      const laneStripeOffsets = [-7.2, -3.6, 0, 3.6, 7.2];
+      const laneStripeOffsets = Array.from({ length: laneCount - 1 }, (_, index) => (index - ((laneCount - 2) / 2)) * laneWidth + laneWidth * 0.5);
       const edgeLineX = roadHalfWidth - 1.05;
       const curbX = roadHalfWidth + 0.18;
       const railX = roadHalfWidth + 1.1;
+      const sceneryNearX = roadHalfWidth + shoulderWidth + 2.5;
+      const sceneryFarX = roadHalfWidth + shoulderWidth + 9.5;
       const trackStraightX = 124;
       const trackStraightZ = 120;
       const turnRadius = 34;
@@ -739,7 +747,7 @@
             roadBits.push(edgeLine, curb);
           }
 
-          for (const x of laneStripeOffsets.slice(1, -1)) {
+          for (const x of laneStripeOffsets) {
             for (let j = 0; j < 2; j += 1) {
               const stripe = box(0.18, 0.035, 4.2, stripeMat, x, 0.035, z - 3 + j * 6);
               road.add(stripe);
@@ -844,6 +852,18 @@
         return car;
       }
 
+      function makeAmbulance() {
+        const ambulance = makeCar(0xffffff, 0x1d4ed8);
+        const redMat = new THREE.MeshStandardMaterial({ color: 0xef4444, emissive: 0xef4444, emissiveIntensity: 0.8, roughness: 0.24 });
+        const cyanMat = new THREE.MeshStandardMaterial({ color: 0x7dd3fc, emissive: 0x7dd3fc, emissiveIntensity: 0.78, roughness: 0.22 });
+        ambulance.add(box(0.18, 0.44, 2.26, redMat, -0.64, 0.72, 0));
+        ambulance.add(box(0.18, 0.44, 2.26, redMat, 0.64, 0.72, 0));
+        ambulance.add(box(0.86, 0.16, 0.2, cyanMat, 0, 1.24, 0.06));
+        ambulance.add(box(0.42, 0.14, 0.14, redMat, 0, 0.82, -0.96));
+        ambulance.scale.set(1.04, 1.08, 1.2);
+        return ambulance;
+      }
+
       function makeScenery() {
         const hillMat = new THREE.MeshStandardMaterial({ color: 0x536d38, roughness: 1 });
         const darkHillMat = new THREE.MeshStandardMaterial({ color: 0x314424, roughness: 1 });
@@ -925,13 +945,13 @@
         for (let i = 0; i < 18; i += 1) {
           const z = -38 - i * 23;
           const leftHill = new THREE.Mesh(new THREE.ConeGeometry(8 + Math.random() * 5, 6 + Math.random() * 6, 7), i % 2 ? darkHillMat : hillMat);
-          leftHill.position.set(-25 - Math.random() * 14, 2.3, z);
+          leftHill.position.set(-(sceneryFarX + 8 + Math.random() * 14), 2.3, z);
           leftHill.rotation.y = Math.random() * Math.PI;
           leftHill.castShadow = false;
           track(leftHill);
 
           const rightHill = new THREE.Mesh(new THREE.ConeGeometry(8 + Math.random() * 5, 6 + Math.random() * 6, 7), i % 2 ? hillMat : darkHillMat);
-          rightHill.position.set(25 + Math.random() * 14, 2.3, z - 12);
+          rightHill.position.set(sceneryFarX + 8 + Math.random() * 14, 2.3, z - 12);
           rightHill.rotation.y = Math.random() * Math.PI;
           rightHill.castShadow = false;
           track(rightHill);
@@ -941,14 +961,14 @@
           const side = i % 2 === 0 ? -1 : 1;
           const z = -10 - i * 7.3;
           if (i % 4 === 0) {
-            makeLamp(side * 14.2, z);
+            makeLamp(side * (roadHalfWidth + 3.8), z);
           } else if (i % 5 === 0) {
-            makeBillboard(side * (18 + Math.random() * 4), z, i % 2 ? reflectorMat : curbMat);
+            makeBillboard(side * (sceneryNearX + 4 + Math.random() * 4), z, i % 2 ? reflectorMat : curbMat);
           } else if (i % 3 === 0) {
-            makeTree(side * (16 + Math.random() * 11), z, 0.75 + Math.random() * 0.9);
+            makeTree(side * (sceneryNearX + 2 + Math.random() * 11), z, 0.75 + Math.random() * 0.9);
           } else {
             const height = 1.8 + Math.random() * 6.8;
-            const building = box(2 + Math.random() * 2.7, height, 2 + Math.random() * 4.4, i % 4 === 1 ? towerMat : buildingMat, side * (20 + Math.random() * 18), height / 2 - 0.08, z);
+            const building = box(2 + Math.random() * 2.7, height, 2 + Math.random() * 4.4, i % 4 === 1 ? towerMat : buildingMat, side * (sceneryNearX + 6 + Math.random() * 18), height / 2 - 0.08, z);
             building.castShadow = false;
             track(building);
             if (i % 2 === 0) {
@@ -969,13 +989,15 @@
       function spawnTraffic(zOverride = null, laneOverride = null) {
         const lane = laneOverride ?? laneCenters[state.nextLane % laneCenters.length];
         state.nextLane = (state.nextLane + 1 + Math.floor(Math.random() * 3)) % laneCenters.length;
+        const isAmbulance = Math.random() < 0.12;
         const color = trafficColors[Math.floor(Math.random() * trafficColors.length)];
-        const car = makeCar(color, 0x243449);
-        const isTruck = Math.random() < 0.18;
+        const car = isAmbulance ? makeAmbulance() : makeCar(color, 0x243449);
+        const isTruck = !isAmbulance && Math.random() < 0.18;
         if (isTruck) {
           car.scale.set(1.12, 1.12, 1.42);
         }
-        car.userData.speed = 5 + Math.random() * 18;
+        car.userData.kind = isAmbulance ? "ambulance" : isTruck ? "truck" : "traffic";
+        car.userData.speed = isAmbulance ? 24 + Math.random() * 18 : 5 + Math.random() * 18;
         car.userData.hit = false;
         car.userData.width = carSize.width * car.scale.x;
         car.userData.length = carSize.length * car.scale.z;
@@ -985,10 +1007,10 @@
       }
 
       function spawnTrafficPack(zOverride = null) {
-        if (traffic.length > 18) return;
+        if (traffic.length > 34) return;
         const shuffledLanes = [...laneCenters].sort(() => Math.random() - 0.5);
-        const laneCount = Math.random() > 0.72 ? 2 : 1;
-        for (let i = 0; i < laneCount; i += 1) {
+        const packCount = Math.random() > 0.72 ? 4 : Math.random() > 0.38 ? 3 : 2;
+        for (let i = 0; i < Math.min(packCount, shuffledLanes.length); i += 1) {
           const stagger = i * (10 + Math.random() * 10);
           spawnTraffic((zOverride ?? -174 - Math.random() * 52) - stagger, shuffledLanes[i]);
         }
@@ -1103,7 +1125,7 @@
         if (state.spawnTimer <= 0) {
           spawnTrafficPack();
           const pressure = Math.min(0.24, state.score / 9000);
-          state.spawnTimer = 1.18 - pressure + Math.random() * 0.48;
+          state.spawnTimer = 0.82 - pressure + Math.random() * 0.34;
         }
 
         for (let i = traffic.length - 1; i >= 0; i -= 1) {
@@ -1261,6 +1283,15 @@
             const hitLength = (car.userData.length + carSize.length) * 0.5;
             if (dx < hitWidth && dz < hitLength) {
               car.userData.hit = true;
+              if (car.userData.kind === "ambulance") {
+                state.health = Math.min(100, state.health + 26);
+                state.speed = Math.max(state.speed, 46);
+                state.score += 140;
+                car.userData.roadZ = 28;
+                car.userData.roadX += car.userData.roadX > state.x ? 2.4 : -2.4;
+                car.rotation.z = (car.userData.roadX > state.x ? -1 : 1) * 0.32;
+                break;
+              }
               state.hitTimer = 0.82;
               state.speed = Math.max(20, state.speed * 0.78);
               car.rotation.z = (car.userData.roadX > state.x ? -1 : 1) * 0.45;
@@ -1363,7 +1394,7 @@
         const pose = roadPose(state.z);
         player.position.set(pose.x, 0.52, pose.z);
         player.rotation.set(0, pose.heading, 0);
-        [-76, -146, -226, -318].forEach((z) => spawnTrafficPack(z));
+        [-56, -106, -156, -216, -286, -356].forEach((z) => spawnTrafficPack(z));
         summonPolice(1);
         hud.overlay.classList.remove("is-visible");
         focusGame();
