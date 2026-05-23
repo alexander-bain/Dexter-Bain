@@ -526,7 +526,7 @@
       const roadBits = [];
       const sceneryBits = [];
       const clouds = [];
-      const laneWidth = 3.6;
+      const laneWidth = 2.7;
       const laneCount = 15;
       const laneHalfCount = (laneCount - 1) / 2;
       const laneCenters = Array.from({ length: laneCount }, (_, index) => (index - laneHalfCount) * laneWidth);
@@ -536,8 +536,8 @@
         right: laneCenters[laneCenters.length - 1] + (laneWidth * 0.6),
       };
       const carSize = { width: 1.38, length: 3.0 };
-      const highwayWidth = Math.abs(laneCenters[0]) * 2 + laneWidth + 2.4;
-      const shoulderWidth = 11.5;
+      const highwayWidth = Math.abs(laneCenters[0]) * 2 + laneWidth + 2.1;
+      const shoulderWidth = 8.8;
       const roadHalfWidth = highwayWidth / 2;
       const laneStripeOffsets = Array.from({ length: laneCount - 1 }, (_, index) => (index - ((laneCount - 2) / 2)) * laneWidth + laneWidth * 0.5);
       const edgeLineX = roadHalfWidth - 1.05;
@@ -1007,11 +1007,11 @@
       }
 
       function spawnTrafficPack(zOverride = null) {
-        if (traffic.length > 34) return;
+        if (traffic.length > 42) return;
         const shuffledLanes = [...laneCenters].sort(() => Math.random() - 0.5);
-        const packCount = Math.random() > 0.72 ? 4 : Math.random() > 0.38 ? 3 : 2;
+        const packCount = Math.random() > 0.74 ? 5 : Math.random() > 0.36 ? 4 : 3;
         for (let i = 0; i < Math.min(packCount, shuffledLanes.length); i += 1) {
-          const stagger = i * (10 + Math.random() * 10);
+          const stagger = i * (8 + Math.random() * 7);
           spawnTraffic((zOverride ?? -174 - Math.random() * 52) - stagger, shuffledLanes[i]);
         }
       }
@@ -1125,7 +1125,7 @@
         if (state.spawnTimer <= 0) {
           spawnTrafficPack();
           const pressure = Math.min(0.24, state.score / 9000);
-          state.spawnTimer = 0.82 - pressure + Math.random() * 0.34;
+          state.spawnTimer = 0.66 - pressure * 0.45 + Math.random() * 0.24;
         }
 
         for (let i = traffic.length - 1; i >= 0; i -= 1) {
@@ -1394,7 +1394,7 @@
         const pose = roadPose(state.z);
         player.position.set(pose.x, 0.52, pose.z);
         player.rotation.set(0, pose.heading, 0);
-        [-56, -106, -156, -216, -286, -356].forEach((z) => spawnTrafficPack(z));
+        [-46, -96, -146, -196, -246, -296, -346].forEach((z) => spawnTrafficPack(z));
         summonPolice(1);
         hud.overlay.classList.remove("is-visible");
         focusGame();
