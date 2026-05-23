@@ -561,6 +561,7 @@
         z: 5,
         steerAngle: 0,
         headingOffset: 0,
+        motionHeadingOffset: 0,
         driveFactor: 1,
         jumpVelocity: 0,
         spawnTimer: 0,
@@ -1056,8 +1057,14 @@
         state.steerAngle += (steer * 0.72 - state.steerAngle) * Math.min(1, dt * 7.5);
         state.headingOffset += steer * dt * (1.65 + state.speed * 0.024);
         state.headingOffset = THREE.MathUtils.euclideanModulo(state.headingOffset + Math.PI, Math.PI * 2) - Math.PI;
-        state.driveFactor = Math.cos(state.headingOffset);
-        state.x += Math.sin(state.headingOffset) * dt * (state.speed * 0.44);
+        const motionDelta = Math.atan2(
+          Math.sin(state.headingOffset - state.motionHeadingOffset),
+          Math.cos(state.headingOffset - state.motionHeadingOffset)
+        );
+        state.motionHeadingOffset += motionDelta * Math.min(1, dt * 8.5);
+        state.motionHeadingOffset = THREE.MathUtils.euclideanModulo(state.motionHeadingOffset + Math.PI, Math.PI * 2) - Math.PI;
+        state.driveFactor = Math.cos(state.motionHeadingOffset);
+        state.x += Math.sin(state.motionHeadingOffset) * dt * (state.speed * 0.44);
         state.x = Math.max(bounds.left, Math.min(bounds.right, state.x));
 
         if (state.y > 0 || state.jumpVelocity > 0) {
@@ -1317,6 +1324,7 @@
         state.z = 0;
         state.steerAngle = 0;
         state.headingOffset = 0;
+        state.motionHeadingOffset = 0;
         state.driveFactor = 1;
         state.jumpVelocity = 0;
         state.spawnTimer = 1.05;
