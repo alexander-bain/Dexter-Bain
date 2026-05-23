@@ -2081,71 +2081,67 @@
     const eventCatalog = [
       // DAILY_WEATHER_GAME_START
       {
-        id: "daily-weather-20260522",
-        name: "Menlo Park Day Watch - May 22",
+        id: "daily-weather-20260523",
+        name: "Menlo Park Day Watch - May 23",
         type: "Day",
         month: 4,
-        day: 22,
-        summary: "Generated at 6 AM for May 22: 14 simple questions about weather, money, news, music, and sports that settle through the day. Forecast: Partly Sunny, high near 70.",
+        day: 23,
+        summary: "Generated at 6 AM for May 23: 13 simple questions about weather, money, news, music, and sports that settle through the day. Forecast: Partly Sunny, high near 70. Weather, gas, news, music, and sports only today because the market is closed.",
         questions: [
           question("By noon, will it be warmer than 65 degrees?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260522-warm-by-noon", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-22T19:00:00.000Z" }),
+          ], "20260523-warm-by-noon", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-23T19:00:00.000Z" }),
           question("By noon, will AAA's national regular gas average still be above $4.500?", [
-            answer("Yes", 64, "yes"),
-            answer("No", 36, "no")
-          ], "20260522-gas-noon", { autoSource: "https://r.jina.ai/http://gasprices.aaa.com/", lockAt: "2026-05-22T19:15:00.000Z" }),
+            answer("Yes", 36, "yes"),
+            answer("No", 64, "no")
+          ], "20260523-gas-noon", { autoSource: "https://r.jina.ai/http://gasprices.aaa.com/", lockAt: "2026-05-23T19:15:00.000Z" }),
           question("By 2 PM, which topic best matches Mercury News' main featured homepage story?", [
             answer("Weather", 28, "weather"),
             answer("Stocks", 30, "stocks"),
             answer("Sports", 24, "sports"),
             answer("Traffic", 18, "traffic")
-          ], "20260522-local-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-05-22T21:00:00.000Z" }),
+          ], "20260523-local-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-05-23T21:00:00.000Z" }),
           question("By 3 PM, will rain show up in the forecast?", [
             answer("Yes", 36, "yes"),
             answer("No", 64, "no")
-          ], "20260522-rain-by-3pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-22T22:00:00.000Z" }),
+          ], "20260523-rain-by-3pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-23T22:00:00.000Z" }),
           question("By 3 PM, will the sky still be mostly sunny?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260522-sky-still-sunny", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-22T22:00:00.000Z" }),
+          ], "20260523-sky-still-sunny", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-23T22:00:00.000Z" }),
           question("By 3 PM, will Mercury News' main featured homepage story be weather-related?", [
             answer("Yes", 40, "yes"),
             answer("No", 60, "no")
-          ], "20260522-weather-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-05-22T22:00:00.000Z" }),
-          question("By 4 PM, will the S&P 500 finish up for the day?", [
-            answer("Yes", 64, "yes"),
-            answer("No", 36, "no")
-          ], "20260522-market-lunch", { autoSource: "https://r.jina.ai/http://www.google.com/finance/quote/.INX:INDEXSP", lockAt: "2026-05-22T23:00:00.000Z" }),
+          ], "20260523-weather-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-05-23T22:00:00.000Z" }),
           question("By 4 PM, will \"the morning No. 1 song\" still be the top Apple Music song?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260522-music-four", { autoSource: "https://r.jina.ai/http://music.apple.com/us/charts/songs", lockAt: "2026-05-22T23:00:00.000Z" }),
+          ], "20260523-music-four", { autoSource: "https://r.jina.ai/http://music.apple.com/us/charts/songs", lockAt: "2026-05-23T23:00:00.000Z" }),
           question("By 4 PM, will one of Mercury News' top homepage stories be sports-related?", [
             answer("Yes", 58, "yes"),
             answer("No", 42, "no")
-          ], "20260522-sports-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-05-22T23:00:00.000Z" }),
+          ], "20260523-sports-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-05-23T23:00:00.000Z" }),
           question("By 5 PM, will \"the morning No. 1 song\" still be No. 1 on Apple Music?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260522-music-five", { autoSource: "https://r.jina.ai/http://music.apple.com/us/charts/songs", lockAt: "2026-05-23T00:00:00.000Z" }),
+          ], "20260523-music-five", { autoSource: "https://r.jina.ai/http://music.apple.com/us/charts/songs", lockAt: "2026-05-24T00:00:00.000Z" }),
           question("By 5 PM, will the wind be stronger than 10 mph?", [
             answer("Yes", 36, "yes"),
             answer("No", 64, "no")
-          ], "20260522-wind-by-5pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-23T00:00:00.000Z" }),
+          ], "20260523-wind-by-5pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-24T00:00:00.000Z" }),
           question("By 6 PM, will the sports page still show a live game?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260522-sports-six", { autoSource: "https://r.jina.ai/http://www.espn.com/scoreboard", lockAt: "2026-05-23T01:00:00.000Z" }),
+          ], "20260523-sports-six", { autoSource: "https://r.jina.ai/http://www.espn.com/scoreboard", lockAt: "2026-05-24T01:00:00.000Z" }),
           question("By 7 PM, will the top sports story be about a live game?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260522-sports-seven", { autoSource: "https://r.jina.ai/http://www.espn.com/scoreboard", lockAt: "2026-05-23T02:00:00.000Z" }),
+          ], "20260523-sports-seven", { autoSource: "https://r.jina.ai/http://www.espn.com/scoreboard", lockAt: "2026-05-24T02:00:00.000Z" }),
           question("Tonight, will it stay cooler than 60 degrees?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260522-cool-tonight", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-23T03:00:00.000Z" })
+          ], "20260523-cool-tonight", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-05-24T03:00:00.000Z" })
         ]
       },
       // DAILY_WEATHER_GAME_END
