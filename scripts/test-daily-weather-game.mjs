@@ -247,30 +247,139 @@ async function run() {
           test.setSelectedGameId(game.gameId);
           test.render();
 
-          const favoritePicks = game.questions.map((question, index) => {
-            const favorite = test.getAnswers(question).reduce((winner, candidate) => {
-              if (!winner || candidate.odds > winner.odds) {
+          const questionModels = game.questions.map((question, index) => {
+            const answers = test.getAnswers(question).slice();
+            return {
+              index,
+              id: test.getQuestionId(question, index),
+              answers,
+            };
+          });
+          const favoritePicks = questionModels.map((question) => {
+            const favorite = question.answers.reduce((winner, candidate) => {
+              if (!winner || candidate.odds > winner.odds || (candidate.odds === winner.odds && candidate.points < winner.points)) {
                 return candidate;
               }
               return winner;
             }, null);
-            return [test.getQuestionId(question, index), favorite.id];
+            return [question.id, favorite.id];
           });
-          const botPicks = game.questions.map((question, index) => {
-            const answers = test.getAnswers(question).slice();
-            const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
-            const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
-              .sort((left, right) => right.points - left.points || right.odds - left.odds);
-            const choice = index % 3 === 1
-              ? (risks[0] || favorites[0])
-              : index % 4 === 3
-              ? (risks[1] || favorites[0])
-              : favorites[0];
-            return [test.getQuestionId(question, index), choice.id];
-          });
-          const picks = Object.fromEntries(botPicks);
           const favoritePickMap = Object.fromEntries(favoritePicks);
+          const seededRandom = (seed) => {
+            let value = 2166136261;
+            for (const char of String(seed)) {
+              value ^= char.charCodeAt(0);
+              value = Math.imul(value, 16777619);
+            }
+            return () => {
+              value += 0x6D2B79F5;
+              let next = value;
+              next = Math.imul(next ^ (next >>> 15), next | 1);
+              next ^= next + Math.imul(next ^ (next >>> 7), next | 61);
+              return ((next ^ (next >>> 14)) >>> 0) / 4294967296;
+            };
+          };
+          const weightedRandomAnswer = (answers, randomValue) => {
+            const totalOdds = answers.reduce((total, answerOption) => total + (Number(answerOption.odds) || 0), 0) || 1;
+            let cursor = randomValue * totalOdds;
+            for (const answerOption of answers) {
+              cursor -= Number(answerOption.odds) || 0;
+              if (cursor <= 0) {
+                return answerOption;
+              }
+            }
+            return answers[answers.length - 1];
+          };
+          const randomForLineups = seededRandom(game.gameId + ":weather-bot");
+          const scoredLineups = [];
+          const buildCandidates = (question) => {
+            const favoriteId = favoritePickMap[question.id];
+            const byLeverage = question.answers
+              .slice()
+              .sort((left, right) => {
+                const leftScore = (100 - left.odds) * left.points;
+                const rightScore = (100 - right.odds) * right.points;
+                return rightScore - leftScore || right.odds - left.odds;
+              })
+              .map((answer) => answer.id);
+            return [favoriteId, ...byLeverage].filter((answerId, index, values) => answerId && values.indexOf(answerId) === index).slice(0, 3);
+          };
+          const lineups = [[]];
+          questionModels.forEach((question) => {
+            const next = [];
+            const candidates = buildCandidates(question);
+            lineups.forEach((lineup) => {
+              candidates.forEach((answerId) => {
+                next.push([...lineup, [question.id, answerId]]);
+              });
+            });
+            lineups.splice(0, lineups.length, ...next.slice(0, 729));
+          });
+          const scoreCandidateLineup = (picks) => {
+            const pickMap = Object.fromEntries(picks);
+            const chalkLineups = [
+              favoritePickMap,
+              Object.fromEntries(questionModels.map((question) => {
+                const sorted = question.answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
+                return [question.id, (sorted[1] || sorted[0]).id];
+              })),
+              Object.fromEntries(questionModels.map((question, index) => {
+                const sorted = question.answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
+                return [question.id, (sorted[Math.min(index % 3, sorted.length - 1)] || sorted[0]).id];
+              })),
+            ];
+            let winShare = 0;
+            let expectedScore = 0;
+            let leverageCount = 0;
+            const simulations = 2400;
+
+            questionModels.forEach((question) => {
+              if (pickMap[question.id] !== favoritePickMap[question.id]) {
+                leverageCount += 1;
+              }
+            });
+
+            for (let simulation = 0; simulation < simulations; simulation += 1) {
+              let botScore = 0;
+              const fieldScores = new Array(chalkLineups.length).fill(0);
+
+              questionModels.forEach((question) => {
+                const winner = weightedRandomAnswer(question.answers, randomForLineups());
+                if (pickMap[question.id] === winner.id) {
+                  botScore += winner.points;
+                }
+                chalkLineups.forEach((fieldLineup, fieldIndex) => {
+                  if (fieldLineup[question.id] === winner.id) {
+                    fieldScores[fieldIndex] += winner.points;
+                  }
+                });
+              });
+
+              expectedScore += botScore;
+              const topScore = Math.max(botScore, ...fieldScores);
+              const tiedFieldWinners = fieldScores.filter((score) => score === topScore && botScore === topScore).length;
+              if (botScore === topScore) {
+                winShare += 1 / (1 + tiedFieldWinners);
+              }
+            }
+
+            return {
+              picks,
+              winRate: winShare / simulations,
+              expectedScore: expectedScore / simulations,
+              leverageCount,
+            };
+          };
+          lineups.forEach((lineup) => {
+            scoredLineups.push(scoreCandidateLineup(lineup));
+          });
+          scoredLineups.sort((left, right) => (
+            right.winRate - left.winRate ||
+            right.expectedScore - left.expectedScore ||
+            right.leverageCount - left.leverageCount
+          ));
+          const botPicks = scoredLineups[0]?.picks || favoritePicks;
+          const picks = Object.fromEntries(botPicks);
           const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
           if (!usedRiskPick) {
             throw new Error("Weather Bot only picked favorites.");
@@ -312,7 +421,7 @@ async function run() {
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
+              leaderboard.includes("100% chance to win") &&
               leaderboard.includes("max from picks") &&
               pickView.includes("chance to win") &&
               pickView.includes("max from picks") &&
