@@ -473,7 +473,7 @@
       const gameShell = document.getElementById("gameShell");
 
       const scene = new THREE.Scene();
-      scene.fog = new THREE.Fog(0x88cfff, 40, 214);
+      scene.fog = new THREE.Fog(0x98d8ff, 44, 142);
 
       function readStoredNumber(key, fallback = 0) {
         try {
@@ -491,7 +491,7 @@
         }
       }
 
-      const camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 0.1, 320);
+      const camera = new THREE.PerspectiveCamera(68, window.innerWidth / window.innerHeight, 0.1, 220);
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance", preserveDrawingBuffer: true });
       renderer.setClearColor(0x000000, 0);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -539,7 +539,7 @@
       const highwayWidth = Math.abs(laneCenters[0]) * 2 + laneWidth + 2.1;
       const shoulderWidth = 8.8;
       const roadHalfWidth = highwayWidth / 2;
-      const laneStripeOffsets = Array.from({ length: laneCount - 1 }, (_, index) => (index - ((laneCount - 2) / 2)) * laneWidth + laneWidth * 0.5);
+      const laneStripeOffsets = Array.from({ length: laneCount - 1 }, (_, index) => (index - ((laneCount - 2) / 2)) * laneWidth);
       const edgeLineX = roadHalfWidth - 1.05;
       const curbX = roadHalfWidth + 0.18;
       const railX = roadHalfWidth + 1.1;
@@ -547,7 +547,7 @@
       const sceneryFarX = roadHalfWidth + shoulderWidth + 9.5;
       const trackStraightX = 124;
       const trackStraightZ = 120;
-      const turnRadius = 34;
+      const turnRadius = 62;
       const quarterTurnLength = Math.PI * turnRadius * 0.5;
       const routeLoopLength = (trackStraightX * 2) + (trackStraightZ * 2) + (quarterTurnLength * 4);
       const roadLoopLength = routeLoopLength;
@@ -580,6 +580,22 @@
         escapeTimer: 0,
         nextLane: 0,
       };
+
+      function trafficPressure() {
+        return Math.min(1.6, state.score / 6200);
+      }
+
+      function trafficLimit() {
+        return 66 + Math.floor(trafficPressure() * 34);
+      }
+
+      function targetPoliceCount() {
+        return state.wanted > 0 ? Math.max(1, Math.ceil(state.wanted * 1.25)) : 0;
+      }
+
+      function wantedPressure() {
+        return Math.min(state.wanted, 22);
+      }
 
       const road = new THREE.Group();
       scene.add(road);
@@ -1007,9 +1023,9 @@
       }
 
       function spawnTrafficPack(zOverride = null) {
-        if (traffic.length > 54) return;
+        if (traffic.length > trafficLimit()) return;
         const shuffledLanes = [...laneCenters].sort(() => Math.random() - 0.5);
-        const packCount = Math.random() > 0.76 ? 6 : Math.random() > 0.38 ? 5 : 4;
+        const packCount = Math.min(9, 5 + Math.floor(trafficPressure() * 2) + (Math.random() > 0.52 ? 1 : 0));
         for (let i = 0; i < Math.min(packCount, shuffledLanes.length); i += 1) {
           const stagger = i * (7 + Math.random() * 6);
           spawnTraffic((zOverride ?? -174 - Math.random() * 52) - stagger, shuffledLanes[i]);
@@ -1017,9 +1033,10 @@
       }
 
       function spawnPolice() {
-        if (police.length >= Math.min(5, Math.max(1, state.wanted))) return;
+        if (police.length >= targetPoliceCount()) return;
         const car = makePoliceCar();
-        car.userData.speed = state.speed + 2.8 + state.wanted * 0.75 + Math.random() * 1.8;
+        const pressure = wantedPressure();
+        car.userData.speed = Math.abs(state.speed) + 2.8 + pressure * 0.75 + Math.random() * 1.8;
         car.userData.width = carSize.width * 1.06;
         car.userData.length = carSize.length * 1.06;
         car.userData.hitCooldown = 0;
@@ -1041,7 +1058,7 @@
       }
 
       function summonPolice(count = 1) {
-        state.wanted = Math.min(6, state.wanted + count);
+        state.wanted += count;
         state.escapeTimer = 9.5 + state.wanted * 1.5;
         state.policeTimer = 0.05;
         for (let i = 0; i < count; i += 1) spawnPolice();
@@ -1055,7 +1072,7 @@
 
       function reduceWanted(amount = 1) {
         state.wanted = Math.max(0, state.wanted - amount);
-        const targetPolice = state.wanted > 0 ? Math.min(5, Math.max(1, state.wanted)) : 0;
+        const targetPolice = targetPoliceCount();
         while (police.length > targetPolice) {
           removePoliceCar(police[0]);
         }
@@ -1075,9 +1092,10 @@
         const gas = keys.has("KeyW") || keys.has("ArrowUp");
         const brake = keys.has("KeyS") || keys.has("ArrowDown");
         const steer = (right ? 1 : 0) - (left ? 1 : 0);
-        const targetSpeed = gas ? 62 : brake ? 20 : 36;
+        const targetSpeed = gas ? 66 : brake ? -34 : 28;
+        const throttleResponse = gas || brake ? 3.6 : 1.75;
 
-        state.speed += (targetSpeed - state.speed) * Math.min(1, dt * 2.4);
+        state.speed += (targetSpeed - state.speed) * Math.min(1, dt * throttleResponse);
         state.steerAngle += (steer * 0.72 - state.steerAngle) * Math.min(1, dt * 7.5);
         state.headingOffset += steer * dt * (1.65 + state.speed * 0.024);
         state.headingOffset = THREE.MathUtils.euclideanModulo(state.headingOffset + Math.PI, Math.PI * 2) - Math.PI;
@@ -1112,7 +1130,7 @@
         }
 
         for (const item of sceneryBits) {
-          advanceRouteObject(item, scroll * 0.82, 58, roadLoopLength, 0.42);
+          advanceRouteObject(item, scroll, 58, roadLoopLength, 1);
         }
 
         for (const cloud of clouds) {
@@ -1124,8 +1142,8 @@
         state.spawnTimer -= dt;
         if (state.spawnTimer <= 0) {
           spawnTrafficPack();
-          const pressure = Math.min(0.24, state.score / 9000);
-          state.spawnTimer = 0.54 - pressure * 0.5 + Math.random() * 0.2;
+          const pressure = trafficPressure();
+          state.spawnTimer = Math.max(0.28, 0.52 - pressure * 0.12) + Math.random() * 0.16;
         }
 
         for (let i = traffic.length - 1; i >= 0; i -= 1) {
@@ -1148,14 +1166,14 @@
           state.policeTimer -= dt;
           if (state.policeTimer <= 0) {
             spawnPolice();
-            state.policeTimer = Math.max(1.7, 4.2 - state.wanted * 0.28);
+            state.policeTimer = Math.max(0.42, 3.4 / Math.sqrt(Math.max(1, state.wanted)));
           }
 
           state.escapeTimer -= dt;
           const closeCop = police.some((car) => Math.abs(car.userData.roadZ - state.z) < 12 && Math.abs(car.userData.roadX - state.x) < 4.9);
           if (state.escapeTimer <= 0 && !closeCop) {
-            reduceWanted(1);
             state.score += 320;
+            state.escapeTimer = Math.max(6, 9.5 - Math.min(5, state.wanted * 0.2));
           } else if (closeCop) {
             state.escapeTimer = Math.max(state.escapeTimer, 4.5);
           }
@@ -1199,11 +1217,12 @@
             }
           }
 
+          const pressure = wantedPressure();
           const targetSpeed = car.userData.mode === "attack"
-            ? state.speed + 6.5 + state.wanted + car.userData.speedBias
+            ? Math.abs(state.speed) + 6.5 + pressure + car.userData.speedBias
             : car.userData.mode === "recover"
-              ? state.speed - 6 + car.userData.speedBias
-              : state.speed + 2.8 + state.wanted * 0.65 + car.userData.speedBias;
+              ? Math.max(18, Math.abs(state.speed) - 6) + car.userData.speedBias
+              : Math.abs(state.speed) + 2.8 + pressure * 0.65 + car.userData.speedBias;
           const accel = car.userData.mode === "attack" ? 2.6 : car.userData.mode === "recover" ? 3.2 : 1.5;
           car.userData.speed += (targetSpeed - car.userData.speed) * Math.min(1, dt * accel);
           const targetDeltaX = car.userData.targetRoadX - car.userData.roadX;
@@ -1326,6 +1345,7 @@
 
       function updateCamera(dt) {
         const heading = player.rotation.y;
+        const pressure = wantedPressure();
         const rearDistance = state.wanted > 0 ? 30 : 24;
         const behindX = -Math.sin(heading) * rearDistance;
         const behindZ = -Math.cos(heading) * rearDistance;
@@ -1333,7 +1353,7 @@
         const lookZ = player.position.z + Math.cos(heading) * 16;
         const targetX = player.position.x * 0.18 + behindX - state.steerAngle * 1.2;
         camera.position.x += (targetX - camera.position.x) * Math.min(1, dt * 4.2);
-        camera.position.y += (6.6 + state.y * 0.24 + state.wanted * 0.18 - camera.position.y) * Math.min(1, dt * 4.0);
+        camera.position.y += (6.6 + state.y * 0.24 + pressure * 0.07 - camera.position.y) * Math.min(1, dt * 4.0);
         camera.position.z += (player.position.z + behindZ - camera.position.z) * Math.min(1, dt * 4.0);
         camera.lookAt(lookX, 1.15 + state.y * 0.18, lookZ);
       }
@@ -1394,7 +1414,7 @@
         const pose = roadPose(state.z);
         player.position.set(pose.x, 0.52, pose.z);
         player.rotation.set(0, pose.heading, 0);
-        [-36, -76, -116, -156, -196, -236, -276, -316, -356].forEach((z) => spawnTrafficPack(z));
+        [-28, -58, -88, -118, -148, -178, -208, -238, -268, -298, -328, -358, -388].forEach((z) => spawnTrafficPack(z));
         summonPolice(1);
         hud.overlay.classList.remove("is-visible");
         focusGame();
@@ -1408,7 +1428,7 @@
           updatePolice(dt);
           updatePlayer(dt);
           checkCollisions();
-          state.score += dt * state.speed * 0.4;
+          state.score += dt * Math.abs(state.speed * state.driveFactor) * 0.4;
           updateHud();
         }
         updateCamera(dt);
@@ -1467,9 +1487,9 @@
         }
         if (!event.repeat) {
           if (code === "KeyW" || code === "ArrowUp") {
-            state.speed = Math.min(62, state.speed + 4);
+            state.speed = Math.min(66, state.speed + 7);
           } else if (code === "KeyS" || code === "ArrowDown") {
-            state.speed = Math.max(18, state.speed - 6);
+            state.speed = Math.max(-34, state.speed - 14);
           } else if (code === "KeyA" || code === "ArrowLeft") {
             state.x = Math.min(bounds.right, state.x + 0.9);
             state.steerAngle = Math.min(0.72, state.steerAngle + 0.18);
