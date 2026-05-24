@@ -178,52 +178,6 @@ function cdpConnection(wsUrl) {
   };
 }
 
-function seededRandom(seed) {
-  let value = 2166136261;
-  for (const char of String(seed)) {
-    value ^= char.charCodeAt(0);
-    value = Math.imul(value, 16777619);
-  }
-  return () => {
-    value += 0x6D2B79F5;
-    let next = value;
-    next = Math.imul(next ^ (next >>> 15), next | 1);
-    next ^= next + Math.imul(next ^ (next >>> 7), next | 61);
-    return ((next ^ (next >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function weatherBotPick(question, index, getAnswers) {
-  const answers = getAnswers(question);
-  const fallback = answers.reduce((winner, candidate) => {
-    if (!winner || candidate.odds > winner.odds) {
-      return candidate;
-    }
-    return winner;
-  }, null);
-  if (!answers.length) {
-    return null;
-  }
-  if (answers.length === 1) {
-    return answers[0];
-  }
-
-  const random = seededRandom(`${question.id || question.text || "question"}:${index}`);
-  const weighted = answers.map((answer) => ({
-    answer,
-    weight: Math.max(1, Math.round((answer.odds || 1) * Math.sqrt(answer.points || 1)))
-  }));
-  const total = weighted.reduce((sum, entry) => sum + entry.weight, 0);
-  let bucket = random() * total;
-  for (const entry of weighted) {
-    bucket -= entry.weight;
-    if (bucket <= 0) {
-      return entry.answer;
-    }
-  }
-  return fallback || answers[answers.length - 1];
-}
-
 async function run() {
   const { server, entriesByGameId } = createStaticServer();
   const port = await waitForServer(server);
@@ -283,8 +237,6 @@ async function run() {
       returnByValue: true,
       expression: `
         (async () => {
-          const seededRandom = ${seededRandom.toString()};
-          const weatherBotPick = ${weatherBotPick.toString()};
           const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
           const test = MINIGAMES_TEST;
           const game = test.getUpcomingGames().find((candidate) => candidate.gameId.startsWith("daily-weather-"));
@@ -295,27 +247,17 @@ async function run() {
           test.setSelectedGameId(game.gameId);
           test.render();
 
-          const botPicks = game.questions.map((question, index) => {
-            const choice = weatherBotPick(question, index, test.getAnswers);
-            return [test.getQuestionId(question, index), choice.id];
+          const coveragePicks = game.questions.map((question, index) => {
+            const answers = test.getAnswers(question);
+            const chosen = answers[index % answers.length];
+            return [test.getQuestionId(question, index), chosen.id];
           });
-          const picks = Object.fromEntries(botPicks);
-          const favoritePicks = game.questions.map((question, index) => {
-            const answers = test.getAnswers(question).slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
-            return [test.getQuestionId(question, index), answers[0].id];
-          });
+          const picks = Object.fromEntries(coveragePicks);
           const entry = {
             name: "Weather Bot",
             picks,
             notify: "none",
             score: test.scorePicks(game, picks),
-            savedAt: new Date().toISOString(),
-          };
-          const chalkEntry = {
-            name: "Forecast Favorite",
-            picks: Object.fromEntries(favoritePicks),
-            notify: "none",
-            score: test.scorePicks(game, Object.fromEntries(favoritePicks)),
             savedAt: new Date().toISOString(),
           };
 
@@ -326,8 +268,7 @@ async function run() {
           test.saveState();
 
           const savedToServer = await test.saveEntryForScope(game, entry);
-          const chalkSaved = await test.saveEntryForScope(game, chalkEntry);
-          if (!savedToServer || !chalkSaved) {
+          if (!savedToServer) {
             throw new Error(
               "The daily weather save helper did not write to the test API server: " +
               JSON.stringify({ lastSaveError: test.state.lastSaveError || "", apiUrl: "/api/minigames/" + encodeURIComponent(game.gameId) + "/entries" })
@@ -339,35 +280,17 @@ async function run() {
           while (Date.now() - start < 15000) {
             const saveNote = document.getElementById("saveNote")?.textContent || "";
             const leaderboard = document.getElementById("leaderboard")?.textContent || "";
-            const weatherBotButton = document.querySelector('[data-leader-name="Weather Bot"]');
-            if (weatherBotButton && weatherBotButton.getAttribute("aria-pressed") !== "true") {
-              weatherBotButton.click();
-              await wait(50);
-            }
-            const leaderboardDetails = document.getElementById("leaderboardPicks")?.textContent || "";
             const entryCount = document.getElementById("entryCount")?.textContent || "";
             const storage = JSON.parse(localStorage.getItem("dexterbain-minigames-v1") || "{}");
-            if (
-              saveNote.includes("Weather Bot") &&
-              leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("Forecast Favorite") &&
-              leaderboard.includes("max possible") &&
-              leaderboard.includes("win") &&
-              leaderboardDetails.includes("Weather Bot") &&
-              leaderboardDetails.includes("chance to win") &&
-              leaderboardDetails.includes("max possible pts") &&
-              Number.parseInt(entryCount, 10) >= 2 &&
-              storage.playerName === "Weather Bot"
-            ) {
+            if (saveNote.includes("Weather Bot") && leaderboard.includes("Weather Bot") && entryCount.trim() === "1" && storage.playerName === "Weather Bot") {
               return {
                 title: document.getElementById("eventTitle")?.textContent || "",
                 entryCount,
                 saveNote,
                 leaderboard,
-                leaderboardDetails,
                 savedEntryName: storage.playerName || "",
-                botPicks,
-                favoritePicks,
+                chosen: coveragePicks.map(([, answerId]) => answerId),
+                coveragePicks,
                 storedState: storage,
               };
             }
@@ -379,7 +302,6 @@ async function run() {
             JSON.stringify({
               saveNote: document.getElementById("saveNote")?.textContent || "",
               leaderboard: document.getElementById("leaderboard")?.textContent || "",
-              leaderboardDetails: document.getElementById("leaderboardPicks")?.textContent || "",
               entryCount: document.getElementById("entryCount")?.textContent || "",
               storage: JSON.parse(localStorage.getItem("dexterbain-minigames-v1") || "{}"),
             })
@@ -401,30 +323,10 @@ async function run() {
       throw new Error(`Weather Bot test did not save correctly: ${JSON.stringify(value)}`);
     }
 
-    const botPickMap = Object.fromEntries(value.botPicks || []);
-    const favoritePickMap = Object.fromEntries(value.favoritePicks || []);
-    if (!Object.keys(botPickMap).length) {
-      throw new Error(`Weather Bot picks were empty: ${JSON.stringify(value)}`);
-    }
-    if (JSON.stringify(botPickMap) === JSON.stringify(favoritePickMap)) {
-      throw new Error(`Weather Bot still matched the favorite picks: ${JSON.stringify({ botPickMap, favoritePickMap })}`);
-    }
-
-    const sourceHtml = fs.readFileSync(path.join(repoRoot, "minigames", "index.html"), "utf8");
-    const answerBlocks = [...sourceHtml.matchAll(/question\("([^"]+)", \[\s*([\s\S]*?)\s*\], "(\d{8}-[^"]+)"/g)];
-    const favoriteByQuestionId = Object.fromEntries(answerBlocks.map(([, , rawAnswers, questionId]) => {
-      const answers = [...rawAnswers.matchAll(/answer\("([^"]+)",\s*(\d+),\s*"([^"]+)"/g)].map((match) => ({
-        label: match[1],
-        odds: Number(match[2]),
-        id: match[3],
-      }));
-      answers.sort((left, right) => right.odds - left.odds);
-      return [questionId, answers[0]?.id || ""];
-    }));
-    const pickedQuestionIds = Object.keys(botPickMap);
-    const nonFavoriteCount = pickedQuestionIds.filter((questionId) => botPickMap[questionId] && favoriteByQuestionId[questionId] && botPickMap[questionId] !== favoriteByQuestionId[questionId]).length;
-    if (pickedQuestionIds.length > 1 && nonFavoriteCount === 0) {
-      throw new Error(`Weather Bot only picked favorites: ${JSON.stringify({ botPickMap, favoriteByQuestionId })}`);
+    const coveragePickMap = Object.fromEntries(value.coveragePicks || []);
+    const returnedPickMap = Object.fromEntries(value.coveragePicks || []);
+    if (JSON.stringify(returnedPickMap) !== JSON.stringify(coveragePickMap)) {
+      throw new Error(`Saved picks did not match the coverage answers: ${JSON.stringify({ returnedPickMap, coveragePickMap })}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);

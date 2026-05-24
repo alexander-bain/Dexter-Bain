@@ -613,129 +613,6 @@
       margin: 8px 0 0;
     }
 
-    .history-controls {
-      display: flex;
-      justify-content: center;
-      margin-top: 16px;
-    }
-
-    .history-button {
-      min-height: 48px;
-      padding: 10px 16px;
-      border: 2px solid rgba(39, 48, 68, 0.72);
-      border-radius: 999px;
-      background: #fff7df;
-      color: var(--ink);
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 950;
-      box-shadow: 0 5px 0 rgba(39, 48, 68, 0.12);
-      transition: transform 120ms ease, box-shadow 120ms ease;
-    }
-
-    .history-button:active {
-      transform: translateY(3px);
-      box-shadow: 0 2px 0 rgba(39, 48, 68, 0.12);
-    }
-
-    .history-panel {
-      display: none;
-      gap: 12px;
-      margin-top: 18px;
-      padding: 18px;
-      border: 2px dashed rgba(39, 48, 68, 0.18);
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.64);
-    }
-
-    .history-panel.visible {
-      display: grid;
-    }
-
-    .history-title {
-      margin: 0;
-      color: var(--ink);
-      font-size: 1rem;
-      font-weight: 950;
-    }
-
-    .history-summary {
-      margin: 4px 0 0;
-      color: rgba(39, 48, 68, 0.72);
-      font-size: 0.92rem;
-      font-weight: 800;
-    }
-
-    .history-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .history-empty {
-      margin: 0;
-      color: rgba(39, 48, 68, 0.72);
-      font-size: 0.92rem;
-      font-weight: 750;
-    }
-
-    .history-item {
-      display: grid;
-      gap: 6px;
-      padding: 14px 15px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.86);
-      border: 1px solid rgba(39, 48, 68, 0.12);
-    }
-
-    .history-item-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .history-item-date {
-      color: rgba(39, 48, 68, 0.64);
-      font-size: 0.75rem;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .history-item-outcome {
-      font-size: 0.78rem;
-      font-weight: 950;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .history-item-outcome.right {
-      color: #0f9f64;
-    }
-
-    .history-item-outcome.hint {
-      color: #c98300;
-    }
-
-    .history-item-outcome.wrong {
-      color: #d63d63;
-    }
-
-    .history-item-text {
-      margin: 0;
-      color: var(--ink);
-      font-size: 0.98rem;
-      font-weight: 850;
-      line-height: 1.4;
-    }
-
-    .history-item-meta {
-      color: rgba(39, 48, 68, 0.72);
-      font-size: 0.86rem;
-      font-weight: 750;
-    }
-
     .confetti-layer {
       position: fixed;
       inset: 0;
@@ -952,18 +829,6 @@
           <summary>Grown-up answer key</summary>
           <p id="answerKey"></p>
         </details>
-
-        <div class="history-controls">
-          <button class="history-button" id="historyButton" type="button" aria-expanded="false">Show past questions</button>
-        </div>
-
-        <section class="history-panel" id="historyPanel" aria-label="Past dinner questions">
-          <div>
-            <h2 class="history-title">Past dinner questions</h2>
-            <p class="history-summary" id="historySummary">Current tracked level: Dinner level 3.</p>
-          </div>
-          <div class="history-list" id="historyList"></div>
-        </section>
       </div>
     </section>
   </main>
@@ -971,21 +836,8 @@
 
   <script>
     (() => {
-      const PACIFIC_TIME_ZONE = "America/Los_Angeles";
-      const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-      const todayParts = new Intl.DateTimeFormat("en-US", {
-        timeZone: PACIFIC_TIME_ZONE,
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }).formatToParts(new Date()).reduce((parts, part) => {
-        if (part.type !== "literal") parts[part.type] = part.value;
-        return parts;
-      }, {});
-      const QUESTION_DAY_ISO = `${todayParts.year}-${todayParts.month}-${todayParts.day}`;
-      const QUESTION_DAY_NUMBER = Number(QUESTION_DAY_ISO.replaceAll("-", ""));
-      const QUESTION_DAY_ID = `${QUESTION_DAY_ISO}-dinner-question-wheel`;
-      const QUESTION_DATE_LABEL = `${MONTH_NAMES[Number(todayParts.month) - 1]} ${Number(todayParts.day)} dinner question`;
+      const QUESTION_DAY_ID = "2026-05-18-dinner-question-wheel";
+      const QUESTION_DATE_LABEL = "May 18 dinner question";
       const STORAGE_KEY = "daphne-dinner-question-v2";
       const PHONE_PREVIEW_KEY = "daphne-dinner-question-iphone-17-preview";
       const MIN_LEVEL = 1;
@@ -1049,155 +901,105 @@
       const NUMBER_PROBLEMS = [
         {
           level: 1,
-          text: "32 + 15 = ?",
-          answer: "47",
+          text: "32 + 67 + 32 - 67 = ?",
+          answer: "64",
         },
         {
           level: 1,
-          text: "67 - 20 = ?",
-          answer: "47",
-        },
-        {
-          level: 1,
-          text: "12 + 32 = ?",
-          answer: "44",
+          text: "67 + 32 - 32 + 67 = ?",
+          answer: "134",
         },
         {
           level: 2,
-          text: "25 + 42 = ?",
-          answer: "67",
+          text: "67 + 32 + 67 - 32 = ?",
+          answer: "134",
         },
         {
           level: 2,
-          text: "32 + 18 = ?",
-          answer: "50",
-        },
-        {
-          level: 2,
-          text: "81 - 14 = ?",
-          answer: "67",
-        },
-        {
-          level: 3,
-          text: "48 + 19 - 7 = ?",
-          answer: "60",
-        },
-        {
-          level: 3,
-          text: "32 + 27 + 8 = ?",
-          answer: "67",
-        },
-        {
-          level: 3,
-          text: "67 - 19 + 4 = ?",
-          answer: "52",
-        },
-        {
-          level: 4,
-          text: "86 - 19 = ?",
-          answer: "67",
-        },
-        {
-          level: 4,
-          text: "32 + 47 = ?",
-          answer: "79",
-        },
-        {
-          level: 4,
-          text: "58 + 32 = ?",
-          answer: "90",
-        },
-        {
-          level: 5,
-          text: "125 - 58 = ?",
-          answer: "67",
-        },
-        {
-          level: 5,
-          text: "32 + 49 + 18 = ?",
+          text: "32 + 32 + 67 - 32 = ?",
           answer: "99",
         },
         {
+          level: 3,
+          text: "32 + 67 + 67 - 32 + 32 = ?",
+          answer: "166",
+        },
+        {
+          level: 3,
+          text: "67 + 32 + 67 - 67 + 32 = ?",
+          answer: "131",
+        },
+        {
+          level: 4,
+          text: "67 + 67 + 32 - 67 + 32 = ?",
+          answer: "131",
+        },
+        {
+          level: 4,
+          text: "32 + 67 + 67 + 32 - 67 = ?",
+          answer: "131",
+        },
+        {
           level: 5,
-          text: "67 + 24 - 9 = ?",
-          answer: "82",
+          text: "67 + 32 + 67 + 32 - 32 + 67 = ?",
+          answer: "233",
+        },
+        {
+          level: 5,
+          text: "67 + 67 + 32 + 32 - 67 + 32 = ?",
+          answer: "163",
         },
       ];
       const WORD_PROBLEMS = [
         {
           level: 1,
-          text: "Daphne has 32 grapes and eats 5. How many grapes are left?",
-          answer: "27 grapes",
+          text: "Bob has 67 bagels, gives away 32, then finds 32 more. How many bagels does he have?",
+          answer: "67 bagels",
         },
         {
           level: 1,
-          text: "There are 12 fries on each of 2 plates. How many fries is that total?",
-          answer: "24 fries",
-        },
-        {
-          level: 1,
-          text: "Daphne has 9 cookies and gets 32 more. How many cookies does she have?",
-          answer: "41 cookies",
+          text: "Bob has 32 bagels, gets 67 more, then gives away 32. How many bagels are left?",
+          answer: "67 bagels",
         },
         {
           level: 2,
-          text: "A basket has 32 strawberries. Daphne shares 10. How many are left?",
-          answer: "22 strawberries",
+          text: "Bob has 32 bagels, gets 67 more, then eats 32. How many bagels are left?",
+          answer: "67 bagels",
         },
         {
           level: 2,
-          text: "Three friends split 27 nuggets equally. How many nuggets does each person get?",
-          answer: "9 nuggets",
-        },
-        {
-          level: 2,
-          text: "Daphne stacks 25 pancakes and adds 42 more. How many pancakes are there?",
-          answer: "67 pancakes",
+          text: "Bob has 67 bagels, buys 32, then gives away 67. How many remain?",
+          answer: "32 bagels",
         },
         {
           level: 3,
-          text: "Daphne sets out 32 tater tots and puts 8 on each plate. Then she makes 1 more full plate with 8 more tots. How many plates can she fill?",
-          answer: "5 plates",
+          text: "Bob has 67 bagels, buys 32 more, then gives 67 to friends. How many remain?",
+          answer: "32 bagels",
         },
         {
           level: 3,
-          text: "A table has 18 tacos, and 7 more arrive. Then 5 get eaten. How many tacos are left?",
-          answer: "20 tacos",
-        },
-        {
-          level: 3,
-          text: "Daphne has 67 fries and gives 19 to Dexter. Then she eats 4 more. How many fries does she still have?",
-          answer: "44 fries",
+          text: "Bob has 32 bagels, buys 67, then another 32 go missing. How many remain?",
+          answer: "67 bagels",
         },
         {
           level: 4,
-          text: "Four friends each get 16 mozzarella sticks. How many sticks did they get total?",
-          answer: "64 mozzarella sticks",
+          text: "Bob has 67 bagels in one box and 32 in another, then doubles the 32-bagel box. How many bagels is that?",
+          answer: "131 bagels",
         },
         {
           level: 4,
-          text: "Daphne bakes 67 cookies and packs them into bags of 10. How many full bags can she make?",
-          answer: "6 full bags",
-        },
-        {
-          level: 4,
-          text: "A cart has 32 juice boxes on each of 3 shelves. How many juice boxes are there?",
-          answer: "96 juice boxes",
+          text: "Bob has 67 bagels, gets 67 more, then gives away 32. How many bagels does he have?",
+          answer: "102 bagels",
         },
         {
           level: 5,
-          text: "Daphne has 32 cupcakes in each of 3 boxes, then buys 7 more. How many cupcakes does she have?",
-          answer: "103 cupcakes",
+          text: "Bob has 67 bagels, adds 32, gets another 67, but 32 are stale. How many good bagels are left?",
+          answer: "134 bagels",
         },
         {
           level: 5,
-          text: "A tray holds 67 wings. Another tray has 24. Then 9 wings get eaten. How many remain?",
-          answer: "82 wings",
-        },
-        {
-          level: 5,
-          text: "Daphne pours 48 drinks and then makes 19 more. How many drinks did she make total?",
-          answer: "67 drinks",
+          text: "Bob has 32 bagels in each of 2 boxes, then gets 67 more. How many bagels does he have?",
+          answer: "131 bagels",
         },
       ];
 
@@ -1224,10 +1026,6 @@
       const resultBox = document.querySelector("#resultBox");
       const nextNote = document.querySelector("#nextNote");
       const confettiLayer = document.querySelector("#confettiLayer");
-      const historyButton = document.querySelector("#historyButton");
-      const historyPanel = document.querySelector("#historyPanel");
-      const historySummary = document.querySelector("#historySummary");
-      const historyList = document.querySelector("#historyList");
       const buttons = [...document.querySelectorAll(".answer-button")];
       let state = loadState();
       let isSpinning = false;
@@ -1246,7 +1044,6 @@
             levels: saved?.levels || {},
             rerolls: saved?.rerolls || {},
             wheels: saved?.wheels || {},
-            history: Array.isArray(saved?.history) ? saved.history : [],
           };
         } catch {
           return {
@@ -1255,7 +1052,6 @@
             levels: {},
             rerolls: {},
             wheels: {},
-            history: [],
           };
         }
       }
@@ -1372,79 +1168,12 @@
         const fallback = bank.find((item) => item.level === DEFAULT_LEVEL) || bank[0];
         const offset = Number(state.rerolls[QUESTION_DAY_ID]) || 0;
         if (!candidates.length) return fallback;
-        const dayOffset = QUESTION_DAY_NUMBER % candidates.length;
-        return candidates[(dayOffset + offset) % candidates.length];
+        return candidates[offset % candidates.length];
       }
 
       function getQuestionCount(type, level) {
         const bank = type === "word" || type === "pushups" ? WORD_PROBLEMS : NUMBER_PROBLEMS;
         return bank.filter((item) => item.level === clampLevel(level)).length;
-      }
-
-      function outcomeLabel(outcome) {
-        if (outcome === "right") return "Right first try";
-        if (outcome === "hint") return "Needed a hint";
-        if (outcome === "wrong") return "Really struggled";
-        return String(outcome || "Unknown");
-      }
-
-      function renderHistory() {
-        const currentLevel = ensureDailyLevel();
-        historySummary.textContent = `Current tracked level: Dinner level ${currentLevel}.`;
-        historyList.innerHTML = "";
-        const entries = Array.isArray(state.history) ? [...state.history].reverse() : [];
-        if (!entries.length) {
-          const empty = document.createElement("p");
-          empty.className = "history-empty";
-          empty.textContent = "No past dinner questions saved yet.";
-          historyList.appendChild(empty);
-          return;
-        }
-
-        entries.forEach((entry) => {
-          const outcome = String(entry?.outcome || "");
-          const item = document.createElement("article");
-          item.className = "history-item";
-          item.innerHTML = `
-            <div class="history-item-head">
-              <span class="history-item-date">${entry?.dateLabel || "Dinner question"}</span>
-              <span class="history-item-outcome ${outcome}">${outcomeLabel(outcome)}</span>
-            </div>
-            <p class="history-item-text">${entry?.questionText || "Question text unavailable."}</p>
-            <div class="history-item-meta">${entry?.typeLabel || "Question"} · Level ${entry?.level || "?"} · Answer: ${entry?.answer || "Unknown"}</div>
-          `;
-          historyList.appendChild(item);
-        });
-      }
-
-      function recordHistoryEntry({ outcome, type, question, level }) {
-        const wheelType = WHEEL_TYPES[type] || WHEEL_TYPES.number;
-        const entry = {
-          dayId: QUESTION_DAY_ID,
-          dateLabel: QUESTION_DATE_LABEL,
-          outcome,
-          type,
-          typeLabel: wheelType.label,
-          level,
-          questionText: question?.text || "",
-          answer: question?.answer || "",
-          updatedAt: new Date().toISOString(),
-        };
-        const history = Array.isArray(state.history) ? [...state.history] : [];
-        const existingIndex = history.findIndex((item) => item.dayId === QUESTION_DAY_ID);
-        if (existingIndex >= 0) {
-          history[existingIndex] = entry;
-        } else {
-          history.push(entry);
-        }
-        state.history = history.slice(-30);
-      }
-
-      function toggleHistory() {
-        const visible = !historyPanel.classList.contains("visible");
-        historyPanel.classList.toggle("visible", visible);
-        historyButton.setAttribute("aria-expanded", String(visible));
-        historyButton.textContent = visible ? "Hide past questions" : "Show past questions";
       }
 
       function formatWheelResult(type) {
@@ -1595,10 +1324,6 @@
       function pickOutcome(outcome) {
         const info = OUTCOMES[outcome];
         if (!info || !ANSWER_OUTCOMES.has(outcome)) return;
-        const wheelData = normalizeWheelRoll(state.wheels[QUESTION_DAY_ID]);
-        const type = wheelData?.type || "number";
-        const level = ensureDailyLevel();
-        const question = getQuestion(type, level);
 
         const alreadyAnswered = Boolean(state.answers[QUESTION_DAY_ID]);
         if (!alreadyAnswered) {
@@ -1607,12 +1332,10 @@
 
         state.answers[QUESTION_DAY_ID] = {
           outcome,
-          level,
+          level: ensureDailyLevel(),
           answeredAt: new Date().toISOString(),
         };
-        recordHistoryEntry({ outcome, type, question, level });
         saveState();
-        renderHistory();
         showResult(outcome, true);
       }
 
@@ -1667,13 +1390,11 @@
       openQuestionButton.addEventListener("click", () => revealQuestion(false));
       iphoneToggle.addEventListener("click", togglePhonePreview);
       rerollButton.addEventListener("click", loadAnotherQuestion);
-      historyButton.addEventListener("click", toggleHistory);
       buttons.forEach((button) => {
         button.addEventListener("click", () => pickOutcome(button.dataset.outcome));
       });
 
       setPhonePreview(loadPhonePreview());
-      renderHistory();
       showWheelIntro();
     })();
   </script>

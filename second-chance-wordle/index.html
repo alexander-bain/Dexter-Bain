@@ -680,28 +680,6 @@
         "VOICE", "WASTE", "WATCH", "WATER", "WHEEL", "WHERE", "WHICH", "WHILE", "WHITE", "WHOLE",
         "WHOSE", "WOMAN", "WORLD", "WORRY", "WORTH", "WOULD", "WRITE", "WRONG", "YOUNG", "YOUTH"
       ];
-      const DAILY_EXTRA_WORDS = [
-        "ABACK", "ABBEY", "ABODE", "ABORT", "ABUSE", "ADAPT", "ADULT", "AGILE", "AGLOW", "AGONY",
-        "ALIBI", "ALIGN", "ALIKE", "ALLOT", "ALLOY", "ALONG", "ALOOF", "ALOUD", "ALPHA", "ALTAR",
-        "AMAZE", "AMBER", "AMBLE", "AMEND", "AMISS", "AMPLE", "AMPLY", "AMUSE", "ANGEL", "ANGER",
-        "ANGLE", "ANGRY", "ANKLE", "ANNEX", "ANODE", "ANTIC", "ANTSY", "APART", "APNEA", "APRON",
-        "APTLY", "ARBOR", "ARMOR", "AROMA", "ARROW", "ARSON", "ASIDE", "ASSET", "ATLAS", "ATONE",
-        "ATTIC", "AWAIT", "AWAKE", "AWFUL", "AXIAL", "BACON", "BAGEL", "BALMY", "BANAL", "BANJO",
-        "BARGE", "BARON", "BASIL", "BASIN", "BASTE", "BATCH", "BATHE", "BATON", "BEARD", "BEAST",
-        "BEECH", "BEEFY", "BEIGE", "BELCH", "BELIE", "BELLE", "BELLY", "BERET", "BERRY", "BINGE",
-        "BINGO", "BIOME", "BISON", "BLAST", "BLAZE", "BLEAK", "BLEAR", "BLEAT", "BLEED", "BLEEP",
-        "BLIMP", "BLIND", "BLINK", "BLISS", "BLITZ", "BLOAT", "BLOOD", "BLOWN", "BLUFF", "BLUNT",
-        "BLURB", "BLURT", "BLUSH", "BOAST", "BOBBY", "BONUS", "BOOTH", "BOOTY", "BOOZE", "BOXER",
-        "BRACE", "BRAID", "BRAKE", "BRAND", "BRASH", "BRASS", "BRAWN", "BRAWL", "BRAZE", "BRIAR",
-        "BRIBE", "BRIDE", "BRIEF", "BRINE", "BRINK", "BRISK", "BROIL", "BROOD", "BROOK", "BROOM",
-        "BROTH", "BUNCH", "BUNNY", "BURST", "BUTCH", "BUYER", "CABIN", "CACAO", "CACHE", "CADET",
-        "CAMEL", "CANAL", "CANOE", "CANON", "CAPER", "CARGO", "CAROL", "CARVE", "CASTE", "CATER",
-        "CAULK", "CEDAR", "CHAFE", "CHANT", "CHAOS", "CHARD", "CHARM", "CHASM", "CHEAT", "CHEEK",
-        "CHEER", "CHESS", "CHICK", "CHIDE", "CHILI", "CHILL", "CHIME", "CHINA", "CHIRP", "CHOCK",
-        "CHOIR", "CHOKE", "CHORD", "CHORE", "CHOSE", "CHUCK", "CHUMP", "CHUNK", "CHURN", "CHUTE",
-        "CIDER", "CIGAR", "CINCH", "CIRCA", "CIVIL", "CLAIM", "CLAMP", "CLANG", "CLANK", "CLASH",
-        "CLASP", "CLEAT", "CLEFT", "CLERK", "CLICK", "CLIFF", "CLING", "CLINK", "CLONE", "CLOUT"
-      ];
       const EXTRA_GUESSES = [
         "AAHED", "AALII", "AARGH", "ABACA", "ABACI", "ABACS", "ABAFT", "ABAKA", "ABAMP", "ABAYA",
         "ABBES", "ABDAL", "ABELE", "ABHOR", "ABIDE", "ABIES", "ABJAD", "ABLET", "ABMHO", "ABNET",
@@ -732,23 +710,10 @@
 
       const ROWS = 6;
       const COLS = 5;
-      const DAILY_WORD_ANCHOR_DATE = "2026-05-22";
-      const DAILY_WORD_ANCHOR = "TRICK";
-      const DAILY_WORD_STEP = 137;
+      // Change these when Dexter asks for the next daily word.
+      const DAILY_PUZZLE = { id: "2026-05-19-today", word: "TODAY" };
       const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
-      const JOHN_WORDS = [
-        "LUCKY", "BLAZE", "COMET", "RIVER", "SPARK", "GHOST", "CANDY", "BRICK",
-        "CLOVE", "CLOWN", "CLUCK", "CLUMP", "CLUNG", "COCOA", "COLON", "COMIC", "COMMA", "CONCH",
-        "CONDO", "COPSE", "CORAL", "CORER", "CORNY", "COUCH", "COUGH", "COVEN", "COVET", "COVEY",
-        "COWER", "COYLY", "CRACK", "CRAFT", "CRAMP", "CRANE", "CRANK", "CRATE", "CRAVE", "CRAWL",
-        "CRAZE", "CRAZY", "CREAK", "CREAM", "CREEP", "CREPE", "CREST", "CRICK", "CRIED", "CRIME",
-        "CRIMP", "CROAK", "CROCK", "CRONY", "CROUP", "CRUDE", "CRUEL", "CRUMB", "CRUSH", "CRUST",
-        "CRYPT", "CUBIC", "CURLY", "CURVE", "CURVY", "CUTIE", "CYBER", "CYCLE", "CYNIC", "DAILY",
-        "DAIRY", "DAISY", "DANDY", "DENSE", "DEITY", "DELTA", "DEMON", "DENIM", "DETOX", "DEVIL",
-        "DIGIT", "DINER", "DINGO", "DISCO", "DITTO", "DIZZY", "DODGE", "DOGMA", "DOILY", "DONOR",
-        "DONUT", "DOPEY", "DOUGH", "DOWEL", "DOWNY", "DOZEN", "DRAIN", "DRAKE", "DRAMA", "DRAWL",
-        "DRAWN", "DREAD", "DRIER", "DRIFT", "DRILL", "DROID", "DRONE", "DROWN", "DRUID", "DRUNK"
-      ];
+      const JOHN_WORDS = ["LUCKY", "BLAZE", "COMET", "RIVER", "SPARK", "GHOST", "CANDY", "BRICK"];
       const RESET_CODE = "CENA";
       const ALT_WORD_CODE = "JOHN";
       const RESET_STATS_CODE = "DEX";
@@ -756,10 +721,8 @@
       const STATS_KEY = "second-chance-wordle-stats-v2";
       const LEGACY_STATS_KEY = "second-chance-wordle-stats-v1";
       const PROGRESS_KEY = "second-chance-wordle-progress-v1";
-      const ACTIVE_PUZZLE_KEY = "second-chance-wordle-active-puzzle-v1";
       const DICTIONARY_DATA = window.SECOND_CHANCE_DICTIONARIES || { guesses: [], fourLetterBases: [] };
-      const DAILY_ANSWER_WORDS = [...WORDS, ...DAILY_EXTRA_WORDS];
-      const WORD_LIST = new Set([...DAILY_ANSWER_WORDS, ...JOHN_WORDS, ...EXTRA_GUESSES, ...DICTIONARY_DATA.guesses]);
+      const WORD_LIST = new Set([...WORDS, ...EXTRA_GUESSES, ...DICTIONARY_DATA.guesses]);
       const FOUR_LETTER_BASES = new Set(DICTIONARY_DATA.fourLetterBases || []);
       const board = document.querySelector("#board");
       const keyboard = document.querySelector("#keyboard");
@@ -777,7 +740,6 @@
       const rank = { absent: 1, present: 2, correct: 3 };
       const keyState = {};
       const confettiColors = ["#6aaa64", "#c9b458", "#787c7e", "#f97316", "#2563eb", "#e11d48"];
-      const DAILY_PUZZLE = getDailyPuzzle();
       let currentPuzzle = DAILY_PUZZLE;
       let answer = currentPuzzle.word;
       let currentRow = 0;
@@ -790,48 +752,6 @@
       let keys = {};
       let stats = loadStats();
       let progress = loadProgress();
-
-      function todayKey() {
-        return pacificDateParts().id;
-      }
-
-      function pacificDateParts(date = new Date()) {
-        const parts = new Intl.DateTimeFormat("en-CA", {
-          timeZone: "America/Los_Angeles",
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        }).formatToParts(date);
-        const lookup = Object.fromEntries(parts.filter((part) => part.type !== "literal").map((part) => [part.type, part.value]));
-        return {
-          year: Number(lookup.year),
-          month: Number(lookup.month),
-          day: Number(lookup.day),
-          id: `${lookup.year}-${lookup.month}-${lookup.day}`,
-        };
-      }
-
-      function daysSincePacificDate(anchorId, currentId) {
-        const anchorDate = new Date(`${anchorId}T12:00:00Z`);
-        const currentDate = new Date(`${currentId}T12:00:00Z`);
-        return Math.round((currentDate - anchorDate) / 86400000);
-      }
-
-      function wrapIndex(index, length) {
-        return ((index % length) + length) % length;
-      }
-
-      function getDailyPuzzle() {
-        const today = pacificDateParts();
-        const anchorIndex = DAILY_ANSWER_WORDS.indexOf(DAILY_WORD_ANCHOR);
-        const safeAnchorIndex = anchorIndex >= 0 ? anchorIndex : 0;
-        const dayOffset = daysSincePacificDate(DAILY_WORD_ANCHOR_DATE, today.id);
-        const word = DAILY_ANSWER_WORDS[wrapIndex(safeAnchorIndex + dayOffset * DAILY_WORD_STEP, DAILY_ANSWER_WORDS.length)];
-        return {
-          id: `${today.id}-${word.toLowerCase()}`,
-          word,
-        };
-      }
 
       function buildBoard() {
         board.innerHTML = "";
@@ -1010,31 +930,6 @@
         return johnPuzzleAt(Number.isFinite(suffix) ? suffix : 0);
       }
 
-      function loadActivePuzzle() {
-        try {
-          const saved = JSON.parse(localStorage.getItem(ACTIVE_PUZZLE_KEY) || "null");
-          if (saved?.dayKey !== todayKey()) return DAILY_PUZZLE;
-          return getPuzzleById(saved?.puzzleId) || DAILY_PUZZLE;
-        } catch {
-          return DAILY_PUZZLE;
-        }
-      }
-
-      function saveActivePuzzle(puzzle = currentPuzzle) {
-        try {
-          if (isJohnPuzzleId(puzzle?.id)) {
-            localStorage.setItem(ACTIVE_PUZZLE_KEY, JSON.stringify({
-              dayKey: todayKey(),
-              puzzleId: puzzle.id,
-            }));
-            return;
-          }
-          localStorage.removeItem(ACTIVE_PUZZLE_KEY);
-        } catch {
-          // Active puzzle persistence is optional when storage is blocked.
-        }
-      }
-
       function nextJohnPuzzle() {
         const currentIndex = isJohnPuzzleId(currentPuzzle.id) ? currentPuzzle.johnIndex || 0 : -1;
         return johnPuzzleAt(currentIndex + 1);
@@ -1065,7 +960,6 @@
 
       function freshProgress(puzzle = currentPuzzle) {
         return {
-          dayKey: todayKey(),
           puzzleId: puzzle.id,
           word: puzzle.word,
           guesses: [],
@@ -1076,19 +970,9 @@
 
       function loadProgress() {
         try {
-          const activePuzzle = loadActivePuzzle();
           const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "null");
           const savedPuzzle = getPuzzleById(saved?.puzzleId);
-          const savedDayKey = typeof saved?.dayKey === "string" ? saved.dayKey : "";
-          const sameDay = savedDayKey === todayKey();
-          const restoreLegacyDaily = !savedDayKey && saved?.puzzleId === DAILY_PUZZLE.id && saved?.word === DAILY_PUZZLE.word;
-          const restoreCurrentDaily = saved?.puzzleId === DAILY_PUZZLE.id && saved?.word === DAILY_PUZZLE.word && (sameDay || restoreLegacyDaily);
-          const restoreCurrentJohn = isJohnPuzzleId(saved?.puzzleId) && savedPuzzle && saved?.word === savedPuzzle.word && sameDay;
-          if (!restoreCurrentDaily && !restoreCurrentJohn) {
-            currentPuzzle = activePuzzle;
-            answer = currentPuzzle.word;
-            return freshProgress(currentPuzzle);
-          }
+          if (!savedPuzzle || saved.word !== savedPuzzle.word) return freshProgress(DAILY_PUZZLE);
           currentPuzzle = savedPuzzle;
           answer = currentPuzzle.word;
           const guesses = (saved.guesses || []).filter((guess) => /^[A-Z]{5}$/.test(guess)).slice(0, ROWS);
@@ -1096,7 +980,6 @@
           const won = lastGuess === currentPuzzle.word;
           const doneGame = Boolean(saved.done || won || guesses.length >= ROWS);
           return {
-            dayKey: sameDay ? savedDayKey : todayKey(),
             puzzleId: currentPuzzle.id,
             word: currentPuzzle.word,
             guesses,
@@ -1146,7 +1029,6 @@
         answer = currentPuzzle.word;
         progress = freshProgress(currentPuzzle);
         if (clearRecordedResult) removeCurrentResultFromStats();
-        saveActivePuzzle(currentPuzzle);
         saveProgress();
         Object.keys(keyState).forEach((letter) => delete keyState[letter]);
         currentRow = 0;
@@ -1167,13 +1049,6 @@
 
       function switchToJohnPuzzle() {
         beginPuzzle(nextJohnPuzzle(), "New word", false);
-      }
-
-      function syncDailyPuzzle(forceToast = false) {
-        const latestDailyPuzzle = getDailyPuzzle();
-        const onCustomPuzzle = isJohnPuzzleId(currentPuzzle?.id);
-        if (onCustomPuzzle || currentPuzzle?.id === latestDailyPuzzle.id) return;
-        beginPuzzle(latestDailyPuzzle, forceToast ? "New daily word" : "Fresh start", false);
       }
 
       function updateStatsPanel() {
@@ -1401,12 +1276,9 @@
 
       function startGame() {
         Object.keys(keyState).forEach((letter) => delete keyState[letter]);
-        currentPuzzle = loadActivePuzzle();
+        currentPuzzle = DAILY_PUZZLE;
         answer = currentPuzzle.word;
         progress = loadProgress();
-        syncDailyPuzzle(false);
-        saveActivePuzzle(currentPuzzle);
-        saveProgress();
         currentRow = 0;
         currentGuess = "";
         done = false;
@@ -1435,13 +1307,6 @@
         if (event.key === "Backspace") press("<");
         if (event.key === "Enter") press("ENTER");
       });
-
-      document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "visible") syncDailyPuzzle(true);
-      });
-
-      window.addEventListener("focus", () => syncDailyPuzzle(true));
-      window.addEventListener("pageshow", () => syncDailyPuzzle(true));
 
       startGame();
     })();
