@@ -379,6 +379,10 @@
           <span>Score</span>
         </div>
         <div class="readout">
+          <b id="bestText">0</b>
+          <span>Best</span>
+        </div>
+        <div class="readout">
           <b id="speedText">0</b>
           <span>MPH</span>
         </div>
@@ -460,6 +464,7 @@
     function startGame(THREE) {
       const hud = {
         score: document.getElementById("scoreText"),
+        best: document.getElementById("bestText"),
         speed: document.getElementById("speedText"),
         wanted: document.getElementById("wantedText"),
         health: document.getElementById("healthText"),
@@ -473,7 +478,7 @@
       const gameShell = document.getElementById("gameShell");
 
       const scene = new THREE.Scene();
-      scene.fog = new THREE.Fog(0x98d8ff, 44, 142);
+      scene.fog = new THREE.Fog(0xaee3ff, 24, 96);
 
       function readStoredNumber(key, fallback = 0) {
         try {
@@ -491,7 +496,7 @@
         }
       }
 
-      const camera = new THREE.PerspectiveCamera(68, window.innerWidth / window.innerHeight, 0.1, 220);
+      const camera = new THREE.PerspectiveCamera(64, window.innerWidth / window.innerHeight, 0.1, 165);
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance", preserveDrawingBuffer: true });
       renderer.setClearColor(0x000000, 0);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -579,6 +584,7 @@
         wanted: 0,
         escapeTimer: 0,
         nextLane: 0,
+        policeSerial: 0,
       };
 
       function trafficPressure() {
@@ -589,12 +595,16 @@
         return 66 + Math.floor(trafficPressure() * 34);
       }
 
+      function chasePressure() {
+        return Math.min(34, state.wanted * 1.1 + state.score / 1350);
+      }
+
       function targetPoliceCount() {
-        return state.wanted > 0 ? Math.max(1, Math.ceil(state.wanted * 1.25)) : 0;
+        return state.wanted > 0 ? Math.max(1, Math.floor(state.wanted * 1.12 + state.score / 4200)) : 0;
       }
 
       function wantedPressure() {
-        return Math.min(state.wanted, 22);
+        return Math.min(chasePressure(), 30);
       }
 
       const road = new THREE.Group();
@@ -602,7 +612,7 @@
 
       const roadMat = new THREE.MeshStandardMaterial({ color: 0x171b23, roughness: 0.88, metalness: 0.04 });
       const shoulderMat = new THREE.MeshStandardMaterial({ color: 0x42512f, roughness: 0.92 });
-      const stripeMat = new THREE.MeshStandardMaterial({ color: 0xf7f7f2, roughness: 0.5, emissive: 0xffffdd, emissiveIntensity: 0.06 });
+      const stripeMat = new THREE.MeshStandardMaterial({ color: 0xf0f4f8, roughness: 0.62, emissive: 0xffffdd, emissiveIntensity: 0.015 });
       const railMat = new THREE.MeshStandardMaterial({ color: 0xb4becd, roughness: 0.28, metalness: 0.32 });
       const curbMat = new THREE.MeshStandardMaterial({ color: 0xffd166, roughness: 0.56, emissive: 0xff9f1c, emissiveIntensity: 0.07 });
       const reflectorMat = new THREE.MeshStandardMaterial({ color: 0x7dd3fc, roughness: 0.24, emissive: 0x38bdf8, emissiveIntensity: 0.72 });
@@ -764,15 +774,19 @@
           }
 
           for (const x of laneStripeOffsets) {
-            for (let j = 0; j < 2; j += 1) {
-              const stripe = box(0.18, 0.035, 4.2, stripeMat, x, 0.035, z - 3 + j * 6);
+            const outerStripe = Math.abs(x) > laneWidth * 3.4;
+            if (outerStripe && i % 2 === 1) continue;
+            const dashCount = outerStripe ? 1 : 2;
+            const dashLength = outerStripe ? 3.0 : 3.9;
+            for (let j = 0; j < dashCount; j += 1) {
+              const stripe = box(0.16, 0.032, dashLength, stripeMat, x, 0.035, z - 3 + j * 6);
               road.add(stripe);
               stripes.push(stripe);
             }
           }
 
           for (const x of [-railX + 0.32, railX - 0.32]) {
-            for (let j = 0; j < 2; j += 1) {
+            for (let j = 0; j < 1; j += 1) {
               const reflector = box(0.16, 0.08, 0.52, reflectorMat, x, 0.11, z - 3 + j * 6);
               road.add(reflector);
               roadBits.push(reflector);
@@ -784,7 +798,7 @@
             road.add(rail);
             roadBits.push(rail);
 
-            for (let j = 0; j < 2; j += 1) {
+            for (let j = 0; j < 1; j += 1) {
               const post = box(0.2, 0.92, 0.2, shadowMat, x, 0.5, z - 3 + j * 6);
               road.add(post);
               roadBits.push(post);
@@ -869,14 +883,21 @@
       }
 
       function makeAmbulance() {
-        const ambulance = makeCar(0xffffff, 0x1d4ed8);
-        const redMat = new THREE.MeshStandardMaterial({ color: 0xef4444, emissive: 0xef4444, emissiveIntensity: 0.8, roughness: 0.24 });
-        const cyanMat = new THREE.MeshStandardMaterial({ color: 0x7dd3fc, emissive: 0x7dd3fc, emissiveIntensity: 0.78, roughness: 0.22 });
-        ambulance.add(box(0.18, 0.44, 2.26, redMat, -0.64, 0.72, 0));
-        ambulance.add(box(0.18, 0.44, 2.26, redMat, 0.64, 0.72, 0));
-        ambulance.add(box(0.86, 0.16, 0.2, cyanMat, 0, 1.24, 0.06));
-        ambulance.add(box(0.42, 0.14, 0.14, redMat, 0, 0.82, -0.96));
-        ambulance.scale.set(1.04, 1.08, 1.2);
+        const ambulance = makeCar(0xdc2626, 0xfef2f2);
+        const redMat = new THREE.MeshStandardMaterial({ color: 0xb91c1c, emissive: 0x991b1b, emissiveIntensity: 0.36, roughness: 0.34 });
+        const brightRedMat = new THREE.MeshStandardMaterial({ color: 0xef4444, emissive: 0xef4444, emissiveIntensity: 0.9, roughness: 0.2 });
+        const whiteMat = new THREE.MeshStandardMaterial({ color: 0xfff7ed, emissive: 0xffffff, emissiveIntensity: 0.16, roughness: 0.32 });
+        const amberMat = new THREE.MeshStandardMaterial({ color: 0xfbbf24, emissive: 0xf59e0b, emissiveIntensity: 1.1, roughness: 0.18 });
+        ambulance.add(box(1.72, 0.88, 2.32, redMat, 0, 0.95, 0.28));
+        ambulance.add(box(1.54, 0.72, 0.92, redMat, 0, 0.88, -1.02));
+        ambulance.add(box(1.02, 0.18, 0.12, whiteMat, 0, 1.44, 0.44));
+        ambulance.add(box(0.18, 0.66, 0.12, whiteMat, 0, 1.44, 0.44));
+        ambulance.add(box(0.12, 0.62, 0.82, whiteMat, -0.92, 0.98, 0.26));
+        ambulance.add(box(0.12, 0.62, 0.82, whiteMat, 0.92, 0.98, 0.26));
+        ambulance.add(box(0.72, 0.2, 0.24, amberMat, 0, 1.5, -0.58));
+        ambulance.add(box(0.36, 0.18, 0.18, brightRedMat, -0.48, 1.5, -0.58));
+        ambulance.add(box(0.36, 0.18, 0.18, brightRedMat, 0.48, 1.5, -0.58));
+        ambulance.scale.set(1.32, 1.28, 1.68);
         return ambulance;
       }
 
@@ -958,8 +979,8 @@
           scene.add(cloud);
         }
 
-        for (let i = 0; i < 18; i += 1) {
-          const z = -38 - i * 23;
+        for (let i = 0; i < 12; i += 1) {
+          const z = -44 - i * 34;
           const leftHill = new THREE.Mesh(new THREE.ConeGeometry(8 + Math.random() * 5, 6 + Math.random() * 6, 7), i % 2 ? darkHillMat : hillMat);
           leftHill.position.set(-(sceneryFarX + 8 + Math.random() * 14), 2.3, z);
           leftHill.rotation.y = Math.random() * Math.PI;
@@ -973,9 +994,9 @@
           track(rightHill);
         }
 
-        for (let i = 0; i < 58; i += 1) {
+        for (let i = 0; i < 38; i += 1) {
           const side = i % 2 === 0 ? -1 : 1;
-          const z = -10 - i * 7.3;
+          const z = -10 - i * 12.4;
           if (i % 4 === 0) {
             makeLamp(side * (roadHalfWidth + 3.8), z);
           } else if (i % 5 === 0) {
@@ -987,7 +1008,7 @@
             const building = box(2 + Math.random() * 2.7, height, 2 + Math.random() * 4.4, i % 4 === 1 ? towerMat : buildingMat, side * (sceneryNearX + 6 + Math.random() * 18), height / 2 - 0.08, z);
             building.castShadow = false;
             track(building);
-            if (i % 2 === 0) {
+            if (i % 6 === 0) {
               const glow = box(0.7 + Math.random() * 0.7, 0.14, 0.08, windowMat, building.position.x, height * 0.68, z + 1.08);
               glow.castShadow = false;
               track(glow);
@@ -1013,7 +1034,9 @@
           car.scale.set(1.12, 1.12, 1.42);
         }
         car.userData.kind = isAmbulance ? "ambulance" : isTruck ? "truck" : "traffic";
-        car.userData.speed = isAmbulance ? 24 + Math.random() * 18 : 5 + Math.random() * 18;
+        car.userData.speed = isAmbulance
+          ? Math.max(58, Math.abs(state.speed) + 18 + Math.random() * 20)
+          : 5 + Math.random() * 18;
         car.userData.hit = false;
         car.userData.width = carSize.width * car.scale.x;
         car.userData.length = carSize.length * car.scale.z;
@@ -1036,23 +1059,37 @@
         if (police.length >= targetPoliceCount()) return;
         const car = makePoliceCar();
         const pressure = wantedPressure();
-        car.userData.speed = Math.abs(state.speed) + 2.8 + pressure * 0.75 + Math.random() * 1.8;
+        const spawnIndex = state.policeSerial;
+        state.policeSerial += 1;
+        const formationX = [-10.8, 10.8, -5.4, 5.4, 0, -13.5, 13.5];
+        const formationZ = [0, 8, 15, 23, 31, 40];
+        car.userData.chaseOffsetX = formationX[spawnIndex % formationX.length] + (Math.random() - 0.5) * 1.4;
+        car.userData.chaseOffsetZ = formationZ[spawnIndex % formationZ.length] + Math.random() * 3;
+        car.userData.skill = Math.min(1, (state.score / 12000) + (state.wanted / 18));
+        car.userData.speed = Math.abs(state.speed) + 3.4 + pressure * 0.9 + car.userData.skill * 8 + Math.random() * 2.6;
         car.userData.width = carSize.width * 1.06;
         car.userData.length = carSize.length * 1.06;
         car.userData.hitCooldown = 0;
         car.userData.mode = "approach";
-        car.userData.modeTimer = 0.9 + Math.random() * 0.35;
+        car.userData.modeTimer = Math.max(0.45, 0.95 - car.userData.skill * 0.3) + Math.random() * 0.35;
         car.userData.recoverTimer = 0;
-        car.userData.attackSide = Math.random() > 0.5 ? 1 : -1;
-        car.userData.speedBias = (Math.random() - 0.5) * 1.8;
+        car.userData.attackSide = Math.sign(car.userData.chaseOffsetX) || (Math.random() > 0.5 ? 1 : -1);
+        car.userData.speedBias = (Math.random() - 0.5) * 2.2 + car.userData.skill * 4.5;
         car.userData.steerAngle = 0;
         car.userData.headingOffset = 0;
         car.userData.motionHeadingOffset = 0;
         car.userData.targetRoadX = state.x;
         car.userData.targetRoadZ = state.z + 8;
         car.userData.tagCooldown = 0;
-        const sideOffset = (Math.random() - 0.5) * 8.8;
-        setRoadActor(car, Math.max(bounds.left, Math.min(bounds.right, state.x + sideOffset)), 42 + Math.random() * 34, 0);
+        let spawnX = state.x + car.userData.chaseOffsetX + (Math.random() - 0.5) * 1.2;
+        let spawnZ = state.z + 38 + car.userData.chaseOffsetZ + Math.random() * 4;
+        for (const other of police) {
+          if (Math.abs(other.userData.roadX - spawnX) < 3.6 && Math.abs(other.userData.roadZ - spawnZ) < 15) {
+            spawnZ += 16;
+            spawnX += spawnX > 0 ? 2.4 : -2.4;
+          }
+        }
+        setRoadActor(car, THREE.MathUtils.clamp(spawnX, bounds.left, bounds.right), spawnZ, 0);
         police.push(car);
         scene.add(car);
       }
@@ -1130,7 +1167,7 @@
         }
 
         for (const item of sceneryBits) {
-          advanceRouteObject(item, scroll, 58, roadLoopLength, 1);
+          advanceRouteObject(item, scroll, 58, roadLoopLength, 0.45);
         }
 
         for (const cloud of clouds) {
@@ -1166,7 +1203,7 @@
           state.policeTimer -= dt;
           if (state.policeTimer <= 0) {
             spawnPolice();
-            state.policeTimer = Math.max(0.42, 3.4 / Math.sqrt(Math.max(1, state.wanted)));
+            state.policeTimer = Math.max(0.35, 3.2 / Math.sqrt(Math.max(1, state.wanted + state.score / 2800))) + Math.random() * 0.32;
           }
 
           state.escapeTimer -= dt;
@@ -1187,43 +1224,59 @@
           car.userData.tagCooldown = Math.max(0, car.userData.tagCooldown - dt);
           const dzToPlayer = state.z - car.userData.roadZ;
           const dxToPlayer = state.x - car.userData.roadX;
-          const playerTrendX = state.x + state.steerAngle * 2.2 + Math.sin(state.motionHeadingOffset) * 1.4;
-          const playerTrendZ = state.z - Math.cos(state.motionHeadingOffset) * 2.4;
+          car.userData.skill = Math.min(1.4, Math.max(car.userData.skill || 0, (state.score / 11500) + (state.wanted / 20)));
+          const skill = car.userData.skill;
+          const playerTrendX = state.x + state.steerAngle * (2.2 + skill * 2.4) + Math.sin(state.motionHeadingOffset) * (1.4 + skill * 2.1);
+          const playerTrendZ = state.z - Math.cos(state.motionHeadingOffset) * (2.4 + skill * 4.2);
 
           if (car.userData.mode === "recover") {
             car.userData.recoverTimer -= dt;
-            car.userData.targetRoadX = state.x + car.userData.attackSide * 3.2;
-            car.userData.targetRoadZ = state.z + 10;
+            car.userData.targetRoadX = state.x + car.userData.attackSide * (3.2 + skill * 1.4) + car.userData.chaseOffsetX * 0.28;
+            car.userData.targetRoadZ = state.z + 10 + skill * 2;
             if (car.userData.recoverTimer <= 0) {
               car.userData.mode = "approach";
-              car.userData.modeTimer = 0.85 + Math.random() * 0.35;
+              car.userData.modeTimer = Math.max(0.45, 0.85 - skill * 0.24) + Math.random() * 0.35;
             }
           } else if (car.userData.mode === "attack") {
             car.userData.modeTimer -= dt;
-            car.userData.targetRoadX = playerTrendX + car.userData.attackSide * 0.8;
-            car.userData.targetRoadZ = playerTrendZ + 0.8;
+            car.userData.targetRoadX = playerTrendX + car.userData.attackSide * (0.8 + skill * 0.6) + car.userData.chaseOffsetX * 0.12;
+            car.userData.targetRoadZ = playerTrendZ + 0.8 - skill * 1.4;
             if (Math.abs(dzToPlayer) < 0.9 || car.userData.modeTimer <= 0) {
               car.userData.mode = "recover";
-              car.userData.recoverTimer = 0.78;
+              car.userData.recoverTimer = Math.max(0.46, 0.78 - skill * 0.16);
             }
           } else {
             car.userData.modeTimer -= dt;
-            car.userData.targetRoadX = playerTrendX;
-            car.userData.targetRoadZ = state.z + 5.6;
+            const formationHold = Math.max(0.3, 0.78 - skill * 0.25);
+            car.userData.targetRoadX = playerTrendX + car.userData.chaseOffsetX * formationHold + (skill > 0.75 ? car.userData.attackSide * 1.2 : 0);
+            car.userData.targetRoadZ = state.z + 5.6 + car.userData.chaseOffsetZ * 0.28 - skill * 1.9;
             if (Math.abs(dzToPlayer) < 9 && Math.abs(dxToPlayer) < 5.8 && car.userData.modeTimer <= 0) {
               car.userData.mode = "attack";
-              car.userData.modeTimer = 0.95 + Math.random() * 0.35;
-              car.userData.attackSide = dxToPlayer === 0 ? (Math.random() > 0.5 ? 1 : -1) : Math.sign(dxToPlayer);
+              car.userData.modeTimer = Math.max(0.48, 0.95 - skill * 0.25) + Math.random() * 0.35;
+              car.userData.attackSide = Math.sign(car.userData.chaseOffsetX) || (dxToPlayer === 0 ? (Math.random() > 0.5 ? 1 : -1) : Math.sign(dxToPlayer));
             }
           }
 
           const pressure = wantedPressure();
+          let separationX = 0;
+          let separationZ = 0;
+          for (const other of police) {
+            if (other === car) continue;
+            const sepX = car.userData.roadX - other.userData.roadX;
+            const sepZ = car.userData.roadZ - other.userData.roadZ;
+            if (Math.abs(sepX) < 3.8 && Math.abs(sepZ) < 14) {
+              separationX += sepX === 0 ? (Math.random() > 0.5 ? 2.2 : -2.2) : Math.sign(sepX) * (4.8 - Math.abs(sepX));
+              separationZ += sepZ === 0 ? 5 : Math.sign(sepZ) * (16 - Math.abs(sepZ)) * 0.22;
+            }
+          }
+          car.userData.targetRoadX = THREE.MathUtils.clamp(car.userData.targetRoadX + separationX * 0.82, bounds.left, bounds.right);
+          car.userData.targetRoadZ += separationZ;
           const targetSpeed = car.userData.mode === "attack"
-            ? Math.abs(state.speed) + 6.5 + pressure + car.userData.speedBias
+            ? Math.abs(state.speed) + 6.5 + pressure + skill * 10 + car.userData.speedBias
             : car.userData.mode === "recover"
-              ? Math.max(18, Math.abs(state.speed) - 6) + car.userData.speedBias
-              : Math.abs(state.speed) + 2.8 + pressure * 0.65 + car.userData.speedBias;
-          const accel = car.userData.mode === "attack" ? 2.6 : car.userData.mode === "recover" ? 3.2 : 1.5;
+              ? Math.max(20, Math.abs(state.speed) - 4 + skill * 5) + car.userData.speedBias
+              : Math.abs(state.speed) + 3.2 + pressure * 0.75 + skill * 6 + car.userData.speedBias;
+          const accel = car.userData.mode === "attack" ? 2.8 + skill * 1.2 : car.userData.mode === "recover" ? 3.4 : 1.65 + skill * 0.65;
           car.userData.speed += (targetSpeed - car.userData.speed) * Math.min(1, dt * accel);
           const targetDeltaX = car.userData.targetRoadX - car.userData.roadX;
           const targetDeltaZ = car.userData.targetRoadZ - car.userData.roadZ;
@@ -1232,9 +1285,9 @@
             Math.sin(desiredHeading - car.userData.headingOffset),
             Math.cos(desiredHeading - car.userData.headingOffset)
           );
-          const steerCommand = THREE.MathUtils.clamp(headingDelta * 1.6, -1, 1);
+          const steerCommand = THREE.MathUtils.clamp(headingDelta * (1.6 + skill * 0.65), -1, 1);
           car.userData.steerAngle += (steerCommand * 0.72 - car.userData.steerAngle) * Math.min(1, dt * 7.5);
-          car.userData.headingOffset += steerCommand * dt * (1.45 + car.userData.speed * 0.022);
+          car.userData.headingOffset += steerCommand * dt * (1.45 + skill * 0.4 + car.userData.speed * 0.023);
           car.userData.headingOffset = THREE.MathUtils.euclideanModulo(car.userData.headingOffset + Math.PI, Math.PI * 2) - Math.PI;
           const motionDelta = Math.atan2(
             Math.sin(car.userData.headingOffset - car.userData.motionHeadingOffset),
@@ -1355,11 +1408,12 @@
         camera.position.x += (targetX - camera.position.x) * Math.min(1, dt * 4.2);
         camera.position.y += (6.6 + state.y * 0.24 + pressure * 0.07 - camera.position.y) * Math.min(1, dt * 4.0);
         camera.position.z += (player.position.z + behindZ - camera.position.z) * Math.min(1, dt * 4.0);
-        camera.lookAt(lookX, 1.15 + state.y * 0.18, lookZ);
+        camera.lookAt(lookX, 2.05 + state.y * 0.16, lookZ);
       }
 
       function updateHud() {
         hud.score.textContent = Math.floor(state.score).toString();
+        hud.best.textContent = Math.max(state.best, Math.floor(state.score)).toString();
         hud.speed.textContent = Math.round(state.speed).toString();
         hud.wanted.textContent = state.wanted.toString();
         hud.health.textContent = `${Math.round(state.health)}%`;
@@ -1410,6 +1464,7 @@
         state.wanted = 0;
         state.escapeTimer = 0;
         state.nextLane = Math.floor(Math.random() * laneCenters.length);
+        state.policeSerial = 0;
         player.visible = true;
         const pose = roadPose(state.z);
         player.position.set(pose.x, 0.52, pose.z);
