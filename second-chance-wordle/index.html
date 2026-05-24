@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>Second Chance Wordle | DexterBain</title>
   <style>
     :root {
@@ -732,9 +735,13 @@
 
       const ROWS = 6;
       const COLS = 5;
-      const DAILY_WORD_ANCHOR_DATE = "2026-05-24";
-      const DAILY_WORD_ANCHOR = "BLAZE";
+      const DAILY_WORD_ANCHOR_DATE = "2026-05-21";
+      const DAILY_WORD_ANCHOR = "CANDY";
       const DAILY_WORD_STEP = 137;
+      const DAILY_WORD_OVERRIDES = {
+        "2026-05-23": "CROWN",
+        "2026-05-24": "BLAZE",
+      };
       const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
       const JOHN_WORDS = [
         "LUCKY", "BLAZE", "COMET", "RIVER", "SPARK", "GHOST", "CANDY", "BRICK",
@@ -819,10 +826,11 @@
 
       function getDailyPuzzle() {
         const today = pacificDateParts();
+        const overrideWord = DAILY_WORD_OVERRIDES[today.id];
         const anchorIndex = DAILY_ANSWER_WORDS.indexOf(DAILY_WORD_ANCHOR);
         const safeAnchorIndex = anchorIndex >= 0 ? anchorIndex : 0;
         const dayOffset = daysSincePacificDate(DAILY_WORD_ANCHOR_DATE, today.id);
-        const word = DAILY_ANSWER_WORDS[wrapIndex(safeAnchorIndex + dayOffset * DAILY_WORD_STEP, DAILY_ANSWER_WORDS.length)];
+        const word = overrideWord || DAILY_ANSWER_WORDS[wrapIndex(safeAnchorIndex + dayOffset * DAILY_WORD_STEP, DAILY_ANSWER_WORDS.length)];
         return {
           id: `${today.id}-${word.toLowerCase()}`,
           word,
@@ -1067,6 +1075,19 @@
         };
       }
 
+      function replaceWithFreshProgress(puzzle = DAILY_PUZZLE) {
+        const nextProgress = freshProgress(puzzle);
+        currentPuzzle = puzzle;
+        answer = puzzle.word;
+        saveActivePuzzle();
+        try {
+          localStorage.setItem(PROGRESS_KEY, JSON.stringify(nextProgress));
+        } catch {
+          // If storage is blocked, still return the fresh in-memory puzzle.
+        }
+        return nextProgress;
+      }
+
       function loadProgress() {
         const activePuzzle = loadActivePuzzle();
         try {
@@ -1074,11 +1095,7 @@
           const savedPuzzle = getPuzzleById(saved?.puzzleId);
           const restoreCurrentDaily = saved?.puzzleId === DAILY_PUZZLE.id && saved?.word === DAILY_PUZZLE.word;
           const restoreCurrentJohn = isJohnPuzzleId(saved?.puzzleId) && savedPuzzle && saved?.word === savedPuzzle.word;
-          if (!restoreCurrentDaily && !restoreCurrentJohn) {
-            currentPuzzle = activePuzzle;
-            answer = currentPuzzle.word;
-            return freshProgress(currentPuzzle);
-          }
+          if (!restoreCurrentDaily && !restoreCurrentJohn) return replaceWithFreshProgress(activePuzzle);
           currentPuzzle = savedPuzzle;
           answer = currentPuzzle.word;
           const guesses = (saved.guesses || []).filter((guess) => /^[A-Z]{5}$/.test(guess)).slice(0, ROWS);
@@ -1093,9 +1110,7 @@
             won: doneGame ? Boolean(saved.won || won) : false,
           };
         } catch {
-          currentPuzzle = activePuzzle;
-          answer = currentPuzzle.word;
-          return freshProgress(currentPuzzle);
+          return replaceWithFreshProgress(activePuzzle);
         }
       }
 
