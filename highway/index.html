@@ -1469,8 +1469,7 @@
           if (removed >= limit) break;
           const index = police.indexOf(car);
           if (index < 0) continue;
-          police.splice(index, 1);
-          scene.remove(car);
+          removePoliceCar(car);
           removed += 1;
         }
         return removed;
@@ -1508,7 +1507,9 @@
         state.inventory[action] -= 1;
         saveProgress();
         if (action === "bomb") {
-          state.score += removeNearestPolice(1) ? 180 : 30;
+          const removed = removeNearestPolice(1);
+          if (removed || state.wanted > 0) reduceWanted(1);
+          state.score += removed ? 180 : 30;
         } else if (action === "speedBump") {
           dropTrap(action);
         } else if (action === "clear") {
