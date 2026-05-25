@@ -643,8 +643,23 @@
     }
 
     .money-wheel {
-      background: conic-gradient(#47e38f 0 50%, #ff4d6d 50% 100%);
+      background: conic-gradient(#ff4d6d 0 60%, #47e38f 60% 100%);
       position: relative;
+    }
+
+    .money-wheel::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -10px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 14px solid var(--warn);
+      transform: translateX(-50%);
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.45));
+      z-index: 2;
     }
 
     .money-wheel::after {
@@ -659,9 +674,20 @@
       font-weight: 1000;
     }
 
-    .money-wheel.is-spinning,
+    .money-wheel.is-spinning {
+      animation: moneyWheelSpin 1400ms cubic-bezier(0.12, 0.76, 0.16, 1) 1 forwards;
+    }
+
     .color-choice-wheel.is-spinning {
       animation: garageSpin 880ms cubic-bezier(0.18, 0.8, 0.22, 1) 1;
+    }
+
+    .money-wheel.is-win {
+      box-shadow: 0 0 28px rgba(71, 227, 143, 0.58);
+    }
+
+    .money-wheel.is-lose {
+      box-shadow: 0 0 28px rgba(255, 77, 109, 0.58);
     }
 
     .color-choice-wheel {
@@ -682,6 +708,18 @@
     @keyframes garageSpin {
       to {
         transform: rotate(1260deg);
+      }
+    }
+
+    @keyframes moneyWheelSpin {
+      from {
+        transform: rotate(0deg) scale(1);
+      }
+      72% {
+        transform: rotate(calc(var(--wheel-spin, 1440deg) - 46deg)) scale(1.08);
+      }
+      to {
+        transform: rotate(var(--wheel-spin, 1440deg)) scale(1);
       }
     }
 
@@ -1381,6 +1419,7 @@
         slowAmbulanceTimer: 0,
         superJumpReady: false,
         wheelUsed: false,
+        wheelSpinning: false,
         introActive: false,
         garageOpen: true,
         introTimer: 0,
@@ -2137,8 +2176,8 @@
             hud.garageBuyCar.disabled = true;
           }
         }
-        hud.garageWheelButton.disabled = state.wheelUsed;
-        hud.garageWheelButton.querySelector("small").textContent = state.wheelUsed ? "Wheel already used this run" : "Free once per run";
+        hud.garageWheelButton.disabled = state.wheelUsed || state.wheelSpinning;
+        hud.garageWheelButton.querySelector("small").textContent = state.wheelSpinning ? "Spinning..." : state.wheelUsed ? "Wheel already used this run" : "Free once per run";
         hud.garageColorButton.disabled = state.money < 5;
         gameShell.classList.toggle("is-garage", state.garageOpen);
         syncGaragePreviewCar();
@@ -2163,22 +2202,33 @@
         }
       }
 
-      function spinGarageWheel(element) {
-        element.classList.remove("is-spinning");
+      function spinGarageWheel(element, result = null) {
+        element.classList.remove("is-spinning", "is-win", "is-lose");
         void element.offsetWidth;
+        if (result) element.classList.add(result === "win" ? "is-win" : "is-lose");
         element.classList.add("is-spinning");
       }
 
       function useGarageMoneyWheel() {
-        if (state.wheelUsed) return;
+        if (state.wheelUsed || state.wheelSpinning) return;
+        const won = Math.random() >= 0.6;
+        const startMoney = state.money;
+        const landingDegrees = won ? 252 + Math.random() * 72 : 18 + Math.random() * 180;
+        hud.garageMoneyWheel.style.setProperty("--wheel-spin", `${Math.round(1440 + landingDegrees)}deg`);
         state.wheelUsed = true;
-        const won = Math.random() > 0.5;
-        state.money = won ? state.money * 2 : 0;
-        spinGarageWheel(hud.garageMoneyWheel);
+        state.wheelSpinning = true;
+        spinGarageWheel(hud.garageMoneyWheel, won ? "win" : "lose");
+        hud.garageSummary.textContent = "The money wheel is spinning...";
         saveProgress();
-        hud.garageSummary.textContent = won ? "Double win. Your garage cash doubled." : "Nothing. The wheel ate your money.";
-        updateHud();
         updateGarage();
+        setTimeout(() => {
+          state.money = won ? startMoney * 2 : 0;
+          state.wheelSpinning = false;
+          saveProgress();
+          hud.garageSummary.textContent = won ? "Double win. Your garage cash doubled." : "Nothing. The wheel ate your money.";
+          updateHud();
+          updateGarage();
+        }, 1420);
       }
 
       function buyGarageColor() {
@@ -3170,6 +3220,7 @@
         state.slowAmbulanceTimer = 0;
         state.superJumpReady = false;
         state.wheelUsed = false;
+        state.wheelSpinning = false;
         state.introActive = false;
         state.garageOpen = true;
         state.introTimer = 0;
