@@ -725,7 +725,7 @@
     .overlay {
       position: fixed;
       inset: 0;
-      z-index: 3;
+      z-index: 8;
       display: grid;
       place-items: center;
       padding: 24px;
@@ -769,6 +769,32 @@
       font-weight: 900;
       text-transform: uppercase;
       cursor: pointer;
+    }
+
+    .death-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .death-actions .restart {
+      width: 100%;
+    }
+
+    .restart.secondary {
+      background: rgba(248, 250, 252, 0.15);
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .restart.revive {
+      background: linear-gradient(135deg, var(--good), var(--neon));
+      color: #06111f;
+    }
+
+    .restart:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
     }
 
     .touch-controls {
@@ -1042,7 +1068,7 @@
     <div class="shop-panel" aria-label="Highway Rush shop">
       <button class="shop-button" data-buy="bomb" type="button"><span class="item-icon icon-bomb"></span><span class="shop-name">$2 Bomb</span><span class="shop-key">R</span></button>
       <button class="shop-button" data-buy="speedBump" type="button"><span class="item-icon icon-bump"></span><span class="shop-name">$2 Speed Bump</span><span class="shop-key">Y</span></button>
-      <button class="shop-button" data-buy="clear" type="button"><span class="item-icon icon-clear"></span><span class="shop-name">$3 Clear Police</span><span class="shop-key">U</span></button>
+      <button class="shop-button" data-buy="clear" type="button"><span class="item-icon icon-clear"></span><span class="shop-name">$10 Clear Police</span><span class="shop-key">U</span></button>
       <button class="shop-button" data-buy="superJump" type="button"><span class="item-icon icon-jump"></span><span class="shop-name">$3 Super Jump</span><span class="shop-key">I</span></button>
       <button class="shop-button" data-buy="slowAmbulance" type="button"><span class="item-icon icon-ambulance"></span><span class="shop-name">$5 Slow Ambulance</span><span class="shop-key">O</span></button>
     </div>
@@ -1114,7 +1140,11 @@
       <section class="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="gameOverTitle">
         <h2 id="gameOverTitle">Wrecked</h2>
         <p id="finalStats">Score 0</p>
-        <button class="restart" id="restartButton" type="button">Restart</button>
+        <div class="death-actions">
+          <button class="restart secondary" id="homeButton" type="button">Home</button>
+          <button class="restart" id="restartButton" type="button">Restart</button>
+          <button class="restart revive" id="reviveButton" type="button">Revive $15</button>
+        </div>
       </section>
     </div>
 
@@ -1167,6 +1197,8 @@
         overlay: document.getElementById("gameOver"),
         final: document.getElementById("finalStats"),
         restart: document.getElementById("restartButton"),
+        home: document.getElementById("homeButton"),
+        revive: document.getElementById("reviveButton"),
         jump: document.getElementById("jumpButton"),
         intro: document.getElementById("introCard"),
         garage: document.getElementById("garageScreen"),
@@ -1268,7 +1300,7 @@
       const shopCosts = {
         bomb: 2,
         speedBump: 2,
-        clear: 3,
+        clear: 10,
         superJump: 3,
         slowAmbulance: 5,
         betterCar: 20,
@@ -1345,6 +1377,7 @@
         fireTimer: 0,
         healTimer: 0,
         healAmount: 0,
+        policeSlowTimer: 0,
         slowAmbulanceTimer: 0,
         superJumpReady: false,
         wheelUsed: false,
@@ -2451,6 +2484,16 @@
         return removed;
       }
 
+      function slowAllPolice(seconds = 4) {
+        state.policeSlowTimer = Math.max(state.policeSlowTimer, seconds);
+        for (const car of police) {
+          car.userData.mode = "recover";
+          car.userData.recoverTimer = Math.max(car.userData.recoverTimer || 0, seconds);
+          car.userData.speed = Math.max(5, car.userData.speed * 0.34);
+          car.userData.targetRoadZ = state.z + 16;
+        }
+      }
+
       function buyShop(action) {
         if (state.introActive && action !== "wheel") startRun();
         if (action === "wheel") {
@@ -2488,7 +2531,8 @@
           state.policeTimer = Math.max(state.policeTimer, 2.25);
           state.score += removed ? 180 : 30;
         } else if (action === "speedBump") {
-          dropTrap(action);
+          slowAllPolice(4);
+          state.score += police.length ? 90 : 20;
         } else if (action === "clear") {
           for (const car of police.splice(0)) scene.remove(car);
           state.wanted = 0;
@@ -2704,6 +2748,7 @@
       }
 
       function updatePolice(dt) {
+        state.policeSlowTimer = Math.max(0, state.policeSlowTimer - dt);
         if (state.wanted > 0) {
           if (state.wanted > state.wantedBest) {
             state.wantedBest = state.wanted;
@@ -2785,8 +2830,9 @@
             : car.userData.mode === "recover"
               ? Math.max(20, Math.abs(state.speed) - 4 + skill * 5) + car.userData.speedBias
               : Math.abs(state.speed) + 3.2 + pressure * 0.75 + skill * 6 + car.userData.speedBias;
+          const policeSlowFactor = state.policeSlowTimer > 0 ? 0.34 : 1;
           const accel = car.userData.mode === "attack" ? 2.8 + skill * 1.2 : car.userData.mode === "recover" ? 3.4 : 1.65 + skill * 0.65;
-          car.userData.speed += (targetSpeed - car.userData.speed) * Math.min(1, dt * accel);
+          car.userData.speed += (targetSpeed * policeSlowFactor - car.userData.speed) * Math.min(1, dt * accel);
           const targetDeltaX = car.userData.targetRoadX - car.userData.roadX;
           const targetDeltaZ = car.userData.targetRoadZ - car.userData.roadZ;
           const desiredHeading = Math.atan2(targetDeltaX * 1.08, -targetDeltaZ);
@@ -2991,6 +3037,8 @@
             ? "Super jump ready"
           : state.slowAmbulanceTimer > 0
             ? `Slow ambulance ${Math.ceil(state.slowAmbulanceTimer)}s`
+          : state.policeSlowTimer > 0
+            ? `Police slowed ${Math.ceil(state.policeSlowTimer)}s`
           : state.hitTimer > 0
             ? "Wanted up"
             : state.wanted > 0
@@ -3029,11 +3077,56 @@
       function endGame() {
         if (!state.playing) return;
         const finalScore = Math.floor(state.score);
+        state.playing = false;
+        keys.clear();
+        state.health = 0;
         state.best = Math.max(state.best, Math.floor(state.score));
         writeStoredValue("highway-rush-best", String(state.best));
         saveProgress();
+        hud.final.textContent = `Score ${finalScore} · Best ${state.best} · Money $${state.money}`;
+        hud.revive.disabled = state.money < 15;
+        hud.revive.textContent = state.money >= 15 ? "Revive $15" : "Need $15";
+        hud.overlay.classList.add("is-visible");
+        updateHud();
+      }
+
+      function homeAfterDeath() {
+        hud.overlay.classList.remove("is-visible");
         restart();
-        setGarageVisible(true, "Wrecked", `Score ${finalScore} · Best ${state.best} · Money $${state.money}`);
+        setGarageVisible(true, "Highway Rush", `Back in the garage · Best ${state.best} · Money $${state.money}`);
+      }
+
+      function restartAfterDeath() {
+        hud.overlay.classList.remove("is-visible");
+        restart();
+        startRun();
+      }
+
+      function reviveAfterDeath() {
+        if (state.playing || state.money < 15) return;
+        if (!spendMoney(15)) return;
+        state.playing = true;
+        state.health = Math.max(45, Math.floor(maxHealth() * 0.62));
+        state.speed = Math.max(34, Math.abs(state.speed));
+        state.driveFactor = 1;
+        state.y = 0;
+        state.jumpVelocity = 0;
+        state.hitTimer = 1.4;
+        state.policeHitTimer = 1.4;
+        state.fireTimer = 0;
+        fireEffect.visible = false;
+        state.policeSlowTimer = Math.max(state.policeSlowTimer, 1.8);
+        for (const car of police) {
+          car.userData.mode = "recover";
+          car.userData.recoverTimer = Math.max(car.userData.recoverTimer || 0, 1.8);
+          car.userData.roadZ = Math.max(car.userData.roadZ, state.z + 28 + Math.random() * 18);
+          car.userData.roadX = THREE.MathUtils.clamp(car.userData.roadX + (car.userData.roadX > state.x ? 3.5 : -3.5), bounds.left, bounds.right);
+          car.userData.speed = Math.max(7, car.userData.speed * 0.48);
+          placeRoadActor(car);
+        }
+        hud.overlay.classList.remove("is-visible");
+        updateHud();
+        focusGame();
       }
 
       function restart() {
@@ -3073,6 +3166,7 @@
         state.fireTimer = 0;
         state.healTimer = 0;
         state.healAmount = 0;
+        state.policeSlowTimer = 0;
         state.slowAmbulanceTimer = 0;
         state.superJumpReady = false;
         state.wheelUsed = false;
@@ -3365,7 +3459,9 @@
         event.preventDefault();
         buyOrEquipGarageCar();
       });
-      hud.restart.addEventListener("click", restart);
+      hud.home.addEventListener("click", homeAfterDeath);
+      hud.restart.addEventListener("click", restartAfterDeath);
+      hud.revive.addEventListener("click", reviveAfterDeath);
       window.addEventListener("resize", onResize);
 
       makeGarageScene();
