@@ -1415,18 +1415,20 @@
         fireTimer: 0,
         healTimer: 0,
         healAmount: 0,
+        ambulanceBonusHealth: 0,
         policeSlowTimer: 0,
         slowAmbulanceTimer: 0,
         superJumpReady: false,
         wheelUsed: false,
         wheelSpinning: false,
+        adminBuffer: "",
         introActive: false,
         garageOpen: true,
         introTimer: 0,
       };
 
       function maxHealth() {
-        return 100 + state.carUpgrade * 12;
+        return 100 + state.carUpgrade * 12 + (state.ambulanceBonusHealth || 0);
       }
 
       function upgradePower() {
@@ -1446,6 +1448,18 @@
       function earnMoney(amount) {
         state.money = Math.max(0, state.money + amount);
         saveProgress();
+      }
+
+      function grantAdminMoney() {
+        earnMoney(20);
+        hud.garageSummary.textContent = "Admin access: +$20.";
+        if (hud.overlay.classList.contains("is-visible")) {
+          hud.final.textContent = `Money $${state.money} · Admin access added $20`;
+          hud.revive.disabled = state.money < 15;
+          hud.revive.textContent = state.money >= 15 ? "Revive $15" : "Need $15";
+        }
+        updateHud();
+        updateGarage();
       }
 
       function spendMoney(cost) {
@@ -2965,6 +2979,24 @@
         player.visible = !flash;
       }
 
+      function collectAmbulance(car) {
+        car.userData.hit = true;
+        earnMoney(1);
+        setFire(false);
+        const beforeHealth = state.health;
+        state.ambulanceBonusHealth = Math.min(120, (state.ambulanceBonusHealth || 0) + 45);
+        state.health = Math.min(maxHealth(), state.health + 70);
+        state.healAmount = Math.max(1, Math.round(state.health - beforeHealth));
+        state.healTimer = 2.2;
+        state.hitTimer = 0;
+        state.policeHitTimer = 0;
+        state.speed = Math.max(state.speed, 48);
+        state.score += 160;
+        car.userData.roadZ = 32;
+        car.userData.roadX += car.userData.roadX > state.x ? 3 : -3;
+        car.rotation.z = (car.userData.roadX > state.x ? -1 : 1) * 0.32;
+      }
+
       function checkCollisions() {
         if (state.y > 0.95) return;
 
@@ -2978,9 +3010,22 @@
           }
         }
 
+        for (const car of traffic) {
+          if (car.userData.kind !== "ambulance" || car.userData.hit) continue;
+          const dx = Math.abs(car.userData.roadX - state.x);
+          const dz = Math.abs(car.userData.roadZ - state.z);
+          const hitWidth = (car.userData.width + carSize.width) * 0.6;
+          const hitLength = (car.userData.length + carSize.length) * 0.58;
+          if (dx < hitWidth && dz < hitLength) {
+            collectAmbulance(car);
+            break;
+          }
+        }
+
         if (state.hitTimer <= 0) {
           for (const car of traffic) {
             if (car.userData.hit) continue;
+            if (car.userData.kind === "ambulance") continue;
             const dx = Math.abs(car.userData.roadX - state.x);
             const dz = Math.abs(car.userData.roadZ - state.z);
             const hitWidth = (car.userData.width + carSize.width) * 0.54;
@@ -2988,20 +3033,6 @@
             if (dx < hitWidth && dz < hitLength) {
               car.userData.hit = true;
               earnMoney(1);
-              if (car.userData.kind === "ambulance") {
-                setFire(false);
-                const beforeHealth = state.health;
-                state.health = Math.min(maxHealth() + 50, state.health + 48);
-                state.healAmount = Math.max(0, Math.round(state.health - beforeHealth));
-                state.healTimer = 1.7;
-                state.policeHitTimer = 0;
-                state.speed = Math.max(state.speed, 46);
-                state.score += 140;
-                car.userData.roadZ = 28;
-                car.userData.roadX += car.userData.roadX > state.x ? 2.4 : -2.4;
-                car.rotation.z = (car.userData.roadX > state.x ? -1 : 1) * 0.32;
-                break;
-              }
               state.hitTimer = 0.82;
               state.speed = Math.max(20, state.speed * 0.78);
               car.rotation.z = (car.userData.roadX > state.x ? -1 : 1) * 0.45;
@@ -3216,6 +3247,7 @@
         state.fireTimer = 0;
         state.healTimer = 0;
         state.healAmount = 0;
+        state.ambulanceBonusHealth = 0;
         state.policeSlowTimer = 0;
         state.slowAmbulanceTimer = 0;
         state.superJumpReady = false;
@@ -3321,6 +3353,23 @@
         return "";
       }
 
+      function handleAdminAccess(event) {
+        if (event.repeat || event.metaKey || event.ctrlKey || event.altKey) return false;
+        const key = typeof event.key === "string" ? event.key.toLowerCase() : "";
+        if (!/^[a-z]$/.test(key)) {
+          state.adminBuffer = "";
+          return false;
+        }
+        const candidate = `${state.adminBuffer}${key}`.slice(-4);
+        state.adminBuffer = "john".startsWith(candidate) ? candidate : key === "j" ? "j" : "";
+        if (state.adminBuffer === "john") {
+          state.adminBuffer = "";
+          grantAdminMoney();
+          return true;
+        }
+        return (state.garageOpen || !state.playing) && state.adminBuffer.length > 0;
+      }
+
       const buyKeyActions = {
         KeyR: "bomb",
         KeyY: "speedBump",
@@ -3349,6 +3398,11 @@
 
       const handleKeyDown = (event) => {
         const code = normalizeKey(event);
+        if (handleAdminAccess(event)) {
+          event.preventDefault();
+          event.stopPropagation();
+          return;
+        }
         if (state.garageOpen) {
           if (code === "ArrowLeft" || code === "KeyA") {
             event.preventDefault();
