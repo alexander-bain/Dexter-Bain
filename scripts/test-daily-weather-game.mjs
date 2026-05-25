@@ -259,21 +259,26 @@ async function run() {
           const botPicks = game.questions.map((question, index) => {
             const answers = test.getAnswers(question).slice();
             const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
-            const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
-              .sort((left, right) => right.points - left.points || right.odds - left.odds);
-            const choice = index % 3 === 1
+            const balanced = answers.slice().sort((left, right) => {
+              const leftScore = left.points * (left.odds / 100);
+              const rightScore = right.points * (right.odds / 100);
+              return rightScore - leftScore || right.points - left.points;
+            });
+            const risks = answers.slice().sort((left, right) => right.points - left.points || right.odds - left.odds);
+            const choice = index % 5 === 2
               ? (risks[0] || favorites[0])
-              : index % 4 === 3
-              ? (risks[1] || favorites[0])
-              : favorites[0];
+              : index % 4 === 1
+              ? (balanced[0] || favorites[0])
+              : index % 3 === 0
+              ? (favorites[0] || balanced[0] || risks[0])
+              : (balanced[1] || risks[1] || favorites[0]);
             return [test.getQuestionId(question, index), choice.id];
           });
           const picks = Object.fromEntries(botPicks);
           const favoritePickMap = Object.fromEntries(favoritePicks);
           const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
           if (!usedRiskPick) {
-            throw new Error("Weather Bot only picked favorites.");
+            throw new Error("Weather Bot only picked favorites instead of mixing risk.");
           }
           const entry = {
             name: "Weather Bot",
@@ -312,10 +317,10 @@ async function run() {
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
-              leaderboard.includes("max from picks") &&
+              leaderboard.includes("100% chance to win") &&
+              leaderboard.includes("max points from risk") &&
               pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
+              pickView.includes("max points from risk") &&
               entryCount.trim() === "1" &&
               storage.playerName === "Weather Bot"
             ) {

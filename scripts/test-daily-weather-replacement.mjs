@@ -77,8 +77,12 @@ for (const questionId of [
   "rain-by-3pm",
   "sky-still-sunny",
   "weather-headline",
+  "sports-headline",
   "music-four",
+  "music-five",
+  "wind-by-5pm",
   "sports-six",
+  "sports-seven",
   "cool-tonight",
 ]) {
   if (!block.includes(`"20260513-${questionId}"`)) {
@@ -89,8 +93,8 @@ for (const questionId of [
 const autoScoredQuestions = [
   ...block.matchAll(/autoSource: "https:\/\/forecast\.weather\.gov\/MapClick\.php\?lat=37\.453&lon=-122\.182"/g)
 ].length;
-if (autoScoredQuestions !== 4) {
-  throw new Error(`Expected 4 auto-scored weather questions, found ${autoScoredQuestions}.`);
+if (autoScoredQuestions !== 5) {
+  throw new Error(`Expected 5 auto-scored weather questions, found ${autoScoredQuestions}.`);
 }
 
 for (const hour of [
@@ -100,7 +104,9 @@ for (const hour of [
   "T21:00:00.000Z",
   "T22:00:00.000Z",
   "T23:00:00.000Z",
+  "T00:00:00.000Z",
   "T01:00:00.000Z",
+  "T02:00:00.000Z",
   "T03:00:00.000Z",
 ]) {
   if (!block.includes(hour)) {
@@ -127,8 +133,30 @@ if (!weekendBlock.includes('"20260516-gas-noon"')) {
   throw new Error("Weekend daily weather game is missing the gas question.");
 }
 
-if (weekendQuestionCount !== 10) {
-  throw new Error(`Expected 10 weekend daily weather questions, found ${weekendQuestionCount}.`);
+if (weekendQuestionCount !== 13) {
+  throw new Error(`Expected 13 weekend daily weather questions, found ${weekendQuestionCount}.`);
 }
 
 console.log("Weekend daily weather replacement test passed.");
+
+runGenerator("2026-05-25");
+const marketHolidayHtml = fs.readFileSync(testHtml, "utf8");
+const marketHolidayBlock = generatedWeatherBlock(marketHolidayHtml);
+
+if (!marketHolidayHtml.includes('id: "daily-weather-20260525"')) {
+  throw new Error("The market-holiday daily weather game was not created.");
+}
+
+if (marketHolidayBlock.includes('"20260525-market-lunch"')) {
+  throw new Error("Market-holiday daily weather game still included the stock question.");
+}
+
+if (!marketHolidayBlock.includes("Market question skipped because trading is closed.")) {
+  throw new Error("Market-holiday summary did not explain why the stock question was skipped.");
+}
+
+if (!marketHolidayBlock.includes('answer("Travel"')) {
+  throw new Error("Market-holiday local headline question did not swap in the travel option.");
+}
+
+console.log("Market-holiday daily weather replacement test passed.");

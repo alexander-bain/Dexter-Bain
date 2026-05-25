@@ -49,6 +49,75 @@ function isWeekend(date) {
   return day === 0 || day === 6;
 }
 
+function observedDate(year, month, day) {
+  const date = new Date(year, month, day, 6, 0, 0);
+  const weekday = date.getDay();
+  if (weekday === 6) {
+    return new Date(year, month, day - 1, 6, 0, 0);
+  }
+  if (weekday === 0) {
+    return new Date(year, month, day + 1, 6, 0, 0);
+  }
+  return date;
+}
+
+function nthWeekdayOfMonth(year, month, weekday, occurrence) {
+  const first = new Date(year, month, 1, 6, 0, 0);
+  const offset = (weekday - first.getDay() + 7) % 7;
+  return new Date(year, month, 1 + offset + (occurrence - 1) * 7, 6, 0, 0);
+}
+
+function lastWeekdayOfMonth(year, month, weekday) {
+  const last = new Date(year, month + 1, 0, 6, 0, 0);
+  const offset = (last.getDay() - weekday + 7) % 7;
+  return new Date(year, month, last.getDate() - offset, 6, 0, 0);
+}
+
+function easterSunday(year) {
+  const a = year % 19;
+  const b = Math.floor(year / 100);
+  const c = year % 100;
+  const d = Math.floor(b / 4);
+  const e = b % 4;
+  const f = Math.floor((b + 8) / 25);
+  const g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4);
+  const k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const month = Math.floor((h + l - 7 * m + 114) / 31) - 1;
+  const day = ((h + l - 7 * m + 114) % 31) + 1;
+  return new Date(year, month, day, 6, 0, 0);
+}
+
+function sameCalendarDay(left, right) {
+  return left.getFullYear() === right.getFullYear() &&
+    left.getMonth() === right.getMonth() &&
+    left.getDate() === right.getDate();
+}
+
+function isMarketHoliday(date) {
+  const year = date.getFullYear();
+  const holidays = [
+    observedDate(year, 0, 1),
+    nthWeekdayOfMonth(year, 0, 1, 3),
+    nthWeekdayOfMonth(year, 1, 1, 3),
+    new Date(easterSunday(year).getTime() - 2 * 86400000),
+    lastWeekdayOfMonth(year, 4, 1),
+    observedDate(year, 5, 19),
+    observedDate(year, 6, 4),
+    nthWeekdayOfMonth(year, 8, 1, 1),
+    nthWeekdayOfMonth(year, 10, 4, 4),
+    observedDate(year, 11, 25),
+  ];
+  return holidays.some((holiday) => sameCalendarDay(holiday, date));
+}
+
+function isMarketClosed(date) {
+  return isWeekend(date) || isMarketHoliday(date);
+}
+
 function jsString(value) {
   return JSON.stringify(String(value ?? ""));
 }
@@ -214,7 +283,7 @@ function renderQuestion(question, idDate) {
 function dayWatchEvent(date, forecast) {
   const day = forecast.dayPeriod || {};
   const night = forecast.nightPeriod || {};
-  const weekend = isWeekend(date);
+  const marketClosed = isMarketClosed(date);
   const high = Number(day.temperature) || 70;
   const low = Number(night.temperature) || 54;
   const skyText = `${day.shortForecast || ""} ${day.detailedForecast || ""}`;
@@ -242,19 +311,24 @@ function dayWatchEvent(date, forecast) {
   const likelySkySunnyLater = sky === "mostly-sunny" || sky === "partly-cloudy";
   const likelyWindyLater = windSpeed >= 12;
   const likelyNightCooler = low <= 60 || low <= high - 10;
-  const likelyMarketUp = !includesAny(skyText, ["storm", "rain"]) && day.temperature >= 65;
+  const likelyMarketUp = !marketClosed && !includesAny(skyText, ["storm", "rain"]) && day.temperature >= 65;
   const likelyGasUp = daySeed % 2 === 0 || high >= 74;
   const likelyMusicChanged = daySeed % 3 !== 0;
   const likelySportsLive = daySeed % 4 !== 0;
   const likelyWeatherLead = sky === "rain-likely" || (sky === "mostly-cloudy" && !likelyMarketUp);
   const likelySportsLead = likelySportsLive && daySeed % 5 !== 0;
+  const localHeadlineSecondLabel = marketClosed ? "Travel" : "Stocks";
+  const localHeadlineSecondId = marketClosed ? "travel" : "stocks";
+  const localHeadlineSecondOdds = marketClosed
+    ? (likelySportsLive ? 26 : 30)
+    : (likelyMarketUp ? 30 : 24);
   const localHeadlineOdds = {
     weather: [sky === "rain-likely" ? 36 : 28, "Weather"],
-    stocks: [likelyMarketUp ? 30 : 24, "Stocks"],
+    second: [localHeadlineSecondOdds, localHeadlineSecondLabel],
     sports: [likelySportsLive ? 24 : 18, "Sports"],
     traffic: [18, "Traffic"]
   };
-  const weatherQuestions = rotateSelection([
+  const weatherQuestions = [
     () => yesNoQuestion({
       text: `By noon, will it be warmer than ${warmByNoonThreshold} degrees?`,
       idSuffix: "warm-by-noon",
@@ -290,7 +364,7 @@ function dayWatchEvent(date, forecast) {
       lockAt: locks.weatherNight,
       likely: likelyNightCooler
     })
-  ], 4, daySeed);
+  ];
   const moneyQuestionPool = [
     () => yesNoQuestion({
       text: "By noon, will gas prices be higher than this morning?",
@@ -300,7 +374,7 @@ function dayWatchEvent(date, forecast) {
       likely: likelyGasUp
     })
   ];
-  if (!weekend) {
+  if (!marketClosed) {
     moneyQuestionPool.push(() => yesNoQuestion({
       text: "By 1 PM, will the stock market go up?",
       idSuffix: "market-lunch",
@@ -309,8 +383,8 @@ function dayWatchEvent(date, forecast) {
       likely: likelyMarketUp
     }));
   }
-  const moneyQuestions = rotateSelection(moneyQuestionPool, moneyQuestionPool.length, daySeed + 7);
-  const newsQuestions = rotateSelection([
+  const moneyQuestions = moneyQuestionPool;
+  const newsQuestions = [
     () => choiceQuestion({
       text: "By 2 PM, what will the local news talk about most?",
       idSuffix: "local-headline",
@@ -318,7 +392,7 @@ function dayWatchEvent(date, forecast) {
       lockAt: locks.localHeadline,
       answers: [
         { label: localHeadlineOdds.weather[1], odds: localHeadlineOdds.weather[0], id: "weather" },
-        { label: localHeadlineOdds.stocks[1], odds: localHeadlineOdds.stocks[0], id: "stocks" },
+        { label: localHeadlineOdds.second[1], odds: localHeadlineOdds.second[0], id: localHeadlineSecondId },
         { label: localHeadlineOdds.sports[1], odds: localHeadlineOdds.sports[0], id: "sports" },
         { label: localHeadlineOdds.traffic[1], odds: localHeadlineOdds.traffic[0], id: "traffic" }
       ]
@@ -341,8 +415,8 @@ function dayWatchEvent(date, forecast) {
       yesLikely: 58,
       yesUnlikely: 42
     })
-  ], 2, daySeed + 11);
-  const musicQuestions = rotateSelection([
+  ];
+  const musicQuestions = [
     () => yesNoQuestion({
       text: "By 4 PM, will the top Apple Music song be different?",
       idSuffix: "music-four",
@@ -357,8 +431,8 @@ function dayWatchEvent(date, forecast) {
       lockAt: lockDate(date, 17).toISOString(),
       likely: likelyMusicChanged
     })
-  ], weekend ? 2 : 1, daySeed + 23);
-  const sportsQuestions = rotateSelection([
+  ];
+  const sportsQuestions = [
     () => yesNoQuestion({
       text: "By 6 PM, will the sports page still show a live game?",
       idSuffix: "sports-six",
@@ -373,7 +447,7 @@ function dayWatchEvent(date, forecast) {
       lockAt: locks.sportsSeven,
       likely: likelySportsLive
     })
-  ], 1, daySeed + 37);
+  ];
   const selectedQuestions = [
     ...weatherQuestions,
     ...moneyQuestions,
@@ -387,9 +461,9 @@ function dayWatchEvent(date, forecast) {
     return left.lockAt.localeCompare(right.lockAt);
   });
   const questionCount = selectedQuestions.length;
-  const categorySummary = weekend
-    ? "weather, gas, news, music, and sports"
-    : "weather, money, news, music, and sports";
+  const categorySummary = marketClosed
+    ? "weather, gas, local news, music, and sports"
+    : "weather, money, local news, music, and sports";
 
   return `      {
         id: "daily-weather-${idDate}",
@@ -397,7 +471,7 @@ function dayWatchEvent(date, forecast) {
         type: "Day",
         month: ${date.getMonth()},
         day: ${date.getDate()},
-        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: ${questionCount} simple questions about ${categorySummary} that settle through the day. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.`)},
+        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: ${questionCount} day-of questions about ${categorySummary} that settle through the day. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.${marketClosed ? " Market question skipped because trading is closed." : ""}`)},
         questions: [
 ${selectedQuestions.map((question) => renderQuestion(question, idDate)).join(",\n")}
         ]
