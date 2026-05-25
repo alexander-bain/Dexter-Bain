@@ -155,6 +155,211 @@
       transition: transform 160ms ease;
     }
 
+    .shop-panel {
+      position: fixed;
+      left: 16px;
+      top: 96px;
+      z-index: 3;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      width: min(220px, calc(100vw - 32px));
+      pointer-events: auto;
+    }
+
+    .shop-button {
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      display: grid;
+      grid-template-columns: 30px 1fr auto;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 9px;
+      background: rgba(8, 15, 24, 0.7);
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.7rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+    }
+
+    .shop-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+
+    .shop-button.is-free {
+      color: #102018;
+      background: linear-gradient(135deg, #ffd166, #47e38f);
+    }
+
+    .item-icon {
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .item-icon::before {
+      content: "";
+      display: block;
+    }
+
+    .icon-bomb::before {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: #111827;
+      box-shadow: 5px -7px 0 -4px #ffd166;
+    }
+
+    .icon-bump::before {
+      width: 22px;
+      height: 7px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ff4d6d, #ffd166);
+    }
+
+    .icon-clear::before {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, #2563eb 0 45%, #ef233c 45% 100%);
+    }
+
+    .icon-jump::before {
+      width: 0;
+      height: 0;
+      border-left: 9px solid transparent;
+      border-right: 9px solid transparent;
+      border-bottom: 18px solid #47e38f;
+    }
+
+    .icon-ambulance::before {
+      width: 22px;
+      height: 14px;
+      border-radius: 4px;
+      background: #ef4444;
+      box-shadow: inset 8px 0 0 #fff7ed;
+    }
+
+    .icon-car::before {
+      width: 22px;
+      height: 13px;
+      border-radius: 5px;
+      background: #38bdf8;
+    }
+
+    .icon-color::before {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: conic-gradient(#ff5c5c, #f6c85f, #47e38f, #38bdf8, #8b5cf6, #ff5c5c);
+    }
+
+    .icon-wheel::before {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: conic-gradient(#47e38f 0 50%, #ff4d6d 50% 100%);
+    }
+
+    .shop-name,
+    .inventory-name {
+      text-align: left;
+    }
+
+    .shop-key {
+      color: var(--warn);
+      font-size: 0.62rem;
+    }
+
+    .inventory-panel {
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      z-index: 3;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      width: min(560px, calc(100vw - 360px));
+      transform: translateX(-50%);
+      pointer-events: auto;
+    }
+
+    .inventory-item {
+      min-width: 92px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 9px;
+      background: rgba(8, 15, 24, 0.72);
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.66rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+    }
+
+    .inventory-item:disabled {
+      cursor: not-allowed;
+      opacity: 0.44;
+    }
+
+    .inventory-count {
+      color: var(--warn);
+      font-size: 0.86rem;
+    }
+
+    .intro-card {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      z-index: 4;
+      width: min(480px, calc(100vw - 32px));
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      background: rgba(8, 15, 24, 0.78);
+      color: var(--ink);
+      text-align: center;
+      text-transform: uppercase;
+      transform: translate(-50%, -50%);
+      pointer-events: auto;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.34);
+    }
+
+    .intro-card.is-hidden {
+      display: none;
+    }
+
+    .intro-card b {
+      display: block;
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .intro-card span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 900;
+    }
+
     .overlay {
       position: fixed;
       inset: 0;
@@ -346,6 +551,20 @@
         display: grid;
       }
 
+      .shop-panel {
+        top: auto;
+        bottom: 108px;
+        width: min(190px, calc(50vw - 18px));
+      }
+
+      .inventory-panel {
+        bottom: 108px;
+        left: auto;
+        right: 10px;
+        width: min(240px, calc(50vw - 18px));
+        transform: none;
+      }
+
       .jump-action {
         right: auto;
         left: 50%;
@@ -383,6 +602,14 @@
           <span>Best</span>
         </div>
         <div class="readout">
+          <b id="moneyText">$0</b>
+          <span>Money</span>
+        </div>
+        <div class="readout">
+          <b id="wantedBestText">0</b>
+          <span>Wanted Best</span>
+        </div>
+        <div class="readout">
           <b id="speedText">0</b>
           <span>MPH</span>
         </div>
@@ -417,6 +644,30 @@
       <span>Jump</span>
       <small>Space</small>
     </button>
+
+    <div class="shop-panel" aria-label="Highway Rush shop">
+      <button class="shop-button" data-buy="bomb" type="button"><span class="item-icon icon-bomb"></span><span class="shop-name">$2 Bomb</span><span class="shop-key">R</span></button>
+      <button class="shop-button" data-buy="speedBump" type="button"><span class="item-icon icon-bump"></span><span class="shop-name">$2 Speed Bump</span><span class="shop-key">Y</span></button>
+      <button class="shop-button" data-buy="clear" type="button"><span class="item-icon icon-clear"></span><span class="shop-name">$3 Clear Police</span><span class="shop-key">U</span></button>
+      <button class="shop-button" data-buy="superJump" type="button"><span class="item-icon icon-jump"></span><span class="shop-name">$3 Super Jump</span><span class="shop-key">I</span></button>
+      <button class="shop-button" data-buy="slowAmbulance" type="button"><span class="item-icon icon-ambulance"></span><span class="shop-name">$5 Slow Ambulance</span><span class="shop-key">O</span></button>
+      <button class="shop-button" data-buy="betterCar" type="button"><span class="item-icon icon-car"></span><span class="shop-name">$20 Better Car</span><span class="shop-key">B</span></button>
+      <button class="shop-button" data-buy="colorCar" type="button"><span class="item-icon icon-color"></span><span class="shop-name">$5 Color Car</span><span class="shop-key">C</span></button>
+      <button class="shop-button is-free" data-buy="wheel" type="button"><span class="item-icon icon-wheel"></span><span class="shop-name">Free Money Wheel</span><span class="shop-key">M</span></button>
+    </div>
+
+    <div class="inventory-panel" aria-label="Highway Rush inventory">
+      <button class="inventory-item" data-use="bomb" type="button"><span class="item-icon icon-bomb"></span><span class="inventory-name">Bomb <b class="inventory-count" data-count="bomb">0</b></span></button>
+      <button class="inventory-item" data-use="speedBump" type="button"><span class="item-icon icon-bump"></span><span class="inventory-name">Bump <b class="inventory-count" data-count="speedBump">0</b></span></button>
+      <button class="inventory-item" data-use="clear" type="button"><span class="item-icon icon-clear"></span><span class="inventory-name">Clear <b class="inventory-count" data-count="clear">0</b></span></button>
+      <button class="inventory-item" data-use="superJump" type="button"><span class="item-icon icon-jump"></span><span class="inventory-name">Jump <b class="inventory-count" data-count="superJump">0</b></span></button>
+      <button class="inventory-item" data-use="slowAmbulance" type="button"><span class="item-icon icon-ambulance"></span><span class="inventory-name">Slow <b class="inventory-count" data-count="slowAmbulance">0</b></span></button>
+    </div>
+
+    <div class="intro-card" id="introCard">
+      <b>Police got punched</b>
+      <span>Press any driving key or tap to start</span>
+    </div>
 
     <div class="overlay" id="gameOver">
       <section class="overlay-panel" role="dialog" aria-modal="true" aria-labelledby="gameOverTitle">
@@ -465,6 +716,8 @@
       const hud = {
         score: document.getElementById("scoreText"),
         best: document.getElementById("bestText"),
+        money: document.getElementById("moneyText"),
+        wantedBest: document.getElementById("wantedBestText"),
         speed: document.getElementById("speedText"),
         wanted: document.getElementById("wantedText"),
         health: document.getElementById("healthText"),
@@ -474,6 +727,10 @@
         final: document.getElementById("finalStats"),
         restart: document.getElementById("restartButton"),
         jump: document.getElementById("jumpButton"),
+        intro: document.getElementById("introCard"),
+        buyButtons: Array.from(document.querySelectorAll("[data-buy]")),
+        inventoryButtons: Array.from(document.querySelectorAll("[data-use]")),
+        inventoryCounts: Array.from(document.querySelectorAll("[data-count]")),
       };
       const gameShell = document.getElementById("gameShell");
 
@@ -482,7 +739,8 @@
 
       function readStoredNumber(key, fallback = 0) {
         try {
-          return Number(localStorage.getItem(key) || fallback);
+          const value = Number(localStorage.getItem(key) || fallback);
+          return Number.isFinite(value) ? value : fallback;
         } catch {
           return fallback;
         }
@@ -493,6 +751,21 @@
           localStorage.setItem(key, value);
         } catch {
           // Embedded file views can block storage; gameplay should still work.
+        }
+      }
+
+      function readStoredInventory() {
+        try {
+          const saved = JSON.parse(localStorage.getItem("highway-rush-inventory") || "{}");
+          return {
+            bomb: Math.max(0, Number(saved.bomb) || 0),
+            speedBump: Math.max(0, Number(saved.speedBump) || 0),
+            clear: Math.max(0, Number(saved.clear) || 0),
+            superJump: Math.max(0, Number(saved.superJump) || 0),
+            slowAmbulance: Math.max(0, Number(saved.slowAmbulance) || 0),
+          };
+        } catch {
+          return { bomb: 0, speedBump: 0, clear: 0, superJump: 0, slowAmbulance: 0 };
         }
       }
 
@@ -527,10 +800,22 @@
       const keys = new Set();
       const traffic = [];
       const police = [];
+      const moneyPickups = [];
+      const traps = [];
       const stripes = [];
       const roadBits = [];
       const sceneryBits = [];
       const clouds = [];
+      const shopCosts = {
+        bomb: 2,
+        speedBump: 2,
+        clear: 3,
+        superJump: 3,
+        slowAmbulance: 5,
+        betterCar: 20,
+        colorCar: 5,
+      };
+      const playerColors = [0x1d9bf0, 0xff5c5c, 0x47e38f, 0xf6c85f, 0x8b5cf6, 0xf97316, 0xffffff];
       const laneWidth = 2.7;
       const laneCount = 15;
       const laneHalfCount = (laneCount - 1) / 2;
@@ -569,6 +854,11 @@
         health: 100,
         score: 0,
         best: readStoredNumber("highway-rush-best", 0),
+        money: readStoredNumber("highway-rush-money", 0),
+        wantedBest: readStoredNumber("highway-rush-wanted-best", 0),
+        carUpgrade: Math.floor(readStoredNumber("highway-rush-car-upgrade", 0)),
+        colorIndex: Math.floor(readStoredNumber("highway-rush-color-index", 0)) % playerColors.length,
+        inventory: readStoredInventory(),
         x: 0,
         y: 0,
         z: 5,
@@ -585,7 +875,44 @@
         escapeTimer: 0,
         nextLane: 0,
         policeSerial: 0,
+        pickupTimer: 0,
+        fireTimer: 0,
+        slowAmbulanceTimer: 0,
+        superJumpReady: false,
+        wheelUsed: false,
+        introActive: true,
+        introTimer: 0,
       };
+
+      const maxUpgradeLevel = 5;
+
+      function maxHealth() {
+        return 100 + state.carUpgrade * 12;
+      }
+
+      function upgradePower() {
+        return Math.min(maxUpgradeLevel, state.carUpgrade);
+      }
+
+      function saveProgress() {
+        writeStoredValue("highway-rush-money", String(state.money));
+        writeStoredValue("highway-rush-wanted-best", String(state.wantedBest));
+        writeStoredValue("highway-rush-car-upgrade", String(state.carUpgrade));
+        writeStoredValue("highway-rush-color-index", String(state.colorIndex));
+        writeStoredValue("highway-rush-inventory", JSON.stringify(state.inventory));
+      }
+
+      function earnMoney(amount) {
+        state.money = Math.max(0, state.money + amount);
+        saveProgress();
+      }
+
+      function spendMoney(cost) {
+        if (state.money < cost) return false;
+        state.money -= cost;
+        saveProgress();
+        return true;
+      }
 
       function trafficPressure() {
         return Math.min(1.6, state.score / 6200);
@@ -617,6 +944,9 @@
       const curbMat = new THREE.MeshStandardMaterial({ color: 0xffd166, roughness: 0.56, emissive: 0xff9f1c, emissiveIntensity: 0.07 });
       const reflectorMat = new THREE.MeshStandardMaterial({ color: 0x7dd3fc, roughness: 0.24, emissive: 0x38bdf8, emissiveIntensity: 0.72 });
       const shadowMat = new THREE.MeshStandardMaterial({ color: 0x0b111a, roughness: 1 });
+      const moneyMat = new THREE.MeshStandardMaterial({ color: 0xffd166, roughness: 0.24, metalness: 0.38, emissive: 0xfbbf24, emissiveIntensity: 0.48 });
+      const trapMat = new THREE.MeshStandardMaterial({ color: 0xff4d6d, roughness: 0.32, metalness: 0.18, emissive: 0xff3355, emissiveIntensity: 0.42 });
+      const fireMat = new THREE.MeshStandardMaterial({ color: 0xff6b35, roughness: 0.22, emissive: 0xff3b1f, emissiveIntensity: 1.2 });
       function box(w, h, d, mat, x = 0, y = 0, z = 0) {
         const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
         mesh.position.set(x, y, z);
@@ -817,7 +1147,7 @@
         }
       }
 
-      const player = makeCar(0x1d9bf0, 0x0b4a6f);
+      const player = makeCar(playerColors[state.colorIndex], 0x0b4a6f);
       player.position.set(state.x, 0.52, state.z);
       scene.add(player);
 
@@ -832,10 +1162,12 @@
         const headlightMat = new THREE.MeshStandardMaterial({ color: 0xfff5ca, emissive: 0xfff0a8, emissiveIntensity: 0.92, roughness: 0.24 });
         const tailMat = new THREE.MeshStandardMaterial({ color: 0xff3355, emissive: 0xff3355, emissiveIntensity: 0.68, roughness: 0.3 });
 
-        group.add(box(1.48, 0.5, 2.92, bodyMat, 0, 0.34, 0));
+        const bodyMain = box(1.48, 0.5, 2.92, bodyMat, 0, 0.34, 0);
+        const hood = box(1.02, 0.24, 0.62, bodyMat, 0, 0.73, 0.74);
+        group.add(bodyMain);
         group.add(box(1.28, 0.18, 2.34, darkBodyMat, 0, 0.62, -0.08));
         group.add(box(1.12, 0.5, 1.12, glassMat, 0, 0.92, -0.24));
-        group.add(box(1.02, 0.24, 0.62, bodyMat, 0, 0.73, 0.74));
+        group.add(hood);
         group.add(box(1.0, 0.12, 0.22, trimMat, 0, 0.78, -1.39));
         group.add(box(1.0, 0.12, 0.22, trimMat, 0, 0.78, 1.38));
         group.add(box(1.32, 0.07, 0.14, trimMat, 0, 1.18, 0.24));
@@ -867,8 +1199,24 @@
         }
 
         group.userData.wheels = wheels;
+        group.userData.bodyMat = bodyMat;
         return group;
       }
+
+      const fireEffect = new THREE.Group();
+      fireEffect.add(box(0.24, 0.64, 0.18, fireMat, -0.36, 1.3, -0.2));
+      fireEffect.add(box(0.34, 0.86, 0.2, fireMat, 0, 1.42, -0.08));
+      fireEffect.add(box(0.24, 0.62, 0.18, fireMat, 0.36, 1.3, -0.24));
+      fireEffect.visible = false;
+      player.add(fireEffect);
+
+      function applyPlayerLook() {
+        player.userData.bodyMat.color.setHex(playerColors[state.colorIndex]);
+        const scale = 1 + upgradePower() * 0.035;
+        player.scale.set(scale, 1 + upgradePower() * 0.02, scale);
+      }
+
+      applyPlayerLook();
 
       function makePoliceCar() {
         const car = makeCar(0xf8fafc, 0x172554);
@@ -899,6 +1247,46 @@
         ambulance.add(box(0.36, 0.18, 0.18, brightRedMat, 0.48, 1.5, -0.58));
         ambulance.scale.set(1.32, 1.28, 1.68);
         return ambulance;
+      }
+
+      function makeMoneyPickup() {
+        const pickup = new THREE.Group();
+        const coin = new THREE.Mesh(new THREE.CylinderGeometry(0.52, 0.52, 0.12, 24), moneyMat);
+        coin.rotation.x = Math.PI / 2;
+        coin.castShadow = true;
+        pickup.add(coin);
+        pickup.add(box(0.12, 0.08, 0.68, moneyMat, 0, 0, 0));
+        pickup.userData.value = 2;
+        return pickup;
+      }
+
+      function makeTrap(type = "speedBump") {
+        const trap = new THREE.Group();
+        if (type === "bomb") {
+          const bomb = new THREE.Mesh(new THREE.SphereGeometry(0.52, 18, 12), shadowMat);
+          bomb.position.y = 0.52;
+          bomb.castShadow = true;
+          trap.add(bomb);
+          trap.add(box(0.16, 0.34, 0.16, fireMat, 0.28, 0.98, -0.18));
+          trap.userData.life = 4.6;
+        } else {
+          trap.add(box(2.1, 0.16, 0.7, trapMat, 0, 0.1, 0));
+          trap.add(box(0.24, 0.32, 0.52, shadowMat, -0.62, 0.28, 0));
+          trap.add(box(0.24, 0.32, 0.52, shadowMat, 0, 0.28, 0));
+          trap.add(box(0.24, 0.32, 0.52, shadowMat, 0.62, 0.28, 0));
+          trap.userData.life = 8;
+        }
+        trap.userData.type = type;
+        return trap;
+      }
+
+      const introPolice = makePoliceCar();
+      introPolice.visible = false;
+      scene.add(introPolice);
+
+      function setFire(active) {
+        state.fireTimer = active ? Math.max(state.fireTimer, 9) : 0;
+        fireEffect.visible = state.fireTimer > 0;
       }
 
       function makeScenery() {
@@ -1023,17 +1411,31 @@
 
       const trafficColors = [0xff5c5c, 0xf6c85f, 0x42d392, 0xffffff, 0x8b5cf6, 0xf97316, 0x14b8a6, 0xf43f5e, 0x38bdf8];
 
+      function spawnMoneyPickup(zOverride = null) {
+        const pickup = makeMoneyPickup();
+        const lane = laneCenters[Math.floor(Math.random() * laneCenters.length)];
+        setRoadActor(pickup, lane + (Math.random() - 0.5) * 0.5, zOverride ?? -120 - Math.random() * 90, 0);
+        moneyPickups.push(pickup);
+        scene.add(pickup);
+      }
+
       function spawnTraffic(zOverride = null, laneOverride = null) {
         const lane = laneOverride ?? laneCenters[state.nextLane % laneCenters.length];
         state.nextLane = (state.nextLane + 1 + Math.floor(Math.random() * 3)) % laneCenters.length;
         const isAmbulance = Math.random() < 0.12;
-        const color = trafficColors[Math.floor(Math.random() * trafficColors.length)];
+        const isBlackCar = !isAmbulance && Math.random() < 0.08;
+        const color = isBlackCar ? 0x030712 : trafficColors[Math.floor(Math.random() * trafficColors.length)];
         const car = isAmbulance ? makeAmbulance() : makeCar(color, 0x243449);
-        const isTruck = !isAmbulance && Math.random() < 0.18;
+        const isTruck = !isAmbulance && !isBlackCar && Math.random() < 0.18;
         if (isTruck) {
           car.scale.set(1.12, 1.12, 1.42);
         }
-        car.userData.kind = isAmbulance ? "ambulance" : isTruck ? "truck" : "traffic";
+        if (isBlackCar) {
+          const flameA = box(0.22, 0.5, 0.16, fireMat, -0.34, 1.26, -0.34);
+          const flameB = box(0.24, 0.68, 0.16, fireMat, 0.24, 1.36, -0.42);
+          car.add(flameA, flameB);
+        }
+        car.userData.kind = isAmbulance ? "ambulance" : isBlackCar ? "black" : isTruck ? "truck" : "traffic";
         car.userData.speed = isAmbulance
           ? Math.max(58, Math.abs(state.speed) + 18 + Math.random() * 20)
           : 5 + Math.random() * 18;
@@ -1043,6 +1445,61 @@
         setRoadActor(car, lane + (Math.random() - 0.5) * 0.42, zOverride ?? -150 - Math.random() * 28, 0);
         traffic.push(car);
         scene.add(car);
+      }
+
+      function dropTrap(type = "speedBump") {
+        const trap = makeTrap(type);
+        setRoadActor(trap, state.x + (type === "bomb" ? state.steerAngle * 2.4 : 0), state.z + (type === "bomb" ? 5 : 9), 0);
+        if (type === "bomb") {
+          trap.userData.throwTargetZ = state.z + 18;
+          trap.userData.throwArc = 0.42;
+        }
+        traps.push(trap);
+        scene.add(trap);
+      }
+
+      function buyShop(action) {
+        if (state.introActive && action !== "wheel") startRun();
+        if (action === "wheel") {
+          if (state.wheelUsed) return;
+          state.wheelUsed = true;
+          state.money = Math.random() > 0.5 ? state.money * 2 : 0;
+          saveProgress();
+          return;
+        }
+        const cost = shopCosts[action];
+        if (!spendMoney(cost)) return;
+        if (Object.prototype.hasOwnProperty.call(state.inventory, action)) {
+          state.inventory[action] += 1;
+          saveProgress();
+        } else if (action === "betterCar") {
+          state.carUpgrade = Math.min(maxUpgradeLevel, state.carUpgrade + 1);
+          state.health = Math.min(maxHealth(), state.health + 35);
+          applyPlayerLook();
+          saveProgress();
+        } else if (action === "colorCar") {
+          state.colorIndex = (state.colorIndex + 1) % playerColors.length;
+          applyPlayerLook();
+          saveProgress();
+        }
+      }
+
+      function useInventory(action) {
+        if (state.introActive) startRun();
+        if (!state.inventory[action]) return;
+        state.inventory[action] -= 1;
+        saveProgress();
+        if (action === "bomb" || action === "speedBump") {
+          dropTrap(action);
+        } else if (action === "clear") {
+          for (const car of police.splice(0)) scene.remove(car);
+          state.wanted = 0;
+          state.escapeTimer = 0;
+        } else if (action === "superJump") {
+          state.superJumpReady = true;
+        } else if (action === "slowAmbulance") {
+          state.slowAmbulanceTimer = 15;
+        }
       }
 
       function spawnTrafficPack(zOverride = null) {
@@ -1118,7 +1575,8 @@
 
       function performJump() {
         if (!state.playing || state.y > 0.001 || state.jumpVelocity !== 0) return;
-        state.jumpVelocity = 11.4;
+        state.jumpVelocity = state.superJumpReady ? 17.8 : 11.4;
+        state.superJumpReady = false;
         state.y = 0.02;
         hud.jump.classList.add("is-down");
       }
@@ -1129,12 +1587,13 @@
         const gas = keys.has("KeyW") || keys.has("ArrowUp");
         const brake = keys.has("KeyS") || keys.has("ArrowDown");
         const steer = (right ? 1 : 0) - (left ? 1 : 0);
-        const targetSpeed = gas ? 66 : brake ? -34 : 28;
+        const power = upgradePower();
+        const targetSpeed = gas ? 66 + power * 5 : brake ? -34 - power * 2 : 28 + power * 1.4;
         const throttleResponse = gas || brake ? 3.6 : 1.75;
 
         state.speed += (targetSpeed - state.speed) * Math.min(1, dt * throttleResponse);
-        state.steerAngle += (steer * 0.72 - state.steerAngle) * Math.min(1, dt * 7.5);
-        state.headingOffset += steer * dt * (1.65 + state.speed * 0.024);
+        state.steerAngle += (steer * 0.72 - state.steerAngle) * Math.min(1, dt * (7.5 + power * 0.32));
+        state.headingOffset += steer * dt * (1.65 + power * 0.12 + state.speed * 0.024);
         state.headingOffset = THREE.MathUtils.euclideanModulo(state.headingOffset + Math.PI, Math.PI * 2) - Math.PI;
         const motionDelta = Math.atan2(
           Math.sin(state.headingOffset - state.motionHeadingOffset),
@@ -1159,6 +1618,15 @@
 
       function updateWorld(dt) {
         const scroll = state.speed * state.driveFactor * dt;
+        state.slowAmbulanceTimer = Math.max(0, state.slowAmbulanceTimer - dt);
+        if (state.fireTimer > 0) {
+          state.fireTimer = Math.max(0, state.fireTimer - dt);
+          state.health = Math.max(0, state.health - dt * 6.4);
+          if (state.health <= 0) endGame();
+        }
+        fireEffect.visible = state.fireTimer > 0;
+        fireEffect.rotation.y += dt * 8;
+
         for (const item of roadBits) {
           advanceRouteObject(item, scroll, 35, roadLoopLength);
         }
@@ -1183,8 +1651,46 @@
           state.spawnTimer = Math.max(0.28, 0.52 - pressure * 0.12) + Math.random() * 0.16;
         }
 
+        state.pickupTimer -= dt;
+        if (state.pickupTimer <= 0) {
+          spawnMoneyPickup();
+          state.pickupTimer = 2.4 + Math.random() * 2.2;
+        }
+
+        for (let i = moneyPickups.length - 1; i >= 0; i -= 1) {
+          const pickup = moneyPickups[i];
+          pickup.userData.roadZ += scroll;
+          pickup.rotation.y += dt * 4.8;
+          placeRoadActor(pickup);
+          if (pickup.userData.roadZ > 28) {
+            scene.remove(pickup);
+            moneyPickups.splice(i, 1);
+          }
+        }
+
+        for (let i = traps.length - 1; i >= 0; i -= 1) {
+          const trap = traps[i];
+          trap.userData.life -= dt;
+          trap.userData.roadZ += scroll;
+          if (trap.userData.type === "bomb") {
+            trap.userData.roadZ = Math.min(trap.userData.throwTargetZ || trap.userData.roadZ, trap.userData.roadZ + dt * 28);
+            trap.userData.throwArc = Math.max(0, trap.userData.throwArc - dt);
+          }
+          placeRoadActor(trap);
+          if (trap.userData.type === "bomb") {
+            trap.position.y = 0.1 + Math.sin(Math.max(0, trap.userData.throwArc) * Math.PI / 0.42) * 1.8;
+          }
+          if (trap.userData.life <= 0 || trap.userData.roadZ > 35) {
+            scene.remove(trap);
+            traps.splice(i, 1);
+          }
+        }
+
         for (let i = traffic.length - 1; i >= 0; i -= 1) {
           const car = traffic[i];
+          if (car.userData.kind === "ambulance" && state.slowAmbulanceTimer > 0) {
+            car.userData.speed = Math.min(car.userData.speed, 18);
+          }
           car.userData.roadZ += (state.speed * state.driveFactor - car.userData.speed) * dt;
           placeRoadActor(car);
           car.userData.wheels.forEach((wheel) => {
@@ -1200,6 +1706,10 @@
 
       function updatePolice(dt) {
         if (state.wanted > 0) {
+          if (state.wanted > state.wantedBest) {
+            state.wantedBest = state.wanted;
+            saveProgress();
+          }
           state.policeTimer -= dt;
           if (state.policeTimer <= 0) {
             spawnPolice();
@@ -1315,6 +1825,23 @@
             wheel.rotation.x -= dt * car.userData.speed * 1.55;
           });
 
+          for (let j = traps.length - 1; j >= 0; j -= 1) {
+            const trap = traps[j];
+            const hitWidth = trap.userData.type === "bomb" ? 3.8 : 2.1;
+            const hitDepth = trap.userData.type === "bomb" ? 4.4 : 2.4;
+            if (Math.abs(car.userData.roadX - trap.userData.roadX) < hitWidth && Math.abs(car.userData.roadZ - trap.userData.roadZ) < hitDepth) {
+              car.userData.mode = "recover";
+              car.userData.recoverTimer = trap.userData.type === "bomb" ? 2.1 : 1.6;
+              car.userData.speed = Math.max(6, car.userData.speed * (trap.userData.type === "bomb" ? 0.16 : 0.32));
+              car.userData.headingOffset += Math.PI * (trap.userData.type === "bomb" ? 0.95 : 0.62);
+              car.rotation.z = trap.userData.type === "bomb" ? 1.05 : 0.72;
+              scene.remove(trap);
+              traps.splice(j, 1);
+              state.score += trap.userData.type === "bomb" ? 220 : 120;
+              break;
+            }
+          }
+
           if (car.userData.roadZ < -34 || car.userData.roadZ > 86) {
             removePoliceCar(car);
           }
@@ -1346,6 +1873,16 @@
       function checkCollisions() {
         if (state.y > 0.95) return;
 
+        for (let i = moneyPickups.length - 1; i >= 0; i -= 1) {
+          const pickup = moneyPickups[i];
+          if (Math.abs(pickup.userData.roadX - state.x) < 1.35 && Math.abs(pickup.userData.roadZ - state.z) < 2.2) {
+            earnMoney(pickup.userData.value || 2);
+            state.score += 40;
+            scene.remove(pickup);
+            moneyPickups.splice(i, 1);
+          }
+        }
+
         if (state.hitTimer <= 0) {
           for (const car of traffic) {
             if (car.userData.hit) continue;
@@ -1355,13 +1892,26 @@
             const hitLength = (car.userData.length + carSize.length) * 0.5;
             if (dx < hitWidth && dz < hitLength) {
               car.userData.hit = true;
+              earnMoney(1);
               if (car.userData.kind === "ambulance") {
-                state.health = Math.min(100, state.health + 26);
+                setFire(false);
+                state.health = Math.min(maxHealth(), state.health + 26);
                 state.speed = Math.max(state.speed, 46);
                 state.score += 140;
                 car.userData.roadZ = 28;
                 car.userData.roadX += car.userData.roadX > state.x ? 2.4 : -2.4;
                 car.rotation.z = (car.userData.roadX > state.x ? -1 : 1) * 0.32;
+                break;
+              }
+              if (car.userData.kind === "black") {
+                setFire(true);
+                state.hitTimer = 0.9;
+                state.speed = Math.max(18, state.speed * 0.66);
+                state.health = Math.max(0, state.health - 12);
+                car.rotation.z = (car.userData.roadX > state.x ? -1 : 1) * 0.55;
+                car.userData.roadX += car.userData.roadX > state.x ? 2.1 : -2.1;
+                summonPolice(1);
+                if (state.health <= 0) endGame();
                 break;
               }
               state.hitTimer = 0.82;
@@ -1385,7 +1935,7 @@
               car.userData.mode = "recover";
               car.userData.recoverTimer = 0.82;
               state.policeHitTimer = 1.05;
-              state.health = Math.max(0, state.health - (12 + Math.min(12, state.wanted * 2)));
+              state.health = Math.max(0, state.health - Math.max(4, 12 + Math.min(12, state.wanted * 2) - upgradePower() * 2.2));
               state.speed = Math.max(16, state.speed * 0.72);
               car.userData.roadZ += 5.4;
               car.userData.roadX += car.userData.roadX > state.x ? 1.7 : -1.7;
@@ -1414,27 +1964,59 @@
       function updateHud() {
         hud.score.textContent = Math.floor(state.score).toString();
         hud.best.textContent = Math.max(state.best, Math.floor(state.score)).toString();
+        hud.money.textContent = `$${state.money}`;
+        hud.wantedBest.textContent = state.wantedBest.toString();
         hud.speed.textContent = Math.round(state.speed).toString();
         hud.wanted.textContent = state.wanted.toString();
-        hud.health.textContent = `${Math.round(state.health)}%`;
-        hud.healthFill.style.transform = `scaleX(${state.health / 100})`;
+        hud.health.textContent = `${Math.round(state.health)}/${maxHealth()}`;
+        hud.healthFill.style.transform = `scaleX(${Math.max(0, Math.min(1, state.health / maxHealth()))})`;
         hud.state.textContent = state.policeHitTimer > 0
           ? "Police ram"
+          : state.fireTimer > 0
+            ? "On fire"
+          : state.superJumpReady
+            ? "Super jump ready"
+          : state.slowAmbulanceTimer > 0
+            ? `Slow ambulance ${Math.ceil(state.slowAmbulanceTimer)}s`
           : state.hitTimer > 0
             ? "Wanted up"
             : state.wanted > 0
               ? `Police chase x${police.length}`
+              : state.introActive
+                ? "Punch the police"
               : state.y > 0.2
                 ? "Airborne"
                 : "Engine live";
         hud.jump.classList.toggle("is-airborne", state.y > 0.08);
+        for (const button of hud.buyButtons) {
+          const action = button.dataset.buy;
+          if (action === "wheel") {
+            button.disabled = state.wheelUsed;
+            const name = button.querySelector(".shop-name");
+            if (name) name.textContent = state.wheelUsed ? "Wheel Used" : "Free Money Wheel";
+          } else {
+            const cost = shopCosts[action] || 0;
+            button.disabled = state.money < cost || (action === "betterCar" && state.carUpgrade >= maxUpgradeLevel);
+            if (action === "betterCar") {
+              const name = button.querySelector(".shop-name");
+              if (name) name.textContent = state.carUpgrade >= maxUpgradeLevel ? "Max Better Car" : `$${cost} Better Car`;
+            }
+          }
+        }
+        for (const count of hud.inventoryCounts) {
+          count.textContent = state.inventory[count.dataset.count] || 0;
+        }
+        for (const button of hud.inventoryButtons) {
+          button.disabled = !state.inventory[button.dataset.use];
+        }
       }
 
       function endGame() {
         state.playing = false;
         state.best = Math.max(state.best, Math.floor(state.score));
         writeStoredValue("highway-rush-best", String(state.best));
-        hud.final.textContent = `Score ${Math.floor(state.score)} · Best ${state.best}`;
+        saveProgress();
+        hud.final.textContent = `Score ${Math.floor(state.score)} · Best ${state.best} · Money $${state.money}`;
         hud.overlay.classList.add("is-visible");
       }
 
@@ -1445,9 +2027,15 @@
         for (const car of police.splice(0)) {
           scene.remove(car);
         }
-        state.playing = true;
+        for (const pickup of moneyPickups.splice(0)) {
+          scene.remove(pickup);
+        }
+        for (const trap of traps.splice(0)) {
+          scene.remove(trap);
+        }
+        state.playing = false;
         state.speed = 33;
-        state.health = 100;
+        state.health = maxHealth();
         state.score = 0;
         state.x = 0;
         state.y = 0;
@@ -1465,18 +2053,54 @@
         state.escapeTimer = 0;
         state.nextLane = Math.floor(Math.random() * laneCenters.length);
         state.policeSerial = 0;
+        state.pickupTimer = 1.4;
+        state.fireTimer = 0;
+        state.slowAmbulanceTimer = 0;
+        state.superJumpReady = false;
+        state.wheelUsed = false;
+        state.introActive = true;
+        state.introTimer = 0;
         player.visible = true;
+        fireEffect.visible = false;
+        applyPlayerLook();
         const pose = roadPose(state.z);
         player.position.set(pose.x, 0.52, pose.z);
         player.rotation.set(0, pose.heading, 0);
-        [-28, -58, -88, -118, -148, -178, -208, -238, -268, -298, -328, -358, -388].forEach((z) => spawnTrafficPack(z));
-        summonPolice(1);
+        setRoadActor(introPolice, state.x + 3.2, state.z - 2.8, 0);
+        introPolice.visible = true;
+        hud.intro.classList.remove("is-hidden");
         hud.overlay.classList.remove("is-visible");
+        updateHud();
         focusGame();
+      }
+
+      function startRun() {
+        if (!state.introActive) return;
+        state.introActive = false;
+        state.playing = true;
+        introPolice.visible = false;
+        hud.intro.classList.add("is-hidden");
+        [-28, -58, -88, -118, -148, -178, -208, -238, -268, -298, -328, -358, -388].forEach((z) => spawnTrafficPack(z));
+        spawnMoneyPickup(-42);
+        summonPolice(1);
+        focusGame();
+      }
+
+      function updateIntro(dt) {
+        if (!state.introActive) return;
+        state.introTimer += dt;
+        const pose = roadPose(state.z);
+        const punch = Math.sin(state.introTimer * 8) > 0.35 ? 0.7 : 0;
+        player.position.x = pose.x + (state.x + punch) * Math.cos(pose.heading);
+        player.position.z = pose.z + (state.x + punch) * Math.sin(pose.heading);
+        player.rotation.y = pose.heading + Math.sin(state.introTimer * 8) * 0.22;
+        setRoadActor(introPolice, state.x + 3.2 + Math.sin(state.introTimer * 12) * 0.25, state.z - 2.8, 0);
+        introPolice.rotation.z = Math.sin(state.introTimer * 10) * 0.18;
       }
 
       function loop() {
         const dt = Math.min(clock.getDelta(), 0.033);
+        updateIntro(dt);
         if (state.playing) {
           updateInput(dt);
           updateWorld(dt);
@@ -1523,6 +2147,16 @@
         return "";
       }
 
+      const buyKeyActions = {
+        KeyR: "bomb",
+        KeyY: "speedBump",
+        KeyU: "clear",
+        KeyI: "superJump",
+        KeyO: "slowAmbulance",
+        KeyB: "betterCar",
+        KeyC: "colorCar",
+        KeyM: "wheel",
+      };
       const controlCodes = ["KeyW", "KeyA", "KeyS", "KeyD", "ArrowUp", "ArrowLeft", "ArrowDown", "ArrowRight", "Space"];
       const focusGame = () => {
         gameShell.focus({ preventScroll: true });
@@ -1533,9 +2167,19 @@
 
       const handleKeyDown = (event) => {
         const code = normalizeKey(event);
+        if (buyKeyActions[code] && !event.repeat) {
+          event.preventDefault();
+          event.stopPropagation();
+          buyShop(buyKeyActions[code]);
+          updateHud();
+          return;
+        }
         if (!controlCodes.includes(code)) return;
         event.preventDefault();
         event.stopPropagation();
+        if (state.introActive) {
+          startRun();
+        }
         if (code === "Space") {
           if (!event.repeat) performJump();
           return;
@@ -1572,6 +2216,9 @@
       gameShell.addEventListener("keydown", handleKeyDown, { capture: true });
       gameShell.addEventListener("keyup", handleKeyUp, { capture: true });
       document.addEventListener("pointerdown", focusGame, { capture: true });
+      document.addEventListener("pointerdown", () => {
+        if (state.introActive) startRun();
+      }, { capture: true });
       window.addEventListener("blur", () => keys.clear());
       document.addEventListener("visibilitychange", () => {
         if (!document.hidden) focusGame();
@@ -1610,6 +2257,7 @@
       hud.jump.addEventListener("pointerdown", (event) => {
         event.preventDefault();
         focusGame();
+        if (state.introActive) startRun();
         hud.jump.classList.add("is-down");
         performJump();
       });
@@ -1618,8 +2266,29 @@
       hud.jump.addEventListener("pointerleave", liftJumpButton);
       hud.jump.addEventListener("click", (event) => {
         event.preventDefault();
+        if (state.introActive) startRun();
         performJump();
       });
+      for (const button of hud.buyButtons) {
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          focusGame();
+          buyShop(button.dataset.buy);
+          updateHud();
+        });
+      }
+      for (const button of hud.inventoryButtons) {
+        button.addEventListener("dblclick", (event) => {
+          event.preventDefault();
+          focusGame();
+          useInventory(button.dataset.use);
+          updateHud();
+        });
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          focusGame();
+        });
+      }
       hud.restart.addEventListener("click", restart);
       window.addEventListener("resize", onResize);
 
