@@ -663,11 +663,11 @@
     </div>
 
     <div class="inventory-panel" aria-label="Highway Rush inventory">
-      <button class="inventory-item" data-use="bomb" type="button"><span class="item-icon icon-bomb"></span><span class="inventory-name">Bomb <b class="inventory-count" data-count="bomb">0</b><span class="inventory-use-key">R x2</span></span></button>
-      <button class="inventory-item" data-use="speedBump" type="button"><span class="item-icon icon-bump"></span><span class="inventory-name">Bump <b class="inventory-count" data-count="speedBump">0</b><span class="inventory-use-key">Y x2</span></span></button>
-      <button class="inventory-item" data-use="clear" type="button"><span class="item-icon icon-clear"></span><span class="inventory-name">Clear <b class="inventory-count" data-count="clear">0</b><span class="inventory-use-key">U x2</span></span></button>
-      <button class="inventory-item" data-use="superJump" type="button"><span class="item-icon icon-jump"></span><span class="inventory-name">Jump <b class="inventory-count" data-count="superJump">0</b><span class="inventory-use-key">I x2</span></span></button>
-      <button class="inventory-item" data-use="slowAmbulance" type="button"><span class="item-icon icon-ambulance"></span><span class="inventory-name">Slow <b class="inventory-count" data-count="slowAmbulance">0</b><span class="inventory-use-key">O x2</span></span></button>
+      <button class="inventory-item" data-use="bomb" type="button"><span class="item-icon icon-bomb"></span><span class="inventory-name">Bomb <b class="inventory-count" data-count="bomb">0</b><span class="inventory-use-key">Use F</span></span></button>
+      <button class="inventory-item" data-use="speedBump" type="button"><span class="item-icon icon-bump"></span><span class="inventory-name">Bump <b class="inventory-count" data-count="speedBump">0</b><span class="inventory-use-key">Use G</span></span></button>
+      <button class="inventory-item" data-use="clear" type="button"><span class="item-icon icon-clear"></span><span class="inventory-name">Clear <b class="inventory-count" data-count="clear">0</b><span class="inventory-use-key">Use H</span></span></button>
+      <button class="inventory-item" data-use="superJump" type="button"><span class="item-icon icon-jump"></span><span class="inventory-name">Jump <b class="inventory-count" data-count="superJump">0</b><span class="inventory-use-key">Use J</span></span></button>
+      <button class="inventory-item" data-use="slowAmbulance" type="button"><span class="item-icon icon-ambulance"></span><span class="inventory-name">Slow <b class="inventory-count" data-count="slowAmbulance">0</b><span class="inventory-use-key">Use K</span></span></button>
     </div>
 
     <div class="intro-card" id="introCard">
@@ -2173,16 +2173,11 @@
         KeyM: "wheel",
       };
       const useKeyActions = {
-        Digit1: "bomb",
-        Numpad1: "bomb",
-        Digit2: "speedBump",
-        Numpad2: "speedBump",
-        Digit3: "clear",
-        Numpad3: "clear",
-        Digit4: "superJump",
-        Numpad4: "superJump",
-        Digit5: "slowAmbulance",
-        Numpad5: "slowAmbulance",
+        KeyF: "bomb",
+        KeyG: "speedBump",
+        KeyH: "clear",
+        KeyJ: "superJump",
+        KeyK: "slowAmbulance",
       };
       const controlCodes = ["KeyW", "KeyA", "KeyS", "KeyD", "ArrowUp", "ArrowLeft", "ArrowDown", "ArrowRight", "Space"];
       const focusGame = () => {
@@ -2193,16 +2188,7 @@
       };
 
       function handleBuyKey(code) {
-        useOrBuyItem(buyKeyActions[code]);
-      }
-
-      function useOrBuyItem(action) {
-        const isInventoryAction = Object.prototype.hasOwnProperty.call(state.inventory, action);
-        if (isInventoryAction && state.inventory[action] > 0) {
-          useInventory(action);
-        } else {
-          buyShop(action);
-        }
+        buyShop(buyKeyActions[code]);
       }
 
       const handleKeyDown = (event) => {
@@ -2320,7 +2306,7 @@
         button.addEventListener("click", (event) => {
           event.preventDefault();
           focusGame();
-          useOrBuyItem(button.dataset.buy);
+          buyShop(button.dataset.buy);
           updateHud();
         });
       }
