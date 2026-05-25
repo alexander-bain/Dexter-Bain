@@ -349,9 +349,9 @@
       pointer-events: none;
       transition: opacity 180ms ease;
       background:
-        radial-gradient(circle at 18% 20%, rgba(255, 45, 149, 0.46), transparent 22%),
-        radial-gradient(circle at 82% 12%, rgba(0, 245, 255, 0.34), transparent 20%),
-        linear-gradient(135deg, rgba(4, 7, 19, 0.96), rgba(20, 13, 40, 0.86) 45%, rgba(5, 21, 31, 0.9));
+        radial-gradient(circle at 18% 20%, rgba(255, 45, 149, 0.26), transparent 22%),
+        radial-gradient(circle at 82% 12%, rgba(0, 245, 255, 0.24), transparent 20%),
+        linear-gradient(135deg, rgba(4, 7, 19, 0.68), rgba(20, 13, 40, 0.45) 45%, rgba(5, 21, 31, 0.56));
       overflow: hidden;
     }
 
@@ -396,10 +396,11 @@
       border-radius: 24px;
       padding: clamp(16px, 3vw, 28px);
       background:
-        linear-gradient(145deg, rgba(10, 14, 30, 0.9), rgba(21, 27, 49, 0.76)),
+        linear-gradient(145deg, rgba(10, 14, 30, 0.62), rgba(21, 27, 49, 0.38)),
         repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 34px);
       box-shadow: 0 30px 90px rgba(0, 0, 0, 0.52), inset 0 0 54px rgba(0, 245, 255, 0.08);
       backdrop-filter: blur(20px);
+      transform: translateY(16px);
     }
 
     .garage-top {
@@ -450,7 +451,7 @@
 
     .garage-stage {
       display: grid;
-      grid-template-columns: minmax(260px, 1fr) minmax(230px, 0.7fr);
+      grid-template-columns: minmax(320px, 1fr) minmax(230px, 0.58fr);
       gap: 18px;
       align-items: stretch;
     }
@@ -463,9 +464,12 @@
       display: grid;
       place-items: center;
       background:
-        linear-gradient(180deg, rgba(125, 211, 252, 0.16), transparent 42%),
-        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 2px, transparent 2px 36px);
+        linear-gradient(180deg, rgba(125, 211, 252, 0.07), transparent 42%),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 2px, transparent 2px 36px);
       overflow: hidden;
+      pointer-events: none;
+      opacity: 1;
+      box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.55), 0 28px 70px rgba(0, 0, 0, 0.28);
     }
 
     .garage-preview::before {
@@ -475,6 +479,19 @@
       height: 76px;
       background: linear-gradient(90deg, transparent, rgba(255, 45, 149, 0.38), rgba(0, 245, 255, 0.36), transparent);
       filter: blur(20px);
+      z-index: 1;
+    }
+
+    .garage-preview-3d {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .garage-preview-3d canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
     }
 
     .garage-car {
@@ -484,6 +501,7 @@
       height: 150px;
       transform: perspective(680px) rotateX(58deg) rotateZ(-2deg);
       filter: drop-shadow(0 24px 22px rgba(0, 0, 0, 0.55));
+      display: none;
     }
 
     .garage-car .car-body {
@@ -536,6 +554,7 @@
     }
 
     .garage-arrow,
+    .garage-buy,
     .garage-action,
     .garage-start {
       border: 1px solid rgba(255, 255, 255, 0.22);
@@ -555,10 +574,23 @@
       color: var(--warn);
     }
 
+    .garage-buy {
+      display: block;
+      width: min(360px, 100%);
+      min-height: 50px;
+      margin: 12px auto 0;
+      padding: 10px 18px;
+      color: #06111f;
+      background: linear-gradient(135deg, var(--warn), #26e7f2);
+      box-shadow: 0 16px 30px rgba(0, 245, 255, 0.18);
+    }
+
     .garage-arrow:disabled,
+    .garage-buy:disabled,
     .garage-action:disabled {
       opacity: 0.42;
       cursor: not-allowed;
+      filter: grayscale(0.35);
     }
 
     .garage-car-readout {
@@ -1039,6 +1071,7 @@
         <div class="garage-stage">
           <div>
             <div class="garage-preview">
+              <div class="garage-preview-3d" id="garagePreview3d" aria-hidden="true"></div>
               <div class="garage-car" id="garageCar">
                 <span class="car-cabin"></span>
                 <span class="car-body"></span>
@@ -1055,6 +1088,7 @@
               </div>
               <button class="garage-arrow" id="garageCarNext" type="button" aria-label="Next car">›</button>
             </div>
+            <button class="garage-buy" id="garageBuyCarButton" type="button">Buy / Equip Car</button>
           </div>
           <div class="garage-actions">
             <button class="garage-action" id="garageWheelButton" type="button">
@@ -1139,12 +1173,14 @@
         garageTitle: document.getElementById("garageTitle"),
         garageSummary: document.getElementById("garageSummary"),
         garageMoney: document.getElementById("garageMoneyText"),
+        garagePreview: document.getElementById("garagePreview3d"),
         garageCar: document.getElementById("garageCar"),
         garageCarName: document.getElementById("garageCarName"),
         garageCarLevel: document.getElementById("garageCarLevel"),
         garageCarCost: document.getElementById("garageCarCost"),
         garageCarPrev: document.getElementById("garageCarPrev"),
         garageCarNext: document.getElementById("garageCarNext"),
+        garageBuyCar: document.getElementById("garageBuyCarButton"),
         garageStart: document.getElementById("garageStartButton"),
         garageWheelButton: document.getElementById("garageWheelButton"),
         garageMoneyWheel: document.getElementById("garageMoneyWheel"),
@@ -1227,6 +1263,7 @@
       const stripes = [];
       const roadBits = [];
       const sceneryBits = [];
+      const staticScenery = [];
       const clouds = [];
       const shopCosts = {
         bomb: 2,
@@ -1285,6 +1322,7 @@
         wantedBest: readStoredNumber("highway-rush-wanted-best", 0),
         carUpgrade: savedSelectedCarUpgrade,
         maxCarUpgrade: savedMaxCarUpgrade,
+        garagePreviewUpgrade: savedSelectedCarUpgrade,
         colorIndex: Math.floor(readStoredNumber("highway-rush-color-index", 0)) % playerColors.length,
         inventory: readStoredInventory(),
         x: 0,
@@ -1384,6 +1422,237 @@
         mesh.castShadow = true;
         mesh.receiveShadow = true;
         return mesh;
+      }
+
+      const garageGroup = new THREE.Group();
+      garageGroup.visible = false;
+      scene.add(garageGroup);
+
+      const garageFloorMat = new THREE.MeshStandardMaterial({ color: 0x202733, roughness: 0.46, metalness: 0.32 });
+      const garageWallMat = new THREE.MeshStandardMaterial({ color: 0x0d1321, roughness: 0.78, metalness: 0.16 });
+      const garagePinkMat = new THREE.MeshStandardMaterial({ color: 0xff2d95, emissive: 0xff2d95, emissiveIntensity: 1.5, roughness: 0.18 });
+      const garageBlueMat = new THREE.MeshStandardMaterial({ color: 0x00f5ff, emissive: 0x00f5ff, emissiveIntensity: 1.35, roughness: 0.18 });
+      const garageYellowMat = new THREE.MeshStandardMaterial({ color: 0xffd166, emissive: 0xffb703, emissiveIntensity: 0.9, roughness: 0.2 });
+      const garageDarkMat = new THREE.MeshStandardMaterial({ color: 0x060913, roughness: 0.82, metalness: 0.1 });
+      let garageMoneyWheel3d = null;
+      let garageColorWheel3d = null;
+      let garagePreviewRenderer = null;
+      let garagePreviewScene = null;
+      let garagePreviewCamera = null;
+      let garagePreviewCar = null;
+      let garagePreviewMoneyWheel = null;
+      let garagePreviewColorWheel = null;
+      const garagePreviewSize = { width: 0, height: 0 };
+
+      function addGraffitiStroke(x, y, w, h, mat) {
+        const stroke = box(w, h, 0.08, mat, x, y, -4.04);
+        garageGroup.add(stroke);
+      }
+
+      function makeGarageScene() {
+        const floor = box(17, 0.16, 12.5, garageFloorMat, 0, -0.08, 0);
+        garageGroup.add(floor);
+        garageGroup.add(box(17, 5.6, 0.24, garageWallMat, 0, 2.7, -4.6));
+        garageGroup.add(box(0.24, 4.8, 11.5, garageWallMat, -8.5, 2.25, 0.7));
+        garageGroup.add(box(0.24, 4.8, 11.5, garageWallMat, 8.5, 2.25, 0.7));
+
+        const platform = new THREE.Mesh(new THREE.CylinderGeometry(3.9, 3.9, 0.22, 4), garageDarkMat);
+        platform.rotation.y = Math.PI / 4;
+        platform.position.y = 0.05;
+        platform.receiveShadow = true;
+        garageGroup.add(platform);
+        for (const [x, z, rot, length] of [
+          [0, 3.92, 0, 5.5],
+          [0, -3.92, 0, 5.5],
+          [-3.92, 0, Math.PI / 2, 5.5],
+          [3.92, 0, Math.PI / 2, 5.5],
+        ]) {
+          const stripe = box(length, 0.08, 0.28, garageYellowMat, x, 0.22, z);
+          stripe.rotation.y = rot;
+          garageGroup.add(stripe);
+          const darkStripe = box(length * 0.9, 0.09, 0.1, garageDarkMat, x, 0.27, z);
+          darkStripe.rotation.y = rot + 0.08;
+          garageGroup.add(darkStripe);
+        }
+
+        for (let i = 0; i < 7; i += 1) {
+          garageGroup.add(box(0.08, 0.04, 11.2, i % 2 ? garageBlueMat : garagePinkMat, -6 + i * 2, 0.04, 0.5));
+        }
+        garageGroup.add(box(14.2, 0.12, 0.12, garageBlueMat, 0, 4.15, -4.38));
+        garageGroup.add(box(14.2, 0.1, 0.1, garagePinkMat, 0, 0.82, -4.38));
+
+        addGraffitiStroke(-5.4, 2.35, 0.18, 1.6, garagePinkMat);
+        addGraffitiStroke(-4.9, 3.08, 0.9, 0.18, garagePinkMat);
+        addGraffitiStroke(-4.9, 1.62, 0.9, 0.18, garagePinkMat);
+        addGraffitiStroke(-4.42, 2.35, 0.18, 1.3, garagePinkMat);
+        addGraffitiStroke(-3.15, 2.35, 0.18, 1.6, garageBlueMat);
+        addGraffitiStroke(-2.62, 3.08, 0.88, 0.18, garageBlueMat);
+        addGraffitiStroke(-2.62, 2.35, 0.72, 0.18, garageBlueMat);
+        addGraffitiStroke(-2.62, 1.62, 0.88, 0.18, garageBlueMat);
+        addGraffitiStroke(-1.05, 2.35, 0.18, 1.62, garageYellowMat);
+        addGraffitiStroke(-0.46, 2.9, 1.08, 0.18, garageYellowMat);
+        addGraffitiStroke(-0.46, 1.8, 1.08, 0.18, garageYellowMat);
+        const slashA = box(0.18, 1.8, 0.08, garageYellowMat, -0.5, 2.35, -4.04);
+        slashA.rotation.z = -0.6;
+        const slashB = box(0.18, 1.8, 0.08, garageYellowMat, 0.2, 2.35, -4.04);
+        slashB.rotation.z = 0.6;
+        garageGroup.add(slashA, slashB);
+
+        garageMoneyWheel3d = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 0.85, 0.2, 48), [
+          garagePinkMat,
+          garageDarkMat,
+          garageBlueMat,
+        ]);
+        garageMoneyWheel3d.rotation.x = Math.PI / 2;
+        garageMoneyWheel3d.position.set(5.55, 1.48, -3.05);
+        garageGroup.add(garageMoneyWheel3d);
+
+        garageColorWheel3d = new THREE.Group();
+        const colorWheelColors = [0xff4d6d, 0xffd166, 0x47e38f, 0x38bdf8, 0x8b5cf6, 0xf97316];
+        for (let i = 0; i < colorWheelColors.length; i += 1) {
+          const mat = new THREE.MeshStandardMaterial({ color: colorWheelColors[i], emissive: colorWheelColors[i], emissiveIntensity: 0.75, roughness: 0.25 });
+          const wedge = box(0.5, 0.14, 0.95, mat, 0, 0, 0.46);
+          wedge.rotation.y = (Math.PI * 2 * i) / colorWheelColors.length;
+          garageColorWheel3d.add(wedge);
+        }
+        garageColorWheel3d.position.set(-5.55, 1.42, -3.0);
+        garageGroup.add(garageColorWheel3d);
+
+        const toolMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.5, metalness: 0.4 });
+        const crateMat = new THREE.MeshStandardMaterial({ color: 0x2f3544, roughness: 0.72, metalness: 0.08 });
+        garageGroup.add(box(1.1, 0.9, 0.8, crateMat, -5.8, 0.38, 2.6));
+        garageGroup.add(box(0.9, 1.2, 0.7, crateMat, -6.6, 0.55, 1.65));
+        garageGroup.add(box(1.2, 0.1, 0.16, toolMat, -5.82, 1.05, 2.22));
+        garageGroup.add(box(1.4, 0.16, 0.2, garageBlueMat, 5.95, 1.0, 2.0));
+        garageGroup.add(box(0.22, 1.8, 0.22, toolMat, 6.4, 0.82, 2.05));
+        garageGroup.add(box(1.35, 0.18, 0.18, garagePinkMat, 0, 1.18, 3.6));
+      }
+
+      function syncGaragePreviewCar() {
+        if (!garagePreviewCar) return;
+        const previewUpgrade = Math.max(0, Math.min(maxUpgradeLevel, state.garagePreviewUpgrade ?? state.carUpgrade));
+        setPlayerCarModel(garagePreviewCar, previewUpgrade, carPaintForTier(previewUpgrade));
+        garagePreviewCar.scale.set(1.38, 1.38, 1.38);
+      }
+
+      function makeGaragePreview() {
+        if (!hud.garagePreview || garagePreviewRenderer) return;
+        garagePreviewScene = new THREE.Scene();
+        garagePreviewCamera = new THREE.PerspectiveCamera(42, 1, 0.1, 60);
+        garagePreviewCamera.position.set(3.9, 2.35, 5.7);
+        garagePreviewCamera.lookAt(0, 0.72, 0);
+
+        garagePreviewRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+        garagePreviewRenderer.setClearColor(0x000000, 0);
+        garagePreviewRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        garagePreviewRenderer.shadowMap.enabled = true;
+        garagePreviewRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        hud.garagePreview.textContent = "";
+        hud.garagePreview.appendChild(garagePreviewRenderer.domElement);
+
+        const previewHemi = new THREE.HemisphereLight(0x9ee7ff, 0x261335, 2.5);
+        garagePreviewScene.add(previewHemi);
+        const previewKey = new THREE.DirectionalLight(0xffffff, 3);
+        previewKey.position.set(-3.2, 5.4, 4.2);
+        previewKey.castShadow = true;
+        previewKey.shadow.camera.left = -6;
+        previewKey.shadow.camera.right = 6;
+        previewKey.shadow.camera.top = 6;
+        previewKey.shadow.camera.bottom = -6;
+        garagePreviewScene.add(previewKey);
+        const previewPinkLight = new THREE.PointLight(0xff2d95, 2.2, 9);
+        previewPinkLight.position.set(-3.3, 2.1, 2.7);
+        garagePreviewScene.add(previewPinkLight);
+        const previewBlueLight = new THREE.PointLight(0x00f5ff, 2.1, 9);
+        previewBlueLight.position.set(3.3, 2.4, -1.8);
+        garagePreviewScene.add(previewBlueLight);
+
+        const floor = box(8.4, 0.14, 5.7, garageFloorMat, 0, -0.07, 0.2);
+        floor.receiveShadow = true;
+        garagePreviewScene.add(floor);
+        garagePreviewScene.add(box(8.4, 3.2, 0.18, garageWallMat, 0, 1.55, -2.55));
+        garagePreviewScene.add(box(0.18, 2.6, 5.6, garageWallMat, -4.2, 1.25, 0.2));
+        garagePreviewScene.add(box(0.18, 2.6, 5.6, garageWallMat, 4.2, 1.25, 0.2));
+
+        const platform = new THREE.Mesh(new THREE.CylinderGeometry(2.35, 2.35, 0.16, 4), garageDarkMat);
+        platform.rotation.y = Math.PI / 4;
+        platform.position.y = 0.06;
+        platform.receiveShadow = true;
+        garagePreviewScene.add(platform);
+        for (const [x, z, rot] of [
+          [0, 2.36, 0],
+          [0, -2.36, 0],
+          [-2.36, 0, Math.PI / 2],
+          [2.36, 0, Math.PI / 2],
+        ]) {
+          const stripe = box(3.15, 0.06, 0.18, garageYellowMat, x, 0.16, z);
+          stripe.rotation.y = rot;
+          garagePreviewScene.add(stripe);
+        }
+
+        garagePreviewScene.add(box(6.4, 0.08, 0.08, garageBlueMat, 0, 2.75, -2.42));
+        garagePreviewScene.add(box(6.4, 0.08, 0.08, garagePinkMat, 0, 0.65, -2.42));
+        garagePreviewScene.add(box(0.12, 0.9, 0.06, garagePinkMat, -2.3, 1.75, -2.35));
+        garagePreviewScene.add(box(0.82, 0.12, 0.06, garagePinkMat, -1.95, 2.15, -2.35));
+        garagePreviewScene.add(box(0.12, 0.9, 0.06, garageBlueMat, -0.85, 1.75, -2.35));
+        garagePreviewScene.add(box(0.82, 0.12, 0.06, garageBlueMat, -0.5, 1.35, -2.35));
+        garagePreviewScene.add(box(1.0, 0.12, 0.06, garageYellowMat, 0.9, 2.0, -2.35));
+        garagePreviewScene.add(box(1.0, 0.12, 0.06, garageYellowMat, 0.9, 1.45, -2.35));
+
+        garagePreviewCar = makeCar(carPaintForTier(state.garagePreviewUpgrade ?? state.carUpgrade), 0x67e8f9);
+        garagePreviewCar.position.set(-0.1, 0.08, 0.05);
+        garagePreviewCar.rotation.y = -0.72;
+        garagePreviewScene.add(garagePreviewCar);
+
+        garagePreviewMoneyWheel = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.08, 42), [
+          garagePinkMat,
+          garageDarkMat,
+          garageBlueMat,
+        ]);
+        garagePreviewMoneyWheel.rotation.x = Math.PI / 2;
+        garagePreviewMoneyWheel.position.set(2.85, 1.1, -1.45);
+        garagePreviewScene.add(garagePreviewMoneyWheel);
+
+        garagePreviewColorWheel = new THREE.Group();
+        for (let i = 0; i < playerColors.length; i += 1) {
+          const color = playerColors[i];
+          const mat = new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 0.52, roughness: 0.26 });
+          const wedge = box(0.24, 0.08, 0.5, mat, 0, 0, 0.22);
+          wedge.rotation.y = (Math.PI * 2 * i) / playerColors.length;
+          garagePreviewColorWheel.add(wedge);
+        }
+        garagePreviewColorWheel.position.set(-2.85, 1.05, -1.45);
+        garagePreviewScene.add(garagePreviewColorWheel);
+
+        syncGaragePreviewCar();
+        resizeGaragePreview();
+      }
+
+      function resizeGaragePreview() {
+        if (!garagePreviewRenderer || !hud.garagePreview || !garagePreviewCamera) return;
+        const rect = hud.garagePreview.getBoundingClientRect();
+        const width = Math.max(1, Math.floor(rect.width));
+        const height = Math.max(1, Math.floor(rect.height));
+        if (garagePreviewSize.width === width && garagePreviewSize.height === height) return;
+        garagePreviewSize.width = width;
+        garagePreviewSize.height = height;
+        garagePreviewRenderer.setSize(width, height, false);
+        garagePreviewCamera.aspect = width / height;
+        garagePreviewCamera.updateProjectionMatrix();
+      }
+
+      function renderGaragePreview(dt) {
+        if (!state.garageOpen || !garagePreviewRenderer || !garagePreviewScene || !garagePreviewCamera) return;
+        resizeGaragePreview();
+        if (garagePreviewCar) {
+          garagePreviewCar.rotation.y = -0.72 + Math.sin(clock.elapsedTime * 0.55) * 0.08;
+          garagePreviewCar.userData.wheels.forEach((wheel) => {
+            wheel.rotation.x += dt * 1.6;
+          });
+        }
+        if (garagePreviewMoneyWheel) garagePreviewMoneyWheel.rotation.z += dt * (state.wheelUsed ? 6 : 1.2);
+        if (garagePreviewColorWheel) garagePreviewColorWheel.rotation.y += dt * 1.35;
+        garagePreviewRenderer.render(garagePreviewScene, garagePreviewCamera);
       }
 
       function roadPose(z) {
@@ -1578,7 +1847,7 @@
         }
       }
 
-      const player = makeCar(playerColors[state.colorIndex], 0x0b4a6f);
+      const player = makeCar(carPaintForTier(state.carUpgrade), 0x0b4a6f);
       player.position.set(state.x, 0.52, state.z);
       scene.add(player);
 
@@ -1594,24 +1863,24 @@
         const tailMat = new THREE.MeshStandardMaterial({ color: 0xff3355, emissive: 0xff3355, emissiveIntensity: 0.68, roughness: 0.3 });
 
         const bodyMain = box(1.48, 0.5, 2.92, bodyMat, 0, 0.34, 0);
+        const darkInset = box(1.28, 0.18, 2.34, darkBodyMat, 0, 0.62, -0.08);
+        const cabin = box(1.12, 0.5, 1.12, glassMat, 0, 0.92, -0.24);
         const hood = box(1.02, 0.24, 0.62, bodyMat, 0, 0.73, 0.74);
-        group.add(bodyMain);
-        group.add(box(1.28, 0.18, 2.34, darkBodyMat, 0, 0.62, -0.08));
-        group.add(box(1.12, 0.5, 1.12, glassMat, 0, 0.92, -0.24));
-        group.add(hood);
-        group.add(box(1.0, 0.12, 0.22, trimMat, 0, 0.78, -1.39));
-        group.add(box(1.0, 0.12, 0.22, trimMat, 0, 0.78, 1.38));
-        group.add(box(1.32, 0.07, 0.14, trimMat, 0, 1.18, 0.24));
-        group.add(box(0.46, 0.11, 0.1, headlightMat, -0.42, 0.48, -1.5));
-        group.add(box(0.46, 0.11, 0.1, headlightMat, 0.42, 0.48, -1.5));
-        group.add(box(0.38, 0.13, 0.1, tailMat, -0.42, 0.5, 1.5));
-        group.add(box(0.38, 0.13, 0.1, tailMat, 0.42, 0.5, 1.5));
-        group.add(box(1.72, 0.08, 0.16, trimMat, 0, 0.5, 1.58));
-        group.add(box(1.76, 0.07, 0.12, trimMat, 0, 0.5, -1.58));
+        const frontTrim = box(1.0, 0.12, 0.22, trimMat, 0, 0.78, -1.39);
+        const rearTrim = box(1.0, 0.12, 0.22, trimMat, 0, 0.78, 1.38);
+        const roofTrim = box(1.32, 0.07, 0.14, trimMat, 0, 1.18, 0.24);
+        const leftHeadlight = box(0.46, 0.11, 0.1, headlightMat, -0.42, 0.48, -1.5);
+        const rightHeadlight = box(0.46, 0.11, 0.1, headlightMat, 0.42, 0.48, -1.5);
+        const leftTail = box(0.38, 0.13, 0.1, tailMat, -0.42, 0.5, 1.5);
+        const rightTail = box(0.38, 0.13, 0.1, tailMat, 0.42, 0.5, 1.5);
+        const rearBumper = box(1.72, 0.08, 0.16, trimMat, 0, 0.5, 1.58);
+        const frontBumper = box(1.76, 0.07, 0.12, trimMat, 0, 0.5, -1.58);
+        group.add(bodyMain, darkInset, cabin, hood, frontTrim, rearTrim, roofTrim, leftHeadlight, rightHeadlight, leftTail, rightTail, rearBumper, frontBumper);
 
         const wheelGeo = new THREE.CylinderGeometry(0.27, 0.27, 0.28, 18);
         const rimGeo = new THREE.CylinderGeometry(0.14, 0.14, 0.3, 16);
         const wheels = [];
+        const rims = [];
         for (const x of [-0.82, 0.82]) {
           for (const z of [-0.95, 0.95]) {
             const wheel = new THREE.Mesh(wheelGeo, wheelMat);
@@ -1626,12 +1895,146 @@
             rim.position.set(x + (x > 0 ? 0.01 : -0.01), 0.22, z);
             rim.castShadow = true;
             group.add(rim);
+            rims.push(rim);
           }
         }
 
+        const modelKit = new THREE.Group();
+        group.add(modelKit);
+
         group.userData.wheels = wheels;
+        group.userData.rims = rims;
         group.userData.bodyMat = bodyMat;
+        group.userData.carParts = {
+          bodyMain,
+          darkInset,
+          cabin,
+          hood,
+          frontTrim,
+          rearTrim,
+          roofTrim,
+          leftHeadlight,
+          rightHeadlight,
+          leftTail,
+          rightTail,
+          frontBumper,
+          rearBumper,
+          modelKit,
+        };
+        group.userData.carMats = { bodyMat, darkBodyMat, trimMat, glassMat, headlightMat, tailMat };
         return group;
+      }
+
+      const carPartBases = {
+        bodyMain: [1.48, 0.5, 2.92],
+        darkInset: [1.28, 0.18, 2.34],
+        cabin: [1.12, 0.5, 1.12],
+        hood: [1.02, 0.24, 0.62],
+        frontTrim: [1.0, 0.12, 0.22],
+        rearTrim: [1.0, 0.12, 0.22],
+        roofTrim: [1.32, 0.07, 0.14],
+        leftHeadlight: [0.46, 0.11, 0.1],
+        rightHeadlight: [0.46, 0.11, 0.1],
+        leftTail: [0.38, 0.13, 0.1],
+        rightTail: [0.38, 0.13, 0.1],
+        frontBumper: [1.76, 0.07, 0.12],
+        rearBumper: [1.72, 0.08, 0.16],
+      };
+
+      const carVisualSpecs = [
+        { body: [1.42, 0.52, 2.58, 0, 0.34, 0.05], dark: [1.06, 0.16, 1.72, 0, 0.62, 0.02], cabin: [0.92, 0.58, 0.86, 0, 0.94, 0.22], hood: [0.86, 0.2, 0.72, 0, 0.7, -0.78], wheelX: 0.78, wheelZ: 0.9, wheelY: 0.22, lightX: 0.38, tailX: 0.36 },
+        { body: [1.5, 0.4, 3.18, 0, 0.3, 0], dark: [1.16, 0.13, 2.35, 0, 0.55, -0.1], cabin: [0.86, 0.38, 0.78, 0, 0.82, 0.18], hood: [1.0, 0.15, 1.1, 0, 0.58, -0.78], wheelX: 0.86, wheelZ: 1.08, wheelY: 0.2, lightX: 0.42, tailX: 0.42 },
+        { body: [1.78, 0.5, 2.9, 0, 0.34, 0], dark: [1.42, 0.14, 1.72, 0, 0.66, -0.18], cabin: [1.04, 0.46, 0.76, 0, 0.9, 0.2], hood: [1.36, 0.22, 1.08, 0, 0.72, -0.72], wheelX: 1.02, wheelZ: 0.98, wheelY: 0.24, lightX: 0.5, tailX: 0.5 },
+        { body: [1.36, 0.36, 3.42, 0, 0.28, 0], dark: [0.92, 0.12, 2.5, 0, 0.53, -0.1], cabin: [0.72, 0.44, 1.02, 0, 0.82, -0.08], hood: [0.72, 0.13, 1.22, 0, 0.56, -0.92], wheelX: 0.78, wheelZ: 1.16, wheelY: 0.19, lightX: 0.34, tailX: 0.34 },
+        { body: [1.82, 0.54, 3.2, 0, 0.36, 0], dark: [1.46, 0.16, 2.0, 0, 0.7, -0.08], cabin: [0.96, 0.42, 0.9, 0, 0.94, 0.05], hood: [1.36, 0.2, 0.96, 0, 0.76, -0.88], wheelX: 1.08, wheelZ: 1.12, wheelY: 0.25, lightX: 0.56, tailX: 0.54 },
+        { body: [1.66, 0.32, 3.65, 0, 0.25, 0], dark: [1.0, 0.1, 2.72, 0, 0.52, -0.08], cabin: [0.7, 0.34, 0.88, 0, 0.78, -0.02], hood: [0.94, 0.11, 1.5, 0, 0.52, -1.0], wheelX: 0.98, wheelZ: 1.28, wheelY: 0.18, lightX: 0.42, tailX: 0.42 },
+      ];
+
+      function setCarPart(mesh, key, size, position) {
+        const base = carPartBases[key];
+        mesh.visible = true;
+        mesh.scale.set(size[0] / base[0], size[1] / base[1], size[2] / base[2]);
+        mesh.position.set(position[0], position[1], position[2]);
+        mesh.rotation.set(0, 0, 0);
+      }
+
+      function addKitBox(car, width, height, depth, mat, x, y, z, rotationY = 0, rotationZ = 0) {
+        const part = box(width, height, depth, mat, x, y, z);
+        part.rotation.y = rotationY;
+        part.rotation.z = rotationZ;
+        car.userData.carParts.modelKit.add(part);
+        return part;
+      }
+
+      function setWheelLayout(car, spec) {
+        const wheelPositions = [
+          [-spec.wheelX, spec.wheelY, -spec.wheelZ],
+          [-spec.wheelX, spec.wheelY, spec.wheelZ],
+          [spec.wheelX, spec.wheelY, -spec.wheelZ],
+          [spec.wheelX, spec.wheelY, spec.wheelZ],
+        ];
+        car.userData.wheels.forEach((wheel, index) => {
+          wheel.position.set(...wheelPositions[index]);
+        });
+        car.userData.rims.forEach((rim, index) => {
+          const [x, y, z] = wheelPositions[index];
+          rim.position.set(x + (x > 0 ? 0.01 : -0.01), y, z);
+        });
+      }
+
+      function setPlayerCarModel(car, tier, color) {
+        if (!car.userData.carParts) return;
+        const spec = carVisualSpecs[Math.max(0, Math.min(maxUpgradeLevel, tier))] || carVisualSpecs[0];
+        const parts = car.userData.carParts;
+        const mats = car.userData.carMats;
+        while (parts.modelKit.children.length) parts.modelKit.remove(parts.modelKit.children[0]);
+        mats.bodyMat.color.setHex(color);
+        setCarPart(parts.bodyMain, "bodyMain", spec.body.slice(0, 3), spec.body.slice(3));
+        setCarPart(parts.darkInset, "darkInset", spec.dark.slice(0, 3), spec.dark.slice(3));
+        setCarPart(parts.cabin, "cabin", spec.cabin.slice(0, 3), spec.cabin.slice(3));
+        setCarPart(parts.hood, "hood", spec.hood.slice(0, 3), spec.hood.slice(3));
+        setCarPart(parts.frontTrim, "frontTrim", [Math.max(0.72, spec.body[0] * 0.68), 0.1, 0.18], [0, 0.6, -spec.body[2] / 2 - 0.03]);
+        setCarPart(parts.rearTrim, "rearTrim", [Math.max(0.72, spec.body[0] * 0.64), 0.1, 0.18], [0, 0.6, spec.body[2] / 2 + 0.03]);
+        setCarPart(parts.roofTrim, "roofTrim", [Math.max(0.7, spec.cabin[0] * 0.82), 0.06, 0.14], [0, spec.cabin[4] + spec.cabin[1] * 0.58, spec.cabin[5] + 0.14]);
+        setCarPart(parts.leftHeadlight, "leftHeadlight", [0.38, 0.1, 0.08], [-spec.lightX, 0.47, -spec.body[2] / 2 - 0.12]);
+        setCarPart(parts.rightHeadlight, "rightHeadlight", [0.38, 0.1, 0.08], [spec.lightX, 0.47, -spec.body[2] / 2 - 0.12]);
+        setCarPart(parts.leftTail, "leftTail", [0.32, 0.12, 0.08], [-spec.tailX, 0.48, spec.body[2] / 2 + 0.12]);
+        setCarPart(parts.rightTail, "rightTail", [0.32, 0.12, 0.08], [spec.tailX, 0.48, spec.body[2] / 2 + 0.12]);
+        setCarPart(parts.frontBumper, "frontBumper", [spec.body[0] + 0.22, 0.07, 0.12], [0, 0.44, -spec.body[2] / 2 - 0.18]);
+        setCarPart(parts.rearBumper, "rearBumper", [spec.body[0] + 0.18, 0.08, 0.14], [0, 0.45, spec.body[2] / 2 + 0.18]);
+        setWheelLayout(car, spec);
+
+        if (tier === 1) {
+          addKitBox(car, 2.0, 0.08, 0.36, mats.trimMat, 0, 0.32, -1.78);
+          addKitBox(car, 1.7, 0.08, 0.34, mats.trimMat, 0, 0.82, 1.72);
+          addKitBox(car, 0.12, 0.5, 0.08, mats.trimMat, -0.75, 0.62, 1.62);
+          addKitBox(car, 0.12, 0.5, 0.08, mats.trimMat, 0.75, 0.62, 1.62);
+        } else if (tier === 2) {
+          addKitBox(car, 0.42, 0.16, 0.8, mats.darkBodyMat, 0, 0.86, -0.6);
+          addKitBox(car, 0.16, 0.12, 1.2, mats.trimMat, -1.12, 0.42, 0.05);
+          addKitBox(car, 0.16, 0.12, 1.2, mats.trimMat, 1.12, 0.42, 0.05);
+          addKitBox(car, 2.14, 0.16, 0.28, mats.bodyMat, 0, 0.42, 1.56);
+        } else if (tier === 3) {
+          addKitBox(car, 0.18, 0.64, 1.1, mats.bodyMat, -0.68, 0.62, 0.72, 0, -0.28);
+          addKitBox(car, 0.18, 0.64, 1.1, mats.bodyMat, 0.68, 0.62, 0.72, 0, 0.28);
+          addKitBox(car, 0.1, 0.08, 2.9, garageBlueMat, -0.62, 0.52, -0.1);
+          addKitBox(car, 0.1, 0.08, 2.9, garageBlueMat, 0.62, 0.52, -0.1);
+          addKitBox(car, 0.54, 0.16, 0.54, mats.darkBodyMat, 0, 0.8, -0.22);
+        } else if (tier === 4) {
+          addKitBox(car, 0.42, 0.32, 1.42, mats.bodyMat, -1.15, 0.42, -0.06);
+          addKitBox(car, 0.42, 0.32, 1.42, mats.bodyMat, 1.15, 0.42, -0.06);
+          addKitBox(car, 2.28, 0.12, 0.32, mats.trimMat, 0, 0.36, -1.78);
+          addKitBox(car, 0.14, 0.62, 0.72, mats.trimMat, -0.8, 0.92, 1.28, 0, -0.42);
+          addKitBox(car, 0.14, 0.62, 0.72, mats.trimMat, 0.8, 0.92, 1.28, 0, 0.42);
+        } else if (tier === 5) {
+          addKitBox(car, 2.4, 0.08, 0.4, mats.trimMat, 0, 0.3, -2.02);
+          addKitBox(car, 2.2, 0.08, 0.42, mats.trimMat, 0, 0.92, 1.88);
+          addKitBox(car, 0.12, 0.72, 0.12, mats.trimMat, -0.88, 0.62, 1.72);
+          addKitBox(car, 0.12, 0.72, 0.12, mats.trimMat, 0.88, 0.62, 1.72);
+          addKitBox(car, 0.16, 0.48, 1.34, mats.bodyMat, -0.95, 0.48, -0.42, 0, -0.48);
+          addKitBox(car, 0.16, 0.48, 1.34, mats.bodyMat, 0.95, 0.48, -0.42, 0, 0.48);
+          addKitBox(car, 0.72, 0.08, 2.4, garagePinkMat, 0, 0.48, -0.12);
+        }
       }
 
       const fireEffect = new THREE.Group();
@@ -1642,52 +2045,89 @@
       player.add(fireEffect);
 
       function applyPlayerLook() {
-        player.userData.bodyMat.color.setHex(playerColors[state.colorIndex]);
-        const scale = 1 + upgradePower() * 0.035;
-        player.scale.set(scale, 1 + upgradePower() * 0.02, scale);
+        setPlayerCarModel(player, state.carUpgrade, carPaintForTier(state.carUpgrade));
+        player.scale.set(1, 1, 1);
         updateGarage();
+        syncGaragePreviewCar();
       }
 
       applyPlayerLook();
 
-      function carUpgradeCost() {
-        return (state.maxCarUpgrade + 1) * 20;
+      function carPreviewCost(level) {
+        return Math.max(1, level) * 20;
       }
 
-      function carColorCss() {
-        return `#${playerColors[state.colorIndex].toString(16).padStart(6, "0")}`;
+      function garagePreviewLevel() {
+        return Math.max(0, Math.min(maxUpgradeLevel, state.garagePreviewUpgrade ?? state.carUpgrade));
+      }
+
+      function carPaintForTier(tier) {
+        const offset = Math.max(0, Math.min(maxUpgradeLevel, tier));
+        return playerColors[(state.colorIndex + offset) % playerColors.length];
+      }
+
+      function carColorCss(tier = garagePreviewLevel()) {
+        return `#${carPaintForTier(tier).toString(16).padStart(6, "0")}`;
       }
 
       function updateGarage() {
         if (!hud.garage) return;
-        const nextCost = carUpgradeCost();
+        const previewUpgrade = garagePreviewLevel();
+        const previewCost = carPreviewCost(previewUpgrade);
+        const previewOwned = previewUpgrade <= state.maxCarUpgrade;
+        const previewNextBuy = previewUpgrade === state.maxCarUpgrade + 1;
         hud.garageMoney.textContent = `$${state.money}`;
-        hud.garageCar.style.setProperty("--garage-car-color", carColorCss());
-        hud.garageCar.dataset.level = String(state.carUpgrade);
-        hud.garageCarName.textContent = carNames[state.carUpgrade] || carNames[0];
-        hud.garageCarLevel.textContent = `Tier ${state.carUpgrade} · Owned ${state.maxCarUpgrade}`;
-        if (state.carUpgrade < state.maxCarUpgrade) {
-          hud.garageCarCost.textContent = "Right arrow selects next owned car";
+        hud.garageCar.style.setProperty("--garage-car-color", carColorCss(previewUpgrade));
+        hud.garageCar.dataset.level = String(previewUpgrade);
+        hud.garageCarName.textContent = carNames[previewUpgrade] || carNames[0];
+        hud.garageCarLevel.textContent = `Tier ${previewUpgrade} · Owned ${state.maxCarUpgrade}`;
+        if (previewOwned) {
+          hud.garageCarCost.textContent = previewUpgrade === state.carUpgrade ? "Equipped" : "Click arrow to equip";
         } else if (state.maxCarUpgrade >= maxUpgradeLevel) {
           hud.garageCarCost.textContent = "Best car unlocked";
+        } else if (previewNextBuy) {
+          hud.garageCarCost.textContent = state.money >= previewCost ? `$${previewCost} ready to buy` : `$${previewCost} needed to buy`;
         } else {
-          hud.garageCarCost.textContent = `$${nextCost} next car`;
+          hud.garageCarCost.textContent = `Buy tier ${state.maxCarUpgrade + 1} first`;
         }
-        hud.garageCarPrev.disabled = state.carUpgrade <= 0;
-        hud.garageCarNext.disabled = state.carUpgrade >= maxUpgradeLevel || (state.carUpgrade >= state.maxCarUpgrade && state.money < nextCost);
+        hud.garageCarPrev.disabled = previewUpgrade <= 0;
+        hud.garageCarNext.disabled = previewUpgrade >= maxUpgradeLevel;
+        if (hud.garageBuyCar) {
+          if (previewOwned) {
+            hud.garageBuyCar.textContent = previewUpgrade === state.carUpgrade ? "Equipped" : "Equip this car";
+            hud.garageBuyCar.disabled = previewUpgrade === state.carUpgrade;
+          } else if (previewNextBuy) {
+            hud.garageBuyCar.textContent = `Buy ${carNames[previewUpgrade]} - $${previewCost}`;
+            hud.garageBuyCar.disabled = state.money < previewCost;
+          } else {
+            hud.garageBuyCar.textContent = `Buy tier ${state.maxCarUpgrade + 1} first`;
+            hud.garageBuyCar.disabled = true;
+          }
+        }
         hud.garageWheelButton.disabled = state.wheelUsed;
         hud.garageWheelButton.querySelector("small").textContent = state.wheelUsed ? "Wheel already used this run" : "Free once per run";
         hud.garageColorButton.disabled = state.money < 5;
         gameShell.classList.toggle("is-garage", state.garageOpen);
+        syncGaragePreviewCar();
       }
 
       function setGarageVisible(visible, title = "Highway Rush", summary = "Tune the car, spin your luck, then hit the highway.") {
         state.garageOpen = visible;
+        if (visible) state.garagePreviewUpgrade = state.carUpgrade;
         hud.garageTitle.textContent = title;
         hud.garageSummary.textContent = summary;
         hud.garage.classList.toggle("is-visible", visible);
         gameShell.classList.toggle("is-garage", visible);
+        setDrivingWorldVisible(!visible);
+        garageGroup.visible = visible;
         updateGarage();
+      }
+
+      function setDrivingWorldVisible(visible) {
+        road.visible = visible;
+        for (const object of [...roadBits, ...stripes, ...sceneryBits, ...staticScenery, ...clouds, ...traffic, ...police, ...moneyPickups, ...traps]) {
+          object.visible = visible;
+        }
       }
 
       function spinGarageWheel(element) {
@@ -1719,18 +2159,40 @@
       }
 
       function changeGarageCar(direction) {
-        if (direction < 0) {
-          state.carUpgrade = Math.max(0, state.carUpgrade - 1);
-        } else if (state.carUpgrade < state.maxCarUpgrade) {
-          state.carUpgrade += 1;
-        } else if (state.maxCarUpgrade < maxUpgradeLevel) {
-          const cost = carUpgradeCost();
-          if (!spendMoney(cost)) return;
-          state.maxCarUpgrade += 1;
-          state.carUpgrade = state.maxCarUpgrade;
-          state.health = Math.min(maxHealth() + 50, state.health + 24);
-          hud.garageSummary.textContent = `${carNames[state.carUpgrade]} bought for $${cost}.`;
+        const targetPreview = Math.max(0, Math.min(maxUpgradeLevel, garagePreviewLevel() + direction));
+        state.garagePreviewUpgrade = targetPreview;
+        hud.garageSummary.textContent = `${carNames[targetPreview]} preview. Use the buy button when you want it.`;
+        syncGaragePreviewCar();
+        updateGarage();
+      }
+
+      function buyOrEquipGarageCar() {
+        const previewUpgrade = garagePreviewLevel();
+        if (previewUpgrade <= state.maxCarUpgrade) {
+          state.carUpgrade = previewUpgrade;
+          hud.garageSummary.textContent = `${carNames[previewUpgrade]} equipped.`;
+          applyPlayerLook();
+          saveProgress();
+          updateHud();
+          updateGarage();
+          return;
         }
+        if (previewUpgrade !== state.maxCarUpgrade + 1) {
+          hud.garageSummary.textContent = `Buy ${carNames[state.maxCarUpgrade + 1]} first.`;
+          updateGarage();
+          return;
+        }
+        const cost = carPreviewCost(previewUpgrade);
+        if (!spendMoney(cost)) {
+          hud.garageSummary.textContent = `${carNames[previewUpgrade]} costs $${cost}.`;
+          updateGarage();
+          return;
+        }
+        state.maxCarUpgrade = previewUpgrade;
+        state.carUpgrade = previewUpgrade;
+        state.garagePreviewUpgrade = previewUpgrade;
+        state.health = Math.min(maxHealth() + 50, state.health + 24);
+        hud.garageSummary.textContent = `${carNames[previewUpgrade]} bought and equipped.`;
         applyPlayerLook();
         saveProgress();
         updateHud();
@@ -1826,6 +2288,7 @@
         );
         sunDisc.position.set(-34, 43, -118);
         scene.add(sunDisc);
+        staticScenery.push(sunDisc);
 
         function track(object) {
           sceneryBits.push(object);
@@ -2475,7 +2938,26 @@
         }
       }
 
+      function updateGarageView(dt) {
+        garageGroup.visible = true;
+        player.visible = true;
+        player.position.set(0.35, 0.74, 0.2);
+        player.rotation.set(0, Math.PI * 0.82 + Math.sin(clock.elapsedTime * 0.7) * 0.08, 0);
+        player.userData.wheels.forEach((wheel) => {
+          wheel.rotation.x += dt * 1.2;
+        });
+        if (garageMoneyWheel3d) garageMoneyWheel3d.rotation.z += dt * (state.wheelUsed ? 6.2 : 1.4);
+        if (garageColorWheel3d) garageColorWheel3d.rotation.y += dt * 1.65;
+        const targetCamera = new THREE.Vector3(3.25, 2.15, 6.9);
+        camera.position.lerp(targetCamera, Math.min(1, dt * 5.2));
+        camera.lookAt(0.15, 0.95, -0.15);
+      }
+
       function updateCamera(dt) {
+        if (state.garageOpen) {
+          updateGarageView(dt);
+          return;
+        }
         const heading = player.rotation.y;
         const pressure = wantedPressure();
         const rearDistance = state.wanted > 0 ? 30 : 24;
@@ -2652,6 +3134,7 @@
           updateHud();
         }
         updateCamera(dt);
+        renderGaragePreview(dt);
         renderer.render(scene, camera);
       }
 
@@ -2659,6 +3142,7 @@
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+        resizeGaragePreview();
       }
 
       function normalizeKey(event) {
@@ -2877,9 +3361,15 @@
         event.preventDefault();
         changeGarageCar(1);
       });
+      hud.garageBuyCar.addEventListener("click", (event) => {
+        event.preventDefault();
+        buyOrEquipGarageCar();
+      });
       hud.restart.addEventListener("click", restart);
       window.addEventListener("resize", onResize);
 
+      makeGarageScene();
+      makeGaragePreview();
       makeRoad();
       makeScenery();
       restart();
