@@ -1508,7 +1508,8 @@
         saveProgress();
         if (action === "bomb") {
           const removed = removeNearestPolice(1);
-          if (removed || state.wanted > 0) reduceWanted(1);
+          if (state.wanted > 0) reduceWanted(1);
+          state.policeTimer = Math.max(state.policeTimer, 2.25);
           state.score += removed ? 180 : 30;
         } else if (action === "speedBump") {
           dropTrap(action);
@@ -2192,7 +2193,10 @@
       };
 
       function handleBuyKey(code) {
-        const action = buyKeyActions[code];
+        useOrBuyItem(buyKeyActions[code]);
+      }
+
+      function useOrBuyItem(action) {
         const isInventoryAction = Object.prototype.hasOwnProperty.call(state.inventory, action);
         if (isInventoryAction && state.inventory[action] > 0) {
           useInventory(action);
@@ -2316,7 +2320,7 @@
         button.addEventListener("click", (event) => {
           event.preventDefault();
           focusGame();
-          buyShop(button.dataset.buy);
+          useOrBuyItem(button.dataset.buy);
           updateHud();
         });
       }
