@@ -663,11 +663,11 @@
     </div>
 
     <div class="inventory-panel" aria-label="Highway Rush inventory">
-      <button class="inventory-item" data-use="bomb" type="button"><span class="item-icon icon-bomb"></span><span class="inventory-name">Bomb <b class="inventory-count" data-count="bomb">0</b><span class="inventory-use-key">Use 1</span></span></button>
-      <button class="inventory-item" data-use="speedBump" type="button"><span class="item-icon icon-bump"></span><span class="inventory-name">Bump <b class="inventory-count" data-count="speedBump">0</b><span class="inventory-use-key">Use 2</span></span></button>
-      <button class="inventory-item" data-use="clear" type="button"><span class="item-icon icon-clear"></span><span class="inventory-name">Clear <b class="inventory-count" data-count="clear">0</b><span class="inventory-use-key">Use 3</span></span></button>
-      <button class="inventory-item" data-use="superJump" type="button"><span class="item-icon icon-jump"></span><span class="inventory-name">Jump <b class="inventory-count" data-count="superJump">0</b><span class="inventory-use-key">Use 4</span></span></button>
-      <button class="inventory-item" data-use="slowAmbulance" type="button"><span class="item-icon icon-ambulance"></span><span class="inventory-name">Slow <b class="inventory-count" data-count="slowAmbulance">0</b><span class="inventory-use-key">Use 5</span></span></button>
+      <button class="inventory-item" data-use="bomb" type="button"><span class="item-icon icon-bomb"></span><span class="inventory-name">Bomb <b class="inventory-count" data-count="bomb">0</b><span class="inventory-use-key">R x2</span></span></button>
+      <button class="inventory-item" data-use="speedBump" type="button"><span class="item-icon icon-bump"></span><span class="inventory-name">Bump <b class="inventory-count" data-count="speedBump">0</b><span class="inventory-use-key">Y x2</span></span></button>
+      <button class="inventory-item" data-use="clear" type="button"><span class="item-icon icon-clear"></span><span class="inventory-name">Clear <b class="inventory-count" data-count="clear">0</b><span class="inventory-use-key">U x2</span></span></button>
+      <button class="inventory-item" data-use="superJump" type="button"><span class="item-icon icon-jump"></span><span class="inventory-name">Jump <b class="inventory-count" data-count="superJump">0</b><span class="inventory-use-key">I x2</span></span></button>
+      <button class="inventory-item" data-use="slowAmbulance" type="button"><span class="item-icon icon-ambulance"></span><span class="inventory-name">Slow <b class="inventory-count" data-count="slowAmbulance">0</b><span class="inventory-use-key">O x2</span></span></button>
     </div>
 
     <div class="intro-card" id="introCard">
@@ -1458,6 +1458,24 @@
         scene.add(trap);
       }
 
+      function removeNearestPolice(limit = 1) {
+        const sortedPolice = [...police].sort((a, b) => {
+          const aDistance = Math.abs(a.userData.roadZ - state.z) + Math.abs(a.userData.roadX - state.x) * 0.35;
+          const bDistance = Math.abs(b.userData.roadZ - state.z) + Math.abs(b.userData.roadX - state.x) * 0.35;
+          return aDistance - bDistance;
+        });
+        let removed = 0;
+        for (const car of sortedPolice) {
+          if (removed >= limit) break;
+          const index = police.indexOf(car);
+          if (index < 0) continue;
+          police.splice(index, 1);
+          scene.remove(car);
+          removed += 1;
+        }
+        return removed;
+      }
+
       function buyShop(action) {
         if (state.introActive && action !== "wheel") startRun();
         if (action === "wheel") {
@@ -1489,7 +1507,9 @@
         if (!state.inventory[action]) return;
         state.inventory[action] -= 1;
         saveProgress();
-        if (action === "bomb" || action === "speedBump") {
+        if (action === "bomb") {
+          state.score += removeNearestPolice(1) ? 180 : 30;
+        } else if (action === "speedBump") {
           dropTrap(action);
         } else if (action === "clear") {
           for (const car of police.splice(0)) scene.remove(car);
@@ -2170,6 +2190,16 @@
         });
       };
 
+      function handleBuyKey(code) {
+        const action = buyKeyActions[code];
+        const isInventoryAction = Object.prototype.hasOwnProperty.call(state.inventory, action);
+        if (isInventoryAction && state.inventory[action] > 0) {
+          useInventory(action);
+        } else {
+          buyShop(action);
+        }
+      }
+
       const handleKeyDown = (event) => {
         const code = normalizeKey(event);
         if (useKeyActions[code] && !event.repeat) {
@@ -2182,7 +2212,7 @@
         if (buyKeyActions[code] && !event.repeat) {
           event.preventDefault();
           event.stopPropagation();
-          buyShop(buyKeyActions[code]);
+          handleBuyKey(code);
           updateHud();
           return;
         }
