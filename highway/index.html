@@ -280,6 +280,12 @@
       font-size: 0.62rem;
     }
 
+    .inventory-use-key {
+      color: var(--good);
+      font-size: 0.58rem;
+      margin-left: 4px;
+    }
+
     .inventory-panel {
       position: fixed;
       left: 50%;
@@ -657,11 +663,11 @@
     </div>
 
     <div class="inventory-panel" aria-label="Highway Rush inventory">
-      <button class="inventory-item" data-use="bomb" type="button"><span class="item-icon icon-bomb"></span><span class="inventory-name">Bomb <b class="inventory-count" data-count="bomb">0</b></span></button>
-      <button class="inventory-item" data-use="speedBump" type="button"><span class="item-icon icon-bump"></span><span class="inventory-name">Bump <b class="inventory-count" data-count="speedBump">0</b></span></button>
-      <button class="inventory-item" data-use="clear" type="button"><span class="item-icon icon-clear"></span><span class="inventory-name">Clear <b class="inventory-count" data-count="clear">0</b></span></button>
-      <button class="inventory-item" data-use="superJump" type="button"><span class="item-icon icon-jump"></span><span class="inventory-name">Jump <b class="inventory-count" data-count="superJump">0</b></span></button>
-      <button class="inventory-item" data-use="slowAmbulance" type="button"><span class="item-icon icon-ambulance"></span><span class="inventory-name">Slow <b class="inventory-count" data-count="slowAmbulance">0</b></span></button>
+      <button class="inventory-item" data-use="bomb" type="button"><span class="item-icon icon-bomb"></span><span class="inventory-name">Bomb <b class="inventory-count" data-count="bomb">0</b><span class="inventory-use-key">Use 1</span></span></button>
+      <button class="inventory-item" data-use="speedBump" type="button"><span class="item-icon icon-bump"></span><span class="inventory-name">Bump <b class="inventory-count" data-count="speedBump">0</b><span class="inventory-use-key">Use 2</span></span></button>
+      <button class="inventory-item" data-use="clear" type="button"><span class="item-icon icon-clear"></span><span class="inventory-name">Clear <b class="inventory-count" data-count="clear">0</b><span class="inventory-use-key">Use 3</span></span></button>
+      <button class="inventory-item" data-use="superJump" type="button"><span class="item-icon icon-jump"></span><span class="inventory-name">Jump <b class="inventory-count" data-count="superJump">0</b><span class="inventory-use-key">Use 4</span></span></button>
+      <button class="inventory-item" data-use="slowAmbulance" type="button"><span class="item-icon icon-ambulance"></span><span class="inventory-name">Slow <b class="inventory-count" data-count="slowAmbulance">0</b><span class="inventory-use-key">Use 5</span></span></button>
     </div>
 
     <div class="intro-card" id="introCard">
@@ -1423,19 +1429,13 @@
         const lane = laneOverride ?? laneCenters[state.nextLane % laneCenters.length];
         state.nextLane = (state.nextLane + 1 + Math.floor(Math.random() * 3)) % laneCenters.length;
         const isAmbulance = Math.random() < 0.12;
-        const isBlackCar = !isAmbulance && Math.random() < 0.08;
-        const color = isBlackCar ? 0x030712 : trafficColors[Math.floor(Math.random() * trafficColors.length)];
+        const color = trafficColors[Math.floor(Math.random() * trafficColors.length)];
         const car = isAmbulance ? makeAmbulance() : makeCar(color, 0x243449);
-        const isTruck = !isAmbulance && !isBlackCar && Math.random() < 0.18;
+        const isTruck = !isAmbulance && Math.random() < 0.18;
         if (isTruck) {
           car.scale.set(1.12, 1.12, 1.42);
         }
-        if (isBlackCar) {
-          const flameA = box(0.22, 0.5, 0.16, fireMat, -0.34, 1.26, -0.34);
-          const flameB = box(0.24, 0.68, 0.16, fireMat, 0.24, 1.36, -0.42);
-          car.add(flameA, flameB);
-        }
-        car.userData.kind = isAmbulance ? "ambulance" : isBlackCar ? "black" : isTruck ? "truck" : "traffic";
+        car.userData.kind = isAmbulance ? "ambulance" : isTruck ? "truck" : "traffic";
         car.userData.speed = isAmbulance
           ? Math.max(58, Math.abs(state.speed) + 18 + Math.random() * 20)
           : 5 + Math.random() * 18;
@@ -1903,17 +1903,6 @@
                 car.rotation.z = (car.userData.roadX > state.x ? -1 : 1) * 0.32;
                 break;
               }
-              if (car.userData.kind === "black") {
-                setFire(true);
-                state.hitTimer = 0.9;
-                state.speed = Math.max(18, state.speed * 0.66);
-                state.health = Math.max(0, state.health - 12);
-                car.rotation.z = (car.userData.roadX > state.x ? -1 : 1) * 0.55;
-                car.userData.roadX += car.userData.roadX > state.x ? 2.1 : -2.1;
-                summonPolice(1);
-                if (state.health <= 0) endGame();
-                break;
-              }
               state.hitTimer = 0.82;
               state.speed = Math.max(20, state.speed * 0.78);
               car.rotation.z = (car.userData.roadX > state.x ? -1 : 1) * 0.45;
@@ -2122,6 +2111,8 @@
 
       function normalizeKey(event) {
         if (event.code && event.code.startsWith("Key")) return event.code;
+        if (event.code && event.code.startsWith("Digit")) return event.code;
+        if (event.code && event.code.startsWith("Numpad")) return event.code;
         if (event.code && event.code.startsWith("Arrow")) return event.code;
         if (event.code === "Space") return "Space";
 
@@ -2144,6 +2135,8 @@
         if (event.keyCode === 40) return "ArrowDown";
         if (event.keyCode === 39) return "ArrowRight";
         if (event.keyCode === 32) return "Space";
+        if (event.keyCode >= 49 && event.keyCode <= 53) return `Digit${event.keyCode - 48}`;
+        if (event.keyCode >= 97 && event.keyCode <= 101) return `Numpad${event.keyCode - 96}`;
         return "";
       }
 
@@ -2157,6 +2150,18 @@
         KeyC: "colorCar",
         KeyM: "wheel",
       };
+      const useKeyActions = {
+        Digit1: "bomb",
+        Numpad1: "bomb",
+        Digit2: "speedBump",
+        Numpad2: "speedBump",
+        Digit3: "clear",
+        Numpad3: "clear",
+        Digit4: "superJump",
+        Numpad4: "superJump",
+        Digit5: "slowAmbulance",
+        Numpad5: "slowAmbulance",
+      };
       const controlCodes = ["KeyW", "KeyA", "KeyS", "KeyD", "ArrowUp", "ArrowLeft", "ArrowDown", "ArrowRight", "Space"];
       const focusGame = () => {
         gameShell.focus({ preventScroll: true });
@@ -2167,6 +2172,13 @@
 
       const handleKeyDown = (event) => {
         const code = normalizeKey(event);
+        if (useKeyActions[code] && !event.repeat) {
+          event.preventDefault();
+          event.stopPropagation();
+          useInventory(useKeyActions[code]);
+          updateHud();
+          return;
+        }
         if (buyKeyActions[code] && !event.repeat) {
           event.preventDefault();
           event.stopPropagation();
@@ -2278,15 +2290,11 @@
         });
       }
       for (const button of hud.inventoryButtons) {
-        button.addEventListener("dblclick", (event) => {
+        button.addEventListener("click", (event) => {
           event.preventDefault();
           focusGame();
           useInventory(button.dataset.use);
           updateHud();
-        });
-        button.addEventListener("click", (event) => {
-          event.preventDefault();
-          focusGame();
         });
       }
       hud.restart.addEventListener("click", restart);
