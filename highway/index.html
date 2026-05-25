@@ -612,16 +612,16 @@
           <span>Money</span>
         </div>
         <div class="readout">
-          <b id="wantedBestText">0</b>
-          <span>Wanted Best</span>
+          <b id="wantedText">0</b>
+          <span>Wanted</span>
         </div>
         <div class="readout">
           <b id="speedText">0</b>
           <span>MPH</span>
         </div>
         <div class="readout">
-          <b id="wantedText">0</b>
-          <span>Wanted</span>
+          <b id="wantedBestText">0</b>
+          <span>Wanted Best</span>
         </div>
       </div>
       <div class="meter">
@@ -883,6 +883,8 @@
         policeSerial: 0,
         pickupTimer: 0,
         fireTimer: 0,
+        healTimer: 0,
+        healAmount: 0,
         slowAmbulanceTimer: 0,
         superJumpReady: false,
         wheelUsed: false,
@@ -1641,6 +1643,7 @@
       function updateWorld(dt) {
         const scroll = state.speed * state.driveFactor * dt;
         state.slowAmbulanceTimer = Math.max(0, state.slowAmbulanceTimer - dt);
+        state.healTimer = Math.max(0, state.healTimer - dt);
         if (state.fireTimer > 0) {
           state.fireTimer = Math.max(0, state.fireTimer - dt);
           state.health = Math.max(0, state.health - dt * 6.4);
@@ -1917,7 +1920,11 @@
               earnMoney(1);
               if (car.userData.kind === "ambulance") {
                 setFire(false);
-                state.health = Math.min(maxHealth(), state.health + 26);
+                const beforeHealth = state.health;
+                state.health = Math.min(maxHealth() + 50, state.health + 48);
+                state.healAmount = Math.max(0, Math.round(state.health - beforeHealth));
+                state.healTimer = 1.7;
+                state.policeHitTimer = 0;
                 state.speed = Math.max(state.speed, 46);
                 state.score += 140;
                 car.userData.roadZ = 28;
@@ -1985,6 +1992,8 @@
           ? "Police ram"
           : state.fireTimer > 0
             ? "On fire"
+          : state.healTimer > 0
+            ? `Ambulance +${state.healAmount || 0} health`
           : state.superJumpReady
             ? "Super jump ready"
           : state.slowAmbulanceTimer > 0
@@ -2066,6 +2075,8 @@
         state.policeSerial = 0;
         state.pickupTimer = 1.4;
         state.fireTimer = 0;
+        state.healTimer = 0;
+        state.healAmount = 0;
         state.slowAmbulanceTimer = 0;
         state.superJumpReady = false;
         state.wheelUsed = false;
