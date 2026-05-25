@@ -329,6 +329,330 @@
       font-size: 0.86rem;
     }
 
+    #gameShell.is-garage .hud,
+    #gameShell.is-garage .shop-panel,
+    #gameShell.is-garage .inventory-panel,
+    #gameShell.is-garage .jump-action,
+    #gameShell.is-garage .touch-controls {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .garage-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 7;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(255, 45, 149, 0.46), transparent 22%),
+        radial-gradient(circle at 82% 12%, rgba(0, 245, 255, 0.34), transparent 20%),
+        linear-gradient(135deg, rgba(4, 7, 19, 0.96), rgba(20, 13, 40, 0.86) 45%, rgba(5, 21, 31, 0.9));
+      overflow: hidden;
+    }
+
+    .garage-screen.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .garage-screen::before,
+    .garage-screen::after {
+      content: "RUSH  WANTED  DEX  GARAGE  NO LIMITS";
+      position: absolute;
+      left: -8vw;
+      width: 120vw;
+      color: rgba(255, 255, 255, 0.08);
+      font-size: clamp(2.3rem, 8vw, 8rem);
+      font-weight: 1000;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transform: rotate(-9deg);
+      pointer-events: none;
+    }
+
+    .garage-screen::before {
+      top: 10%;
+      text-shadow: 6px 6px 0 rgba(255, 45, 149, 0.22), -5px -4px 0 rgba(0, 245, 255, 0.18);
+    }
+
+    .garage-screen::after {
+      bottom: 8%;
+      color: rgba(255, 209, 102, 0.09);
+      transform: rotate(7deg);
+    }
+
+    .garage-card {
+      position: relative;
+      z-index: 1;
+      width: min(940px, calc(100vw - 28px));
+      max-height: calc(100vh - 28px);
+      overflow: auto;
+      border: 1px solid rgba(125, 211, 252, 0.36);
+      border-radius: 24px;
+      padding: clamp(16px, 3vw, 28px);
+      background:
+        linear-gradient(145deg, rgba(10, 14, 30, 0.9), rgba(21, 27, 49, 0.76)),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 34px);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.52), inset 0 0 54px rgba(0, 245, 255, 0.08);
+      backdrop-filter: blur(20px);
+    }
+
+    .garage-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: start;
+      text-transform: uppercase;
+    }
+
+    .garage-kicker {
+      color: var(--warn);
+      font-size: 0.72rem;
+      font-weight: 1000;
+      letter-spacing: 0.22em;
+    }
+
+    .garage-card h2 {
+      margin: 6px 0 0;
+      font-size: clamp(2rem, 6vw, 4.8rem);
+      line-height: 0.88;
+      text-shadow: 5px 4px 0 rgba(255, 45, 149, 0.42), -4px -3px 0 rgba(0, 245, 255, 0.32);
+    }
+
+    .garage-money {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 10px 14px;
+      background: rgba(0, 0, 0, 0.28);
+      text-align: right;
+      font-weight: 1000;
+      text-transform: uppercase;
+    }
+
+    .garage-money b {
+      display: block;
+      font-size: 1.55rem;
+      color: var(--good);
+    }
+
+    .garage-summary {
+      max-width: 700px;
+      margin: 12px 0 18px;
+      color: var(--muted);
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .garage-stage {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) minmax(230px, 0.7fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .garage-preview {
+      position: relative;
+      min-height: 300px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 22px;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(180deg, rgba(125, 211, 252, 0.16), transparent 42%),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 2px, transparent 2px 36px);
+      overflow: hidden;
+    }
+
+    .garage-preview::before {
+      content: "";
+      position: absolute;
+      inset: auto -20% 18% -20%;
+      height: 76px;
+      background: linear-gradient(90deg, transparent, rgba(255, 45, 149, 0.38), rgba(0, 245, 255, 0.36), transparent);
+      filter: blur(20px);
+    }
+
+    .garage-car {
+      --garage-car-color: #1d9bf0;
+      position: relative;
+      width: min(390px, 74vw);
+      height: 150px;
+      transform: perspective(680px) rotateX(58deg) rotateZ(-2deg);
+      filter: drop-shadow(0 24px 22px rgba(0, 0, 0, 0.55));
+    }
+
+    .garage-car .car-body {
+      position: absolute;
+      inset: 28px 34px 26px;
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-radius: 36px 48px 30px 30px;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.28), transparent 30%),
+        var(--garage-car-color);
+      box-shadow: inset 0 -18px 0 rgba(0, 0, 0, 0.24), 0 0 32px color-mix(in srgb, var(--garage-car-color), white 15%);
+    }
+
+    .garage-car .car-cabin {
+      position: absolute;
+      left: 38%;
+      top: 0;
+      width: 34%;
+      height: 72px;
+      border-radius: 26px 26px 10px 10px;
+      background: linear-gradient(135deg, #06111f, #155e75);
+      border: 3px solid rgba(125, 211, 252, 0.42);
+    }
+
+    .garage-car .car-wheel {
+      position: absolute;
+      bottom: 6px;
+      width: 54px;
+      height: 54px;
+      border-radius: 999px;
+      border: 8px solid #05070d;
+      background: radial-gradient(circle, #c8f7ff 0 22%, #1f2937 24% 100%);
+    }
+
+    .garage-car .car-wheel.left {
+      left: 54px;
+    }
+
+    .garage-car .car-wheel.right {
+      right: 54px;
+    }
+
+    .garage-car-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 12px;
+      text-transform: uppercase;
+    }
+
+    .garage-arrow,
+    .garage-action,
+    .garage-start {
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 16px;
+      background: rgba(3, 8, 18, 0.7);
+      color: var(--ink);
+      font: inherit;
+      font-weight: 1000;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .garage-arrow {
+      width: 62px;
+      height: 54px;
+      font-size: 2rem;
+      color: var(--warn);
+    }
+
+    .garage-arrow:disabled,
+    .garage-action:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+    }
+
+    .garage-car-readout {
+      min-width: 210px;
+      text-align: center;
+    }
+
+    .garage-car-readout b,
+    .garage-car-readout span,
+    .garage-car-readout small {
+      display: block;
+    }
+
+    .garage-car-readout small {
+      color: var(--warn);
+      font-weight: 1000;
+    }
+
+    .garage-actions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .garage-action {
+      min-height: 92px;
+      display: grid;
+      grid-template-columns: 68px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      text-align: left;
+    }
+
+    .garage-action b,
+    .garage-action small {
+      display: block;
+    }
+
+    .garage-action small {
+      color: var(--muted);
+    }
+
+    .money-wheel,
+    .color-choice-wheel {
+      width: 62px;
+      height: 62px;
+      border-radius: 999px;
+      border: 4px solid rgba(255, 255, 255, 0.26);
+      box-shadow: 0 0 20px rgba(0, 245, 255, 0.18);
+    }
+
+    .money-wheel {
+      background: conic-gradient(#47e38f 0 50%, #ff4d6d 50% 100%);
+      position: relative;
+    }
+
+    .money-wheel::after {
+      content: "$";
+      position: absolute;
+      inset: 16px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: #07111f;
+      color: var(--warn);
+      font-weight: 1000;
+    }
+
+    .money-wheel.is-spinning,
+    .color-choice-wheel.is-spinning {
+      animation: garageSpin 880ms cubic-bezier(0.18, 0.8, 0.22, 1) 1;
+    }
+
+    .color-choice-wheel {
+      background: conic-gradient(#ff4d6d, #ffd166, #47e38f, #38bdf8, #8b5cf6, #f97316, #ff4d6d);
+    }
+
+    .garage-start {
+      width: 100%;
+      margin-top: 16px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #ff2d95, #00f5ff);
+      color: #06111f;
+      font-size: 1.05rem;
+      box-shadow: 0 14px 34px rgba(0, 245, 255, 0.18);
+    }
+
+    @keyframes garageSpin {
+      to {
+        transform: rotate(1260deg);
+      }
+    }
+
     .intro-card {
       position: fixed;
       left: 50%;
@@ -571,6 +895,38 @@
         transform: none;
       }
 
+      .garage-screen {
+        padding: 10px;
+      }
+
+      .garage-card {
+        width: calc(100vw - 20px);
+        padding: 14px;
+      }
+
+      .garage-top,
+      .garage-stage {
+        grid-template-columns: 1fr;
+        display: grid;
+      }
+
+      .garage-money {
+        text-align: left;
+      }
+
+      .garage-preview {
+        min-height: 190px;
+      }
+
+      .garage-car {
+        width: min(310px, 76vw);
+        height: 118px;
+      }
+
+      .garage-action {
+        min-height: 74px;
+      }
+
       .jump-action {
         right: auto;
         left: 50%;
@@ -657,9 +1013,6 @@
       <button class="shop-button" data-buy="clear" type="button"><span class="item-icon icon-clear"></span><span class="shop-name">$3 Clear Police</span><span class="shop-key">U</span></button>
       <button class="shop-button" data-buy="superJump" type="button"><span class="item-icon icon-jump"></span><span class="shop-name">$3 Super Jump</span><span class="shop-key">I</span></button>
       <button class="shop-button" data-buy="slowAmbulance" type="button"><span class="item-icon icon-ambulance"></span><span class="shop-name">$5 Slow Ambulance</span><span class="shop-key">O</span></button>
-      <button class="shop-button" data-buy="betterCar" type="button"><span class="item-icon icon-car"></span><span class="shop-name">$20 Better Car</span><span class="shop-key">B</span></button>
-      <button class="shop-button" data-buy="colorCar" type="button"><span class="item-icon icon-color"></span><span class="shop-name">$5 Color Car</span><span class="shop-key">C</span></button>
-      <button class="shop-button is-free" data-buy="wheel" type="button"><span class="item-icon icon-wheel"></span><span class="shop-name">Free Money Wheel</span><span class="shop-key">M</span></button>
     </div>
 
     <div class="inventory-panel" aria-label="Highway Rush inventory">
@@ -670,7 +1023,55 @@
       <button class="inventory-item" data-use="slowAmbulance" type="button"><span class="item-icon icon-ambulance"></span><span class="inventory-name">Slow <b class="inventory-count" data-count="slowAmbulance">0</b><span class="inventory-use-key">Use K</span></span></button>
     </div>
 
-    <div class="intro-card" id="introCard">
+    <div class="garage-screen" id="garageScreen" aria-label="Highway Rush garage">
+      <section class="garage-card" role="dialog" aria-modal="true" aria-labelledby="garageTitle">
+        <div class="garage-top">
+          <div>
+            <div class="garage-kicker">Cyberpunk garage</div>
+            <h2 id="garageTitle">Highway Rush</h2>
+          </div>
+          <div class="garage-money">
+            <span>Money</span>
+            <b id="garageMoneyText">$0</b>
+          </div>
+        </div>
+        <p class="garage-summary" id="garageSummary">Tune the car, spin your luck, then hit the highway.</p>
+        <div class="garage-stage">
+          <div>
+            <div class="garage-preview">
+              <div class="garage-car" id="garageCar">
+                <span class="car-cabin"></span>
+                <span class="car-body"></span>
+                <span class="car-wheel left"></span>
+                <span class="car-wheel right"></span>
+              </div>
+            </div>
+            <div class="garage-car-controls">
+              <button class="garage-arrow" id="garageCarPrev" type="button" aria-label="Previous car">‹</button>
+              <div class="garage-car-readout">
+                <b id="garageCarName">Street Starter</b>
+                <span id="garageCarLevel">Tier 0</span>
+                <small id="garageCarCost">$20 next car</small>
+              </div>
+              <button class="garage-arrow" id="garageCarNext" type="button" aria-label="Next car">›</button>
+            </div>
+          </div>
+          <div class="garage-actions">
+            <button class="garage-action" id="garageWheelButton" type="button">
+              <span class="money-wheel" id="garageMoneyWheel"></span>
+              <span><b>Double or Nothing</b><small>Free once per run</small></span>
+            </button>
+            <button class="garage-action" id="garageColorButton" type="button">
+              <span class="color-choice-wheel" id="garageColorWheel"></span>
+              <span><b>$5 Color Wheel</b><small>Spin for a new paint color</small></span>
+            </button>
+          </div>
+        </div>
+        <button class="garage-start" id="garageStartButton" type="button">Start Run</button>
+      </section>
+    </div>
+
+    <div class="intro-card is-hidden" id="introCard">
       <b>Police got punched</b>
       <span>Press any driving key or tap to start</span>
     </div>
@@ -734,6 +1135,21 @@
         restart: document.getElementById("restartButton"),
         jump: document.getElementById("jumpButton"),
         intro: document.getElementById("introCard"),
+        garage: document.getElementById("garageScreen"),
+        garageTitle: document.getElementById("garageTitle"),
+        garageSummary: document.getElementById("garageSummary"),
+        garageMoney: document.getElementById("garageMoneyText"),
+        garageCar: document.getElementById("garageCar"),
+        garageCarName: document.getElementById("garageCarName"),
+        garageCarLevel: document.getElementById("garageCarLevel"),
+        garageCarCost: document.getElementById("garageCarCost"),
+        garageCarPrev: document.getElementById("garageCarPrev"),
+        garageCarNext: document.getElementById("garageCarNext"),
+        garageStart: document.getElementById("garageStartButton"),
+        garageWheelButton: document.getElementById("garageWheelButton"),
+        garageMoneyWheel: document.getElementById("garageMoneyWheel"),
+        garageColorButton: document.getElementById("garageColorButton"),
+        garageColorWheel: document.getElementById("garageColorWheel"),
         buyButtons: Array.from(document.querySelectorAll("[data-buy]")),
         inventoryButtons: Array.from(document.querySelectorAll("[data-use]")),
         inventoryCounts: Array.from(document.querySelectorAll("[data-count]")),
@@ -854,15 +1270,21 @@
       const trackBottomZ = trackHalfStraightZ + turnRadius;
       const routeOriginOffset = trackStraightX + quarterTurnLength + trackStraightZ * 0.5;
       const routeWorldOffsetX = -trackSideX;
+      const maxUpgradeLevel = 5;
+      const legacyCarUpgrade = Math.floor(readStoredNumber("highway-rush-car-upgrade", 0));
+      const savedMaxCarUpgrade = Math.max(0, Math.min(maxUpgradeLevel, Math.floor(readStoredNumber("highway-rush-car-owned", legacyCarUpgrade))));
+      const savedSelectedCarUpgrade = Math.max(0, Math.min(savedMaxCarUpgrade, Math.floor(readStoredNumber("highway-rush-car-selected", savedMaxCarUpgrade))));
+      const carNames = ["Street Starter", "Neon Coupe", "Chrome Viper", "Turbo Ghost", "Cyber Panther", "Apex Legend"];
       const state = {
-        playing: true,
+        playing: false,
         speed: 33,
         health: 100,
         score: 0,
         best: readStoredNumber("highway-rush-best", 0),
         money: readStoredNumber("highway-rush-money", 0),
         wantedBest: readStoredNumber("highway-rush-wanted-best", 0),
-        carUpgrade: Math.floor(readStoredNumber("highway-rush-car-upgrade", 0)),
+        carUpgrade: savedSelectedCarUpgrade,
+        maxCarUpgrade: savedMaxCarUpgrade,
         colorIndex: Math.floor(readStoredNumber("highway-rush-color-index", 0)) % playerColors.length,
         inventory: readStoredInventory(),
         x: 0,
@@ -888,11 +1310,10 @@
         slowAmbulanceTimer: 0,
         superJumpReady: false,
         wheelUsed: false,
-        introActive: true,
+        introActive: false,
+        garageOpen: true,
         introTimer: 0,
       };
-
-      const maxUpgradeLevel = 5;
 
       function maxHealth() {
         return 100 + state.carUpgrade * 12;
@@ -905,7 +1326,9 @@
       function saveProgress() {
         writeStoredValue("highway-rush-money", String(state.money));
         writeStoredValue("highway-rush-wanted-best", String(state.wantedBest));
-        writeStoredValue("highway-rush-car-upgrade", String(state.carUpgrade));
+        writeStoredValue("highway-rush-car-upgrade", String(state.maxCarUpgrade));
+        writeStoredValue("highway-rush-car-owned", String(state.maxCarUpgrade));
+        writeStoredValue("highway-rush-car-selected", String(state.carUpgrade));
         writeStoredValue("highway-rush-color-index", String(state.colorIndex));
         writeStoredValue("highway-rush-inventory", JSON.stringify(state.inventory));
       }
@@ -1222,9 +1645,97 @@
         player.userData.bodyMat.color.setHex(playerColors[state.colorIndex]);
         const scale = 1 + upgradePower() * 0.035;
         player.scale.set(scale, 1 + upgradePower() * 0.02, scale);
+        updateGarage();
       }
 
       applyPlayerLook();
+
+      function carUpgradeCost() {
+        return (state.maxCarUpgrade + 1) * 20;
+      }
+
+      function carColorCss() {
+        return `#${playerColors[state.colorIndex].toString(16).padStart(6, "0")}`;
+      }
+
+      function updateGarage() {
+        if (!hud.garage) return;
+        const nextCost = carUpgradeCost();
+        hud.garageMoney.textContent = `$${state.money}`;
+        hud.garageCar.style.setProperty("--garage-car-color", carColorCss());
+        hud.garageCar.dataset.level = String(state.carUpgrade);
+        hud.garageCarName.textContent = carNames[state.carUpgrade] || carNames[0];
+        hud.garageCarLevel.textContent = `Tier ${state.carUpgrade} · Owned ${state.maxCarUpgrade}`;
+        if (state.carUpgrade < state.maxCarUpgrade) {
+          hud.garageCarCost.textContent = "Right arrow selects next owned car";
+        } else if (state.maxCarUpgrade >= maxUpgradeLevel) {
+          hud.garageCarCost.textContent = "Best car unlocked";
+        } else {
+          hud.garageCarCost.textContent = `$${nextCost} next car`;
+        }
+        hud.garageCarPrev.disabled = state.carUpgrade <= 0;
+        hud.garageCarNext.disabled = state.carUpgrade >= maxUpgradeLevel || (state.carUpgrade >= state.maxCarUpgrade && state.money < nextCost);
+        hud.garageWheelButton.disabled = state.wheelUsed;
+        hud.garageWheelButton.querySelector("small").textContent = state.wheelUsed ? "Wheel already used this run" : "Free once per run";
+        hud.garageColorButton.disabled = state.money < 5;
+        gameShell.classList.toggle("is-garage", state.garageOpen);
+      }
+
+      function setGarageVisible(visible, title = "Highway Rush", summary = "Tune the car, spin your luck, then hit the highway.") {
+        state.garageOpen = visible;
+        hud.garageTitle.textContent = title;
+        hud.garageSummary.textContent = summary;
+        hud.garage.classList.toggle("is-visible", visible);
+        gameShell.classList.toggle("is-garage", visible);
+        updateGarage();
+      }
+
+      function spinGarageWheel(element) {
+        element.classList.remove("is-spinning");
+        void element.offsetWidth;
+        element.classList.add("is-spinning");
+      }
+
+      function useGarageMoneyWheel() {
+        if (state.wheelUsed) return;
+        state.wheelUsed = true;
+        const won = Math.random() > 0.5;
+        state.money = won ? state.money * 2 : 0;
+        spinGarageWheel(hud.garageMoneyWheel);
+        saveProgress();
+        hud.garageSummary.textContent = won ? "Double win. Your garage cash doubled." : "Nothing. The wheel ate your money.";
+        updateHud();
+        updateGarage();
+      }
+
+      function buyGarageColor() {
+        if (!spendMoney(5)) return;
+        state.colorIndex = (state.colorIndex + 1) % playerColors.length;
+        spinGarageWheel(hud.garageColorWheel);
+        applyPlayerLook();
+        saveProgress();
+        hud.garageSummary.textContent = "New paint locked in.";
+        updateHud();
+      }
+
+      function changeGarageCar(direction) {
+        if (direction < 0) {
+          state.carUpgrade = Math.max(0, state.carUpgrade - 1);
+        } else if (state.carUpgrade < state.maxCarUpgrade) {
+          state.carUpgrade += 1;
+        } else if (state.maxCarUpgrade < maxUpgradeLevel) {
+          const cost = carUpgradeCost();
+          if (!spendMoney(cost)) return;
+          state.maxCarUpgrade += 1;
+          state.carUpgrade = state.maxCarUpgrade;
+          state.health = Math.min(maxHealth() + 50, state.health + 24);
+          hud.garageSummary.textContent = `${carNames[state.carUpgrade]} bought for $${cost}.`;
+        }
+        applyPlayerLook();
+        saveProgress();
+        updateHud();
+        updateGarage();
+      }
 
       function makePoliceCar() {
         const car = makeCar(0xf8fafc, 0x172554);
@@ -2002,6 +2513,8 @@
             ? "Wanted up"
             : state.wanted > 0
               ? `Police chase x${police.length}`
+              : state.garageOpen
+                ? "Garage"
               : state.introActive
                 ? "Punch the police"
               : state.y > 0.2
@@ -2032,12 +2545,13 @@
       }
 
       function endGame() {
-        state.playing = false;
+        if (!state.playing) return;
+        const finalScore = Math.floor(state.score);
         state.best = Math.max(state.best, Math.floor(state.score));
         writeStoredValue("highway-rush-best", String(state.best));
         saveProgress();
-        hud.final.textContent = `Score ${Math.floor(state.score)} · Best ${state.best} · Money $${state.money}`;
-        hud.overlay.classList.add("is-visible");
+        restart();
+        setGarageVisible(true, "Wrecked", `Score ${finalScore} · Best ${state.best} · Money $${state.money}`);
       }
 
       function restart() {
@@ -2080,7 +2594,8 @@
         state.slowAmbulanceTimer = 0;
         state.superJumpReady = false;
         state.wheelUsed = false;
-        state.introActive = true;
+        state.introActive = false;
+        state.garageOpen = true;
         state.introTimer = 0;
         player.visible = true;
         fireEffect.visible = false;
@@ -2089,22 +2604,26 @@
         player.position.set(pose.x, 0.52, pose.z);
         player.rotation.set(0, pose.heading, 0);
         setRoadActor(introPolice, state.x + 3.2, state.z - 2.8, 0);
-        introPolice.visible = true;
-        hud.intro.classList.remove("is-hidden");
+        introPolice.visible = false;
+        hud.intro.classList.add("is-hidden");
         hud.overlay.classList.remove("is-visible");
+        setGarageVisible(true);
         updateHud();
         focusGame();
       }
 
       function startRun() {
-        if (!state.introActive) return;
+        if (state.playing) return;
         state.introActive = false;
+        state.garageOpen = false;
         state.playing = true;
         introPolice.visible = false;
         hud.intro.classList.add("is-hidden");
+        setGarageVisible(false);
         [-28, -58, -88, -118, -148, -178, -208, -238, -268, -298, -328, -358, -388].forEach((z) => spawnTrafficPack(z));
         spawnMoneyPickup(-42);
         summonPolice(1);
+        updateHud();
         focusGame();
       }
 
@@ -2179,9 +2698,6 @@
         KeyU: "clear",
         KeyI: "superJump",
         KeyO: "slowAmbulance",
-        KeyB: "betterCar",
-        KeyC: "colorCar",
-        KeyM: "wheel",
       };
       const useKeyActions = {
         KeyF: "bomb",
@@ -2204,6 +2720,18 @@
 
       const handleKeyDown = (event) => {
         const code = normalizeKey(event);
+        if (state.garageOpen) {
+          if (code === "ArrowLeft" || code === "KeyA") {
+            event.preventDefault();
+            event.stopPropagation();
+            changeGarageCar(-1);
+          } else if (code === "ArrowRight" || code === "KeyD") {
+            event.preventDefault();
+            event.stopPropagation();
+            changeGarageCar(1);
+          }
+          return;
+        }
         if (useKeyActions[code] && !event.repeat) {
           event.preventDefault();
           event.stopPropagation();
@@ -2329,6 +2857,26 @@
           updateHud();
         });
       }
+      hud.garageStart.addEventListener("click", (event) => {
+        event.preventDefault();
+        startRun();
+      });
+      hud.garageWheelButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        useGarageMoneyWheel();
+      });
+      hud.garageColorButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        buyGarageColor();
+      });
+      hud.garageCarPrev.addEventListener("click", (event) => {
+        event.preventDefault();
+        changeGarageCar(-1);
+      });
+      hud.garageCarNext.addEventListener("click", (event) => {
+        event.preventDefault();
+        changeGarageCar(1);
+      });
       hud.restart.addEventListener("click", restart);
       window.addEventListener("resize", onResize);
 
