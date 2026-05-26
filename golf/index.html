@@ -124,8 +124,8 @@
 
     .meter {
       justify-self: end;
-      width: min(290px, 100%);
-      padding: 10px;
+      width: min(330px, 100%);
+      padding: 10px 10px 9px;
       border-radius: 14px;
     }
 
@@ -142,31 +142,91 @@
 
     .track {
       position: relative;
-      height: 15px;
+      height: 24px;
       overflow: hidden;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.13);
+      background:
+        linear-gradient(90deg, rgba(255, 77, 109, 0.65), rgba(255, 209, 102, 0.72) 26%, rgba(71, 227, 143, 0.82) 50%, rgba(255, 209, 102, 0.72) 74%, rgba(255, 77, 109, 0.65)),
+        rgba(255, 255, 255, 0.13);
+      box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.35);
     }
 
     .fill {
+      position: relative;
+      z-index: 2;
       height: 100%;
       width: 0%;
       border-radius: inherit;
-      background: linear-gradient(90deg, var(--good), var(--warn), var(--bad));
+      background: linear-gradient(90deg, rgba(71, 227, 143, 0.9), rgba(255, 209, 102, 0.92), rgba(255, 77, 109, 0.9));
       transform-origin: left center;
       transition: width 80ms linear;
     }
 
+    .meter.is-direction .fill {
+      width: 100%;
+      opacity: 0.16;
+    }
+
+    .target-band,
+    .sweet-spot {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .target-band {
+      left: 50%;
+      width: 18px;
+      border-left: 2px solid rgba(248, 250, 252, 0.85);
+      border-right: 2px solid rgba(248, 250, 252, 0.85);
+      background: rgba(248, 250, 252, 0.16);
+      transform: translateX(-50%);
+      box-shadow: 0 0 14px rgba(248, 250, 252, 0.28);
+    }
+
+    .sweet-spot {
+      left: 50%;
+      width: 52px;
+      background: rgba(71, 227, 143, 0.22);
+      transform: translateX(-50%);
+      box-shadow: inset 0 0 0 1px rgba(248, 250, 252, 0.28);
+    }
+
     .needle {
       position: absolute;
-      top: -3px;
+      top: -4px;
       left: 50%;
-      width: 3px;
-      height: 21px;
+      z-index: 4;
+      width: 5px;
+      height: 32px;
       border-radius: 999px;
       background: #f8fafc;
-      box-shadow: 0 0 12px rgba(248, 250, 252, 0.7);
+      box-shadow:
+        0 0 12px rgba(248, 250, 252, 0.8),
+        0 0 0 2px rgba(9, 17, 28, 0.5);
       transform: translateX(-50%);
+    }
+
+    .meter-scale {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 5px;
+      color: rgba(170, 183, 201, 0.92);
+      font-size: 0.58rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .meter-subtext {
+      min-height: 1rem;
+      margin-top: 5px;
+      color: #dbeafe;
+      font-size: 0.66rem;
+      font-weight: 900;
+      line-height: 1.18;
+      text-transform: uppercase;
     }
 
     .scorecard {
@@ -432,15 +492,23 @@
           <span>Score</span>
         </div>
       </div>
-      <div class="meter">
+      <div class="meter" id="swingMeter">
         <div class="meter-label">
           <span id="meterName">Distance meter</span>
           <span id="meterValue">0 m</span>
         </div>
         <div class="track">
+          <div class="sweet-spot" id="meterSweetSpot"></div>
+          <div class="target-band" id="meterTarget"></div>
           <div class="fill" id="meterFill"></div>
           <div class="needle" id="meterNeedle"></div>
         </div>
+        <div class="meter-scale">
+          <span id="meterMin">0 m</span>
+          <span id="meterMid">Target</span>
+          <span id="meterMax">245 m</span>
+        </div>
+        <div class="meter-subtext" id="meterSubtext">Tap start, lock distance, then hit center.</div>
       </div>
     </div>
 
@@ -487,10 +555,17 @@
         distance: document.getElementById("distanceText"),
         strokes: document.getElementById("strokeText"),
         score: document.getElementById("scoreText"),
+        meter: document.getElementById("swingMeter"),
         meterName: document.getElementById("meterName"),
         meterValue: document.getElementById("meterValue"),
         meterFill: document.getElementById("meterFill"),
         meterNeedle: document.getElementById("meterNeedle"),
+        meterTarget: document.getElementById("meterTarget"),
+        meterSweetSpot: document.getElementById("meterSweetSpot"),
+        meterMin: document.getElementById("meterMin"),
+        meterMid: document.getElementById("meterMid"),
+        meterMax: document.getElementById("meterMax"),
+        meterSubtext: document.getElementById("meterSubtext"),
         scorecard: document.getElementById("scorecard"),
         lie: document.getElementById("lieText"),
         swingButton: document.getElementById("swingButton"),
@@ -584,6 +659,9 @@
         meterMode: "idle",
         meterT: 0,
         meterDir: 1,
+        meterFeedback: "Tap start, lock distance, then hit center.",
+        distanceFeedback: "",
+        directionFeedback: "",
         aim: 0,
         lie: "Tee",
         cameraMode: "address",
@@ -760,6 +838,26 @@
         return score > 0 ? `+${score}` : String(score);
       }
 
+      function clamp01(value) {
+        return Math.max(0, Math.min(1, value));
+      }
+
+      function distanceFeedback(targetMeters, neededMeters) {
+        const miss = Math.round(targetMeters - neededMeters);
+        const abs = Math.abs(miss);
+        if (abs <= 3) return "Perfect distance";
+        if (abs <= 9) return miss > 0 ? `${abs} m long` : `${abs} m short`;
+        return miss > 0 ? `Too long by ${abs} m` : `Too short by ${abs} m`;
+      }
+
+      function directionFeedback(missMeters) {
+        const miss = Math.round(missMeters);
+        const abs = Math.abs(miss);
+        if (abs <= 2) return "Pure strike";
+        if (abs <= 6) return miss > 0 ? `${abs} m push` : `${abs} m pull`;
+        return miss > 0 ? `Pushed ${abs} m right` : `Pulled ${abs} m left`;
+      }
+
       function selectClub() {
         const distance = distanceToPin();
         if (distance < 24) return clubs[3];
@@ -815,6 +913,7 @@
         const hole = currentHole();
         const distance = distanceToPin();
         const club = selectClub();
+        const targetPercent = clamp01(Math.min(distance, club.max) / club.max) * 100;
         state.shotClub = club;
         const totalScore = state.totals.reduce((sum, strokes, index) => strokes === null ? sum : sum + strokes - holes[index].par, 0);
         const wind = hole.wind;
@@ -823,12 +922,21 @@
         hud.strokes.textContent = `${state.strokes}`;
         hud.score.textContent = scoreName(totalScore);
         hud.lie.textContent = `${state.lie}. Wind ${wind > 0 ? "+" : ""}${wind.toFixed(1)} m/s. ${club.name} up to ${club.max} m. Aim ${state.aim} m.`;
+        hud.meter.classList.toggle("is-distance", state.meterMode !== "direction");
+        hud.meter.classList.toggle("is-direction", state.meterMode === "direction");
+        hud.meterTarget.style.left = `${targetPercent}%`;
+        hud.meterTarget.style.display = state.meterMode === "direction" ? "none" : "block";
+        hud.meterSweetSpot.style.display = state.meterMode === "direction" ? "block" : "none";
         if (state.meterMode === "distance") {
           const meters = Math.round(state.meterT * club.max);
           hud.meterName.textContent = "Distance meter";
           hud.meterValue.textContent = `${meters} m`;
           hud.meterFill.style.width = `${state.meterT * 100}%`;
-          hud.meterNeedle.style.left = "50%";
+          hud.meterNeedle.style.left = `${state.meterT * 100}%`;
+          hud.meterMin.textContent = "0 m";
+          hud.meterMid.textContent = `${Math.round(Math.min(distance, club.max))} m target`;
+          hud.meterMax.textContent = `${club.max} m`;
+          hud.meterSubtext.textContent = distanceFeedback(meters, Math.min(distance, club.max));
           hud.swingLabel.textContent = "Lock";
           hud.swingHint.textContent = "Distance";
         } else if (state.meterMode === "direction") {
@@ -837,13 +945,21 @@
           hud.meterValue.textContent = `${miss > 0 ? "+" : ""}${miss} m`;
           hud.meterFill.style.width = "100%";
           hud.meterNeedle.style.left = `${state.meterT * 100}%`;
+          hud.meterMin.textContent = "Pull";
+          hud.meterMid.textContent = "Center";
+          hud.meterMax.textContent = "Push";
+          hud.meterSubtext.textContent = directionFeedback(miss);
           hud.swingLabel.textContent = "Swing";
           hud.swingHint.textContent = "Direction";
         } else {
           hud.meterName.textContent = club.name === "Putter" ? "Putt distance" : "Distance meter";
           hud.meterValue.textContent = `${Math.round(Math.min(distance, club.max))} m`;
           hud.meterFill.style.width = `${Math.min(1, distance / club.max) * 100}%`;
-          hud.meterNeedle.style.left = "50%";
+          hud.meterNeedle.style.left = `${targetPercent}%`;
+          hud.meterMin.textContent = "0 m";
+          hud.meterMid.textContent = state.distanceFeedback || `${Math.round(Math.min(distance, club.max))} m target`;
+          hud.meterMax.textContent = `${club.max} m`;
+          hud.meterSubtext.textContent = state.meterFeedback;
           hud.swingLabel.textContent = state.cameraMode === "flying" ? "Watch" : "Start";
           hud.swingHint.textContent = "Space";
         }
@@ -858,6 +974,9 @@
         state.meterMode = "idle";
         state.meterT = 0;
         state.meterDir = 1;
+        state.meterFeedback = "Tap start, lock distance, then hit center.";
+        state.distanceFeedback = "";
+        state.directionFeedback = "";
         state.lie = "Tee";
         state.cameraMode = "address";
         state.holed = false;
@@ -873,12 +992,15 @@
       function startDistanceMeter() {
         if (state.cameraMode === "flying" || state.holed) return;
         state.meterMode = "distance";
-        state.meterT = Math.min(0.95, distanceToPin() / selectClub().max);
+        state.meterT = 0;
         state.meterDir = 1;
+        state.meterFeedback = "Lock when the marker reaches the target band.";
       }
 
       function lockDistanceMeter() {
         state.targetDistance = Math.max(2, state.meterT * selectClub().max);
+        state.distanceFeedback = distanceFeedback(state.targetDistance, Math.min(distanceToPin(), selectClub().max));
+        state.meterFeedback = `${state.distanceFeedback}. Now hit the green center zone.`;
         state.meterMode = "direction";
         state.meterT = 0.5;
         state.meterDir = 1;
@@ -886,6 +1008,8 @@
 
       function lockDirectionAndSwing() {
         state.directionMiss = (state.meterT - 0.5) * 34;
+        state.directionFeedback = directionFeedback(state.directionMiss);
+        state.meterFeedback = `${state.distanceFeedback}. ${state.directionFeedback}.`;
         state.meterMode = "idle";
         takeShot();
       }
@@ -918,7 +1042,7 @@
         state.flightTime = 0;
         state.swingTime = 0.72;
         state.cameraMode = "flying";
-        hud.state.textContent = `${club.name} away`;
+        hud.state.textContent = `${club.name}: ${state.meterFeedback}`;
       }
 
       function settleBall() {
