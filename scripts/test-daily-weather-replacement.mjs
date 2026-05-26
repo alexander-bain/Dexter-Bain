@@ -77,8 +77,12 @@ for (const questionId of [
   "rain-by-3pm",
   "sky-still-sunny",
   "weather-headline",
+  "sports-headline",
   "music-four",
+  "wind-by-5pm",
+  "music-five",
   "sports-six",
+  "sports-seven",
   "cool-tonight",
 ]) {
   if (!block.includes(`"20260513-${questionId}"`)) {
@@ -89,8 +93,8 @@ for (const questionId of [
 const autoScoredQuestions = [
   ...block.matchAll(/autoSource: "https:\/\/forecast\.weather\.gov\/MapClick\.php\?lat=37\.453&lon=-122\.182"/g)
 ].length;
-if (autoScoredQuestions !== 4) {
-  throw new Error(`Expected 4 auto-scored weather questions, found ${autoScoredQuestions}.`);
+if (autoScoredQuestions !== 5) {
+  throw new Error(`Expected 5 auto-scored weather questions, found ${autoScoredQuestions}.`);
 }
 
 for (const hour of [
@@ -100,7 +104,9 @@ for (const hour of [
   "T21:00:00.000Z",
   "T22:00:00.000Z",
   "T23:00:00.000Z",
+  "T00:00:00.000Z",
   "T01:00:00.000Z",
+  "T02:00:00.000Z",
   "T03:00:00.000Z",
 ]) {
   if (!block.includes(hour)) {
@@ -127,8 +133,12 @@ if (!weekendBlock.includes('"20260516-gas-noon"')) {
   throw new Error("Weekend daily weather game is missing the gas question.");
 }
 
-if (weekendQuestionCount !== 10) {
-  throw new Error(`Expected 10 weekend daily weather questions, found ${weekendQuestionCount}.`);
+if (weekendBlock.includes('answer("Stocks"')) {
+  throw new Error("Weekend daily weather game still included stocks in the local-news choices.");
+}
+
+if (weekendQuestionCount !== 13) {
+  throw new Error(`Expected 13 weekend daily weather questions, found ${weekendQuestionCount}.`);
 }
 
 console.log("Weekend daily weather replacement test passed.");

@@ -271,9 +271,9 @@ async function run() {
           });
           const picks = Object.fromEntries(botPicks);
           const favoritePickMap = Object.fromEntries(favoritePicks);
-          const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
-          if (!usedRiskPick) {
-            throw new Error("Weather Bot only picked favorites.");
+          const underdogPicks = botPicks.filter(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
+          if (underdogPicks.length < Math.max(2, Math.floor(botPicks.length / 4))) {
+            throw new Error("Weather Bot did not take enough risk picks.");
           }
           const entry = {
             name: "Weather Bot",
@@ -312,10 +312,11 @@ async function run() {
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
-              leaderboard.includes("max from picks") &&
+              leaderboard.includes("100%") &&
+              leaderboard.includes("chance to win") &&
+              leaderboard.includes("max if the risky picks hit") &&
               pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
+              pickView.includes("max if the risky picks hit") &&
               entryCount.trim() === "1" &&
               storage.playerName === "Weather Bot"
             ) {
@@ -327,6 +328,7 @@ async function run() {
                 pickView,
                 savedEntryName: storage.playerName || "",
                 chosen: botPicks.map(([, answerId]) => answerId),
+                underdogPickCount: underdogPicks.length,
                 botPicks,
                 favoritePicks,
                 storedState: storage,
@@ -364,8 +366,9 @@ async function run() {
 
     const botPickMap = Object.fromEntries(value.botPicks || []);
     const favoritePickMap = Object.fromEntries(value.favoritePicks || []);
-    if (!Object.keys(botPickMap).some((questionId) => botPickMap[questionId] !== favoritePickMap[questionId])) {
-      throw new Error(`Saved picks only used favorites: ${JSON.stringify({ botPickMap, favoritePickMap })}`);
+    const underdogPickCount = Object.keys(botPickMap).filter((questionId) => botPickMap[questionId] !== favoritePickMap[questionId]).length;
+    if (underdogPickCount < Math.max(2, Math.floor(Object.keys(botPickMap).length / 4))) {
+      throw new Error(`Saved picks were still too favorite-heavy: ${JSON.stringify({ botPickMap, favoritePickMap, underdogPickCount })}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);
