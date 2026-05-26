@@ -860,7 +860,7 @@
 
       function selectClub() {
         const distance = distanceToPin();
-        if (distance < 24) return clubs[3];
+        if (distance < 24 && classifyLie() === "Green") return clubs[3];
         if (distance < 86) return clubs[2];
         if (distance < 174) return clubs[1];
         return clubs[0];
@@ -1034,10 +1034,14 @@
         const directionError = state.directionMiss * 0.0055 * lieError;
         const angle = baseAngle + directionError;
         const distance = state.targetDistance * liePower;
-        const carry = club.name === "Putter" ? distance : distance * (1 - club.roll * 0.45);
-        const speed = club.name === "Putter" ? Math.max(5, distance * 1.6) : Math.max(28, carry * 0.92);
+        const isPutt = club.name === "Putter";
+        const shortGame = club.name === "Wedge" && distance < 42;
+        const carry = isPutt ? distance : distance * (shortGame ? 0.72 : 1 - club.roll * 0.45);
+        const speed = isPutt ? distance * 1.42 + 1.8 : carry * (shortGame ? 1.12 : 0.92);
+        const launch = isPutt ? 0.18 : shortGame ? 5.5 + distance * 0.22 : 18 + club.loft * 34;
+        const windScale = isPutt ? 0.04 : shortGame ? 0.22 : 0.8;
         state.shotStart.copy(state.ball);
-        state.velocity.set(Math.sin(angle) * speed + hole.wind * 0.8, club.name === "Putter" ? 0.24 : 18 + club.loft * 34, Math.cos(angle) * speed);
+        state.velocity.set(Math.sin(angle) * speed + hole.wind * windScale, launch, Math.cos(angle) * speed);
         state.strokes += 1;
         state.flightTime = 0;
         state.swingTime = 0.72;
@@ -1157,7 +1161,8 @@
 
         updateBallMesh();
         const groundSpeed = Math.hypot(state.velocity.x, state.velocity.z);
-        if (state.flightTime > 0.5 && state.ball.y <= 0.19 && groundSpeed < 0.42) {
+        const settleSpeed = club.name === "Putter" ? 0.16 : 0.42;
+        if (state.flightTime > 0.5 && state.ball.y <= 0.19 && groundSpeed < settleSpeed) {
           settleBall();
         }
       }
