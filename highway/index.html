@@ -1380,6 +1380,8 @@
       const routeOriginOffset = trackStraightX + quarterTurnLength + trackStraightZ * 0.5;
       const routeWorldOffsetX = -trackSideX;
       const maxUpgradeLevel = 99;
+      const finalHeatStartScore = 18500;
+      const finalHeatWallScore = 20500;
       const legacyCarUpgrade = Math.floor(readStoredNumber("highway-rush-car-upgrade", 0));
       const savedMaxCarUpgrade = Math.max(0, Math.min(maxUpgradeLevel, Math.floor(readStoredNumber("highway-rush-car-owned", legacyCarUpgrade))));
       const savedSelectedCarUpgrade = Math.max(0, Math.min(savedMaxCarUpgrade, Math.floor(readStoredNumber("highway-rush-car-selected", savedMaxCarUpgrade))));
@@ -1489,7 +1491,7 @@
       }
 
       function trafficPressure() {
-        return Math.min(1.6, state.score / 6200);
+        return Math.min(2.9, state.score / 6200 + finalHeatPressure() * 0.92);
       }
 
       function trafficLimit() {
@@ -1497,15 +1499,30 @@
       }
 
       function chasePressure() {
-        return Math.min(34, state.wanted * 1.1 + state.score / 1350);
+        const heat = finalHeatPressure();
+        return Math.min(68, state.wanted * 1.1 + state.score / 1350 + heat * 26);
       }
 
       function targetPoliceCount() {
-        return state.wanted > 0 ? Math.max(1, Math.floor(state.wanted * 1.12 + state.score / 4200)) : 0;
+        const heat = finalHeatPressure();
+        if (state.wanted <= 0 && heat <= 0) return 0;
+        const heatSwarm = Math.floor(heat * 10 + Math.max(0, heat - 1) * 16);
+        return Math.max(1, Math.floor(state.wanted * 1.12 + state.score / 4200 + heatSwarm));
       }
 
       function wantedPressure() {
-        return Math.min(chasePressure(), 30);
+        return Math.min(chasePressure(), 58);
+      }
+
+      function finalHeatPressure() {
+        return Math.max(0, Math.min(1.8, (state.score - finalHeatStartScore) / (finalHeatWallScore - finalHeatStartScore)));
+      }
+
+      function policeHitDamage() {
+        const heat = finalHeatPressure();
+        const normalDamage = Math.max(4, 12 + Math.min(12, state.wanted * 2) - upgradePower() * 2.2);
+        const armorBreaker = maxHealth() * (0.03 + heat * 0.12);
+        return Math.round(normalDamage + heat * (18 + state.wanted * 1.8) + armorBreaker);
       }
 
       const road = new THREE.Group();
@@ -2669,7 +2686,7 @@
       function spawnTrafficPack(zOverride = null) {
         if (traffic.length > trafficLimit()) return;
         const shuffledLanes = [...laneCenters].sort(() => Math.random() - 0.5);
-        const packCount = Math.min(9, 5 + Math.floor(trafficPressure() * 2) + (Math.random() > 0.52 ? 1 : 0));
+        const packCount = Math.min(13, 5 + Math.floor(trafficPressure() * 2) + Math.floor(finalHeatPressure() * 3) + (Math.random() > 0.52 ? 1 : 0));
         for (let i = 0; i < Math.min(packCount, shuffledLanes.length); i += 1) {
           const stagger = i * (7 + Math.random() * 6);
           spawnTraffic((zOverride ?? -174 - Math.random() * 52) - stagger, shuffledLanes[i]);
@@ -2680,14 +2697,15 @@
         if (police.length >= targetPoliceCount()) return;
         const car = makePoliceCar();
         const pressure = wantedPressure();
+        const heat = finalHeatPressure();
         const spawnIndex = state.policeSerial;
         state.policeSerial += 1;
         const formationX = [-10.8, 10.8, -5.4, 5.4, 0, -13.5, 13.5];
         const formationZ = [0, 8, 15, 23, 31, 40];
         car.userData.chaseOffsetX = formationX[spawnIndex % formationX.length] + (Math.random() - 0.5) * 1.4;
         car.userData.chaseOffsetZ = formationZ[spawnIndex % formationZ.length] + Math.random() * 3;
-        car.userData.skill = Math.min(1, (state.score / 12000) + (state.wanted / 18));
-        car.userData.speed = Math.abs(state.speed) + 3.4 + pressure * 0.9 + car.userData.skill * 8 + Math.random() * 2.6;
+        car.userData.skill = Math.min(3.2, (state.score / 12000) + (state.wanted / 18) + heat * 1.15);
+        car.userData.speed = Math.abs(state.speed) + 3.4 + pressure * 0.9 + car.userData.skill * 8 + heat * 24 + Math.random() * 2.6;
         car.userData.width = carSize.width * 1.06;
         car.userData.length = carSize.length * 1.06;
         car.userData.hitCooldown = 0;
@@ -2783,11 +2801,16 @@
 
       function updateWorld(dt) {
         const scroll = state.speed * state.driveFactor * dt;
+        const heat = finalHeatPressure();
         state.slowAmbulanceTimer = Math.max(0, state.slowAmbulanceTimer - dt);
         state.healTimer = Math.max(0, state.healTimer - dt);
         if (state.fireTimer > 0) {
           state.fireTimer = Math.max(0, state.fireTimer - dt);
           state.health = Math.max(0, state.health - dt * 6.4);
+          if (state.health <= 0) endGame();
+        }
+        if (heat >= 1) {
+          state.health = Math.max(0, state.health - dt * (12 + heat * 16));
           if (state.health <= 0) endGame();
         }
         fireEffect.visible = state.fireTimer > 0;
@@ -2814,7 +2837,7 @@
         if (state.spawnTimer <= 0) {
           spawnTrafficPack();
           const pressure = trafficPressure();
-          state.spawnTimer = Math.max(0.28, 0.52 - pressure * 0.12) + Math.random() * 0.16;
+          state.spawnTimer = Math.max(0.16, 0.52 - pressure * 0.12 - heat * 0.09) + Math.random() * 0.16;
         }
 
         state.pickupTimer -= dt;
@@ -2871,7 +2894,16 @@
       }
 
       function updatePolice(dt) {
+        const heat = finalHeatPressure();
         state.policeSlowTimer = Math.max(0, state.policeSlowTimer - dt);
+        if (heat > 0) {
+          const forcedWanted = 1 + Math.floor(heat * 7);
+          if (state.wanted < forcedWanted) {
+            state.wanted = forcedWanted;
+            state.escapeTimer = Math.max(state.escapeTimer, 7.5);
+            state.policeTimer = Math.min(state.policeTimer, 0.08);
+          }
+        }
         if (state.wanted > 0) {
           if (state.wanted > state.wantedBest) {
             state.wantedBest = state.wanted;
@@ -2880,7 +2912,7 @@
           state.policeTimer -= dt;
           if (state.policeTimer <= 0) {
             spawnPolice();
-            state.policeTimer = Math.max(0.35, 3.2 / Math.sqrt(Math.max(1, state.wanted + state.score / 2800))) + Math.random() * 0.32;
+            state.policeTimer = Math.max(0.12, (3.2 / Math.sqrt(Math.max(1, state.wanted + state.score / 2800))) * (1 - heat * 0.46)) + Math.random() * 0.24;
           }
 
           state.escapeTimer -= dt;
@@ -2901,7 +2933,7 @@
           car.userData.tagCooldown = Math.max(0, car.userData.tagCooldown - dt);
           const dzToPlayer = state.z - car.userData.roadZ;
           const dxToPlayer = state.x - car.userData.roadX;
-          car.userData.skill = Math.min(1.4, Math.max(car.userData.skill || 0, (state.score / 11500) + (state.wanted / 20)));
+          car.userData.skill = Math.min(3.2, Math.max(car.userData.skill || 0, (state.score / 11500) + (state.wanted / 20) + heat * 1.2));
           const skill = car.userData.skill;
           const playerTrendX = state.x + state.steerAngle * (2.2 + skill * 2.4) + Math.sin(state.motionHeadingOffset) * (1.4 + skill * 2.1);
           const playerTrendZ = state.z - Math.cos(state.motionHeadingOffset) * (2.4 + skill * 4.2);
@@ -2949,12 +2981,12 @@
           car.userData.targetRoadX = THREE.MathUtils.clamp(car.userData.targetRoadX + separationX * 0.82, bounds.left, bounds.right);
           car.userData.targetRoadZ += separationZ;
           const targetSpeed = car.userData.mode === "attack"
-            ? Math.abs(state.speed) + 6.5 + pressure + skill * 10 + car.userData.speedBias
+            ? Math.abs(state.speed) + 6.5 + pressure + skill * 10 + heat * 34 + car.userData.speedBias
             : car.userData.mode === "recover"
-              ? Math.max(20, Math.abs(state.speed) - 4 + skill * 5) + car.userData.speedBias
-              : Math.abs(state.speed) + 3.2 + pressure * 0.75 + skill * 6 + car.userData.speedBias;
+              ? Math.max(20, Math.abs(state.speed) - 4 + skill * 5 + heat * 10) + car.userData.speedBias
+              : Math.abs(state.speed) + 3.2 + pressure * 0.75 + skill * 6 + heat * 22 + car.userData.speedBias;
           const policeSlowFactor = state.policeSlowTimer > 0 ? 0.34 : 1;
-          const accel = car.userData.mode === "attack" ? 2.8 + skill * 1.2 : car.userData.mode === "recover" ? 3.4 : 1.65 + skill * 0.65;
+          const accel = car.userData.mode === "attack" ? 2.8 + skill * 1.2 + heat * 1.4 : car.userData.mode === "recover" ? 3.4 + heat * 0.8 : 1.65 + skill * 0.65 + heat * 0.9;
           car.userData.speed += (targetSpeed * policeSlowFactor - car.userData.speed) * Math.min(1, dt * accel);
           const targetDeltaX = car.userData.targetRoadX - car.userData.roadX;
           const targetDeltaZ = car.userData.targetRoadZ - car.userData.roadZ;
@@ -3112,8 +3144,8 @@
               car.userData.tagCooldown = 1.45;
               car.userData.mode = "recover";
               car.userData.recoverTimer = 0.82;
-              state.policeHitTimer = 1.05;
-              state.health = Math.max(0, state.health - Math.max(4, 12 + Math.min(12, state.wanted * 2) - upgradePower() * 2.2));
+              state.policeHitTimer = Math.max(0.42, 1.05 - finalHeatPressure() * 0.34);
+              state.health = Math.max(0, state.health - policeHitDamage());
               state.speed = Math.max(16, state.speed * 0.72);
               car.userData.roadZ += 5.4;
               car.userData.roadX += car.userData.roadX > state.x ? 1.7 : -1.7;
@@ -3159,6 +3191,7 @@
       }
 
       function updateHud() {
+        const heat = finalHeatPressure();
         hud.score.textContent = Math.floor(state.score).toString();
         hud.best.textContent = Math.max(state.best, Math.floor(state.score)).toString();
         hud.money.textContent = `$${state.money}`;
@@ -3173,6 +3206,10 @@
             ? "On fire"
           : state.healTimer > 0
             ? `Ambulance +${state.healAmount || 0} health`
+          : heat >= 1
+            ? "Max heat"
+          : heat > 0
+            ? "Final heat rising"
           : state.superJumpReady
             ? "Super jump ready"
           : state.slowAmbulanceTimer > 0
