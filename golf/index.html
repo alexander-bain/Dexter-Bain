@@ -667,6 +667,7 @@
         cameraMode: "address",
         shotStart: new THREE.Vector3(),
         shotClub: clubs[0],
+        precisionShot: null,
         flightTime: 0,
         swingTime: 0,
         holed: false,
@@ -981,6 +982,7 @@
         state.cameraMode = "address";
         state.holed = false;
         state.penaltyDrop = null;
+        state.precisionShot = null;
         makeCourse();
         updateBallMesh();
         updateGolferAddress();
@@ -1014,6 +1016,25 @@
         takeShot();
       }
 
+      function startPrecisionShot(angle, distance, club, hole, lie) {
+        const windDrift = club.name === "Putter" ? hole.wind * 0.03 : hole.wind * 0.12;
+        const rollMultiplier = club.name === "Putter" ? 1 : lie === "Bunker" ? 0.72 : lie === "Rough" ? 0.86 : 1;
+        const finalDistance = Math.max(0.7, distance * rollMultiplier);
+        const end = state.ball.clone();
+        end.x += Math.sin(angle) * finalDistance + windDrift;
+        end.z += Math.cos(angle) * finalDistance;
+        end.y = 0.18;
+        state.precisionShot = {
+          start: state.ball.clone(),
+          end,
+          elapsed: 0,
+          duration: Math.max(0.7, Math.min(2.2, 0.58 + finalDistance * 0.035)),
+          arc: club.name === "Putter" ? 0.08 : Math.min(4.2, 0.9 + finalDistance * 0.13),
+          rollStarts: club.name === "Putter" ? 0 : 0.68,
+        };
+        state.velocity.set(Math.sin(angle) * finalDistance, 0, Math.cos(angle) * finalDistance);
+      }
+
       function handleSwingButton() {
         if (hud.overlay.classList.contains("is-visible")) return;
         if (state.meterMode === "idle") startDistanceMeter();
@@ -1035,13 +1056,18 @@
         const angle = baseAngle + directionError;
         const distance = state.targetDistance * liePower;
         const isPutt = club.name === "Putter";
-        const shortGame = club.name === "Wedge" && distance < 42;
+        const shortGame = isPutt || (club.name === "Wedge" && distance < 64);
         const carry = isPutt ? distance : distance * (shortGame ? 0.72 : 1 - club.roll * 0.45);
         const speed = isPutt ? distance * 1.42 + 1.8 : carry * (shortGame ? 1.12 : 0.92);
         const launch = isPutt ? 0.18 : shortGame ? 5.5 + distance * 0.22 : 18 + club.loft * 34;
         const windScale = isPutt ? 0.04 : shortGame ? 0.22 : 0.8;
         state.shotStart.copy(state.ball);
-        state.velocity.set(Math.sin(angle) * speed + hole.wind * windScale, launch, Math.cos(angle) * speed);
+        state.precisionShot = null;
+        if (shortGame) {
+          startPrecisionShot(angle, distance, club, hole, lie);
+        } else {
+          state.velocity.set(Math.sin(angle) * speed + hole.wind * windScale, launch, Math.cos(angle) * speed);
+        }
         state.strokes += 1;
         state.flightTime = 0;
         state.swingTime = 0.72;
@@ -1124,6 +1150,33 @@
         if (state.cameraMode !== "flying") return;
         state.flightTime += dt;
         const club = state.shotClub;
+        if (state.precisionShot) {
+          const shot = state.precisionShot;
+          shot.elapsed += dt;
+          const t = Math.min(1, shot.elapsed / shot.duration);
+          const ease = t * t * (3 - 2 * t);
+          state.ball.lerpVectors(shot.start, shot.end, ease);
+          state.ball.y = 0.18 + Math.sin(Math.PI * Math.min(1, t / Math.max(0.01, shot.rollStarts))) * shot.arc * (t < shot.rollStarts ? 1 : 0);
+          if (club.name === "Putter") state.ball.y = 0.18;
+
+          const pin = holePosition(currentHole());
+          if (state.ball.distanceTo(pin) < (club.name === "Putter" ? 0.52 : 0.9) && t > 0.4) {
+            state.ball.copy(pin);
+            state.ball.y = 0.09;
+            state.precisionShot = null;
+            updateBallMesh();
+            finishHole();
+            return;
+          }
+
+          updateBallMesh();
+          if (t >= 1) {
+            state.precisionShot = null;
+            settleBall();
+          }
+          return;
+        }
+
         const onGround = state.ball.y <= 0.19 && state.flightTime > 0.15;
         if (!onGround) {
           state.velocity.y -= 24 * dt;
