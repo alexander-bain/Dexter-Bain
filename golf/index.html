@@ -143,7 +143,7 @@
     .track {
       position: relative;
       height: 24px;
-      overflow: hidden;
+      overflow: visible;
       border-radius: 999px;
       background:
         linear-gradient(90deg, rgba(255, 77, 109, 0.65), rgba(255, 209, 102, 0.72) 26%, rgba(71, 227, 143, 0.82) 50%, rgba(255, 209, 102, 0.72) 74%, rgba(255, 77, 109, 0.65)),
@@ -178,12 +178,42 @@
 
     .target-band {
       left: 50%;
-      width: 18px;
+      width: 22px;
       border-left: 2px solid rgba(248, 250, 252, 0.85);
       border-right: 2px solid rgba(248, 250, 252, 0.85);
-      background: rgba(248, 250, 252, 0.16);
+      background: rgba(248, 250, 252, 0.2);
       transform: translateX(-50%);
-      box-shadow: 0 0 14px rgba(248, 250, 252, 0.28);
+      box-shadow:
+        0 0 16px rgba(248, 250, 252, 0.36),
+        inset 0 0 0 1px rgba(9, 17, 28, 0.28);
+    }
+
+    .target-label {
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 4px);
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: rgba(248, 250, 252, 0.94);
+      color: #09111c;
+      font-size: 0.53rem;
+      font-weight: 1000;
+      line-height: 1;
+      transform: translateX(-50%);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+    }
+
+    .target-label::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid rgba(248, 250, 252, 0.94);
+      transform: translateX(-50%);
     }
 
     .sweet-spot {
@@ -499,7 +529,9 @@
         </div>
         <div class="track">
           <div class="sweet-spot" id="meterSweetSpot"></div>
-          <div class="target-band" id="meterTarget"></div>
+          <div class="target-band" id="meterTarget">
+            <span class="target-label" id="meterTargetLabel">HOLE</span>
+          </div>
           <div class="fill" id="meterFill"></div>
           <div class="needle" id="meterNeedle"></div>
         </div>
@@ -561,6 +593,7 @@
         meterFill: document.getElementById("meterFill"),
         meterNeedle: document.getElementById("meterNeedle"),
         meterTarget: document.getElementById("meterTarget"),
+        meterTargetLabel: document.getElementById("meterTargetLabel"),
         meterSweetSpot: document.getElementById("meterSweetSpot"),
         meterMin: document.getElementById("meterMin"),
         meterMid: document.getElementById("meterMid"),
@@ -914,7 +947,10 @@
         const hole = currentHole();
         const distance = distanceToPin();
         const club = selectClub();
-        const targetPercent = clamp01(Math.min(distance, club.max) / club.max) * 100;
+        const targetMeters = Math.min(distance, club.max);
+        const targetPercent = clamp01(targetMeters / club.max) * 100;
+        const markerPercent = Math.max(4, Math.min(96, targetPercent));
+        const targetLabel = distance > club.max ? `${club.max} m max` : `${Math.round(distance)} m to hole`;
         state.shotClub = club;
         const totalScore = state.totals.reduce((sum, strokes, index) => strokes === null ? sum : sum + strokes - holes[index].par, 0);
         const wind = hole.wind;
@@ -925,7 +961,8 @@
         hud.lie.textContent = `${state.lie}. Wind ${wind > 0 ? "+" : ""}${wind.toFixed(1)} m/s. ${club.name} up to ${club.max} m. Aim ${state.aim} m.`;
         hud.meter.classList.toggle("is-distance", state.meterMode !== "direction");
         hud.meter.classList.toggle("is-direction", state.meterMode === "direction");
-        hud.meterTarget.style.left = `${targetPercent}%`;
+        hud.meterTarget.style.left = `${markerPercent}%`;
+        hud.meterTargetLabel.textContent = distance > club.max ? "MAX" : "HOLE";
         hud.meterTarget.style.display = state.meterMode === "direction" ? "none" : "block";
         hud.meterSweetSpot.style.display = state.meterMode === "direction" ? "block" : "none";
         if (state.meterMode === "distance") {
@@ -935,9 +972,9 @@
           hud.meterFill.style.width = `${state.meterT * 100}%`;
           hud.meterNeedle.style.left = `${state.meterT * 100}%`;
           hud.meterMin.textContent = "0 m";
-          hud.meterMid.textContent = `${Math.round(Math.min(distance, club.max))} m target`;
+          hud.meterMid.textContent = targetLabel;
           hud.meterMax.textContent = `${club.max} m`;
-          hud.meterSubtext.textContent = distanceFeedback(meters, Math.min(distance, club.max));
+          hud.meterSubtext.textContent = distance > club.max ? `Hole is ${Math.round(distance)} m away. Hit max with ${club.name}.` : distanceFeedback(meters, targetMeters);
           hud.swingLabel.textContent = "Lock";
           hud.swingHint.textContent = "Distance";
         } else if (state.meterMode === "direction") {
@@ -958,7 +995,7 @@
           hud.meterFill.style.width = `${Math.min(1, distance / club.max) * 100}%`;
           hud.meterNeedle.style.left = `${targetPercent}%`;
           hud.meterMin.textContent = "0 m";
-          hud.meterMid.textContent = state.distanceFeedback || `${Math.round(Math.min(distance, club.max))} m target`;
+          hud.meterMid.textContent = state.distanceFeedback || targetLabel;
           hud.meterMax.textContent = `${club.max} m`;
           hud.meterSubtext.textContent = state.meterFeedback;
           hud.swingLabel.textContent = state.cameraMode === "flying" ? "Watch" : "Start";
