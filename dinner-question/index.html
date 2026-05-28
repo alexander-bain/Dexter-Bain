@@ -115,16 +115,108 @@
       line-height: 1.55;
     }
 
-    .wheel-area {
+    .wheel-layout {
       display: grid;
-      gap: 18px;
+      grid-template-columns: minmax(230px, 0.9fr) minmax(0, 1fr);
+      gap: 26px;
       align-items: center;
     }
 
+    .wheel-stack {
+      display: grid;
+      gap: 12px;
+      justify-items: center;
+    }
+
+    .wheel-frame {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: min(280px, 76vw);
+      aspect-ratio: 1;
+      justify-self: center;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .wheel-frame::before {
+      content: "";
+      position: absolute;
+      top: 1px;
+      z-index: 2;
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-top: 34px solid var(--ink);
+      filter: drop-shadow(0 4px 0 rgba(36, 48, 66, 0.14));
+    }
+
+    .wheel-frame.is-spinning {
+      cursor: wait;
+    }
+
+    .wheel {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      aspect-ratio: 1;
+      border: 7px solid var(--ink);
+      border-radius: 50%;
+      background: conic-gradient(
+        from -90deg,
+        var(--mint) 0deg 288deg,
+        var(--sky) 288deg 342deg,
+        var(--butter) 342deg 356.4deg,
+        var(--berry) 356.4deg 360deg
+      );
+      box-shadow: 0 16px 0 rgba(36, 48, 66, 0.12);
+      transition: transform 3400ms cubic-bezier(0.13, 0.78, 0.12, 1);
+      will-change: transform;
+    }
+
+    .wheel::before {
+      content: "";
+      position: absolute;
+      inset: 18%;
+      border: 4px solid rgba(36, 48, 66, 0.8);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.74);
+    }
+
+    .wheel-center {
+      position: relative;
+      z-index: 3;
+      display: grid;
+      place-items: center;
+      width: 88px;
+      height: 88px;
+      border: 4px solid var(--ink);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.96);
+      font-size: 0.82rem;
+      font-weight: 950;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .wheel-stack .action {
+      width: min(250px, 100%);
+      justify-self: center;
+    }
+
+    .wheel-copy {
+      display: grid;
+      gap: 14px;
+    }
+
     .wheel-copy h2 {
-      margin: 0 0 10px;
-      font-size: clamp(1.45rem, 5vw, 2.1rem);
-      line-height: 1.05;
+      margin: 0;
+      font-size: clamp(1.55rem, 5vw, 2.4rem);
+      line-height: 1;
     }
 
     .wheel-copy p {
@@ -136,7 +228,7 @@
     .legend {
       display: grid;
       gap: 8px;
-      margin: 14px 0 0;
+      margin: 0;
       padding: 0;
       list-style: none;
       color: var(--soft);
@@ -161,13 +253,6 @@
     .skip { background: var(--butter); }
     .pushups { background: var(--berry); }
 
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-    }
-
     .action,
     .answer-button,
     .history-button {
@@ -185,6 +270,14 @@
     .history-button:active {
       transform: translateY(4px);
       box-shadow: 0 3px 0 rgba(36, 48, 66, 0.14);
+    }
+
+    .wheel-frame:focus-visible,
+    .action:focus-visible,
+    .answer-button:focus-visible,
+    .history-button:focus-visible {
+      outline: 5px solid rgba(138, 201, 255, 0.6);
+      outline-offset: 5px;
     }
 
     .action {
@@ -340,6 +433,7 @@
     .next-note { margin: 0; color: var(--soft); font-size: 1rem; font-weight: 850; }
 
     @media (max-width: 700px) {
+      .wheel-layout { grid-template-columns: 1fr; }
       .answer-row { grid-template-columns: 1fr; }
     }
   </style>
@@ -360,7 +454,15 @@
 
         <p class="intro" id="introText">Spin first, then solve one short dinner math problem. No timer.</p>
 
-        <section class="wheel-area">
+        <section class="wheel-layout">
+          <div class="wheel-stack">
+            <button class="wheel-frame" id="wheelFrame" type="button" aria-label="Spin the dinner wheel">
+              <span class="wheel" id="wheel"></span>
+              <span class="wheel-center">Spin<br />me</span>
+            </button>
+            <button class="action" id="spinButton" type="button">Spin the wheel</button>
+            <button class="action secondary hidden" id="openQuestionButton" type="button">Open today's question</button>
+          </div>
           <div class="wheel-copy">
             <h2>Most days are number problems. Sometimes the wheel gets weird.</h2>
             <p>Refreshing keeps the latest result. Pressing spin again rolls a fresh 80/15/4/1 chance.</p>
@@ -370,12 +472,8 @@
               <li><span class="dot skip"></span>4% skip the problem</li>
               <li><span class="dot pushups"></span>1% word problem plus everyone does 10 pushups</li>
             </ul>
+            <div class="result-line" id="spinResult" aria-live="polite"></div>
           </div>
-          <div class="controls">
-            <button class="action" id="spinButton" type="button">Spin the wheel</button>
-            <button class="action secondary hidden" id="openQuestionButton" type="button">Open today's question</button>
-          </div>
-          <div class="result-line" id="spinResult" aria-live="polite"></div>
         </section>
 
         <section class="question-box" aria-label="Daily dinner question">
@@ -433,6 +531,8 @@
       const MIN_LEVEL = 1;
       const MAX_LEVEL = 5;
       const DEFAULT_LEVEL = 3;
+      const WHEEL_SPIN_MS = 3400;
+      const WHEEL_VISUAL_OFFSET_DEG = 90;
       const ANSWER_OUTCOMES = new Set(["right", "hint", "wrong"]);
       const WHEEL_SEGMENTS = [
         { type: "number", start: 0, end: 288 },
@@ -486,6 +586,8 @@
         { level: 5, text: "Daphne pours 48 drinks and then makes 19 more. How many drinks did she make total?", answer: "67 drinks" },
       ];
 
+      const wheelFrame = document.querySelector("#wheelFrame");
+      const wheel = document.querySelector("#wheel");
       const spinButton = document.querySelector("#spinButton");
       const openQuestionButton = document.querySelector("#openQuestionButton");
       const spinResult = document.querySelector("#spinResult");
@@ -509,6 +611,8 @@
       const buttons = [...document.querySelectorAll(".answer-button")];
 
       let state = loadState();
+      let isSpinning = false;
+      let spinReplayCount = 0;
 
       function clampLevel(level) {
         return Math.min(MAX_LEVEL, Math.max(MIN_LEVEL, Number(level) || DEFAULT_LEVEL));
@@ -544,9 +648,39 @@
         return clampLevel(state.levels[QUESTION_DAY_ID]);
       }
 
+      function getWheelSegmentForAngle(angle) {
+        const normalized = ((Number(angle) % 360) + 360) % 360;
+        return WHEEL_SEGMENTS.find((segment) => normalized >= segment.start && normalized < segment.end) || WHEEL_SEGMENTS[0];
+      }
+
+      function randomAngleInSegment(type) {
+        const segment = WHEEL_SEGMENTS.find((item) => item.type === type) || WHEEL_SEGMENTS[0];
+        return segment.start + Math.random() * (segment.end - segment.start);
+      }
+
+      function createWheelRoll() {
+        const landingAngle = Math.random() * 360;
+        return {
+          type: getWheelSegmentForAngle(landingAngle).type,
+          landingAngle,
+        };
+      }
+
       function normalizeWheelRoll(wheelData) {
         if (!wheelData || !WHEEL_TYPES[wheelData.type]) return null;
-        return wheelData;
+        const landingAngle = Number(wheelData.landingAngle);
+        if (Number.isFinite(landingAngle)) {
+          const type = getWheelSegmentForAngle(landingAngle).type;
+          return {
+            ...wheelData,
+            type,
+            landingAngle,
+          };
+        }
+        return {
+          ...wheelData,
+          landingAngle: randomAngleInSegment(wheelData.type),
+        };
       }
 
       function getQuestion(type, level) {
@@ -563,11 +697,6 @@
       function getQuestionCount(type, level) {
         const bank = type === "word" || type === "pushups" ? WORD_PROBLEMS : NUMBER_PROBLEMS;
         return bank.filter((item) => item.level === clampLevel(level)).length;
-      }
-
-      function randomWheelType() {
-        const angle = Math.random() * 360;
-        return WHEEL_SEGMENTS.find((segment) => angle >= segment.start && angle < segment.end)?.type || "number";
       }
 
       function outcomeLabel(outcome) {
@@ -655,16 +784,51 @@
         answerKey.textContent = question.answer;
       }
 
+      function formatWheelResult(type) {
+        const wheelType = WHEEL_TYPES[type] || WHEEL_TYPES.number;
+        return `The wheel landed on: ${wheelType.label}.`;
+      }
+
+      function landWheelOn(roll, animated) {
+        const turns = animated ? 7 + (spinReplayCount % 3) : 0;
+        const landingAngle = Number.isFinite(Number(roll?.landingAngle))
+          ? Number(roll.landingAngle)
+          : randomAngleInSegment(roll?.type);
+        const rotation = turns * 360 + WHEEL_VISUAL_OFFSET_DEG - landingAngle;
+        if (!animated) {
+          wheel.style.transition = "none";
+          wheel.style.transform = `rotate(${rotation}deg)`;
+          void wheel.offsetWidth;
+          wheel.style.transition = "";
+          return;
+        }
+        spinReplayCount += 1;
+        wheel.style.transition = "none";
+        wheel.style.transform = `rotate(${rotation - 2160}deg)`;
+        void wheel.offsetWidth;
+        wheel.style.transition = "";
+        wheel.style.transform = `rotate(${rotation}deg)`;
+      }
+
       function showWheelState() {
         const wheelData = normalizeWheelRoll(state.wheels[QUESTION_DAY_ID]);
+        wheelFrame.classList.remove("is-spinning");
         if (!wheelData) {
+          wheelFrame.setAttribute("aria-label", "Spin the dinner wheel");
+          spinButton.disabled = false;
           spinResult.textContent = "";
           openQuestionButton.classList.add("hidden");
           renderQuestion("number");
           return;
         }
-        const label = (WHEEL_TYPES[wheelData.type] || WHEEL_TYPES.number).label;
-        spinResult.textContent = `The wheel landed on: ${label}.`;
+        if (wheelData !== state.wheels[QUESTION_DAY_ID]) {
+          state.wheels[QUESTION_DAY_ID] = wheelData;
+          saveState();
+        }
+        wheelFrame.setAttribute("aria-label", `Wheel result: ${(WHEEL_TYPES[wheelData.type] || WHEEL_TYPES.number).label}`);
+        landWheelOn(wheelData, false);
+        spinButton.disabled = false;
+        spinResult.textContent = formatWheelResult(wheelData.type);
         if (wheelData.type === "skip") {
           openQuestionButton.classList.add("hidden");
           renderQuestion("skip");
@@ -675,13 +839,28 @@
       }
 
       function startSpin() {
-        const type = randomWheelType();
-        state.wheels[QUESTION_DAY_ID] = { type, spunAt: new Date().toISOString() };
-        delete state.answers[QUESTION_DAY_ID];
-        delete state.rerolls[QUESTION_DAY_ID];
-        ensureDailyLevel();
-        saveState();
-        showWheelState();
+        if (isSpinning) return;
+        isSpinning = true;
+        spinButton.disabled = true;
+        openQuestionButton.classList.add("hidden");
+        wheelFrame.classList.add("is-spinning");
+        spinResult.textContent = "Spinning...";
+        const roll = createWheelRoll();
+        landWheelOn(roll, true);
+
+        window.setTimeout(() => {
+          state.wheels[QUESTION_DAY_ID] = {
+            type: roll.type,
+            landingAngle: roll.landingAngle,
+            spunAt: new Date().toISOString(),
+          };
+          delete state.answers[QUESTION_DAY_ID];
+          delete state.rerolls[QUESTION_DAY_ID];
+          ensureDailyLevel();
+          saveState();
+          isSpinning = false;
+          showWheelState();
+        }, WHEEL_SPIN_MS + 80);
       }
 
       function pickOutcome(outcome) {
@@ -724,6 +903,7 @@
       }
 
       spinButton.addEventListener("click", startSpin);
+      wheelFrame.addEventListener("click", startSpin);
       openQuestionButton.addEventListener("click", () => showWheelState());
       rerollButton.addEventListener("click", loadAnotherQuestion);
       historyButton.addEventListener("click", toggleHistory);
