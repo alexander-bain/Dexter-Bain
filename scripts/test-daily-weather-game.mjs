@@ -208,6 +208,20 @@ function weatherBotPick(question, index, getAnswers) {
     return answers[0];
   }
 
+  const favorite = answers
+    .slice()
+    .sort((left, right) => right.odds - left.odds || left.points - right.points)[0] || fallback;
+  const highestPoints = answers
+    .slice()
+    .sort((left, right) => right.points - left.points || right.odds - left.odds);
+  const nonFavoriteUpside = highestPoints.filter((candidate) => candidate.id !== favorite?.id);
+  if (index % 4 === 1 && nonFavoriteUpside[0]) {
+    return nonFavoriteUpside[0];
+  }
+  if (index % 4 === 3 && (nonFavoriteUpside[1] || nonFavoriteUpside[0])) {
+    return nonFavoriteUpside[1] || nonFavoriteUpside[0];
+  }
+
   const random = seededRandom(`${question.id || question.text || "question"}:${index}`);
   const weighted = answers.map((answer) => ({
     answer,
@@ -355,7 +369,7 @@ async function run() {
               leaderboard.includes("win") &&
               leaderboardDetails.includes("Weather Bot") &&
               leaderboardDetails.includes("chance to win") &&
-              leaderboardDetails.includes("max possible pts") &&
+              leaderboardDetails.includes("max possible from picks") &&
               Number.parseInt(entryCount, 10) >= 2 &&
               storage.playerName === "Weather Bot"
             ) {

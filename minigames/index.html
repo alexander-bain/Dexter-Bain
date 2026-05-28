@@ -4607,6 +4607,7 @@
       }
 
       const maxPossible = maxPossibleScore(game, entry.picks);
+      const gameMaxPoints = maxPointsForGame(game);
 
       const rows = game.questions.map((question, questionIndex) => {
         const pick = getSavedPick(entry.picks, question, questionIndex);
@@ -4623,7 +4624,7 @@
       }).join("");
 
       leaderboardPicksEl.innerHTML = `
-        <h4 class="pick-view-title">${escapeHtml(entry.name)}'s picks · ${escapeHtml(formatWinChance(winChance))} chance to win · ${escapeHtml(String(maxPossible))} max possible pts</h4>
+        <h4 class="pick-view-title">${escapeHtml(entry.name)}'s picks · ${escapeHtml(formatWinChance(winChance))} chance to win · ${escapeHtml(String(maxPossible))}/${gameMaxPoints} max possible from picks</h4>
         <ul class="pick-list">${rows}</ul>
       `;
     }
@@ -4912,7 +4913,7 @@
             <span class="rank">${index + 1}</span>
             <span>
               <span class="leader-name">${escapeHtml(entry.name)}</span>
-              <div class="leader-details">${scope.type === "room" ? `Room ${scope.roomCode}` : "Public board"} · ${entry.score}/${maxPoints} scored · ${maxPossibleScore(game, entry.picks)} max possible · click for picks</div>
+              <div class="leader-details">${scope.type === "room" ? `Room ${scope.roomCode}` : "Public board"} · ${entry.score}/${maxPoints} scored · ${formatWinChance(winChances[entry.name] || 0)} chance to win · ${maxPossibleScore(game, entry.picks)}/${maxPoints} max possible from picks</div>
             </span>
             <span class="points">
               ${entry.score}
