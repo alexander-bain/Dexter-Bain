@@ -612,6 +612,7 @@
 
       let state = loadState();
       let isSpinning = false;
+      let queuedSpin = false;
       let spinReplayCount = 0;
 
       function clampLevel(level) {
@@ -839,7 +840,12 @@
       }
 
       function startSpin() {
-        if (isSpinning) return;
+        if (isSpinning) {
+          queuedSpin = true;
+          spinResult.textContent = "Spinning... another roll is queued.";
+          return;
+        }
+        queuedSpin = false;
         isSpinning = true;
         spinButton.disabled = true;
         openQuestionButton.classList.add("hidden");
@@ -860,6 +866,10 @@
           saveState();
           isSpinning = false;
           showWheelState();
+          if (queuedSpin) {
+            queuedSpin = false;
+            window.setTimeout(() => startSpin(), 0);
+          }
         }, WHEEL_SPIN_MS + 80);
       }
 
