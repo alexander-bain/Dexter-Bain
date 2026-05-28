@@ -876,6 +876,37 @@
         return Math.max(0, Math.min(1, value));
       }
 
+      function liePowerFor(lie) {
+        return lie === "Bunker" ? 0.78 : lie === "Rough" ? 0.88 : 1;
+      }
+
+      function rollMultiplierFor(club, lie) {
+        if (club.name === "Putter") return 1;
+        if (lie === "Bunker") return 0.72;
+        if (lie === "Rough") return 0.86;
+        return 1;
+      }
+
+      function projectedShotDistance(targetMeters, club = selectClub(), lie = state.lie) {
+        const distance = Math.max(0, targetMeters) * liePowerFor(lie);
+        if (club.name === "Putter") return distance;
+        const shortGame = club.name === "Wedge" && distance < 64;
+        if (shortGame) return Math.max(0.7, distance * rollMultiplierFor(club, lie));
+        return distance;
+      }
+
+      function requiredMeterDistance(neededMeters, club = selectClub(), lie = state.lie) {
+        const clampedNeeded = Math.max(0, neededMeters);
+        const liePower = liePowerFor(lie);
+        if (club.name === "Putter") return clampedNeeded / liePower;
+        if (club.name === "Wedge") {
+          const rollMultiplier = rollMultiplierFor(club, lie);
+          const shortGameLimit = 64 * rollMultiplier;
+          if (clampedNeeded <= shortGameLimit) return clampedNeeded / (liePower * rollMultiplier);
+        }
+        return clampedNeeded / liePower;
+      }
+
       function distanceFeedback(targetMeters, neededMeters) {
         const miss = Math.round(targetMeters - neededMeters);
         const abs = Math.abs(miss);
@@ -947,10 +978,11 @@
         const hole = currentHole();
         const distance = distanceToPin();
         const club = selectClub();
-        const targetMeters = Math.min(distance, club.max);
+        const maxReach = Math.round(projectedShotDistance(club.max, club, state.lie));
+        const targetMeters = Math.min(club.max, requiredMeterDistance(distance, club, state.lie));
         const targetPercent = clamp01(targetMeters / club.max) * 100;
         const markerPercent = Math.max(4, Math.min(96, targetPercent));
-        const targetLabel = distance > club.max ? `${club.max} m max` : `${Math.round(distance)} m to hole`;
+        const targetLabel = distance > maxReach ? `${maxReach} m max` : `${Math.round(distance)} m to hole`;
         state.shotClub = club;
         const totalScore = state.totals.reduce((sum, strokes, index) => strokes === null ? sum : sum + strokes - holes[index].par, 0);
         const wind = hole.wind;
@@ -958,7 +990,7 @@
         hud.distance.textContent = `${Math.max(0, Math.round(distance))} m`;
         hud.strokes.textContent = `${state.strokes}`;
         hud.score.textContent = scoreName(totalScore);
-        hud.lie.textContent = `${state.lie}. Wind ${wind > 0 ? "+" : ""}${wind.toFixed(1)} m/s. ${club.name} up to ${club.max} m. Aim ${state.aim} m.`;
+        hud.lie.textContent = `${state.lie}. Wind ${wind > 0 ? "+" : ""}${wind.toFixed(1)} m/s. ${club.name} up to ${maxReach} m. Aim ${state.aim} m.`;
         hud.meter.classList.toggle("is-distance", state.meterMode !== "direction");
         hud.meter.classList.toggle("is-direction", state.meterMode === "direction");
         hud.meterTarget.style.left = `${markerPercent}%`;
@@ -966,7 +998,8 @@
         hud.meterTarget.style.display = state.meterMode === "direction" ? "none" : "block";
         hud.meterSweetSpot.style.display = state.meterMode === "direction" ? "block" : "none";
         if (state.meterMode === "distance") {
-          const meters = Math.round(state.meterT * club.max);
+          const rawMeters = state.meterT * club.max;
+          const meters = Math.round(projectedShotDistance(rawMeters, club, state.lie));
           hud.meterName.textContent = "Distance meter";
           hud.meterValue.textContent = `${meters} m`;
           hud.meterFill.style.width = `${state.meterT * 100}%`;
@@ -974,7 +1007,7 @@
           hud.meterMin.textContent = "0 m";
           hud.meterMid.textContent = targetLabel;
           hud.meterMax.textContent = `${club.max} m`;
-          hud.meterSubtext.textContent = distance > club.max ? `Hole is ${Math.round(distance)} m away. Hit max with ${club.name}.` : distanceFeedback(meters, targetMeters);
+          hud.meterSubtext.textContent = distance > projectedShotDistance(club.max, club, state.lie) ? `Hole is ${Math.round(distance)} m away. Hit max with ${club.name}.` : distanceFeedback(meters, distance);
           hud.swingLabel.textContent = "Lock";
           hud.swingHint.textContent = "Distance";
         } else if (state.meterMode === "direction") {
@@ -1038,7 +1071,7 @@
 
       function lockDistanceMeter() {
         state.targetDistance = Math.max(2, state.meterT * selectClub().max);
-        state.distanceFeedback = distanceFeedback(state.targetDistance, Math.min(distanceToPin(), selectClub().max));
+        state.distanceFeedback = distanceFeedback(projectedShotDistance(state.targetDistance, selectClub(), state.lie), distanceToPin());
         state.meterFeedback = `${state.distanceFeedback}. Now hit the green center zone.`;
         state.meterMode = "direction";
         state.meterT = 0.5;
@@ -1084,7 +1117,7 @@
         const pin = holePosition(hole);
         const club = selectClub();
         const lie = state.lie;
-        const liePower = lie === "Bunker" ? 0.78 : lie === "Rough" ? 0.88 : 1;
+        const liePower = liePowerFor(lie);
         const lieError = lie === "Bunker" ? 1.45 : lie === "Rough" ? 1.25 : 1;
         const dx = pin.x - state.ball.x;
         const dz = pin.z - state.ball.z;
@@ -1095,8 +1128,11 @@
         const isPutt = club.name === "Putter";
         const shortGame = isPutt || (club.name === "Wedge" && distance < 64);
         const carry = isPutt ? distance : distance * (shortGame ? 0.72 : 1 - club.roll * 0.45);
-        const speed = isPutt ? distance * 1.42 + 1.8 : carry * (shortGame ? 1.12 : 0.92);
+        const gravity = 24;
         const launch = isPutt ? 0.18 : shortGame ? 5.5 + distance * 0.22 : 18 + club.loft * 34;
+        const airTime = (launch + Math.sqrt(launch * launch + 2 * gravity * state.ball.y)) / gravity;
+        const speedTune = 0.98 + club.roll * 0.16;
+        const speed = isPutt ? distance * 1.42 + 1.8 : shortGame ? carry * 1.12 : (carry / Math.max(0.45, airTime)) * speedTune;
         const windScale = isPutt ? 0.04 : shortGame ? 0.22 : 0.8;
         state.shotStart.copy(state.ball);
         state.precisionShot = null;
