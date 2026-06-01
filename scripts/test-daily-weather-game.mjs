@@ -351,8 +351,8 @@ async function run() {
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
               leaderboard.includes("Forecast Favorite") &&
-              leaderboard.includes("max possible") &&
-              leaderboard.includes("win") &&
+              leaderboard.includes("chance to win") &&
+              leaderboard.includes("max possible pts") &&
               leaderboardDetails.includes("Weather Bot") &&
               leaderboardDetails.includes("chance to win") &&
               leaderboardDetails.includes("max possible pts") &&
