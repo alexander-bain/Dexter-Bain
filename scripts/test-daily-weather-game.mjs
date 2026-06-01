@@ -259,21 +259,28 @@ async function run() {
           const botPicks = game.questions.map((question, index) => {
             const answers = test.getAnswers(question).slice();
             const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
-            const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
+            const riskFirst = answers
+              .slice()
               .sort((left, right) => right.points - left.points || right.odds - left.odds);
-            const choice = index % 3 === 1
-              ? (risks[0] || favorites[0])
+            const middleFirst = answers
+              .slice()
+              .sort((left, right) => {
+                const leftDistance = Math.abs(left.odds - 50);
+                const rightDistance = Math.abs(right.odds - 50);
+                return leftDistance - rightDistance || right.points - left.points;
+              });
+            const choice = index % 4 === 1
+              ? (middleFirst[0] || favorites[0])
               : index % 4 === 3
-              ? (risks[1] || favorites[0])
+              ? (riskFirst[0] || favorites[0])
               : favorites[0];
             return [test.getQuestionId(question, index), choice.id];
           });
           const picks = Object.fromEntries(botPicks);
           const favoritePickMap = Object.fromEntries(favoritePicks);
-          const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
-          if (!usedRiskPick) {
-            throw new Error("Weather Bot only picked favorites.");
+          const nonFavoritePicks = botPicks.filter(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
+          if (nonFavoritePicks.length < 2) {
+            throw new Error("Weather Bot stayed too close to the favorites.");
           }
           const entry = {
             name: "Weather Bot",
@@ -309,14 +316,16 @@ async function run() {
             }
             const pickView = document.getElementById("leaderboardPicks")?.textContent || "";
             const storage = JSON.parse(localStorage.getItem("dexterbain-minigames-v1") || "{}");
+            const parsedEntryCount = Number.parseInt(entryCount, 10);
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
-              leaderboard.includes("max from picks") &&
-              pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
-              entryCount.trim() === "1" &&
+              leaderboard.includes("win odds") &&
+              leaderboard.includes("pick ceiling") &&
+              pickView.includes("win odds") &&
+              pickView.includes("pick ceiling") &&
+              Number.isFinite(parsedEntryCount) &&
+              parsedEntryCount >= 1 &&
               storage.playerName === "Weather Bot"
             ) {
               return {
@@ -364,8 +373,9 @@ async function run() {
 
     const botPickMap = Object.fromEntries(value.botPicks || []);
     const favoritePickMap = Object.fromEntries(value.favoritePicks || []);
-    if (!Object.keys(botPickMap).some((questionId) => botPickMap[questionId] !== favoritePickMap[questionId])) {
-      throw new Error(`Saved picks only used favorites: ${JSON.stringify({ botPickMap, favoritePickMap })}`);
+    const nonFavoriteQuestionIds = Object.keys(botPickMap).filter((questionId) => botPickMap[questionId] !== favoritePickMap[questionId]);
+    if (nonFavoriteQuestionIds.length < 2) {
+      throw new Error(`Saved picks did not mix in enough risky choices: ${JSON.stringify({ botPickMap, favoritePickMap, nonFavoriteQuestionIds })}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);
