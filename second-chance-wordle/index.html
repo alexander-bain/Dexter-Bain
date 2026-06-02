@@ -431,6 +431,9 @@
       const DAILY_WORD_ANCHOR_DATE = "2026-05-31";
       const DAILY_WORD_ANCHOR = "CHAOS";
       const DAILY_WORD_STEP = 137;
+      const DAILY_WORD_OVERRIDES = {
+        "2026-06-02": "CRANE",
+      };
       const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
       const RESET_CODE = "CENA";
       const ALT_WORD_CODE = "JOHN";
@@ -508,10 +511,11 @@
 
       function getDailyPuzzle() {
         const today = pacificDateParts();
+        const overrideWord = DAILY_WORD_OVERRIDES[today.id];
         const anchorIndex = DAILY_ANSWER_WORDS.indexOf(DAILY_WORD_ANCHOR);
         const safeAnchorIndex = anchorIndex >= 0 ? anchorIndex : 0;
         const dayOffset = daysSincePacificDate(DAILY_WORD_ANCHOR_DATE, today.id);
-        const word = DAILY_ANSWER_WORDS[wrapIndex(safeAnchorIndex + dayOffset * DAILY_WORD_STEP, DAILY_ANSWER_WORDS.length)];
+        const word = overrideWord || DAILY_ANSWER_WORDS[wrapIndex(safeAnchorIndex + dayOffset * DAILY_WORD_STEP, DAILY_ANSWER_WORDS.length)];
         return { id: `${today.id}-${word.toLowerCase()}`, word };
       }
 
