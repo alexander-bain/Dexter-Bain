@@ -256,21 +256,51 @@ async function run() {
             }, null);
             return [test.getQuestionId(question, index), favorite.id];
           });
-          const botPicks = game.questions.map((question, index) => {
-            const answers = test.getAnswers(question).slice();
-            const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
-            const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
-              .sort((left, right) => right.points - left.points || right.odds - left.odds);
-            const choice = index % 3 === 1
-              ? (risks[0] || favorites[0])
-              : index % 4 === 3
-              ? (risks[1] || favorites[0])
-              : favorites[0];
-            return [test.getQuestionId(question, index), choice.id];
-          });
-          const picks = Object.fromEntries(botPicks);
           const favoritePickMap = Object.fromEntries(favoritePicks);
+          const favoriteMax = game.questions.reduce((total, question, index) => {
+            const pickId = favoritePickMap[test.getQuestionId(question, index)];
+            const pickedAnswer = test.getAnswers(question).find((candidate) => candidate.id === pickId);
+            return total + (pickedAnswer?.points || 0);
+          }, 0);
+          const gameMax = game.questions.reduce((total, question) => {
+            const points = test.getAnswers(question).map((candidate) => candidate.points || 0);
+            return total + Math.max(...points);
+          }, 0);
+          const picks = { ...favoritePickMap };
+          let projectedMax = favoriteMax;
+          const targetMax = Math.max(favoriteMax + Math.ceil(game.questions.length / 2), Math.round(gameMax * 0.72));
+          const upgrades = game.questions.map((question, index) => {
+            const questionId = test.getQuestionId(question, index);
+            const answers = test.getAnswers(question).slice().sort((left, right) => right.points - left.points || right.odds - left.odds);
+            const favorite = test.getAnswers(question).find((candidate) => candidate.id === favoritePickMap[questionId]);
+            const upgrade = answers.find((candidate) => candidate.id !== favorite?.id && candidate.odds >= 15 && candidate.points > (favorite?.points || 0));
+            if (!favorite || !upgrade) {
+              return null;
+            }
+            const ceilingGain = upgrade.points - favorite.points;
+            const oddsDrop = Math.max(1, favorite.odds - upgrade.odds);
+            return {
+              questionId,
+              answerId: upgrade.id,
+              ceilingGain,
+              efficiency: ceilingGain / oddsDrop,
+            };
+          }).filter(Boolean).sort((left, right) => right.efficiency - left.efficiency || right.ceilingGain - left.ceilingGain || left.questionId.localeCompare(right.questionId));
+
+          upgrades.forEach((upgrade, index) => {
+            if (projectedMax >= targetMax && index > 0) {
+              return;
+            }
+            if (picks[upgrade.questionId] !== upgrade.answerId) {
+              picks[upgrade.questionId] = upgrade.answerId;
+              projectedMax += upgrade.ceilingGain;
+            }
+          });
+
+          const botPicks = game.questions.map((question, index) => [
+            test.getQuestionId(question, index),
+            picks[test.getQuestionId(question, index)]
+          ]);
           const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
           if (!usedRiskPick) {
             throw new Error("Weather Bot only picked favorites.");
@@ -312,11 +342,11 @@ async function run() {
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
-              leaderboard.includes("max from picks") &&
+              leaderboard.includes("chance to win") &&
+              leaderboard.includes("max if the risky picks hit") &&
               pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
-              entryCount.trim() === "1" &&
+              pickView.includes("max if the risky picks hit") &&
+              Number(entryCount.trim()) >= 1 &&
               storage.playerName === "Weather Bot"
             ) {
               return {

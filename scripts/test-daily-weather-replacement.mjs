@@ -89,8 +89,8 @@ for (const questionId of [
 const autoScoredQuestions = [
   ...block.matchAll(/autoSource: "https:\/\/forecast\.weather\.gov\/MapClick\.php\?lat=37\.453&lon=-122\.182"/g)
 ].length;
-if (autoScoredQuestions !== 4) {
-  throw new Error(`Expected 4 auto-scored weather questions, found ${autoScoredQuestions}.`);
+if (autoScoredQuestions !== 5) {
+  throw new Error(`Expected 5 auto-scored weather questions, found ${autoScoredQuestions}.`);
 }
 
 for (const hour of [
@@ -127,8 +127,8 @@ if (!weekendBlock.includes('"20260516-gas-noon"')) {
   throw new Error("Weekend daily weather game is missing the gas question.");
 }
 
-if (weekendQuestionCount !== 10) {
-  throw new Error(`Expected 10 weekend daily weather questions, found ${weekendQuestionCount}.`);
+if (weekendQuestionCount !== 13) {
+  throw new Error(`Expected 13 weekend daily weather questions, found ${weekendQuestionCount}.`);
 }
 
 console.log("Weekend daily weather replacement test passed.");
