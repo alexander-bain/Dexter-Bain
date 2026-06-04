@@ -2833,41 +2833,40 @@
         type: "Sports",
         month: 5,
         day: 3,
-        summary: "Game 1 is tonight: Spurs vs. Knicks with live result checks on quarter breaks, halftime, and the final horn.",
+        summary: "Game 1 is tonight: Spurs vs. Knicks with live checks from ESPN for first score, quarter breaks, halftime, and the final horn.",
         questions: [
+          question("Which team scores first?", [
+            answer("Spurs", 51, "spurs"),
+            answer("Knicks", 49, "knicks")
+          ], "2026-finals-g1-first-score", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859963", lockAt: "2026-06-04T00:40:00.000Z" }),
           question("Who leads after the first quarter?", [
             answer("Spurs", 44, "spurs"),
             answer("Knicks", 44, "knicks"),
             answer("Tied", 12, "tied")
-          ], "2026-finals-g1-q1-leader", { autoSource: "https://r.jina.ai/http://www.nba.com/game/nyk-vs-sas-0042500401", lockAt: "2026-06-04T01:25:00.000Z" }),
+          ], "2026-finals-g1-q1-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859963", lockAt: "2026-06-04T01:25:00.000Z" }),
           question("Who leads at halftime?", [
             answer("Spurs", 43, "spurs"),
             answer("Knicks", 43, "knicks"),
             answer("Tied", 14, "tied")
-          ], "2026-finals-g1-half-leader", { autoSource: "https://r.jina.ai/http://www.nba.com/game/nyk-vs-sas-0042500401", lockAt: "2026-06-04T02:10:00.000Z" }),
+          ], "2026-finals-g1-half-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859963", lockAt: "2026-06-04T02:10:00.000Z" }),
           question("Who leads after three quarters?", [
             answer("Spurs", 42, "spurs"),
             answer("Knicks", 42, "knicks"),
             answer("Tied", 16, "tied")
-          ], "2026-finals-g1-q3-leader", { autoSource: "https://r.jina.ai/http://www.nba.com/game/nyk-vs-sas-0042500401", lockAt: "2026-06-04T03:00:00.000Z" }),
+          ], "2026-finals-g1-q3-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859963", lockAt: "2026-06-04T03:00:00.000Z" }),
           question("Who wins Game 1?", [
             answer("Spurs", 54, "spurs"),
             answer("Knicks", 46, "knicks")
-          ], "2026-finals-g1-winner", { autoSource: "https://r.jina.ai/http://www.nba.com/game/nyk-vs-sas-0042500401", lockAt: "2026-06-04T04:05:00.000Z" }),
+          ], "2026-finals-g1-winner", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859963", lockAt: "2026-06-04T04:05:00.000Z" }),
           question("What is the winning margin?", [
             answer("1 to 5 points", 31, "1-5"),
             answer("6 to 10 points", 33, "6-10"),
             answer("11+ points", 36, "11-plus")
-          ], "2026-finals-g1-margin", { autoSource: "https://r.jina.ai/http://www.nba.com/game/nyk-vs-sas-0042500401", lockAt: "2026-06-04T04:05:00.000Z" }),
+          ], "2026-finals-g1-margin", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859963", lockAt: "2026-06-04T04:05:00.000Z" }),
           question("Will Game 1 go to overtime?", [
             answer("Yes", 16, "yes"),
             answer("No", 84, "no")
-          ], "2026-finals-g1-ot", { autoSource: "https://r.jina.ai/http://www.nba.com/game/nyk-vs-sas-0042500401", lockAt: "2026-06-04T04:05:00.000Z" }),
-          question("Who has the biggest scoring night?", [
-            answer("Victor Wembanyama", 39, "wembanyama"),
-            answer("Jalen Brunson", 33, "brunson"),
-            answer("Someone else", 28, "someone-else")
-          ], "2026-finals-g1-top-scorer", { autoSource: "https://r.jina.ai/http://www.nba.com/game/nyk-vs-sas-0042500401", lockAt: "2026-06-04T04:05:00.000Z" })
+          ], "2026-finals-g1-ot", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859963", lockAt: "2026-06-04T04:05:00.000Z" })
         ]
       },
       {
@@ -2876,41 +2875,40 @@
         type: "Sports",
         month: 5,
         day: 5,
-        summary: "Game 2 stays in San Antonio on Friday, June 5. This one is ready now with the same live quarter, halftime, and final checks.",
+        summary: "Game 2 stays in San Antonio on Friday, June 5. It is set up with ESPN live checks for first score, quarter breaks, halftime, and the final horn.",
         questions: [
+          question("Which team scores first?", [
+            answer("Spurs", 52, "spurs"),
+            answer("Knicks", 48, "knicks")
+          ], "2026-finals-g2-first-score", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859964", lockAt: "2026-06-06T00:40:00.000Z" }),
           question("Who leads after the first quarter?", [
             answer("Spurs", 45, "spurs"),
             answer("Knicks", 43, "knicks"),
             answer("Tied", 12, "tied")
-          ], "2026-finals-g2-q1-leader", { autoSource: "https://r.jina.ai/http://www.nba.com/game/nyk-vs-sas-0042500402", lockAt: "2026-06-06T01:25:00.000Z" }),
+          ], "2026-finals-g2-q1-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859964", lockAt: "2026-06-06T01:25:00.000Z" }),
           question("Who leads at halftime?", [
             answer("Spurs", 44, "spurs"),
             answer("Knicks", 42, "knicks"),
             answer("Tied", 14, "tied")
-          ], "2026-finals-g2-half-leader", { autoSource: "https://r.jina.ai/http://www.nba.com/game/nyk-vs-sas-0042500402", lockAt: "2026-06-06T02:10:00.000Z" }),
+          ], "2026-finals-g2-half-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859964", lockAt: "2026-06-06T02:10:00.000Z" }),
           question("Who leads after three quarters?", [
             answer("Spurs", 43, "spurs"),
             answer("Knicks", 41, "knicks"),
             answer("Tied", 16, "tied")
-          ], "2026-finals-g2-q3-leader", { autoSource: "https://r.jina.ai/http://www.nba.com/game/nyk-vs-sas-0042500402", lockAt: "2026-06-06T03:00:00.000Z" }),
+          ], "2026-finals-g2-q3-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859964", lockAt: "2026-06-06T03:00:00.000Z" }),
           question("Who wins Game 2?", [
             answer("Spurs", 55, "spurs"),
             answer("Knicks", 45, "knicks")
-          ], "2026-finals-g2-winner", { autoSource: "https://r.jina.ai/http://www.nba.com/game/nyk-vs-sas-0042500402", lockAt: "2026-06-06T04:05:00.000Z" }),
+          ], "2026-finals-g2-winner", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859964", lockAt: "2026-06-06T04:05:00.000Z" }),
           question("What is the winning margin?", [
             answer("1 to 5 points", 30, "1-5"),
             answer("6 to 10 points", 34, "6-10"),
             answer("11+ points", 36, "11-plus")
-          ], "2026-finals-g2-margin", { autoSource: "https://r.jina.ai/http://www.nba.com/game/nyk-vs-sas-0042500402", lockAt: "2026-06-06T04:05:00.000Z" }),
+          ], "2026-finals-g2-margin", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859964", lockAt: "2026-06-06T04:05:00.000Z" }),
           question("Will Game 2 go to overtime?", [
             answer("Yes", 15, "yes"),
             answer("No", 85, "no")
-          ], "2026-finals-g2-ot", { autoSource: "https://r.jina.ai/http://www.nba.com/game/nyk-vs-sas-0042500402", lockAt: "2026-06-06T04:05:00.000Z" }),
-          question("Who has the biggest scoring night?", [
-            answer("Victor Wembanyama", 38, "wembanyama"),
-            answer("Jalen Brunson", 34, "brunson"),
-            answer("Someone else", 28, "someone-else")
-          ], "2026-finals-g2-top-scorer", { autoSource: "https://r.jina.ai/http://www.nba.com/game/nyk-vs-sas-0042500402", lockAt: "2026-06-06T04:05:00.000Z" })
+          ], "2026-finals-g2-ot", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859964", lockAt: "2026-06-06T04:05:00.000Z" })
         ]
       },
       {
@@ -2919,41 +2917,40 @@
         type: "Sports",
         month: 5,
         day: 8,
-        summary: "Game 3 shifts to New York on Monday, June 8. Same live structure, now with the Knicks as the home side.",
+        summary: "Game 3 shifts to New York on Monday, June 8. It is set up with ESPN live checks for first score, quarter breaks, halftime, and the final horn.",
         questions: [
+          question("Which team scores first?", [
+            answer("Knicks", 51, "knicks"),
+            answer("Spurs", 49, "spurs")
+          ], "2026-finals-g3-first-score", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859965", lockAt: "2026-06-09T00:40:00.000Z" }),
           question("Who leads after the first quarter?", [
             answer("Knicks", 44, "knicks"),
             answer("Spurs", 44, "spurs"),
             answer("Tied", 12, "tied")
-          ], "2026-finals-g3-q1-leader", { autoSource: "https://r.jina.ai/http://www.nba.com/game/sas-vs-nyk-0042500403", lockAt: "2026-06-09T01:25:00.000Z" }),
+          ], "2026-finals-g3-q1-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859965", lockAt: "2026-06-09T01:25:00.000Z" }),
           question("Who leads at halftime?", [
             answer("Knicks", 43, "knicks"),
             answer("Spurs", 43, "spurs"),
             answer("Tied", 14, "tied")
-          ], "2026-finals-g3-half-leader", { autoSource: "https://r.jina.ai/http://www.nba.com/game/sas-vs-nyk-0042500403", lockAt: "2026-06-09T02:10:00.000Z" }),
+          ], "2026-finals-g3-half-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859965", lockAt: "2026-06-09T02:10:00.000Z" }),
           question("Who leads after three quarters?", [
             answer("Knicks", 42, "knicks"),
             answer("Spurs", 42, "spurs"),
             answer("Tied", 16, "tied")
-          ], "2026-finals-g3-q3-leader", { autoSource: "https://r.jina.ai/http://www.nba.com/game/sas-vs-nyk-0042500403", lockAt: "2026-06-09T03:00:00.000Z" }),
+          ], "2026-finals-g3-q3-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859965", lockAt: "2026-06-09T03:00:00.000Z" }),
           question("Who wins Game 3?", [
             answer("Knicks", 52, "knicks"),
             answer("Spurs", 48, "spurs")
-          ], "2026-finals-g3-winner", { autoSource: "https://r.jina.ai/http://www.nba.com/game/sas-vs-nyk-0042500403", lockAt: "2026-06-09T04:05:00.000Z" }),
+          ], "2026-finals-g3-winner", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859965", lockAt: "2026-06-09T04:05:00.000Z" }),
           question("What is the winning margin?", [
             answer("1 to 5 points", 31, "1-5"),
             answer("6 to 10 points", 33, "6-10"),
             answer("11+ points", 36, "11-plus")
-          ], "2026-finals-g3-margin", { autoSource: "https://r.jina.ai/http://www.nba.com/game/sas-vs-nyk-0042500403", lockAt: "2026-06-09T04:05:00.000Z" }),
+          ], "2026-finals-g3-margin", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859965", lockAt: "2026-06-09T04:05:00.000Z" }),
           question("Will Game 3 go to overtime?", [
             answer("Yes", 16, "yes"),
             answer("No", 84, "no")
-          ], "2026-finals-g3-ot", { autoSource: "https://r.jina.ai/http://www.nba.com/game/sas-vs-nyk-0042500403", lockAt: "2026-06-09T04:05:00.000Z" }),
-          question("Who has the biggest scoring night?", [
-            answer("Jalen Brunson", 36, "brunson"),
-            answer("Victor Wembanyama", 35, "wembanyama"),
-            answer("Someone else", 29, "someone-else")
-          ], "2026-finals-g3-top-scorer", { autoSource: "https://r.jina.ai/http://www.nba.com/game/sas-vs-nyk-0042500403", lockAt: "2026-06-09T04:05:00.000Z" })
+          ], "2026-finals-g3-ot", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/game?gameId=401859965", lockAt: "2026-06-09T04:05:00.000Z" })
         ]
       },
       {
