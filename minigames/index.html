@@ -4440,8 +4440,8 @@
     function compatiblePickCountForGame(game, picks) {
       const normalizedPicks = normalizedEntryPicksForGame(game, picks);
       return game.questions.reduce((count, question, index) => {
-        const pick = normalizePickId(question, getSavedPick(normalizedPicks, question, index));
-        return pick ? count + 1 : count;
+        const pickedAnswer = pickedAnswerForQuestion(question, getSavedPick(normalizedPicks, question, index));
+        return pickedAnswer ? count + 1 : count;
       }, 0);
     }
 
