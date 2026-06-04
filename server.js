@@ -542,6 +542,174 @@ function stripSourceText(raw) {
     .slice(0, 12000);
 }
 
+function escapeRegExp(value) {
+  return String(value || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function answerIdMatchingLabel(answers, label) {
+  const needle = cleanText(label, 80).toLowerCase();
+  return answers.find((answer) => {
+    const answerId = cleanText(answer?.id, 80).toLowerCase();
+    const answerLabel = cleanText(answer?.label, 80).toLowerCase();
+    return answerId === needle || answerLabel === needle || answerLabel.includes(needle) || needle.includes(answerLabel);
+  })?.id || "";
+}
+
+function extractEspnGameId(source) {
+  const match = String(source || "").match(/gameId(?:=|\/)(\d{6,})/i);
+  return match ? match[1] : "";
+}
+
+function parseEspnLineScore(sourceText) {
+  const match = String(sourceText || "").match(
+    /\|\s*\|\s*1\s*\|\s*2\s*\|\s*3\s*\|\s*4(?:\s*\|\s*(OT|2OT|3OT))?\s*\|\s*T\s*\|\s*\|\s*([A-Za-z .'-]+?)\s+[A-Z]{2}\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)(?:\s*\|\s*(\d+))?\s*\|\s*(\d+)\s*\|\s*\|\s*([A-Za-z .'-]+?)\s+[A-Z]{2}\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)(?:\s*\|\s*(\d+))?\s*\|\s*(\d+)\s*\|/i
+  );
+  if (!match) {
+    return null;
+  }
+
+  const overtimeColumn = match[1] || "";
+  const first = {
+    name: cleanText(match[2], 80),
+    q1: Number(match[3]),
+    q2: Number(match[4]),
+    q3: Number(match[5]),
+    q4: Number(match[6]),
+    ot: Number(match[7] || 0),
+    total: Number(match[8]),
+  };
+  const second = {
+    name: cleanText(match[9], 80),
+    q1: Number(match[10]),
+    q2: Number(match[11]),
+    q3: Number(match[12]),
+    q4: Number(match[13]),
+    ot: Number(match[14] || 0),
+    total: Number(match[15]),
+  };
+
+  return {
+    overtime: Boolean(overtimeColumn) || /\bFinal\/OT\b|\bFinal\/2OT\b|\bFinal\/3OT\b/i.test(sourceText),
+    teams: [first, second],
+  };
+}
+
+function parseEspnRosterNames(sourceText, teamName) {
+  const teamPattern = escapeRegExp(teamName);
+  const sectionMatch = String(sourceText || "").match(
+    new RegExp(`${teamPattern}\\s+starters\\s+([\\s\\S]*?)\\s+team\\s+MIN\\s+PTS`, "i")
+  );
+  if (!sectionMatch) {
+    return [];
+  }
+
+  const names = [];
+  const playerRegex = /([A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+)+)\s+[A-Z]\.\s*[A-Za-z.'-]+\s*#\d+/g;
+  for (const match of sectionMatch[1].matchAll(playerRegex)) {
+    names.push(cleanText(match[1], 80));
+  }
+  return names;
+}
+
+function resolveEspnNbaBoxScore(questionText, answers, sourceText) {
+  const lineScore = parseEspnLineScore(sourceText);
+  if (!lineScore || lineScore.teams.length !== 2) {
+    return null;
+  }
+
+  const [teamA, teamB] = lineScore.teams;
+  const teamAAnswer = answerIdMatchingLabel(answers, teamA.name);
+  const teamBAnswer = answerIdMatchingLabel(answers, teamB.name);
+  const tiedAnswer = answerIdMatchingLabel(answers, "tied");
+
+  const pickLeader = (leftScore, rightScore) => {
+    if (leftScore === rightScore && tiedAnswer) {
+      return tiedAnswer;
+    }
+    return leftScore > rightScore ? teamAAnswer : teamBAnswer;
+  };
+
+  if (/after the first quarter/i.test(questionText)) {
+    return { answerId: pickLeader(teamA.q1, teamB.q1), explanation: `${teamA.name} ${teamA.q1}, ${teamB.name} ${teamB.q1} after the first quarter.` };
+  }
+
+  if (/at halftime/i.test(questionText)) {
+    return {
+      answerId: pickLeader(teamA.q1 + teamA.q2, teamB.q1 + teamB.q2),
+      explanation: `${teamA.name} ${teamA.q1 + teamA.q2}, ${teamB.name} ${teamB.q1 + teamB.q2} at halftime.`,
+    };
+  }
+
+  if (/after three quarters/i.test(questionText)) {
+    return {
+      answerId: pickLeader(teamA.q1 + teamA.q2 + teamA.q3, teamB.q1 + teamB.q2 + teamB.q3),
+      explanation: `${teamA.name} ${teamA.q1 + teamA.q2 + teamA.q3}, ${teamB.name} ${teamB.q1 + teamB.q2 + teamB.q3} after three quarters.`,
+    };
+  }
+
+  if (/who wins/i.test(questionText)) {
+    return {
+      answerId: pickLeader(teamA.total, teamB.total),
+      explanation: `${teamA.name} ${teamA.total}, ${teamB.name} ${teamB.total} in the final score.`,
+    };
+  }
+
+  if (/winning margin/i.test(questionText)) {
+    const diff = Math.abs(teamA.total - teamB.total);
+    const marginLabel = diff <= 5 ? "1 to 5 points" : diff <= 10 ? "6 to 10 points" : "11+ points";
+    return {
+      answerId: answerIdMatchingLabel(answers, marginLabel),
+      explanation: `The final margin was ${diff} points.`,
+    };
+  }
+
+  if (/go to overtime/i.test(questionText)) {
+    return {
+      answerId: answerIdMatchingLabel(answers, lineScore.overtime ? "yes" : "no"),
+      explanation: lineScore.overtime ? "The line score includes an overtime period." : "The line score ends after four quarters with no overtime period.",
+    };
+  }
+
+  return null;
+}
+
+async function resolveEspnNbaFirstScore(questionText, answers, source, sourceText) {
+  if (!/which team scores first/i.test(questionText)) {
+    return null;
+  }
+
+  const playMatch = String(sourceText || "").match(/([A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+)+)\s+makes\b/i);
+  if (!playMatch) {
+    return null;
+  }
+
+  const gameId = extractEspnGameId(source);
+  if (!gameId) {
+    return null;
+  }
+
+  const boxScoreSource = `https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/${gameId}`;
+  const boxScoreText = await fetchResultSource(boxScoreSource);
+  const lineScore = parseEspnLineScore(boxScoreText);
+  if (!lineScore || lineScore.teams.length !== 2) {
+    return null;
+  }
+
+  const [teamA, teamB] = lineScore.teams;
+  const scorer = cleanText(playMatch[1], 80);
+  const teamAPlayers = parseEspnRosterNames(boxScoreText, teamA.name);
+  const teamBPlayers = parseEspnRosterNames(boxScoreText, teamB.name);
+
+  if (teamAPlayers.includes(scorer)) {
+    return { answerId: answerIdMatchingLabel(answers, teamA.name), explanation: `${scorer} recorded the first made basket for ${teamA.name}.` };
+  }
+  if (teamBPlayers.includes(scorer)) {
+    return { answerId: answerIdMatchingLabel(answers, teamB.name), explanation: `${scorer} recorded the first made basket for ${teamB.name}.` };
+  }
+
+  return null;
+}
+
 async function fetchResultSource(source) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 7000);
@@ -619,6 +787,32 @@ async function automaticResultForQuestion(question, questionIndex) {
   if (source) {
     try {
       const sourceText = await fetchResultSource(source);
+      if (/espn\.com\/nba\/boxscore/i.test(source)) {
+        const parsedChoice = resolveEspnNbaBoxScore(text, answers, sourceText);
+        if (parsedChoice?.answerId) {
+          return {
+            questionId,
+            status: "resolved",
+            answerId: parsedChoice.answerId,
+            source,
+            note: parsedChoice.explanation || "Confirmed from the ESPN box score.",
+            checkedAt: new Date().toISOString(),
+          };
+        }
+      }
+      if (/espn\.com\/nba\/playbyplay/i.test(source)) {
+        const parsedChoice = await resolveEspnNbaFirstScore(text, answers, source, sourceText);
+        if (parsedChoice?.answerId) {
+          return {
+            questionId,
+            status: "resolved",
+            answerId: parsedChoice.answerId,
+            source,
+            note: parsedChoice.explanation || "Confirmed from the ESPN play-by-play.",
+            checkedAt: new Date().toISOString(),
+          };
+        }
+      }
       const choice = await chooseAnswerFromSource(text, answers, sourceText);
       if (choice?.answerId) {
         return {
