@@ -561,31 +561,60 @@ function extractEspnGameId(source) {
 }
 
 function parseEspnLineScore(sourceText) {
-  const match = String(sourceText || "").match(
+  const markdownRows = String(sourceText || "").matchAll(
+    /\|\s*\[([^\]]+)\]\([^)]+\)\s+[A-Z]{2}\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)(?:\s*\|\s*(\d+))?\s*\|\s*(\d+)\s*\|/gi
+  );
+  const rows = Array.from(markdownRows);
+  if (rows.length >= 2) {
+    const first = {
+      name: cleanText(rows[0][1], 80),
+      q1: Number(rows[0][2]),
+      q2: Number(rows[0][3]),
+      q3: Number(rows[0][4]),
+      q4: Number(rows[0][5]),
+      ot: Number(rows[0][6] || 0),
+      total: Number(rows[0][7]),
+    };
+    const second = {
+      name: cleanText(rows[1][1], 80),
+      q1: Number(rows[1][2]),
+      q2: Number(rows[1][3]),
+      q3: Number(rows[1][4]),
+      q4: Number(rows[1][5]),
+      ot: Number(rows[1][6] || 0),
+      total: Number(rows[1][7]),
+    };
+    return {
+      overtime: /\bFinal\/OT\b|\bFinal\/2OT\b|\bFinal\/3OT\b/i.test(sourceText),
+      teams: [first, second],
+    };
+  }
+
+  const legacyMatch = String(sourceText || "").match(
     /\|\s*\|\s*1\s*\|\s*2\s*\|\s*3\s*\|\s*4(?:\s*\|\s*(OT|2OT|3OT))?\s*\|\s*T\s*\|\s*\|\s*([A-Za-z .'-]+?)\s+[A-Z]{2}\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)(?:\s*\|\s*(\d+))?\s*\|\s*(\d+)\s*\|\s*\|\s*([A-Za-z .'-]+?)\s+[A-Z]{2}\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)(?:\s*\|\s*(\d+))?\s*\|\s*(\d+)\s*\|/i
   );
-  if (!match) {
+  if (!legacyMatch) {
     return null;
   }
 
-  const overtimeColumn = match[1] || "";
+  const overtimeColumn = legacyMatch[1] || "";
   const first = {
-    name: cleanText(match[2], 80),
-    q1: Number(match[3]),
-    q2: Number(match[4]),
-    q3: Number(match[5]),
-    q4: Number(match[6]),
-    ot: Number(match[7] || 0),
-    total: Number(match[8]),
+    name: cleanText(legacyMatch[2], 80),
+    q1: Number(legacyMatch[3]),
+    q2: Number(legacyMatch[4]),
+    q3: Number(legacyMatch[5]),
+    q4: Number(legacyMatch[6]),
+    ot: Number(legacyMatch[7] || 0),
+    total: Number(legacyMatch[8]),
   };
   const second = {
-    name: cleanText(match[9], 80),
-    q1: Number(match[10]),
-    q2: Number(match[11]),
-    q3: Number(match[12]),
-    q4: Number(match[13]),
-    ot: Number(match[14] || 0),
-    total: Number(match[15]),
+    name: cleanText(legacyMatch[9], 80),
+    q1: Number(legacyMatch[10]),
+    q2: Number(legacyMatch[11]),
+    q3: Number(legacyMatch[12]),
+    q4: Number(legacyMatch[13]),
+    ot: Number(legacyMatch[14] || 0),
+    total: Number(legacyMatch[15]),
   };
 
   return {
@@ -604,7 +633,7 @@ function parseEspnRosterNames(sourceText, teamName) {
   }
 
   const names = [];
-  const playerRegex = /([A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+)+)\s+[A-Z]\.\s*[A-Za-z.'-]+\s*#\d+/g;
+  const playerRegex = /\[([A-Z][A-Za-z.'-]+(?:\s+[A-Z][A-Za-z.'-]+)+)\s+[A-Z]\.\s*[A-Za-z.'-]+\]\([^)]+\)#\d+/g;
   for (const match of sectionMatch[1].matchAll(playerRegex)) {
     names.push(cleanText(match[1], 80));
   }
