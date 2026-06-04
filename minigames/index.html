@@ -4406,6 +4406,85 @@
       return "";
     }
 
+    function legacyFinalsGame1PicksForCurrentGame(game, picks) {
+      if (game?.gameId !== "nba-finals" || !picks || typeof picks !== "object" || Array.isArray(picks)) {
+        return picks;
+      }
+
+      const legacyKeys = Object.keys(picks);
+      if (!legacyKeys.length) {
+        return picks;
+      }
+
+      const hasCurrentFinalsKeys = legacyKeys.some((key) => key.startsWith("2026-finals-g1-") && key !== "2026-finals-g1-top-scorer");
+      const hasLegacyLiveKeys = legacyKeys.includes("2026-finals-g1-top-scorer");
+      if (!hasLegacyLiveKeys || hasCurrentFinalsKeys) {
+        return picks;
+      }
+
+      return {
+        "2026-finals-g1-first-score": "",
+        "2026-finals-g1-q1-leader": picks["2026-finals-g1-q1-leader"] || "",
+        "2026-finals-g1-half-leader": picks["2026-finals-g1-half-leader"] || "",
+        "2026-finals-g1-q3-leader": picks["2026-finals-g1-q3-leader"] || "",
+        "2026-finals-g1-winner": picks["2026-finals-g1-winner"] || "",
+        "2026-finals-g1-margin": picks["2026-finals-g1-margin"] || "",
+        "2026-finals-g1-ot": picks["2026-finals-g1-ot"] || "",
+      };
+    }
+
+    function normalizedEntryPicksForGame(game, picks) {
+      return legacyFinalsGame1PicksForCurrentGame(game, picks);
+    }
+
+    function compatiblePickCountForGame(game, picks) {
+      const normalizedPicks = normalizedEntryPicksForGame(game, picks);
+      return game.questions.reduce((count, question, index) => {
+        const pick = normalizePickId(question, getSavedPick(normalizedPicks, question, index));
+        return pick ? count + 1 : count;
+      }, 0);
+    }
+
+    function entryIsCompatibleWithGame(game, entry) {
+      return compatiblePickCountForGame(game, entry?.picks) > 0;
+    }
+
+    function legacyLocalEntriesForGame(game) {
+      if (game?.gameId !== "nba-finals") {
+        return [];
+      }
+
+      return Array.isArray(state.entries?.["nba-finals-game-1-2026"])
+        ? state.entries["nba-finals-game-1-2026"]
+        : [];
+    }
+
+    function mergeEntriesByName(entries, game) {
+      const merged = new Map();
+      entries.forEach((entry) => {
+        const cleanName = normalizedEntryName(entry?.name);
+        if (!cleanName) {
+          return;
+        }
+
+        const nextCompatibility = compatiblePickCountForGame(game, entry.picks);
+        const current = merged.get(cleanName);
+        if (!current) {
+          merged.set(cleanName, entry);
+          return;
+        }
+
+        const currentCompatibility = compatiblePickCountForGame(game, current.picks);
+        const nextSavedAt = Date.parse(entry.savedAt || 0) || 0;
+        const currentSavedAt = Date.parse(current.savedAt || 0) || 0;
+        if (nextCompatibility > currentCompatibility || (nextCompatibility === currentCompatibility && nextSavedAt > currentSavedAt)) {
+          merged.set(cleanName, entry);
+        }
+      });
+
+      return Array.from(merged.values());
+    }
+
     function findSavedEntryForName(game, entries, name) {
       const cleanName = normalizePlayerName(name).toLowerCase();
       if (!cleanName) {
@@ -4755,26 +4834,37 @@
       const scope = leaderboardScope(game);
       const roomKey = roomEntriesKey(game.gameId, scope.roomCode);
       const localEntries = Array.isArray(state.entries?.[game.gameId]) ? state.entries[game.gameId] : [];
+      const legacyLocalEntries = legacyLocalEntriesForGame(game);
       const sharedGameEntries = Array.isArray(sharedEntries[game.gameId]) ? sharedEntries[game.gameId] : null;
       const sourceEntries = scope.type === "room"
         ? (Array.isArray(sharedRooms[roomKey]) ? sharedRooms[roomKey] : [])
-        : [
+        : mergeEntriesByName([
             ...(sharedGameEntries || []),
             ...localEntries.filter((localEntry) => {
               const localName = normalizedEntryName(localEntry.name);
               return !(sharedGameEntries || []).some((sharedEntry) => normalizedEntryName(sharedEntry.name) === localName);
             }),
-          ];
+            ...legacyLocalEntries.filter((legacyEntry) => {
+              const legacyName = normalizedEntryName(legacyEntry.name);
+              return !(sharedGameEntries || []).some((sharedEntry) => normalizedEntryName(sharedEntry.name) === legacyName);
+            }),
+          ], game);
 
       return sourceEntries.map((entry) => ({
         ...entry,
-        score: scorePicks(game, entry.picks),
+        picks: normalizedEntryPicksForGame(game, entry.picks),
         source: scope.type === "room"
           ? "room"
           : localEntries.includes(entry)
           ? "device"
           : "shared"
-      })).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+      }))
+        .filter((entry) => entryIsCompatibleWithGame(game, entry))
+        .map((entry) => ({
+          ...entry,
+          score: scorePicks(game, entry.picks),
+        }))
+        .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
     }
 
     function renderTabs(games) {
