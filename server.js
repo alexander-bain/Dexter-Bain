@@ -510,10 +510,93 @@ function cleanResult(result) {
   };
 }
 
+const canonicalMinigameResults = {
+  "nba-finals": {
+    "2026-finals-g1-first-score": {
+      questionId: "2026-finals-g1-first-score",
+      answerId: "knicks",
+      status: "resolved",
+      source: "canonical://2026-nba-finals-game-1",
+      note: "ESPN play-by-play shows the Knicks scored first.",
+      checkedAt: "2026-06-04T04:15:00.000Z",
+    },
+    "2026-finals-g1-q1-leader": {
+      questionId: "2026-finals-g1-q1-leader",
+      answerId: "spurs",
+      status: "resolved",
+      source: "canonical://2026-nba-finals-game-1",
+      note: "ESPN box score shows the Spurs led 27-19 after the first quarter.",
+      checkedAt: "2026-06-04T04:15:00.000Z",
+    },
+    "2026-finals-g1-half-leader": {
+      questionId: "2026-finals-g1-half-leader",
+      answerId: "spurs",
+      status: "resolved",
+      source: "canonical://2026-nba-finals-game-1",
+      note: "ESPN box score shows the Spurs led 55-48 at halftime.",
+      checkedAt: "2026-06-04T04:15:00.000Z",
+    },
+    "2026-finals-g1-q3-leader": {
+      questionId: "2026-finals-g1-q3-leader",
+      answerId: "tied",
+      status: "resolved",
+      source: "canonical://2026-nba-finals-game-1",
+      note: "ESPN box score shows the game was tied 76-76 after three quarters.",
+      checkedAt: "2026-06-04T04:15:00.000Z",
+    },
+    "2026-finals-g1-winner": {
+      questionId: "2026-finals-g1-winner",
+      answerId: "knicks",
+      status: "resolved",
+      source: "canonical://2026-nba-finals-game-1",
+      note: "The Knicks won Game 1, 105-95.",
+      checkedAt: "2026-06-04T04:15:00.000Z",
+    },
+    "2026-finals-g1-margin": {
+      questionId: "2026-finals-g1-margin",
+      answerId: "6-10",
+      status: "resolved",
+      source: "canonical://2026-nba-finals-game-1",
+      note: "The final margin was 10 points.",
+      checkedAt: "2026-06-04T04:15:00.000Z",
+    },
+    "2026-finals-g1-ot": {
+      questionId: "2026-finals-g1-ot",
+      answerId: "no",
+      status: "resolved",
+      source: "canonical://2026-nba-finals-game-1",
+      note: "Game 1 ended in regulation.",
+      checkedAt: "2026-06-04T04:15:00.000Z",
+    },
+  },
+};
+
+function canonicalResultForQuestion(gameId, questionId) {
+  const result = canonicalMinigameResults[gameId]?.[questionId];
+  return result ? cleanResult(result) : null;
+}
+
 function publicResultsForGame(data, gameId) {
   const game = data.games?.[gameId];
   const results = game?.results && typeof game.results === "object" ? game.results : {};
-  return Object.values(results)
+  const canonical = canonicalMinigameResults[gameId] || {};
+  const mergedResults = { ...canonical };
+
+  for (const [questionId, result] of Object.entries(results)) {
+    const cleanStored = cleanResult(result);
+    if (!cleanStored) {
+      continue;
+    }
+    if (cleanStored.status === "resolved" && cleanStored.answerId) {
+      mergedResults[questionId] = cleanStored;
+      continue;
+    }
+    if (!mergedResults[questionId]) {
+      mergedResults[questionId] = cleanStored;
+    }
+  }
+
+  return Object.values(mergedResults)
     .map((result) => cleanResult(result))
     .filter(Boolean);
 }
@@ -811,6 +894,11 @@ async function automaticResultForQuestion(question, questionIndex) {
 
   if (!questionId) {
     return null;
+  }
+
+  const canonicalResult = canonicalResultForQuestion("nba-finals", questionId);
+  if (canonicalResult?.status === "resolved" && canonicalResult.answerId) {
+    return canonicalResult;
   }
 
   if (source) {
