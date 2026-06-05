@@ -434,6 +434,7 @@
       const DAILY_WORD_OVERRIDES = {
         "2026-06-02": "CRANE",
         "2026-06-03": "CHIME",
+        "2026-06-04": "CIGAR",
       };
       const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
       const RESET_CODE = "CENA";
@@ -444,6 +445,7 @@
       const LEGACY_STATS_KEY = "second-chance-wordle-stats-v1";
       const PROGRESS_KEY = "second-chance-wordle-progress-v1";
       const ACTIVE_PUZZLE_KEY = "second-chance-wordle-active-puzzle-v1";
+      const BUILD_KEY = "second-chance-wordle-build-v1";
       const DICTIONARY_DATA = window.SECOND_CHANCE_DICTIONARIES || { guesses: [], fourLetterBases: [] };
       const DAILY_ANSWER_WORDS = [...WORDS, ...DAILY_EXTRA_WORDS];
       const WORD_LIST = new Set([...DAILY_ANSWER_WORDS, ...JOHN_WORDS, ...(DICTIONARY_DATA.guesses || [])]);
@@ -518,6 +520,18 @@
         const dayOffset = daysSincePacificDate(DAILY_WORD_ANCHOR_DATE, today.id);
         const word = overrideWord || DAILY_ANSWER_WORDS[wrapIndex(safeAnchorIndex + dayOffset * DAILY_WORD_STEP, DAILY_ANSWER_WORDS.length)];
         return { id: `${today.id}-${word.toLowerCase()}`, word };
+      }
+
+      function syncBuildVersion() {
+        try {
+          const currentBuild = DAILY_PUZZLE.id;
+          const savedBuild = localStorage.getItem(BUILD_KEY);
+          if (savedBuild && savedBuild !== currentBuild) {
+            localStorage.removeItem(PROGRESS_KEY);
+            localStorage.removeItem(ACTIVE_PUZZLE_KEY);
+          }
+          localStorage.setItem(BUILD_KEY, currentBuild);
+        } catch {}
       }
 
       function isJohnPuzzleId(puzzleId) {
@@ -1005,6 +1019,7 @@
       }
 
       function startGame() {
+        syncBuildVersion();
         currentPuzzle = loadActivePuzzle();
         answer = currentPuzzle.word;
         progress = loadProgress();
