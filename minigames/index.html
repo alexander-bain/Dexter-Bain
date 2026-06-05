@@ -3821,6 +3821,43 @@
       return results.some(Boolean);
     }
 
+    function isGameInLiveWindow(game) {
+      if (!game) {
+        return false;
+      }
+
+      const now = Date.now();
+      const gameStart = game.date instanceof Date ? game.date.getTime() : Date.now();
+      const latestLock = Math.max(
+        gameStart,
+        ...game.questions.map((question) => questionLockDate(game, question).getTime()).filter(Number.isFinite)
+      );
+
+      return now >= gameStart - 15 * 60000 && now <= latestLock + 15 * 60000;
+    }
+
+    async function refreshCurrentGameLiveData() {
+      const game = currentGame();
+      if (!game) {
+        return false;
+      }
+
+      const [entriesLoaded, resultsLoaded] = await Promise.all([
+        loadEntriesForScope(game, true),
+        loadResultsForGame(game, true),
+      ]);
+
+      const checkedResults = lockedQuestions(game).length > 0
+        ? await checkResultsForGame(game)
+        : resultsLoaded;
+
+      if (currentGame()?.gameId === game.gameId && (entriesLoaded || resultsLoaded || checkedResults)) {
+        renderGame(game);
+      }
+
+      return Boolean(entriesLoaded || resultsLoaded || checkedResults);
+    }
+
     function cleanRoomCode(value) {
       return String(value || "").replace(/[^A-HJ-NP-Z2-9]/gi, "").toUpperCase().slice(0, 6);
     }
@@ -5713,12 +5750,17 @@
     });
 
     window.setInterval(() => {
-      refreshLockedGameResults().then((loaded) => {
+      const game = currentGame();
+      const refresh = isGameInLiveWindow(game)
+        ? refreshCurrentGameLiveData()
+        : refreshLockedGameResults();
+
+      refresh.then((loaded) => {
         if (loaded && currentGame()) {
           renderGame(currentGame());
         }
       });
-    }, 60000);
+    }, 15000);
 
     window.setInterval(updateCountdowns, 1000);
 
