@@ -2081,55 +2081,55 @@
     const eventCatalog = [
       // DAILY_WEATHER_GAME_START
       {
-        id: "daily-weather-20260605",
-        name: "Menlo Park Day Watch - Jun 5",
+        id: "daily-weather-20260606",
+        name: "Menlo Park Day Watch - Jun 6",
         type: "Day",
         month: 5,
-        day: 5,
-        summary: "Generated at 6 AM for Jun 5: 10 simple questions about weather, money, news, music, and sports that settle through the day. Forecast: Partly Sunny, high near 70.",
+        day: 6,
+        summary: "Generated at 6 AM for Jun 6: 10 simple questions about weather, money, news, music, and sports that settle through the day. Forecast: Sunny, high near 69.",
         questions: [
-          question("By noon, will it be warmer than 65 degrees?", [
-            answer("Yes", 64, "yes"),
-            answer("No", 36, "no")
-          ], "20260605-warm-by-noon", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-06-05T19:00:00.000Z" }),
           question("By noon, will gas prices be higher than this morning?", [
-            answer("Yes", 36, "yes"),
-            answer("No", 64, "no")
-          ], "20260605-gas-noon", { autoSource: "https://r.jina.ai/http://gasprices.aaa.com/", lockAt: "2026-06-05T19:15:00.000Z" }),
-          question("By 1 PM, will the stock market go up?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260605-market-lunch", { autoSource: "https://r.jina.ai/http://finance.yahoo.com/quote/%5EGSPC", lockAt: "2026-06-05T20:00:00.000Z" }),
+          ], "20260606-gas-noon", { autoSource: "https://r.jina.ai/http://gasprices.aaa.com/", lockAt: "2026-06-06T19:15:00.000Z" }),
           question("By 2 PM, what will the local news talk about most?", [
             answer("Weather", 28, "weather"),
-            answer("Stocks", 30, "stocks"),
+            answer("Community", 24, "community"),
             answer("Sports", 24, "sports"),
             answer("Traffic", 18, "traffic")
-          ], "20260605-local-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-06-05T21:00:00.000Z" }),
+          ], "20260606-local-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-06-06T21:00:00.000Z" }),
           question("By 3 PM, will rain show up in the forecast?", [
             answer("Yes", 36, "yes"),
             answer("No", 64, "no")
-          ], "20260605-rain-by-3pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-06-05T22:00:00.000Z" }),
+          ], "20260606-rain-by-3pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-06-06T22:00:00.000Z" }),
           question("By 3 PM, will the sky still be mostly sunny?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260605-sky-still-sunny", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-06-05T22:00:00.000Z" }),
+          ], "20260606-sky-still-sunny", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-06-06T22:00:00.000Z" }),
+          question("By 3 PM, will weather be the top local news story?", [
+            answer("Yes", 40, "yes"),
+            answer("No", 60, "no")
+          ], "20260606-weather-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-06-06T22:00:00.000Z" }),
           question("By 4 PM, will the top Apple Music song be different?", [
-            answer("Yes", 36, "yes"),
-            answer("No", 64, "no")
-          ], "20260605-music-four", { autoSource: "https://r.jina.ai/http://music.apple.com/us/charts/songs", lockAt: "2026-06-05T23:00:00.000Z" }),
-          question("By 4 PM, will sports be one of the top local news stories?", [
-            answer("Yes", 42, "yes"),
-            answer("No", 58, "no")
-          ], "20260605-sports-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-06-05T23:00:00.000Z" }),
-          question("By 5 PM, will the wind be stronger than 10 mph?", [
-            answer("Yes", 36, "yes"),
-            answer("No", 64, "no")
-          ], "20260605-wind-by-5pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-06-06T00:00:00.000Z" }),
-          question("By 6 PM, will the sports page still show a live game?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260605-sports-six", { autoSource: "https://r.jina.ai/http://www.espn.com/scoreboard", lockAt: "2026-06-06T01:00:00.000Z" })
+          ], "20260606-music-four", { autoSource: "https://r.jina.ai/http://music.apple.com/us/charts/songs", lockAt: "2026-06-06T23:00:00.000Z" }),
+          question("By 5 PM, will a new song reach No. 1?", [
+            answer("Yes", 64, "yes"),
+            answer("No", 36, "no")
+          ], "20260606-music-five", { autoSource: "https://r.jina.ai/http://music.apple.com/us/charts/songs", lockAt: "2026-06-07T00:00:00.000Z" }),
+          question("By 5 PM, will the wind be stronger than 15 mph?", [
+            answer("Yes", 64, "yes"),
+            answer("No", 36, "no")
+          ], "20260606-wind-by-5pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-06-07T00:00:00.000Z" }),
+          question("By 7 PM, will the top sports story be about a live game?", [
+            answer("Yes", 64, "yes"),
+            answer("No", 36, "no")
+          ], "20260606-sports-seven", { autoSource: "https://r.jina.ai/http://www.espn.com/scoreboard", lockAt: "2026-06-07T02:00:00.000Z" }),
+          question("Tonight, will it stay cooler than 60 degrees?", [
+            answer("Yes", 64, "yes"),
+            answer("No", 36, "no")
+          ], "20260606-cool-tonight", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-06-07T03:00:00.000Z" })
         ]
       },
       // DAILY_WEATHER_GAME_END
