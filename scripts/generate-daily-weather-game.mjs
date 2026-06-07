@@ -290,7 +290,7 @@ function dayWatchEvent(date, forecast) {
       lockAt: locks.weatherNight,
       likely: likelyNightCooler
     })
-  ], 4, daySeed);
+  ], 5, daySeed);
   const moneyQuestionPool = [
     () => yesNoQuestion({
       text: "By noon, will gas prices be higher than this morning?",
@@ -341,7 +341,7 @@ function dayWatchEvent(date, forecast) {
       yesLikely: 58,
       yesUnlikely: 42
     })
-  ], 2, daySeed + 11);
+  ], 3, daySeed + 11);
   const musicQuestions = rotateSelection([
     () => yesNoQuestion({
       text: "By 4 PM, will the top Apple Music song be different?",
@@ -357,7 +357,7 @@ function dayWatchEvent(date, forecast) {
       lockAt: lockDate(date, 17).toISOString(),
       likely: likelyMusicChanged
     })
-  ], weekend ? 2 : 1, daySeed + 23);
+  ], 2, daySeed + 23);
   const sportsQuestions = rotateSelection([
     () => yesNoQuestion({
       text: "By 6 PM, will the sports page still show a live game?",
@@ -373,7 +373,7 @@ function dayWatchEvent(date, forecast) {
       lockAt: locks.sportsSeven,
       likely: likelySportsLive
     })
-  ], 1, daySeed + 37);
+  ], 2, daySeed + 37);
   const selectedQuestions = [
     ...weatherQuestions,
     ...moneyQuestions,
