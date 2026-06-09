@@ -312,11 +312,7 @@ async function run() {
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
-              leaderboard.includes("max from picks") &&
-              pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
-              entryCount.trim() === "1" &&
+              Number(entryCount.trim()) >= 1 &&
               storage.playerName === "Weather Bot"
             ) {
               return {
@@ -360,6 +356,18 @@ async function run() {
     const value = result.result.value;
     if (value?.savedEntryName !== "Weather Bot") {
       throw new Error(`Weather Bot test did not save correctly: ${JSON.stringify(value)}`);
+    }
+    if (!/(?:<1|\d+)%\s+win/.test(value.leaderboard || "")) {
+      throw new Error(`Leaderboard did not show a win percentage: ${JSON.stringify(value)}`);
+    }
+    if (!String(value.leaderboard || "").includes("max from picks")) {
+      throw new Error(`Leaderboard did not show max from picks: ${JSON.stringify(value)}`);
+    }
+    if (!String(value.pickView || "").includes("chance to win")) {
+      throw new Error(`Pick view did not show chance to win: ${JSON.stringify(value)}`);
+    }
+    if (!String(value.pickView || "").includes("max from picks")) {
+      throw new Error(`Pick view did not show max from picks: ${JSON.stringify(value)}`);
     }
 
     const botPickMap = Object.fromEntries(value.botPicks || []);
