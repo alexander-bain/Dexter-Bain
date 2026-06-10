@@ -342,22 +342,37 @@
     }
 
     .battle-progress {
+      position: relative;
       display: block;
-      height: 5px;
-      overflow: hidden;
+      height: 9px;
+      overflow: visible;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.16);
+      background: linear-gradient(90deg, rgba(255, 107, 107, 0.5), rgba(255, 255, 255, 0.24), rgba(117, 230, 161, 0.5));
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
     }
 
     .battle-progress::before {
       content: "";
-      display: block;
-      width: 100%;
-      height: 100%;
+      position: absolute;
+      inset: 2px;
       border-radius: inherit;
-      background: linear-gradient(90deg, #ff6b6b, #ffd166, #75e6a1);
-      animation: battleProgress 2.4s linear forwards;
-      transform-origin: left center;
+      background: linear-gradient(90deg, transparent, rgba(255, 246, 215, 0.8), transparent);
+      animation: battleSurge 0.75s ease-in-out infinite alternate;
+    }
+
+    .battle-progress::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: #fff8d6;
+      border: 2px solid rgba(7, 11, 16, 0.72);
+      box-shadow: 0 0 15px rgba(255, 209, 102, 0.85);
+      transform: translate(-50%, -50%);
+      animation: battleSwing 0.68s ease-in-out infinite alternate;
     }
 
     .start-panel {
@@ -679,12 +694,21 @@
       }
     }
 
-    @keyframes battleProgress {
+    @keyframes battleSurge {
       from {
-        transform: scaleX(0);
+        opacity: 0.42;
       }
       to {
-        transform: scaleX(1);
+        opacity: 0.95;
+      }
+    }
+
+    @keyframes battleSwing {
+      from {
+        left: 18%;
+      }
+      to {
+        left: 82%;
       }
     }
 
@@ -882,6 +906,7 @@
       turn: 1,
       tension: 32,
       activeBattle: false,
+      worldTurn: false,
       started: false
     };
 
@@ -918,6 +943,7 @@
     };
 
     const BATTLE_DURATION_MS = 2400;
+    const WORLD_MOVE_DELAY_MS = 560;
 
     function clamp(value, min, max) {
       return Math.max(min, Math.min(max, value));
@@ -943,6 +969,7 @@
       state.turn = 1;
       state.tension = 32;
       state.activeBattle = false;
+      state.worldTurn = false;
       state.started = false;
       els.winnerPanel.classList.remove("is-visible");
       els.startPanel.classList.remove("is-hidden");
@@ -1086,19 +1113,20 @@
       if (!region) return;
       const stats = ownerStats(region.owner);
       const isPlayer = region.owner === state.playerId;
+      const isBusy = state.activeBattle || state.worldTurn;
       els.selectedName.textContent = region.name;
-      els.selectedNote.textContent = state.activeBattle ? `Battle underway. Command reports are updating near ${region.name}.` : isPlayer ? "Your command controls this territory." : `${stats.name} controls this territory.`;
+      els.selectedNote.textContent = state.activeBattle ? `Battle underway. Command reports are updating near ${region.name}.` : state.worldTurn ? "World powers are making their moves. Watch the map for new wars." : isPlayer ? "Your command controls this territory." : `${stats.name} controls this territory.`;
       els.ownerPill.textContent = isPlayer ? "Your command" : stats.name;
       els.statArmy.textContent = `${stats.army}K`;
       els.statLand.textContent = stats.land;
       els.statKills.textContent = stats.defeated;
       els.statMorale.textContent = `${stats.morale}%`;
-      els.attackButton.textContent = state.activeBattle ? "Battle Underway" : "Launch Attack";
-      els.peaceButton.textContent = state.activeBattle ? "Stand By" : "Request Peace";
-      els.decisionButton.textContent = state.activeBattle ? "Resolving" : "Take Risk";
-      els.attackButton.disabled = !state.started || state.activeBattle || !canAttack(state.playerId, region.id);
-      els.peaceButton.disabled = !state.started || state.activeBattle || isPlayer;
-      els.decisionButton.disabled = !state.started || state.activeBattle;
+      els.attackButton.textContent = state.activeBattle ? "Battle Underway" : state.worldTurn ? "World Moving" : "Launch Attack";
+      els.peaceButton.textContent = isBusy ? "Stand By" : "Request Peace";
+      els.decisionButton.textContent = isBusy ? "Resolving" : "Take Risk";
+      els.attackButton.disabled = !state.started || isBusy || !canAttack(state.playerId, region.id);
+      els.peaceButton.disabled = !state.started || isBusy || isPlayer;
+      els.decisionButton.disabled = !state.started || isBusy;
     }
 
     function renderBars() {
@@ -1129,7 +1157,7 @@
     function renderTip() {
       const targets = attackableTargets(state.playerId);
       if (!state.started) {
-        els.tipText.textContent = "Pick a region to begin. Big armies are safer; smaller armies get richer upset rewards.";
+        els.tipText.textContent = "Pick a region to begin. Most wars are close, but army size and readiness still tilt the odds.";
         return;
       }
       if (!targets.length) {
@@ -1138,7 +1166,7 @@
       }
       const weakest = targets.slice().sort((a, b) => ownerStats(a.owner).army - ownerStats(b.owner).army)[0];
       const strongest = targets.slice().sort((a, b) => ownerStats(b.owner).army - ownerStats(a.owner).army)[0];
-      els.tipText.textContent = `Safest target: ${weakest.name}. Biggest upset reward: ${strongest.name}.`;
+      els.tipText.textContent = `Lowest army target: ${weakest.name}. Biggest upset reward: ${strongest.name}.`;
     }
 
     function render() {
@@ -1152,15 +1180,18 @@
     function battleOdds(attackerOwner, defenderOwner) {
       const attacker = ownerStats(attackerOwner);
       const defender = ownerStats(defenderOwner);
-      const attackPower = attacker.army * 0.62 + attacker.morale * 0.55 + attacker.supply * 0.35 + attacker.tech * 0.45 + rand(-12, 16);
-      const defensePower = defender.army * 0.66 + defender.morale * 0.52 + defender.supply * 0.38 + defender.tech * 0.4 + rand(-10, 14);
-      return { attacker, defender, attackPower, defensePower };
+      const armyEdge = (attacker.army - defender.army) / Math.max(1, Math.max(attacker.army, defender.army));
+      const readinessEdge = (attacker.morale - defender.morale) * 0.04 + (attacker.supply - defender.supply) * 0.035 + (attacker.tech - defender.tech) * 0.04;
+      const landEdge = (attacker.land - defender.land) * 0.35;
+      const attackerChance = clamp(Math.round(50 + armyEdge * 9 + readinessEdge + landEdge), 36, 64);
+      const roll = rand(1, 100);
+      return { attacker, defender, attackerChance, roll };
     }
 
-    function animateBattle(fromRegion, toRegion) {
+    function animateBattle(fromRegion, toRegion, odds) {
       els.battleLayer.innerHTML = "";
       els.battleStatus.hidden = false;
-      els.battleStatusText.textContent = `${ownerStats(fromRegion.owner).name} advancing on ${toRegion.name}`;
+      els.battleStatusText.textContent = `${odds.attacker.name} pushing into ${toRegion.name} - ${odds.attackerChance}% chance`;
       const [x1, y1] = fromRegion.center;
       const [x2, y2] = toRegion.center;
       const routeId = `battle-route-${Date.now()}`;
@@ -1250,19 +1281,19 @@
       });
     }
 
-    function applyBattleResult(attackerOwner, targetId, isPlayerAttack = false) {
+    function applyBattleResult(attackerOwner, targetId, isPlayerAttack = false, afterBattle = null) {
       const target = getRegion(targetId);
       const origin = borderRegionFor(attackerOwner, targetId);
-      if (!target || !origin || state.activeBattle) return;
-      state.activeBattle = true;
-      animateBattle(origin, target);
-      renderSelected();
+      if (!target || !origin || state.activeBattle) return false;
       const defenderOwner = target.owner;
       const odds = battleOdds(attackerOwner, defenderOwner);
-      const attackerWon = odds.attackPower >= odds.defensePower;
+      const attackerWon = odds.roll <= odds.attackerChance;
       const underdog = odds.attacker.army < odds.defender.army;
       const reward = underdog ? rand(18, 34) : rand(8, 18);
       const loss = underdog ? rand(4, 12) : rand(9, 20);
+      state.activeBattle = true;
+      animateBattle(origin, target, odds);
+      renderSelected();
 
       setTimeout(() => {
         if (attackerWon) {
@@ -1292,47 +1323,101 @@
         state.tension = clamp(state.tension + rand(2, 7), 0, 100);
         state.turn += isPlayerAttack ? 1 : 0;
         render();
-        checkWinner();
+        const hasWinner = checkWinner();
         setTimeout(() => {
           state.activeBattle = false;
           stopBattleAnimation();
+          if (hasWinner) {
+            state.worldTurn = false;
+            render();
+            return;
+          }
           render();
           if (isPlayerAttack) runWorldTurn();
+          if (!isPlayerAttack && afterBattle) afterBattle();
         }, 850);
       }, BATTLE_DURATION_MS);
+      return true;
+    }
+
+    function worldAttackCount() {
+      const enemyOwners = livingOwners().filter((owner) => owner !== state.playerId).length;
+      if (!enemyOwners) return 0;
+      const tensionBonus = state.tension > 70 ? 2 : state.tension > 45 ? 1 : 0;
+      return Math.min(enemyOwners, rand(2, 3 + tensionBonus));
+    }
+
+    function chooseWorldMove(lastOwner = null) {
+      const possible = livingOwners()
+        .filter((owner) => owner !== state.playerId)
+        .flatMap((owner) => attackableTargets(owner).map((target) => ({ owner, target })));
+      if (!possible.length) return null;
+      const differentOwner = possible.filter((move) => move.owner !== lastOwner);
+      const candidates = differentOwner.length ? differentOwner : possible;
+      return candidates[rand(0, candidates.length - 1)];
+    }
+
+    function rebuildWorldOwner() {
+      const owners = livingOwners().filter((owner) => owner !== state.playerId);
+      if (!owners.length) return;
+      const owner = owners[rand(0, owners.length - 1)];
+      ownedRegions(owner).forEach((region) => {
+        region.army = clamp(region.army + rand(2, 7), 8, 220);
+        region.supply = clamp(region.supply + rand(1, 4), 20, 99);
+      });
+      state.tension = clamp(state.tension + rand(-5, 4), 0, 100);
+      log(`${ownerStats(owner).name} rebuilt forces instead of attacking.`);
+      render();
+    }
+
+    function finishWorldTurn() {
+      state.worldTurn = false;
+      render();
+    }
+
+    function runWorldBattleWave(remaining, lastOwner = null) {
+      if (remaining <= 0 || checkWinner()) {
+        finishWorldTurn();
+        return;
+      }
+      setTimeout(() => {
+        if (state.activeBattle || checkWinner()) {
+          finishWorldTurn();
+          return;
+        }
+        const move = chooseWorldMove(lastOwner);
+        const attackChance = clamp(82 + state.tension / 6, 84, 96);
+        if (move && rand(1, 100) <= attackChance) {
+          const started = applyBattleResult(move.owner, move.target.id, false, () => {
+            runWorldBattleWave(remaining - 1, move.owner);
+          });
+          if (!started) runWorldBattleWave(remaining - 1, lastOwner);
+          return;
+        }
+        rebuildWorldOwner();
+        runWorldBattleWave(remaining - 1, lastOwner);
+      }, WORLD_MOVE_DELAY_MS);
     }
 
     function runWorldTurn() {
-      if (state.activeBattle || checkWinner()) return;
-      setTimeout(() => {
-        if (state.activeBattle || checkWinner()) return;
-        state.regions.forEach((region) => {
-          region.peace = Math.max(0, region.peace - 1);
-        });
-        const possible = livingOwners()
-          .filter((owner) => owner !== state.playerId)
-          .flatMap((owner) => attackableTargets(owner).map((target) => ({ owner, target })));
-        const chance = clamp(34 + state.tension / 2, 40, 82);
-        if (possible.length && rand(1, 100) <= chance) {
-          const move = possible[rand(0, possible.length - 1)];
-          applyBattleResult(move.owner, move.target.id, false);
-        } else {
-          const owners = livingOwners();
-          const owner = owners[rand(0, owners.length - 1)];
-          ownedRegions(owner).forEach((region) => {
-            region.army = clamp(region.army + rand(2, 7), 8, 220);
-            region.supply = clamp(region.supply + rand(1, 4), 20, 99);
-          });
-          state.tension = clamp(state.tension + rand(-5, 4), 0, 100);
-          log(`${ownerStats(owner).name} rebuilt forces instead of attacking.`);
-          render();
-        }
-      }, 650);
+      if (state.activeBattle || state.worldTurn || checkWinner()) return;
+      state.worldTurn = true;
+      state.regions.forEach((region) => {
+        region.peace = Math.max(0, region.peace - 1);
+      });
+      const attacks = worldAttackCount();
+      if (!attacks) {
+        finishWorldTurn();
+        return;
+      }
+      log(`World powers are moving. Up to ${attacks} border wars may break out.`, "urgent");
+      render();
+      runWorldBattleWave(attacks);
     }
 
     function requestPeace() {
       const selected = getRegion(state.selectedId);
-      if (!selected || selected.owner === state.playerId || state.activeBattle) return;
+      if (!selected || selected.owner === state.playerId || state.activeBattle || state.worldTurn) return;
       const player = ownerStats(state.playerId);
       const rival = ownerStats(selected.owner);
       const chance = clamp(44 + (player.army - rival.army) * 0.18 + (100 - state.tension) * 0.22, 12, 78);
@@ -1356,7 +1441,7 @@
     }
 
     function takeRisk() {
-      if (state.activeBattle) return;
+      if (state.activeBattle || state.worldTurn) return;
       const type = els.decisionSelect.value;
       const playerRegions = ownedRegions(state.playerId);
       state.turn += 1;
@@ -1438,6 +1523,8 @@
         els.winnerTitle.textContent = owners[0] === state.playerId ? "You Took the World" : `${winner.name} Took the World`;
         els.winnerText.textContent = `${winner.name} controls all ${state.regions.length} territories after ${state.turn} turns with ${winner.defeated} defeated territories.`;
         els.winnerPanel.classList.add("is-visible");
+        state.activeBattle = false;
+        state.worldTurn = false;
         state.started = false;
         return true;
       }
@@ -1526,6 +1613,7 @@
     });
 
     els.attackButton.addEventListener("click", () => {
+      if (state.activeBattle || state.worldTurn) return;
       if (!canAttack(state.playerId, state.selectedId)) return;
       applyBattleResult(state.playerId, state.selectedId, true);
     });
