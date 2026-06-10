@@ -6,7 +6,7 @@
 - Do not use `guess/index.html` for Daphne's dinner question work.
 
 ## Difficulty rule
-- Daphne starts from dinner level 3 unless saved browser state says otherwise.
+- Daphne starts from dinner level 4 unless saved browser state says otherwise.
 - `Got it right first try` raises the next level by 1.
 - `Needed a hint, then got it` keeps the next level the same.
 - `Really struggled` lowers the next level by 1.
@@ -24,5 +24,5 @@
 - This markdown file is for automation guidance only; it does not auto-update from the browser.
 
 ## Current baseline for automation
-- Assume dinner level 3 unless a newer committed note in this file says otherwise.
+- Assume dinner level 4 unless a newer committed note in this file says otherwise.
 - If a future automation writes a manual level update here, trust that note before generating the next prompts.

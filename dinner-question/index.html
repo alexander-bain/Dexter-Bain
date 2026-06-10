@@ -530,7 +530,7 @@
       const STORAGE_KEY = "daphne-dinner-question-v2";
       const MIN_LEVEL = 1;
       const MAX_LEVEL = 5;
-      const DEFAULT_LEVEL = 3;
+      const DEFAULT_LEVEL = 4;
       const WHEEL_SPIN_MS = 3400;
       const WHEEL_VISUAL_OFFSET_DEG = 90;
       const ANSWER_OUTCOMES = new Set(["right", "hint", "wrong"]);
@@ -552,38 +552,38 @@
         wrong: { delta: -1, note: "No problem. Next dinner question will be a little easier." },
       };
       const NUMBER_PROBLEMS = [
-        { level: 1, text: "32 + 15 = ?", answer: "47" },
-        { level: 1, text: "67 - 20 = ?", answer: "47" },
-        { level: 1, text: "12 + 32 = ?", answer: "44" },
-        { level: 2, text: "25 + 42 = ?", answer: "67" },
-        { level: 2, text: "32 + 18 = ?", answer: "50" },
-        { level: 2, text: "81 - 14 = ?", answer: "67" },
-        { level: 3, text: "67 - 24 + 6 = ?", answer: "49" },
-        { level: 3, text: "58 - 24 + 13 = ?", answer: "47" },
-        { level: 3, text: "67 - 26 + 8 = ?", answer: "49" },
-        { level: 4, text: "86 - 19 = ?", answer: "67" },
-        { level: 4, text: "32 + 47 = ?", answer: "79" },
-        { level: 4, text: "58 + 32 = ?", answer: "90" },
-        { level: 5, text: "125 - 58 = ?", answer: "67" },
-        { level: 5, text: "32 + 49 + 18 = ?", answer: "99" },
-        { level: 5, text: "67 + 24 - 9 = ?", answer: "82" },
+        { level: 1, text: "27 + 18 = ?", answer: "45" },
+        { level: 1, text: "54 - 17 = ?", answer: "37" },
+        { level: 1, text: "6 x 7 = ?", answer: "42" },
+        { level: 2, text: "43 + 28 = ?", answer: "71" },
+        { level: 2, text: "84 - 29 = ?", answer: "55" },
+        { level: 2, text: "9 x 6 = ?", answer: "54" },
+        { level: 3, text: "67 - 18 + 14 = ?", answer: "63" },
+        { level: 3, text: "32 + 27 + 19 = ?", answer: "78" },
+        { level: 3, text: "96 / 12 + 35 = ?", answer: "43" },
+        { level: 4, text: "14 x 6 - 17 = ?", answer: "67" },
+        { level: 4, text: "32 x 3 - 11 = ?", answer: "85" },
+        { level: 4, text: "144 / 12 + 29 = ?", answer: "41" },
+        { level: 5, text: "(18 x 5) - 23 = ?", answer: "67" },
+        { level: 5, text: "32 x 4 + 19 = ?", answer: "147" },
+        { level: 5, text: "175 - 48 + 26 = ?", answer: "153" },
       ];
       const WORD_PROBLEMS = [
-        { level: 1, text: "Daphne has 32 grapes and eats 5. How many grapes are left?", answer: "27 grapes" },
-        { level: 1, text: "There are 12 fries on each of 2 plates. How many fries is that total?", answer: "24 fries" },
-        { level: 1, text: "Daphne has 9 cookies and gets 32 more. How many cookies does she have?", answer: "41 cookies" },
-        { level: 2, text: "A basket has 32 strawberries. Daphne shares 10. How many are left?", answer: "22 strawberries" },
-        { level: 2, text: "Three friends split 27 nuggets equally. How many nuggets does each person get?", answer: "9 nuggets" },
-        { level: 2, text: "Daphne stacks 25 pancakes and adds 42 more. How many pancakes are there?", answer: "67 pancakes" },
-        { level: 3, text: "Daphne puts 32 orange slices into 4 bowls equally. Then she adds 3 more slices to each bowl. How many orange slices are there now?", answer: "44 orange slices" },
-        { level: 3, text: "Daphne sets out 32 carrot sticks and fills 4 cups with 6 sticks each. How many carrot sticks are left?", answer: "8 carrot sticks" },
-        { level: 3, text: "Daphne puts 5 apple slices on each of 6 plates, then adds 2 more slices to each plate. How many apple slices are on the plates now?", answer: "42 apple slices" },
-        { level: 4, text: "Four friends each get 16 mozzarella sticks. How many sticks did they get total?", answer: "64 mozzarella sticks" },
-        { level: 4, text: "Daphne bakes 67 cookies and packs them into bags of 10. How many full bags can she make?", answer: "6 full bags" },
-        { level: 4, text: "A cart has 32 juice boxes on each of 3 shelves. How many juice boxes are there?", answer: "96 juice boxes" },
-        { level: 5, text: "Daphne has 32 cupcakes in each of 3 boxes, then buys 7 more. How many cupcakes does she have?", answer: "103 cupcakes" },
-        { level: 5, text: "A tray holds 67 wings. Another tray has 24. Then 9 wings get eaten. How many remain?", answer: "82 wings" },
-        { level: 5, text: "Daphne pours 48 drinks and then makes 19 more. How many drinks did she make total?", answer: "67 drinks" },
+        { level: 1, text: "Daphne has 18 grapes and gets 14 more. How many grapes does she have now?", answer: "32 grapes" },
+        { level: 1, text: "There are 7 fries on each of 5 plates. How many fries is that total?", answer: "35 fries" },
+        { level: 1, text: "Daphne has 46 crackers and eats 9. How many crackers are left?", answer: "37 crackers" },
+        { level: 2, text: "A basket has 54 strawberries. Daphne shares 18. How many are left?", answer: "36 strawberries" },
+        { level: 2, text: "Three friends each get 8 nuggets. How many nuggets do they get altogether?", answer: "24 nuggets" },
+        { level: 2, text: "Daphne stacks 32 pancakes into 4 equal piles. How many pancakes are in each pile?", answer: "8 pancakes" },
+        { level: 3, text: "Daphne puts 32 orange slices into 4 bowls equally, then adds 5 more slices to each bowl. How many orange slices are there now?", answer: "52 orange slices" },
+        { level: 3, text: "A table has 67 fries. Daphne and Dexter eat 12 each. How many fries are left?", answer: "43 fries" },
+        { level: 3, text: "Daphne fills 6 cups with 8 carrot sticks each, then adds 2 more sticks to every cup. How many carrot sticks are there now?", answer: "60 carrot sticks" },
+        { level: 4, text: "Four friends each get 18 mozzarella sticks, and then 5 extra sticks are added to the table. How many sticks are there total?", answer: "77 mozzarella sticks" },
+        { level: 4, text: "Daphne bakes 67 cookies and then bakes 24 more. She packs 7 cookies into each bag. How many full bags can she make?", answer: "13 full bags" },
+        { level: 4, text: "A cart has 32 juice boxes on each of 4 shelves, and 6 more juice boxes on top. How many juice boxes are there?", answer: "134 juice boxes" },
+        { level: 5, text: "Daphne has 32 cupcakes in each of 4 boxes, then buys 19 more. How many cupcakes does she have?", answer: "147 cupcakes" },
+        { level: 5, text: "A tray holds 67 wings. Another tray has 38. Then 24 wings get eaten. How many remain?", answer: "81 wings" },
+        { level: 5, text: "Daphne pours 18 drinks for each of 5 tables and then makes 9 more drinks. How many drinks did she make total?", answer: "99 drinks" },
       ];
 
       const wheelFrame = document.querySelector("#wheelFrame");
