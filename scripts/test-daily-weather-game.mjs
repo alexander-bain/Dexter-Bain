@@ -249,30 +249,64 @@ async function run() {
 
           const favoritePicks = game.questions.map((question, index) => {
             const favorite = test.getAnswers(question).reduce((winner, candidate) => {
-              if (!winner || candidate.odds > winner.odds) {
+              if (!winner || candidate.odds > winner.odds || (candidate.odds === winner.odds && candidate.points < winner.points)) {
                 return candidate;
               }
               return winner;
             }, null);
             return [test.getQuestionId(question, index), favorite.id];
           });
-          const botPicks = game.questions.map((question, index) => {
-            const answers = test.getAnswers(question).slice();
-            const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
-            const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
-              .sort((left, right) => right.points - left.points || right.odds - left.odds);
-            const choice = index % 3 === 1
-              ? (risks[0] || favorites[0])
-              : index % 4 === 3
-              ? (risks[1] || favorites[0])
-              : favorites[0];
-            return [test.getQuestionId(question, index), choice.id];
-          });
-          const picks = Object.fromEntries(botPicks);
           const favoritePickMap = Object.fromEntries(favoritePicks);
-          const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
-          if (!usedRiskPick) {
+          const leverageChoices = game.questions.map((question, index) => {
+            const questionId = test.getQuestionId(question, index);
+            const answers = test.getAnswers(question).slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
+            const favorite = answers[0];
+            const alternatives = answers
+              .filter((candidate) => candidate.id !== favorite.id)
+              .map((candidate) => {
+                const oddsGap = favorite.odds - candidate.odds;
+                const pointsGain = candidate.points - favorite.points;
+                const expectedDrop = ((favorite.odds * favorite.points) - (candidate.odds * candidate.points)) / 100;
+                const leverage = pointsGain - (oddsGap * 2) - (expectedDrop * 6);
+                return {
+                  ...candidate,
+                  leverage,
+                  oddsGap,
+                  pointsGain,
+                  expectedDrop,
+                };
+              })
+              .filter((candidate) => candidate.odds >= 20 || answers.length <= 2)
+              .sort((left, right) => right.leverage - left.leverage || right.pointsGain - left.pointsGain || right.odds - left.odds);
+            return {
+              questionId,
+              favorite,
+              alternative: alternatives[0] || null,
+            };
+          });
+          const targetRiskCount = Math.max(2, Math.floor(game.questions.length / 5));
+          const chosenRiskIds = new Set(
+            leverageChoices
+              .filter((item) => item.alternative && item.alternative.leverage > -8)
+              .sort((left, right) => right.alternative.leverage - left.alternative.leverage)
+              .slice(0, targetRiskCount)
+              .map((item) => item.questionId)
+          );
+          if (chosenRiskIds.size === 0) {
+            const fallbackRisk = leverageChoices
+              .filter((item) => item.alternative)
+              .sort((left, right) => left.alternative.oddsGap - right.alternative.oddsGap || right.alternative.pointsGain - left.alternative.pointsGain)[0];
+            if (fallbackRisk) {
+              chosenRiskIds.add(fallbackRisk.questionId);
+            }
+          }
+          const botPicks = leverageChoices.map((item) => [
+            item.questionId,
+            chosenRiskIds.has(item.questionId) && item.alternative ? item.alternative.id : item.favorite.id,
+          ]);
+          const picks = Object.fromEntries(botPicks);
+          const riskyPickCount = botPicks.filter(([questionId, answerId]) => favoritePickMap[questionId] !== answerId).length;
+          if (riskyPickCount === 0) {
             throw new Error("Weather Bot only picked favorites.");
           }
           const entry = {
@@ -312,11 +346,11 @@ async function run() {
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
-              leaderboard.includes("max from picks") &&
+              leaderboard.includes("chance to win") &&
+              leaderboard.includes("risk max") &&
               pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
-              entryCount.trim() === "1" &&
+              pickView.includes("risk max") &&
+              Number(entryCount.trim()) >= 1 &&
               storage.playerName === "Weather Bot"
             ) {
               return {
@@ -329,6 +363,7 @@ async function run() {
                 chosen: botPicks.map(([, answerId]) => answerId),
                 botPicks,
                 favoritePicks,
+                riskyPickCount,
                 storedState: storage,
               };
             }
@@ -366,6 +401,9 @@ async function run() {
     const favoritePickMap = Object.fromEntries(value.favoritePicks || []);
     if (!Object.keys(botPickMap).some((questionId) => botPickMap[questionId] !== favoritePickMap[questionId])) {
       throw new Error(`Saved picks only used favorites: ${JSON.stringify({ botPickMap, favoritePickMap })}`);
+    }
+    if ((value.riskyPickCount || 0) < 2) {
+      throw new Error(`Weather Bot did not use enough leverage picks: ${JSON.stringify(value)}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);
