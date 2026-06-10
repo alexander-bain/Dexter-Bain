@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>World Command</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070b10;
+      --ink: #f7fbff;
+      --muted: #aab8c8;
+      --line: rgba(255, 255, 255, 0.14);
+      --panel: rgba(12, 18, 27, 0.88);
+      --panel-strong: rgba(7, 11, 16, 0.95);
+      --water: #10263d;
+      --land: #263443;
+      --good: #75e6a1;
+      --warn: #ffd166;
+      --bad: #ff6b6b;
+      --blue: #68a9ff;
+      --cyan: #4ed7d0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(180deg, rgba(7, 11, 16, 0.12), rgba(7, 11, 16, 0.92)),
+        radial-gradient(circle at 18% 14%, rgba(104, 169, 255, 0.28), transparent 26%),
+        radial-gradient(circle at 86% 20%, rgba(117, 230, 161, 0.16), transparent 22%),
+        linear-gradient(135deg, #101925, #070b10 56%, #0b1118);
+      color: var(--ink);
+    }
+
+    button,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px clamp(14px, 3vw, 28px);
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 11, 16, 0.78);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(104, 169, 255, 0.32), rgba(117, 230, 161, 0.18));
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.25rem, 3vw, 1.9rem);
+      line-height: 1;
+    }
+
+    .subtitle {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .arcade-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.06);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .game {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) minmax(300px, 420px);
+      gap: 16px;
+      padding: clamp(12px, 2vw, 20px);
+      min-height: 0;
+    }
+
+    .map-panel,
+    .side-panel,
+    .start-panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.28);
+    }
+
+    .map-panel {
+      position: relative;
+      overflow: hidden;
+      min-height: 590px;
+      background:
+        linear-gradient(rgba(16, 38, 61, 0.86), rgba(16, 38, 61, 0.9)),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 62px),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 72px);
+    }
+
+    .map-head {
+      position: absolute;
+      inset: 14px 14px auto;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .meter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .meter {
+      min-height: 34px;
+      padding: 7px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 8px;
+      background: rgba(7, 11, 16, 0.66);
+      color: #dfe8f3;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .meter strong {
+      color: var(--ink);
+    }
+
+    .world-map {
+      width: 100%;
+      height: 100%;
+      min-height: 590px;
+      display: block;
+    }
+
+    .region {
+      stroke: rgba(255, 255, 255, 0.74);
+      stroke-width: 1.6;
+      vector-effect: non-scaling-stroke;
+      filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.22));
+      transition: opacity 0.18s ease, filter 0.18s ease, transform 0.18s ease;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    .region:hover,
+    .region.is-selected {
+      filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.42));
+      transform: translateY(-1px);
+    }
+
+    .region.is-player {
+      stroke: #ffffff;
+      stroke-width: 2.4;
+    }
+
+    .region.is-targetable {
+      stroke: var(--warn);
+      stroke-width: 2.4;
+    }
+
+    .region.is-fighting {
+      animation: flashRegion 0.56s ease-in-out 3;
+    }
+
+    .region-label {
+      fill: #f8fbff;
+      paint-order: stroke;
+      stroke: rgba(4, 8, 13, 0.9);
+      stroke-width: 4px;
+      stroke-linejoin: round;
+      font-size: 12px;
+      font-weight: 900;
+      pointer-events: none;
+    }
+
+    .army-label {
+      fill: #d7e4f5;
+      paint-order: stroke;
+      stroke: rgba(4, 8, 13, 0.9);
+      stroke-width: 3px;
+      font-size: 10px;
+      font-weight: 800;
+      pointer-events: none;
+    }
+
+    .battle-line {
+      fill: none;
+      stroke: #ffe08a;
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-dasharray: 12 10;
+      filter: drop-shadow(0 0 8px rgba(255, 209, 102, 0.8));
+      animation: march 0.62s linear infinite;
+    }
+
+    .battle-dot {
+      fill: #fff2b8;
+      filter: drop-shadow(0 0 12px rgba(255, 209, 102, 0.95));
+      animation: pulseDot 0.72s ease-in-out infinite;
+    }
+
+    .start-panel {
+      position: absolute;
+      inset: 70px auto auto 50%;
+      z-index: 8;
+      width: min(720px, calc(100% - 28px));
+      transform: translateX(-50%);
+      padding: clamp(16px, 3vw, 24px);
+      background: rgba(7, 11, 16, 0.94);
+    }
+
+    .start-panel.is-hidden {
+      display: none;
+    }
+
+    .start-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .start-choice {
+      display: grid;
+      gap: 4px;
+      min-height: 92px;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--ink);
+      text-align: left;
+    }
+
+    .start-choice.is-picked {
+      border-color: #ffffff;
+      background: rgba(104, 169, 255, 0.22);
+    }
+
+    .start-choice strong {
+      font-size: 1rem;
+    }
+
+    .start-choice span {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .side-panel {
+      display: grid;
+      grid-template-rows: auto auto auto 1fr;
+      min-height: 590px;
+      overflow: hidden;
+    }
+
+    .panel-section {
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-section:last-child {
+      border-bottom: none;
+      min-height: 0;
+    }
+
+    .selected-title {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    h2,
+    h3 {
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+    }
+
+    h3 {
+      font-size: 0.92rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #d5e3f4;
+    }
+
+    .owner-pill {
+      flex: 0 0 auto;
+      padding: 5px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.07);
+      color: #dce9f7;
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .stat {
+      min-height: 64px;
+      padding: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.055);
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      font-weight: 800;
+    }
+
+    .stat strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 1.05rem;
+    }
+
+    .actions {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .btn {
+      min-height: 42px;
+      padding: 9px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--ink);
+      font-weight: 900;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, #75e6a1, #4ed7d0);
+      color: #03110d;
+      border-color: transparent;
+    }
+
+    .btn.warn {
+      background: linear-gradient(135deg, #ffd166, #ff9f43);
+      color: #201100;
+      border-color: transparent;
+    }
+
+    .btn.danger {
+      background: linear-gradient(135deg, #ff7b72, #ff4d6d);
+      color: #210507;
+      border-color: transparent;
+    }
+
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.48;
+    }
+
+    .decision {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .decision select {
+      width: 100%;
+      min-height: 40px;
+      padding: 7px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      background: #111a25;
+      color: var(--ink);
+    }
+
+    .bar-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 42px;
+      gap: 8px;
+      align-items: center;
+      color: #d8e5f5;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .bar-track {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue), var(--good));
+    }
+
+    .log {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      max-height: 100%;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .log-entry {
+      padding: 9px 10px;
+      border-left: 3px solid rgba(104, 169, 255, 0.78);
+      background: rgba(255, 255, 255, 0.055);
+      border-radius: 0 8px 8px 0;
+      color: #dbe7f5;
+      font-size: 0.84rem;
+      line-height: 1.35;
+    }
+
+    .log-entry.urgent {
+      border-left-color: var(--bad);
+    }
+
+    .log-entry.good {
+      border-left-color: var(--good);
+    }
+
+    .winner {
+      position: absolute;
+      inset: 0;
+      z-index: 12;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(4, 8, 13, 0.82);
+      backdrop-filter: blur(10px);
+    }
+
+    .winner.is-visible {
+      display: grid;
+    }
+
+    .winner-box {
+      width: min(560px, 100%);
+      padding: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      background: #0b1118;
+      text-align: center;
+    }
+
+    .winner-box p {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    @keyframes flashRegion {
+      50% {
+        filter: drop-shadow(0 0 22px rgba(255, 209, 102, 0.85));
+      }
+    }
+
+    @keyframes march {
+      to {
+        stroke-dashoffset: -44;
+      }
+    }
+
+    @keyframes pulseDot {
+      50% {
+        r: 8;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .game {
+        grid-template-columns: 1fr;
+      }
+
+      .side-panel {
+        min-height: 520px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .arcade-link {
+        width: 100%;
+      }
+
+      .map-panel,
+      .world-map {
+        min-height: 500px;
+      }
+
+      .map-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .start-grid,
+      .stats,
+      .button-row,
+      .decision {
+        grid-template-columns: 1fr;
+      }
+
+      .bar-row {
+        grid-template-columns: 72px 1fr 36px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">WC</div>
+        <div>
+          <h1>World Command</h1>
+          <p class="subtitle">Control a region, take risks, and try to unite the map.</p>
+        </div>
+      </div>
+      <a class="arcade-link" href="../index.html">Back to Arcade</a>
+    </header>
+
+    <main class="game">
+      <section class="map-panel" aria-label="World command map">
+        <div class="map-head">
+          <div class="meter-row">
+            <div class="meter">Turn <strong id="turnMeter">1</strong></div>
+            <div class="meter">Controlled <strong id="controlMeter">1 / 15</strong></div>
+            <div class="meter">World tension <strong id="tensionMeter">32%</strong></div>
+          </div>
+        </div>
+
+        <svg class="world-map" viewBox="0 0 1000 610" role="img" aria-label="Clickable strategy map">
+          <rect x="0" y="0" width="1000" height="610" fill="var(--water)"></rect>
+          <path d="M120 118 C150 84 213 76 272 96 L313 129 L303 191 L250 222 L189 211 L141 178 Z" class="region" data-id="canada"></path>
+          <path d="M126 228 L300 214 L336 265 L319 329 L254 359 L171 333 L112 284 Z" class="region" data-id="usa"></path>
+          <path d="M286 360 L370 389 L410 462 L380 552 L312 568 L270 500 L242 418 Z" class="region" data-id="brazil"></path>
+          <path d="M426 185 L500 165 L548 204 L537 254 L457 260 L410 228 Z" class="region" data-id="western-europe"></path>
+          <path d="M540 168 L617 154 L672 198 L650 260 L570 262 L535 220 Z" class="region" data-id="eastern-europe"></path>
+          <path d="M650 112 L858 94 L920 151 L902 225 L800 252 L674 230 L620 174 Z" class="region" data-id="russia"></path>
+          <path d="M432 286 L544 270 L598 332 L556 402 L444 393 L392 334 Z" class="region" data-id="north-africa"></path>
+          <path d="M579 281 L672 264 L733 318 L697 383 L611 384 L558 332 Z" class="region" data-id="middle-east"></path>
+          <path d="M446 413 L572 416 L626 497 L574 578 L477 548 L412 480 Z" class="region" data-id="sub-saharan-africa"></path>
+          <path d="M592 417 L667 410 L710 486 L671 571 L596 548 L565 491 Z" class="region" data-id="southern-africa"></path>
+          <path d="M715 272 L783 263 L830 322 L797 395 L725 381 L690 327 Z" class="region" data-id="india"></path>
+          <path d="M806 235 L900 236 L944 304 L904 375 L815 366 L785 300 Z" class="region" data-id="china"></path>
+          <path d="M827 386 L912 391 L954 460 L918 523 L838 514 L798 452 Z" class="region" data-id="southeast-asia"></path>
+          <path d="M914 216 L963 242 L956 311 L910 300 L892 253 Z" class="region" data-id="japan-korea"></path>
+          <path d="M792 500 L928 510 L952 572 L874 595 L770 565 Z" class="region" data-id="australia"></path>
+          <g id="battleLayer"></g>
+          <g id="labelLayer"></g>
+        </svg>
+
+        <div class="start-panel" id="startPanel">
+          <h2>Pick Your Command</h2>
+          <p class="subtitle">Every region starts with a different army, supply, morale, and diplomatic position.</p>
+          <div class="start-grid" id="startGrid"></div>
+          <button class="btn primary" id="startButton" type="button">Start Campaign</button>
+        </div>
+
+        <div class="winner" id="winnerPanel">
+          <div class="winner-box">
+            <h2 id="winnerTitle">World Unified</h2>
+            <p id="winnerText"></p>
+            <button class="btn primary" id="restartButton" type="button">Play Again</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side-panel" aria-label="Command controls">
+        <section class="panel-section">
+          <div class="selected-title">
+            <div>
+              <h2 id="selectedName">Choose a region</h2>
+              <p class="subtitle" id="selectedNote">Click a territory to inspect army strength and history.</p>
+            </div>
+            <span class="owner-pill" id="ownerPill">Neutral</span>
+          </div>
+          <div class="stats">
+            <div class="stat"><span>Army</span><strong id="statArmy">-</strong></div>
+            <div class="stat"><span>Territories</span><strong id="statLand">-</strong></div>
+            <div class="stat"><span>Defeated</span><strong id="statKills">-</strong></div>
+            <div class="stat"><span>Morale</span><strong id="statMorale">-</strong></div>
+          </div>
+          <div class="actions">
+            <div class="button-row">
+              <button class="btn danger" id="attackButton" type="button" disabled>Launch Attack</button>
+              <button class="btn" id="peaceButton" type="button" disabled>Request Peace</button>
+            </div>
+            <div class="decision">
+              <select id="decisionSelect" aria-label="Risky decision">
+                <option value="draft">Emergency draft</option>
+                <option value="raid">Supply raid</option>
+                <option value="alliance">Secret alliance</option>
+                <option value="fortify">Fortify borders</option>
+              </select>
+              <button class="btn warn" id="decisionButton" type="button" disabled>Take Risk</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <h3>Power Balance</h3>
+          <div class="bar-list" id="powerBars"></div>
+        </section>
+
+        <section class="panel-section">
+          <h3>Command Tip</h3>
+          <p class="subtitle" id="tipText">Smaller armies can win. If they do, they earn larger army, morale, and tech rewards.</p>
+        </section>
+
+        <section class="panel-section">
+          <h3>War Room</h3>
+          <div class="log" id="log"></div>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    const baseRegions = [
+      { id: "canada", name: "Canada", army: 60, morale: 68, supply: 78, tech: 58, color: "#7fc8f8", center: [220, 152], neighbors: ["usa", "russia", "western-europe"] },
+      { id: "usa", name: "USA", army: 96, morale: 72, supply: 88, tech: 76, color: "#68a9ff", center: [221, 286], neighbors: ["canada", "brazil", "western-europe"] },
+      { id: "brazil", name: "Brazil", army: 74, morale: 75, supply: 66, tech: 52, color: "#60d394", center: [333, 466], neighbors: ["usa", "north-africa", "sub-saharan-africa"] },
+      { id: "western-europe", name: "Western Europe", army: 82, morale: 69, supply: 80, tech: 72, color: "#ffd166", center: [479, 218], neighbors: ["canada", "usa", "eastern-europe", "north-africa"] },
+      { id: "eastern-europe", name: "Eastern Europe", army: 70, morale: 65, supply: 68, tech: 61, color: "#f4a261", center: [600, 213], neighbors: ["western-europe", "russia", "middle-east", "north-africa"] },
+      { id: "russia", name: "Russia", army: 104, morale: 61, supply: 63, tech: 67, color: "#b8c0ff", center: [772, 173], neighbors: ["canada", "eastern-europe", "china", "japan-korea", "middle-east"] },
+      { id: "north-africa", name: "North Africa", army: 62, morale: 71, supply: 61, tech: 48, color: "#e9c46a", center: [498, 340], neighbors: ["western-europe", "eastern-europe", "middle-east", "sub-saharan-africa", "brazil"] },
+      { id: "middle-east", name: "Middle East", army: 66, morale: 76, supply: 58, tech: 55, color: "#ffb703", center: [641, 325], neighbors: ["eastern-europe", "russia", "north-africa", "india", "sub-saharan-africa"] },
+      { id: "sub-saharan-africa", name: "Sub-Saharan Africa", army: 72, morale: 78, supply: 57, tech: 46, color: "#90be6d", center: [519, 490], neighbors: ["north-africa", "middle-east", "southern-africa", "brazil"] },
+      { id: "southern-africa", name: "Southern Africa", army: 48, morale: 73, supply: 64, tech: 50, color: "#43aa8b", center: [636, 493], neighbors: ["sub-saharan-africa", "india", "australia"] },
+      { id: "india", name: "India", army: 90, morale: 80, supply: 70, tech: 62, color: "#ef476f", center: [761, 326], neighbors: ["middle-east", "china", "southeast-asia", "southern-africa"] },
+      { id: "china", name: "China", army: 112, morale: 70, supply: 78, tech: 72, color: "#f94144", center: [866, 307], neighbors: ["russia", "india", "southeast-asia", "japan-korea"] },
+      { id: "southeast-asia", name: "Southeast Asia", army: 68, morale: 77, supply: 62, tech: 57, color: "#4ecdc4", center: [875, 455], neighbors: ["india", "china", "japan-korea", "australia"] },
+      { id: "japan-korea", name: "Japan-Korea", army: 58, morale: 74, supply: 75, tech: 78, color: "#c77dff", center: [925, 265], neighbors: ["russia", "china", "southeast-asia"] },
+      { id: "australia", name: "Australia", army: 52, morale: 72, supply: 82, tech: 65, color: "#f77f00", center: [858, 549], neighbors: ["southeast-asia", "southern-africa"] }
+    ];
+
+    const state = {
+      regions: [],
+      selectedId: null,
+      playerId: null,
+      turn: 1,
+      tension: 32,
+      activeBattle: false,
+      started: false
+    };
+
+    const els = {
+      startPanel: document.querySelector("#startPanel"),
+      startGrid: document.querySelector("#startGrid"),
+      startButton: document.querySelector("#startButton"),
+      restartButton: document.querySelector("#restartButton"),
+      winnerPanel: document.querySelector("#winnerPanel"),
+      winnerTitle: document.querySelector("#winnerTitle"),
+      winnerText: document.querySelector("#winnerText"),
+      turnMeter: document.querySelector("#turnMeter"),
+      controlMeter: document.querySelector("#controlMeter"),
+      tensionMeter: document.querySelector("#tensionMeter"),
+      selectedName: document.querySelector("#selectedName"),
+      selectedNote: document.querySelector("#selectedNote"),
+      ownerPill: document.querySelector("#ownerPill"),
+      statArmy: document.querySelector("#statArmy"),
+      statLand: document.querySelector("#statLand"),
+      statKills: document.querySelector("#statKills"),
+      statMorale: document.querySelector("#statMorale"),
+      attackButton: document.querySelector("#attackButton"),
+      peaceButton: document.querySelector("#peaceButton"),
+      decisionSelect: document.querySelector("#decisionSelect"),
+      decisionButton: document.querySelector("#decisionButton"),
+      powerBars: document.querySelector("#powerBars"),
+      tipText: document.querySelector("#tipText"),
+      log: document.querySelector("#log"),
+      battleLayer: document.querySelector("#battleLayer"),
+      labelLayer: document.querySelector("#labelLayer")
+    };
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function rand(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function resetGame() {
+      state.regions = baseRegions.map((region) => ({
+        ...region,
+        owner: region.id,
+        land: 1,
+        defeated: 0,
+        shield: 0,
+        peace: 0,
+        eliminated: false
+      }));
+      state.selectedId = "usa";
+      state.playerId = "usa";
+      state.turn = 1;
+      state.tension = 32;
+      state.activeBattle = false;
+      state.started = false;
+      els.winnerPanel.classList.remove("is-visible");
+      els.startPanel.classList.remove("is-hidden");
+      buildStartChoices();
+      render();
+      log("Choose a command region. Smaller starts are harder, but their upset rewards are stronger.", "good");
+    }
+
+    function getRegion(id) {
+      return state.regions.find((region) => region.id === id);
+    }
+
+    function livingOwners() {
+      return [...new Set(state.regions.filter((region) => !region.eliminated).map((region) => region.owner))];
+    }
+
+    function ownedRegions(owner) {
+      return state.regions.filter((region) => !region.eliminated && region.owner === owner);
+    }
+
+    function ownerStats(owner) {
+      const regions = ownedRegions(owner);
+      const capital = getRegion(owner) || regions[0];
+      return {
+        name: capital?.name || "Unknown",
+        army: regions.reduce((sum, region) => sum + region.army, 0),
+        morale: Math.round(regions.reduce((sum, region) => sum + region.morale, 0) / Math.max(1, regions.length)),
+        supply: Math.round(regions.reduce((sum, region) => sum + region.supply, 0) / Math.max(1, regions.length)),
+        tech: Math.round(regions.reduce((sum, region) => sum + region.tech, 0) / Math.max(1, regions.length)),
+        land: regions.length,
+        defeated: regions.reduce((sum, region) => sum + region.defeated, 0)
+      };
+    }
+
+    function canAttack(fromOwner, targetId) {
+      const target = getRegion(targetId);
+      if (!target || target.owner === fromOwner || target.eliminated) return false;
+      if (target.peace > 0) return false;
+      return ownedRegions(fromOwner).some((region) => region.neighbors.includes(targetId));
+    }
+
+    function attackableTargets(owner) {
+      return state.regions.filter((region) => canAttack(owner, region.id));
+    }
+
+    function borderRegionFor(owner, targetId) {
+      return ownedRegions(owner).find((region) => region.neighbors.includes(targetId)) || ownedRegions(owner)[0];
+    }
+
+    function buildStartChoices() {
+      const goodStarts = ["usa", "india", "middle-east", "north-africa", "japan-korea", "brazil"];
+      els.startGrid.innerHTML = "";
+      goodStarts.forEach((id) => {
+        const region = getRegion(id);
+        const button = document.createElement("button");
+        button.className = "start-choice";
+        button.type = "button";
+        button.dataset.id = id;
+        button.innerHTML = `
+          <strong>${region.name}</strong>
+          <span>Army ${region.army}K - morale ${region.morale} - supply ${region.supply}</span>
+          <span>${region.neighbors.length} border options</span>
+        `;
+        button.addEventListener("click", () => {
+          state.playerId = id;
+          state.selectedId = id;
+          document.querySelectorAll(".start-choice").forEach((choice) => choice.classList.toggle("is-picked", choice.dataset.id === id));
+          render();
+        });
+        els.startGrid.append(button);
+      });
+      document.querySelector(`.start-choice[data-id="${state.playerId}"]`)?.classList.add("is-picked");
+    }
+
+    function log(message, tone = "") {
+      const entry = document.createElement("div");
+      entry.className = `log-entry ${tone}`.trim();
+      entry.textContent = message;
+      els.log.prepend(entry);
+      while (els.log.children.length > 12) {
+        els.log.lastElementChild.remove();
+      }
+    }
+
+    function renderLabels() {
+      els.labelLayer.innerHTML = "";
+      state.regions.forEach((region) => {
+        if (region.eliminated) return;
+        const [x, y] = region.center;
+        const stats = ownerStats(region.owner);
+        const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        label.setAttribute("x", x);
+        label.setAttribute("y", y - 5);
+        label.setAttribute("text-anchor", "middle");
+        label.setAttribute("class", "region-label");
+        label.textContent = region.name;
+        const army = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        army.setAttribute("x", x);
+        army.setAttribute("y", y + 13);
+        army.setAttribute("text-anchor", "middle");
+        army.setAttribute("class", "army-label");
+        army.textContent = `${stats.army}K army`;
+        els.labelLayer.append(label, army);
+      });
+    }
+
+    function renderMap() {
+      document.querySelectorAll(".region").forEach((shape) => {
+        const region = getRegion(shape.dataset.id);
+        const owner = getRegion(region.owner);
+        shape.style.fill = owner?.color || region.color;
+        shape.style.opacity = region.eliminated ? "0.2" : "0.92";
+        shape.classList.toggle("is-selected", region.id === state.selectedId);
+        shape.classList.toggle("is-player", region.owner === state.playerId);
+        shape.classList.toggle("is-targetable", state.started && canAttack(state.playerId, region.id));
+      });
+      renderLabels();
+    }
+
+    function renderSelected() {
+      const region = getRegion(state.selectedId) || getRegion(state.playerId);
+      if (!region) return;
+      const stats = ownerStats(region.owner);
+      const isPlayer = region.owner === state.playerId;
+      els.selectedName.textContent = region.name;
+      els.selectedNote.textContent = isPlayer ? "Your command controls this territory." : `${stats.name} controls this territory.`;
+      els.ownerPill.textContent = isPlayer ? "Your command" : stats.name;
+      els.statArmy.textContent = `${stats.army}K`;
+      els.statLand.textContent = stats.land;
+      els.statKills.textContent = stats.defeated;
+      els.statMorale.textContent = `${stats.morale}%`;
+      els.attackButton.disabled = !state.started || state.activeBattle || !canAttack(state.playerId, region.id);
+      els.peaceButton.disabled = !state.started || state.activeBattle || isPlayer;
+      els.decisionButton.disabled = !state.started || state.activeBattle;
+    }
+
+    function renderBars() {
+      const owners = livingOwners()
+        .map((owner) => ({ owner, ...ownerStats(owner) }))
+        .sort((a, b) => b.army - a.army)
+        .slice(0, 8);
+      const maxArmy = Math.max(1, ...owners.map((item) => item.army));
+      els.powerBars.innerHTML = "";
+      owners.forEach((item) => {
+        const row = document.createElement("div");
+        row.className = "bar-row";
+        row.innerHTML = `
+          <span>${item.name}</span>
+          <div class="bar-track"><div class="bar-fill" style="width:${Math.max(8, (item.army / maxArmy) * 100)}%"></div></div>
+          <span>${item.army}K</span>
+        `;
+        els.powerBars.append(row);
+      });
+    }
+
+    function renderMeters() {
+      els.turnMeter.textContent = state.turn;
+      els.controlMeter.textContent = `${ownerStats(state.playerId).land} / ${state.regions.length}`;
+      els.tensionMeter.textContent = `${state.tension}%`;
+    }
+
+    function renderTip() {
+      const targets = attackableTargets(state.playerId);
+      if (!state.started) {
+        els.tipText.textContent = "Pick a region to begin. Big armies are safer; smaller armies get richer upset rewards.";
+        return;
+      }
+      if (!targets.length) {
+        els.tipText.textContent = "You have no border enemies right now. Use risky decisions to grow, then wait for the world to shift.";
+        return;
+      }
+      const weakest = targets.slice().sort((a, b) => ownerStats(a.owner).army - ownerStats(b.owner).army)[0];
+      const strongest = targets.slice().sort((a, b) => ownerStats(b.owner).army - ownerStats(a.owner).army)[0];
+      els.tipText.textContent = `Safest target: ${weakest.name}. Biggest upset reward: ${strongest.name}.`;
+    }
+
+    function render() {
+      renderMap();
+      renderSelected();
+      renderBars();
+      renderMeters();
+      renderTip();
+    }
+
+    function battleOdds(attackerOwner, defenderOwner) {
+      const attacker = ownerStats(attackerOwner);
+      const defender = ownerStats(defenderOwner);
+      const attackPower = attacker.army * 0.62 + attacker.morale * 0.55 + attacker.supply * 0.35 + attacker.tech * 0.45 + rand(-12, 16);
+      const defensePower = defender.army * 0.66 + defender.morale * 0.52 + defender.supply * 0.38 + defender.tech * 0.4 + rand(-10, 14);
+      return { attacker, defender, attackPower, defensePower };
+    }
+
+    function animateBattle(fromRegion, toRegion) {
+      els.battleLayer.innerHTML = "";
+      const [x1, y1] = fromRegion.center;
+      const [x2, y2] = toRegion.center;
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      const midX = (x1 + x2) / 2;
+      const midY = Math.min(y1, y2) - 42;
+      path.setAttribute("d", `M ${x1} ${y1} Q ${midX} ${midY} ${x2} ${y2}`);
+      path.setAttribute("class", "battle-line");
+      const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      dot.setAttribute("cx", x2);
+      dot.setAttribute("cy", y2);
+      dot.setAttribute("r", "5");
+      dot.setAttribute("class", "battle-dot");
+      els.battleLayer.append(path, dot);
+      fromRegion.shape?.classList?.add("is-fighting");
+      toRegion.shape?.classList?.add("is-fighting");
+      document.querySelector(`.region[data-id="${fromRegion.id}"]`)?.classList.add("is-fighting");
+      document.querySelector(`.region[data-id="${toRegion.id}"]`)?.classList.add("is-fighting");
+    }
+
+    function stopBattleAnimation() {
+      els.battleLayer.innerHTML = "";
+      document.querySelectorAll(".region").forEach((shape) => shape.classList.remove("is-fighting"));
+    }
+
+    function transferTerritory(target, newOwner) {
+      target.owner = newOwner;
+      target.defeated += 1;
+      const winnerTerritories = ownedRegions(newOwner);
+      winnerTerritories.forEach((region) => {
+        region.morale = clamp(region.morale + rand(2, 6), 25, 99);
+        region.supply = clamp(region.supply + rand(1, 4), 20, 99);
+      });
+    }
+
+    function applyBattleResult(attackerOwner, targetId, isPlayerAttack = false) {
+      const target = getRegion(targetId);
+      const origin = borderRegionFor(attackerOwner, targetId);
+      if (!target || !origin || state.activeBattle) return;
+      state.activeBattle = true;
+      animateBattle(origin, target);
+      const defenderOwner = target.owner;
+      const odds = battleOdds(attackerOwner, defenderOwner);
+      const attackerWon = odds.attackPower >= odds.defensePower;
+      const underdog = odds.attacker.army < odds.defender.army;
+      const reward = underdog ? rand(18, 34) : rand(8, 18);
+      const loss = underdog ? rand(4, 12) : rand(9, 20);
+
+      setTimeout(() => {
+        if (attackerWon) {
+          ownedRegions(attackerOwner).forEach((region) => {
+            region.army = clamp(region.army + Math.round(reward / Math.max(1, odds.attacker.land)), 10, 220);
+            region.tech = clamp(region.tech + (underdog ? 3 : 1), 20, 99);
+          });
+          ownedRegions(defenderOwner).forEach((region) => {
+            region.army = clamp(region.army - Math.round(loss / Math.max(1, odds.defender.land)), 8, 220);
+            region.morale = clamp(region.morale - rand(3, 9), 20, 99);
+          });
+          transferTerritory(target, attackerOwner);
+          log(`${odds.attacker.name} captured ${target.name}${underdog ? " in an upset and earned a huge reward" : ""}.`, attackerOwner === state.playerId ? "good" : "urgent");
+        } else {
+          ownedRegions(attackerOwner).forEach((region) => {
+            region.army = clamp(region.army - Math.round(loss / Math.max(1, odds.attacker.land)), 8, 220);
+            region.morale = clamp(region.morale - rand(2, 7), 20, 99);
+          });
+          ownedRegions(defenderOwner).forEach((region) => {
+            region.army = clamp(region.army + Math.round(rand(3, 9) / Math.max(1, odds.defender.land)), 8, 220);
+            region.supply = clamp(region.supply + rand(1, 4), 20, 99);
+          });
+          log(`${odds.attacker.name} failed to take ${target.name}. The defender gained supplies.`, isPlayerAttack ? "urgent" : "");
+        }
+        state.tension = clamp(state.tension + rand(2, 7), 0, 100);
+        state.turn += isPlayerAttack ? 1 : 0;
+        state.activeBattle = false;
+        stopBattleAnimation();
+        render();
+        checkWinner();
+        if (isPlayerAttack) runWorldTurn();
+      }, 900);
+    }
+
+    function runWorldTurn() {
+      if (state.activeBattle || checkWinner()) return;
+      setTimeout(() => {
+        if (state.activeBattle || checkWinner()) return;
+        state.regions.forEach((region) => {
+          region.peace = Math.max(0, region.peace - 1);
+        });
+        const possible = livingOwners()
+          .filter((owner) => owner !== state.playerId)
+          .flatMap((owner) => attackableTargets(owner).map((target) => ({ owner, target })));
+        const chance = clamp(34 + state.tension / 2, 40, 82);
+        if (possible.length && rand(1, 100) <= chance) {
+          const move = possible[rand(0, possible.length - 1)];
+          applyBattleResult(move.owner, move.target.id, false);
+        } else {
+          const owners = livingOwners();
+          const owner = owners[rand(0, owners.length - 1)];
+          ownedRegions(owner).forEach((region) => {
+            region.army = clamp(region.army + rand(2, 7), 8, 220);
+            region.supply = clamp(region.supply + rand(1, 4), 20, 99);
+          });
+          state.tension = clamp(state.tension + rand(-5, 4), 0, 100);
+          log(`${ownerStats(owner).name} rebuilt forces instead of attacking.`);
+          render();
+        }
+      }, 650);
+    }
+
+    function requestPeace() {
+      const selected = getRegion(state.selectedId);
+      if (!selected || selected.owner === state.playerId || state.activeBattle) return;
+      const player = ownerStats(state.playerId);
+      const rival = ownerStats(selected.owner);
+      const chance = clamp(44 + (player.army - rival.army) * 0.18 + (100 - state.tension) * 0.22, 12, 78);
+      state.turn += 1;
+      if (rand(1, 100) <= chance) {
+        ownedRegions(selected.owner).forEach((region) => {
+          region.peace = 2;
+          region.morale = clamp(region.morale - 2, 20, 99);
+        });
+        state.tension = clamp(state.tension - rand(8, 16), 0, 100);
+        log(`${rival.name} accepted a short peace deal. Tension dropped.`, "good");
+      } else {
+        ownedRegions(state.playerId).forEach((region) => {
+          region.morale = clamp(region.morale - rand(2, 6), 20, 99);
+        });
+        state.tension = clamp(state.tension + rand(5, 12), 0, 100);
+        log(`${rival.name} rejected peace. Your command lost morale.`, "urgent");
+      }
+      render();
+      runWorldTurn();
+    }
+
+    function takeRisk() {
+      if (state.activeBattle) return;
+      const type = els.decisionSelect.value;
+      const playerRegions = ownedRegions(state.playerId);
+      state.turn += 1;
+      const roll = rand(1, 100);
+      if (type === "draft") {
+        if (roll <= 72) {
+          playerRegions.forEach((region) => {
+            region.army = clamp(region.army + rand(7, 14), 8, 220);
+            region.morale = clamp(region.morale - rand(3, 7), 20, 99);
+          });
+          log("Emergency draft added soldiers, but morale dipped.", "good");
+        } else {
+          playerRegions.forEach((region) => {
+            region.morale = clamp(region.morale - rand(9, 16), 20, 99);
+          });
+          log("The draft sparked protests. Morale took a hard hit.", "urgent");
+        }
+      }
+      if (type === "raid") {
+        if (roll <= 58) {
+          playerRegions.forEach((region) => {
+            region.supply = clamp(region.supply + rand(10, 18), 20, 99);
+            region.army = clamp(region.army + rand(2, 7), 8, 220);
+          });
+          state.tension = clamp(state.tension + rand(4, 9), 0, 100);
+          log("The supply raid worked. Your army is better stocked.", "good");
+        } else {
+          playerRegions.forEach((region) => {
+            region.army = clamp(region.army - rand(5, 12), 8, 220);
+          });
+          state.tension = clamp(state.tension + rand(8, 15), 0, 100);
+          log("The raid backfired and cost troops.", "urgent");
+        }
+      }
+      if (type === "alliance") {
+        if (roll <= 52) {
+          const target = attackableTargets(state.playerId).sort((a, b) => ownerStats(b.owner).army - ownerStats(a.owner).army)[0];
+          if (target) {
+            ownedRegions(target.owner).forEach((region) => {
+              region.morale = clamp(region.morale - rand(4, 9), 20, 99);
+              region.supply = clamp(region.supply - rand(3, 8), 20, 99);
+            });
+            playerRegions.forEach((region) => {
+              region.tech = clamp(region.tech + rand(4, 9), 20, 99);
+            });
+            log(`Secret allies weakened ${ownerStats(target.owner).name} and upgraded your tech.`, "good");
+          }
+        } else {
+          playerRegions.forEach((region) => {
+            region.supply = clamp(region.supply - rand(5, 12), 20, 99);
+          });
+          state.tension = clamp(state.tension + rand(9, 18), 0, 100);
+          log("The secret alliance leaked. Rivals are angrier, and supplies were wasted.", "urgent");
+        }
+      }
+      if (type === "fortify") {
+        if (roll <= 82) {
+          playerRegions.forEach((region) => {
+            region.supply = clamp(region.supply + rand(4, 8), 20, 99);
+            region.morale = clamp(region.morale + rand(2, 5), 20, 99);
+          });
+          state.tension = clamp(state.tension - rand(3, 8), 0, 100);
+          log("Borders are fortified. Morale improved and tension cooled.", "good");
+        } else {
+          playerRegions.forEach((region) => {
+            region.army = clamp(region.army - rand(2, 6), 8, 220);
+          });
+          log("Fortification delays caused desertions.", "urgent");
+        }
+      }
+      render();
+      runWorldTurn();
+    }
+
+    function checkWinner() {
+      const owners = livingOwners();
+      if (owners.length === 1) {
+        const winner = ownerStats(owners[0]);
+        els.winnerTitle.textContent = owners[0] === state.playerId ? "You Took the World" : `${winner.name} Took the World`;
+        els.winnerText.textContent = `${winner.name} controls all ${state.regions.length} territories after ${state.turn} turns with ${winner.defeated} defeated territories.`;
+        els.winnerPanel.classList.add("is-visible");
+        state.started = false;
+        return true;
+      }
+      return false;
+    }
+
+    document.querySelectorAll(".region").forEach((shape) => {
+      shape.addEventListener("click", () => {
+        state.selectedId = shape.dataset.id;
+        render();
+      });
+    });
+
+    els.startButton.addEventListener("click", () => {
+      state.started = true;
+      els.startPanel.classList.add("is-hidden");
+      state.selectedId = state.playerId;
+      log(`${ownerStats(state.playerId).name} command is live. Pick a border enemy or take a risky decision.`, "good");
+      render();
+    });
+
+    els.attackButton.addEventListener("click", () => {
+      if (!canAttack(state.playerId, state.selectedId)) return;
+      applyBattleResult(state.playerId, state.selectedId, true);
+    });
+
+    els.peaceButton.addEventListener("click", requestPeace);
+    els.decisionButton.addEventListener("click", takeRisk);
+    els.restartButton.addEventListener("click", resetGame);
+
+    resetGame();
+  </script>
+</body>
+</html>
