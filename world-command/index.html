@@ -1829,7 +1829,7 @@
       const territories = ownedRegions(owner);
       const totalArmy = territories.reduce((sum, region) => sum + region.army, 0);
       const landAfterCapture = territories.length + 1;
-      return clamp(Math.round(totalArmy / Math.max(3, landAfterCapture + 2)), MIN_REGION_ARMY, 46);
+      return clamp(Math.round(totalArmy / Math.max(4, landAfterCapture + 4)), MIN_REGION_ARMY, 24);
     }
 
     function pullGarrisonFrom(owner, amount) {
@@ -1908,13 +1908,15 @@
       const loser = attackerWon ? odds.defender : odds.attacker;
       const winnerChance = attackerWon ? odds.attackerChance : 100 - odds.attackerChance;
       const surpriseCost = clamp((50 - winnerChance) / 30, -0.45, 0.75);
-      const armyPressure = clamp(loser.army / Math.max(1, winner.army), 0.65, 1.65);
-      const winnerLossRate = clamp((0.12 + closeFight * 0.26 + surpriseCost * 0.14) * armyPressure, 0.08, 0.52);
-      const loserPressure = clamp(winner.army / Math.max(1, loser.army), 0.75, 1.45);
-      const loserLossRate = clamp((0.2 + decisiveness * 0.16 + closeFight * 0.08) * loserPressure, 0.18, 0.58);
+      const winnerRegions = Math.max(1, winner.land || 1);
+      const loserRegions = Math.max(1, loser.land || 1);
+      const winnerSurvivorsPerRegion = clamp(Math.round(10 + decisiveness * 9 - closeFight * 4 - surpriseCost * 5), MIN_REGION_ARMY, 24);
+      const loserSurvivorsPerRegion = clamp(Math.round(8 + closeFight * 4 - decisiveness * 2), MIN_REGION_ARMY, 16);
+      const winnerSurvivors = clamp(winnerSurvivorsPerRegion * winnerRegions, MIN_REGION_ARMY * winnerRegions, Math.max(MIN_REGION_ARMY * winnerRegions, winner.army - 1));
+      const loserSurvivors = clamp(loserSurvivorsPerRegion * loserRegions, MIN_REGION_ARMY * loserRegions, Math.max(MIN_REGION_ARMY * loserRegions, loser.army - 1));
       return {
-        winnerLoss: Math.max(1, Math.round(winner.army * winnerLossRate)),
-        loserLoss: Math.max(1, Math.round(loser.army * loserLossRate)),
+        winnerLoss: Math.max(1, Math.round(winner.army - winnerSurvivors)),
+        loserLoss: Math.max(1, Math.round(loser.army - loserSurvivors)),
         decisiveness,
         winnerChance
       };
