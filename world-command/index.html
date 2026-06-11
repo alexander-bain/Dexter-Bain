@@ -322,23 +322,29 @@
 
     .battle-status {
       min-width: min(340px, 100%);
-      padding: 9px 11px;
-      border: 1px solid rgba(255, 209, 102, 0.42);
-      border-radius: 8px;
-      background: rgba(7, 11, 16, 0.76);
+      display: grid;
+      gap: 8px;
       color: #fff6d7;
       font-size: 0.82rem;
       font-weight: 900;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
     }
 
     .battle-status[hidden] {
       display: none;
     }
 
-    .battle-status > span:first-child {
+    .battle-card {
+      padding: 9px 11px;
+      border: 1px solid rgba(255, 209, 102, 0.42);
+      border-radius: 8px;
+      background: rgba(7, 11, 16, 0.78);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+    }
+
+    .battle-main {
       display: block;
       margin-bottom: 7px;
+      line-height: 1.2;
     }
 
     .battle-sides {
@@ -804,16 +810,7 @@
             <div class="meter">Controlled <strong id="controlMeter">1 / 15</strong></div>
             <div class="meter">World tension <strong id="tensionMeter">32%</strong></div>
           </div>
-          <div class="battle-status" id="battleStatus" hidden>
-            <span id="battleStatusText">Battle underway</span>
-            <span class="battle-sides" aria-hidden="true">
-              <span id="battleDefenderLabel">Defender</span>
-              <span id="battleAttackerLabel">Attacker</span>
-            </span>
-            <span class="battle-progress" aria-hidden="true">
-              <span class="battle-marker" id="battleMarker"></span>
-            </span>
-          </div>
+          <div class="battle-status" id="battleStatus" hidden></div>
         </div>
 
         <svg class="world-map" viewBox="0 0 1000 610" role="img" aria-label="Clickable strategy map">
@@ -934,6 +931,8 @@
       turn: 1,
       tension: 32,
       activeBattle: false,
+      battles: [],
+      nextBattleId: 1,
       worldTurn: false,
       started: false
     };
@@ -964,10 +963,6 @@
       tipText: document.querySelector("#tipText"),
       log: document.querySelector("#log"),
       battleStatus: document.querySelector("#battleStatus"),
-      battleStatusText: document.querySelector("#battleStatusText"),
-      battleDefenderLabel: document.querySelector("#battleDefenderLabel"),
-      battleAttackerLabel: document.querySelector("#battleAttackerLabel"),
-      battleMarker: document.querySelector("#battleMarker"),
       selectionLayer: document.querySelector("#selectionLayer"),
       battleLayer: document.querySelector("#battleLayer"),
       labelLayer: document.querySelector("#labelLayer")
@@ -976,7 +971,6 @@
     const BATTLE_TICK_MS = 620;
     const BATTLE_MAX_TICKS = 11;
     const WORLD_MOVE_DELAY_MS = 560;
-    let battleTimer = null;
 
     function clamp(value, min, max) {
       return Math.max(min, Math.min(max, value));
@@ -1002,8 +996,13 @@
       state.turn = 1;
       state.tension = 32;
       state.activeBattle = false;
+      state.battles = [];
+      state.nextBattleId = 1;
       state.worldTurn = false;
       state.started = false;
+      els.battleLayer.innerHTML = "";
+      els.battleStatus.innerHTML = "";
+      els.battleStatus.hidden = true;
       els.winnerPanel.classList.remove("is-visible");
       els.startPanel.classList.remove("is-hidden");
       buildStartChoices();
@@ -1037,10 +1036,30 @@
       };
     }
 
+    function syncBattleState() {
+      state.activeBattle = state.battles.length > 0;
+      els.battleStatus.hidden = state.battles.length === 0;
+    }
+
+    function isOwnerInBattle(owner) {
+      return state.battles.some((battle) => battle.attackerOwner === owner || battle.defenderOwner === owner);
+    }
+
+    function isRegionInBattle(regionId) {
+      return state.battles.some((battle) => battle.originId === regionId || battle.targetId === regionId);
+    }
+
+    function battleBlocks(attackerOwner, targetId) {
+      const target = getRegion(targetId);
+      if (!target) return true;
+      return isOwnerInBattle(attackerOwner) || isOwnerInBattle(target.owner) || isRegionInBattle(targetId);
+    }
+
     function canAttack(fromOwner, targetId) {
       const target = getRegion(targetId);
       if (!target || target.owner === fromOwner || target.eliminated) return false;
       if (target.peace > 0) return false;
+      if (battleBlocks(fromOwner, targetId)) return false;
       return ownedRegions(fromOwner).some((region) => region.neighbors.includes(targetId));
     }
 
@@ -1148,22 +1167,23 @@
       if (!region) return;
       const stats = ownerStats(region.owner);
       const isPlayer = region.owner === state.playerId;
-      const isBusy = state.activeBattle || state.worldTurn;
       const conquered = region.owner !== region.id;
       const displayName = conquered ? stats.name : region.name;
+      const playerBusy = isOwnerInBattle(state.playerId);
+      const targetBusy = isOwnerInBattle(region.owner) || isRegionInBattle(region.id);
       els.selectedName.textContent = displayName;
-      els.selectedNote.textContent = state.activeBattle ? `Battle underway. Command reports are updating near ${region.name}.` : state.worldTurn ? "World powers are making their moves. Watch the map for new wars." : isPlayer ? `Your command controls ${conquered ? `former ${region.name}` : "this territory"}.` : `${stats.name} controls ${conquered ? `former ${region.name}` : "this territory"}.`;
+      els.selectedNote.textContent = playerBusy ? "Your command is already fighting. Wait for that battle to finish." : targetBusy ? `${displayName} is already in battle.` : state.worldTurn ? "World powers are making their moves. You can still attack if your command and target are free." : isPlayer ? `Your command controls ${conquered ? `former ${region.name}` : "this territory"}.` : `${stats.name} controls ${conquered ? `former ${region.name}` : "this territory"}.`;
       els.ownerPill.textContent = isPlayer ? "Your command" : stats.name;
       els.statArmy.textContent = `${stats.army}K`;
       els.statLand.textContent = stats.land;
       els.statKills.textContent = stats.defeated;
       els.statMorale.textContent = `${stats.morale}%`;
-      els.attackButton.textContent = state.activeBattle ? "Battle Underway" : state.worldTurn ? "World Moving" : "Launch Attack";
-      els.peaceButton.textContent = isBusy ? "Stand By" : "Request Peace";
-      els.decisionButton.textContent = isBusy ? "Resolving" : "Take Risk";
-      els.attackButton.disabled = !state.started || isBusy || !canAttack(state.playerId, region.id);
-      els.peaceButton.disabled = !state.started || isBusy || isPlayer;
-      els.decisionButton.disabled = !state.started || isBusy;
+      els.attackButton.textContent = playerBusy ? "Battle Underway" : targetBusy && !isPlayer ? "Target Busy" : "Launch Attack";
+      els.peaceButton.textContent = playerBusy || targetBusy ? "Stand By" : "Request Peace";
+      els.decisionButton.textContent = playerBusy ? "Resolving" : "Take Risk";
+      els.attackButton.disabled = !state.started || playerBusy || !canAttack(state.playerId, region.id);
+      els.peaceButton.disabled = !state.started || playerBusy || targetBusy || isPlayer;
+      els.decisionButton.disabled = !state.started || playerBusy;
     }
 
     function renderBars() {
@@ -1224,51 +1244,76 @@
       return { attacker, defender, attackerChance };
     }
 
-    function setBattleMarker(position) {
-      els.battleMarker.style.left = `${position}%`;
-      els.battleMarker.style.background = position >= 50 ? "#dfffe9" : "#ffe1e1";
-      els.battleMarker.style.boxShadow = position >= 50 ? "0 0 18px rgba(117, 230, 161, 0.9)" : "0 0 18px rgba(255, 107, 107, 0.88)";
+    function setBattleMarker(battle, position) {
+      battle.position = position;
+      battle.markerEl.style.left = `${position}%`;
+      battle.markerEl.style.background = position >= 50 ? "#dfffe9" : "#ffe1e1";
+      battle.markerEl.style.boxShadow = position >= 50 ? "0 0 18px rgba(117, 230, 161, 0.9)" : "0 0 18px rgba(255, 107, 107, 0.88)";
     }
 
-    function battleLeaderText(position, odds) {
-      if (position >= 60) return `${odds.attacker.name} is gaining ground`;
-      if (position <= 40) return `${odds.defender.name} is holding the line`;
+    function battleLeaderText(position, battle) {
+      if (position >= 60) return `${battle.odds.attacker.name} is gaining ground`;
+      if (position <= 40) return `${battle.odds.defender.name} is holding the line`;
       return "The battle is swinging back and forth";
     }
 
-    function runBattleBar(odds, onComplete) {
+    function createBattleCard(battle, toRegion) {
+      const card = document.createElement("div");
+      card.className = "battle-card";
+      const status = document.createElement("span");
+      status.className = "battle-main";
+      status.textContent = `${battle.odds.attacker.name} attacking ${battle.odds.defender.name} in ${toRegion.name}`;
+      const sides = document.createElement("span");
+      sides.className = "battle-sides";
+      const defender = document.createElement("span");
+      defender.textContent = `${battle.odds.defender.name} wins`;
+      const attacker = document.createElement("span");
+      attacker.textContent = `${battle.odds.attacker.name} wins`;
+      sides.append(defender, attacker);
+      const progress = document.createElement("span");
+      progress.className = "battle-progress";
+      const marker = document.createElement("span");
+      marker.className = "battle-marker";
+      progress.append(marker);
+      card.append(status, sides, progress);
+      els.battleStatus.append(card);
+      battle.cardEl = card;
+      battle.statusEl = status;
+      battle.markerEl = marker;
+      syncBattleState();
+    }
+
+    function runBattleBar(battle, onComplete) {
       let position = 50;
       let ticks = 0;
       let momentum = 0;
-      const bias = (odds.attackerChance - 50) * 0.55;
-      setBattleMarker(position);
-      battleTimer = setInterval(() => {
+      const bias = (battle.odds.attackerChance - 50) * 0.55;
+      setBattleMarker(battle, position);
+      battle.timer = setInterval(() => {
         ticks += 1;
         momentum = clamp(momentum * 0.35 + rand(-22, 22) + bias, -28, 28);
         position = clamp(Math.round(position + momentum), 0, 100);
         if (ticks >= BATTLE_MAX_TICKS) {
           position = position >= 50 ? 100 : 0;
         }
-        setBattleMarker(position);
-        els.battleStatusText.textContent = battleLeaderText(position, odds);
+        setBattleMarker(battle, position);
+        battle.statusEl.textContent = battleLeaderText(position, battle);
         if (position === 0 || position === 100) {
-          clearInterval(battleTimer);
-          battleTimer = null;
+          clearInterval(battle.timer);
+          battle.timer = null;
           setTimeout(() => onComplete(position === 100), BATTLE_TICK_MS);
         }
       }, BATTLE_TICK_MS);
     }
 
-    function animateBattle(fromRegion, toRegion, odds) {
-      els.battleLayer.innerHTML = "";
-      els.battleStatus.hidden = false;
-      els.battleStatusText.textContent = `${odds.attacker.name} attacking ${odds.defender.name} in ${toRegion.name}`;
-      els.battleDefenderLabel.textContent = `${odds.defender.name} wins`;
-      els.battleAttackerLabel.textContent = `${odds.attacker.name} wins`;
-      setBattleMarker(50);
+    function animateBattle(fromRegion, toRegion, battle) {
+      createBattleCard(battle, toRegion);
+      setBattleMarker(battle, 50);
       const [x1, y1] = fromRegion.center;
       const [x2, y2] = toRegion.center;
-      const routeId = `battle-route-${Date.now()}`;
+      const routeId = `battle-route-${battle.id}`;
+      const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      group.dataset.battleId = battle.id;
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
       const midX = (x1 + x2) / 2;
       const midY = Math.min(y1, y2) - 58;
@@ -1299,7 +1344,7 @@
       label.setAttribute("text-anchor", "middle");
       label.setAttribute("class", "battle-label");
       label.textContent = "WAR";
-      els.battleLayer.append(trail, path, originPulse, targetPulse, dot, label);
+      group.append(trail, path, originPulse, targetPulse, dot, label);
       for (let i = 0; i < 4; i += 1) {
         const runner = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         runner.setAttribute("r", String(4 + (i % 2)));
@@ -1313,16 +1358,18 @@
         mpath.setAttribute("href", `#${routeId}`);
         motion.append(mpath);
         runner.append(motion);
-        els.battleLayer.append(runner);
+        group.append(runner);
       }
+      els.battleLayer.append(group);
+      battle.groupEl = group;
       fromRegion.shape?.classList?.add("is-fighting");
       toRegion.shape?.classList?.add("is-fighting");
       document.querySelector(`.region[data-id="${fromRegion.id}"]`)?.classList.add("is-fighting");
       document.querySelector(`.region[data-id="${toRegion.id}"]`)?.classList.add("is-fighting");
     }
 
-    function showBattleResult(region, text, tone) {
-      els.battleLayer.innerHTML = "";
+    function showBattleResult(region, text, tone, battle) {
+      battle.groupEl.innerHTML = "";
       const [x, y] = region.center;
       const ring = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       ring.setAttribute("cx", x);
@@ -1336,17 +1383,31 @@
       label.setAttribute("text-anchor", "middle");
       label.setAttribute("class", "battle-label");
       label.textContent = text;
-      els.battleLayer.append(ring, label);
+      battle.groupEl.append(ring, label);
     }
 
-    function stopBattleAnimation() {
-      if (battleTimer) {
-        clearInterval(battleTimer);
-        battleTimer = null;
+    function stopBattleAnimation(battle) {
+      if (battle.timer) {
+        clearInterval(battle.timer);
+        battle.timer = null;
       }
+      battle.groupEl?.remove();
+      battle.cardEl?.remove();
+      state.battles = state.battles.filter((item) => item.id !== battle.id);
+      [battle.originId, battle.targetId].forEach((regionId) => {
+        if (!isRegionInBattle(regionId)) {
+          document.querySelector(`.region[data-id="${regionId}"]`)?.classList.remove("is-fighting");
+        }
+      });
+      syncBattleState();
+    }
+
+    function stopAllBattles() {
+      state.battles.slice().forEach((battle) => stopBattleAnimation(battle));
       els.battleLayer.innerHTML = "";
-      els.battleStatus.hidden = true;
-      document.querySelectorAll(".region").forEach((shape) => shape.classList.remove("is-fighting"));
+      els.battleStatus.innerHTML = "";
+      state.battles = [];
+      syncBattleState();
     }
 
     function transferTerritory(target, newOwner) {
@@ -1366,22 +1427,39 @@
       state.activeBattle = false;
       state.worldTurn = false;
       state.started = false;
+      stopAllBattles();
     }
 
     function applyBattleResult(attackerOwner, targetId, isPlayerAttack = false, afterBattle = null) {
       const target = getRegion(targetId);
       const origin = borderRegionFor(attackerOwner, targetId);
-      if (!target || !origin || state.activeBattle) return false;
+      if (!target || !origin || battleBlocks(attackerOwner, targetId)) return false;
       const defenderOwner = target.owner;
       const odds = battleOdds(attackerOwner, defenderOwner);
       const underdog = odds.attacker.army < odds.defender.army;
       const reward = underdog ? rand(18, 34) : rand(8, 18);
       const loss = underdog ? rand(4, 12) : rand(9, 20);
-      state.activeBattle = true;
-      animateBattle(origin, target, odds);
+      const battle = {
+        id: state.nextBattleId,
+        attackerOwner,
+        defenderOwner,
+        originId: origin.id,
+        targetId,
+        odds,
+        timer: null,
+        groupEl: null,
+        cardEl: null,
+        statusEl: null,
+        markerEl: null,
+        position: 50
+      };
+      state.nextBattleId += 1;
+      state.battles.push(battle);
+      syncBattleState();
+      animateBattle(origin, target, battle);
       renderSelected();
 
-      runBattleBar(odds, (attackerWon) => {
+      runBattleBar(battle, (attackerWon) => {
         if (attackerWon) {
           ownedRegions(attackerOwner).forEach((region) => {
             region.army = clamp(region.army + Math.round(reward / Math.max(1, odds.attacker.land)), 10, 220);
@@ -1393,7 +1471,7 @@
           });
           transferTerritory(target, attackerOwner);
           log(`${odds.attacker.name} captured ${target.name}${underdog ? " in an upset and earned a huge reward" : ""}.`, attackerOwner === state.playerId ? "good" : "urgent");
-          showBattleResult(target, underdog ? "UPSET CAPTURE" : "CAPTURED", attackerOwner === state.playerId ? "good" : "urgent");
+          showBattleResult(target, underdog ? "UPSET CAPTURE" : "CAPTURED", attackerOwner === state.playerId ? "good" : "urgent", battle);
         } else {
           ownedRegions(attackerOwner).forEach((region) => {
             region.army = clamp(region.army - Math.round(loss / Math.max(1, odds.attacker.land)), 8, 220);
@@ -1404,7 +1482,7 @@
             region.supply = clamp(region.supply + rand(1, 4), 20, 99);
           });
           log(`${odds.attacker.name} failed to take ${target.name}. The defender gained supplies.`, isPlayerAttack ? "urgent" : "");
-          showBattleResult(target, "REPELLED", isPlayerAttack ? "urgent" : "good");
+          showBattleResult(target, "REPELLED", isPlayerAttack ? "urgent" : "good", battle);
         }
         state.tension = clamp(state.tension + rand(2, 7), 0, 100);
         state.turn += isPlayerAttack ? 1 : 0;
@@ -1418,8 +1496,7 @@
         }
         const hasWinner = playerLostBattle || checkWinner();
         setTimeout(() => {
-          state.activeBattle = false;
-          stopBattleAnimation();
+          stopBattleAnimation(battle);
           if (hasWinner) {
             state.worldTurn = false;
             render();
@@ -1440,14 +1517,31 @@
       return Math.min(enemyOwners, rand(2, 3 + tensionBonus));
     }
 
-    function chooseWorldMove(lastOwner = null) {
-      const possible = livingOwners()
-        .filter((owner) => owner !== state.playerId)
-        .flatMap((owner) => attackableTargets(owner).map((target) => ({ owner, target })));
-      if (!possible.length) return null;
-      const differentOwner = possible.filter((move) => move.owner !== lastOwner);
-      const candidates = differentOwner.length ? differentOwner : possible;
-      return candidates[rand(0, candidates.length - 1)];
+    function activeBattleOwners() {
+      const owners = new Set();
+      state.battles.forEach((battle) => {
+        owners.add(battle.attackerOwner);
+        owners.add(battle.defenderOwner);
+      });
+      return owners;
+    }
+
+    function chooseWorldMoves(count) {
+      const moves = [];
+      const reservedOwners = activeBattleOwners();
+      for (let i = 0; i < count; i += 1) {
+        const possible = livingOwners()
+          .filter((owner) => owner !== state.playerId && !reservedOwners.has(owner))
+          .flatMap((owner) => attackableTargets(owner)
+            .filter((target) => !reservedOwners.has(target.owner))
+            .map((target) => ({ owner, target })));
+        if (!possible.length) break;
+        const move = possible[rand(0, possible.length - 1)];
+        moves.push(move);
+        reservedOwners.add(move.owner);
+        reservedOwners.add(move.target.owner);
+      }
+      return moves;
     }
 
     function rebuildWorldOwner() {
@@ -1468,49 +1562,55 @@
       render();
     }
 
-    function runWorldBattleWave(remaining, lastOwner = null) {
-      if (remaining <= 0 || checkWinner()) {
+    function runWorldBattleWave(moves) {
+      if (!moves.length || checkWinner()) {
         finishWorldTurn();
         return;
       }
-      setTimeout(() => {
-        if (state.activeBattle || checkWinner()) {
-          finishWorldTurn();
-          return;
-        }
-        const move = chooseWorldMove(lastOwner);
-        const attackChance = clamp(82 + state.tension / 6, 84, 96);
-        if (move && rand(1, 100) <= attackChance) {
-          const started = applyBattleResult(move.owner, move.target.id, false, () => {
-            runWorldBattleWave(remaining - 1, move.owner);
-          });
-          if (!started) runWorldBattleWave(remaining - 1, lastOwner);
-          return;
-        }
-        rebuildWorldOwner();
-        runWorldBattleWave(remaining - 1, lastOwner);
-      }, WORLD_MOVE_DELAY_MS);
+      let pending = moves.length;
+      const completeMove = () => {
+        pending -= 1;
+        if (pending <= 0) finishWorldTurn();
+      };
+      moves.forEach((move, index) => {
+        setTimeout(() => {
+          if (checkWinner()) {
+            completeMove();
+            return;
+          }
+          const attackChance = clamp(82 + state.tension / 6, 84, 96);
+          if (rand(1, 100) <= attackChance) {
+            const started = applyBattleResult(move.owner, move.target.id, false, completeMove);
+            if (!started) completeMove();
+            return;
+          }
+          rebuildWorldOwner();
+          completeMove();
+        }, index * WORLD_MOVE_DELAY_MS);
+      });
     }
 
     function runWorldTurn() {
-      if (state.activeBattle || state.worldTurn || checkWinner()) return;
+      if (state.worldTurn || checkWinner()) return;
       state.worldTurn = true;
       state.regions.forEach((region) => {
         region.peace = Math.max(0, region.peace - 1);
       });
       const attacks = worldAttackCount();
-      if (!attacks) {
+      const moves = chooseWorldMoves(attacks);
+      if (!moves.length) {
+        rebuildWorldOwner();
         finishWorldTurn();
         return;
       }
-      log(`World powers are moving. Up to ${attacks} border wars may break out.`, "urgent");
+      log(`World powers are moving. ${moves.length} separate border wars may break out.`, "urgent");
       render();
-      runWorldBattleWave(attacks);
+      runWorldBattleWave(moves);
     }
 
     function requestPeace() {
       const selected = getRegion(state.selectedId);
-      if (!selected || selected.owner === state.playerId || state.activeBattle || state.worldTurn) return;
+      if (!selected || selected.owner === state.playerId || isOwnerInBattle(state.playerId) || isOwnerInBattle(selected.owner) || isRegionInBattle(selected.id)) return;
       const player = ownerStats(state.playerId);
       const rival = ownerStats(selected.owner);
       const chance = clamp(44 + (player.army - rival.army) * 0.18 + (100 - state.tension) * 0.22, 12, 78);
@@ -1534,7 +1634,7 @@
     }
 
     function takeRisk() {
-      if (state.activeBattle || state.worldTurn) return;
+      if (isOwnerInBattle(state.playerId)) return;
       const type = els.decisionSelect.value;
       const playerRegions = ownedRegions(state.playerId);
       state.turn += 1;
@@ -1616,9 +1716,9 @@
         els.winnerTitle.textContent = owners[0] === state.playerId ? "You Took the World" : `${winner.name} Took the World`;
         els.winnerText.textContent = `${winner.name} controls all ${state.regions.length} territories after ${state.turn} turns with ${winner.defeated} defeated territories.`;
         els.winnerPanel.classList.add("is-visible");
-        state.activeBattle = false;
         state.worldTurn = false;
         state.started = false;
+        stopAllBattles();
         return true;
       }
       return false;
@@ -1706,7 +1806,7 @@
     });
 
     els.attackButton.addEventListener("click", () => {
-      if (state.activeBattle || state.worldTurn) return;
+      if (isOwnerInBattle(state.playerId)) return;
       if (!canAttack(state.playerId, state.selectedId)) return;
       applyBattleResult(state.playerId, state.selectedId, true);
     });
