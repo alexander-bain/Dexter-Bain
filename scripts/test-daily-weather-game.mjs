@@ -178,52 +178,6 @@ function cdpConnection(wsUrl) {
   };
 }
 
-function seededRandom(seed) {
-  let value = 2166136261;
-  for (const char of String(seed)) {
-    value ^= char.charCodeAt(0);
-    value = Math.imul(value, 16777619);
-  }
-  return () => {
-    value += 0x6D2B79F5;
-    let next = value;
-    next = Math.imul(next ^ (next >>> 15), next | 1);
-    next ^= next + Math.imul(next ^ (next >>> 7), next | 61);
-    return ((next ^ (next >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function weatherBotPick(question, index, getAnswers) {
-  const answers = getAnswers(question);
-  const fallback = answers.reduce((winner, candidate) => {
-    if (!winner || candidate.odds > winner.odds) {
-      return candidate;
-    }
-    return winner;
-  }, null);
-  if (!answers.length) {
-    return null;
-  }
-  if (answers.length === 1) {
-    return answers[0];
-  }
-
-  const random = seededRandom(`${question.id || question.text || "question"}:${index}`);
-  const weighted = answers.map((answer) => ({
-    answer,
-    weight: Math.max(1, Math.round((answer.odds || 1) * Math.sqrt(answer.points || 1)))
-  }));
-  const total = weighted.reduce((sum, entry) => sum + entry.weight, 0);
-  let bucket = random() * total;
-  for (const entry of weighted) {
-    bucket -= entry.weight;
-    if (bucket <= 0) {
-      return entry.answer;
-    }
-  }
-  return fallback || answers[answers.length - 1];
-}
-
 async function run() {
   const { server, entriesByGameId } = createStaticServer();
   const port = await waitForServer(server);
@@ -283,8 +237,6 @@ async function run() {
       returnByValue: true,
       expression: `
         (async () => {
-          const seededRandom = ${seededRandom.toString()};
-          const weatherBotPick = ${weatherBotPick.toString()};
           const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
           const test = MINIGAMES_TEST;
           const game = test.getUpcomingGames().find((candidate) => candidate.gameId.startsWith("daily-weather-"));
@@ -295,15 +247,12 @@ async function run() {
           test.setSelectedGameId(game.gameId);
           test.render();
 
-          const botPicks = game.questions.map((question, index) => {
-            const choice = weatherBotPick(question, index, test.getAnswers);
-            return [test.getQuestionId(question, index), choice.id];
-          });
-          const picks = Object.fromEntries(botPicks);
           const favoritePicks = game.questions.map((question, index) => {
             const answers = test.getAnswers(question).slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
             return [test.getQuestionId(question, index), answers[0].id];
           });
+          const botPicks = test.weatherBotPicks(game);
+          const picks = Object.fromEntries(botPicks);
           const entry = {
             name: "Weather Bot",
             picks,
@@ -352,10 +301,10 @@ async function run() {
               leaderboard.includes("Weather Bot") &&
               leaderboard.includes("Forecast Favorite") &&
               leaderboard.includes("chance to win") &&
-              leaderboard.includes("max possible pts") &&
+              leaderboard.includes("max possible pts from these picks") &&
               leaderboardDetails.includes("Weather Bot") &&
               leaderboardDetails.includes("chance to win") &&
-              leaderboardDetails.includes("max possible pts") &&
+              leaderboardDetails.includes("max possible pts from these picks") &&
               Number.parseInt(entryCount, 10) >= 2 &&
               storage.playerName === "Weather Bot"
             ) {

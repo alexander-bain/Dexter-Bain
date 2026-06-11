@@ -81,10 +81,14 @@ for (const questionId of [
   "market-lunch",
   "local-headline",
   "rain-by-3pm",
+  "wind-by-5pm",
   "sky-still-sunny",
   "weather-headline",
+  "sports-headline",
   "music-four",
+  "music-five",
   "sports-six",
+  "sports-seven",
   "cool-tonight",
 ]) {
   assertContains(block, `"20260513-${questionId}"`);
@@ -93,8 +97,8 @@ for (const questionId of [
 const autoScoredQuestions = [
   ...block.matchAll(/autoSource: "https:\/\/forecast\.weather\.gov\/MapClick\.php\?lat=37\.453&lon=-122\.182"/g)
 ].length;
-if (autoScoredQuestions !== 4) {
-  throw new Error(`Expected 4 auto-scored weather questions, found ${autoScoredQuestions}.`);
+if (autoScoredQuestions !== 5) {
+  throw new Error(`Expected 5 auto-scored weather questions, found ${autoScoredQuestions}.`);
 }
 
 for (const hour of [
@@ -104,7 +108,9 @@ for (const hour of [
   "T21:00:00.000Z",
   "T22:00:00.000Z",
   "T23:00:00.000Z",
+  "T00:00:00.000Z",
   "T01:00:00.000Z",
+  "T02:00:00.000Z",
   "T03:00:00.000Z",
 ]) {
   assertContains(block, hour);
@@ -113,6 +119,7 @@ for (const hour of [
 runGenerator("2026-05-16");
 const weekendHtml = fs.readFileSync(testHtml, "utf8");
 const weekendBlock = generatedWeatherBlock(weekendHtml);
+const weekendQuestionCount = [...weekendBlock.matchAll(/question\(/g)].length;
 
 assertContains(weekendBlock, 'id: "daily-weather-20260516"');
 assertContains(weekendBlock, '"20260516-gas-noon"');
@@ -127,4 +134,8 @@ if (weekendBlock.includes('answer("Stocks"')) {
   throw new Error("Weekend generated weather game should not include Stocks as a local headline option.");
 }
 
-console.log("Daily weather replacement test passed.");
+if (weekendQuestionCount !== 13) {
+  throw new Error(`Expected 13 weekend daily weather questions, found ${weekendQuestionCount}.`);
+}
+
+console.log("Weekend daily weather replacement test passed.");
