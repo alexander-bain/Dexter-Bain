@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Omnis: Shattered Convergence</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f8fafc;
+      --muted: #a7b4c8;
+      --glass: rgba(7, 12, 22, 0.76);
+      --line: rgba(255, 255, 255, 0.14);
+      --red: #ef4444;
+      --blue: #38bdf8;
+      --gold: #facc15;
+      --green: #5eead4;
+      --violet: #a78bfa;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      overflow: hidden;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #050712;
+      color: var(--ink);
+      touch-action: none;
+    }
+
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      background: #050712;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .hud {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .topbar,
+    .left-panel,
+    .right-panel,
+    .bottom-panel,
+    .briefing,
+    .toast,
+    .mobile-controls {
+      position: absolute;
+      pointer-events: auto;
+    }
+
+    .topbar {
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .home-link,
+    .hud-chip,
+    .mode-button,
+    .action-button {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--glass);
+      color: var(--ink);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+    }
+
+    .home-link {
+      min-height: 38px;
+      padding: 8px 11px;
+      text-decoration: none;
+      font-weight: 850;
+    }
+
+    .hud-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 8px 11px;
+      font-size: 0.84rem;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .hud-chip strong {
+      color: var(--gold);
+    }
+
+    .left-panel {
+      left: 12px;
+      top: 64px;
+      width: min(250px, calc(100vw - 24px));
+      display: grid;
+      gap: 8px;
+    }
+
+    .right-panel {
+      right: 12px;
+      top: 64px;
+      width: 210px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .bar-shell {
+      padding: 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+    }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      color: #dce8f8;
+      font-size: 0.75rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .bar {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: 100%;
+      border-radius: inherit;
+      transition: width 0.15s ease;
+    }
+
+    .health {
+      background: linear-gradient(90deg, #991b1b, var(--red), #fca5a5);
+    }
+
+    .mana {
+      background: linear-gradient(90deg, #1d4ed8, var(--blue), #bae6fd);
+    }
+
+    .storm {
+      background: linear-gradient(90deg, #7c2d12, #f97316, var(--gold));
+    }
+
+    .mode-row,
+    .action-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .mode-button,
+    .action-button {
+      min-height: 38px;
+      padding: 7px 8px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .mode-button[aria-pressed="true"],
+    .action-button.is-active {
+      border-color: rgba(250, 204, 21, 0.8);
+      background: linear-gradient(135deg, rgba(250, 204, 21, 0.24), rgba(56, 189, 248, 0.16)), var(--glass);
+      color: #fff7c2;
+    }
+
+    .mini-map {
+      height: 142px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(56, 189, 248, 0.12) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(56, 189, 248, 0.12) 1px, transparent 1px),
+        rgba(7, 12, 22, 0.8);
+      background-size: 18px 18px;
+      backdrop-filter: blur(12px);
+    }
+
+    .inventory {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+    }
+
+    .slot {
+      display: grid;
+      place-items: center;
+      min-height: 42px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      color: #e5eefb;
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .bottom-panel {
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
+      width: min(760px, calc(100vw - 24px));
+      display: grid;
+      gap: 8px;
+    }
+
+    .companions,
+    .hotbar {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .companion,
+    .block {
+      min-height: 48px;
+      padding: 7px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--glass);
+      text-align: center;
+      backdrop-filter: blur(12px);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .companion small,
+    .block small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+
+    .crosshair {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 24px;
+      height: 24px;
+      transform: translate(-50%, -50%);
+    }
+
+    .crosshair::before,
+    .crosshair::after {
+      content: "";
+      position: absolute;
+      background: rgba(248, 250, 252, 0.9);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+    }
+
+    .crosshair::before {
+      left: 11px;
+      top: 0;
+      width: 2px;
+      height: 24px;
+    }
+
+    .crosshair::after {
+      left: 0;
+      top: 11px;
+      width: 24px;
+      height: 2px;
+    }
+
+    .briefing {
+      left: 50%;
+      top: 50%;
+      width: min(520px, calc(100vw - 24px));
+      transform: translate(-50%, -50%);
+      padding: 18px;
+      border: 1px solid rgba(250, 204, 21, 0.42);
+      border-radius: 8px;
+      background: rgba(5, 9, 17, 0.92);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.48);
+      backdrop-filter: blur(18px);
+    }
+
+    .briefing h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.8rem, 7vw, 3.6rem);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .briefing p {
+      margin: 0 0 13px;
+      color: #d8e3f1;
+      line-height: 1.45;
+    }
+
+    .briefing ul {
+      margin: 0 0 16px;
+      padding-left: 20px;
+      color: #cbd8e8;
+      line-height: 1.5;
+    }
+
+    .primary {
+      min-height: 44px;
+      padding: 10px 14px;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #051014;
+      background: linear-gradient(135deg, var(--gold), var(--green), var(--blue));
+      font-weight: 950;
+    }
+
+    .toast {
+      left: 50%;
+      top: 16px;
+      max-width: min(620px, calc(100vw - 24px));
+      transform: translateX(-50%);
+      padding: 10px 12px;
+      border: 1px solid rgba(94, 234, 212, 0.34);
+      border-radius: 8px;
+      background: rgba(5, 9, 17, 0.84);
+      color: #e7f9ff;
+      text-align: center;
+      font-size: 0.86rem;
+      font-weight: 850;
+      backdrop-filter: blur(12px);
+    }
+
+    .mobile-controls {
+      display: none;
+      left: 12px;
+      right: 12px;
+      bottom: 122px;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .pad {
+      display: grid;
+      grid-template-columns: repeat(3, 42px);
+      grid-template-rows: repeat(3, 42px);
+      gap: 5px;
+    }
+
+    .pad button,
+    .mobile-action {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(7, 12, 22, 0.82);
+      color: var(--ink);
+      font-weight: 950;
+    }
+
+    .pad .up {
+      grid-column: 2;
+    }
+
+    .pad .left {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .pad .right {
+      grid-column: 3;
+      grid-row: 2;
+    }
+
+    .pad .down {
+      grid-column: 2;
+      grid-row: 3;
+    }
+
+    .mobile-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 58px);
+      gap: 7px;
+      align-content: end;
+    }
+
+    .mobile-action {
+      min-height: 48px;
+    }
+
+    @media (max-width: 820px) {
+      .left-panel,
+      .right-panel {
+        width: calc(50vw - 18px);
+      }
+
+      .right-panel {
+        top: 64px;
+      }
+
+      .mini-map {
+        height: 96px;
+      }
+
+      .inventory {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .slot {
+        min-height: 34px;
+      }
+
+      .bottom-panel {
+        bottom: 8px;
+      }
+
+      .companion,
+      .block {
+        min-height: 42px;
+        padding: 5px;
+        font-size: 0.68rem;
+      }
+
+      .mobile-controls {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .hud-chip {
+        font-size: 0.72rem;
+      }
+
+      .left-panel,
+      .right-panel {
+        top: 58px;
+      }
+
+      .mode-row,
+      .action-row {
+        grid-template-columns: 1fr;
+      }
+
+      .mode-button,
+      .action-button {
+        min-height: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="game" aria-label="Omnis: Shattered Convergence game field"></canvas>
+  <div class="hud">
+    <div class="topbar">
+      <a class="home-link" href="../index.html">Arcade</a>
+      <div class="hud-chip">Omnis: <strong id="objectiveText">breach the nexus</strong></div>
+      <div class="hud-chip">Score <strong id="scoreText">0</strong></div>
+    </div>
+
+    <div class="left-panel">
+      <div class="bar-shell">
+        <div class="bar-label"><span>Health</span><span id="healthText">100</span></div>
+        <div class="bar"><div class="bar-fill health" id="healthBar"></div></div>
+      </div>
+      <div class="bar-shell">
+        <div class="bar-label"><span>Mana</span><span id="manaText">100</span></div>
+        <div class="bar"><div class="bar-fill mana" id="manaBar"></div></div>
+      </div>
+      <div class="bar-shell">
+        <div class="bar-label"><span>Storm Wall</span><span id="stormText">100%</span></div>
+        <div class="bar"><div class="bar-fill storm" id="stormBar"></div></div>
+      </div>
+      <div class="mode-row" aria-label="Traversal modes">
+        <button class="mode-button" type="button" data-mode="runner" aria-pressed="true">Parkour</button>
+        <button class="mode-button" type="button" data-mode="car" aria-pressed="false">Car</button>
+        <button class="mode-button" type="button" data-mode="beast" aria-pressed="false">Beast</button>
+      </div>
+      <div class="action-row" aria-label="Combat actions">
+        <button class="action-button is-active" type="button" data-tool="rifle">Rifle</button>
+        <button class="action-button" type="button" data-tool="staff">Staff</button>
+        <button class="action-button" type="button" data-tool="build">Build</button>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <canvas class="mini-map" id="miniMap" aria-label="GPS minimap"></canvas>
+      <div class="inventory">
+        <div class="slot">Ammo<br><span id="ammoText">30/120</span></div>
+        <div class="slot">Grenades<br><span id="grenadeText">3</span></div>
+        <div class="slot">Concrete<br><span id="concreteText">24</span></div>
+        <div class="slot">Iron<br><span id="ironText">8</span></div>
+        <div class="slot">Capsules<br><span id="capsuleText">3</span></div>
+        <div class="slot">Nexus<br><span id="nexusText">100</span></div>
+      </div>
+    </div>
+
+    <div class="crosshair" aria-hidden="true"></div>
+
+    <div class="bottom-panel">
+      <div class="companions" id="companions"></div>
+      <div class="hotbar" id="hotbar"></div>
+    </div>
+
+    <div class="mobile-controls" aria-label="Mobile controls">
+      <div class="pad">
+        <button class="up" data-key="w" type="button">W</button>
+        <button class="left" data-key="a" type="button">A</button>
+        <button class="right" data-key="d" type="button">D</button>
+        <button class="down" data-key="s" type="button">S</button>
+      </div>
+      <div class="mobile-actions">
+        <button class="mobile-action" data-key=" " type="button">Act</button>
+        <button class="mobile-action" data-key="e" type="button">Swap</button>
+        <button class="mobile-action" data-key="q" type="button">Tool</button>
+        <button class="mobile-action" data-key="r" type="button">Reload</button>
+      </div>
+    </div>
+
+    <div class="toast" id="toast">Mine towers, capture beasts, build cover, and crack the enemy nexus.</div>
+
+    <section class="briefing" id="briefing">
+      <h1>Omnis: Shattered Convergence</h1>
+      <p>A compressed arcade slice of the impossible mega-game: neon city, voxel mining, monster capsules, arena storm, shooter spells, and a nexus war all fighting for the same screen.</p>
+      <ul>
+        <li>Move with WASD or the touch pad. Aim by moving. Space uses the active tool.</li>
+        <li>Rifle hurts drones, staff blasts raid bosses, build places concrete walls.</li>
+        <li>Touch wild elementals to capture them. Destroy the nexus before the storm closes.</li>
+      </ul>
+      <button class="primary" id="startButton" type="button">Enter the Convergence</button>
+    </section>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const miniMap = document.getElementById("miniMap");
+    const mapCtx = miniMap.getContext("2d");
+    const keys = new Set();
+    const world = { width: 2600, height: 1800 };
+    const player = {
+      x: 360,
+      y: 910,
+      vx: 0,
+      vy: 0,
+      radius: 17,
+      health: 100,
+      mana: 100,
+      ammo: 30,
+      reserve: 120,
+      grenades: 3,
+      concrete: 24,
+      iron: 8,
+      capsules: 3,
+      score: 0,
+      mode: "runner",
+      tool: "rifle",
+      cooldown: 0,
+      invulnerable: 0,
+      grace: 0
+    };
+
+    const state = {
+      running: false,
+      last: 0,
+      stormRadius: 1320,
+      stormCenterX: world.width * 0.55,
+      stormCenterY: world.height * 0.52,
+      stormTimer: 0,
+      nexusHealth: 100,
+      messageTimer: 0,
+      message: "Mine towers, capture beasts, build cover, and crack the enemy nexus.",
+      selectedBlock: 0,
+      eclipse: false,
+      bossSpawned: false
+    };
+
+    const buildings = [];
+    const enemies = [];
+    const beasts = [];
+    const blocks = [];
+    const particles = [];
+    const companions = ["Empty", "Empty", "Empty", "Empty", "Empty"];
+    const blockTypes = [
+      { name: "Concrete", color: "#64748b" },
+      { name: "Iron", color: "#94a3b8" },
+      { name: "Mythril", color: "#38bdf8" },
+      { name: "Glass", color: "#67e8f9" },
+      { name: "Turret", color: "#facc15" }
+    ];
+    const nexus = { x: 2190, y: 900, radius: 70 };
+    const vault = { x: 1840, y: 1320, radius: 52, alive: true };
+
+    const ui = {
+      objectiveText: document.getElementById("objectiveText"),
+      scoreText: document.getElementById("scoreText"),
+      healthText: document.getElementById("healthText"),
+      healthBar: document.getElementById("healthBar"),
+      manaText: document.getElementById("manaText"),
+      manaBar: document.getElementById("manaBar"),
+      stormText: document.getElementById("stormText"),
+      stormBar: document.getElementById("stormBar"),
+      ammoText: document.getElementById("ammoText"),
+      grenadeText: document.getElementById("grenadeText"),
+      concreteText: document.getElementById("concreteText"),
+      ironText: document.getElementById("ironText"),
+      capsuleText: document.getElementById("capsuleText"),
+      nexusText: document.getElementById("nexusText"),
+      toast: document.getElementById("toast"),
+      companions: document.getElementById("companions"),
+      hotbar: document.getElementById("hotbar"),
+      briefing: document.getElementById("briefing")
+    };
+
+    function rand(min, max) {
+      return min + Math.random() * (max - min);
+    }
+
+    function distance(a, b) {
+      return Math.hypot(a.x - b.x, a.y - b.y);
+    }
+
+    function resize() {
+      const ratio = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(window.innerWidth * ratio);
+      canvas.height = Math.floor(window.innerHeight * ratio);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      miniMap.width = Math.floor(miniMap.clientWidth * ratio);
+      miniMap.height = Math.floor(miniMap.clientHeight * ratio);
+      mapCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    }
+
+    function seedWorld() {
+      buildings.length = 0;
+      enemies.length = 0;
+      beasts.length = 0;
+      blocks.length = 0;
+      particles.length = 0;
+
+      for (let i = 0; i < 86; i += 1) {
+        const shore = i < 18;
+        buildings.push({
+          x: shore ? rand(70, 650) : rand(710, world.width - 160),
+          y: rand(90, world.height - 120),
+          w: shore ? rand(38, 76) : rand(54, 130),
+          h: shore ? rand(34, 70) : rand(90, 230),
+          hp: shore ? 30 : rand(45, 90),
+          maxHp: shore ? 30 : 90,
+          material: shore ? "stone" : Math.random() > 0.66 ? "iron" : "concrete",
+          color: shore ? "#334155" : Math.random() > 0.5 ? "#172554" : "#1e293b"
+        });
+      }
+
+      for (let i = 0; i < 22; i += 1) {
+        enemies.push({
+          type: i % 6 === 0 ? "knight" : "drone",
+          x: rand(820, world.width - 260),
+          y: rand(160, world.height - 160),
+          radius: i % 6 === 0 ? 24 : 16,
+          hp: i % 6 === 0 ? 62 : 34,
+          speed: i % 6 === 0 ? 55 : 78,
+          cooldown: rand(0, 1.2)
+        });
+      }
+
+      for (let i = 0; i < 10; i += 1) {
+        beasts.push({
+          kind: ["Ember", "Volt", "Tide", "Stone", "Gale"][i % 5],
+          x: rand(500, world.width - 320),
+          y: rand(120, world.height - 120),
+          radius: 18,
+          color: ["#fb7185", "#fde047", "#38bdf8", "#94a3b8", "#5eead4"][i % 5],
+          captured: false
+        });
+      }
+
+      for (let i = 0; i < 70; i += 1) {
+        blocks.push({
+          x: rand(120, world.width - 120),
+          y: rand(100, world.height - 100),
+          size: rand(16, 30),
+          hp: 20,
+          falling: Math.random() > 0.72,
+          vy: rand(30, 90),
+          color: Math.random() > 0.5 ? "#7c3aed" : "#0891b2"
+        });
+      }
+    }
+
+    function setMessage(text) {
+      state.message = text;
+      state.messageTimer = 3.4;
+      ui.toast.textContent = text;
+    }
+
+    function cycleMode() {
+      const modes = ["runner", "car", "beast"];
+      player.mode = modes[(modes.indexOf(player.mode) + 1) % modes.length];
+      setMessage(player.mode === "car" ? "Hijacked a neon sports car." : player.mode === "beast" ? "Mounted an elemental companion." : "Back to parkour movement.");
+      updatePressedButtons();
+    }
+
+    function cycleTool() {
+      const tools = ["rifle", "staff", "build"];
+      player.tool = tools[(tools.indexOf(player.tool) + 1) % tools.length];
+      setMessage(player.tool === "rifle" ? "Rifle ready." : player.tool === "staff" ? "Ancient staff charged." : "Build tool selected.");
+      updatePressedButtons();
+    }
+
+    function updatePressedButtons() {
+      document.querySelectorAll(".mode-button").forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.mode === player.mode));
+      });
+      document.querySelectorAll(".action-button").forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.tool === player.tool);
+      });
+    }
+
+    function spawnParticles(x, y, color, count = 10) {
+      for (let i = 0; i < count; i += 1) {
+        particles.push({
+          x,
+          y,
+          vx: rand(-150, 150),
+          vy: rand(-150, 150),
+          life: rand(0.35, 0.85),
+          size: rand(2, 6),
+          color
+        });
+      }
+    }
+
+    function useTool() {
+      if (player.cooldown > 0 || !state.running) {
+        return;
+      }
+
+      const aim = { x: player.x + Math.cos(getAimAngle()) * 76, y: player.y + Math.sin(getAimAngle()) * 76 };
+
+      if (player.tool === "build") {
+        if (player.concrete <= 0) {
+          setMessage("No concrete left. Mine skyscraper walls.");
+          return;
+        }
+        player.concrete -= 1;
+        blocks.push({ x: aim.x, y: aim.y, size: 34, hp: 80, falling: false, vy: 0, color: blockTypes[state.selectedBlock].color, built: true });
+        player.cooldown = 0.18;
+        setMessage("Voxel wall placed.");
+        return;
+      }
+
+      if (player.tool === "staff") {
+        if (player.mana < 16) {
+          setMessage("Mana is too low.");
+          return;
+        }
+        player.mana -= 16;
+        player.cooldown = 0.48;
+        spawnParticles(aim.x, aim.y, "#38bdf8", 18);
+        damageNear(aim, 104, 24);
+        if (distance(aim, vault) < vault.radius + 110 && vault.alive) {
+          vault.alive = false;
+          player.score += 500;
+          player.iron += 10;
+          setMessage("Corporate vault boss shattered. Mythril payout secured.");
+        }
+        return;
+      }
+
+      if (player.ammo <= 0) {
+        setMessage("Magazine empty. Press R to reload.");
+        return;
+      }
+      player.ammo -= 1;
+      player.cooldown = 0.13;
+      spawnParticles(aim.x, aim.y, "#facc15", 5);
+      damageNear(aim, 58, 16);
+      if (distance(aim, nexus) < nexus.radius + 50) {
+        state.nexusHealth = Math.max(0, state.nexusHealth - 4);
+        spawnParticles(nexus.x, nexus.y, "#f472b6", 8);
+        if (state.nexusHealth <= 0) {
+          win();
+        }
+      }
+    }
+
+    function reload() {
+      if (player.ammo >= 30 || player.reserve <= 0) {
+        return;
+      }
+      const needed = 30 - player.ammo;
+      const loaded = Math.min(needed, player.reserve);
+      player.ammo += loaded;
+      player.reserve -= loaded;
+      setMessage("Magazine reloaded.");
+    }
+
+    function damageNear(point, radius, amount) {
+      enemies.forEach((enemy) => {
+        if (distance(point, enemy) < radius + enemy.radius) {
+          enemy.hp -= amount;
+          spawnParticles(enemy.x, enemy.y, enemy.type === "knight" ? "#a78bfa" : "#22d3ee", 6);
+        }
+      });
+      buildings.forEach((building) => {
+        const closeX = Math.max(building.x, Math.min(point.x, building.x + building.w));
+        const closeY = Math.max(building.y, Math.min(point.y, building.y + building.h));
+        if (Math.hypot(point.x - closeX, point.y - closeY) < radius) {
+          building.hp -= amount * 0.6;
+          if (building.hp <= 0) {
+            player.concrete += building.material === "concrete" ? 6 : 2;
+            player.iron += building.material === "iron" ? 3 : 0;
+            player.score += 35;
+            spawnParticles(building.x + building.w / 2, building.y + building.h / 2, "#94a3b8", 16);
+          }
+        }
+      });
+    }
+
+    function captureBeast(beast) {
+      if (player.capsules <= 0 || beast.captured) {
+        return;
+      }
+      const emptyIndex = companions.indexOf("Empty");
+      if (emptyIndex === -1) {
+        setMessage("Companion slots are full.");
+        return;
+      }
+      player.capsules -= 1;
+      beast.captured = true;
+      companions[emptyIndex] = beast.kind;
+      player.score += 150;
+      setMessage(`${beast.kind} elemental captured and added to your squad.`);
+      renderStaticUi();
+    }
+
+    function mineNearby() {
+      const target = buildings.find((building) => {
+        const cx = building.x + building.w / 2;
+        const cy = building.y + building.h / 2;
+        return Math.hypot(player.x - cx, player.y - cy) < 78;
+      });
+      if (target) {
+        target.hp -= 18;
+        player.concrete += target.material === "concrete" ? 1 : 0;
+        player.iron += target.material === "iron" && Math.random() > 0.55 ? 1 : 0;
+        spawnParticles(player.x, player.y, "#cbd5e1", 5);
+      }
+    }
+
+    function getAimAngle() {
+      const mx = (keys.has("arrowright") ? 1 : 0) - (keys.has("arrowleft") ? 1 : 0);
+      const my = (keys.has("arrowdown") ? 1 : 0) - (keys.has("arrowup") ? 1 : 0);
+      if (mx || my) {
+        return Math.atan2(my, mx);
+      }
+      if (Math.abs(player.vx) + Math.abs(player.vy) > 0.1) {
+        return Math.atan2(player.vy, player.vx);
+      }
+      return 0;
+    }
+
+    function update(dt) {
+      player.grace = Math.max(0, player.grace - dt);
+      const speed = player.mode === "car" ? 270 : player.mode === "beast" ? 220 : 170;
+      const ax = (keys.has("d") || keys.has("arrowright") ? 1 : 0) - (keys.has("a") || keys.has("arrowleft") ? 1 : 0);
+      const ay = (keys.has("s") || keys.has("arrowdown") ? 1 : 0) - (keys.has("w") || keys.has("arrowup") ? 1 : 0);
+      const length = Math.hypot(ax, ay) || 1;
+      player.vx = (ax / length) * speed;
+      player.vy = (ay / length) * speed;
+      player.x = Math.max(30, Math.min(world.width - 30, player.x + player.vx * dt));
+      player.y = Math.max(30, Math.min(world.height - 30, player.y + player.vy * dt));
+
+      player.cooldown = Math.max(0, player.cooldown - dt);
+      player.invulnerable = Math.max(0, player.invulnerable - dt);
+      player.mana = Math.min(100, player.mana + dt * 5);
+      state.stormTimer += dt;
+      state.stormRadius = Math.max(330, state.stormRadius - dt * 8);
+      state.eclipse = state.stormRadius < 720;
+
+      if (keys.has("shift")) {
+        mineNearby();
+      }
+
+      const stormDistance = Math.hypot(player.x - state.stormCenterX, player.y - state.stormCenterY);
+      if (stormDistance > state.stormRadius && player.invulnerable <= 0 && player.grace <= 0) {
+        player.health -= 10 * dt;
+      }
+
+      enemies.forEach((enemy) => {
+        const dx = player.x - enemy.x;
+        const dy = player.y - enemy.y;
+        const d = Math.hypot(dx, dy) || 1;
+        const chase = state.eclipse ? 1.42 : 1;
+        enemy.x += (dx / d) * enemy.speed * chase * dt;
+        enemy.y += (dy / d) * enemy.speed * chase * dt;
+        enemy.cooldown -= dt;
+        if (d < enemy.radius + player.radius + 6 && enemy.cooldown <= 0 && player.grace <= 0) {
+          player.health -= enemy.type === "knight" ? 13 : 8;
+          player.invulnerable = 0.25;
+          enemy.cooldown = 0.75;
+          spawnParticles(player.x, player.y, "#ef4444", 8);
+        }
+      });
+
+      for (let i = enemies.length - 1; i >= 0; i -= 1) {
+        if (enemies[i].hp <= 0) {
+          player.score += enemies[i].type === "knight" ? 120 : 70;
+          if (Math.random() > 0.62) {
+            player.reserve += 12;
+          }
+          enemies.splice(i, 1);
+        }
+      }
+
+      beasts.forEach((beast) => {
+        if (!beast.captured && distance(player, beast) < player.radius + beast.radius + 8) {
+          captureBeast(beast);
+        }
+      });
+
+      blocks.forEach((block) => {
+        if (block.falling) {
+          block.y += block.vy * dt;
+          block.vy += 35 * dt;
+          if (block.y > world.height - 40) {
+            block.y = rand(40, 180);
+            block.x = rand(200, world.width - 200);
+            block.vy = rand(30, 90);
+          }
+        }
+        if (Math.hypot(player.x - block.x, player.y - block.y) < player.radius + block.size * 0.55 && player.invulnerable <= 0 && player.grace <= 0) {
+          player.health -= block.falling ? 18 : 2;
+          player.invulnerable = 0.3;
+          spawnParticles(block.x, block.y, block.color, 10);
+        }
+      });
+
+      buildings.forEach((building) => {
+        if (building.hp <= 0 && !building.dead) {
+          building.dead = true;
+        }
+      });
+
+      if (!state.bossSpawned && enemies.length < 7) {
+        state.bossSpawned = true;
+        enemies.push({ type: "boss", x: vault.x, y: vault.y, radius: 38, hp: 180, speed: 42, cooldown: 0.5 });
+        setMessage("Raid boss breached the underground vault.");
+      }
+
+      particles.forEach((particle) => {
+        particle.x += particle.vx * dt;
+        particle.y += particle.vy * dt;
+        particle.life -= dt;
+      });
+      for (let i = particles.length - 1; i >= 0; i -= 1) {
+        if (particles[i].life <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+
+      state.messageTimer = Math.max(0, state.messageTimer - dt);
+      if (state.messageTimer <= 0) {
+        ui.toast.textContent = state.eclipse ? "Eclipse phase: wild enemies are faster. Build a bunker or break the nexus." : state.message;
+      }
+
+      if (player.health <= 0 || state.stormRadius <= 330) {
+        lose();
+      }
+    }
+
+    function camera() {
+      return {
+        x: Math.max(0, Math.min(world.width - window.innerWidth, player.x - window.innerWidth / 2)),
+        y: Math.max(0, Math.min(world.height - window.innerHeight, player.y - window.innerHeight / 2))
+      };
+    }
+
+    function draw() {
+      const cam = camera();
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      drawWorld(cam);
+      drawEntities(cam);
+      drawMiniMap();
+      updateUi();
+    }
+
+    function drawWorld(cam) {
+      const gradient = ctx.createLinearGradient(-cam.x, 0, world.width - cam.x, 0);
+      gradient.addColorStop(0, "#0f172a");
+      gradient.addColorStop(0.24, "#134e4a");
+      gradient.addColorStop(0.38, "#111827");
+      gradient.addColorStop(1, "#030712");
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+      ctx.save();
+      ctx.translate(-cam.x, -cam.y);
+      ctx.strokeStyle = "rgba(56, 189, 248, 0.09)";
+      ctx.lineWidth = 1;
+      for (let x = 0; x < world.width; x += 52) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, world.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < world.height; y += 52) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(world.width, y);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = "rgba(15, 23, 42, 0.72)";
+      ctx.fillRect(0, 760, world.width, 280);
+      ctx.fillStyle = "rgba(8, 145, 178, 0.34)";
+      ctx.fillRect(0, 1040, 680, 760);
+
+      buildings.forEach((building) => {
+        if (building.dead) {
+          return;
+        }
+        const damage = Math.max(0.18, building.hp / building.maxHp);
+        ctx.fillStyle = building.color;
+        ctx.globalAlpha = 0.58 + damage * 0.42;
+        ctx.fillRect(building.x, building.y, building.w, building.h);
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = building.material === "iron" ? "#cbd5e1" : "#22d3ee";
+        for (let y = building.y + 12; y < building.y + building.h - 8; y += 22) {
+          for (let x = building.x + 10; x < building.x + building.w - 8; x += 24) {
+            ctx.fillRect(x, y, 8, 10);
+          }
+        }
+      });
+
+      ctx.strokeStyle = state.eclipse ? "rgba(248, 113, 113, 0.68)" : "rgba(250, 204, 21, 0.58)";
+      ctx.lineWidth = 10;
+      ctx.setLineDash([18, 14]);
+      ctx.beginPath();
+      ctx.arc(state.stormCenterX, state.stormCenterY, state.stormRadius, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.restore();
+    }
+
+    function drawEntities(cam) {
+      ctx.save();
+      ctx.translate(-cam.x, -cam.y);
+
+      blocks.forEach((block) => {
+        ctx.save();
+        ctx.translate(block.x, block.y);
+        ctx.rotate(block.falling ? state.stormTimer * 2 : 0.12);
+        ctx.fillStyle = block.color;
+        ctx.fillRect(-block.size / 2, -block.size / 2, block.size, block.size);
+        ctx.strokeStyle = "rgba(255,255,255,0.25)";
+        ctx.strokeRect(-block.size / 2, -block.size / 2, block.size, block.size);
+        ctx.restore();
+      });
+
+      if (vault.alive) {
+        ctx.fillStyle = "#312e81";
+        ctx.beginPath();
+        ctx.arc(vault.x, vault.y, vault.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "#a78bfa";
+        ctx.lineWidth = 4;
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = "#581c87";
+      ctx.beginPath();
+      ctx.arc(nexus.x, nexus.y, nexus.radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#f0abfc";
+      ctx.lineWidth = 6;
+      ctx.stroke();
+      ctx.fillStyle = "#f8fafc";
+      ctx.font = "900 18px system-ui";
+      ctx.textAlign = "center";
+      ctx.fillText("NEXUS", nexus.x, nexus.y + 7);
+
+      beasts.forEach((beast) => {
+        if (beast.captured) {
+          return;
+        }
+        ctx.fillStyle = beast.color;
+        ctx.beginPath();
+        ctx.arc(beast.x, beast.y, beast.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      });
+
+      enemies.forEach((enemy) => {
+        ctx.fillStyle = enemy.type === "boss" ? "#c026d3" : enemy.type === "knight" ? "#7c3aed" : "#ef4444";
+        ctx.beginPath();
+        ctx.arc(enemy.x, enemy.y, enemy.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = enemy.type === "boss" ? "#f0abfc" : "#fecaca";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.fillStyle = "#111827";
+        ctx.fillRect(enemy.x - enemy.radius, enemy.y - enemy.radius - 12, enemy.radius * 2, 5);
+        ctx.fillStyle = "#22c55e";
+        ctx.fillRect(enemy.x - enemy.radius, enemy.y - enemy.radius - 12, enemy.radius * 2 * Math.max(0, enemy.hp / (enemy.type === "boss" ? 180 : enemy.type === "knight" ? 62 : 34)), 5);
+      });
+
+      particles.forEach((particle) => {
+        ctx.globalAlpha = Math.max(0, particle.life);
+        ctx.fillStyle = particle.color;
+        ctx.fillRect(particle.x - particle.size / 2, particle.y - particle.size / 2, particle.size, particle.size);
+      });
+      ctx.globalAlpha = 1;
+
+      drawPlayer();
+      ctx.restore();
+    }
+
+    function drawPlayer() {
+      ctx.save();
+      ctx.translate(player.x, player.y);
+      ctx.rotate(getAimAngle());
+      const modeColor = player.mode === "car" ? "#f97316" : player.mode === "beast" ? "#5eead4" : "#f8fafc";
+      ctx.fillStyle = modeColor;
+      if (player.mode === "car") {
+        ctx.fillRect(-24, -13, 48, 26);
+        ctx.fillStyle = "#0f172a";
+        ctx.fillRect(-6, -10, 18, 20);
+      } else if (player.mode === "beast") {
+        ctx.beginPath();
+        ctx.moveTo(24, 0);
+        ctx.lineTo(-16, -18);
+        ctx.lineTo(-8, 0);
+        ctx.lineTo(-16, 18);
+        ctx.closePath();
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#111827";
+        ctx.fillRect(4, -4, 26, 8);
+      }
+      ctx.restore();
+    }
+
+    function drawMiniMap() {
+      const width = miniMap.clientWidth;
+      const height = miniMap.clientHeight;
+      mapCtx.clearRect(0, 0, width, height);
+      mapCtx.fillStyle = "rgba(3, 7, 18, 0.72)";
+      mapCtx.fillRect(0, 0, width, height);
+      const sx = width / world.width;
+      const sy = height / world.height;
+      mapCtx.strokeStyle = state.eclipse ? "#ef4444" : "#facc15";
+      mapCtx.lineWidth = 2;
+      mapCtx.beginPath();
+      mapCtx.arc(state.stormCenterX * sx, state.stormCenterY * sy, state.stormRadius * sx, 0, Math.PI * 2);
+      mapCtx.stroke();
+      mapCtx.fillStyle = "#f0abfc";
+      mapCtx.beginPath();
+      mapCtx.arc(nexus.x * sx, nexus.y * sy, 4, 0, Math.PI * 2);
+      mapCtx.fill();
+      mapCtx.fillStyle = "#ef4444";
+      enemies.forEach((enemy) => mapCtx.fillRect(enemy.x * sx - 1.5, enemy.y * sy - 1.5, 3, 3));
+      mapCtx.fillStyle = "#5eead4";
+      mapCtx.beginPath();
+      mapCtx.arc(player.x * sx, player.y * sy, 4, 0, Math.PI * 2);
+      mapCtx.fill();
+    }
+
+    function renderStaticUi() {
+      ui.companions.innerHTML = companions.map((name, index) => `
+        <div class="companion">${name}<small>Slot ${index + 1}</small></div>
+      `).join("");
+      ui.hotbar.innerHTML = blockTypes.map((block, index) => `
+        <button class="block" type="button" data-block="${index}" style="border-color:${index === state.selectedBlock ? block.color : "rgba(255,255,255,0.14)"}">
+          ${block.name}<small>${index + 1}</small>
+        </button>
+      `).join("");
+      document.querySelectorAll("[data-block]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.selectedBlock = Number(button.dataset.block);
+          renderStaticUi();
+        });
+      });
+    }
+
+    function updateUi() {
+      ui.scoreText.textContent = String(Math.floor(player.score));
+      ui.healthText.textContent = String(Math.max(0, Math.ceil(player.health)));
+      ui.healthBar.style.width = `${Math.max(0, player.health)}%`;
+      ui.manaText.textContent = String(Math.floor(player.mana));
+      ui.manaBar.style.width = `${Math.max(0, player.mana)}%`;
+      const stormPct = Math.round((state.stormRadius / 1320) * 100);
+      ui.stormText.textContent = `${stormPct}%`;
+      ui.stormBar.style.width = `${stormPct}%`;
+      ui.ammoText.textContent = `${player.ammo}/${player.reserve}`;
+      ui.grenadeText.textContent = String(player.grenades);
+      ui.concreteText.textContent = String(player.concrete);
+      ui.ironText.textContent = String(player.iron);
+      ui.capsuleText.textContent = String(player.capsules);
+      ui.nexusText.textContent = String(Math.ceil(state.nexusHealth));
+      ui.objectiveText.textContent = state.nexusHealth <= 35 ? "finish the nexus" : state.eclipse ? "survive eclipse" : "breach the nexus";
+    }
+
+    function loop(time) {
+      const dt = Math.min(0.033, (time - state.last) / 1000 || 0);
+      state.last = time;
+      if (state.running) {
+        update(dt);
+      }
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    function start() {
+      player.x = 360;
+      player.y = 910;
+      player.health = 100;
+      player.mana = 100;
+      player.ammo = 30;
+      player.reserve = 120;
+      player.grenades = 3;
+      player.concrete = 24;
+      player.iron = 8;
+      player.capsules = 3;
+      player.score = 0;
+      player.grace = 8;
+      state.running = true;
+      state.stormRadius = 1320;
+      state.nexusHealth = 100;
+      state.bossSpawned = false;
+      companions.fill("Empty");
+      seedWorld();
+      renderStaticUi();
+      ui.briefing.style.display = "none";
+      setMessage("Convergence storm online. Push through the city.");
+    }
+
+    function win() {
+      state.running = false;
+      player.score += 1000;
+      ui.briefing.style.display = "block";
+      ui.briefing.querySelector("h1").textContent = "Nexus Broken";
+      ui.briefing.querySelector("p").textContent = `You survived the storm, cracked the nexus, and left Omnis with ${Math.floor(player.score)} trade value.`;
+      ui.briefing.querySelector("ul").innerHTML = "<li>Captured beasts stay in the squad.</li><li>Built walls blocked the convergence storm.</li><li>The enemy faction lost its territory block.</li>";
+      ui.briefing.querySelector("button").textContent = "Run It Again";
+    }
+
+    function lose() {
+      state.running = false;
+      ui.briefing.style.display = "block";
+      ui.briefing.querySelector("h1").textContent = "Storm Collapse";
+      ui.briefing.querySelector("p").textContent = `The boundary crushed the district. You banked ${Math.floor(player.score)} trade value before extraction failed.`;
+      ui.briefing.querySelector("ul").innerHTML = "<li>Mine more skyscrapers for concrete.</li><li>Use staff blasts on packed enemies.</li><li>Swap into car mode to outrun the storm wall.</li>";
+      ui.briefing.querySelector("button").textContent = "Re-enter Omnis";
+    }
+
+    window.addEventListener("resize", resize);
+    window.addEventListener("keydown", (event) => {
+      const key = event.key.toLowerCase();
+      keys.add(key);
+      if (key === " ") {
+        event.preventDefault();
+        useTool();
+      }
+      if (key === "e") {
+        cycleMode();
+      }
+      if (key === "q") {
+        cycleTool();
+      }
+      if (key === "r") {
+        reload();
+      }
+      if (/^[1-5]$/.test(key)) {
+        state.selectedBlock = Number(key) - 1;
+        renderStaticUi();
+      }
+    });
+    window.addEventListener("keyup", (event) => keys.delete(event.key.toLowerCase()));
+
+    document.querySelectorAll(".mode-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        player.mode = button.dataset.mode;
+        updatePressedButtons();
+      });
+    });
+    document.querySelectorAll(".action-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        player.tool = button.dataset.tool;
+        updatePressedButtons();
+      });
+    });
+    document.querySelectorAll("[data-key]").forEach((button) => {
+      const key = button.dataset.key;
+      button.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        keys.add(key);
+        if (key === " ") useTool();
+        if (key === "e") cycleMode();
+        if (key === "q") cycleTool();
+        if (key === "r") reload();
+      });
+      button.addEventListener("pointerup", () => keys.delete(key));
+      button.addEventListener("pointercancel", () => keys.delete(key));
+      button.addEventListener("pointerleave", () => keys.delete(key));
+    });
+    canvas.addEventListener("pointerdown", useTool);
+    document.getElementById("startButton").addEventListener("click", start);
+
+    resize();
+    seedWorld();
+    renderStaticUi();
+    updatePressedButtons();
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>
