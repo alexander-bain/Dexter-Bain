@@ -1182,8 +1182,8 @@
       return state.regions.filter((region) => canAttack(owner, region.id));
     }
 
-    function attackSourcesFor(owner, targetId) {
-      return ownedRegions(owner).filter((region) => region.neighbors.includes(targetId) && !isRegionInBattle(region.id));
+    function attackSourcesFor(owner, targetId, includeSupport = false) {
+      return ownedRegions(owner).filter((region) => !isRegionInBattle(region.id) && (includeSupport || region.neighbors.includes(targetId)));
     }
 
     function borderRegionFor(owner, targetId) {
@@ -1290,7 +1290,7 @@
       const displayName = conquered ? stats.name : region.name;
       const playerBusy = isOwnerInBattle(state.playerId);
       const targetBusy = isOwnerInBattle(region.owner) || isRegionInBattle(region.id);
-      const availableSources = !isPlayer && !playerBusy && !targetBusy ? attackSourcesFor(state.playerId, region.id).map((source) => source.id) : [];
+      const availableSources = !isPlayer && !playerBusy && !targetBusy ? attackSourcesFor(state.playerId, region.id, true).map((source) => source.id) : [];
       const plannedChance = state.started && availableSources.length && canAttack(state.playerId, region.id) ? battleOdds(state.playerId, region.owner, availableSources, region.id).attackerChance : null;
       els.selectedName.textContent = displayName;
       els.selectedNote.textContent = playerBusy ? "Your command is already fighting. Wait for that battle to finish." : targetBusy ? `${displayName} is already in battle.` : plannedChance ? `${stats.name} controls ${conquered ? `former ${region.name}` : "this territory"}. Attack chance: ${plannedChance}%.` : state.worldTurn ? "World powers are making their moves. You can still attack if your command and target are free." : isPlayer ? `Your command controls ${conquered ? `former ${region.name}` : "this territory"}.` : `${stats.name} controls ${conquered ? `former ${region.name}` : "this territory"}.`;
@@ -1395,9 +1395,9 @@
     function openAttackPlanner(targetId) {
       const target = getRegion(targetId);
       if (!target || !canAttack(state.playerId, targetId)) return;
-      const sources = attackSourcesFor(state.playerId, targetId);
+      const sources = attackSourcesFor(state.playerId, targetId, true);
       if (!sources.length) {
-        log("No free border territories can join that attack.", "urgent");
+        log("No free territories can join that attack.", "urgent");
         return;
       }
       state.pendingAttack = { targetId };
@@ -1414,7 +1414,8 @@
         const name = document.createElement("strong");
         name.textContent = region.name;
         const stats = document.createElement("span");
-        stats.textContent = `${region.army}K army`;
+        const role = region.neighbors.includes(targetId) ? "front line" : "support";
+        stats.textContent = `${region.army}K - ${role}`;
         label.append(checkbox, name, stats);
         els.plannerOptions.append(label);
       });
@@ -1630,8 +1631,9 @@
     function applyBattleResult(attackerOwner, targetId, isPlayerAttack = false, afterBattle = null, sourceIds = null) {
       const target = getRegion(targetId);
       const selectedSources = sourceIds?.length ? sourceIds.map((id) => getRegion(id)) : [borderRegionFor(attackerOwner, targetId)];
-      const sourceRegions = selectedSources.filter((region) => region && !region.eliminated && region.owner === attackerOwner && region.neighbors.includes(targetId));
-      if (!target || !sourceRegions.length || battleBlocks(attackerOwner, targetId)) return false;
+      const sourceRegions = selectedSources.filter((region) => region && !region.eliminated && region.owner === attackerOwner && !isRegionInBattle(region.id));
+      const hasAttackRoute = ownedRegions(attackerOwner).some((region) => region.neighbors.includes(targetId));
+      if (!target || !sourceRegions.length || !hasAttackRoute || battleBlocks(attackerOwner, targetId)) return false;
       const sourceRegionIds = [...new Set(sourceRegions.map((region) => region.id))];
       const defenderOwner = target.owner;
       const odds = battleOdds(attackerOwner, defenderOwner, sourceRegionIds, targetId);
