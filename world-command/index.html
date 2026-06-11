@@ -345,11 +345,31 @@
       display: flex;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 7px;
-      color: rgba(255, 246, 215, 0.78);
-      font-size: 0.7rem;
+      margin-bottom: 8px;
+      color: #fff6d7;
+      font-size: 0.76rem;
       font-weight: 950;
       text-transform: uppercase;
+    }
+
+    .battle-sides span {
+      max-width: 46%;
+      padding: 5px 7px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.08);
+      overflow-wrap: anywhere;
+      line-height: 1.15;
+    }
+
+    .battle-sides span:first-child {
+      border-color: rgba(255, 107, 107, 0.42);
+      text-align: left;
+    }
+
+    .battle-sides span:last-child {
+      border-color: rgba(117, 230, 161, 0.42);
+      text-align: right;
     }
 
     .battle-progress {
@@ -1073,18 +1093,20 @@
         if (region.eliminated) return;
         const [x, y] = region.center;
         const stats = ownerStats(region.owner);
+        const conquered = region.owner !== region.id;
+        const displayName = conquered ? stats.name : region.name;
         const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
         label.setAttribute("x", x);
         label.setAttribute("y", y - 5);
         label.setAttribute("text-anchor", "middle");
         label.setAttribute("class", "region-label");
-        label.textContent = region.name;
+        label.textContent = displayName;
         const army = document.createElementNS("http://www.w3.org/2000/svg", "text");
         army.setAttribute("x", x);
         army.setAttribute("y", y + 13);
         army.setAttribute("text-anchor", "middle");
         army.setAttribute("class", "army-label");
-        army.textContent = `${stats.army}K army`;
+        army.textContent = conquered ? `${region.name} - ${stats.army}K` : `${stats.army}K army`;
         els.labelLayer.append(label, army);
       });
     }
@@ -1127,8 +1149,10 @@
       const stats = ownerStats(region.owner);
       const isPlayer = region.owner === state.playerId;
       const isBusy = state.activeBattle || state.worldTurn;
-      els.selectedName.textContent = region.name;
-      els.selectedNote.textContent = state.activeBattle ? `Battle underway. Command reports are updating near ${region.name}.` : state.worldTurn ? "World powers are making their moves. Watch the map for new wars." : isPlayer ? "Your command controls this territory." : `${stats.name} controls this territory.`;
+      const conquered = region.owner !== region.id;
+      const displayName = conquered ? stats.name : region.name;
+      els.selectedName.textContent = displayName;
+      els.selectedNote.textContent = state.activeBattle ? `Battle underway. Command reports are updating near ${region.name}.` : state.worldTurn ? "World powers are making their moves. Watch the map for new wars." : isPlayer ? `Your command controls ${conquered ? `former ${region.name}` : "this territory"}.` : `${stats.name} controls ${conquered ? `former ${region.name}` : "this territory"}.`;
       els.ownerPill.textContent = isPlayer ? "Your command" : stats.name;
       els.statArmy.textContent = `${stats.army}K`;
       els.statLand.textContent = stats.land;
@@ -1238,9 +1262,9 @@
     function animateBattle(fromRegion, toRegion, odds) {
       els.battleLayer.innerHTML = "";
       els.battleStatus.hidden = false;
-      els.battleStatusText.textContent = `${odds.attacker.name} pushing into ${toRegion.name} - ${odds.attackerChance}% pressure`;
-      els.battleDefenderLabel.textContent = odds.defender.name;
-      els.battleAttackerLabel.textContent = odds.attacker.name;
+      els.battleStatusText.textContent = `${odds.attacker.name} attacking ${odds.defender.name} in ${toRegion.name}`;
+      els.battleDefenderLabel.textContent = `${odds.defender.name} wins`;
+      els.battleAttackerLabel.textContent = `${odds.attacker.name} wins`;
       setBattleMarker(50);
       const [x1, y1] = fromRegion.center;
       const [x2, y2] = toRegion.center;
