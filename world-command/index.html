@@ -1545,22 +1545,22 @@
       els.transferAmount.value = String(Math.max(0, Math.round(value)));
     }
 
-    function updateTransferPanel() {
+    function updateTransferPanel({ normalizeAmount = true } = {}) {
       const from = getRegion(els.transferFrom.value);
       const to = getRegion(els.transferTo.value);
       const fromOwned = from && from.owner === state.playerId && !from.eliminated;
       const toOwned = to && to.owner === state.playerId && !to.eliminated;
       const maxAmount = fromOwned && toOwned ? maxTransferAmount(from, to) : 0;
       els.transferAmount.max = String(maxAmount);
-      if (maxAmount <= 0) {
+      if (normalizeAmount && maxAmount <= 0) {
         setTransferAmount(0);
-      } else {
+      } else if (normalizeAmount) {
         const currentAmount = clamp(transferAmountValue() || 5, 1, maxAmount);
         setTransferAmount(currentAmount);
       }
       const amount = transferAmountValue();
       const invalid = !fromOwned || !toOwned || from.id === to.id || amount < 1 || amount > maxAmount || isOwnerInBattle(state.playerId);
-      els.transferAmount.disabled = !fromOwned || !toOwned || from.id === to.id || maxAmount <= 0 || isOwnerInBattle(state.playerId);
+      els.transferAmount.disabled = !fromOwned || !toOwned || from.id === to.id || isOwnerInBattle(state.playerId);
       els.transferButton.disabled = invalid;
       if (!fromOwned || !toOwned) {
         els.transferNote.textContent = "Choose two territories you control.";
@@ -1570,9 +1570,17 @@
         els.transferNote.textContent = `${from.name} has no spare troops. It must keep ${MIN_REGION_ARMY}K defenders.`;
       } else if (to.army >= 220) {
         els.transferNote.textContent = `${to.name} is already at max defense.`;
+      } else if (amount < 1) {
+        els.transferNote.textContent = `Type how many troops to move. ${from.name} can send up to ${maxAmount}K.`;
+      } else if (amount > maxAmount) {
+        els.transferNote.textContent = `${from.name} can only send ${maxAmount}K and still keep ${MIN_REGION_ARMY}K defenders.`;
       } else {
         els.transferNote.textContent = `${from.name} keeps ${from.army - amount}K. ${to.name} rises to ${to.army + amount}K.`;
       }
+    }
+
+    function normalizeTransferAmount() {
+      updateTransferPanel({ normalizeAmount: true });
     }
 
     function renderDistributionPanel() {
@@ -1623,7 +1631,7 @@
       const maxAmount = maxTransferAmount(from, to);
       const amount = clamp(transferAmountValue(), 0, maxAmount);
       if (!from || !to || from.owner !== state.playerId || to.owner !== state.playerId || from.id === to.id || amount < 1) {
-        updateTransferPanel();
+        normalizeTransferAmount();
         return;
       }
       from.army = clamp(from.army - amount, MIN_REGION_ARMY, 220);
@@ -2346,9 +2354,10 @@
     els.decisionButton.addEventListener("click", takeRisk);
     els.plannerLaunch.addEventListener("click", launchPlannedAttack);
     els.plannerCancel.addEventListener("click", closeAttackPlanner);
-    els.transferFrom.addEventListener("change", updateTransferPanel);
-    els.transferTo.addEventListener("change", updateTransferPanel);
-    els.transferAmount.addEventListener("input", updateTransferPanel);
+    els.transferFrom.addEventListener("change", normalizeTransferAmount);
+    els.transferTo.addEventListener("change", normalizeTransferAmount);
+    els.transferAmount.addEventListener("input", () => updateTransferPanel({ normalizeAmount: false }));
+    els.transferAmount.addEventListener("blur", normalizeTransferAmount);
     els.transferButton.addEventListener("click", transferTroops);
     els.distributionDone.addEventListener("click", closeDistributionPanel);
     els.restartButton.addEventListener("click", resetGame);
