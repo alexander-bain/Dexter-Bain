@@ -336,15 +336,26 @@
       display: none;
     }
 
-    .battle-status span:first-child {
+    .battle-status > span:first-child {
       display: block;
       margin-bottom: 7px;
+    }
+
+    .battle-sides {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 7px;
+      color: rgba(255, 246, 215, 0.78);
+      font-size: 0.7rem;
+      font-weight: 950;
+      text-transform: uppercase;
     }
 
     .battle-progress {
       position: relative;
       display: block;
-      height: 9px;
+      height: 11px;
       overflow: visible;
       border-radius: 999px;
       background: linear-gradient(90deg, rgba(255, 107, 107, 0.5), rgba(255, 255, 255, 0.24), rgba(117, 230, 161, 0.5));
@@ -360,19 +371,19 @@
       animation: battleSurge 0.75s ease-in-out infinite alternate;
     }
 
-    .battle-progress::after {
-      content: "";
+    .battle-marker {
       position: absolute;
       top: 50%;
       left: 50%;
       width: 16px;
       height: 16px;
+      display: block;
       border-radius: 999px;
       background: #fff8d6;
       border: 2px solid rgba(7, 11, 16, 0.72);
       box-shadow: 0 0 15px rgba(255, 209, 102, 0.85);
       transform: translate(-50%, -50%);
-      animation: battleSwing 0.68s ease-in-out infinite alternate;
+      transition: left 0.62s ease-in-out, box-shadow 0.62s ease, background 0.62s ease;
     }
 
     .start-panel {
@@ -703,15 +714,6 @@
       }
     }
 
-    @keyframes battleSwing {
-      from {
-        left: 18%;
-      }
-      to {
-        left: 82%;
-      }
-    }
-
     @keyframes targetPulse {
       50% {
         stroke-width: 2;
@@ -784,7 +786,13 @@
           </div>
           <div class="battle-status" id="battleStatus" hidden>
             <span id="battleStatusText">Battle underway</span>
-            <span class="battle-progress" aria-hidden="true"></span>
+            <span class="battle-sides" aria-hidden="true">
+              <span id="battleDefenderLabel">Defender</span>
+              <span id="battleAttackerLabel">Attacker</span>
+            </span>
+            <span class="battle-progress" aria-hidden="true">
+              <span class="battle-marker" id="battleMarker"></span>
+            </span>
           </div>
         </div>
 
@@ -937,13 +945,18 @@
       log: document.querySelector("#log"),
       battleStatus: document.querySelector("#battleStatus"),
       battleStatusText: document.querySelector("#battleStatusText"),
+      battleDefenderLabel: document.querySelector("#battleDefenderLabel"),
+      battleAttackerLabel: document.querySelector("#battleAttackerLabel"),
+      battleMarker: document.querySelector("#battleMarker"),
       selectionLayer: document.querySelector("#selectionLayer"),
       battleLayer: document.querySelector("#battleLayer"),
       labelLayer: document.querySelector("#labelLayer")
     };
 
-    const BATTLE_DURATION_MS = 2400;
+    const BATTLE_TICK_MS = 620;
+    const BATTLE_MAX_TICKS = 11;
     const WORLD_MOVE_DELAY_MS = 560;
+    let battleTimer = null;
 
     function clamp(value, min, max) {
       return Math.max(min, Math.min(max, value));
@@ -1184,14 +1197,51 @@
       const readinessEdge = (attacker.morale - defender.morale) * 0.04 + (attacker.supply - defender.supply) * 0.035 + (attacker.tech - defender.tech) * 0.04;
       const landEdge = (attacker.land - defender.land) * 0.35;
       const attackerChance = clamp(Math.round(50 + armyEdge * 9 + readinessEdge + landEdge), 36, 64);
-      const roll = rand(1, 100);
-      return { attacker, defender, attackerChance, roll };
+      return { attacker, defender, attackerChance };
+    }
+
+    function setBattleMarker(position) {
+      els.battleMarker.style.left = `${position}%`;
+      els.battleMarker.style.background = position >= 50 ? "#dfffe9" : "#ffe1e1";
+      els.battleMarker.style.boxShadow = position >= 50 ? "0 0 18px rgba(117, 230, 161, 0.9)" : "0 0 18px rgba(255, 107, 107, 0.88)";
+    }
+
+    function battleLeaderText(position, odds) {
+      if (position >= 60) return `${odds.attacker.name} is gaining ground`;
+      if (position <= 40) return `${odds.defender.name} is holding the line`;
+      return "The battle is swinging back and forth";
+    }
+
+    function runBattleBar(odds, onComplete) {
+      let position = 50;
+      let ticks = 0;
+      let momentum = 0;
+      const bias = (odds.attackerChance - 50) * 0.55;
+      setBattleMarker(position);
+      battleTimer = setInterval(() => {
+        ticks += 1;
+        momentum = clamp(momentum * 0.35 + rand(-22, 22) + bias, -28, 28);
+        position = clamp(Math.round(position + momentum), 0, 100);
+        if (ticks >= BATTLE_MAX_TICKS) {
+          position = position >= 50 ? 100 : 0;
+        }
+        setBattleMarker(position);
+        els.battleStatusText.textContent = battleLeaderText(position, odds);
+        if (position === 0 || position === 100) {
+          clearInterval(battleTimer);
+          battleTimer = null;
+          setTimeout(() => onComplete(position === 100), BATTLE_TICK_MS);
+        }
+      }, BATTLE_TICK_MS);
     }
 
     function animateBattle(fromRegion, toRegion, odds) {
       els.battleLayer.innerHTML = "";
       els.battleStatus.hidden = false;
-      els.battleStatusText.textContent = `${odds.attacker.name} pushing into ${toRegion.name} - ${odds.attackerChance}% chance`;
+      els.battleStatusText.textContent = `${odds.attacker.name} pushing into ${toRegion.name} - ${odds.attackerChance}% pressure`;
+      els.battleDefenderLabel.textContent = odds.defender.name;
+      els.battleAttackerLabel.textContent = odds.attacker.name;
+      setBattleMarker(50);
       const [x1, y1] = fromRegion.center;
       const [x2, y2] = toRegion.center;
       const routeId = `battle-route-${Date.now()}`;
@@ -1266,6 +1316,10 @@
     }
 
     function stopBattleAnimation() {
+      if (battleTimer) {
+        clearInterval(battleTimer);
+        battleTimer = null;
+      }
       els.battleLayer.innerHTML = "";
       els.battleStatus.hidden = true;
       document.querySelectorAll(".region").forEach((shape) => shape.classList.remove("is-fighting"));
@@ -1281,13 +1335,21 @@
       });
     }
 
+    function showGameOver(winnerName, detail) {
+      els.winnerTitle.textContent = "Game Over";
+      els.winnerText.textContent = `${winnerName} defeated your command. ${detail}`;
+      els.winnerPanel.classList.add("is-visible");
+      state.activeBattle = false;
+      state.worldTurn = false;
+      state.started = false;
+    }
+
     function applyBattleResult(attackerOwner, targetId, isPlayerAttack = false, afterBattle = null) {
       const target = getRegion(targetId);
       const origin = borderRegionFor(attackerOwner, targetId);
       if (!target || !origin || state.activeBattle) return false;
       const defenderOwner = target.owner;
       const odds = battleOdds(attackerOwner, defenderOwner);
-      const attackerWon = odds.roll <= odds.attackerChance;
       const underdog = odds.attacker.army < odds.defender.army;
       const reward = underdog ? rand(18, 34) : rand(8, 18);
       const loss = underdog ? rand(4, 12) : rand(9, 20);
@@ -1295,7 +1357,7 @@
       animateBattle(origin, target, odds);
       renderSelected();
 
-      setTimeout(() => {
+      runBattleBar(odds, (attackerWon) => {
         if (attackerWon) {
           ownedRegions(attackerOwner).forEach((region) => {
             region.army = clamp(region.army + Math.round(reward / Math.max(1, odds.attacker.land)), 10, 220);
@@ -1323,7 +1385,14 @@
         state.tension = clamp(state.tension + rand(2, 7), 0, 100);
         state.turn += isPlayerAttack ? 1 : 0;
         render();
-        const hasWinner = checkWinner();
+        const playerLostBattle = (attackerOwner === state.playerId && !attackerWon) || (defenderOwner === state.playerId && attackerWon);
+        if (playerLostBattle) {
+          const winnerName = attackerWon ? odds.attacker.name : odds.defender.name;
+          const detail = attackerWon ? `${winnerName} captured ${target.name}.` : `Your attack on ${target.name} failed.`;
+          log(`Game over: ${winnerName} defeated your command.`, "urgent");
+          showGameOver(winnerName, detail);
+        }
+        const hasWinner = playerLostBattle || checkWinner();
         setTimeout(() => {
           state.activeBattle = false;
           stopBattleAnimation();
@@ -1336,7 +1405,7 @@
           if (isPlayerAttack) runWorldTurn();
           if (!isPlayerAttack && afterBattle) afterBattle();
         }, 850);
-      }, BATTLE_DURATION_MS);
+      });
       return true;
     }
 
