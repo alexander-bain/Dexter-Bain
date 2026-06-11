@@ -1059,7 +1059,7 @@
 
         <section class="panel-section">
           <h3>Command Tip</h3>
-          <p class="subtitle" id="tipText">Smaller armies can win. If they do, they earn larger army, morale, and tech rewards.</p>
+          <p class="subtitle" id="tipText">Smaller armies can win. Upsets earn momentum and tech, but every battle costs troops.</p>
         </section>
 
         <section class="panel-section">
@@ -1197,7 +1197,7 @@
       els.startPanel.classList.remove("is-hidden");
       buildStartChoices();
       render();
-      log("Choose a command region. Smaller starts are harder, but their upset rewards are stronger.", "good");
+      log("Choose a command region. Smaller starts are harder, but their upset rewards are stronger and every fight costs troops.", "good");
     }
 
     function getRegion(id) {
@@ -1691,8 +1691,11 @@
       battle.timer = setInterval(() => {
         ticks += 1;
         momentum = clamp(momentum * 0.35 + rand(-22, 22) + bias, -28, 28);
-        position = clamp(Math.round(position + momentum), 0, 100);
-        if (ticks >= BATTLE_MAX_TICKS) {
+        const rawPosition = clamp(Math.round(position + momentum), 0, 100);
+        let forcedFinish = false;
+        position = rawPosition;
+        if (ticks >= BATTLE_MAX_TICKS && position !== 0 && position !== 100) {
+          forcedFinish = true;
           position = position >= 50 ? 100 : 0;
         }
         setBattleMarker(battle, position);
@@ -1700,7 +1703,10 @@
         if (position === 0 || position === 100) {
           clearInterval(battle.timer);
           battle.timer = null;
-          setTimeout(() => onComplete(position === 100), BATTLE_TICK_MS);
+          const barDistance = Math.abs((forcedFinish ? rawPosition : position) - 50) / 50;
+          const speedBonus = clamp((BATTLE_MAX_TICKS - ticks + 1) / BATTLE_MAX_TICKS, 0, 1);
+          const decisiveness = clamp(barDistance * 0.7 + speedBonus * 0.3, 0.08, 1);
+          setTimeout(() => onComplete(position === 100, { decisiveness, forcedFinish, ticks }), BATTLE_TICK_MS);
         }
       }, BATTLE_TICK_MS);
     }
@@ -1867,6 +1873,51 @@
       return false;
     }
 
+    function applyCasualties(regions, totalLoss) {
+      const availableRegions = regions.filter((region) => region && !region.eliminated);
+      let remaining = Math.max(0, Math.round(totalLoss));
+      let applied = 0;
+      for (let pass = 0; pass < 3 && remaining > 0; pass += 1) {
+        const activeRegions = availableRegions.filter((region) => region.army > MIN_REGION_ARMY);
+        const activeArmy = activeRegions.reduce((sum, region) => sum + region.army, 0);
+        if (!activeRegions.length || activeArmy <= 0) break;
+        activeRegions.forEach((region) => {
+          if (remaining <= 0) return;
+          const share = Math.max(1, Math.round(remaining * (region.army / activeArmy)));
+          const loss = Math.min(region.army - MIN_REGION_ARMY, share);
+          region.army -= loss;
+          remaining -= loss;
+          applied += loss;
+        });
+      }
+      return applied;
+    }
+
+    function battleCasualties(odds, attackerWon, result) {
+      const decisiveness = result?.decisiveness ?? 0.5;
+      const closeFight = 1 - decisiveness;
+      const winner = attackerWon ? odds.attacker : odds.defender;
+      const loser = attackerWon ? odds.defender : odds.attacker;
+      const winnerChance = attackerWon ? odds.attackerChance : 100 - odds.attackerChance;
+      const surpriseCost = clamp((50 - winnerChance) / 30, -0.45, 0.75);
+      const armyPressure = clamp(loser.army / Math.max(1, winner.army), 0.65, 1.65);
+      const winnerLossRate = clamp((0.12 + closeFight * 0.26 + surpriseCost * 0.14) * armyPressure, 0.08, 0.52);
+      const loserPressure = clamp(winner.army / Math.max(1, loser.army), 0.75, 1.45);
+      const loserLossRate = clamp((0.2 + decisiveness * 0.16 + closeFight * 0.08) * loserPressure, 0.18, 0.58);
+      return {
+        winnerLoss: Math.max(1, Math.round(winner.army * winnerLossRate)),
+        loserLoss: Math.max(1, Math.round(loser.army * loserLossRate)),
+        decisiveness,
+        winnerChance
+      };
+    }
+
+    function victoryAdverb(decisiveness) {
+      if (decisiveness >= 0.72) return "decisively";
+      if (decisiveness <= 0.28) return "barely";
+      return "narrowly";
+    }
+
     function applyBattleResult(attackerOwner, targetId, isPlayerAttack = false, afterBattle = null, sourceIds = null) {
       const target = getRegion(targetId);
       const selectedSources = sourceIds?.length ? sourceIds.map((id) => getRegion(id)) : [borderRegionFor(attackerOwner, targetId)];
@@ -1879,9 +1930,6 @@
         closeDistributionPanel();
       }
       const odds = battleOdds(attackerOwner, defenderOwner, sourceRegionIds, targetId);
-      const underdog = odds.attacker.army < odds.defender.army;
-      const reward = underdog ? rand(18, 34) : rand(8, 18);
-      const loss = underdog ? rand(4, 12) : rand(9, 20);
       const battle = {
         id: state.nextBattleId,
         attackerOwner,
@@ -1904,28 +1952,35 @@
       animateBattle(sourceRegions, target, battle);
       renderSelected();
 
-      runBattleBar(battle, (attackerWon) => {
+      runBattleBar(battle, (attackerWon, result) => {
+        const casualties = battleCasualties(odds, attackerWon, result);
+        const winnerWasUnderdog = attackerWon ? odds.attacker.army < odds.defender.army : odds.defender.army < odds.attacker.army;
+        const winStyle = victoryAdverb(casualties.decisiveness);
         if (attackerWon) {
+          const attackerLoss = applyCasualties(sourceRegions, casualties.winnerLoss);
+          const defenderLoss = applyCasualties([target], casualties.loserLoss);
           sourceRegions.forEach((region) => {
-            region.army = clamp(region.army + Math.round(reward / Math.max(1, sourceRegions.length)), 10, 220);
-            region.tech = clamp(region.tech + (underdog ? 3 : 1), 20, 99);
+            region.tech = clamp(region.tech + (winnerWasUnderdog ? 4 : 1), 20, 99);
+            region.morale = clamp(region.morale + (winnerWasUnderdog ? 3 : 1), 20, 99);
           });
-          target.army = clamp(target.army - loss + rand(2, 7), MIN_REGION_ARMY, 220);
           target.morale = clamp(target.morale - rand(3, 9), 20, 99);
           transferTerritory(target, attackerOwner);
-          log(`${odds.attacker.name} captured ${target.name}${underdog ? " in an upset and earned a huge reward" : ""}.`, attackerOwner === state.playerId ? "good" : "urgent");
-          showBattleResult(target, underdog ? "UPSET CAPTURE" : "CAPTURED", attackerOwner === state.playerId ? "good" : "urgent", battle);
+          log(`${odds.attacker.name} ${winStyle} captured ${target.name}. Winners lost ${attackerLoss}K; defenders lost ${defenderLoss}K${winnerWasUnderdog ? ", and the upset boosted tech" : ""}.`, attackerOwner === state.playerId ? "good" : "urgent");
+          const resultText = casualties.decisiveness <= 0.28 ? "COSTLY CAPTURE" : winnerWasUnderdog ? "UPSET CAPTURE" : "CAPTURED";
+          showBattleResult(target, resultText, attackerOwner === state.playerId ? "good" : "urgent", battle);
         } else {
+          const defenderLoss = applyCasualties([target], casualties.winnerLoss);
+          const attackerLoss = applyCasualties(sourceRegions, casualties.loserLoss);
           const lostSource = sourceRegions.slice().sort((a, b) => a.army - b.army)[0];
           sourceRegions.forEach((region) => {
-            region.army = clamp(region.army - Math.round(loss / Math.max(1, sourceRegions.length)), MIN_REGION_ARMY, 220);
             region.morale = clamp(region.morale - rand(2, 7), 20, 99);
           });
-          target.army = clamp(target.army + Math.round(rand(3, 9)), MIN_REGION_ARMY, 220);
           target.supply = clamp(target.supply + rand(1, 4), 20, 99);
+          target.tech = clamp(target.tech + (winnerWasUnderdog ? 4 : 1), 20, 99);
+          target.morale = clamp(target.morale + (winnerWasUnderdog ? 3 : 1), 20, 99);
           transferTerritory(lostSource, defenderOwner);
-          log(`${odds.attacker.name} failed to take ${target.name}. ${odds.defender.name} captured ${lostSource.name}.`, isPlayerAttack ? "urgent" : "");
-          showBattleResult(lostSource, "LOST", isPlayerAttack ? "urgent" : "good", battle);
+          log(`${odds.defender.name} ${winStyle} held ${target.name}. Winners lost ${defenderLoss}K; attackers lost ${attackerLoss}K and ${lostSource.name}.`, isPlayerAttack ? "urgent" : "");
+          showBattleResult(lostSource, casualties.decisiveness <= 0.28 ? "COSTLY HOLD" : "LOST", isPlayerAttack ? "urgent" : "good", battle);
         }
         state.tension = clamp(state.tension + rand(2, 7), 0, 100);
         state.turn += isPlayerAttack ? 1 : 0;
