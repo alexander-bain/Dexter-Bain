@@ -1000,7 +1000,7 @@
             </label>
             <label>
               Troops
-              <input id="transferAmount" type="number" min="1" step="1" value="5">
+              <input id="transferAmount" type="text" inputmode="numeric" pattern="[0-9]*" value="5K" aria-label="Troops in thousands">
             </label>
           </div>
           <p class="transfer-note" id="transferNote"></p>
@@ -1514,6 +1514,14 @@
       return Math.max(0, Math.min(from.army - MIN_REGION_ARMY, 220 - to.army));
     }
 
+    function transferAmountValue() {
+      return Math.max(0, Math.round(Number(String(els.transferAmount.value).replace(/[^0-9]/g, "")) || 0));
+    }
+
+    function setTransferAmount(value) {
+      els.transferAmount.value = `${Math.max(0, Math.round(value))}K`;
+    }
+
     function updateTransferPanel() {
       const from = getRegion(els.transferFrom.value);
       const to = getRegion(els.transferTo.value);
@@ -1522,12 +1530,12 @@
       const maxAmount = fromOwned && toOwned ? maxTransferAmount(from, to) : 0;
       els.transferAmount.max = String(maxAmount);
       if (maxAmount <= 0) {
-        els.transferAmount.value = "0";
+        setTransferAmount(0);
       } else {
-        const currentAmount = clamp(Math.round(Number(els.transferAmount.value) || 5), 1, maxAmount);
-        els.transferAmount.value = String(currentAmount);
+        const currentAmount = clamp(transferAmountValue() || 5, 1, maxAmount);
+        setTransferAmount(currentAmount);
       }
-      const amount = Math.round(Number(els.transferAmount.value) || 0);
+      const amount = transferAmountValue();
       const invalid = !fromOwned || !toOwned || from.id === to.id || amount < 1 || amount > maxAmount || isOwnerInBattle(state.playerId);
       els.transferButton.disabled = invalid;
       if (!fromOwned || !toOwned) {
@@ -1555,7 +1563,7 @@
         els.transferTo.disabled = true;
         els.transferAmount.disabled = true;
         els.transferButton.disabled = true;
-        els.transferAmount.value = "0";
+        setTransferAmount(0);
         els.transferNote.textContent = "You need at least two territories to distribute forces.";
         return;
       }
@@ -1589,7 +1597,7 @@
       const from = getRegion(els.transferFrom.value);
       const to = getRegion(els.transferTo.value);
       const maxAmount = maxTransferAmount(from, to);
-      const amount = clamp(Math.round(Number(els.transferAmount.value) || 0), 0, maxAmount);
+      const amount = clamp(transferAmountValue(), 0, maxAmount);
       if (!from || !to || from.owner !== state.playerId || to.owner !== state.playerId || from.id === to.id || amount < 1) {
         updateTransferPanel();
         return;
