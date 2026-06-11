@@ -516,6 +516,26 @@
       font-weight: 850;
     }
 
+    .transfer-amount-field {
+      position: relative;
+      display: block;
+    }
+
+    .transfer-amount-field input {
+      padding-right: 30px;
+      text-align: right;
+    }
+
+    .transfer-amount-suffix {
+      position: absolute;
+      right: 11px;
+      top: 50%;
+      color: var(--muted);
+      font-weight: 950;
+      pointer-events: none;
+      transform: translateY(-50%);
+    }
+
     .transfer-note {
       min-height: 22px;
       margin: 0 0 12px;
@@ -1000,7 +1020,10 @@
             </label>
             <label>
               Troops
-              <input id="transferAmount" type="text" inputmode="numeric" pattern="[0-9]*" value="5K" aria-label="Troops in thousands">
+              <span class="transfer-amount-field">
+                <input id="transferAmount" type="text" inputmode="numeric" pattern="[0-9]*" value="5" aria-label="Troops in thousands">
+                <span class="transfer-amount-suffix" aria-hidden="true">K</span>
+              </span>
             </label>
           </div>
           <p class="transfer-note" id="transferNote"></p>
@@ -1519,7 +1542,7 @@
     }
 
     function setTransferAmount(value) {
-      els.transferAmount.value = `${Math.max(0, Math.round(value))}K`;
+      els.transferAmount.value = String(Math.max(0, Math.round(value)));
     }
 
     function updateTransferPanel() {
@@ -1537,6 +1560,7 @@
       }
       const amount = transferAmountValue();
       const invalid = !fromOwned || !toOwned || from.id === to.id || amount < 1 || amount > maxAmount || isOwnerInBattle(state.playerId);
+      els.transferAmount.disabled = !fromOwned || !toOwned || from.id === to.id || maxAmount <= 0 || isOwnerInBattle(state.playerId);
       els.transferButton.disabled = invalid;
       if (!fromOwned || !toOwned) {
         els.transferNote.textContent = "Choose two territories you control.";
