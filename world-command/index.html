@@ -412,6 +412,80 @@
       transition: left 0.62s ease-in-out, box-shadow 0.62s ease, background 0.62s ease;
     }
 
+    .attack-planner {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      z-index: 10;
+      width: min(560px, calc(100% - 32px));
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      background: rgba(7, 11, 16, 0.94);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.36);
+      transform: translateX(-50%);
+    }
+
+    .attack-planner[hidden] {
+      display: none;
+    }
+
+    .planner-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .chance-pill {
+      flex: 0 0 auto;
+      padding: 6px 9px;
+      border: 1px solid rgba(117, 230, 161, 0.34);
+      border-radius: 999px;
+      background: rgba(117, 230, 161, 0.12);
+      color: #dfffe9;
+      font-size: 0.78rem;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .attack-options {
+      display: grid;
+      gap: 8px;
+      max-height: 190px;
+      overflow: auto;
+      margin-bottom: 12px;
+      padding-right: 2px;
+    }
+
+    .attack-option {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 9px;
+      align-items: center;
+      min-height: 46px;
+      padding: 9px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.065);
+      color: var(--ink);
+      font-weight: 850;
+    }
+
+    .attack-option input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--good);
+    }
+
+    .attack-option span {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-align: right;
+    }
+
     .start-panel {
       position: absolute;
       inset: 70px auto auto 50%;
@@ -845,6 +919,21 @@
           <button class="btn primary" id="startButton" type="button">Start Campaign</button>
         </div>
 
+        <div class="attack-planner" id="attackPlanner" hidden>
+          <div class="planner-head">
+            <div>
+              <h2 id="plannerTitle">Plan Attack</h2>
+              <p class="subtitle" id="plannerNote">Pick the territories joining this battle.</p>
+            </div>
+            <span class="chance-pill" id="plannerChance">0% chance</span>
+          </div>
+          <div class="attack-options" id="plannerOptions"></div>
+          <div class="button-row">
+            <button class="btn danger" id="plannerLaunch" type="button">Launch Selected</button>
+            <button class="btn" id="plannerCancel" type="button">Cancel</button>
+          </div>
+        </div>
+
         <div class="winner" id="winnerPanel">
           <div class="winner-box">
             <h2 id="winnerTitle">World Unified</h2>
@@ -933,6 +1022,7 @@
       activeBattle: false,
       battles: [],
       nextBattleId: 1,
+      pendingAttack: null,
       worldTurn: false,
       started: false
     };
@@ -963,6 +1053,13 @@
       tipText: document.querySelector("#tipText"),
       log: document.querySelector("#log"),
       battleStatus: document.querySelector("#battleStatus"),
+      attackPlanner: document.querySelector("#attackPlanner"),
+      plannerTitle: document.querySelector("#plannerTitle"),
+      plannerNote: document.querySelector("#plannerNote"),
+      plannerChance: document.querySelector("#plannerChance"),
+      plannerOptions: document.querySelector("#plannerOptions"),
+      plannerLaunch: document.querySelector("#plannerLaunch"),
+      plannerCancel: document.querySelector("#plannerCancel"),
       selectionLayer: document.querySelector("#selectionLayer"),
       battleLayer: document.querySelector("#battleLayer"),
       labelLayer: document.querySelector("#labelLayer")
@@ -998,11 +1095,14 @@
       state.activeBattle = false;
       state.battles = [];
       state.nextBattleId = 1;
+      state.pendingAttack = null;
       state.worldTurn = false;
       state.started = false;
       els.battleLayer.innerHTML = "";
       els.battleStatus.innerHTML = "";
       els.battleStatus.hidden = true;
+      els.attackPlanner.hidden = true;
+      els.plannerOptions.innerHTML = "";
       els.winnerPanel.classList.remove("is-visible");
       els.startPanel.classList.remove("is-hidden");
       buildStartChoices();
@@ -1036,6 +1136,21 @@
       };
     }
 
+    function battleStatsForRegions(owner, regionIds) {
+      const regions = regionIds.map((id) => getRegion(id)).filter((region) => region && !region.eliminated && region.owner === owner);
+      const ownerName = ownerStats(owner).name;
+      return {
+        name: ownerName,
+        army: regions.reduce((sum, region) => sum + region.army, 0),
+        morale: Math.round(regions.reduce((sum, region) => sum + region.morale, 0) / Math.max(1, regions.length)),
+        supply: Math.round(regions.reduce((sum, region) => sum + region.supply, 0) / Math.max(1, regions.length)),
+        tech: Math.round(regions.reduce((sum, region) => sum + region.tech, 0) / Math.max(1, regions.length)),
+        land: regions.length,
+        defeated: regions.reduce((sum, region) => sum + region.defeated, 0),
+        regions
+      };
+    }
+
     function syncBattleState() {
       state.activeBattle = state.battles.length > 0;
       els.battleStatus.hidden = state.battles.length === 0;
@@ -1046,7 +1161,7 @@
     }
 
     function isRegionInBattle(regionId) {
-      return state.battles.some((battle) => battle.originId === regionId || battle.targetId === regionId);
+      return state.battles.some((battle) => (battle.originIds || [battle.originId]).includes(regionId) || battle.targetId === regionId);
     }
 
     function battleBlocks(attackerOwner, targetId) {
@@ -1065,6 +1180,10 @@
 
     function attackableTargets(owner) {
       return state.regions.filter((region) => canAttack(owner, region.id));
+    }
+
+    function attackSourcesFor(owner, targetId) {
+      return ownedRegions(owner).filter((region) => region.neighbors.includes(targetId) && !isRegionInBattle(region.id));
     }
 
     function borderRegionFor(owner, targetId) {
@@ -1171,14 +1290,16 @@
       const displayName = conquered ? stats.name : region.name;
       const playerBusy = isOwnerInBattle(state.playerId);
       const targetBusy = isOwnerInBattle(region.owner) || isRegionInBattle(region.id);
+      const availableSources = !isPlayer && !playerBusy && !targetBusy ? attackSourcesFor(state.playerId, region.id).map((source) => source.id) : [];
+      const plannedChance = state.started && availableSources.length && canAttack(state.playerId, region.id) ? battleOdds(state.playerId, region.owner, availableSources, region.id).attackerChance : null;
       els.selectedName.textContent = displayName;
-      els.selectedNote.textContent = playerBusy ? "Your command is already fighting. Wait for that battle to finish." : targetBusy ? `${displayName} is already in battle.` : state.worldTurn ? "World powers are making their moves. You can still attack if your command and target are free." : isPlayer ? `Your command controls ${conquered ? `former ${region.name}` : "this territory"}.` : `${stats.name} controls ${conquered ? `former ${region.name}` : "this territory"}.`;
+      els.selectedNote.textContent = playerBusy ? "Your command is already fighting. Wait for that battle to finish." : targetBusy ? `${displayName} is already in battle.` : plannedChance ? `${stats.name} controls ${conquered ? `former ${region.name}` : "this territory"}. Attack chance: ${plannedChance}%.` : state.worldTurn ? "World powers are making their moves. You can still attack if your command and target are free." : isPlayer ? `Your command controls ${conquered ? `former ${region.name}` : "this territory"}.` : `${stats.name} controls ${conquered ? `former ${region.name}` : "this territory"}.`;
       els.ownerPill.textContent = isPlayer ? "Your command" : stats.name;
       els.statArmy.textContent = `${stats.army}K`;
       els.statLand.textContent = stats.land;
       els.statKills.textContent = stats.defeated;
       els.statMorale.textContent = `${stats.morale}%`;
-      els.attackButton.textContent = playerBusy ? "Battle Underway" : targetBusy && !isPlayer ? "Target Busy" : "Launch Attack";
+      els.attackButton.textContent = playerBusy ? "Battle Underway" : targetBusy && !isPlayer ? "Target Busy" : "Plan Attack";
       els.peaceButton.textContent = playerBusy || targetBusy ? "Stand By" : "Request Peace";
       els.decisionButton.textContent = playerBusy ? "Resolving" : "Take Risk";
       els.attackButton.disabled = !state.started || playerBusy || !canAttack(state.playerId, region.id);
@@ -1234,14 +1355,79 @@
       renderTip();
     }
 
-    function battleOdds(attackerOwner, defenderOwner) {
-      const attacker = ownerStats(attackerOwner);
-      const defender = ownerStats(defenderOwner);
+    function battleOdds(attackerOwner, defenderOwner, sourceIds = null, targetId = null) {
+      const target = targetId ? getRegion(targetId) : null;
+      const attacker = sourceIds?.length ? battleStatsForRegions(attackerOwner, sourceIds) : ownerStats(attackerOwner);
+      const defender = target ? battleStatsForRegions(defenderOwner, [target.id]) : ownerStats(defenderOwner);
       const armyEdge = (attacker.army - defender.army) / Math.max(1, Math.max(attacker.army, defender.army));
       const readinessEdge = (attacker.morale - defender.morale) * 0.04 + (attacker.supply - defender.supply) * 0.035 + (attacker.tech - defender.tech) * 0.04;
-      const landEdge = (attacker.land - defender.land) * 0.35;
-      const attackerChance = clamp(Math.round(50 + armyEdge * 9 + readinessEdge + landEdge), 36, 64);
+      const landEdge = (attacker.land - defender.land) * 0.55;
+      const attackerChance = clamp(Math.round(50 + armyEdge * 18 + readinessEdge + landEdge), 28, 78);
       return { attacker, defender, attackerChance };
+    }
+
+    function selectedPlannerSourceIds() {
+      return [...els.plannerOptions.querySelectorAll("input[type='checkbox']:checked")].map((input) => input.dataset.id);
+    }
+
+    function updatePlannerChance() {
+      const target = getRegion(state.pendingAttack?.targetId);
+      const sourceIds = selectedPlannerSourceIds();
+      if (!target || !sourceIds.length) {
+        els.plannerChance.textContent = "Pick forces";
+        els.plannerNote.textContent = "Choose at least one territory to send.";
+        els.plannerLaunch.disabled = true;
+        return;
+      }
+      const odds = battleOdds(state.playerId, target.owner, sourceIds, target.id);
+      const sourceStats = battleStatsForRegions(state.playerId, sourceIds);
+      els.plannerChance.textContent = `${odds.attackerChance}% chance`;
+      els.plannerNote.textContent = `${sourceIds.length} ${sourceIds.length === 1 ? "territory" : "territories"} sending ${sourceStats.army}K vs ${target.army}K.`;
+      els.plannerLaunch.disabled = false;
+    }
+
+    function closeAttackPlanner() {
+      state.pendingAttack = null;
+      els.attackPlanner.hidden = true;
+      els.plannerOptions.innerHTML = "";
+    }
+
+    function openAttackPlanner(targetId) {
+      const target = getRegion(targetId);
+      if (!target || !canAttack(state.playerId, targetId)) return;
+      const sources = attackSourcesFor(state.playerId, targetId);
+      if (!sources.length) {
+        log("No free border territories can join that attack.", "urgent");
+        return;
+      }
+      state.pendingAttack = { targetId };
+      els.plannerTitle.textContent = `Attack ${target.name}`;
+      els.plannerOptions.innerHTML = "";
+      sources.forEach((region) => {
+        const label = document.createElement("label");
+        label.className = "attack-option";
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.dataset.id = region.id;
+        checkbox.checked = true;
+        checkbox.addEventListener("change", updatePlannerChance);
+        const name = document.createElement("strong");
+        name.textContent = region.name;
+        const stats = document.createElement("span");
+        stats.textContent = `${region.army}K army`;
+        label.append(checkbox, name, stats);
+        els.plannerOptions.append(label);
+      });
+      els.attackPlanner.hidden = false;
+      updatePlannerChance();
+    }
+
+    function launchPlannedAttack() {
+      const targetId = state.pendingAttack?.targetId;
+      const sourceIds = selectedPlannerSourceIds();
+      if (!targetId || !sourceIds.length) return;
+      closeAttackPlanner();
+      applyBattleResult(state.playerId, targetId, true, null, sourceIds);
     }
 
     function setBattleMarker(battle, position) {
@@ -1262,7 +1448,8 @@
       card.className = "battle-card";
       const status = document.createElement("span");
       status.className = "battle-main";
-      status.textContent = `${battle.odds.attacker.name} attacking ${battle.odds.defender.name} in ${toRegion.name}`;
+      const sourceText = battle.sourceNames?.length > 2 ? `${battle.sourceNames.length} territories` : battle.sourceNames?.join(" + ");
+      status.textContent = `${battle.odds.attacker.name} attacking ${battle.odds.defender.name} in ${toRegion.name}${sourceText ? ` from ${sourceText}` : ""}`;
       const sides = document.createElement("span");
       sides.className = "battle-sides";
       const defender = document.createElement("span");
@@ -1306,65 +1493,67 @@
       }, BATTLE_TICK_MS);
     }
 
-    function animateBattle(fromRegion, toRegion, battle) {
+    function animateBattle(fromRegions, toRegion, battle) {
       createBattleCard(battle, toRegion);
       setBattleMarker(battle, 50);
-      const [x1, y1] = fromRegion.center;
+      const sources = Array.isArray(fromRegions) ? fromRegions : [fromRegions];
       const [x2, y2] = toRegion.center;
-      const routeId = `battle-route-${battle.id}`;
       const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      group.dataset.battleId = battle.id;
-      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      const midX = (x1 + x2) / 2;
-      const midY = Math.min(y1, y2) - 58;
-      path.setAttribute("d", `M ${x1} ${y1} Q ${midX} ${midY} ${x2} ${y2}`);
-      path.setAttribute("id", routeId);
-      path.setAttribute("class", "battle-line");
-      const trail = path.cloneNode();
-      trail.removeAttribute("id");
-      trail.setAttribute("class", "battle-trail");
+      group.setAttribute("data-battle-id", battle.id);
       const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       dot.setAttribute("cx", x2);
       dot.setAttribute("cy", y2);
       dot.setAttribute("r", "5");
       dot.setAttribute("class", "battle-dot");
-      const originPulse = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-      originPulse.setAttribute("cx", x1);
-      originPulse.setAttribute("cy", y1);
-      originPulse.setAttribute("r", "12");
-      originPulse.setAttribute("class", "battle-pulse");
       const targetPulse = document.createElementNS("http://www.w3.org/2000/svg", "circle");
       targetPulse.setAttribute("cx", x2);
       targetPulse.setAttribute("cy", y2);
       targetPulse.setAttribute("r", "14");
       targetPulse.setAttribute("class", "battle-pulse");
       const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      label.setAttribute("x", midX);
-      label.setAttribute("y", midY - 10);
+      label.setAttribute("x", x2);
+      label.setAttribute("y", y2 - 28);
       label.setAttribute("text-anchor", "middle");
       label.setAttribute("class", "battle-label");
       label.textContent = "WAR";
-      group.append(trail, path, originPulse, targetPulse, dot, label);
-      for (let i = 0; i < 4; i += 1) {
-        const runner = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        runner.setAttribute("r", String(4 + (i % 2)));
-        runner.setAttribute("class", "battle-runner");
-        const motion = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
-        motion.setAttribute("dur", "1.45s");
-        motion.setAttribute("begin", `${i * 0.27}s`);
-        motion.setAttribute("repeatCount", "indefinite");
-        motion.setAttribute("rotate", "auto");
-        const mpath = document.createElementNS("http://www.w3.org/2000/svg", "mpath");
-        mpath.setAttribute("href", `#${routeId}`);
-        motion.append(mpath);
-        runner.append(motion);
-        group.append(runner);
-      }
+      sources.forEach((fromRegion, sourceIndex) => {
+        const [x1, y1] = fromRegion.center;
+        const routeId = `battle-route-${battle.id}-${sourceIndex}`;
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        const midX = (x1 + x2) / 2;
+        const midY = Math.min(y1, y2) - 48 - sourceIndex * 10;
+        path.setAttribute("d", `M ${x1} ${y1} Q ${midX} ${midY} ${x2} ${y2}`);
+        path.setAttribute("id", routeId);
+        path.setAttribute("class", "battle-line");
+        const trail = path.cloneNode();
+        trail.removeAttribute("id");
+        trail.setAttribute("class", "battle-trail");
+        const originPulse = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        originPulse.setAttribute("cx", x1);
+        originPulse.setAttribute("cy", y1);
+        originPulse.setAttribute("r", "12");
+        originPulse.setAttribute("class", "battle-pulse");
+        group.append(trail, path, originPulse);
+        for (let i = 0; i < 3; i += 1) {
+          const runner = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          runner.setAttribute("r", String(4 + ((i + sourceIndex) % 2)));
+          runner.setAttribute("class", "battle-runner");
+          const motion = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
+          motion.setAttribute("dur", "1.45s");
+          motion.setAttribute("begin", `${i * 0.28 + sourceIndex * 0.14}s`);
+          motion.setAttribute("repeatCount", "indefinite");
+          motion.setAttribute("rotate", "auto");
+          const mpath = document.createElementNS("http://www.w3.org/2000/svg", "mpath");
+          mpath.setAttribute("href", `#${routeId}`);
+          motion.append(mpath);
+          runner.append(motion);
+          group.append(runner);
+        }
+        document.querySelector(`.region[data-id="${fromRegion.id}"]`)?.classList.add("is-fighting");
+      });
+      group.append(targetPulse, dot, label);
       els.battleLayer.append(group);
       battle.groupEl = group;
-      fromRegion.shape?.classList?.add("is-fighting");
-      toRegion.shape?.classList?.add("is-fighting");
-      document.querySelector(`.region[data-id="${fromRegion.id}"]`)?.classList.add("is-fighting");
       document.querySelector(`.region[data-id="${toRegion.id}"]`)?.classList.add("is-fighting");
     }
 
@@ -1394,7 +1583,7 @@
       battle.groupEl?.remove();
       battle.cardEl?.remove();
       state.battles = state.battles.filter((item) => item.id !== battle.id);
-      [battle.originId, battle.targetId].forEach((regionId) => {
+      [...(battle.originIds || [battle.originId]), battle.targetId].forEach((regionId) => {
         if (!isRegionInBattle(regionId)) {
           document.querySelector(`.region[data-id="${regionId}"]`)?.classList.remove("is-fighting");
         }
@@ -1430,12 +1619,22 @@
       stopAllBattles();
     }
 
-    function applyBattleResult(attackerOwner, targetId, isPlayerAttack = false, afterBattle = null) {
+    function checkPlayerDefeat(winnerName = "A rival command") {
+      if (state.started && ownedRegions(state.playerId).length === 0) {
+        showGameOver(winnerName, "Your last territory fell.");
+        return true;
+      }
+      return false;
+    }
+
+    function applyBattleResult(attackerOwner, targetId, isPlayerAttack = false, afterBattle = null, sourceIds = null) {
       const target = getRegion(targetId);
-      const origin = borderRegionFor(attackerOwner, targetId);
-      if (!target || !origin || battleBlocks(attackerOwner, targetId)) return false;
+      const selectedSources = sourceIds?.length ? sourceIds.map((id) => getRegion(id)) : [borderRegionFor(attackerOwner, targetId)];
+      const sourceRegions = selectedSources.filter((region) => region && !region.eliminated && region.owner === attackerOwner && region.neighbors.includes(targetId));
+      if (!target || !sourceRegions.length || battleBlocks(attackerOwner, targetId)) return false;
+      const sourceRegionIds = [...new Set(sourceRegions.map((region) => region.id))];
       const defenderOwner = target.owner;
-      const odds = battleOdds(attackerOwner, defenderOwner);
+      const odds = battleOdds(attackerOwner, defenderOwner, sourceRegionIds, targetId);
       const underdog = odds.attacker.army < odds.defender.army;
       const reward = underdog ? rand(18, 34) : rand(8, 18);
       const loss = underdog ? rand(4, 12) : rand(9, 20);
@@ -1443,8 +1642,10 @@
         id: state.nextBattleId,
         attackerOwner,
         defenderOwner,
-        originId: origin.id,
+        originId: sourceRegionIds[0],
+        originIds: sourceRegionIds,
         targetId,
+        sourceNames: sourceRegions.map((region) => region.name),
         odds,
         timer: null,
         groupEl: null,
@@ -1456,45 +1657,37 @@
       state.nextBattleId += 1;
       state.battles.push(battle);
       syncBattleState();
-      animateBattle(origin, target, battle);
+      animateBattle(sourceRegions, target, battle);
       renderSelected();
 
       runBattleBar(battle, (attackerWon) => {
         if (attackerWon) {
-          ownedRegions(attackerOwner).forEach((region) => {
-            region.army = clamp(region.army + Math.round(reward / Math.max(1, odds.attacker.land)), 10, 220);
+          sourceRegions.forEach((region) => {
+            region.army = clamp(region.army + Math.round(reward / Math.max(1, sourceRegions.length)), 10, 220);
             region.tech = clamp(region.tech + (underdog ? 3 : 1), 20, 99);
           });
-          ownedRegions(defenderOwner).forEach((region) => {
-            region.army = clamp(region.army - Math.round(loss / Math.max(1, odds.defender.land)), 8, 220);
-            region.morale = clamp(region.morale - rand(3, 9), 20, 99);
-          });
+          target.army = clamp(target.army - loss + rand(2, 7), 8, 220);
+          target.morale = clamp(target.morale - rand(3, 9), 20, 99);
           transferTerritory(target, attackerOwner);
           log(`${odds.attacker.name} captured ${target.name}${underdog ? " in an upset and earned a huge reward" : ""}.`, attackerOwner === state.playerId ? "good" : "urgent");
           showBattleResult(target, underdog ? "UPSET CAPTURE" : "CAPTURED", attackerOwner === state.playerId ? "good" : "urgent", battle);
         } else {
-          ownedRegions(attackerOwner).forEach((region) => {
-            region.army = clamp(region.army - Math.round(loss / Math.max(1, odds.attacker.land)), 8, 220);
+          const lostSource = sourceRegions.slice().sort((a, b) => a.army - b.army)[0];
+          sourceRegions.forEach((region) => {
+            region.army = clamp(region.army - Math.round(loss / Math.max(1, sourceRegions.length)), 8, 220);
             region.morale = clamp(region.morale - rand(2, 7), 20, 99);
           });
-          ownedRegions(defenderOwner).forEach((region) => {
-            region.army = clamp(region.army + Math.round(rand(3, 9) / Math.max(1, odds.defender.land)), 8, 220);
-            region.supply = clamp(region.supply + rand(1, 4), 20, 99);
-          });
-          log(`${odds.attacker.name} failed to take ${target.name}. The defender gained supplies.`, isPlayerAttack ? "urgent" : "");
-          showBattleResult(target, "REPELLED", isPlayerAttack ? "urgent" : "good", battle);
+          target.army = clamp(target.army + Math.round(rand(3, 9)), 8, 220);
+          target.supply = clamp(target.supply + rand(1, 4), 20, 99);
+          transferTerritory(lostSource, defenderOwner);
+          log(`${odds.attacker.name} failed to take ${target.name}. ${odds.defender.name} captured ${lostSource.name}.`, isPlayerAttack ? "urgent" : "");
+          showBattleResult(lostSource, "LOST", isPlayerAttack ? "urgent" : "good", battle);
         }
         state.tension = clamp(state.tension + rand(2, 7), 0, 100);
         state.turn += isPlayerAttack ? 1 : 0;
         render();
-        const playerLostBattle = (attackerOwner === state.playerId && !attackerWon) || (defenderOwner === state.playerId && attackerWon);
-        if (playerLostBattle) {
-          const winnerName = attackerWon ? odds.attacker.name : odds.defender.name;
-          const detail = attackerWon ? `${winnerName} captured ${target.name}.` : `Your attack on ${target.name} failed.`;
-          log(`Game over: ${winnerName} defeated your command.`, "urgent");
-          showGameOver(winnerName, detail);
-        }
-        const hasWinner = playerLostBattle || checkWinner();
+        const winnerName = attackerWon ? odds.attacker.name : odds.defender.name;
+        const hasWinner = checkPlayerDefeat(winnerName) || checkWinner();
         setTimeout(() => {
           stopBattleAnimation(battle);
           if (hasWinner) {
@@ -1776,6 +1969,7 @@
     worldMap.addEventListener("click", (event) => {
       const region = closestRegionHit(mapPointFromClick(event));
       if (!region) return;
+      closeAttackPlanner();
       state.selectedId = region.id;
       state.hoveredId = region.id;
       render();
@@ -1799,6 +1993,7 @@
 
     els.startButton.addEventListener("click", () => {
       state.started = true;
+      closeAttackPlanner();
       els.startPanel.classList.add("is-hidden");
       state.selectedId = state.playerId;
       log(`${ownerStats(state.playerId).name} command is live. Pick a border enemy or take a risky decision.`, "good");
@@ -1808,11 +2003,13 @@
     els.attackButton.addEventListener("click", () => {
       if (isOwnerInBattle(state.playerId)) return;
       if (!canAttack(state.playerId, state.selectedId)) return;
-      applyBattleResult(state.playerId, state.selectedId, true);
+      openAttackPlanner(state.selectedId);
     });
 
     els.peaceButton.addEventListener("click", requestPeace);
     els.decisionButton.addEventListener("click", takeRisk);
+    els.plannerLaunch.addEventListener("click", launchPlannedAttack);
+    els.plannerCancel.addEventListener("click", closeAttackPlanner);
     els.restartButton.addEventListener("click", resetGame);
 
     resetGame();
