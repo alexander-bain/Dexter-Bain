@@ -486,6 +486,44 @@
       text-align: right;
     }
 
+    .transfer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr minmax(92px, 0.5fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .transfer-grid label {
+      display: grid;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .transfer-grid select,
+    .transfer-grid input {
+      width: 100%;
+      min-height: 42px;
+      padding: 8px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      background: #111a25;
+      color: var(--ink);
+      font: inherit;
+      font-weight: 850;
+    }
+
+    .transfer-note {
+      min-height: 22px;
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
     .start-panel {
       position: absolute;
       inset: 70px auto auto 50%;
@@ -627,6 +665,10 @@
       gap: 8px;
     }
 
+    .actions .button-row #distributeButton {
+      grid-column: 1 / -1;
+    }
+
     .btn {
       min-height: 42px;
       padding: 9px 12px;
@@ -657,7 +699,11 @@
 
     .btn:disabled {
       cursor: not-allowed;
-      opacity: 0.48;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(245, 248, 255, 0.58);
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: none;
+      opacity: 0.72;
     }
 
     .btn,
@@ -853,7 +899,8 @@
       .start-grid,
       .stats,
       .button-row,
-      .decision {
+      .decision,
+      .transfer-grid {
         grid-template-columns: 1fr;
       }
 
@@ -934,6 +981,35 @@
           </div>
         </div>
 
+        <div class="attack-planner" id="distributionPanel" hidden>
+          <div class="planner-head">
+            <div>
+              <h2>Distribute Forces</h2>
+              <p class="subtitle" id="distributionNote">Move troops between your territories.</p>
+            </div>
+            <span class="chance-pill" id="distributionTotal">0K total</span>
+          </div>
+          <div class="transfer-grid">
+            <label>
+              From
+              <select id="transferFrom"></select>
+            </label>
+            <label>
+              To
+              <select id="transferTo"></select>
+            </label>
+            <label>
+              Troops
+              <input id="transferAmount" type="number" min="1" step="1" value="5">
+            </label>
+          </div>
+          <p class="transfer-note" id="transferNote"></p>
+          <div class="button-row">
+            <button class="btn primary" id="transferButton" type="button">Transfer Troops</button>
+            <button class="btn" id="distributionDone" type="button">Done</button>
+          </div>
+        </div>
+
         <div class="winner" id="winnerPanel">
           <div class="winner-box">
             <h2 id="winnerTitle">World Unified</h2>
@@ -962,6 +1038,7 @@
             <div class="button-row">
               <button class="btn danger" id="attackButton" type="button" disabled>Launch Attack</button>
               <button class="btn" id="peaceButton" type="button" disabled>Request Peace</button>
+              <button class="btn primary" id="distributeButton" type="button" disabled>Distribute</button>
             </div>
             <div class="decision">
               <select id="decisionSelect" aria-label="Risky decision">
@@ -1047,6 +1124,7 @@
       statMorale: document.querySelector("#statMorale"),
       attackButton: document.querySelector("#attackButton"),
       peaceButton: document.querySelector("#peaceButton"),
+      distributeButton: document.querySelector("#distributeButton"),
       decisionSelect: document.querySelector("#decisionSelect"),
       decisionButton: document.querySelector("#decisionButton"),
       powerBars: document.querySelector("#powerBars"),
@@ -1060,11 +1138,21 @@
       plannerOptions: document.querySelector("#plannerOptions"),
       plannerLaunch: document.querySelector("#plannerLaunch"),
       plannerCancel: document.querySelector("#plannerCancel"),
+      distributionPanel: document.querySelector("#distributionPanel"),
+      distributionNote: document.querySelector("#distributionNote"),
+      distributionTotal: document.querySelector("#distributionTotal"),
+      transferFrom: document.querySelector("#transferFrom"),
+      transferTo: document.querySelector("#transferTo"),
+      transferAmount: document.querySelector("#transferAmount"),
+      transferNote: document.querySelector("#transferNote"),
+      transferButton: document.querySelector("#transferButton"),
+      distributionDone: document.querySelector("#distributionDone"),
       selectionLayer: document.querySelector("#selectionLayer"),
       battleLayer: document.querySelector("#battleLayer"),
       labelLayer: document.querySelector("#labelLayer")
     };
 
+    const MIN_REGION_ARMY = 8;
     const BATTLE_TICK_MS = 620;
     const BATTLE_MAX_TICKS = 11;
     const WORLD_MOVE_DELAY_MS = 560;
@@ -1103,6 +1191,8 @@
       els.battleStatus.hidden = true;
       els.attackPlanner.hidden = true;
       els.plannerOptions.innerHTML = "";
+      els.distributionPanel.hidden = true;
+      els.transferNote.textContent = "";
       els.winnerPanel.classList.remove("is-visible");
       els.startPanel.classList.remove("is-hidden");
       buildStartChoices();
@@ -1244,7 +1334,7 @@
         army.setAttribute("y", y + 13);
         army.setAttribute("text-anchor", "middle");
         army.setAttribute("class", "army-label");
-        army.textContent = conquered ? `${region.name} - ${stats.army}K` : `${stats.army}K army`;
+        army.textContent = conquered ? `${region.name} - ${region.army}K` : `${region.army}K army`;
         els.labelLayer.append(label, army);
       });
     }
@@ -1292,18 +1382,22 @@
       const targetBusy = isOwnerInBattle(region.owner) || isRegionInBattle(region.id);
       const availableSources = !isPlayer && !playerBusy && !targetBusy ? attackSourcesFor(state.playerId, region.id, true).map((source) => source.id) : [];
       const plannedChance = state.started && availableSources.length && canAttack(state.playerId, region.id) ? battleOdds(state.playerId, region.owner, availableSources, region.id).attackerChance : null;
+      const territoryText = conquered ? `former ${region.name}` : "this territory";
+      const defenseText = `Local defense: ${region.army}K. Command total: ${stats.army}K.`;
       els.selectedName.textContent = displayName;
-      els.selectedNote.textContent = playerBusy ? "Your command is already fighting. Wait for that battle to finish." : targetBusy ? `${displayName} is already in battle.` : plannedChance ? `${stats.name} controls ${conquered ? `former ${region.name}` : "this territory"}. Attack chance: ${plannedChance}%.` : state.worldTurn ? "World powers are making their moves. You can still attack if your command and target are free." : isPlayer ? `Your command controls ${conquered ? `former ${region.name}` : "this territory"}.` : `${stats.name} controls ${conquered ? `former ${region.name}` : "this territory"}.`;
+      els.selectedNote.textContent = playerBusy ? "Your command is already fighting. Wait for that battle to finish." : targetBusy ? `${displayName} is already in battle. ${defenseText}` : plannedChance ? `${stats.name} controls ${territoryText}. Attack chance: ${plannedChance}%. ${defenseText}` : state.worldTurn ? `World powers are making their moves. ${defenseText}` : isPlayer ? `Your command controls ${territoryText}. ${defenseText}` : `${stats.name} controls ${territoryText}. ${defenseText}`;
       els.ownerPill.textContent = isPlayer ? "Your command" : stats.name;
-      els.statArmy.textContent = `${stats.army}K`;
+      els.statArmy.textContent = `${region.army}K`;
       els.statLand.textContent = stats.land;
       els.statKills.textContent = stats.defeated;
       els.statMorale.textContent = `${stats.morale}%`;
       els.attackButton.textContent = playerBusy ? "Battle Underway" : targetBusy && !isPlayer ? "Target Busy" : "Plan Attack";
       els.peaceButton.textContent = playerBusy || targetBusy ? "Stand By" : "Request Peace";
+      els.distributeButton.textContent = playerBusy ? "Battle Underway" : "Distribute";
       els.decisionButton.textContent = playerBusy ? "Resolving" : "Take Risk";
       els.attackButton.disabled = !state.started || playerBusy || !canAttack(state.playerId, region.id);
       els.peaceButton.disabled = !state.started || playerBusy || targetBusy || isPlayer;
+      els.distributeButton.disabled = !state.started || playerBusy || ownedRegions(state.playerId).length < 2;
       els.decisionButton.disabled = !state.started || playerBusy;
     }
 
@@ -1336,6 +1430,11 @@
       const targets = attackableTargets(state.playerId);
       if (!state.started) {
         els.tipText.textContent = "Pick a region to begin. Most wars are close, but army size and readiness still tilt the odds.";
+        return;
+      }
+      const thinTerritory = ownedRegions(state.playerId).filter((region) => !isRegionInBattle(region.id)).sort((a, b) => a.army - b.army)[0];
+      if (ownerStats(state.playerId).land > 1 && thinTerritory?.army <= MIN_REGION_ARMY + 6) {
+        els.tipText.textContent = `${thinTerritory.name} is thinly defended. Use Distribute to move troops before enemies notice.`;
         return;
       }
       if (!targets.length) {
@@ -1392,9 +1491,121 @@
       els.plannerOptions.innerHTML = "";
     }
 
+    function closeDistributionPanel() {
+      els.distributionPanel.hidden = true;
+      els.transferNote.textContent = "";
+    }
+
+    function fillTransferSelect(select, regions, preferredId) {
+      select.innerHTML = "";
+      regions.forEach((region) => {
+        const option = document.createElement("option");
+        option.value = region.id;
+        option.textContent = `${region.name} (${region.army}K)`;
+        select.append(option);
+      });
+      if (preferredId && regions.some((region) => region.id === preferredId)) {
+        select.value = preferredId;
+      }
+    }
+
+    function maxTransferAmount(from, to) {
+      if (!from || !to || from.id === to.id) return 0;
+      return Math.max(0, Math.min(from.army - MIN_REGION_ARMY, 220 - to.army));
+    }
+
+    function updateTransferPanel() {
+      const from = getRegion(els.transferFrom.value);
+      const to = getRegion(els.transferTo.value);
+      const fromOwned = from && from.owner === state.playerId && !from.eliminated;
+      const toOwned = to && to.owner === state.playerId && !to.eliminated;
+      const maxAmount = fromOwned && toOwned ? maxTransferAmount(from, to) : 0;
+      els.transferAmount.max = String(maxAmount);
+      if (maxAmount <= 0) {
+        els.transferAmount.value = "0";
+      } else {
+        const currentAmount = clamp(Math.round(Number(els.transferAmount.value) || 5), 1, maxAmount);
+        els.transferAmount.value = String(currentAmount);
+      }
+      const amount = Math.round(Number(els.transferAmount.value) || 0);
+      const invalid = !fromOwned || !toOwned || from.id === to.id || amount < 1 || amount > maxAmount || isOwnerInBattle(state.playerId);
+      els.transferButton.disabled = invalid;
+      if (!fromOwned || !toOwned) {
+        els.transferNote.textContent = "Choose two territories you control.";
+      } else if (from.id === to.id) {
+        els.transferNote.textContent = "Pick two different territories.";
+      } else if (from.army <= MIN_REGION_ARMY) {
+        els.transferNote.textContent = `${from.name} has no spare troops. It must keep ${MIN_REGION_ARMY}K defenders.`;
+      } else if (to.army >= 220) {
+        els.transferNote.textContent = `${to.name} is already at max defense.`;
+      } else {
+        els.transferNote.textContent = `${from.name} keeps ${from.army - amount}K. ${to.name} rises to ${to.army + amount}K.`;
+      }
+    }
+
+    function renderDistributionPanel() {
+      const regions = ownedRegions(state.playerId);
+      const stats = ownerStats(state.playerId);
+      els.distributionTotal.textContent = `${stats.army}K total`;
+      els.distributionNote.textContent = regions.length < 2 ? "Capture another territory before moving troops." : "Move troops from safer land into places that need stronger defenders.";
+      if (regions.length < 2) {
+        fillTransferSelect(els.transferFrom, regions, regions[0]?.id);
+        fillTransferSelect(els.transferTo, regions, regions[0]?.id);
+        els.transferFrom.disabled = true;
+        els.transferTo.disabled = true;
+        els.transferAmount.disabled = true;
+        els.transferButton.disabled = true;
+        els.transferAmount.value = "0";
+        els.transferNote.textContent = "You need at least two territories to distribute forces.";
+        return;
+      }
+      const currentFrom = els.transferFrom.value;
+      const currentTo = els.transferTo.value;
+      const strongest = regions.slice().sort((a, b) => b.army - a.army)[0];
+      const weakest = regions.slice().sort((a, b) => a.army - b.army)[0];
+      const selected = getRegion(state.selectedId);
+      const preferredFrom = regions.some((region) => region.id === currentFrom) ? currentFrom : strongest.id;
+      let preferredTo = regions.some((region) => region.id === currentTo) ? currentTo : selected?.owner === state.playerId ? selected.id : weakest.id;
+      if (preferredTo === preferredFrom) {
+        preferredTo = regions.find((region) => region.id !== preferredFrom)?.id || preferredTo;
+      }
+      fillTransferSelect(els.transferFrom, regions, preferredFrom);
+      fillTransferSelect(els.transferTo, regions, preferredTo);
+      els.transferFrom.disabled = false;
+      els.transferTo.disabled = false;
+      els.transferAmount.disabled = false;
+      updateTransferPanel();
+    }
+
+    function openDistributionPanel() {
+      if (!state.started || isOwnerInBattle(state.playerId)) return;
+      closeAttackPlanner();
+      els.distributionPanel.hidden = false;
+      renderDistributionPanel();
+    }
+
+    function transferTroops() {
+      if (!state.started || isOwnerInBattle(state.playerId)) return;
+      const from = getRegion(els.transferFrom.value);
+      const to = getRegion(els.transferTo.value);
+      const maxAmount = maxTransferAmount(from, to);
+      const amount = clamp(Math.round(Number(els.transferAmount.value) || 0), 0, maxAmount);
+      if (!from || !to || from.owner !== state.playerId || to.owner !== state.playerId || from.id === to.id || amount < 1) {
+        updateTransferPanel();
+        return;
+      }
+      from.army = clamp(from.army - amount, MIN_REGION_ARMY, 220);
+      to.army = clamp(to.army + amount, MIN_REGION_ARMY, 220);
+      state.selectedId = to.id;
+      log(`Moved ${amount}K troops from ${from.name} to ${to.name}.`, "good");
+      render();
+      renderDistributionPanel();
+    }
+
     function openAttackPlanner(targetId) {
       const target = getRegion(targetId);
       if (!target || !canAttack(state.playerId, targetId)) return;
+      closeDistributionPanel();
       const sources = attackSourcesFor(state.playerId, targetId, true);
       if (!sources.length) {
         log("No free territories can join that attack.", "urgent");
@@ -1600,9 +1811,37 @@
       syncBattleState();
     }
 
+    function captureGarrisonFor(owner) {
+      const territories = ownedRegions(owner);
+      const totalArmy = territories.reduce((sum, region) => sum + region.army, 0);
+      const landAfterCapture = territories.length + 1;
+      return clamp(Math.round(totalArmy / Math.max(3, landAfterCapture + 2)), MIN_REGION_ARMY, 46);
+    }
+
+    function pullGarrisonFrom(owner, amount) {
+      let remaining = amount;
+      ownedRegions(owner)
+        .filter((region) => region.army > MIN_REGION_ARMY)
+        .sort((a, b) => b.army - a.army)
+        .forEach((region) => {
+          if (remaining <= 0) return;
+          const moved = Math.min(region.army - MIN_REGION_ARMY, remaining);
+          region.army -= moved;
+          remaining -= moved;
+        });
+      return amount - remaining;
+    }
+
     function transferTerritory(target, newOwner) {
+      const previousOwner = target.owner;
+      const capturedByNewOwner = previousOwner !== newOwner;
+      const garrison = capturedByNewOwner ? captureGarrisonFor(newOwner) : target.army;
+      const movedGarrison = capturedByNewOwner ? pullGarrisonFrom(newOwner, garrison) : target.army;
       target.owner = newOwner;
       target.defeated += 1;
+      if (capturedByNewOwner) {
+        target.army = clamp(Math.max(MIN_REGION_ARMY, movedGarrison), MIN_REGION_ARMY, 220);
+      }
       const winnerTerritories = ownedRegions(newOwner);
       winnerTerritories.forEach((region) => {
         region.morale = clamp(region.morale + rand(2, 6), 25, 99);
@@ -1636,6 +1875,9 @@
       if (!target || !sourceRegions.length || !hasAttackRoute || battleBlocks(attackerOwner, targetId)) return false;
       const sourceRegionIds = [...new Set(sourceRegions.map((region) => region.id))];
       const defenderOwner = target.owner;
+      if (attackerOwner === state.playerId || defenderOwner === state.playerId) {
+        closeDistributionPanel();
+      }
       const odds = battleOdds(attackerOwner, defenderOwner, sourceRegionIds, targetId);
       const underdog = odds.attacker.army < odds.defender.army;
       const reward = underdog ? rand(18, 34) : rand(8, 18);
@@ -1668,7 +1910,7 @@
             region.army = clamp(region.army + Math.round(reward / Math.max(1, sourceRegions.length)), 10, 220);
             region.tech = clamp(region.tech + (underdog ? 3 : 1), 20, 99);
           });
-          target.army = clamp(target.army - loss + rand(2, 7), 8, 220);
+          target.army = clamp(target.army - loss + rand(2, 7), MIN_REGION_ARMY, 220);
           target.morale = clamp(target.morale - rand(3, 9), 20, 99);
           transferTerritory(target, attackerOwner);
           log(`${odds.attacker.name} captured ${target.name}${underdog ? " in an upset and earned a huge reward" : ""}.`, attackerOwner === state.playerId ? "good" : "urgent");
@@ -1676,10 +1918,10 @@
         } else {
           const lostSource = sourceRegions.slice().sort((a, b) => a.army - b.army)[0];
           sourceRegions.forEach((region) => {
-            region.army = clamp(region.army - Math.round(loss / Math.max(1, sourceRegions.length)), 8, 220);
+            region.army = clamp(region.army - Math.round(loss / Math.max(1, sourceRegions.length)), MIN_REGION_ARMY, 220);
             region.morale = clamp(region.morale - rand(2, 7), 20, 99);
           });
-          target.army = clamp(target.army + Math.round(rand(3, 9)), 8, 220);
+          target.army = clamp(target.army + Math.round(rand(3, 9)), MIN_REGION_ARMY, 220);
           target.supply = clamp(target.supply + rand(1, 4), 20, 99);
           transferTerritory(lostSource, defenderOwner);
           log(`${odds.attacker.name} failed to take ${target.name}. ${odds.defender.name} captured ${lostSource.name}.`, isPlayerAttack ? "urgent" : "");
@@ -1744,7 +1986,7 @@
       if (!owners.length) return;
       const owner = owners[rand(0, owners.length - 1)];
       ownedRegions(owner).forEach((region) => {
-        region.army = clamp(region.army + rand(2, 7), 8, 220);
+        region.army = clamp(region.army + rand(2, 7), MIN_REGION_ARMY, 220);
         region.supply = clamp(region.supply + rand(1, 4), 20, 99);
       });
       state.tension = clamp(state.tension + rand(-5, 4), 0, 100);
@@ -1837,7 +2079,7 @@
       if (type === "draft") {
         if (roll <= 72) {
           playerRegions.forEach((region) => {
-            region.army = clamp(region.army + rand(7, 14), 8, 220);
+            region.army = clamp(region.army + rand(7, 14), MIN_REGION_ARMY, 220);
             region.morale = clamp(region.morale - rand(3, 7), 20, 99);
           });
           log("Emergency draft added soldiers, but morale dipped.", "good");
@@ -1852,13 +2094,13 @@
         if (roll <= 58) {
           playerRegions.forEach((region) => {
             region.supply = clamp(region.supply + rand(10, 18), 20, 99);
-            region.army = clamp(region.army + rand(2, 7), 8, 220);
+            region.army = clamp(region.army + rand(2, 7), MIN_REGION_ARMY, 220);
           });
           state.tension = clamp(state.tension + rand(4, 9), 0, 100);
           log("The supply raid worked. Your army is better stocked.", "good");
         } else {
           playerRegions.forEach((region) => {
-            region.army = clamp(region.army - rand(5, 12), 8, 220);
+            region.army = clamp(region.army - rand(5, 12), MIN_REGION_ARMY, 220);
           });
           state.tension = clamp(state.tension + rand(8, 15), 0, 100);
           log("The raid backfired and cost troops.", "urgent");
@@ -1895,7 +2137,7 @@
           log("Borders are fortified. Morale improved and tension cooled.", "good");
         } else {
           playerRegions.forEach((region) => {
-            region.army = clamp(region.army - rand(2, 6), 8, 220);
+            region.army = clamp(region.army - rand(2, 6), MIN_REGION_ARMY, 220);
           });
           log("Fortification delays caused desertions.", "urgent");
         }
@@ -1972,6 +2214,7 @@
       const region = closestRegionHit(mapPointFromClick(event));
       if (!region) return;
       closeAttackPlanner();
+      closeDistributionPanel();
       state.selectedId = region.id;
       state.hoveredId = region.id;
       render();
@@ -1996,6 +2239,7 @@
     els.startButton.addEventListener("click", () => {
       state.started = true;
       closeAttackPlanner();
+      closeDistributionPanel();
       els.startPanel.classList.add("is-hidden");
       state.selectedId = state.playerId;
       log(`${ownerStats(state.playerId).name} command is live. Pick a border enemy or take a risky decision.`, "good");
@@ -2009,9 +2253,15 @@
     });
 
     els.peaceButton.addEventListener("click", requestPeace);
+    els.distributeButton.addEventListener("click", openDistributionPanel);
     els.decisionButton.addEventListener("click", takeRisk);
     els.plannerLaunch.addEventListener("click", launchPlannedAttack);
     els.plannerCancel.addEventListener("click", closeAttackPlanner);
+    els.transferFrom.addEventListener("change", updateTransferPanel);
+    els.transferTo.addEventListener("change", updateTransferPanel);
+    els.transferAmount.addEventListener("input", updateTransferPanel);
+    els.transferButton.addEventListener("click", transferTroops);
+    els.distributionDone.addEventListener("click", closeDistributionPanel);
     els.restartButton.addEventListener("click", resetGame);
 
     resetGame();
