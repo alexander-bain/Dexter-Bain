@@ -304,6 +304,24 @@ async function run() {
             const answers = test.getAnswers(question).slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
             return [test.getQuestionId(question, index), answers[0].id];
           });
+          const favoritePickMap = Object.fromEntries(favoritePicks);
+          const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
+          if (!usedRiskPick) {
+            throw new Error("Weather Bot only picked favorites.");
+          }
+          const favoriteMaxPoints = favoritePicks.reduce((total, [questionId, answerId], index) => {
+            const question = game.questions[index];
+            const pickedAnswer = test.getAnswers(question).find((candidate) => candidate.id === answerId);
+            return total + (pickedAnswer?.points || 0);
+          }, 0);
+          const botMaxPoints = botPicks.reduce((total, [questionId, answerId], index) => {
+            const question = game.questions[index];
+            const pickedAnswer = test.getAnswers(question).find((candidate) => candidate.id === answerId);
+            return total + (pickedAnswer?.points || 0);
+          }, 0);
+          if (botMaxPoints <= favoriteMaxPoints) {
+            throw new Error("Weather Bot did not raise its max upside: " + JSON.stringify({ botMaxPoints, favoriteMaxPoints, botPicks, favoritePicks }));
+          }
           const entry = {
             name: "Weather Bot",
             picks,
@@ -368,6 +386,8 @@ async function run() {
                 savedEntryName: storage.playerName || "",
                 botPicks,
                 favoritePicks,
+                botMaxPoints,
+                favoriteMaxPoints,
                 storedState: storage,
               };
             }
@@ -425,6 +445,9 @@ async function run() {
     const nonFavoriteCount = pickedQuestionIds.filter((questionId) => botPickMap[questionId] && favoriteByQuestionId[questionId] && botPickMap[questionId] !== favoriteByQuestionId[questionId]).length;
     if (pickedQuestionIds.length > 1 && nonFavoriteCount === 0) {
       throw new Error(`Weather Bot only picked favorites: ${JSON.stringify({ botPickMap, favoriteByQuestionId })}`);
+    }
+    if ((value.botMaxPoints || 0) <= (value.favoriteMaxPoints || 0)) {
+      throw new Error(`Saved picks did not improve max upside: ${JSON.stringify({ botMaxPoints: value.botMaxPoints, favoriteMaxPoints: value.favoriteMaxPoints })}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);
