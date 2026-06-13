@@ -742,6 +742,7 @@
         "2026-05-23": "CROWN",
         "2026-05-24": "BLAZE",
         "2026-05-25": "AFTER",
+        "2026-06-13": "VOICE",
       };
       const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
       const JOHN_WORDS = [
@@ -1176,6 +1177,20 @@
         beginPuzzle(nextJohnPuzzle(), "New word", false);
       }
 
+      function latestPuzzleForSession() {
+        const activePuzzle = loadActivePuzzle();
+        if (isJohnPuzzleId(activePuzzle?.id)) return activePuzzle;
+        return getDailyPuzzle();
+      }
+
+      function syncPuzzleState(forceToast = false) {
+        const latestPuzzle = latestPuzzleForSession();
+        const puzzleChanged = currentPuzzle?.id !== latestPuzzle.id || answer !== latestPuzzle.word;
+        const progressChanged = progress?.puzzleId !== latestPuzzle.id || progress?.word !== latestPuzzle.word;
+        if (!puzzleChanged && !progressChanged) return;
+        beginPuzzle(latestPuzzle, forceToast ? "Word refreshed" : "Fresh start", false);
+      }
+
       function updateStatsPanel() {
         const winRate = stats.played ? Math.round((stats.wins / stats.played) * 100) : 0;
         const maxCount = Math.max(1, ...stats.distribution);
@@ -1431,6 +1446,13 @@
         if (event.key === "Backspace") press("<");
         if (event.key === "Enter") press("ENTER");
       });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") syncPuzzleState(true);
+      });
+
+      window.addEventListener("focus", () => syncPuzzleState(true));
+      window.addEventListener("pageshow", () => syncPuzzleState(true));
 
       startGame();
     })();
