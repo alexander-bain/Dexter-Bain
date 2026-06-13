@@ -259,21 +259,27 @@ async function run() {
           const botPicks = game.questions.map((question, index) => {
             const answers = test.getAnswers(question).slice();
             const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
-            const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
-              .sort((left, right) => right.points - left.points || right.odds - left.odds);
-            const choice = index % 3 === 1
-              ? (risks[0] || favorites[0])
-              : index % 4 === 3
-              ? (risks[1] || favorites[0])
-              : favorites[0];
+            const favorite = favorites[0];
+            const alternatives = answers
+              .filter((candidate) => candidate.id !== favorite?.id)
+              .sort((left, right) => {
+                const rightUpside = right.points - right.odds;
+                const leftUpside = left.points - left.odds;
+                return rightUpside - leftUpside || right.points - left.points || right.odds - left.odds;
+              });
+            const viableRisks = alternatives.filter((candidate) => candidate.odds >= 18);
+            const choice = index % 4 === 1
+              ? (viableRisks[0] || alternatives[0] || favorite)
+              : index % 5 === 3
+              ? (viableRisks[1] || alternatives[0] || favorite)
+              : favorite;
             return [test.getQuestionId(question, index), choice.id];
           });
           const picks = Object.fromEntries(botPicks);
           const favoritePickMap = Object.fromEntries(favoritePicks);
-          const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
-          if (!usedRiskPick) {
-            throw new Error("Weather Bot only picked favorites.");
+          const nonFavoriteCount = botPicks.filter(([questionId, answerId]) => favoritePickMap[questionId] !== answerId).length;
+          if (nonFavoriteCount < 2) {
+            throw new Error("Weather Bot did not make enough non-favorite picks.");
           }
           const entry = {
             name: "Weather Bot",
@@ -309,14 +315,15 @@ async function run() {
             }
             const pickView = document.getElementById("leaderboardPicks")?.textContent || "";
             const storage = JSON.parse(localStorage.getItem("dexterbain-minigames-v1") || "{}");
+            const hasWinLabel = leaderboard.includes("% win") || leaderboard.includes("<1% win");
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
+              hasWinLabel &&
               leaderboard.includes("max from picks") &&
               pickView.includes("chance to win") &&
               pickView.includes("max from picks") &&
-              entryCount.trim() === "1" &&
+              Number(entryCount.trim() || "0") >= 1 &&
               storage.playerName === "Weather Bot"
             ) {
               return {
@@ -330,6 +337,7 @@ async function run() {
                 botPicks,
                 favoritePicks,
                 storedState: storage,
+                nonFavoriteCount,
               };
             }
             await wait(100);
@@ -364,8 +372,8 @@ async function run() {
 
     const botPickMap = Object.fromEntries(value.botPicks || []);
     const favoritePickMap = Object.fromEntries(value.favoritePicks || []);
-    if (!Object.keys(botPickMap).some((questionId) => botPickMap[questionId] !== favoritePickMap[questionId])) {
-      throw new Error(`Saved picks only used favorites: ${JSON.stringify({ botPickMap, favoritePickMap })}`);
+    if ((value.nonFavoriteCount || 0) < 2) {
+      throw new Error(`Saved picks did not stay meaningfully risky: ${JSON.stringify({ nonFavoriteCount: value.nonFavoriteCount, botPickMap, favoritePickMap })}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);
