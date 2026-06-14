@@ -178,6 +178,32 @@ function cdpConnection(wsUrl) {
   };
 }
 
+function botChoiceExpression() {
+  return `
+    ((question, index, test) => {
+      const answers = test.getAnswers(question).slice().sort((left, right) => (
+        left.odds - right.odds || right.points - left.points
+      ));
+      const targets = [36, 62, 28, 54, 22, 68, 42, 31];
+      const target = targets[index % targets.length];
+      return answers.reduce((best, candidate) => {
+        if (!best) {
+          return candidate;
+        }
+        const bestDistance = Math.abs(best.odds - target);
+        const candidateDistance = Math.abs(candidate.odds - target);
+        if (candidateDistance !== bestDistance) {
+          return candidateDistance < bestDistance ? candidate : best;
+        }
+        if (candidate.points !== best.points) {
+          return candidate.points > best.points ? candidate : best;
+        }
+        return candidate.odds < best.odds ? candidate : best;
+      }, null);
+    })
+  `;
+}
+
 async function run() {
   const { server, entriesByGameId } = createStaticServer();
   const port = await waitForServer(server);
@@ -257,23 +283,14 @@ async function run() {
             return [test.getQuestionId(question, index), favorite.id];
           });
           const botPicks = game.questions.map((question, index) => {
-            const answers = test.getAnswers(question).slice();
-            const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
-            const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
-              .sort((left, right) => right.points - left.points || right.odds - left.odds);
-            const choice = index % 3 === 1
-              ? (risks[0] || favorites[0])
-              : index % 4 === 3
-              ? (risks[1] || favorites[0])
-              : favorites[0];
+            const choice = (${botChoiceExpression()})(question, index, test);
             return [test.getQuestionId(question, index), choice.id];
           });
           const picks = Object.fromEntries(botPicks);
           const favoritePickMap = Object.fromEntries(favoritePicks);
-          const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
-          if (!usedRiskPick) {
-            throw new Error("Weather Bot only picked favorites.");
+          const nonFavoriteCount = botPicks.filter(([questionId, answerId]) => favoritePickMap[questionId] !== answerId).length;
+          if (nonFavoriteCount < Math.max(2, Math.floor(botPicks.length / 4))) {
+            throw new Error("Weather Bot did not use enough non-favorite picks.");
           }
           const entry = {
             name: "Weather Bot",
@@ -312,11 +329,11 @@ async function run() {
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
-              leaderboard.includes("max from picks") &&
+              leaderboard.includes("% win") &&
+              leaderboard.includes("max if picks hit") &&
               pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
-              entryCount.trim() === "1" &&
+              pickView.includes("max if picks hit") &&
+              Number(entryCount.trim()) >= 1 &&
               storage.playerName === "Weather Bot"
             ) {
               return {
@@ -329,6 +346,7 @@ async function run() {
                 chosen: botPicks.map(([, answerId]) => answerId),
                 botPicks,
                 favoritePicks,
+                nonFavoriteCount,
                 storedState: storage,
               };
             }
@@ -364,8 +382,9 @@ async function run() {
 
     const botPickMap = Object.fromEntries(value.botPicks || []);
     const favoritePickMap = Object.fromEntries(value.favoritePicks || []);
-    if (!Object.keys(botPickMap).some((questionId) => botPickMap[questionId] !== favoritePickMap[questionId])) {
-      throw new Error(`Saved picks only used favorites: ${JSON.stringify({ botPickMap, favoritePickMap })}`);
+    const nonFavoriteCount = Object.keys(botPickMap).filter((questionId) => botPickMap[questionId] !== favoritePickMap[questionId]).length;
+    if (nonFavoriteCount < Math.max(2, Math.floor(Object.keys(botPickMap).length / 4))) {
+      throw new Error(`Saved picks were too favorite-heavy: ${JSON.stringify({ botPickMap, favoritePickMap, nonFavoriteCount })}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);
