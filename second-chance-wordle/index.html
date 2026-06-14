@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Second Chance Wordle | DexterBain</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --correct: #6aaa64;
+      --present: #c9b458;
+      --absent: #787c7e;
+      --empty: #d3d6da;
+      --key: #d3d6da;
+      --text: #000000;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--white);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .game {
+      min-height: 100svh;
+      display: grid;
+      grid-template-rows: auto auto auto;
+      align-content: start;
+      justify-items: center;
+      gap: 14px;
+      padding: 8px 12px 24px;
+      background: #ffffff;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(620px, calc(100vw - 24px));
+      min-height: 48px;
+      border-bottom: 1px solid #d3d6da;
+    }
+
+    .brand {
+      font-size: clamp(1.1rem, 3vw, 1.45rem);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .stats-button {
+      border: 2px solid #111111;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #111111;
+      padding: 8px 16px;
+      font: inherit;
+      font-size: 0.92rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .stats-button:active {
+      transform: translateY(1px);
+    }
+
+    .board-wrap {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      width: 100%;
+      min-height: 0;
+    }
+
+    .board {
+      --tile-size: min(100px, calc((100vw - 84px) / 5), calc((100svh - 550px) / 6));
+      display: grid;
+      grid-template-rows: repeat(6, var(--tile-size));
+      gap: 12px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: repeat(5, var(--tile-size));
+      gap: 12px;
+    }
+
+    .tile {
+      display: grid;
+      place-items: center;
+      width: var(--tile-size);
+      height: var(--tile-size);
+      border: 4px solid var(--empty);
+      background: var(--white);
+      color: #000000;
+      font-size: calc(var(--tile-size) * 0.58);
+      font-weight: 800;
+      line-height: 1;
+      overflow: hidden;
+      text-transform: uppercase;
+    }
+
+    .tile.filled {
+      border-color: #878a8c;
+    }
+
+    .tile.correct,
+    .tile.present,
+    .tile.absent {
+      border-color: transparent;
+      color: #ffffff;
+    }
+
+    .tile.correct {
+      background: var(--correct);
+    }
+
+    .tile.present {
+      background: var(--present);
+    }
+
+    .tile.absent {
+      background: var(--absent);
+    }
+
+    .tile.pop {
+      animation: pop 100ms ease-out;
+    }
+
+    .tile.flip {
+      animation: flip 900ms ease-in-out;
+    }
+
+    .row.shake {
+      animation: shake 340ms ease-in-out;
+    }
+
+    .row.win .tile {
+      animation: win-hop 620ms ease-out;
+    }
+
+    .row.win .tile:nth-child(2) {
+      animation-delay: 70ms;
+    }
+
+    .row.win .tile:nth-child(3) {
+      animation-delay: 140ms;
+    }
+
+    .row.win .tile:nth-child(4) {
+      animation-delay: 210ms;
+    }
+
+    .row.win .tile:nth-child(5) {
+      animation-delay: 280ms;
+    }
+
+    .keyboard {
+      display: grid;
+      gap: 16px;
+      width: min(970px, calc(100vw - 24px));
+    }
+
+    .key-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .key {
+      height: 116px;
+      min-width: 86px;
+      padding: 0 16px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--key);
+      color: #000000;
+      font: inherit;
+      font-size: clamp(1.7rem, 4vw, 2.55rem);
+      font-weight: 800;
+      line-height: 1;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .key.wide {
+      min-width: 132px;
+      font-size: clamp(1rem, 2.35vw, 1.45rem);
+    }
+
+    .key.correct,
+    .key.present,
+    .key.absent {
+      color: #ffffff;
+    }
+
+    .key.correct {
+      background: var(--correct);
+    }
+
+    .key.present {
+      background: var(--present);
+    }
+
+    .key.absent {
+      background: var(--absent);
+    }
+
+    .key:active {
+      transform: translateY(1px);
+    }
+
+    .toast {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      z-index: 4;
+      transform: translateX(-50%) translateY(-12px);
+      min-width: 160px;
+      padding: 12px 18px;
+      border-radius: 4px;
+      background: #000000;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 800;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 140ms ease, transform 140ms ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast.expand {
+      animation: toast-expand 520ms ease-out;
+    }
+
+    .celebration {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .confetti {
+      position: absolute;
+      top: -18px;
+      width: 10px;
+      height: 18px;
+      border-radius: 2px;
+      animation: confetti-fall 1600ms cubic-bezier(0.12, 0.6, 0.3, 1) forwards;
+    }
+
+    .stats-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.74);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 140ms ease;
+    }
+
+    .stats-panel.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .stats-card {
+      position: relative;
+      width: min(470px, 100%);
+      border: 3px solid #111111;
+      border-radius: 14px;
+      background: #ffffff;
+      padding: 24px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+    }
+
+    .stats-card h2,
+    .stats-card h3 {
+      margin: 0;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .stats-card h2 {
+      font-size: 1.45rem;
+      font-weight: 900;
+    }
+
+    .stats-card h3 {
+      margin-top: 24px;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+    }
+
+    .stats-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 50%;
+      background: #f1f2f3;
+      color: #111111;
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .stats-summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .stat-box {
+      display: grid;
+      gap: 4px;
+      place-items: center;
+      min-height: 74px;
+      border: 2px solid #d3d6da;
+      border-radius: 10px;
+      padding: 10px 6px;
+    }
+
+    .stat-box strong {
+      font-size: clamp(1.25rem, 5vw, 1.9rem);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .stat-box span {
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .stats-bars {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      align-items: center;
+      gap: 8px;
+      font-weight: 900;
+    }
+
+    .bar-track {
+      position: relative;
+      height: 24px;
+      background: #edeff1;
+    }
+
+    .bar-fill {
+      display: block;
+      height: 100%;
+      min-width: 0;
+      background: var(--absent);
+      transition: width 220ms ease;
+    }
+
+    .bar-count {
+      position: absolute;
+      top: 50%;
+      left: 8px;
+      transform: translateY(-50%);
+      color: #111111;
+      font-size: 0.86rem;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0.9);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes toast-expand {
+      0% {
+        transform: translateX(-50%) translateY(0) scale(0.78);
+      }
+      58% {
+        transform: translateX(-50%) translateY(0) scale(1.16);
+      }
+      100% {
+        transform: translateX(-50%) translateY(0) scale(1);
+      }
+    }
+
+    @keyframes flip {
+      0% {
+        transform: rotateX(0);
+      }
+      48% {
+        transform: rotateX(90deg);
+      }
+      52% {
+        transform: rotateX(90deg);
+      }
+      100% {
+        transform: rotateX(0);
+      }
+    }
+
+    @keyframes win-hop {
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+      32% {
+        transform: translateY(-18px) scale(1.04);
+      }
+      64% {
+        transform: translateY(4px) scale(0.98);
+      }
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate3d(var(--drift), 112vh, 0) rotate(var(--spin));
+      }
+    }
+
+    @keyframes shake {
+      10%,
+      90% {
+        transform: translateX(-2px);
+      }
+      20%,
+      80% {
+        transform: translateX(4px);
+      }
+      30%,
+      50%,
+      70% {
+        transform: translateX(-8px);
+      }
+      40%,
+      60% {
+        transform: translateX(8px);
+      }
+    }
+
+    @media (max-height: 850px) {
+      .game {
+        gap: 14px;
+        padding-bottom: 14px;
+      }
+
+      .board {
+        --tile-size: min(76px, calc((100vw - 68px) / 5), calc((100svh - 386px) / 6));
+        gap: 8px;
+      }
+
+      .row {
+        gap: 8px;
+      }
+
+      .tile {
+        border-width: 3px;
+      }
+
+      .keyboard {
+        gap: 8px;
+        width: min(760px, calc(100vw - 18px));
+      }
+
+      .key-row {
+        gap: 8px;
+      }
+
+      .key {
+        height: 72px;
+        min-width: 64px;
+        border-radius: 6px;
+        padding: 0 10px;
+      }
+
+      .key.wide {
+        min-width: 98px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .game {
+        gap: 10px;
+        padding: 6px 6px 10px;
+      }
+
+      .topbar {
+        width: calc(100vw - 12px);
+        min-height: 42px;
+      }
+
+      .stats-button {
+        padding: 7px 12px;
+        font-size: 0.78rem;
+      }
+
+      .board {
+        --tile-size: min(62px, calc((100vw - 52px) / 5), calc((100svh - 292px) / 6));
+        gap: 6px;
+      }
+
+      .row {
+        gap: 6px;
+      }
+
+      .tile {
+        border-width: 3px;
+      }
+
+      .keyboard {
+        gap: 7px;
+        width: calc(100vw - 12px);
+      }
+
+      .key-row {
+        gap: 6px;
+      }
+
+      .key {
+        height: 58px;
+        min-width: 0;
+        flex: 1 1 0;
+        padding: 0;
+        border-radius: 5px;
+        font-size: clamp(1.1rem, 6vw, 1.65rem);
+      }
+
+      .key.wide {
+        flex: 1.55 1 0;
+        min-width: 0;
+        font-size: clamp(0.66rem, 3.8vw, 0.92rem);
+      }
+
+      .stats-card {
+        padding: 20px 16px;
+      }
+
+      .stats-summary {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="game">
+    <header class="topbar">
+      <h1 class="brand">Second Chance Wordle</h1>
+      <button class="stats-button" id="statsButton" type="button">Stats</button>
+    </header>
+    <section class="board-wrap" aria-label="Guess board">
+      <div class="board" id="board"></div>
+    </section>
+    <section class="keyboard" id="keyboard" aria-label="Keyboard"></section>
+  </main>
+  <div class="celebration" id="celebration" aria-hidden="true"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="stats-panel" id="statsPanel" aria-hidden="true">
+    <section class="stats-card" role="dialog" aria-modal="true" aria-labelledby="statsTitle">
+      <button class="stats-close" id="statsClose" type="button" aria-label="Close stats">X</button>
+      <h2 id="statsTitle">Stats</h2>
+      <div class="stats-summary">
+        <div class="stat-box">
+          <strong id="statsRecord">0/0</strong>
+          <span>Wins</span>
+        </div>
+        <div class="stat-box">
+          <strong id="statsWinRate">0%</strong>
+          <span>Win rate</span>
+        </div>
+        <div class="stat-box">
+          <strong id="statsStreak">0</strong>
+          <span>Streak</span>
+        </div>
+        <div class="stat-box">
+          <strong id="statsBestStreak">0</strong>
+          <span>Best streak</span>
+        </div>
+      </div>
+      <h3>Guess distribution</h3>
+      <div class="stats-bars" id="statsBars"></div>
+    </section>
+  </div>
+
+  <script src="dictionaries.js"></script>
+  <script>
+    (() => {
+      const WORDS = [
+        "ABOUT", "ABOVE", "ACTOR", "ACUTE", "ADIEU", "ADMIT", "ADOPT", "AFTER", "AGAIN", "AGENT", "AGREE",
+        "AHEAD", "ALARM", "ALBUM", "ALERT", "ALIEN", "ALIVE", "ALLOW", "ALONE", "ALTER", "AMONG",
+        "APPLE", "APPLY", "ARENA", "ARGUE", "ARISE", "ARRAY", "AUDIO", "AVOID", "AWARD", "AWARE",
+        "BADGE", "BAKER", "BASIC", "BEACH", "BEGAN", "BEGIN", "BEING", "BELOW", "BENCH", "BIRTH",
+        "BLACK", "BLAME", "BLANK", "BLEND", "BLOCK", "BLOOM", "BOARD", "BOOST", "BRAIN", "BRAVE",
+        "BREAD", "BREAK", "BRICK", "BRING", "BROAD", "BROWN", "BRUSH", "BUILD", "CABLE", "CANDY",
+        "CARRY", "CATCH", "CAUSE", "CHAIN", "CHAIR", "CHALK", "CHAMP", "CHART", "CHASE", "CHEAP",
+        "CHECK", "CHEST", "CHIEF", "CHILD", "CIVIC", "CLASS", "CLEAN", "CLEAR", "CLIMB", "CLOCK",
+        "CLOSE", "CLOTH", "CLOUD", "COACH", "COAST", "COLOR", "COULD", "COUNT", "COURT", "COVER",
+        "CRASH", "CRISP", "CROSS", "CROWD", "CROWN", "DANCE", "DATED", "DEALT", "DEBUT", "DELAY",
+        "DEPTH", "DIRTY", "DOUBT", "DRAFT", "DREAM", "DRESS", "DRINK", "DRIVE", "EARLY", "EARTH",
+        "EIGHT", "ELBOW", "ELITE", "EMPTY", "ENJOY", "ENTER", "ENTRY", "EQUAL", "ERROR", "EVENT",
+        "EVERY", "EXACT", "EXIST", "EXTRA", "FAITH", "FALSE", "FAULT", "FAVOR", "FEAST", "FIELD",
+        "FIFTH", "FINAL", "FIRST", "FIXED", "FLASH", "FLEET", "FLOOR", "FOCUS", "FORCE", "FRAME",
+        "FRESH", "FRONT", "FRUIT", "GIANT", "GIVEN", "GLASS", "GLOBE", "GOING", "GRACE", "GRADE",
+        "GRAND", "GRANT", "GRASS", "GREAT", "GREEN", "GROUP", "GROWN", "GUARD", "GUESS", "HAPPY",
+        "HEART", "HEAVY", "HELLO", "HONEY", "HORSE", "HOTEL", "HOUSE", "HUMAN", "IDEAL", "IMAGE",
+        "INDEX", "INNER", "INPUT", "ISSUE", "JELLY", "JOINT", "JUDGE", "JUICE", "KNIFE", "KNOWN",
+        "LABEL", "LARGE", "LASER", "LATER", "LAUGH", "LAYER", "LEARN", "LEAST", "LEAVE", "LEGAL",
+        "LEVEL", "LIGHT", "LIMIT", "LOCAL", "LOGIC", "LOOSE", "LUCKY", "LUNCH", "MAGIC", "MAJOR",
+        "MAKER", "MARCH", "MATCH", "MAYBE", "MEANT", "METAL", "MIGHT", "MINOR", "MODEL", "MONEY",
+        "MONTH", "MORAL", "MOTOR", "MOUNT", "MOUSE", "MOVIE", "MUSIC", "NEEDS", "NEVER", "NIGHT",
+        "NOBLE", "NOISE", "NORTH", "NOVEL", "NURSE", "OCCUR", "OCEAN", "OFFER", "OFTEN", "ORDER",
+        "OTHER", "OUTER", "OWNER", "PAINT", "PANEL", "PAPER", "PARTY", "PATCH", "PEACE", "PHONE",
+        "PHOTO", "PIANO", "PIECE", "PILOT", "PITCH", "PLACE", "PLAIN", "PLANE", "PLANT", "PLATE",
+        "POINT", "POWER", "PRESS", "PRICE", "PRIDE", "PRIME", "PRINT", "PRIZE", "PROOF", "PROUD",
+        "QUEEN", "QUICK", "QUIET", "RADIO", "RAISE", "RANGE", "RATIO", "REACH", "READY", "RIGHT",
+        "RIVER", "ROBIN", "ROBOT", "ROUGH", "ROUND", "ROUTE", "ROYAL", "RURAL", "SCALE", "SCENE",
+        "SCORE", "SENSE", "SERVE", "SHADE", "SHAKE", "SHAPE", "SHARE", "SHARP", "SHEET", "SHELF",
+        "SHIFT", "SHINE", "SHIRT", "SHOCK", "SHORT", "SHOWN", "SIGHT", "SINCE", "SKILL", "SLEEP",
+        "SLICE", "SMILE", "SOLAR", "SOLID", "SOLVE", "SORRY", "SOUND", "SOUTH", "SPACE", "SPARE",
+        "SPEAK", "SPEED", "SPEND", "SPICE", "SPORT", "STAFF", "STAGE", "STAKE", "STAND", "START",
+        "STATE", "STEAM", "STEEL", "STICK", "STILL", "STOCK", "STONE", "STORE", "STORM", "STORY",
+        "STRIP", "STUDY", "STYLE", "SUGAR", "SUPER", "SWEET", "TABLE", "TAKEN", "TASTE", "TEACH",
+        "THANK", "THEIR", "THEME", "THERE", "THICK", "THING", "THINK", "THIRD", "THOSE", "THREE",
+        "THROW", "TIGHT", "TIRED", "TITLE", "TODAY", "TOPIC", "TOTAL", "TOUCH", "TOUGH", "TOWER",
+        "TRACK", "TRADE", "TRAIN", "TRIAL", "TRICK", "TRUST", "TRUTH", "TWICE", "UNDER", "UNION",
+        "UNTIL", "UPPER", "URBAN", "USAGE", "USUAL", "VALUE", "VIDEO", "VIRAL", "VISIT", "VITAL",
+        "VOICE", "WASTE", "WATCH", "WATER", "WHEEL", "WHERE", "WHICH", "WHILE", "WHITE", "WHOLE",
+        "WHOSE", "WOMAN", "WORLD", "WORRY", "WORTH", "WOULD", "WRITE", "WRONG", "YOUNG", "YOUTH"
+      ];
+      const DAILY_EXTRA_WORDS = [
+        "ABACK", "ABBEY", "ABODE", "ABORT", "ABUSE", "ADAPT", "ADULT", "AGILE", "AGLOW", "AGONY",
+        "ALIBI", "ALIGN", "ALIKE", "ALLOT", "ALLOY", "ALONG", "ALOOF", "ALOUD", "ALPHA", "ALTAR",
+        "AMAZE", "AMBER", "AMBLE", "AMEND", "AMISS", "AMPLE", "AMPLY", "AMUSE", "ANGEL", "ANGER",
+        "ANGLE", "ANGRY", "ANKLE", "ANNEX", "ANODE", "ANTIC", "ANTSY", "APART", "APNEA", "APRON",
+        "APTLY", "ARBOR", "ARMOR", "AROMA", "ARROW", "ARSON", "ASIDE", "ASSET", "ATLAS", "ATONE",
+        "ATTIC", "AWAIT", "AWAKE", "AWFUL", "AXIAL", "BACON", "BAGEL", "BALMY", "BANAL", "BANJO",
+        "BARGE", "BARON", "BASIL", "BASIN", "BASTE", "BATCH", "BATHE", "BATON", "BEARD", "BEAST",
+        "BEECH", "BEEFY", "BEIGE", "BELCH", "BELIE", "BELLE", "BELLY", "BERET", "BERRY", "BINGE",
+        "BINGO", "BIOME", "BISON", "BLAST", "BLAZE", "BLEAK", "BLEAR", "BLEAT", "BLEED", "BLEEP",
+        "BLIMP", "BLIND", "BLINK", "BLISS", "BLITZ", "BLOAT", "BLOOD", "BLOWN", "BLUFF", "BLUNT",
+        "BLURB", "BLURT", "BLUSH", "BOAST", "BOBBY", "BONUS", "BOOTH", "BOOTY", "BOOZE", "BOXER",
+        "BRACE", "BRAID", "BRAKE", "BRAND", "BRASH", "BRASS", "BRAWN", "BRAWL", "BRAZE", "BRIAR",
+        "BRIBE", "BRIDE", "BRIEF", "BRINE", "BRINK", "BRISK", "BROIL", "BROOD", "BROOK", "BROOM",
+        "BROTH", "BUNCH", "BUNNY", "BURST", "BUTCH", "BUYER", "CABIN", "CACAO", "CACHE", "CADET",
+        "CAMEL", "CANAL", "CANOE", "CANON", "CAPER", "CARGO", "CAROL", "CARVE", "CASTE", "CATER",
+        "CAULK", "CEDAR", "CHAFE", "CHANT", "CHAOS", "CHARD", "CHARM", "CHASM", "CHEAT", "CHEEK",
+        "CHEER", "CHESS", "CHICK", "CHIDE", "CHILI", "CHILL", "CHIME", "CHINA", "CHIRP", "CHOCK",
+        "CHOIR", "CHOKE", "CHORD", "CHORE", "CHOSE", "CHUCK", "CHUMP", "CHUNK", "CHURN", "CHUTE",
+        "CIDER", "CIGAR", "CINCH", "CIRCA", "CIVIL", "CLAIM", "CLAMP", "CLANG", "CLANK", "CLASH",
+        "CLASP", "CLEAT", "CLEFT", "CLERK", "CLICK", "CLIFF", "CLING", "CLINK", "CLONE", "CLOUT"
+      ];
+      const EXTRA_GUESSES = [
+        "AAHED", "AALII", "AARGH", "ABACA", "ABACI", "ABACS", "ABAFT", "ABAKA", "ABAMP", "ABAYA",
+        "ABBES", "ABDAL", "ABELE", "ABHOR", "ABIDE", "ABIES", "ABJAD", "ABLET", "ABMHO", "ABNET",
+        "ABOHM", "ABOIL", "ABOMA", "ABOON", "ABORD", "ABRAY", "ABRIM", "ABRIN", "ABRIS", "ABSEY",
+        "ABSIT", "ABUNA", "ABUNE", "ABURA", "ABUZZ", "ABYDE", "ABYED", "ABYES", "ABYME", "ABYSM",
+        "ACARI", "ACEDY", "ACERB", "ACHAR", "ACHOO", "ACINI", "ACMIC", "ACNED", "ACNES", "ACOEL",
+        "ACOLD", "ACRAL", "ACRED", "ACRID", "ACRON", "ACRUX", "ACTIN", "ACTUS", "ACYLS", "ADDAX",
+        "ADDLE", "ADEEM", "ADEPS", "ADEPT", "ADIEU", "ADIOS", "ADITS", "ADIVE", "ADLAY", "ADLIB",
+        "ADZES", "AECIA", "AERIE", "AESIR", "AGAMA", "AGAMI", "AGAPE", "AGARS", "AGATE", "AGAVE",
+        "AGLET", "AGLEY", "AGLUS", "AGONE", "AGONS", "AGORA", "AGREE", "AGRIA", "AHENT", "AHURU",
+        "AIDOS", "AILED", "AIMED", "AINEE", "AIOLI", "AITCH", "AITUS", "AIVER", "AJIVA", "AJUGA",
+        "AKENE", "ALAAP", "ALACK", "ALAMO", "ALATE", "ALCID", "ALDEA", "ALEPH", "ALGID", "ALKYD",
+        "ALKYL", "ALLAY", "ALLEE", "ALOES", "ALOHA", "ALOIN", "ALTHO", "ALULA", "AMAIN", "AMATE",
+        "AMBOS", "AMICE", "AMIDE", "AMIDO", "AMINE", "AMINO", "AMIRS", "AMITY", "AMOLE", "AMOUR",
+        "AMRIT", "ANCHO", "ANCON", "ANENT", "ANGST", "ANILE", "ANILS", "ANIMA", "ANIME", "ANION",
+        "ANKHS", "ANLAS", "ANNAL", "ANTAE", "ANTAS", "ANTRE", "AORTA", "APACE", "APAGE", "APERS",
+        "APERT", "APERY", "APHID", "APIAN", "APISH", "APODE", "APORT", "APPAL", "APPAY", "APPUI",
+        "AREAL", "AREIC", "AREPA", "ARGAL", "ARGAN", "ARGIL", "ARGLE", "ARGOT", "ARIEL", "ARILS",
+        "ARLES", "ARMET", "ARNAS", "ARNUT", "AROBA", "AROHA", "AROID", "ARPAS", "ARRIS", "ARUHE",
+        "ARVOS", "ASANA", "ASCOT", "ASDIC", "ASHET", "ASKEW", "ASKOI", "ASPEN", "ASPER", "ASPIC",
+        "ASSAI", "ATILT", "ATMAN", "ATMAS", "ATOLL", "ATOMS", "ATONY", "ATTAR", "AUGER", "AUGHT",
+        "AURAE", "AURAL", "AURAR", "AURAS", "AUREI", "AURES", "AURIC", "AVENS", "AVERS", "AVISO",
+        "AVIZE", "AWARN", "AWATO", "AWOLS", "AXELS", "AXILE", "AXILS", "AXING", "AXIOM", "AXION",
+        "BAIZE", "BODES", "BOOED", "BOORS", "BORER", "BOUSE", "BOWSE", "BROOS", "BROSE", "BURDS",
+        "BURSE", "CEROS", "COOER", "CORSE", "COSES", "COUDE", "CREDO", "CRORE", "CRUDO", "CRUOR",
+        "CRUSE", "CUSSO", "ZORIL"
+      ];
+
+      const ROWS = 6;
+      const COLS = 5;
+      const DAILY_WORD_ANCHOR_DATE = "2026-05-21";
+      const DAILY_WORD_ANCHOR = "CANDY";
+      const DAILY_WORD_STEP = 137;
+      const DAILY_WORD_OVERRIDES = {
+        "2026-05-23": "CROWN",
+        "2026-05-24": "BLAZE",
+        "2026-05-25": "AFTER",
+        "2026-06-13": "VOICE",
+        "2026-06-14": "TRICK",
+      };
+      const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
+      const JOHN_WORDS = [
+        "LUCKY", "BLAZE", "COMET", "RIVER", "SPARK", "GHOST", "CANDY", "BRICK",
+        "CLOVE", "CLOWN", "CLUCK", "CLUMP", "CLUNG", "COCOA", "COLON", "COMIC", "COMMA", "CONCH",
+        "CONDO", "COPSE", "CORAL", "CORER", "CORNY", "COUCH", "COUGH", "COVEN", "COVET", "COVEY",
+        "COWER", "COYLY", "CRACK", "CRAFT", "CRAMP", "CRANE", "CRANK", "CRATE", "CRAVE", "CRAWL",
+        "CRAZE", "CRAZY", "CREAK", "CREAM", "CREEP", "CREPE", "CREST", "CRICK", "CRIED", "CRIME",
+        "CRIMP", "CROAK", "CROCK", "CRONY", "CROUP", "CRUDE", "CRUEL", "CRUMB", "CRUSH", "CRUST",
+        "CRYPT", "CUBIC", "CURLY", "CURVE", "CURVY", "CUTIE", "CYBER", "CYCLE", "CYNIC", "DAILY",
+        "DAIRY", "DAISY", "DANDY", "DENSE", "DEITY", "DELTA", "DEMON", "DENIM", "DETOX", "DEVIL",
+        "DIGIT", "DINER", "DINGO", "DISCO", "DITTO", "DIZZY", "DODGE", "DOGMA", "DOILY", "DONOR",
+        "DONUT", "DOPEY", "DOUGH", "DOWEL", "DOWNY", "DOZEN", "DRAIN", "DRAKE", "DRAMA", "DRAWL",
+        "DRAWN", "DREAD", "DRIER", "DRIFT", "DRILL", "DROID", "DRONE", "DROWN", "DRUID", "DRUNK"
+      ];
+      const RESET_CODE = "CENA";
+      const ALT_WORD_CODE = "JOHN";
+      const RESET_STATS_CODE = "DEX";
+      const SECRET_BUFFER_LIMIT = Math.max(RESET_CODE.length, ALT_WORD_CODE.length, RESET_STATS_CODE.length);
+      const STATS_KEY = "second-chance-wordle-stats-v2";
+      const LEGACY_STATS_KEY = "second-chance-wordle-stats-v1";
+      const ACTIVE_PUZZLE_KEY = "second-chance-wordle-active-puzzle-v1";
+      const PROGRESS_KEY = "second-chance-wordle-progress-v1";
+      const DICTIONARY_DATA = window.SECOND_CHANCE_DICTIONARIES || { guesses: [], fourLetterBases: [] };
+      const DAILY_ANSWER_WORDS = [...WORDS, ...DAILY_EXTRA_WORDS];
+      const WORD_LIST = new Set([...DAILY_ANSWER_WORDS, ...JOHN_WORDS, ...EXTRA_GUESSES, ...DICTIONARY_DATA.guesses]);
+      const FOUR_LETTER_BASES = new Set(DICTIONARY_DATA.fourLetterBases || []);
+      const board = document.querySelector("#board");
+      const keyboard = document.querySelector("#keyboard");
+      const toast = document.querySelector("#toast");
+      const celebration = document.querySelector("#celebration");
+      const statsButton = document.querySelector("#statsButton");
+      const statsPanel = document.querySelector("#statsPanel");
+      const statsClose = document.querySelector("#statsClose");
+      const statsRecord = document.querySelector("#statsRecord");
+      const statsWinRate = document.querySelector("#statsWinRate");
+      const statsStreak = document.querySelector("#statsStreak");
+      const statsBestStreak = document.querySelector("#statsBestStreak");
+      const statsBars = document.querySelector("#statsBars");
+      const keyRows = ["QWERTYUIOP", "ASDFGHJKL", "ENTERZXCVBNM<"];
+      const rank = { absent: 1, present: 2, correct: 3 };
+      const keyState = {};
+      const confettiColors = ["#6aaa64", "#c9b458", "#787c7e", "#f97316", "#2563eb", "#e11d48"];
+      const DAILY_PUZZLE = getDailyPuzzle();
+      let currentPuzzle = DAILY_PUZZLE;
+      let answer = currentPuzzle.word;
+      let currentRow = 0;
+      let currentGuess = "";
+      let done = false;
+      let revealing = false;
+      let toastTimer = 0;
+      let doneSecretBuffer = "";
+      let tiles = [];
+      let keys = {};
+      let stats = loadStats();
+      let progress = loadProgress();
+
+      function pacificDateParts(date = new Date()) {
+        const parts = new Intl.DateTimeFormat("en-CA", {
+          timeZone: "America/Los_Angeles",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).formatToParts(date);
+        const lookup = Object.fromEntries(parts.filter((part) => part.type !== "literal").map((part) => [part.type, part.value]));
+        return {
+          year: Number(lookup.year),
+          month: Number(lookup.month),
+          day: Number(lookup.day),
+          id: `${lookup.year}-${lookup.month}-${lookup.day}`,
+        };
+      }
+
+      function daysSincePacificDate(anchorId, currentId) {
+        const anchorDate = new Date(`${anchorId}T12:00:00Z`);
+        const currentDate = new Date(`${currentId}T12:00:00Z`);
+        return Math.round((currentDate - anchorDate) / 86400000);
+      }
+
+      function wrapIndex(index, length) {
+        return ((index % length) + length) % length;
+      }
+
+      function getDailyPuzzle() {
+        const today = pacificDateParts();
+        const overrideWord = DAILY_WORD_OVERRIDES[today.id];
+        const anchorIndex = DAILY_ANSWER_WORDS.indexOf(DAILY_WORD_ANCHOR);
+        const safeAnchorIndex = anchorIndex >= 0 ? anchorIndex : 0;
+        const dayOffset = daysSincePacificDate(DAILY_WORD_ANCHOR_DATE, today.id);
+        const word = overrideWord || DAILY_ANSWER_WORDS[wrapIndex(safeAnchorIndex + dayOffset * DAILY_WORD_STEP, DAILY_ANSWER_WORDS.length)];
+        return {
+          id: `${today.id}-${word.toLowerCase()}`,
+          word,
+        };
+      }
+
+      function buildBoard() {
+        board.innerHTML = "";
+        tiles = [];
+        for (let row = 0; row < ROWS; row += 1) {
+          const rowEl = document.createElement("div");
+          rowEl.className = "row";
+          const rowTiles = [];
+          for (let col = 0; col < COLS; col += 1) {
+            const tile = document.createElement("div");
+            tile.className = "tile";
+            tile.setAttribute("aria-label", `Row ${row + 1}, letter ${col + 1}`);
+            rowEl.appendChild(tile);
+            rowTiles.push(tile);
+          }
+          board.appendChild(rowEl);
+          tiles.push(rowTiles);
+        }
+      }
+
+      function buildKeyboard() {
+        keyboard.innerHTML = "";
+        keys = {};
+        keyRows.forEach((letters) => {
+          const row = document.createElement("div");
+          row.className = "key-row";
+          for (let index = 0; index < letters.length; index += 1) {
+            let label = letters[index];
+            if (letters.startsWith("ENTER") && index === 0) {
+              label = "ENTER";
+              index = 4;
+            }
+            const key = document.createElement("button");
+            key.className = label === "ENTER" || label === "<" ? "key wide" : "key";
+            key.type = "button";
+            key.textContent = label === "<" ? "⌫" : label;
+            key.dataset.key = label;
+            key.setAttribute("aria-label", label === "<" ? "Backspace" : label);
+            key.addEventListener("click", () => press(label));
+            row.appendChild(key);
+            if (/^[A-Z]$/.test(label)) keys[label] = key;
+          }
+          keyboard.appendChild(row);
+        });
+      }
+
+      function showToast(message, linger = 1100, expand = false) {
+        toast.textContent = message;
+        toast.classList.remove("expand");
+        void toast.offsetWidth;
+        toast.classList.add("show");
+        if (expand) toast.classList.add("expand");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove("show", "expand"), linger);
+      }
+
+      function loadStats() {
+        const fallback = blankStats();
+        try {
+          const saved = JSON.parse(localStorage.getItem(STATS_KEY) || "null");
+          if (saved && Array.isArray(saved.results)) return deriveStats(saved);
+
+          const legacy = JSON.parse(localStorage.getItem(LEGACY_STATS_KEY) || "null");
+          if (!legacy || !Array.isArray(legacy.distribution)) return fallback;
+          return deriveStats({
+            legacyPlayed: Number(legacy.played) || 0,
+            legacyWins: Number(legacy.wins) || 0,
+            legacyStreak: Number(legacy.streak) || 0,
+            legacyBestStreak: Number(legacy.bestStreak) || 0,
+            legacyDistribution: legacy.distribution,
+            results: [],
+          });
+        } catch {
+          return fallback;
+        }
+      }
+
+      function blankStats() {
+        return deriveStats({
+          legacyPlayed: 0,
+          legacyWins: 0,
+          legacyStreak: 0,
+          legacyBestStreak: 0,
+          legacyDistribution: Array(ROWS).fill(0),
+          results: [],
+        });
+      }
+
+      function deriveStats(saved) {
+        const legacyDistribution = Array(ROWS).fill(0).map((value, index) => {
+          return Number(saved.legacyDistribution?.[index]) || value;
+        });
+        const results = (saved.results || []).filter((result) => {
+          return result && typeof result.puzzleId === "string" && typeof result.won === "boolean";
+        });
+        const distribution = [...legacyDistribution];
+        let played = Number(saved.legacyPlayed) || 0;
+        let wins = Number(saved.legacyWins) || 0;
+        let streak = Number(saved.legacyStreak) || 0;
+        let bestStreak = Number(saved.legacyBestStreak) || streak;
+
+        results.forEach((result) => {
+          played += 1;
+          if (result.won) {
+            wins += 1;
+            streak += 1;
+            bestStreak = Math.max(bestStreak, streak);
+            if (result.attempts >= 1 && result.attempts <= ROWS) {
+              distribution[result.attempts - 1] += 1;
+            }
+          } else {
+            streak = 0;
+          }
+        });
+
+        return {
+          legacyPlayed: Number(saved.legacyPlayed) || 0,
+          legacyWins: Number(saved.legacyWins) || 0,
+          legacyStreak: Number(saved.legacyStreak) || 0,
+          legacyBestStreak: Number(saved.legacyBestStreak) || 0,
+          legacyDistribution,
+          results,
+          played,
+          wins,
+          streak,
+          bestStreak,
+          distribution,
+        };
+      }
+
+      function saveStats() {
+        try {
+          localStorage.setItem(STATS_KEY, JSON.stringify({
+            legacyPlayed: stats.legacyPlayed,
+            legacyWins: stats.legacyWins,
+            legacyStreak: stats.legacyStreak,
+            legacyBestStreak: stats.legacyBestStreak,
+            legacyDistribution: stats.legacyDistribution,
+            results: stats.results,
+          }));
+        } catch {
+          // Stats are a bonus; gameplay should continue if storage is blocked.
+        }
+      }
+
+      function resetStats() {
+        stats = blankStats();
+        try {
+          localStorage.removeItem(STATS_KEY);
+          localStorage.removeItem(LEGACY_STATS_KEY);
+        } catch {
+          // If storage is blocked, at least reset the in-memory panel.
+        }
+        updateStatsPanel();
+        showToast("Stats reset", 1500, true);
+      }
+
+      function isJohnPuzzleId(puzzleId) {
+        return typeof puzzleId === "string" && puzzleId.startsWith(JOHN_PUZZLE_PREFIX);
+      }
+
+      function johnPuzzleAt(index) {
+        const normalizedIndex = ((index % JOHN_WORDS.length) + JOHN_WORDS.length) % JOHN_WORDS.length;
+        return {
+          id: `${JOHN_PUZZLE_PREFIX}-${normalizedIndex}`,
+          word: JOHN_WORDS[normalizedIndex],
+          johnIndex: normalizedIndex,
+        };
+      }
+
+      function getPuzzleById(puzzleId) {
+        if (puzzleId === DAILY_PUZZLE.id) return DAILY_PUZZLE;
+        if (puzzleId === `${JOHN_PUZZLE_PREFIX}`) return johnPuzzleAt(0);
+        if (!isJohnPuzzleId(puzzleId)) return null;
+        const suffix = Number.parseInt(puzzleId.slice(JOHN_PUZZLE_PREFIX.length + 1), 10);
+        return johnPuzzleAt(Number.isFinite(suffix) ? suffix : 0);
+      }
+
+      function nextJohnPuzzle() {
+        const currentIndex = isJohnPuzzleId(currentPuzzle.id) ? currentPuzzle.johnIndex || 0 : -1;
+        return johnPuzzleAt(currentIndex + 1);
+      }
+
+      function loadActivePuzzle() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(ACTIVE_PUZZLE_KEY) || "null");
+          const savedPuzzle = getPuzzleById(saved?.puzzleId);
+          if (!savedPuzzle) return DAILY_PUZZLE;
+          if (saved?.word && saved.word !== savedPuzzle.word) return DAILY_PUZZLE;
+          return savedPuzzle;
+        } catch {
+          return DAILY_PUZZLE;
+        }
+      }
+
+      function saveActivePuzzle() {
+        try {
+          localStorage.setItem(ACTIVE_PUZZLE_KEY, JSON.stringify({
+            puzzleId: currentPuzzle.id,
+            word: currentPuzzle.word,
+          }));
+        } catch {
+          // The game can still run if storage is blocked.
+        }
+      }
+
+      function recordGame(won, attempts = 0) {
+        if (stats.results.some((result) => result.puzzleId === currentPuzzle.id)) return;
+        stats.results.push({
+          puzzleId: currentPuzzle.id,
+          word: answer,
+          won,
+          attempts: won ? attempts : 0,
+          completedAt: new Date().toISOString(),
+        });
+        saveStats();
+        stats = loadStats();
+        updateStatsPanel();
+      }
+
+      function removeCurrentResultFromStats() {
+        const nextResults = stats.results.filter((result) => result.puzzleId !== currentPuzzle.id);
+        if (nextResults.length === stats.results.length) return;
+        stats.results = nextResults;
+        saveStats();
+        stats = loadStats();
+        updateStatsPanel();
+      }
+
+      function freshProgress(puzzle = currentPuzzle) {
+        return {
+          puzzleId: puzzle.id,
+          word: puzzle.word,
+          guesses: [],
+          done: false,
+          won: false,
+        };
+      }
+
+      function replaceWithFreshProgress(puzzle = DAILY_PUZZLE) {
+        const nextProgress = freshProgress(puzzle);
+        currentPuzzle = puzzle;
+        answer = puzzle.word;
+        saveActivePuzzle();
+        try {
+          localStorage.setItem(PROGRESS_KEY, JSON.stringify(nextProgress));
+        } catch {
+          // If storage is blocked, still return the fresh in-memory puzzle.
+        }
+        return nextProgress;
+      }
+
+      function loadProgress() {
+        const activePuzzle = loadActivePuzzle();
+        try {
+          const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "null");
+          const savedPuzzle = getPuzzleById(saved?.puzzleId);
+          const restoreCurrentDaily = saved?.puzzleId === DAILY_PUZZLE.id && saved?.word === DAILY_PUZZLE.word;
+          const restoreCurrentJohn = isJohnPuzzleId(saved?.puzzleId) && savedPuzzle && saved?.word === savedPuzzle.word;
+          if (!restoreCurrentDaily && !restoreCurrentJohn) return replaceWithFreshProgress(activePuzzle);
+          currentPuzzle = savedPuzzle;
+          answer = currentPuzzle.word;
+          const guesses = (saved.guesses || []).filter((guess) => /^[A-Z]{5}$/.test(guess)).slice(0, ROWS);
+          const lastGuess = guesses[guesses.length - 1] || "";
+          const won = lastGuess === currentPuzzle.word;
+          const doneGame = Boolean(saved.done || won || guesses.length >= ROWS);
+          return {
+            puzzleId: currentPuzzle.id,
+            word: currentPuzzle.word,
+            guesses,
+            done: doneGame,
+            won: doneGame ? Boolean(saved.won || won) : false,
+          };
+        } catch {
+          return replaceWithFreshProgress(activePuzzle);
+        }
+      }
+
+      function saveProgress() {
+        saveActivePuzzle();
+        try {
+          localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+        } catch {
+          // Refresh protection uses localStorage when the browser allows it.
+        }
+      }
+
+      function renderProgress() {
+        Object.keys(keyState).forEach((letter) => delete keyState[letter]);
+        progress.guesses.forEach((guess, rowIndex) => {
+          const result = scoreGuess(guess, answer);
+          result.forEach((status, colIndex) => {
+            const tile = tiles[rowIndex][colIndex];
+            tile.textContent = guess[colIndex];
+            tile.className = `tile ${status}`;
+            paintKey(guess[colIndex], status);
+          });
+        });
+
+        currentRow = progress.guesses.length;
+        currentGuess = "";
+        done = progress.done;
+
+        if (progress.won && progress.guesses.length) {
+          board.children[progress.guesses.length - 1]?.classList.add("win");
+        }
+
+        if (progress.done) {
+          recordGame(progress.won, progress.won ? progress.guesses.length : 0);
+        }
+      }
+
+      function beginPuzzle(puzzle, toastMessage = "Fresh start", clearRecordedResult = true) {
+        currentPuzzle = puzzle;
+        answer = currentPuzzle.word;
+        progress = freshProgress(currentPuzzle);
+        if (clearRecordedResult) removeCurrentResultFromStats();
+        saveProgress();
+        Object.keys(keyState).forEach((letter) => delete keyState[letter]);
+        currentRow = 0;
+        currentGuess = "";
+        done = false;
+        revealing = false;
+        doneSecretBuffer = "";
+        celebration.innerHTML = "";
+        buildBoard();
+        buildKeyboard();
+        updateStatsPanel();
+        showToast(toastMessage, 1300, true);
+      }
+
+      function resetCurrentPuzzle() {
+        beginPuzzle(currentPuzzle, "Fresh start", true);
+      }
+
+      function switchToJohnPuzzle() {
+        beginPuzzle(nextJohnPuzzle(), "New word", false);
+      }
+
+      function latestPuzzleForSession() {
+        const activePuzzle = loadActivePuzzle();
+        if (isJohnPuzzleId(activePuzzle?.id)) return activePuzzle;
+        return getDailyPuzzle();
+      }
+
+      function syncPuzzleState(forceToast = false) {
+        const latestPuzzle = latestPuzzleForSession();
+        const puzzleChanged = currentPuzzle?.id !== latestPuzzle.id || answer !== latestPuzzle.word;
+        const progressChanged = progress?.puzzleId !== latestPuzzle.id || progress?.word !== latestPuzzle.word;
+        if (!puzzleChanged && !progressChanged) return;
+        beginPuzzle(latestPuzzle, forceToast ? "Word refreshed" : "Fresh start", false);
+      }
+
+      function updateStatsPanel() {
+        const winRate = stats.played ? Math.round((stats.wins / stats.played) * 100) : 0;
+        const maxCount = Math.max(1, ...stats.distribution);
+        statsRecord.textContent = `${stats.wins}/${stats.played}`;
+        statsWinRate.textContent = `${winRate}%`;
+        statsStreak.textContent = stats.streak;
+        statsBestStreak.textContent = stats.bestStreak;
+        statsBars.innerHTML = "";
+
+        stats.distribution.forEach((count, index) => {
+          const width = count ? Math.max(8, Math.round((count / maxCount) * 100)) : 0;
+          const row = document.createElement("div");
+          row.className = "bar-row";
+          row.innerHTML = `
+            <span>${index + 1}</span>
+            <div class="bar-track">
+              <span class="bar-fill" style="width: ${width}%"></span>
+              <span class="bar-count">${count}</span>
+            </div>
+          `;
+          statsBars.appendChild(row);
+        });
+      }
+
+      function openStats() {
+        updateStatsPanel();
+        statsPanel.classList.add("open");
+        statsPanel.setAttribute("aria-hidden", "false");
+      }
+
+      function closeStats() {
+        statsPanel.classList.remove("open");
+        statsPanel.setAttribute("aria-hidden", "true");
+      }
+
+      function celebrateWin() {
+        celebration.innerHTML = "";
+        for (let index = 0; index < 72; index += 1) {
+          const piece = document.createElement("span");
+          piece.className = "confetti";
+          piece.style.left = `${Math.random() * 100}%`;
+          piece.style.background = confettiColors[index % confettiColors.length];
+          piece.style.animationDelay = `${Math.random() * 260}ms`;
+          piece.style.setProperty("--drift", `${Math.random() * 240 - 120}px`);
+          piece.style.setProperty("--spin", `${Math.random() * 720 + 240}deg`);
+          celebration.appendChild(piece);
+        }
+        setTimeout(() => {
+          celebration.innerHTML = "";
+        }, 2100);
+      }
+
+      function press(key) {
+        if (revealing) return;
+
+        if (done) {
+          if (/^[A-Z]$/.test(key)) {
+            doneSecretBuffer = `${doneSecretBuffer}${key}`.slice(-SECRET_BUFFER_LIMIT);
+            return;
+          }
+          if (key === "ENTER" && doneSecretBuffer === RESET_CODE) return resetCurrentPuzzle();
+          if (key === "ENTER" && doneSecretBuffer === ALT_WORD_CODE) return switchToJohnPuzzle();
+          if (key === "ENTER" && doneSecretBuffer === RESET_STATS_CODE) return resetStats();
+          if (key === "<") doneSecretBuffer = "";
+          showToast(progress.won ? "Already solved" : answer, 1400, true);
+          return;
+        }
+
+        if (key === "ENTER" && currentGuess === RESET_CODE) return resetCurrentPuzzle();
+        if (key === "ENTER" && currentGuess === ALT_WORD_CODE) return switchToJohnPuzzle();
+        if (key === "ENTER" && currentGuess === RESET_STATS_CODE) return resetStats();
+
+        if (/^[A-Z]$/.test(key)) addLetter(key);
+        if (key === "<") removeLetter();
+        if (key === "ENTER") submitGuess();
+      }
+
+      function addLetter(letter) {
+        if (currentGuess.length >= COLS) return;
+        const tile = tiles[currentRow][currentGuess.length];
+        currentGuess += letter;
+        tile.textContent = letter;
+        tile.classList.add("filled", "pop");
+        setTimeout(() => tile.classList.remove("pop"), 120);
+      }
+
+      function removeLetter() {
+        if (!currentGuess) return;
+        currentGuess = currentGuess.slice(0, -1);
+        const tile = tiles[currentRow][currentGuess.length];
+        tile.textContent = "";
+        tile.className = "tile";
+      }
+
+      function submitGuess() {
+        if (currentGuess === RESET_CODE) {
+          resetCurrentPuzzle();
+          return;
+        }
+        if (currentGuess === ALT_WORD_CODE) {
+          switchToJohnPuzzle();
+          return;
+        }
+        if (currentGuess === RESET_STATS_CODE) {
+          resetStats();
+          return;
+        }
+
+        if (currentGuess.length !== COLS) {
+          shake();
+          showToast("Not enough letters");
+          return;
+        }
+
+        if (!isAcceptedGuess(currentGuess)) {
+          shake();
+          showToast("Not on word list", 1400, true);
+          return;
+        }
+
+        const guess = currentGuess;
+        const result = scoreGuess(guess, answer);
+        progress.guesses.push(guess);
+        saveProgress();
+        revealGuess(guess, result);
+      }
+
+      function isAcceptedGuess(guess) {
+        if (WORD_LIST.has(guess)) return true;
+        return guess.endsWith("S") && FOUR_LETTER_BASES.has(guess.slice(0, -1));
+      }
+
+      function finishGuess(guess) {
+        if (guess === answer) {
+          const attempts = currentRow + 1;
+          done = true;
+          progress.done = true;
+          progress.won = true;
+          saveProgress();
+          board.children[currentRow]?.classList.add("win");
+          recordGame(true, attempts);
+          celebrateWin();
+          showToast(`Won in ${attempts} - Streak ${stats.streak}`, 2800, true);
+          return;
+        }
+
+        currentRow += 1;
+        currentGuess = "";
+
+        if (currentRow >= ROWS) {
+          done = true;
+          progress.done = true;
+          progress.won = false;
+          saveProgress();
+          recordGame(false);
+          showToast(`${answer} - Streak ended`, 2800, true);
+        }
+      }
+
+      function revealGuess(guess, result) {
+        const flipDelay = 420;
+        const flipDuration = 900;
+        revealing = true;
+
+        result.forEach((status, index) => {
+          const tile = tiles[currentRow][index];
+          const delay = index * flipDelay;
+          setTimeout(() => {
+            tile.classList.add("flip");
+          }, delay);
+          setTimeout(() => {
+            tile.classList.remove("filled");
+            tile.classList.add(status);
+            paintKey(guess[index], status);
+          }, delay + flipDuration / 2);
+          setTimeout(() => {
+            tile.classList.remove("flip");
+          }, delay + flipDuration);
+        });
+
+        setTimeout(() => {
+          revealing = false;
+          finishGuess(guess);
+        }, (COLS - 1) * flipDelay + flipDuration + 60);
+      }
+
+      function scoreGuess(guess, target) {
+        const result = Array(COLS).fill("absent");
+        const leftovers = {};
+
+        for (let index = 0; index < COLS; index += 1) {
+          if (guess[index] === target[index]) {
+            result[index] = "correct";
+          } else {
+            leftovers[target[index]] = (leftovers[target[index]] || 0) + 1;
+          }
+        }
+
+        for (let index = 0; index < COLS; index += 1) {
+          if (result[index] === "correct") continue;
+          const letter = guess[index];
+          if (leftovers[letter] > 0) {
+            result[index] = "present";
+            leftovers[letter] -= 1;
+          }
+        }
+
+        return result;
+      }
+
+      function paintKey(letter, status) {
+        if (!keys[letter]) return;
+        if ((rank[keyState[letter]] || 0) >= rank[status]) return;
+        keyState[letter] = status;
+        keys[letter].className = `key ${status}`;
+      }
+
+      function shake() {
+        const row = board.children[currentRow];
+        row.classList.remove("shake");
+        window.requestAnimationFrame(() => row.classList.add("shake"));
+      }
+
+      function startGame() {
+        Object.keys(keyState).forEach((letter) => delete keyState[letter]);
+        progress = loadProgress();
+        saveProgress();
+        currentRow = 0;
+        currentGuess = "";
+        done = false;
+        revealing = false;
+        doneSecretBuffer = "";
+        celebration.innerHTML = "";
+        buildBoard();
+        buildKeyboard();
+        renderProgress();
+        updateStatsPanel();
+      }
+
+      statsButton.addEventListener("click", openStats);
+      statsClose.addEventListener("click", closeStats);
+      statsPanel.addEventListener("click", (event) => {
+        if (event.target === statsPanel) closeStats();
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeStats();
+          return;
+        }
+        const key = event.key.toUpperCase();
+        if (/^[A-Z]$/.test(key)) press(key);
+        if (event.key === "Backspace") press("<");
+        if (event.key === "Enter") press("ENTER");
+      });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") syncPuzzleState(true);
+      });
+
+      window.addEventListener("focus", () => syncPuzzleState(true));
+      window.addEventListener("pageshow", () => syncPuzzleState(true));
+
+      startGame();
+    })();
+  </script>
+</body>
+</html>
