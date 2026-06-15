@@ -88,8 +88,47 @@ body {
   line-height: 1.05;
 }
 
+#center-timer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  min-width: min(520px, calc(100vw - 36px));
+  min-height: 164px;
+  padding: 18px 34px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(8, 11, 19, 0.54);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.36);
+  backdrop-filter: blur(18px);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  text-align: center;
+}
+
 #timer-label {
-  min-width: 54px;
+  color: #fff4c9;
+  font-size: clamp(96px, 14vw, 168px);
+  font-weight: 950;
+  line-height: 0.86;
+  text-shadow:
+    0 0 30px rgba(255, 198, 74, 0.46),
+    0 16px 42px rgba(0, 0, 0, 0.58);
+}
+
+#center-timer span:last-child {
+  color: rgba(247, 247, 244, 0.72);
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+body[data-phase="falling"] #timer-label,
+body[data-phase="ended"] #timer-label {
+  font-size: clamp(46px, 7vw, 82px);
 }
 
 .corner-counts {
@@ -244,6 +283,21 @@ button:active {
     bottom: 14px;
     min-height: 40px;
     font-size: 13px;
+  }
+
+  #center-timer {
+    min-width: min(280px, calc(100vw - 28px));
+    min-height: 118px;
+    padding: 14px 20px 16px;
+  }
+
+  #timer-label {
+    font-size: clamp(72px, 24vw, 116px);
+  }
+
+  body[data-phase="falling"] #timer-label,
+  body[data-phase="ended"] #timer-label {
+    font-size: clamp(36px, 13vw, 58px);
   }
 
   .screen-panel h1 {

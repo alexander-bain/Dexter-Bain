@@ -19,8 +19,11 @@ const sectionDefs = [
 ];
 
 const canvas = document.querySelector("#game-canvas");
+canvas.tabIndex = 0;
 const queryParams = new URLSearchParams(window.location.search);
 const captureEnabled = queryParams.has("capture");
+const localDebugEnabled = ["127.0.0.1", "localhost"].includes(window.location.hostname);
+const forceUserDrop = localDebugEnabled && queryParams.has("force-user-drop");
 const leftCountEl = document.querySelector("#left-count");
 const roundLabelEl = document.querySelector("#round-label");
 const timerLabelEl = document.querySelector("#timer-label");
@@ -54,7 +57,43 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.06;
 
 const clock = new THREE.Clock();
-const keys = new Set();
+const MOVEMENT_KEYS = new Set([
+  "ArrowDown",
+  "ArrowLeft",
+  "ArrowRight",
+  "ArrowUp",
+  "KeyA",
+  "KeyD",
+  "KeyS",
+  "KeyW",
+]);
+const MOVEMENT_DIRECTIONS = {
+  ArrowDown: "down",
+  ArrowLeft: "left",
+  ArrowRight: "right",
+  ArrowUp: "up",
+  KeyA: "left",
+  KeyD: "right",
+  KeyS: "down",
+  KeyW: "up",
+};
+const KEY_ALIASES = {
+  a: "KeyA",
+  A: "KeyA",
+  d: "KeyD",
+  D: "KeyD",
+  s: "KeyS",
+  S: "KeyS",
+  w: "KeyW",
+  W: "KeyW",
+};
+const OPPOSITE_MOVEMENT_DIRECTIONS = {
+  down: "up",
+  left: "right",
+  right: "left",
+  up: "down",
+};
+const KEY_STALE_MS = 1200;
 const tmpVec = new THREE.Vector3();
 const lookTarget = new THREE.Vector3();
 const desiredCameraPosition = new THREE.Vector3();
@@ -69,6 +108,8 @@ let userMaterials = null;
 let announcementTimer = 0;
 let frameCount = 0;
 let capturedFrame = false;
+const activeMoveKeys = new Map();
+let activeMoveKey = null;
 
 const game = {
   started: false,
@@ -539,6 +580,7 @@ function shuffle(items) {
 function startGame() {
   for (const id of timeouts) window.clearTimeout(id);
   timeouts.clear();
+  clearMovementInput();
 
   game.started = true;
   game.ended = false;
@@ -604,10 +646,18 @@ function triggerFall(now) {
   showAnnouncement(`${def.name} corner fell. ${outText}.`);
 
   schedule(() => restoreSection(sectionId), FALL_MS + 300);
+  if (eliminated.includes(user)) {
+    schedule(() => finishGame(false), 650);
+    return;
+  }
   schedule(() => finishRoundOrContinue(), ROUND_RESET_MS);
 }
 
 function chooseFallingSection() {
+  if (forceUserDrop && user?.alive) {
+    return getSectionFromPosition(user.group.position.x, user.group.position.z);
+  }
+
   const occupied = new Set();
   characters.forEach((entity) => {
     if (entity.alive) {
@@ -627,6 +677,11 @@ function restoreSection(sectionId) {
 }
 
 function finishRoundOrContinue() {
+  if (game.ended) return;
+  if (!user?.alive) {
+    finishGame(false);
+    return;
+  }
   if (aliveCount() <= 1) {
     finishGame(Boolean(user?.alive) && aliveCount() === 1);
     return;
@@ -639,9 +694,12 @@ function finishGame(won) {
   game.ended = true;
   game.phase = "ended";
   game.nextFallAt = 0;
+  clearMovementInput();
   endTitle.textContent = won ? "You Survived" : "Eliminated";
   if (won) {
     endCopy.textContent = `You were the last one standing after ${game.round} rounds.`;
+  } else if (!user?.alive) {
+    endCopy.textContent = `Your corner dropped in round ${game.round}.`;
   } else if (alive === 1) {
     endCopy.textContent = `One bot survived after ${game.round} rounds.`;
   } else {
@@ -697,12 +755,7 @@ function updateFloor(now) {
 function updateUser(dt) {
   if (!user || !user.alive || !game.started || game.ended) return;
 
-  let xAxis = 0;
-  let zAxis = 0;
-  if (keys.has("KeyA") || keys.has("ArrowLeft")) xAxis -= 1;
-  if (keys.has("KeyD") || keys.has("ArrowRight")) xAxis += 1;
-  if (keys.has("KeyW") || keys.has("ArrowUp")) zAxis -= 1;
-  if (keys.has("KeyS") || keys.has("ArrowDown")) zAxis += 1;
+  const { xAxis, zAxis } = getMovementInput(performance.now());
 
   tmpVec.set(xAxis, 0, zAxis);
   const moving = tmpVec.lengthSq() > 0;
@@ -729,6 +782,93 @@ function updateUser(dt) {
   }
 
   updateCharacterMotion(user, moving ? USER_SPEED : 0, dt);
+}
+
+function getMovementInput(now) {
+  pruneStaleMovementInput(now);
+
+  let xAxis = 0;
+  let zAxis = 0;
+  for (const key of activeMoveKeys.keys()) {
+    switch (MOVEMENT_DIRECTIONS[key]) {
+      case "left":
+        xAxis -= 1;
+        break;
+      case "right":
+        xAxis += 1;
+        break;
+      case "up":
+        zAxis -= 1;
+        break;
+      case "down":
+        zAxis += 1;
+        break;
+    }
+  }
+
+  return { xAxis, zAxis };
+}
+
+function setMovementKey(code, now) {
+  const direction = MOVEMENT_DIRECTIONS[code];
+  if (!direction) return;
+
+  clearMovementDirection(OPPOSITE_MOVEMENT_DIRECTIONS[direction]);
+  activeMoveKeys.set(code, now);
+  activeMoveKey = code;
+}
+
+function releaseMovementKey(code) {
+  activeMoveKeys.delete(code);
+  if (activeMoveKey === code) {
+    activeMoveKey = getLatestMoveKey();
+  }
+}
+
+function clearMovementDirection(direction) {
+  for (const key of activeMoveKeys.keys()) {
+    if (MOVEMENT_DIRECTIONS[key] === direction) {
+      activeMoveKeys.delete(key);
+    }
+  }
+  if (activeMoveKey && MOVEMENT_DIRECTIONS[activeMoveKey] === direction) {
+    activeMoveKey = getLatestMoveKey();
+  }
+}
+
+function pruneStaleMovementInput(now) {
+  let pruned = false;
+  for (const [key, lastSeenAt] of activeMoveKeys) {
+    if (now - lastSeenAt > KEY_STALE_MS) {
+      activeMoveKeys.delete(key);
+      pruned = true;
+    }
+  }
+  if (pruned && activeMoveKey && !activeMoveKeys.has(activeMoveKey)) {
+    activeMoveKey = getLatestMoveKey();
+  }
+}
+
+function getLatestMoveKey() {
+  let latestKey = null;
+  let latestSeenAt = -Infinity;
+  for (const [key, lastSeenAt] of activeMoveKeys) {
+    if (lastSeenAt > latestSeenAt) {
+      latestKey = key;
+      latestSeenAt = lastSeenAt;
+    }
+  }
+  return latestKey;
+}
+
+function clearMovementInput() {
+  activeMoveKeys.clear();
+  activeMoveKey = null;
+}
+
+function normalizeMoveCode(event) {
+  if (MOVEMENT_KEYS.has(event.code)) return event.code;
+  return KEY_ALIASES[event.key] || null;
 }
 
 function isSectionWalkable(sectionId) {
@@ -829,9 +969,9 @@ function updateHud(now) {
     const seconds = Math.max(0, (game.nextFallAt - now) / 1000);
     timerLabelEl.textContent = `${seconds.toFixed(1)}s`;
   } else if (game.phase === "falling") {
-    timerLabelEl.textContent = "falling";
+    timerLabelEl.textContent = "FALLING";
   } else if (game.phase === "ended") {
-    timerLabelEl.textContent = "done";
+    timerLabelEl.textContent = "DONE";
   } else {
     timerLabelEl.textContent = "7.0s";
   }
@@ -858,6 +998,14 @@ function updateHud(now) {
   document.body.dataset.round = String(game.round);
   document.body.dataset.alive = String(alive);
   document.body.dataset.cornerCounts = counts.join(",");
+  document.body.dataset.activeMoveKey = activeMoveKey || "";
+  if (user) {
+    document.body.dataset.userX = user.group.position.x.toFixed(3);
+    document.body.dataset.userZ = user.group.position.z.toFixed(3);
+  } else {
+    delete document.body.dataset.userX;
+    delete document.body.dataset.userZ;
+  }
   document.body.dataset.floorStates = floorSections
     .map((section) => `${section.id}:${section.state}:${section.group.position.y.toFixed(2)}`)
     .join(",");
@@ -957,19 +1105,24 @@ function updateRenderStats() {
 
 window.addEventListener("resize", resize);
 window.addEventListener("keydown", (event) => {
-  if (
-    event.code.startsWith("Arrow") ||
-    event.code === "KeyW" ||
-    event.code === "KeyA" ||
-    event.code === "KeyS" ||
-    event.code === "KeyD"
-  ) {
+  const moveCode = normalizeMoveCode(event);
+  if (moveCode) {
     event.preventDefault();
+    setMovementKey(moveCode, performance.now());
   }
-  keys.add(event.code);
 });
 window.addEventListener("keyup", (event) => {
-  keys.delete(event.code);
+  const moveCode = normalizeMoveCode(event);
+  if (!moveCode) return;
+  event.preventDefault();
+  releaseMovementKey(moveCode);
+});
+window.addEventListener("blur", clearMovementInput);
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) clearMovementInput();
+});
+canvas.addEventListener("pointerdown", () => {
+  canvas.focus();
 });
 
 playButton.addEventListener("click", startGame);
@@ -984,6 +1137,16 @@ window.__fourCorners = {
     alive: aliveCount(),
     botsAlive: characters.filter((entity) => entity.kind === "bot" && entity.alive).length,
     userAlive: Boolean(user?.alive),
+    userPosition: user
+      ? {
+          x: Number(user.group.position.x.toFixed(3)),
+          z: Number(user.group.position.z.toFixed(3)),
+        }
+      : null,
+    userSection: user
+      ? getSectionFromPosition(user.group.position.x, user.group.position.z)
+      : null,
+    activeMoveKey,
     fallingSection: game.fallingSection,
     floorStates: floorSections.map((section) => ({
       id: section.id,
