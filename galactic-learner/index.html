@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galactic Learner</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section id="landing-screen" class="screen active">
+        <div class="brand">
+          <p class="eyebrow">Pixel arcade behavior cloning</p>
+          <h1>Galactic Learner</h1>
+          <p class="lede">
+            Dodge, shoot, level up, and teach a tiny JavaScript bot how you fly.
+          </p>
+        </div>
+        <div class="menu-grid">
+          <button id="show-play" class="primary">Play Game</button>
+          <button id="show-scores">High Scores</button>
+          <button id="show-ml">ML Training Data / Bot Info</button>
+        </div>
+      </section>
+
+      <section id="play-screen" class="screen">
+        <div class="panel">
+          <h2>Choose Mode</h2>
+          <button id="start-one" class="primary">1 Player</button>
+          <button id="start-two">2 Player</button>
+          <button id="start-bot">ML Bot Demo</button>
+          <p id="bot-warning" class="notice"></p>
+          <button class="back-menu">Back to Menu</button>
+        </div>
+      </section>
+
+      <section id="game-screen" class="screen game-screen">
+        <div class="topbar">
+          <div id="hud" class="hud"></div>
+          <div class="game-actions">
+            <button id="pause-game">Pause</button>
+            <button id="restart-game">Restart</button>
+            <button id="exit-game">Menu</button>
+          </div>
+        </div>
+        <canvas id="game-canvas" width="960" height="640"></canvas>
+        <div id="overlay" class="overlay hidden"></div>
+      </section>
+
+      <section id="scores-screen" class="screen">
+        <div class="panel wide">
+          <h2>High Scores</h2>
+          <ol id="scores-list" class="scores-list"></ol>
+          <button class="back-menu">Back to Menu</button>
+        </div>
+      </section>
+
+      <section id="ml-screen" class="screen">
+        <div class="panel wide">
+          <h2>ML Training Data / Bot Info</h2>
+          <div id="ml-stats" class="stats"></div>
+          <p>
+            The bot uses behavior cloning: it stores snapshots of human 1-player
+            gameplay and copies similar actions later with weighted k-nearest
+            neighbors.
+          </p>
+          <p>
+            Samples now include two-axis movement, firing, nearby bullets,
+            formation position, and enemy distance to the invasion line.
+          </p>
+          <button id="clear-training" class="danger">Clear Training Data</button>
+          <button id="export-training">Export Training Data</button>
+          <button class="back-menu">Back to Menu</button>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
