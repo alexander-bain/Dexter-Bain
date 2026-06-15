@@ -1,22 +1,107 @@
 import * as THREE from "./vendor/three.module.js";
 
-const BOT_COUNT = 20;
-const ROUND_MS = 7000;
 const FALL_MS = 1700;
 const RESTORE_MS = 900;
 const ROUND_RESET_MS = 3200;
 const FLOOR_TOP_Y = 0.24;
-const FLOOR_LIMIT = 7.58;
+const FLOOR_LIMIT = 8.18;
 const SAFE_INSET = 0.56;
 const BOT_SPEED = 2.55;
 const USER_SPEED = 4.55;
-
-const sectionDefs = [
-  { id: 0, number: "1", name: "Red", color: 0xf04455, center: [-4.08, -4.08] },
-  { id: 1, number: "2", name: "Blue", color: 0x458cff, center: [4.08, -4.08] },
-  { id: 2, number: "3", name: "Green", color: 0x39c86b, center: [-4.08, 4.08] },
-  { id: 3, number: "4", name: "Gold", color: 0xffc64a, center: [4.08, 4.08] },
+const DEFAULT_SETTINGS = {
+  sectionCount: 4,
+  botCount: 20,
+  playerName: "Player",
+  difficulty: "normal",
+  roundSpeed: "medium",
+  eliminationMode: "instant",
+  lives: 3,
+  theme: "classic",
+};
+const ROUND_SPEED_MS = {
+  slow: 10000,
+  medium: 7000,
+  fast: 4500,
+};
+const DIFFICULTY_CONFIG = {
+  easy: { botSpeed: 0.82, targetRadius: 2.05 },
+  normal: { botSpeed: 1, targetRadius: 2.35 },
+  hard: { botSpeed: 1.22, targetRadius: 2.7 },
+};
+const THEMES = {
+  classic: {
+    background: 0x060914,
+    fog: 0x060914,
+    colors: [
+      ["Red", 0xf04455],
+      ["Blue", 0x458cff],
+      ["Green", 0x39c86b],
+      ["Gold", 0xffc64a],
+      ["Purple", 0x9b5cff],
+      ["Aqua", 0x25d5d0],
+      ["Orange", 0xff8747],
+      ["Pink", 0xff66a8],
+      ["Lime", 0xa7df42],
+      ["Silver", 0xd7e1f2],
+    ],
+  },
+  neon: {
+    background: 0x050712,
+    fog: 0x050712,
+    colors: [
+      ["Pulse", 0xff3df2],
+      ["Volt", 0x23d8ff],
+      ["Laser", 0x91ff3d],
+      ["Flare", 0xffb000],
+      ["Plasma", 0x8f51ff],
+      ["Hotline", 0xff446e],
+      ["Signal", 0x41ffd0],
+      ["Arc", 0xf7ff5b],
+      ["Nova", 0x58a6ff],
+      ["Glow", 0xffffff],
+    ],
+  },
+  sunset: {
+    background: 0x100711,
+    fog: 0x100711,
+    colors: [
+      ["Coral", 0xff6b4a],
+      ["Mango", 0xffa337],
+      ["Sun", 0xffd166],
+      ["Rose", 0xff4f81],
+      ["Grape", 0x7d5fff],
+      ["Sky", 0x52c7ff],
+      ["Mint", 0x5ee6a8],
+      ["Ruby", 0xd84a4a],
+      ["Lilac", 0xd98bff],
+      ["Pearl", 0xfff3d6],
+    ],
+  },
+  ocean: {
+    background: 0x031018,
+    fog: 0x031018,
+    colors: [
+      ["Teal", 0x0fd3c8],
+      ["Wave", 0x4f8cff],
+      ["Reef", 0x3ce37a],
+      ["Foam", 0xe6fff8],
+      ["Depth", 0x2667ff],
+      ["Shell", 0xffc67a],
+      ["Lagoon", 0x16b1ff],
+      ["Kelp", 0x86d85a],
+      ["Pearl", 0xd8e7ff],
+      ["Coral", 0xff6978],
+    ],
+  },
+};
+const FOUR_SECTION_CENTERS = [
+  [-4.08, -4.08],
+  [4.08, -4.08],
+  [-4.08, 4.08],
+  [4.08, 4.08],
 ];
+let settings = { ...DEFAULT_SETTINGS };
+let sectionDefs = buildSectionDefs(settings.sectionCount, settings.theme);
 
 const canvas = document.querySelector("#game-canvas");
 canvas.tabIndex = 0;
@@ -27,12 +112,21 @@ const forceUserDrop = localDebugEnabled && queryParams.has("force-user-drop");
 const leftCountEl = document.querySelector("#left-count");
 const roundLabelEl = document.querySelector("#round-label");
 const timerLabelEl = document.querySelector("#timer-label");
+const lifeLabelEl = document.querySelector("#life-label");
+const lifeCardEl = document.querySelector(".life-card");
 const cornerCountsEl = document.querySelector("#corner-counts");
 const announcementEl = document.querySelector("#announcement");
 const startScreen = document.querySelector("#start-screen");
 const endScreen = document.querySelector("#end-screen");
 const endTitle = document.querySelector("#end-title");
 const endCopy = document.querySelector("#end-copy");
+const settingsForm = document.querySelector("#settings-form");
+const playerNameInput = document.querySelector("#player-name");
+const botCountInput = document.querySelector("#bot-count");
+const botCountNumberInput = document.querySelector("#bot-count-number");
+const livesField = document.querySelector("#lives-field");
+const livesInput = document.querySelector("#lives-count");
+const livesNumberInput = document.querySelector("#lives-count-number");
 const playButton = document.querySelector("#play-button");
 const restartButton = document.querySelector("#restart-button");
 
@@ -133,6 +227,79 @@ const geometries = {
   button: new THREE.SphereGeometry(0.018, 12, 8),
 };
 
+function buildSectionDefs(count, themeName) {
+  const theme = THEMES[themeName] || THEMES.classic;
+  const sectionCount = clampInt(count, 4, 10);
+  const normalizedCount = [4, 6, 8, 10].includes(sectionCount) ? sectionCount : 4;
+  const colorPairs = theme.colors;
+
+  if (normalizedCount === 4) {
+    return FOUR_SECTION_CENTERS.map((center, id) => {
+      const [name, color] = colorPairs[id % colorPairs.length];
+      return {
+        id,
+        number: String(id + 1),
+        name,
+        color,
+        center,
+        width: 7.82,
+        depth: 7.82,
+        rotation: 0,
+        right: [1, 0],
+        forward: [0, 1],
+        layout: "grid",
+      };
+    });
+  }
+
+  const step = (Math.PI * 2) / normalizedCount;
+  const depth = normalizedCount === 6 ? 5.8 : normalizedCount === 8 ? 5.35 : 5.05;
+  const width = normalizedCount === 6 ? 3.35 : normalizedCount === 8 ? 2.72 : 2.24;
+  const radius = normalizedCount === 6 ? 4.55 : normalizedCount === 8 ? 4.9 : 5.15;
+  const startAngle = -Math.PI / 2;
+
+  return Array.from({ length: normalizedCount }, (_, id) => {
+    const angle = startAngle + id * step;
+    const forward = [Math.cos(angle), Math.sin(angle)];
+    const right = [Math.cos(angle + Math.PI / 2), Math.sin(angle + Math.PI / 2)];
+    const [name, color] = colorPairs[id % colorPairs.length];
+    return {
+      id,
+      number: String(id + 1),
+      name,
+      color,
+      center: [forward[0] * radius, forward[1] * radius],
+      width,
+      depth,
+      rotation: Math.atan2(forward[0], forward[1]),
+      right,
+      forward,
+      layout: "radial",
+    };
+  });
+}
+
+function applySceneTheme() {
+  const theme = THEMES[settings.theme] || THEMES.classic;
+  scene.background = new THREE.Color(theme.background);
+  scene.fog = new THREE.Fog(theme.fog, 20, 58);
+  document.body.dataset.theme = settings.theme;
+}
+
+function getRoundMs() {
+  return ROUND_SPEED_MS[settings.roundSpeed] || ROUND_SPEED_MS.medium;
+}
+
+function getDifficultyConfig() {
+  return DIFFICULTY_CONFIG[settings.difficulty] || DIFFICULTY_CONFIG.normal;
+}
+
+function clampInt(value, min, max) {
+  const parsed = Number.parseInt(value, 10);
+  if (!Number.isFinite(parsed)) return min;
+  return Math.min(max, Math.max(min, parsed));
+}
+
 function buildWorld() {
   const hemi = new THREE.HemisphereLight(0xbfd8ff, 0x1a1021, 1.1);
   scene.add(hemi);
@@ -173,6 +340,7 @@ function buildWorld() {
   scene.add(grid);
 
   createStars();
+  applySceneTheme();
   createFloor();
 }
 
@@ -204,9 +372,11 @@ function createStars() {
 }
 
 function createFloor() {
+  clearFloor();
   sectionDefs.forEach((def) => {
     const group = new THREE.Group();
     group.position.set(def.center[0], 0, def.center[1]);
+    group.rotation.y = def.rotation;
 
     const material = new THREE.MeshStandardMaterial({
       color: def.color,
@@ -214,13 +384,13 @@ function createFloor() {
       metalness: 0.08,
       envMapIntensity: 0.6,
     });
-    const slab = new THREE.Mesh(new THREE.BoxGeometry(7.82, 0.42, 7.82), material);
+    const slab = new THREE.Mesh(new THREE.BoxGeometry(def.width, 0.42, def.depth), material);
     slab.castShadow = true;
     slab.receiveShadow = true;
     group.add(slab);
 
     const underside = new THREE.Mesh(
-      new THREE.BoxGeometry(7.5, 0.16, 7.5),
+      new THREE.BoxGeometry(Math.max(0.5, def.width - 0.28), 0.16, Math.max(0.5, def.depth - 0.28)),
       new THREE.MeshStandardMaterial({
         color: 0x121722,
         roughness: 0.7,
@@ -232,12 +402,12 @@ function createFloor() {
     group.add(underside);
 
     const edges = new THREE.LineSegments(
-      new THREE.EdgesGeometry(new THREE.BoxGeometry(7.84, 0.44, 7.84)),
+      new THREE.EdgesGeometry(new THREE.BoxGeometry(def.width + 0.02, 0.44, def.depth + 0.02)),
       new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.42 }),
     );
     group.add(edges);
 
-    const label = createCornerLabel(def.number, def.color);
+    const label = createCornerLabel(def.number, def.color, sectionDefs.length >= 8 ? 1 : 1.35);
     label.position.set(0, FLOOR_TOP_Y + 0.015, 0);
     group.add(label);
 
@@ -247,6 +417,7 @@ function createFloor() {
       group,
       baseY: 0,
       state: "stable",
+      baseRotationY: def.rotation,
       fallStart: 0,
       restoreStart: 0,
       startY: 0,
@@ -257,7 +428,14 @@ function createFloor() {
   });
 }
 
-function createCornerLabel(text, color) {
+function clearFloor() {
+  floorSections.splice(0).forEach((section) => {
+    scene.remove(section.group);
+  });
+  cornerCountsEl.replaceChildren();
+}
+
+function createCornerLabel(text, color, labelSize = 1.35) {
   const size = 256;
   const labelCanvas = document.createElement("canvas");
   labelCanvas.width = size;
@@ -286,7 +464,7 @@ function createCornerLabel(text, color) {
     transparent: true,
     depthWrite: false,
   });
-  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1.35, 1.35), material);
+  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(labelSize, labelSize), material);
   mesh.rotation.x = -Math.PI / 2;
   mesh.renderOrder = 3;
   return mesh;
@@ -470,16 +648,21 @@ function createEntity(kind, index, position) {
   const { group, rig } = createHumanoid(kind);
   group.position.set(position.x, FLOOR_TOP_Y, position.z);
   scene.add(group);
+  const lives = settings.eliminationMode === "lives" ? settings.lives : 1;
+  const difficulty = getDifficultyConfig();
 
   const entity = {
     kind,
     index,
+    name: kind === "user" ? settings.playerName : `AI ${index}`,
     group,
     rig,
     alive: true,
+    lives,
+    maxLives: lives,
     target: new THREE.Vector3(position.x, FLOOR_TOP_Y, position.z),
     walkTime: Math.random() * Math.PI * 2,
-    speed: kind === "user" ? USER_SPEED : BOT_SPEED + Math.random() * 0.35,
+    speed: kind === "user" ? USER_SPEED : (BOT_SPEED + Math.random() * 0.35) * difficulty.botSpeed,
     fallVelocity: 0,
     spin: new THREE.Vector3(
       (Math.random() - 0.5) * 2.2,
@@ -500,34 +683,49 @@ function clearCharacters() {
 
 function createCharacters() {
   clearCharacters();
-  user = createEntity("user", 0, randomSpotInSection(3, 0.8));
-  for (let i = 0; i < BOT_COUNT; i += 1) {
-    createEntity("bot", i + 1, randomSpotInSection(i % 4, 1.3));
+  const userSection = Math.min(3, sectionDefs.length - 1);
+  user = createEntity("user", 0, randomSpotInSection(userSection, 0.8));
+  for (let i = 0; i < settings.botCount; i += 1) {
+    createEntity("bot", i + 1, randomSpotInSection(i % sectionDefs.length, 1.3));
   }
 }
 
 function randomSpotInSection(sectionId, radius = 1.9) {
-  const def = sectionDefs[sectionId];
-  const angle = Math.random() * Math.PI * 2;
-  const distance = Math.sqrt(Math.random()) * radius;
-  const x = THREE.MathUtils.clamp(
-    def.center[0] + Math.cos(angle) * distance,
-    def.center[0] < 0 ? -FLOOR_LIMIT : SAFE_INSET,
-    def.center[0] < 0 ? -SAFE_INSET : FLOOR_LIMIT,
-  );
-  const z = THREE.MathUtils.clamp(
-    def.center[1] + Math.sin(angle) * distance,
-    def.center[1] < 0 ? -FLOOR_LIMIT : SAFE_INSET,
-    def.center[1] < 0 ? -SAFE_INSET : FLOOR_LIMIT,
-  );
+  const def = sectionDefs[sectionId] || sectionDefs[0];
+  const halfWidth = Math.max(0.22, def.width / 2 - SAFE_INSET);
+  const halfDepth = Math.max(0.22, def.depth / 2 - SAFE_INSET);
+  const localRight = (Math.random() * 2 - 1) * Math.min(halfWidth, radius);
+  const localForward = (Math.random() * 2 - 1) * Math.min(halfDepth, radius * 1.15);
+  const x = def.center[0] + def.right[0] * localRight + def.forward[0] * localForward;
+  const z = def.center[1] + def.right[1] * localRight + def.forward[1] * localForward;
   return new THREE.Vector3(x, FLOOR_TOP_Y, z);
 }
 
 function getSectionFromPosition(x, z) {
-  if (x < 0 && z < 0) return 0;
-  if (x >= 0 && z < 0) return 1;
-  if (x < 0 && z >= 0) return 2;
-  return 3;
+  if (sectionDefs.length === 4 && sectionDefs[0]?.layout === "grid") {
+    if (x < 0 && z < 0) return 0;
+    if (x >= 0 && z < 0) return 1;
+    if (x < 0 && z >= 0) return 2;
+    return 3;
+  }
+
+  let closestId = 0;
+  let closestScore = Infinity;
+  sectionDefs.forEach((def) => {
+    const dx = x - def.center[0];
+    const dz = z - def.center[1];
+    const localRight = dx * def.right[0] + dz * def.right[1];
+    const localForward = dx * def.forward[0] + dz * def.forward[1];
+    const overRight = Math.max(0, Math.abs(localRight) - def.width / 2);
+    const overForward = Math.max(0, Math.abs(localForward) - def.depth / 2);
+    const centerScore = localRight * localRight + localForward * localForward;
+    const score = (overRight * overRight + overForward * overForward) * 12 + centerScore * 0.02;
+    if (score < closestScore) {
+      closestScore = score;
+      closestId = def.id;
+    }
+  });
+  return closestId;
 }
 
 function assignBotDestinations() {
@@ -535,21 +733,23 @@ function assignBotDestinations() {
   shuffle(bots);
 
   const assignments = [];
-  if (bots.length >= 4) {
-    const all = shuffle([0, 1, 2, 3]);
+  const sectionIds = sectionDefs.map((def) => def.id);
+  if (bots.length >= sectionDefs.length) {
+    const all = shuffle([...sectionIds]);
     assignments.push(...all);
     while (assignments.length < bots.length) {
-      assignments.push(Math.floor(Math.random() * 4));
+      assignments.push(sectionIds[Math.floor(Math.random() * sectionIds.length)]);
     }
     keepCornerAmountsUneven(assignments);
   } else {
     while (assignments.length < bots.length) {
-      assignments.push(Math.floor(Math.random() * 4));
+      assignments.push(sectionIds[Math.floor(Math.random() * sectionIds.length)]);
     }
   }
 
+  const difficulty = getDifficultyConfig();
   bots.forEach((bot, i) => {
-    bot.target.copy(randomSpotInSection(assignments[i], 2.35));
+    bot.target.copy(randomSpotInSection(assignments[i], difficulty.targetRadius));
   });
 }
 
@@ -558,11 +758,11 @@ function keepCornerAmountsUneven(assignments) {
   if (new Set(counts).size !== 1 || assignments.length < 5) return;
 
   const last = assignments.length - 1;
-  assignments[last] = (assignments[last] + 1) % 4;
+  assignments[last] = (assignments[last] + 1) % sectionDefs.length;
 }
 
 function countAssignments(assignments) {
-  const counts = [0, 0, 0, 0];
+  const counts = new Array(sectionDefs.length).fill(0);
   assignments.forEach((id) => {
     counts[id] += 1;
   });
@@ -577,10 +777,85 @@ function shuffle(items) {
   return items;
 }
 
+function setupSettingsControls() {
+  if (!settingsForm) return;
+
+  syncRangePair(botCountInput, botCountNumberInput, 1, 20);
+  syncRangePair(livesInput, livesNumberInput, 1, 5);
+  syncLivesMode();
+
+  settingsForm.addEventListener("change", (event) => {
+    if (event.target?.name === "eliminationMode") syncLivesMode();
+  });
+
+  settingsForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    startGame();
+  });
+}
+
+function syncRangePair(rangeInput, numberInput, min, max) {
+  if (!rangeInput || !numberInput) return;
+
+  const sync = (source, target) => {
+    const value = String(clampInt(source.value, min, max));
+    source.value = value;
+    target.value = value;
+  };
+
+  rangeInput.addEventListener("input", () => sync(rangeInput, numberInput));
+  rangeInput.addEventListener("change", () => sync(rangeInput, numberInput));
+  numberInput.addEventListener("input", () => sync(numberInput, rangeInput));
+  numberInput.addEventListener("change", () => sync(numberInput, rangeInput));
+}
+
+function syncLivesMode() {
+  const mode = getCheckedValue("eliminationMode", DEFAULT_SETTINGS.eliminationMode);
+  const livesEnabled = mode === "lives";
+  livesField?.classList.toggle("disabled", !livesEnabled);
+  if (livesInput) livesInput.disabled = !livesEnabled;
+  if (livesNumberInput) livesNumberInput.disabled = !livesEnabled;
+}
+
+function readSettingsFromForm() {
+  const next = { ...DEFAULT_SETTINGS };
+  if (settingsForm) {
+    next.sectionCount = clampInt(getCheckedValue("sectionCount", DEFAULT_SETTINGS.sectionCount), 4, 10);
+    if (![4, 6, 8, 10].includes(next.sectionCount)) next.sectionCount = 4;
+    next.botCount = clampInt(botCountInput?.value ?? DEFAULT_SETTINGS.botCount, 1, 20);
+    next.playerName = sanitizePlayerName(playerNameInput?.value);
+    next.difficulty = getCheckedValue("difficulty", DEFAULT_SETTINGS.difficulty);
+    next.roundSpeed = getCheckedValue("roundSpeed", DEFAULT_SETTINGS.roundSpeed);
+    next.eliminationMode = getCheckedValue("eliminationMode", DEFAULT_SETTINGS.eliminationMode);
+    next.lives = clampInt(livesInput?.value ?? DEFAULT_SETTINGS.lives, 1, 5);
+    next.theme = getCheckedValue("theme", DEFAULT_SETTINGS.theme);
+  }
+
+  settings = next;
+  sectionDefs = buildSectionDefs(settings.sectionCount, settings.theme);
+  applySceneTheme();
+  document.body.dataset.sectionCount = String(settings.sectionCount);
+  document.body.dataset.botCount = String(settings.botCount);
+  document.body.dataset.eliminationMode = settings.eliminationMode;
+  document.body.dataset.roundSpeed = settings.roundSpeed;
+}
+
+function getCheckedValue(name, fallback) {
+  const checked = settingsForm?.querySelector(`input[name="${name}"]:checked`);
+  return checked?.value ?? String(fallback);
+}
+
+function sanitizePlayerName(value) {
+  const name = String(value || "").trim().replace(/\s+/g, " ").slice(0, 18);
+  return name || DEFAULT_SETTINGS.playerName;
+}
+
 function startGame() {
   for (const id of timeouts) window.clearTimeout(id);
   timeouts.clear();
   clearMovementInput();
+  readSettingsFromForm();
+  clearCharacters();
 
   game.started = true;
   game.ended = false;
@@ -591,16 +866,18 @@ function startGame() {
   startScreen.classList.add("hidden");
   endScreen.classList.add("hidden");
 
+  createFloor();
   resetFloorSections();
   createCharacters();
   startRound();
+  updateHud(performance.now());
   canvas.focus();
 }
 
 function resetFloorSections() {
   floorSections.forEach((section) => {
     section.group.position.y = section.baseY;
-    section.group.rotation.set(0, 0, 0);
+    section.group.rotation.set(0, section.baseRotationY, 0);
     section.state = "stable";
     section.fallStart = 0;
     section.restoreStart = 0;
@@ -613,7 +890,7 @@ function startRound() {
   game.round += 1;
   game.phase = "running";
   game.fallingSection = null;
-  game.nextFallAt = performance.now() + ROUND_MS;
+  game.nextFallAt = performance.now() + getRoundMs();
   assignBotDestinations();
   showAnnouncement(`Round ${game.round}`);
 }
@@ -634,15 +911,31 @@ function triggerFall(now) {
   section.spinX = (Math.random() > 0.5 ? 1 : -1) * (0.5 + Math.random() * 0.35);
   section.spinZ = (Math.random() > 0.5 ? 1 : -1) * (0.28 + Math.random() * 0.28);
 
-  const eliminated = characters.filter(
+  const affected = characters.filter(
     (entity) =>
       entity.alive &&
       getSectionFromPosition(entity.group.position.x, entity.group.position.z) === sectionId,
   );
-  eliminated.forEach((entity) => eliminate(entity));
+  const eliminated = [];
+  const saved = [];
+  affected.forEach((entity) => {
+    if (settings.eliminationMode === "lives") {
+      entity.lives -= 1;
+      if (entity.lives <= 0) {
+        eliminate(entity);
+        eliminated.push(entity);
+      } else {
+        saved.push(entity);
+        moveEntityToSafeSection(entity, sectionId);
+      }
+      return;
+    }
 
-  const outText =
-    eliminated.length === 1 ? "1 player out" : `${eliminated.length} players out`;
+    eliminate(entity);
+    eliminated.push(entity);
+  });
+
+  const outText = buildFallOutcomeText(eliminated.length, saved.length);
   showAnnouncement(`${def.name} corner fell. ${outText}.`);
 
   schedule(() => restoreSection(sectionId), FALL_MS + 300);
@@ -651,6 +944,27 @@ function triggerFall(now) {
     return;
   }
   schedule(() => finishRoundOrContinue(), ROUND_RESET_MS);
+}
+
+function buildFallOutcomeText(eliminatedCount, savedCount) {
+  const outText = eliminatedCount === 1 ? "1 player out" : `${eliminatedCount} players out`;
+  if (settings.eliminationMode !== "lives") return outText;
+  if (savedCount === 0) return outText;
+
+  const savedText = savedCount === 1 ? "1 lost a life" : `${savedCount} lost a life`;
+  if (eliminatedCount === 0) return savedText;
+  return `${outText}, ${savedText}`;
+}
+
+function moveEntityToSafeSection(entity, fallenSectionId) {
+  const safeSections = sectionDefs.filter(
+    (def) => def.id !== fallenSectionId && isSectionWalkable(def.id),
+  );
+  const choices = safeSections.length ? safeSections : sectionDefs.filter((def) => def.id !== fallenSectionId);
+  const targetDef = choices[Math.floor(Math.random() * choices.length)] || sectionDefs[0];
+  const spot = randomSpotInSection(targetDef.id, entity.kind === "user" ? 0.85 : 1.35);
+  entity.group.position.set(spot.x, FLOOR_TOP_Y, spot.z);
+  entity.target.copy(spot);
 }
 
 function chooseFallingSection() {
@@ -664,7 +978,7 @@ function chooseFallingSection() {
       occupied.add(getSectionFromPosition(entity.group.position.x, entity.group.position.z));
     }
   });
-  const choices = occupied.size ? Array.from(occupied) : [0, 1, 2, 3];
+  const choices = occupied.size ? Array.from(occupied) : sectionDefs.map((def) => def.id);
   return choices[Math.floor(Math.random() * choices.length)];
 }
 
@@ -695,11 +1009,15 @@ function finishGame(won) {
   game.phase = "ended";
   game.nextFallAt = 0;
   clearMovementInput();
-  endTitle.textContent = won ? "You Survived" : "Eliminated";
+  const playerName = settings.playerName || "You";
+  endTitle.textContent = won ? `${playerName} Survived` : "Eliminated";
   if (won) {
-    endCopy.textContent = `You were the last one standing after ${game.round} rounds.`;
+    endCopy.textContent = `${playerName} was the last one standing after ${game.round} rounds.`;
   } else if (!user?.alive) {
-    endCopy.textContent = `Your corner dropped in round ${game.round}.`;
+    endCopy.textContent =
+      settings.eliminationMode === "lives"
+        ? `${playerName} ran out of lives in round ${game.round}.`
+        : `${playerName}'s corner dropped in round ${game.round}.`;
   } else if (alive === 1) {
     endCopy.textContent = `One bot survived after ${game.round} rounds.`;
   } else {
@@ -710,6 +1028,7 @@ function finishGame(won) {
 
 function eliminate(entity) {
   entity.alive = false;
+  entity.lives = Math.max(0, entity.lives);
   entity.fallVelocity = 0.8 + Math.random() * 0.75;
   entity.spin.set(
     (Math.random() - 0.5) * 2.4,
@@ -745,7 +1064,7 @@ function updateFloor(now) {
       section.group.rotation.z = THREE.MathUtils.lerp(section.startRotation.z, 0, t);
       if (t >= 1) {
         section.group.position.y = section.baseY;
-        section.group.rotation.set(0, 0, 0);
+        section.group.rotation.set(0, section.baseRotationY, 0);
         section.state = "stable";
       }
     }
@@ -873,6 +1192,7 @@ function normalizeMoveCode(event) {
 
 function isSectionWalkable(sectionId) {
   const section = floorSections[sectionId];
+  if (!section) return false;
   return section.state === "stable" || (section.state === "restoring" && section.group.position.y > -0.08);
 }
 
@@ -914,7 +1234,9 @@ function updateEliminated(dt) {
 
 function updateCharacterMotion(entity, speed, dt) {
   const currentSection = getSectionFromPosition(entity.group.position.x, entity.group.position.z);
-  const floorY = floorSections[currentSection].group.position.y + FLOOR_TOP_Y;
+  const floorSection = floorSections[currentSection];
+  if (!floorSection) return;
+  const floorY = floorSection.group.position.y + FLOOR_TOP_Y;
   const moving = speed > 0.02 && entity.alive;
 
   if (moving) {
@@ -969,20 +1291,27 @@ function updateHud(now) {
     const seconds = Math.max(0, (game.nextFallAt - now) / 1000);
     timerLabelEl.textContent = `${seconds.toFixed(1)}s`;
   } else if (game.phase === "falling") {
-    timerLabelEl.textContent = "FALLING";
+    timerLabelEl.textContent = "DROP";
   } else if (game.phase === "ended") {
     timerLabelEl.textContent = "DONE";
   } else {
-    timerLabelEl.textContent = "7.0s";
+    timerLabelEl.textContent = `${(getRoundMs() / 1000).toFixed(1)}s`;
   }
 
-  const counts = [0, 0, 0, 0];
+  if (lifeLabelEl && lifeCardEl) {
+    lifeLabelEl.textContent = String(Math.max(0, user?.lives ?? settings.lives));
+    lifeCardEl.classList.toggle("hidden", settings.eliminationMode !== "lives");
+  }
+
+  const counts = new Array(sectionDefs.length).fill(0);
   characters.forEach((entity) => {
     if (!entity.alive) return;
-    counts[getSectionFromPosition(entity.group.position.x, entity.group.position.z)] += 1;
+    const sectionId = getSectionFromPosition(entity.group.position.x, entity.group.position.z);
+    if (counts[sectionId] !== undefined) counts[sectionId] += 1;
   });
 
-  if (!cornerCountsEl.children.length) {
+  if (cornerCountsEl.children.length !== sectionDefs.length) {
+    cornerCountsEl.replaceChildren();
     sectionDefs.forEach((def) => {
       const pill = document.createElement("div");
       pill.className = "corner-pill";
@@ -997,6 +1326,9 @@ function updateHud(now) {
   document.body.dataset.phase = game.phase;
   document.body.dataset.round = String(game.round);
   document.body.dataset.alive = String(alive);
+  document.body.dataset.userLives = String(Math.max(0, user?.lives ?? settings.lives));
+  document.body.dataset.sectionCount = String(sectionDefs.length);
+  document.body.dataset.roundMs = String(getRoundMs());
   document.body.dataset.cornerCounts = counts.join(",");
   document.body.dataset.activeMoveKey = activeMoveKey || "";
   if (user) {
@@ -1125,7 +1457,10 @@ canvas.addEventListener("pointerdown", () => {
   canvas.focus();
 });
 
-playButton.addEventListener("click", startGame);
+setupSettingsControls();
+if (!settingsForm) {
+  playButton.addEventListener("click", startGame);
+}
 restartButton.addEventListener("click", startGame);
 
 window.__fourCorners = {
@@ -1137,6 +1472,10 @@ window.__fourCorners = {
     alive: aliveCount(),
     botsAlive: characters.filter((entity) => entity.kind === "bot" && entity.alive).length,
     userAlive: Boolean(user?.alive),
+    userLives: user?.lives ?? null,
+    settings: { ...settings },
+    sectionCount: sectionDefs.length,
+    roundMs: getRoundMs(),
     userPosition: user
       ? {
           x: Number(user.group.position.x.toFixed(3)),

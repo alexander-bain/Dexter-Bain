@@ -17,7 +17,7 @@
   </head>
   <body>
     <main id="game-shell" aria-label="Four Corners 3D game">
-      <canvas id="game-canvas" aria-label="Floating four-color game arena"></canvas>
+      <canvas id="game-canvas" aria-label="Floating Four Corners game arena"></canvas>
 
       <section id="hud" aria-live="polite">
         <div class="hud-card main-stat">
@@ -26,6 +26,10 @@
         </div>
         <div class="hud-card round-card">
           <span id="round-label">Round 1</span>
+        </div>
+        <div class="hud-card life-card hidden">
+          <span id="life-label">3</span>
+          <span>lives</span>
         </div>
         <div id="corner-counts" class="corner-counts" aria-label="Players in each corner"></div>
       </section>
@@ -37,9 +41,122 @@
 
       <div id="announcement" aria-live="assertive"></div>
 
-      <section id="start-screen" class="screen-panel">
-        <h1>Four Corners</h1>
-        <button id="play-button" type="button" data-testid="play-button">Play</button>
+      <section id="start-screen" class="screen-panel start-panel">
+        <form id="settings-form" class="settings-card" data-testid="settings-form">
+          <div class="menu-heading">
+            <p class="eyebrow">Floating floor survival</p>
+            <h1>Four Corners</h1>
+          </div>
+
+          <div class="settings-grid">
+            <label class="field name-field">
+              <span>Player name</span>
+              <input
+                id="player-name"
+                name="playerName"
+                type="text"
+                maxlength="18"
+                value="Player"
+                autocomplete="nickname"
+              />
+            </label>
+
+            <fieldset class="option-group section-options">
+              <legend>Board sections</legend>
+              <div class="segmented">
+                <label><input type="radio" name="sectionCount" value="4" checked /><span>4</span></label>
+                <label><input type="radio" name="sectionCount" value="6" /><span>6</span></label>
+                <label><input type="radio" name="sectionCount" value="8" /><span>8</span></label>
+                <label><input type="radio" name="sectionCount" value="10" /><span>10</span></label>
+              </div>
+            </fieldset>
+
+            <label class="field range-field">
+              <span>AI players</span>
+              <div class="range-row">
+                <input id="bot-count" name="botCount" type="range" min="1" max="20" value="20" />
+                <input
+                  id="bot-count-number"
+                  class="number-input"
+                  type="number"
+                  min="1"
+                  max="20"
+                  value="20"
+                  aria-label="AI player count"
+                />
+              </div>
+            </label>
+
+            <fieldset class="option-group">
+              <legend>Difficulty</legend>
+              <div class="segmented">
+                <label><input type="radio" name="difficulty" value="easy" /><span>Easy</span></label>
+                <label><input type="radio" name="difficulty" value="normal" checked /><span>Normal</span></label>
+                <label><input type="radio" name="difficulty" value="hard" /><span>Hard</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="option-group">
+              <legend>Round speed</legend>
+              <div class="segmented">
+                <label><input type="radio" name="roundSpeed" value="slow" /><span>Slow</span></label>
+                <label><input type="radio" name="roundSpeed" value="medium" checked /><span>Medium</span></label>
+                <label><input type="radio" name="roundSpeed" value="fast" /><span>Fast</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="option-group mode-options">
+              <legend>Elimination mode</legend>
+              <div class="segmented">
+                <label><input type="radio" name="eliminationMode" value="instant" checked /><span>Instant</span></label>
+                <label><input type="radio" name="eliminationMode" value="lives" /><span>Lives</span></label>
+              </div>
+            </fieldset>
+
+            <label id="lives-field" class="field range-field disabled">
+              <span>Lives</span>
+              <div class="range-row">
+                <input id="lives-count" name="lives" type="range" min="1" max="5" value="3" disabled />
+                <input
+                  id="lives-count-number"
+                  class="number-input"
+                  type="number"
+                  min="1"
+                  max="5"
+                  value="3"
+                  disabled
+                  aria-label="Number of lives"
+                />
+              </div>
+            </label>
+
+            <fieldset class="option-group theme-options">
+              <legend>Theme</legend>
+              <div class="theme-grid">
+                <label style="--swatch-a: #f04455; --swatch-b: #458cff">
+                  <input type="radio" name="theme" value="classic" checked />
+                  <span>Classic</span>
+                </label>
+                <label style="--swatch-a: #ff3df2; --swatch-b: #23d8ff">
+                  <input type="radio" name="theme" value="neon" />
+                  <span>Neon</span>
+                </label>
+                <label style="--swatch-a: #ff6b4a; --swatch-b: #ffd166">
+                  <input type="radio" name="theme" value="sunset" />
+                  <span>Sunset</span>
+                </label>
+                <label style="--swatch-a: #0fd3c8; --swatch-b: #4f8cff">
+                  <input type="radio" name="theme" value="ocean" />
+                  <span>Ocean</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+
+          <button id="play-button" class="start-button" type="submit" data-testid="play-button">
+            Start Game
+          </button>
+        </form>
       </section>
 
       <section id="end-screen" class="screen-panel hidden">
