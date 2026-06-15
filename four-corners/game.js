@@ -5,6 +5,9 @@ const RESTORE_MS = 900;
 const ROUND_RESET_MS = 3200;
 const FLOOR_TOP_Y = 0.24;
 const FLOOR_LIMIT = 8.18;
+const FLOOR_HEIGHT = 0.42;
+const BOARD_RADIUS = 8.08;
+const FOUR_SECTION_SIZE = 8.16;
 const SAFE_INSET = 0.56;
 const BOT_SPEED = 2.55;
 const USER_SPEED = 4.55;
@@ -242,8 +245,8 @@ function buildSectionDefs(count, themeName) {
         name,
         color,
         center,
-        width: 7.82,
-        depth: 7.82,
+        width: FOUR_SECTION_SIZE,
+        depth: FOUR_SECTION_SIZE,
         rotation: 0,
         right: [1, 0],
         forward: [0, 1],
@@ -253,28 +256,30 @@ function buildSectionDefs(count, themeName) {
   }
 
   const step = (Math.PI * 2) / normalizedCount;
-  const depth = normalizedCount === 6 ? 5.8 : normalizedCount === 8 ? 5.35 : 5.05;
-  const width = normalizedCount === 6 ? 3.35 : normalizedCount === 8 ? 2.72 : 2.24;
-  const radius = normalizedCount === 6 ? 4.55 : normalizedCount === 8 ? 4.9 : 5.15;
-  const startAngle = -Math.PI / 2;
+  const firstCenterAngle = -Math.PI / 2;
 
   return Array.from({ length: normalizedCount }, (_, id) => {
-    const angle = startAngle + id * step;
+    const angle = firstCenterAngle + id * step;
     const forward = [Math.cos(angle), Math.sin(angle)];
     const right = [Math.cos(angle + Math.PI / 2), Math.sin(angle + Math.PI / 2)];
     const [name, color] = colorPairs[id % colorPairs.length];
+    const centerRadius = BOARD_RADIUS * 0.62;
     return {
       id,
       number: String(id + 1),
       name,
       color,
-      center: [forward[0] * radius, forward[1] * radius],
-      width,
-      depth,
-      rotation: Math.atan2(forward[0], forward[1]),
+      center: [forward[0] * centerRadius, forward[1] * centerRadius],
+      radius: BOARD_RADIUS,
+      centerRadius,
+      step,
+      startAngle: angle - step / 2,
+      endAngle: angle + step / 2,
+      centerAngle: angle,
+      rotation: 0,
       right,
       forward,
-      layout: "radial",
+      layout: "sector",
     };
   });
 }
@@ -375,7 +380,9 @@ function createFloor() {
   clearFloor();
   sectionDefs.forEach((def) => {
     const group = new THREE.Group();
-    group.position.set(def.center[0], 0, def.center[1]);
+    if (def.layout === "grid") {
+      group.position.set(def.center[0], 0, def.center[1]);
+    }
     group.rotation.y = def.rotation;
 
     const material = new THREE.MeshStandardMaterial({
@@ -384,31 +391,45 @@ function createFloor() {
       metalness: 0.08,
       envMapIntensity: 0.6,
     });
-    const slab = new THREE.Mesh(new THREE.BoxGeometry(def.width, 0.42, def.depth), material);
+    const slabGeometry =
+      def.layout === "sector"
+        ? createSectorGeometry(def.radius, def.startAngle, def.endAngle)
+        : new THREE.BoxGeometry(def.width, FLOOR_HEIGHT, def.depth);
+    const slab = new THREE.Mesh(slabGeometry, material);
     slab.castShadow = true;
     slab.receiveShadow = true;
     group.add(slab);
 
-    const underside = new THREE.Mesh(
-      new THREE.BoxGeometry(Math.max(0.5, def.width - 0.28), 0.16, Math.max(0.5, def.depth - 0.28)),
-      new THREE.MeshStandardMaterial({
-        color: 0x121722,
-        roughness: 0.7,
-        metalness: 0.25,
-      }),
-    );
-    underside.position.y = -0.31;
-    underside.receiveShadow = true;
-    group.add(underside);
+    if (def.layout === "grid") {
+      const underside = new THREE.Mesh(
+        new THREE.BoxGeometry(
+          Math.max(0.5, def.width - 0.28),
+          0.16,
+          Math.max(0.5, def.depth - 0.28),
+        ),
+        new THREE.MeshStandardMaterial({
+          color: 0x121722,
+          roughness: 0.7,
+          metalness: 0.25,
+        }),
+      );
+      underside.position.y = -0.31;
+      underside.receiveShadow = true;
+      group.add(underside);
+    }
 
     const edges = new THREE.LineSegments(
-      new THREE.EdgesGeometry(new THREE.BoxGeometry(def.width + 0.02, 0.44, def.depth + 0.02)),
+      new THREE.EdgesGeometry(slabGeometry),
       new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.42 }),
     );
     group.add(edges);
 
     const label = createCornerLabel(def.number, def.color, sectionDefs.length >= 8 ? 1 : 1.35);
-    label.position.set(0, FLOOR_TOP_Y + 0.015, 0);
+    label.position.set(
+      def.layout === "sector" ? def.center[0] : 0,
+      FLOOR_TOP_Y + 0.015,
+      def.layout === "sector" ? def.center[1] : 0,
+    );
     group.add(label);
 
     scene.add(group);
@@ -426,6 +447,33 @@ function createFloor() {
       spinZ: 0,
     });
   });
+}
+
+function createSectorGeometry(radius, startAngle, endAngle) {
+  const shape = new THREE.Shape();
+  const anglePadding = 0.003;
+  const paddedStart = startAngle - anglePadding;
+  const paddedEnd = endAngle + anglePadding;
+  const angleSize = paddedEnd - paddedStart;
+  const segments = Math.max(12, Math.ceil(angleSize * 26));
+
+  shape.moveTo(0, 0);
+  for (let i = 0; i <= segments; i += 1) {
+    const t = i / segments;
+    const angle = paddedStart + angleSize * t;
+    shape.lineTo(Math.cos(angle) * radius, Math.sin(angle) * radius);
+  }
+  shape.lineTo(0, 0);
+
+  const geometry = new THREE.ExtrudeGeometry(shape, {
+    depth: FLOOR_HEIGHT,
+    bevelEnabled: false,
+    steps: 1,
+  });
+  geometry.rotateX(Math.PI / 2);
+  geometry.translate(0, FLOOR_HEIGHT / 2, 0);
+  geometry.computeVertexNormals();
+  return geometry;
 }
 
 function clearFloor() {
@@ -692,6 +740,26 @@ function createCharacters() {
 
 function randomSpotInSection(sectionId, radius = 1.9) {
   const def = sectionDefs[sectionId] || sectionDefs[0];
+  if (def.layout === "sector") {
+    const radialJitter = (Math.random() * 2 - 1) * Math.min(radius, def.radius * 0.22);
+    const distance = THREE.MathUtils.clamp(
+      def.centerRadius + radialJitter,
+      def.radius * 0.22,
+      def.radius - SAFE_INSET,
+    );
+    const angularInset = Math.min(def.step * 0.32, Math.atan((SAFE_INSET + 0.26) / distance));
+    const angle = THREE.MathUtils.lerp(
+      def.startAngle + angularInset,
+      def.endAngle - angularInset,
+      Math.random(),
+    );
+    return new THREE.Vector3(
+      Math.cos(angle) * distance,
+      FLOOR_TOP_Y,
+      Math.sin(angle) * distance,
+    );
+  }
+
   const halfWidth = Math.max(0.22, def.width / 2 - SAFE_INSET);
   const halfDepth = Math.max(0.22, def.depth / 2 - SAFE_INSET);
   const localRight = (Math.random() * 2 - 1) * Math.min(halfWidth, radius);
@@ -707,6 +775,13 @@ function getSectionFromPosition(x, z) {
     if (x >= 0 && z < 0) return 1;
     if (x < 0 && z >= 0) return 2;
     return 3;
+  }
+
+  if (sectionDefs[0]?.layout === "sector") {
+    const step = sectionDefs[0].step;
+    const startAngle = sectionDefs[0].startAngle;
+    const angle = normalizeAngle(Math.atan2(z, x) - startAngle);
+    return Math.min(sectionDefs.length - 1, Math.floor(angle / step));
   }
 
   let closestId = 0;
@@ -726,6 +801,11 @@ function getSectionFromPosition(x, z) {
     }
   });
   return closestId;
+}
+
+function normalizeAngle(angle) {
+  const fullTurn = Math.PI * 2;
+  return ((angle % fullTurn) + fullTurn) % fullTurn;
 }
 
 function assignBotDestinations() {
@@ -1080,27 +1160,38 @@ function updateUser(dt) {
   const moving = tmpVec.lengthSq() > 0;
   if (moving) {
     tmpVec.normalize();
-    const nextX = THREE.MathUtils.clamp(
+    const nextPosition = clampPositionToBoard(
       user.group.position.x + tmpVec.x * USER_SPEED * dt,
-      -FLOOR_LIMIT,
-      FLOOR_LIMIT,
-    );
-    const nextZ = THREE.MathUtils.clamp(
       user.group.position.z + tmpVec.z * USER_SPEED * dt,
-      -FLOOR_LIMIT,
-      FLOOR_LIMIT,
     );
-    const nextSection = getSectionFromPosition(nextX, nextZ);
+    const nextSection = getSectionFromPosition(nextPosition.x, nextPosition.z);
 
     if (isSectionWalkable(nextSection)) {
-      user.group.position.x = nextX;
-      user.group.position.z = nextZ;
+      user.group.position.x = nextPosition.x;
+      user.group.position.z = nextPosition.z;
     }
 
     faceDirection(user, tmpVec.x, tmpVec.z, dt);
   }
 
   updateCharacterMotion(user, moving ? USER_SPEED : 0, dt);
+}
+
+function clampPositionToBoard(x, z) {
+  if (sectionDefs[0]?.layout === "sector") {
+    const maxRadius = BOARD_RADIUS - SAFE_INSET * 0.45;
+    const distance = Math.hypot(x, z);
+    if (distance > maxRadius) {
+      const scale = maxRadius / distance;
+      return { x: x * scale, z: z * scale };
+    }
+    return { x, z };
+  }
+
+  return {
+    x: THREE.MathUtils.clamp(x, -FLOOR_LIMIT, FLOOR_LIMIT),
+    z: THREE.MathUtils.clamp(z, -FLOOR_LIMIT, FLOOR_LIMIT),
+  };
 }
 
 function getMovementInput(now) {
