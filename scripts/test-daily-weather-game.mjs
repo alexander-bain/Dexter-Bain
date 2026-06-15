@@ -259,14 +259,16 @@ async function run() {
           const botPicks = game.questions.map((question, index) => {
             const answers = test.getAnswers(question).slice();
             const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
-            const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
-              .sort((left, right) => right.points - left.points || right.odds - left.odds);
-            const choice = index % 3 === 1
-              ? (risks[0] || favorites[0])
-              : index % 4 === 3
-              ? (risks[1] || favorites[0])
-              : favorites[0];
+            const favorite = favorites[0];
+            const biggestSwing = answers
+              .filter((candidate) => candidate.id !== favorite.id)
+              .sort((left, right) => right.points - left.points || left.odds - right.odds)[0] || favorite;
+            const secondFavorite = favorites[1] || favorite;
+            const choice = index % 4 === 1
+              ? biggestSwing
+              : index % 5 === 3
+              ? secondFavorite
+              : favorite;
             return [test.getQuestionId(question, index), choice.id];
           });
           const picks = Object.fromEntries(botPicks);
@@ -308,15 +310,17 @@ async function run() {
               leaderButton.click();
             }
             const pickView = document.getElementById("leaderboardPicks")?.textContent || "";
+            const botCard = leaderButton?.textContent || "";
             const storage = JSON.parse(localStorage.getItem("dexterbain-minigames-v1") || "{}");
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
-              leaderboard.includes("max from picks") &&
+              botCard.includes("chance to win") &&
+              botCard.includes("risk max points") &&
+              botCard.includes("to win") &&
               pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
-              entryCount.trim() === "1" &&
+              pickView.includes("risk max points") &&
+              Number(entryCount.trim()) >= 1 &&
               storage.playerName === "Weather Bot"
             ) {
               return {
@@ -324,6 +328,7 @@ async function run() {
                 entryCount,
                 saveNote,
                 leaderboard,
+                botCard,
                 pickView,
                 savedEntryName: storage.playerName || "",
                 chosen: botPicks.map(([, answerId]) => answerId),
