@@ -205,6 +205,7 @@ let userMaterials = null;
 let announcementTimer = 0;
 let frameCount = 0;
 let capturedFrame = false;
+let heartTexture = null;
 const activeMoveKeys = new Map();
 let activeMoveKey = null;
 
@@ -698,6 +699,8 @@ function createEntity(kind, index, position) {
   scene.add(group);
   const lives = settings.eliminationMode === "lives" ? settings.lives : 1;
   const difficulty = getDifficultyConfig();
+  const lifeBadge = settings.eliminationMode === "lives" ? createLifeBadge(lives, kind) : null;
+  if (lifeBadge) scene.add(lifeBadge);
 
   const entity = {
     kind,
@@ -708,6 +711,7 @@ function createEntity(kind, index, position) {
     alive: true,
     lives,
     maxLives: lives,
+    lifeBadge,
     target: new THREE.Vector3(position.x, FLOOR_TOP_Y, position.z),
     walkTime: Math.random() * Math.PI * 2,
     speed: kind === "user" ? USER_SPEED : (BOT_SPEED + Math.random() * 0.35) * difficulty.botSpeed,
@@ -718,13 +722,76 @@ function createEntity(kind, index, position) {
       (Math.random() - 0.5) * 2.2,
     ),
   };
+  updateLifeBadge(entity);
   characters.push(entity);
   return entity;
+}
+
+function createLifeBadge(maxLives, kind) {
+  const badge = new THREE.Group();
+  badge.name = `${kind}-life-badge`;
+  badge.renderOrder = 8;
+  badge.userData.hearts = [];
+
+  const spacing = kind === "user" ? 0.24 : 0.21;
+  const size = kind === "user" ? 0.2 : 0.18;
+  const totalWidth = (maxLives - 1) * spacing;
+  for (let i = 0; i < maxLives; i += 1) {
+    const material = new THREE.SpriteMaterial({
+      map: getHeartTexture(),
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+    });
+    const heart = new THREE.Sprite(material);
+    heart.center.set(0.5, 0.5);
+    heart.scale.set(size, size, 1);
+    heart.position.set(i * spacing - totalWidth / 2, 0, 0);
+    badge.add(heart);
+    badge.userData.hearts.push(heart);
+  }
+
+  return badge;
+}
+
+function getHeartTexture() {
+  if (heartTexture) return heartTexture;
+
+  const size = 96;
+  const heartCanvas = document.createElement("canvas");
+  heartCanvas.width = size;
+  heartCanvas.height = size;
+  const ctx = heartCanvas.getContext("2d");
+  ctx.clearRect(0, 0, size, size);
+  ctx.save();
+  ctx.translate(size / 2, size / 2 + 7);
+  ctx.scale(1.02, 1.02);
+  ctx.beginPath();
+  ctx.moveTo(0, 26);
+  ctx.bezierCurveTo(-42, -4, -34, -44, -8, -32);
+  ctx.bezierCurveTo(-3, -30, 0, -23, 0, -20);
+  ctx.bezierCurveTo(0, -23, 3, -30, 8, -32);
+  ctx.bezierCurveTo(34, -44, 42, -4, 0, 26);
+  ctx.closePath();
+  ctx.shadowColor = "rgba(255, 77, 115, 0.8)";
+  ctx.shadowBlur = 14;
+  ctx.fillStyle = "#ff3f67";
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  ctx.lineWidth = 7;
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.92)";
+  ctx.stroke();
+  ctx.restore();
+
+  heartTexture = new THREE.CanvasTexture(heartCanvas);
+  heartTexture.colorSpace = THREE.SRGBColorSpace;
+  return heartTexture;
 }
 
 function clearCharacters() {
   characters.splice(0).forEach((entity) => {
     scene.remove(entity.group);
+    if (entity.lifeBadge) scene.remove(entity.lifeBadge);
   });
   user = null;
 }
@@ -1008,6 +1075,7 @@ function triggerFall(now) {
         saved.push(entity);
         moveEntityToSafeSection(entity, sectionId);
       }
+      updateLifeBadge(entity);
       return;
     }
 
@@ -1109,6 +1177,7 @@ function finishGame(won) {
 function eliminate(entity) {
   entity.alive = false;
   entity.lives = Math.max(0, entity.lives);
+  updateLifeBadge(entity);
   entity.fallVelocity = 0.8 + Math.random() * 0.75;
   entity.spin.set(
     (Math.random() - 0.5) * 2.4,
@@ -1323,6 +1392,41 @@ function updateEliminated(dt) {
   });
 }
 
+function updateLifeBadges() {
+  characters.forEach((entity) => updateLifeBadge(entity));
+}
+
+function updateLifeBadge(entity) {
+  const badge = entity.lifeBadge;
+  if (!badge) return;
+
+  badge.visible = settings.eliminationMode === "lives" && entity.alive && entity.lives > 0;
+  if (!badge.visible) return;
+
+  badge.position.set(
+    entity.group.position.x,
+    entity.group.position.y + 2.58,
+    entity.group.position.z,
+  );
+  badge.quaternion.copy(camera.quaternion);
+
+  badge.userData.hearts.forEach((heart, i) => {
+    heart.visible = i < entity.lives;
+  });
+}
+
+function visibleLifeBadgeCount() {
+  return characters.filter((entity) => entity.lifeBadge?.visible).length;
+}
+
+function visibleHeartCount() {
+  return characters.reduce(
+    (total, entity) =>
+      total + (entity.lifeBadge?.userData.hearts.filter((heart) => heart.visible).length || 0),
+    0,
+  );
+}
+
 function updateCharacterMotion(entity, speed, dt) {
   const currentSection = getSectionFromPosition(entity.group.position.x, entity.group.position.z);
   const floorSection = floorSections[currentSection];
@@ -1418,6 +1522,8 @@ function updateHud(now) {
   document.body.dataset.round = String(game.round);
   document.body.dataset.alive = String(alive);
   document.body.dataset.userLives = String(Math.max(0, user?.lives ?? settings.lives));
+  document.body.dataset.visibleLifeBadges = String(visibleLifeBadgeCount());
+  document.body.dataset.visibleHearts = String(visibleHeartCount());
   document.body.dataset.sectionCount = String(sectionDefs.length);
   document.body.dataset.roundMs = String(getRoundMs());
   document.body.dataset.cornerCounts = counts.join(",");
@@ -1478,6 +1584,7 @@ function animate() {
   updateBots(dt);
   updateEliminated(dt);
   updateCamera(dt);
+  updateLifeBadges();
   updateHud(now);
   renderer.render(scene, camera);
   updateRenderStats();
@@ -1564,6 +1671,8 @@ window.__fourCorners = {
     botsAlive: characters.filter((entity) => entity.kind === "bot" && entity.alive).length,
     userAlive: Boolean(user?.alive),
     userLives: user?.lives ?? null,
+    visibleLifeBadges: visibleLifeBadgeCount(),
+    visibleHearts: visibleHeartCount(),
     settings: { ...settings },
     sectionCount: sectionDefs.length,
     roundMs: getRoundMs(),
