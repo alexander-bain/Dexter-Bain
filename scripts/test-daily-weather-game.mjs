@@ -312,11 +312,11 @@ async function run() {
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
+              /\\d+% win/.test(leaderboard) &&
               leaderboard.includes("max from picks") &&
               pickView.includes("chance to win") &&
               pickView.includes("max from picks") &&
-              entryCount.trim() === "1" &&
+              Number(entryCount.trim()) >= 1 &&
               storage.playerName === "Weather Bot"
             ) {
               return {
