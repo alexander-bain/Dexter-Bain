@@ -553,9 +553,18 @@
       text-transform: uppercase;
     }
 
+    .control-picker {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+      text-transform: uppercase;
+    }
+
     .garage-arrow,
     .garage-buy,
     .garage-action,
+    .control-option,
     .garage-start {
       border: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: 16px;
@@ -565,6 +574,19 @@
       font-weight: 1000;
       text-transform: uppercase;
       cursor: pointer;
+    }
+
+    .control-option {
+      min-height: 44px;
+      border-radius: 12px;
+      padding: 8px 10px;
+      font-size: 0.68rem;
+    }
+
+    .control-option.is-selected {
+      color: #06111f;
+      background: linear-gradient(135deg, var(--warn), var(--good));
+      box-shadow: 0 12px 24px rgba(71, 227, 143, 0.18);
     }
 
     .garage-arrow {
@@ -874,6 +896,51 @@
       background: rgba(71, 227, 143, 0.32);
     }
 
+    .joystick-control {
+      position: fixed;
+      left: 24px;
+      bottom: 24px;
+      z-index: 3;
+      display: none;
+      pointer-events: auto;
+      touch-action: none;
+    }
+
+    .joystick-base {
+      position: relative;
+      width: 132px;
+      height: 132px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(71, 227, 143, 0.22), transparent 30%),
+        rgba(8, 15, 24, 0.64);
+      backdrop-filter: blur(12px);
+      box-shadow: inset 0 0 28px rgba(0, 0, 0, 0.36), 0 18px 36px rgba(0, 0, 0, 0.28);
+    }
+
+    .joystick-thumb {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 56px;
+      height: 56px;
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      border-radius: 999px;
+      background: linear-gradient(145deg, var(--warn), var(--neon));
+      box-shadow: 0 10px 24px rgba(0, 245, 255, 0.22);
+      transform: translate(-50%, -50%);
+    }
+
+    #gameShell.control-joystick:not(.is-garage) .joystick-control {
+      display: block;
+    }
+
+    #gameShell.control-joystick .touch-controls,
+    #gameShell.control-motion .touch-controls {
+      display: none;
+    }
+
     .jump-action {
       position: fixed;
       right: 26px;
@@ -977,6 +1044,11 @@
         display: grid;
       }
 
+      #gameShell.control-joystick .touch-controls,
+      #gameShell.control-motion .touch-controls {
+        display: none;
+      }
+
       .shop-panel {
         top: auto;
         bottom: 108px;
@@ -1021,6 +1093,20 @@
 
       .garage-action {
         min-height: 74px;
+      }
+
+      .control-picker {
+        grid-template-columns: 1fr;
+      }
+
+      .joystick-control {
+        left: 18px;
+        bottom: 18px;
+      }
+
+      .joystick-base {
+        width: 116px;
+        height: 116px;
       }
 
       .jump-action {
@@ -1098,6 +1184,12 @@
       </div>
     </div>
 
+    <div class="joystick-control" id="joystickControl" aria-hidden="true">
+      <div class="joystick-base" id="joystickBase">
+        <span class="joystick-thumb" id="joystickThumb"></span>
+      </div>
+    </div>
+
     <button class="jump-action" id="jumpButton" type="button" aria-label="Jump the car">
       <span>Jump</span>
       <small>Space</small>
@@ -1154,6 +1246,11 @@
               <button class="garage-arrow" id="garageCarNext" type="button" aria-label="Next car">›</button>
             </div>
             <button class="garage-buy" id="garageBuyCarButton" type="button">Buy / Equip Car</button>
+            <div class="control-picker" aria-label="Control mode">
+              <button class="control-option is-selected" data-control-mode="keys" type="button" aria-pressed="true">Arrow Keys</button>
+              <button class="control-option" data-control-mode="joystick" type="button" aria-pressed="false">Joystick</button>
+              <button class="control-option" data-control-mode="motion" type="button" aria-pressed="false">Motion Tilt</button>
+            </div>
           </div>
           <div class="garage-actions">
             <button class="garage-action" id="garageWheelButton" type="button">
@@ -1239,6 +1336,8 @@
         home: document.getElementById("homeButton"),
         revive: document.getElementById("reviveButton"),
         jump: document.getElementById("jumpButton"),
+        joystickBase: document.getElementById("joystickBase"),
+        joystickThumb: document.getElementById("joystickThumb"),
         intro: document.getElementById("introCard"),
         garage: document.getElementById("garageScreen"),
         garageTitle: document.getElementById("garageTitle"),
@@ -1258,6 +1357,7 @@
         garageMoneyWheel: document.getElementById("garageMoneyWheel"),
         garageColorButton: document.getElementById("garageColorButton"),
         garageColorWheel: document.getElementById("garageColorWheel"),
+        controlButtons: Array.from(document.querySelectorAll("[data-control-mode]")),
         buyButtons: Array.from(document.querySelectorAll("[data-buy]")),
         inventoryButtons: Array.from(document.querySelectorAll("[data-use]")),
         inventoryCounts: Array.from(document.querySelectorAll("[data-count]")),
@@ -1405,6 +1505,13 @@
         garagePreviewUpgrade: savedSelectedCarUpgrade,
         colorIndex: Math.floor(readStoredNumber("highway-rush-color-index", 0)) % playerColors.length,
         inventory: readStoredInventory(),
+        controlMode: "keys",
+        joystickX: 0,
+        joystickY: 0,
+        joystickPointerId: null,
+        motionX: 0,
+        motionNeutralGamma: null,
+        motionReady: false,
         x: 0,
         y: 0,
         z: 5,
@@ -2229,6 +2336,56 @@
         return `#${carPaintForTier(tier).toString(16).padStart(6, "0")}`;
       }
 
+      function resetJoystickInput() {
+        state.joystickX = 0;
+        state.joystickY = 0;
+        state.joystickPointerId = null;
+        if (hud.joystickThumb) {
+          hud.joystickThumb.style.left = "50%";
+          hud.joystickThumb.style.top = "50%";
+        }
+      }
+
+      function resetMotionInput() {
+        state.motionX = 0;
+        state.motionNeutralGamma = null;
+      }
+
+      function updateControlModeUi() {
+        gameShell.classList.toggle("control-keys", state.controlMode === "keys");
+        gameShell.classList.toggle("control-joystick", state.controlMode === "joystick");
+        gameShell.classList.toggle("control-motion", state.controlMode === "motion");
+        for (const button of hud.controlButtons) {
+          const selected = button.dataset.controlMode === state.controlMode;
+          button.classList.toggle("is-selected", selected);
+          button.setAttribute("aria-pressed", selected ? "true" : "false");
+        }
+      }
+
+      async function requestMotionAccess() {
+        resetMotionInput();
+        if (!("DeviceOrientationEvent" in window)) return;
+        const orientationEvent = window.DeviceOrientationEvent;
+        if (typeof orientationEvent.requestPermission !== "function") {
+          state.motionReady = true;
+          return;
+        }
+        try {
+          state.motionReady = await orientationEvent.requestPermission() === "granted";
+        } catch {
+          state.motionReady = false;
+        }
+      }
+
+      function setControlMode(mode) {
+        if (!["keys", "joystick", "motion"].includes(mode)) return;
+        state.controlMode = mode;
+        resetJoystickInput();
+        resetMotionInput();
+        updateControlModeUi();
+        if (mode === "motion") requestMotionAccess();
+      }
+
       function updateGarage() {
         if (!hud.garage) return;
         const previewUpgrade = garagePreviewLevel();
@@ -2269,6 +2426,7 @@
         hud.garageWheelButton.querySelector("small").textContent = state.wheelSpinning ? "Spinning..." : state.wheelUsed ? "Wheel already used this run" : "Free once per run";
         hud.garageColorButton.disabled = state.money < 5;
         gameShell.classList.toggle("is-garage", state.garageOpen);
+        updateControlModeUi();
         syncGaragePreviewCar();
       }
 
@@ -2764,11 +2922,19 @@
       }
 
       function updateInput(dt) {
-        const left = keys.has("KeyD") || keys.has("ArrowRight");
-        const right = keys.has("KeyA") || keys.has("ArrowLeft");
-        const gas = keys.has("KeyW") || keys.has("ArrowUp");
-        const brake = keys.has("KeyS") || keys.has("ArrowDown");
-        const steer = (right ? 1 : 0) - (left ? 1 : 0);
+        const steerLeft = keys.has("KeyA") || keys.has("ArrowLeft");
+        const steerRight = keys.has("KeyD") || keys.has("ArrowRight");
+        let gas = keys.has("KeyW") || keys.has("ArrowUp");
+        let brake = keys.has("KeyS") || keys.has("ArrowDown");
+        let steer = (steerLeft ? 1 : 0) - (steerRight ? 1 : 0);
+        if (state.controlMode === "joystick") {
+          const joystickSteer = -state.joystickX;
+          if (Math.abs(joystickSteer) > 0.08) steer = joystickSteer;
+          gas = gas || state.joystickY < -0.28;
+          brake = brake || state.joystickY > 0.38;
+        } else if (state.controlMode === "motion" && Math.abs(state.motionX) > 0.04) {
+          steer = state.motionX;
+        }
         const power = upgradePower();
         const stats = carStatsForTier(state.carUpgrade);
         const targetSpeed = gas ? stats.maxSpeed : brake ? -stats.reverseSpeed : 28 + power * 0.52;
@@ -3352,6 +3518,9 @@
         state.introActive = false;
         state.garageOpen = true;
         state.introTimer = 0;
+        keys.clear();
+        resetJoystickInput();
+        resetMotionInput();
         player.visible = true;
         fireEffect.visible = false;
         applyPlayerLook();
@@ -3488,6 +3657,15 @@
         });
       };
 
+      const handleDeviceOrientation = (event) => {
+        if (state.controlMode !== "motion") return;
+        const gamma = Number(event.gamma);
+        if (!Number.isFinite(gamma)) return;
+        if (state.motionNeutralGamma === null) state.motionNeutralGamma = gamma;
+        const tilt = gamma - state.motionNeutralGamma;
+        state.motionX = THREE.MathUtils.clamp(-tilt / 18, -1, 1);
+      };
+
       function handleBuyKey(code) {
         buyShop(buyKeyActions[code]);
       }
@@ -3571,7 +3749,12 @@
       document.addEventListener("pointerdown", () => {
         if (state.introActive) startRun();
       }, { capture: true });
-      window.addEventListener("blur", () => keys.clear());
+      window.addEventListener("deviceorientation", handleDeviceOrientation, { passive: true });
+      window.addEventListener("blur", () => {
+        keys.clear();
+        resetJoystickInput();
+        resetMotionInput();
+      });
       document.addEventListener("visibilitychange", () => {
         if (!document.hidden) focusGame();
       });
@@ -3601,6 +3784,49 @@
         button.addEventListener("pointercancel", release);
         button.addEventListener("pointerleave", release);
       });
+
+      const updateJoystickFromPointer = (event) => {
+        const rect = hud.joystickBase.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const rawX = event.clientX - centerX;
+        const rawY = event.clientY - centerY;
+        const maxDistance = rect.width * 0.34;
+        const distance = Math.hypot(rawX, rawY);
+        const scale = distance > maxDistance ? maxDistance / distance : 1;
+        const x = rawX * scale;
+        const y = rawY * scale;
+        state.joystickX = x / maxDistance;
+        state.joystickY = y / maxDistance;
+        hud.joystickThumb.style.left = `calc(50% + ${x}px)`;
+        hud.joystickThumb.style.top = `calc(50% + ${y}px)`;
+      };
+
+      hud.joystickBase.addEventListener("pointerdown", (event) => {
+        if (state.controlMode !== "joystick") return;
+        event.preventDefault();
+        focusGame();
+        if (state.introActive) startRun();
+        state.joystickPointerId = event.pointerId;
+        try {
+          hud.joystickBase.setPointerCapture(event.pointerId);
+        } catch {
+          // Pointer capture is a nice-to-have for older embedded browsers.
+        }
+        updateJoystickFromPointer(event);
+      });
+      hud.joystickBase.addEventListener("pointermove", (event) => {
+        if (state.joystickPointerId !== event.pointerId) return;
+        event.preventDefault();
+        updateJoystickFromPointer(event);
+      });
+      const releaseJoystick = (event) => {
+        if (state.joystickPointerId !== event.pointerId) return;
+        event.preventDefault();
+        resetJoystickInput();
+      };
+      hud.joystickBase.addEventListener("pointerup", releaseJoystick);
+      hud.joystickBase.addEventListener("pointercancel", releaseJoystick);
 
       const liftJumpButton = (event) => {
         event.preventDefault();
@@ -3661,6 +3887,12 @@
         event.preventDefault();
         buyOrEquipGarageCar();
       });
+      for (const button of hud.controlButtons) {
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          setControlMode(button.dataset.controlMode);
+        });
+      }
       hud.home.addEventListener("click", homeAfterDeath);
       hud.restart.addEventListener("click", restartAfterDeath);
       hud.revive.addEventListener("click", reviveAfterDeath);
