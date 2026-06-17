@@ -49,6 +49,7 @@ const samplesLabel = document.querySelector("#samples-label");
 const goodLabel = document.querySelector("#good-label");
 const badLabel = document.querySelector("#bad-label");
 const lessonLabel = document.querySelector("#lesson-label");
+const cloudLabel = document.querySelector("#cloud-label");
 const brainStrength = document.querySelector("#brain-strength");
 const brainMeterFill = document.querySelector("#brain-meter-fill");
 
@@ -57,7 +58,10 @@ const ROWS = MAP_TEMPLATE.length;
 const BASE_WIDTH = 672;
 const BASE_HEIGHT = 744;
 const STORAGE_KEY = "maze-muncher-ml-v1";
-const MAX_SAMPLES = 1800;
+const PLAYER_ID_KEY = "maze-muncher-ml-player-id-v1";
+const SUPABASE_LEARNERS_TABLE = "maze_muncher_learners";
+const SUPABASE_SAMPLES_TABLE = "maze_muncher_samples";
+const CLOUD_SYNC_DELAY_MS = 1400;
 const DIRECTIONS = {
   left: { key: "left", dx: -1, dy: 0, angle: Math.PI, opposite: "right" },
   right: { key: "right", dx: 1, dy: 0, angle: 0, opposite: "left" },
@@ -140,6 +144,14 @@ let ghosts = [];
 let learner = createLearner();
 let starfield = [];
 const hudCache = new Map();
+const cloud = {
+  config: getSupabaseConfig(),
+  enabled: false,
+  playerId: "",
+  pendingSamples: [],
+  syncTimer: null,
+  status: "Local only",
+};
 
 function createLearner() {
   return {
@@ -150,7 +162,51 @@ function createLearner() {
     pending: [],
     lastSample: null,
     lastLesson: "None yet",
+    updatedAt: "",
   };
+}
+
+function getSupabaseConfig() {
+  const config = window.MAZE_MUNCHER_SUPABASE || {};
+  return {
+    url: String(config.url || "").replace(/\/$/, ""),
+    anonKey: String(config.anonKey || config.key || ""),
+  };
+}
+
+function readStorage(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch (error) {
+    console.warn("Browser storage is not available", error);
+    return null;
+  }
+}
+
+function writeStorage(key, value) {
+  try {
+    localStorage.setItem(key, value);
+    return true;
+  } catch (error) {
+    console.warn("Could not write browser storage", error);
+    return false;
+  }
+}
+
+function removeStorage(key) {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.warn("Could not clear browser storage", error);
+  }
+}
+
+function getOrCreatePlayerId() {
+  const existing = readStorage(PLAYER_ID_KEY);
+  if (existing) return existing;
+  const id = createSampleId();
+  writeStorage(PLAYER_ID_KEY, id);
+  return id;
 }
 
 function setupCanvas() {
@@ -727,14 +783,19 @@ function settlePendingSamples() {
 function commitSample(sample, label, reason) {
   sample.label = label;
   sample.reason = reason;
-  learner.samples.push({
+  const committedSample = {
+    id: sample.id || createSampleId(),
     features: sample.features,
     action: sample.action,
     label,
     reason,
+    source: sample.source,
+    tileKey: sample.tileKey,
+    gameTime: Number(sample.createdAt?.toFixed ? sample.createdAt.toFixed(3) : sample.createdAt || 0),
     createdAt: Date.now(),
-  });
-  if (learner.samples.length > MAX_SAMPLES) learner.samples.shift();
+  };
+  learner.samples.push(committedSample);
+  cloud.pendingSamples.push(committedSample);
   if (label > 0) learner.good += 1;
   else learner.bad += 1;
   learner.lastLesson = `${label > 0 ? "Reward" : "Penalty"}: ${reason}`;
@@ -882,28 +943,45 @@ function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
 
-function saveLearner() {
-  const compact = {
+function createSampleId() {
+  return globalThis.crypto?.randomUUID ? globalThis.crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
+function getLearnerState(options = {}) {
+  const { includeSamples = true } = options;
+  const state = {
     weights: learner.weights,
-    samples: learner.samples.slice(-MAX_SAMPLES),
     good: learner.good,
     bad: learner.bad,
     lastLesson: learner.lastLesson,
+    updatedAt: learner.updatedAt || new Date().toISOString(),
   };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(compact));
+  if (includeSamples) state.samples = learner.samples;
+  return state;
+}
+
+function saveLearner(options = {}) {
+  const { syncCloud = true } = options;
+  learner.updatedAt = new Date().toISOString();
+  const saved = writeStorage(STORAGE_KEY, JSON.stringify(getLearnerState()));
+  if (!saved) {
+    console.warn("Could not save every learner sample locally. Supabase sync will keep the full history when configured.");
+  }
   updateLearnerHud();
+  if (syncCloud) scheduleCloudSync();
 }
 
 function loadLearner() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = readStorage(STORAGE_KEY);
     if (!raw) return;
     const data = JSON.parse(raw);
     learner.weights = Array.isArray(data.weights) && data.weights.length === FEATURE_NAMES.length ? data.weights : learner.weights;
-    learner.samples = Array.isArray(data.samples) ? data.samples : [];
+    learner.samples = Array.isArray(data.samples) ? data.samples.map(normalizeStoredSample) : [];
     learner.good = Number.isFinite(data.good) ? data.good : learner.samples.filter((sample) => sample.label > 0).length;
     learner.bad = Number.isFinite(data.bad) ? data.bad : learner.samples.filter((sample) => sample.label < 0).length;
     learner.lastLesson = data.lastLesson || learner.lastLesson;
+    learner.updatedAt = data.updatedAt || "";
   } catch (error) {
     console.warn("Could not load learner data", error);
   }
@@ -912,8 +990,248 @@ function loadLearner() {
 function clearLearner() {
   learner = createLearner();
   learner.lastLesson = "Brain reset; rewards will retrain it";
-  localStorage.removeItem(STORAGE_KEY);
+  cloud.pendingSamples = [];
+  removeStorage(STORAGE_KEY);
+  deleteCloudLearner();
   updateLearnerHud();
+}
+
+function mergeCloudState(remoteState = {}, remoteSamples = [], remoteUpdatedAt = "") {
+  if (!remoteState || typeof remoteState !== "object") remoteState = {};
+  const localSamples = learner.samples.map(normalizeStoredSample);
+  const legacyStateSamples = Array.isArray(remoteState.samples) ? remoteState.samples.map(normalizeStoredSample) : [];
+  const normalizedRemoteSamples = remoteSamples.map(normalizeStoredSample);
+  const remoteMergedSamples = mergeSamples(normalizedRemoteSamples, legacyStateSamples);
+  const remoteSampleIds = new Set(remoteMergedSamples.map((sample) => sample.id));
+  const missingLocalSamples = localSamples.filter((sample) => !remoteSampleIds.has(sample.id));
+  const mergedSamples = mergeSamples(remoteMergedSamples, localSamples);
+  const counts = countSamples(mergedSamples);
+  const localUpdated = timestampToMs(learner.updatedAt, 0);
+  const cloudUpdated = timestampToMs(remoteState.updatedAt || remoteUpdatedAt, 0);
+
+  if (Array.isArray(remoteState.weights) && remoteState.weights.length === FEATURE_NAMES.length && cloudUpdated >= localUpdated) {
+    learner.weights = remoteState.weights;
+  }
+
+  learner.samples = mergedSamples;
+  learner.good = counts.total > 0 ? counts.good : Number(remoteState.good) || 0;
+  learner.bad = counts.total > 0 ? counts.bad : Number(remoteState.bad) || 0;
+  learner.lastLesson = remoteState.lastLesson || learner.lastLesson;
+  learner.updatedAt = new Date(Math.max(localUpdated, cloudUpdated, Date.now())).toISOString();
+  if (missingLocalSamples.length > 0) {
+    cloud.pendingSamples = mergeSamples(cloud.pendingSamples, missingLocalSamples);
+  }
+  saveLearner({ syncCloud: false });
+}
+
+function mergeSamples(...sampleGroups) {
+  const seen = new Set();
+  const merged = [];
+  sampleGroups.forEach((samples) => {
+    if (!Array.isArray(samples)) return;
+    samples.forEach((sample) => {
+      const normalized = normalizeStoredSample(sample);
+      const key = normalized.id || `${normalized.createdAt}:${normalized.action}:${normalized.label}:${normalized.reason}:${JSON.stringify(normalized.features)}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      merged.push(normalized);
+    });
+  });
+  merged.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+  return merged;
+}
+
+function countSamples(samples) {
+  return samples.reduce(
+    (counts, sample) => {
+      if (sample.label > 0) counts.good += 1;
+      if (sample.label < 0) counts.bad += 1;
+      counts.total += 1;
+      return counts;
+    },
+    { good: 0, bad: 0, total: 0 },
+  );
+}
+
+function normalizeStoredSample(sample = {}) {
+  const rawCreatedAt = sample.createdAt ?? sample.created_at;
+  const createdAt = timestampToMs(rawCreatedAt, Date.now());
+  const gameTime = Number(sample.gameTime ?? sample.game_time ?? 0);
+  return {
+    id: sample.id || createSampleId(),
+    features: Array.isArray(sample.features) ? sample.features : [],
+    action: sample.action || "unknown",
+    label: Number(sample.label) || 0,
+    reason: sample.reason || "imported",
+    source: sample.source || "stored",
+    tileKey: sample.tileKey || sample.tile_key || "",
+    gameTime: Number.isFinite(gameTime) ? gameTime : 0,
+    createdAt,
+  };
+}
+
+function timestampToMs(value, fallback) {
+  if (value === undefined || value === null || value === "") return fallback;
+  const numeric = Number(value);
+  if (Number.isFinite(numeric)) {
+    if (numeric > 1_000_000_000_000) return numeric;
+    if (numeric > 1_000_000_000) return numeric * 1000;
+    return fallback;
+  }
+  const parsed = Date.parse(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+async function initCloudSync() {
+  cloud.playerId = getOrCreatePlayerId();
+  cloud.config = getSupabaseConfig();
+  cloud.enabled = Boolean(cloud.config.url && cloud.config.anonKey);
+
+  if (!cloud.enabled) {
+    cloud.status = "Local only";
+    updateLearnerHud();
+    return;
+  }
+
+  cloud.status = "Connecting...";
+  updateLearnerHud();
+
+  try {
+    const [rows, remoteSamples] = await Promise.all([
+      supabaseRequest(`${SUPABASE_LEARNERS_TABLE}?player_id=eq.${encodeURIComponent(cloud.playerId)}&select=state,updated_at&limit=1`),
+      fetchCloudSamples(),
+    ]);
+    const remoteRow = Array.isArray(rows) ? rows[0] : null;
+    mergeCloudState(remoteRow?.state || {}, remoteSamples, remoteRow?.updated_at || "");
+    cloud.status = "Cloud synced";
+    scheduleCloudSync(100);
+  } catch (error) {
+    console.warn("Could not load Supabase learner state", error);
+    cloud.status = "Cloud offline";
+  }
+  updateLearnerHud();
+}
+
+function scheduleCloudSync(delay = CLOUD_SYNC_DELAY_MS) {
+  if (!cloud.enabled) return;
+  clearTimeout(cloud.syncTimer);
+  cloud.syncTimer = setTimeout(() => {
+    syncCloudLearner();
+  }, delay);
+}
+
+async function syncCloudLearner() {
+  if (!cloud.enabled) return;
+  cloud.status = "Syncing...";
+  updateLearnerHud();
+
+  try {
+    await upsertCloudLearnerState();
+    await flushCloudSamples();
+    cloud.status = "Cloud synced";
+  } catch (error) {
+    console.warn("Could not sync Supabase learner state", error);
+    cloud.status = "Cloud retrying";
+    scheduleCloudSync(5000);
+  }
+  updateLearnerHud();
+}
+
+async function upsertCloudLearnerState() {
+  const state = getLearnerState({ includeSamples: false });
+  await supabaseRequest(`${SUPABASE_LEARNERS_TABLE}?on_conflict=player_id`, {
+    method: "POST",
+    headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
+    body: JSON.stringify([
+      {
+        player_id: cloud.playerId,
+        state,
+        updated_at: state.updatedAt,
+      },
+    ]),
+  });
+}
+
+async function flushCloudSamples() {
+  if (cloud.pendingSamples.length === 0) return;
+  const samplesToSend = mergeSamples(cloud.pendingSamples).map(sampleToCloudRow);
+  const batchSize = 500;
+  for (let index = 0; index < samplesToSend.length; index += batchSize) {
+    const batch = samplesToSend.slice(index, index + batchSize);
+    await supabaseRequest(`${SUPABASE_SAMPLES_TABLE}?on_conflict=id`, {
+      method: "POST",
+      headers: { Prefer: "resolution=ignore-duplicates,return=minimal" },
+      body: JSON.stringify(batch),
+    });
+  }
+  cloud.pendingSamples = [];
+}
+
+async function fetchCloudSamples() {
+  const pageSize = 1000;
+  const samples = [];
+  for (let start = 0; ; start += pageSize) {
+    const end = start + pageSize - 1;
+    const page = await supabaseRequest(
+      `${SUPABASE_SAMPLES_TABLE}?player_id=eq.${encodeURIComponent(cloud.playerId)}&select=id,features,action,label,reason,source,tile_key,game_time,created_at&order=created_at.asc`,
+      { headers: { Range: `${start}-${end}` } },
+    );
+    if (!Array.isArray(page) || page.length === 0) break;
+    samples.push(...page.map(normalizeStoredSample));
+    if (page.length < pageSize) break;
+  }
+  return samples;
+}
+
+async function deleteCloudLearner() {
+  if (!cloud.enabled || !cloud.playerId) return;
+  try {
+    await supabaseRequest(`${SUPABASE_SAMPLES_TABLE}?player_id=eq.${encodeURIComponent(cloud.playerId)}`, { method: "DELETE" });
+    await supabaseRequest(`${SUPABASE_LEARNERS_TABLE}?player_id=eq.${encodeURIComponent(cloud.playerId)}`, { method: "DELETE" });
+    cloud.status = "Cloud cleared";
+  } catch (error) {
+    console.warn("Could not clear Supabase learner state", error);
+    cloud.status = "Cloud clear failed";
+  }
+  updateLearnerHud();
+}
+
+function sampleToCloudRow(sample) {
+  const normalized = normalizeStoredSample(sample);
+  return {
+    id: normalized.id,
+    player_id: cloud.playerId,
+    features: normalized.features,
+    action: normalized.action,
+    label: normalized.label,
+    reason: normalized.reason,
+    source: normalized.source,
+    tile_key: normalized.tileKey,
+    game_time: normalized.gameTime,
+    created_at: new Date(normalized.createdAt).toISOString(),
+  };
+}
+
+async function supabaseRequest(path, options = {}) {
+  const response = await fetch(`${cloud.config.url}/rest/v1/${path}`, {
+    method: options.method || "GET",
+    headers: {
+      apikey: cloud.config.anonKey,
+      Authorization: `Bearer ${cloud.config.anonKey}`,
+      "Content-Type": "application/json",
+      ...(options.headers || {}),
+    },
+    body: options.body,
+  });
+
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error(`Supabase ${response.status}: ${message}`);
+  }
+
+  if (response.status === 204) return null;
+  const text = await response.text();
+  return text ? JSON.parse(text) : null;
 }
 
 function updateHud() {
@@ -929,6 +1247,7 @@ function updateLearnerHud() {
   setText(goodLabel, learner.good.toLocaleString());
   setText(badLabel, learner.bad.toLocaleString());
   setText(lessonLabel, learner.lastLesson);
+  if (cloudLabel) setText(cloudLabel, cloud.status);
   const strength = Math.round(clamp(learner.samples.length / 60, 0, 1) * 100);
   setText(brainStrength, `${strength}%`);
   const strengthWidth = `${strength}%`;
@@ -1259,12 +1578,14 @@ window.__mazeMuncherDebug = {
       player: { x: Number(player.x.toFixed(2)), y: Number(player.y.toFixed(2)) },
       score: game.score,
       samples: learner.samples.length,
+      cloud: cloud.status,
     };
   },
 };
 
 validateMap();
 loadLearner();
+initCloudSync();
 resetFood();
 resetRoundPositions();
 game.started = false;

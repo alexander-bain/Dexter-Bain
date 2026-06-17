@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Maze Muncher ML</title>
-    <link rel="stylesheet" href="./styles.css?v=autoreset2" />
+    <link rel="stylesheet" href="./styles.css?v=supabase2" />
     <script>
       window.__consoleErrors = [];
       window.addEventListener("error", (event) => {
@@ -92,6 +92,10 @@
                 <dt>Last lesson</dt>
                 <dd id="lesson-label">None yet</dd>
               </div>
+              <div>
+                <dt>Cloud sync</dt>
+                <dd id="cloud-label">Local only</dd>
+              </div>
             </dl>
 
             <div class="brain-actions">
@@ -109,12 +113,14 @@
               <li>Getting caught penalizes the recent moves that led there.</li>
               <li>If the ML bot loses all lives, it starts a new run by itself.</li>
               <li>Press <kbd>M</kbd> or the ML Bot Turn button to let it play.</li>
+              <li>Supabase cloud sync keeps the learner samples after refreshes and closed tabs.</li>
             </ol>
           </section>
         </aside>
       </section>
     </main>
 
-    <script type="module" src="./game.js?v=autoreset2"></script>
+    <script src="./supabase-config.js?v=supabase2"></script>
+    <script type="module" src="./game.js?v=supabase2"></script>
   </body>
 </html>
