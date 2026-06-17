@@ -166,6 +166,9 @@ const shirtCanvasEl = document.querySelector("#shirt-canvas");
 const clearShirtButton = document.querySelector("#clear-shirt-button");
 const fanNameEl = document.querySelector("#fan-name");
 const fanStatusEl = document.querySelector("#fan-status");
+const fanPreviewEl = document.querySelector("#fan-preview");
+const fanPreviewNameEl = document.querySelector("#fan-preview-name");
+const fanPreviewCanvasEl = document.querySelector("#fan-preview-canvas");
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x060914);
@@ -242,6 +245,7 @@ let frameCount = 0;
 let capturedFrame = false;
 let heartTexture = null;
 let fallbackShirtCanvas = null;
+let fanPreviewSynced = false;
 const activeMoveKeys = new Map();
 let activeMoveKey = null;
 const joystickInput = {
@@ -778,12 +782,15 @@ function createEntity(kind, index, position, options = {}) {
   const difficulty = getDifficultyConfig();
   const lifeBadge = settings.eliminationMode === "lives" ? createLifeBadge(lives, kind) : null;
   if (lifeBadge) scene.add(lifeBadge);
+  const entityName = kind === "user" ? settings.playerName : getBotName(index - 1);
+  const nameBadge = createNameBadge(entityName, Boolean(options.rooted));
+  scene.add(nameBadge);
 
   const entity = {
     kind,
     index,
     botIndex: kind === "bot" ? index - 1 : null,
-    name: kind === "user" ? settings.playerName : getBotName(index - 1),
+    name: entityName,
     rooted: Boolean(options.rooted),
     group,
     rig,
@@ -791,6 +798,7 @@ function createEntity(kind, index, position, options = {}) {
     lives,
     maxLives: lives,
     lifeBadge,
+    nameBadge,
     target: new THREE.Vector3(position.x, FLOOR_TOP_Y, position.z),
     walkTime: Math.random() * Math.PI * 2,
     speed: kind === "user" ? USER_SPEED : (BOT_SPEED + Math.random() * 0.35) * difficulty.botSpeed,
@@ -834,6 +842,66 @@ function createLifeBadge(maxLives, kind) {
   return badge;
 }
 
+function createNameBadge(name, rooted) {
+  const badgeCanvas = document.createElement("canvas");
+  badgeCanvas.width = 512;
+  badgeCanvas.height = 160;
+  const ctx = badgeCanvas.getContext("2d");
+  ctx.clearRect(0, 0, badgeCanvas.width, badgeCanvas.height);
+
+  const gradient = ctx.createLinearGradient(0, 0, badgeCanvas.width, badgeCanvas.height);
+  if (rooted) {
+    gradient.addColorStop(0, "rgba(255, 224, 138, 0.98)");
+    gradient.addColorStop(1, "rgba(255, 144, 84, 0.92)");
+  } else {
+    gradient.addColorStop(0, "rgba(9, 14, 26, 0.92)");
+    gradient.addColorStop(1, "rgba(30, 42, 66, 0.86)");
+  }
+
+  roundRect(ctx, 30, 34, 452, 90, 30);
+  ctx.fillStyle = gradient;
+  ctx.fill();
+  ctx.lineWidth = rooted ? 8 : 5;
+  ctx.strokeStyle = rooted ? "rgba(255,255,255,0.82)" : "rgba(255,255,255,0.36)";
+  ctx.stroke();
+  ctx.fillStyle = rooted ? "#15100a" : "#fffaf0";
+  ctx.font = "900 48px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.shadowColor = rooted ? "rgba(255,255,255,0.36)" : "rgba(0,0,0,0.72)";
+  ctx.shadowBlur = rooted ? 8 : 10;
+  ctx.fillText(name, badgeCanvas.width / 2, 82, 390);
+
+  const texture = new THREE.CanvasTexture(badgeCanvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  const material = new THREE.SpriteMaterial({
+    map: texture,
+    transparent: true,
+    depthTest: false,
+    depthWrite: false,
+  });
+  const sprite = new THREE.Sprite(material);
+  sprite.center.set(0.5, 0.5);
+  sprite.scale.set(rooted ? 1.35 : 1.08, rooted ? 0.42 : 0.34, 1);
+  sprite.renderOrder = rooted ? 12 : 11;
+  sprite.visible = false;
+  return sprite;
+}
+
+function roundRect(ctx, x, y, width, height, radius) {
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.lineTo(x + width - radius, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+  ctx.lineTo(x + width, y + height - radius);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  ctx.lineTo(x + radius, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+  ctx.lineTo(x, y + radius);
+  ctx.quadraticCurveTo(x, y, x + radius, y);
+  ctx.closePath();
+}
+
 function getHeartTexture() {
   if (heartTexture) return heartTexture;
 
@@ -872,9 +940,11 @@ function clearCharacters() {
   characters.splice(0).forEach((entity) => {
     scene.remove(entity.group);
     if (entity.lifeBadge) scene.remove(entity.lifeBadge);
+    if (entity.nameBadge) scene.remove(entity.nameBadge);
   });
   user = null;
   rootedBot = null;
+  fanPreviewSynced = false;
 }
 
 function createCharacters() {
@@ -1751,6 +1821,26 @@ function updateLifeBadges() {
   characters.forEach((entity) => updateLifeBadge(entity));
 }
 
+function updateNameBadges() {
+  characters.forEach((entity) => updateNameBadge(entity));
+}
+
+function updateNameBadge(entity) {
+  const badge = entity.nameBadge;
+  if (!badge) return;
+
+  badge.visible = settings.playMode === "audience" && entity.alive;
+  if (!badge.visible) return;
+
+  const lifted = entity.rooted ? 3.02 : 2.82;
+  badge.position.set(
+    entity.group.position.x,
+    entity.group.position.y + lifted,
+    entity.group.position.z,
+  );
+  badge.quaternion.copy(camera.quaternion);
+}
+
 function updateLifeBadge(entity) {
   const badge = entity.lifeBadge;
   if (!badge) return;
@@ -1878,6 +1968,8 @@ function updateHud(now) {
     }
   }
 
+  updateFanPreview();
+
   const counts = new Array(sectionDefs.length).fill(0);
   characters.forEach((entity) => {
     if (!entity.alive) return;
@@ -1908,6 +2000,7 @@ function updateHud(now) {
   document.body.dataset.rootBotLives = String(Math.max(0, rootedBot?.lives ?? settings.lives));
   document.body.dataset.visibleLifeBadges = String(visibleLifeBadgeCount());
   document.body.dataset.visibleHearts = String(visibleHeartCount());
+  document.body.dataset.visibleNameBadges = String(visibleNameBadgeCount());
   document.body.dataset.sectionCount = String(sectionDefs.length);
   document.body.dataset.roundMs = String(getRoundMs());
   document.body.dataset.cornerCounts = counts.join(",");
@@ -1924,6 +2017,30 @@ function updateHud(now) {
   document.body.dataset.floorStates = floorSections
     .map((section) => `${section.id}:${section.state}:${section.group.position.y.toFixed(2)}`)
     .join(",");
+}
+
+function updateFanPreview() {
+  const audienceMode = settings.playMode === "audience";
+  fanPreviewEl?.classList.toggle("hidden", !audienceMode);
+  if (!audienceMode) {
+    fanPreviewSynced = false;
+    return;
+  }
+
+  const botName = rootedBot?.name || getBotName(settings.rootBotIndex);
+  if (fanPreviewNameEl) fanPreviewNameEl.textContent = botName;
+  if (!fanPreviewCanvasEl || fanPreviewSynced) return;
+
+  const source = getAudienceShirtCanvas();
+  const ctx = fanPreviewCanvasEl.getContext("2d");
+  if (!ctx) return;
+  ctx.clearRect(0, 0, fanPreviewCanvasEl.width, fanPreviewCanvasEl.height);
+  ctx.drawImage(source, 0, 0, fanPreviewCanvasEl.width, fanPreviewCanvasEl.height);
+  fanPreviewSynced = true;
+}
+
+function visibleNameBadgeCount() {
+  return characters.filter((entity) => entity.nameBadge?.visible).length;
 }
 
 function aliveCount() {
@@ -1971,6 +2088,7 @@ function animate() {
   updateEliminated(dt);
   updateCamera(dt);
   updateLifeBadges();
+  updateNameBadges();
   updateHud(now);
   renderer.render(scene, camera);
   updateRenderStats();
@@ -2068,6 +2186,8 @@ window.__fourCorners = {
       : null,
     visibleLifeBadges: visibleLifeBadgeCount(),
     visibleHearts: visibleHeartCount(),
+    visibleNameBadges: visibleNameBadgeCount(),
+    fanPreviewVisible: Boolean(fanPreviewEl && !fanPreviewEl.classList.contains("hidden")),
     settings: { ...settings },
     sectionCount: sectionDefs.length,
     roundMs: getRoundMs(),

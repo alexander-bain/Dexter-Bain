@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Four Corners: Floating Floor</title>
-    <link rel="stylesheet" href="./styles.css?v=20260617-audience" />
+    <link rel="stylesheet" href="./styles.css?v=20260617-audience-names" />
     <script>
       window.__consoleErrors = [];
       window.addEventListener("error", (event) => {
@@ -47,6 +47,11 @@
 
       <div id="joystick" class="joystick" aria-label="Movement joystick">
         <div id="joystick-stick" class="joystick-stick"></div>
+      </div>
+
+      <div id="fan-preview" class="fan-preview hidden" aria-label="Selected bot shirt preview">
+        <span id="fan-preview-name">Nova</span>
+        <canvas id="fan-preview-canvas" width="256" height="256"></canvas>
       </div>
 
       <section id="start-screen" class="screen-panel start-panel">
@@ -242,6 +247,6 @@
       </section>
     </main>
 
-    <script type="module" src="./game.js?v=20260617-audience"></script>
+    <script type="module" src="./game.js?v=20260617-audience-names"></script>
   </body>
 </html>
