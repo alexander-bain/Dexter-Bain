@@ -40,13 +40,13 @@ function lockDate(date, hour, minute = 0) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, minute, 0);
 }
 
+function labelDate(date) {
+  return `${monthNames[date.getMonth()]} ${date.getDate()}`;
+}
+
 function isWeekend(date) {
   const day = date.getDay();
   return day === 0 || day === 6;
-}
-
-function labelDate(date) {
-  return `${monthNames[date.getMonth()]} ${date.getDate()}`;
 }
 
 function jsString(value) {
@@ -158,16 +158,6 @@ function windSpeedMax(text) {
   return match ? Number(match[2] || match[1]) : 8;
 }
 
-function rotateSelection(items, count, seed) {
-  if (!Array.isArray(items) || !items.length || count <= 0) {
-    return [];
-  }
-
-  const start = Math.abs(Number(seed) || 0) % items.length;
-  const total = Math.min(count, items.length);
-  return Array.from({ length: total }, (_, index) => items[(start + index) % items.length]);
-}
-
 function yesNoQuestion({
   text,
   idSuffix,
@@ -214,6 +204,7 @@ function renderQuestion(question, idDate) {
 function dayWatchEvent(date, forecast) {
   const day = forecast.dayPeriod || {};
   const night = forecast.nightPeriod || {};
+  const weekend = isWeekend(date);
   const high = Number(day.temperature) || 70;
   const low = Number(night.temperature) || 54;
   const skyText = `${day.shortForecast || ""} ${day.detailedForecast || ""}`;
@@ -221,8 +212,6 @@ function dayWatchEvent(date, forecast) {
   const windSpeed = windSpeedMax(day.windSpeed || night.windSpeed || "8 mph");
   const dateLabel = labelDate(date);
   const idDate = slugDate(date);
-  const daySeed = Number(idDate);
-  const weekend = isWeekend(date);
   const warmByNoonThreshold = Math.max(60, Math.round((high - 5) / 5) * 5);
   const locks = {
     warmByNoon: lockDate(date, 12).toISOString(),
@@ -243,49 +232,47 @@ function dayWatchEvent(date, forecast) {
   const likelyWindyLater = windSpeed >= 12;
   const likelyNightCooler = low <= 60 || low <= high - 10;
   const likelyMarketUp = !includesAny(skyText, ["storm", "rain"]) && day.temperature >= 65;
-  const likelyGasUp = daySeed % 2 === 0 || high >= 74;
-  const likelyMusicChanged = daySeed % 3 !== 0;
-  const likelySportsLive = daySeed % 4 !== 0;
+  const likelyGasUp = high >= 74 || windSpeed >= 12;
+  const likelyMusicChanged = high >= 68 || sky !== "rain-likely";
+  const likelySportsLive = !weekend || high >= 66 || windSpeed <= 18;
   const likelyWeatherLead = sky === "rain-likely" || (sky === "mostly-cloudy" && !likelyMarketUp);
-  const likelySportsLead = likelySportsLive && daySeed % 5 !== 0;
-  const localBusinessLabel = weekend ? "Community" : "Stocks";
-  const localBusinessId = weekend ? "community" : "stocks";
+  const likelySportsLead = likelySportsLive && !likelyWeatherLead;
   const localHeadlineOdds = {
     weather: [sky === "rain-likely" ? 36 : 28, "Weather"],
-    business: [weekend ? 24 : (likelyMarketUp ? 30 : 24), localBusinessLabel],
+    stocks: [likelyMarketUp ? 30 : 24, "Stocks"],
     sports: [likelySportsLive ? 24 : 18, "Sports"],
     traffic: [18, "Traffic"]
   };
   const weatherQuestions = [
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: `By noon, will it be warmer than ${warmByNoonThreshold} degrees?`,
       idSuffix: "warm-by-noon",
       autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.warmByNoon,
       likely: likelyBreaksWarmByNoon
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 3 PM, will rain show up in the forecast?",
       idSuffix: "rain-by-3pm",
       autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.weatherAfternoon,
       likely: likelyRainLater
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: `By 5 PM, will the wind be stronger than ${Math.max(10, Math.round(windSpeed / 5) * 5)} mph?`,
       idSuffix: "wind-by-5pm",
       autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.weatherWind,
       likely: likelyWindyLater
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 3 PM, will the sky still be mostly sunny?",
       idSuffix: "sky-still-sunny",
       autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.weatherAfternoon,
       likely: likelySkySunnyLater
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "Tonight, will it stay cooler than 60 degrees?",
       idSuffix: "cool-tonight",
       autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
@@ -294,39 +281,37 @@ function dayWatchEvent(date, forecast) {
     })
   ];
   const moneyQuestions = [
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By noon, will gas prices be higher than this morning?",
       idSuffix: "gas-noon",
       autoSource: gasSource,
       lockAt: locks.gasNoon,
       likely: likelyGasUp
-    }),
-    ...(
-      weekend
-        ? []
-        : [() => yesNoQuestion({
-            text: "By 1 PM, will the stock market go up?",
-            idSuffix: "market-lunch",
-            autoSource: marketSource,
-            lockAt: locks.marketLunch,
-            likely: likelyMarketUp
-          })]
-    )
+    })
   ];
+  if (!weekend) {
+    moneyQuestions.push(yesNoQuestion({
+      text: "By 1 PM, will the stock market go up?",
+      idSuffix: "market-lunch",
+      autoSource: marketSource,
+      lockAt: locks.marketLunch,
+      likely: likelyMarketUp
+    }));
+  }
   const newsQuestions = [
-    () => choiceQuestion({
+    choiceQuestion({
       text: "By 2 PM, what will the local news talk about most?",
       idSuffix: "local-headline",
       autoSource: localNewsSource,
       lockAt: locks.localHeadline,
       answers: [
         { label: localHeadlineOdds.weather[1], odds: localHeadlineOdds.weather[0], id: "weather" },
-        { label: localHeadlineOdds.business[1], odds: localHeadlineOdds.business[0], id: localBusinessId },
+        { label: localHeadlineOdds.stocks[1], odds: localHeadlineOdds.stocks[0], id: "stocks" },
         { label: localHeadlineOdds.sports[1], odds: localHeadlineOdds.sports[0], id: "sports" },
         { label: localHeadlineOdds.traffic[1], odds: localHeadlineOdds.traffic[0], id: "traffic" }
       ]
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 3 PM, will weather be the top local news story?",
       idSuffix: "weather-headline",
       autoSource: localNewsSource,
@@ -335,7 +320,7 @@ function dayWatchEvent(date, forecast) {
       yesLikely: 60,
       yesUnlikely: 40
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 4 PM, will sports be one of the top local news stories?",
       idSuffix: "sports-headline",
       autoSource: localNewsSource,
@@ -346,14 +331,14 @@ function dayWatchEvent(date, forecast) {
     })
   ];
   const musicQuestions = [
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 4 PM, will the top Apple Music song be different?",
       idSuffix: "music-four",
       autoSource: musicSource,
       lockAt: locks.musicFour,
       likely: likelyMusicChanged
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 5 PM, will a new song reach No. 1?",
       idSuffix: "music-five",
       autoSource: musicSource,
@@ -362,14 +347,14 @@ function dayWatchEvent(date, forecast) {
     })
   ];
   const sportsQuestions = [
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 6 PM, will the sports page still show a live game?",
       idSuffix: "sports-six",
       autoSource: sportsSource,
       lockAt: locks.sportsSix,
       likely: likelySportsLive
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 7 PM, will the top sports story be about a live game?",
       idSuffix: "sports-seven",
       autoSource: sportsSource,
@@ -383,12 +368,16 @@ function dayWatchEvent(date, forecast) {
     ...newsQuestions,
     ...musicQuestions,
     ...sportsQuestions
-  ].map((questionFactory) => questionFactory()).sort((left, right) => {
+  ].sort((left, right) => {
     if (left.lockAt === right.lockAt) {
       return left.idSuffix.localeCompare(right.idSuffix);
     }
     return left.lockAt.localeCompare(right.lockAt);
   });
+  const questionCount = selectedQuestions.length;
+  const categorySummary = weekend
+    ? "weather, gas, news, music, and sports"
+    : "weather, money, news, music, and sports";
 
   return `      {
         id: "daily-weather-${idDate}",
@@ -396,7 +385,7 @@ function dayWatchEvent(date, forecast) {
         type: "Day",
         month: ${date.getMonth()},
         day: ${date.getDate()},
-        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: 10 simple questions about weather, money, news, music, and sports that settle through the day. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.`)},
+        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: ${questionCount} simple questions about ${categorySummary} that settle through the day. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.`)},
         questions: [
 ${selectedQuestions.map((question) => renderQuestion(question, idDate)).join(",\n")}
         ]
