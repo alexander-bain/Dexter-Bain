@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Maze Muncher ML</title>
-    <link rel="stylesheet" href="./styles.css?v=botfix1" />
+    <link rel="stylesheet" href="./styles.css?v=autoreset1" />
     <script>
       window.__consoleErrors = [];
       window.addEventListener("error", (event) => {
@@ -107,6 +107,7 @@
               <li>Every turn creates a training sample automatically.</li>
               <li>Dots, survival, energizers, and bonuses reward recent moves.</li>
               <li>Getting caught penalizes the recent moves that led there.</li>
+              <li>If the ML bot loses all lives, it starts a new run by itself.</li>
               <li>Press <kbd>M</kbd> or the ML Bot Turn button to let it play.</li>
             </ol>
           </section>
@@ -114,6 +115,6 @@
       </section>
     </main>
 
-    <script type="module" src="./game.js?v=botfix1"></script>
+    <script type="module" src="./game.js?v=autoreset1"></script>
   </body>
 </html>

@@ -111,6 +111,7 @@ const game = {
   messageUntil: 0,
   lastFrame: performance.now(),
   botTrail: [],
+  botRestartTimer: null,
 };
 
 const scatterChaseSchedule = [
@@ -273,6 +274,7 @@ function createGhost(name, color, x, y, dir, scatterTarget, releaseDelay, person
 
 function startGame(options = {}) {
   const { bot = false } = options;
+  clearBotRestartTimer();
   game.score = 0;
   game.level = 1;
   game.lives = 3;
@@ -316,7 +318,21 @@ function loseLife() {
 
 function gameOver() {
   game.phase = "gameover";
+  if (game.autopilot) {
+    learner.lastLesson = "ML bot lost; restarting with what it learned";
+    updateLearnerHud();
+    showOverlay("Bot Lost", "The ML bot is keeping its lessons and starting a fresh run automatically.", "Restarting...");
+    game.botRestartTimer = setTimeout(() => startGame({ bot: true }), 1300);
+    return;
+  }
+
   showOverlay("Game Over", "The learner kept training from rewards and penalties. Start again or press ML Bot Turn to let the bot try the next run.", "Play Again");
+}
+
+function clearBotRestartTimer() {
+  if (!game.botRestartTimer) return;
+  clearTimeout(game.botRestartTimer);
+  game.botRestartTimer = null;
 }
 
 function togglePause() {
@@ -1238,6 +1254,7 @@ window.__mazeMuncherDebug = {
       botTrail: [...game.botTrail],
       dir: player.dir,
       dots: pellets.size + energizers.size,
+      lives: game.lives,
       phase: game.phase,
       player: { x: Number(player.x.toFixed(2)), y: Number(player.y.toFixed(2)) },
       score: game.score,
