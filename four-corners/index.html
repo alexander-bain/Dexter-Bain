@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Four Corners: Floating Floor</title>
-    <link rel="stylesheet" href="./styles.css?v=20260616-joystick" />
+    <link rel="stylesheet" href="./styles.css?v=20260617-audience" />
     <script>
       window.__consoleErrors = [];
       window.addEventListener("error", (event) => {
@@ -31,6 +31,10 @@
           <span id="life-label">3</span>
           <span>lives</span>
         </div>
+        <div class="hud-card fan-card hidden">
+          <span id="fan-name">Nova</span>
+          <span id="fan-status">rooting for</span>
+        </div>
         <div id="corner-counts" class="corner-counts" aria-label="Players in each corner"></div>
       </section>
 
@@ -53,6 +57,14 @@
           </div>
 
           <div class="settings-grid">
+            <fieldset class="option-group play-mode-options">
+              <legend>Mode</legend>
+              <div class="segmented">
+                <label><input type="radio" name="playMode" value="player" checked /><span>Player</span></label>
+                <label><input type="radio" name="playMode" value="audience" /><span>Audience</span></label>
+              </div>
+            </fieldset>
+
             <label class="field name-field">
               <span>Player name</span>
               <input
@@ -155,6 +167,66 @@
                 </label>
               </div>
             </fieldset>
+
+            <section id="audience-panel" class="audience-panel hidden" aria-label="Audience mode settings">
+              <fieldset class="option-group bot-roster-field">
+                <legend>Root for</legend>
+                <div id="bot-roster" class="bot-roster" data-testid="bot-roster"></div>
+              </fieldset>
+
+              <fieldset class="option-group shirt-studio">
+                <legend>Shirt studio</legend>
+                <div class="shirt-studio-grid">
+                  <canvas
+                    id="shirt-canvas"
+                    class="shirt-canvas"
+                    width="256"
+                    height="256"
+                    aria-label="Draw on the selected bot shirt"
+                    data-testid="shirt-canvas"
+                  ></canvas>
+                  <div class="shirt-controls">
+                    <div class="swatch-row" aria-label="Shirt color">
+                      <label style="--swatch-a: #fff4c9">
+                        <input type="radio" name="fanShirtColor" value="#fff4c9" checked />
+                        <span></span>
+                      </label>
+                      <label style="--swatch-a: #78dcff">
+                        <input type="radio" name="fanShirtColor" value="#78dcff" />
+                        <span></span>
+                      </label>
+                      <label style="--swatch-a: #ff66a8">
+                        <input type="radio" name="fanShirtColor" value="#ff66a8" />
+                        <span></span>
+                      </label>
+                      <label style="--swatch-a: #91ff3d">
+                        <input type="radio" name="fanShirtColor" value="#91ff3d" />
+                        <span></span>
+                      </label>
+                    </div>
+                    <div class="swatch-row ink-row" aria-label="Drawing color">
+                      <label style="--swatch-a: #111827">
+                        <input type="radio" name="fanInkColor" value="#111827" checked />
+                        <span></span>
+                      </label>
+                      <label style="--swatch-a: #ffffff">
+                        <input type="radio" name="fanInkColor" value="#ffffff" />
+                        <span></span>
+                      </label>
+                      <label style="--swatch-a: #ff3f67">
+                        <input type="radio" name="fanInkColor" value="#ff3f67" />
+                        <span></span>
+                      </label>
+                      <label style="--swatch-a: #ffe08a">
+                        <input type="radio" name="fanInkColor" value="#ffe08a" />
+                        <span></span>
+                      </label>
+                    </div>
+                    <button id="clear-shirt-button" class="clear-shirt-button" type="button">Clear</button>
+                  </div>
+                </div>
+              </fieldset>
+            </section>
           </div>
 
           <button id="play-button" class="start-button" type="submit" data-testid="play-button">
@@ -170,6 +242,6 @@
       </section>
     </main>
 
-    <script type="module" src="./game.js?v=20260616-joystick"></script>
+    <script type="module" src="./game.js?v=20260617-audience"></script>
   </body>
 </html>

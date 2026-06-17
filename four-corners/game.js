@@ -12,6 +12,7 @@ const SAFE_INSET = 0.56;
 const BOT_SPEED = 2.55;
 const USER_SPEED = 4.55;
 const DEFAULT_SETTINGS = {
+  playMode: "player",
   sectionCount: 4,
   botCount: 20,
   playerName: "Player",
@@ -20,7 +21,31 @@ const DEFAULT_SETTINGS = {
   eliminationMode: "instant",
   lives: 3,
   theme: "classic",
+  rootBotIndex: 0,
+  fanShirtColor: "#fff4c9",
 };
+const BOT_NAMES = [
+  "Nova",
+  "Blitz",
+  "Mika",
+  "Juno",
+  "Ace",
+  "Riley",
+  "Zara",
+  "Dash",
+  "Pip",
+  "Kai",
+  "Luna",
+  "Rex",
+  "Ivy",
+  "Max",
+  "Nia",
+  "Bolt",
+  "Skye",
+  "Finn",
+  "Moxie",
+  "Tess",
+];
 const ROUND_SPEED_MS = {
   slow: 10000,
   medium: 7000,
@@ -124,6 +149,7 @@ const endScreen = document.querySelector("#end-screen");
 const endTitle = document.querySelector("#end-title");
 const endCopy = document.querySelector("#end-copy");
 const settingsForm = document.querySelector("#settings-form");
+const nameFieldEl = document.querySelector(".name-field");
 const playerNameInput = document.querySelector("#player-name");
 const botCountInput = document.querySelector("#bot-count");
 const botCountNumberInput = document.querySelector("#bot-count-number");
@@ -134,6 +160,12 @@ const playButton = document.querySelector("#play-button");
 const restartButton = document.querySelector("#restart-button");
 const joystickEl = document.querySelector("#joystick");
 const joystickStickEl = document.querySelector("#joystick-stick");
+const audiencePanelEl = document.querySelector("#audience-panel");
+const botRosterEl = document.querySelector("#bot-roster");
+const shirtCanvasEl = document.querySelector("#shirt-canvas");
+const clearShirtButton = document.querySelector("#clear-shirt-button");
+const fanNameEl = document.querySelector("#fan-name");
+const fanStatusEl = document.querySelector("#fan-status");
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x060914);
@@ -202,12 +234,14 @@ const floorSections = [];
 const characters = [];
 const timeouts = new Set();
 let user = null;
+let rootedBot = null;
 let botMaterials = null;
 let userMaterials = null;
 let announcementTimer = 0;
 let frameCount = 0;
 let capturedFrame = false;
 let heartTexture = null;
+let fallbackShirtCanvas = null;
 const activeMoveKeys = new Map();
 let activeMoveKey = null;
 const joystickInput = {
@@ -217,6 +251,13 @@ const joystickInput = {
   zAxis: 0,
 };
 const JOYSTICK_DEAD_ZONE = 0.12;
+const audienceState = {
+  rootBotIndex: 0,
+  shirtColor: DEFAULT_SETTINGS.fanShirtColor,
+  inkColor: "#111827",
+  drawing: false,
+  lastPoint: null,
+};
 
 const game = {
   started: false,
@@ -568,10 +609,37 @@ function makeMaterialSet(kind) {
   };
 }
 
-function createHumanoid(kind) {
-  const materials = kind === "user" ? userMaterials : botMaterials;
+function makeFanMaterialSet() {
+  const materials = makeMaterialSet("bot");
+  materials.jacket.color.set(0x26344c);
+  materials.shirt = new THREE.MeshStandardMaterial({
+    color: 0xffffff,
+    map: createFanShirtTexture(),
+    roughness: 0.6,
+    metalness: 0.04,
+  });
+  materials.glow = new THREE.MeshBasicMaterial({
+    color: 0xffe08a,
+    transparent: true,
+    opacity: 0.9,
+    depthWrite: false,
+  });
+  return materials;
+}
+
+function createFanShirtTexture() {
+  const texture = new THREE.CanvasTexture(getAudienceShirtCanvas());
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy?.() || 1);
+  texture.needsUpdate = true;
+  return texture;
+}
+
+function createHumanoid(kind, options = {}) {
+  const materials = options.materials || (kind === "user" ? userMaterials : botMaterials);
+  const highlighted = kind === "user" || options.highlight;
   const group = new THREE.Group();
-  group.scale.setScalar(kind === "user" ? 0.86 : 0.8);
+  group.scale.setScalar(kind === "user" ? 0.86 : highlighted ? 0.84 : 0.8);
 
   const torso = new THREE.Mesh(geometries.torso, materials.jacket);
   torso.position.y = 1.17;
@@ -582,6 +650,7 @@ function createHumanoid(kind) {
   shirtPanel.position.set(0, 1.2, 0.245);
   shirtPanel.castShadow = true;
   group.add(shirtPanel);
+  const rig = { shirtPanel };
 
   const belt = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.06, 0.055), materials.pants);
   belt.position.set(0, 0.78, 0.18);
@@ -644,7 +713,6 @@ function createHumanoid(kind) {
   rightBrow.rotation.z = -0.12;
   group.add(rightBrow);
 
-  const rig = {};
   rig.leftArm = createArm(-0.34, materials);
   rig.rightArm = createArm(0.34, materials);
   rig.leftArm.rotation.z = 0.2;
@@ -655,14 +723,14 @@ function createHumanoid(kind) {
   rig.rightLeg = createLeg(0.13, materials);
   group.add(rig.leftLeg, rig.rightLeg);
 
-  if (kind === "user") {
+  if (highlighted) {
     const ring = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.025, 10, 58), materials.glow);
     ring.rotation.x = -Math.PI / 2;
     ring.position.y = 0.035;
     ring.renderOrder = 4;
     group.add(ring);
 
-    const shoulderLight = new THREE.PointLight(0x8fe8ff, 0.85, 4.2);
+    const shoulderLight = new THREE.PointLight(kind === "user" ? 0x8fe8ff : 0xffe08a, 0.85, 4.2);
     shoulderLight.position.set(0, 1.75, 0.18);
     group.add(shoulderLight);
   }
@@ -702,8 +770,8 @@ function createLeg(x, materials) {
   return leg;
 }
 
-function createEntity(kind, index, position) {
-  const { group, rig } = createHumanoid(kind);
+function createEntity(kind, index, position, options = {}) {
+  const { group, rig } = createHumanoid(kind, options);
   group.position.set(position.x, FLOOR_TOP_Y, position.z);
   scene.add(group);
   const lives = settings.eliminationMode === "lives" ? settings.lives : 1;
@@ -714,7 +782,9 @@ function createEntity(kind, index, position) {
   const entity = {
     kind,
     index,
-    name: kind === "user" ? settings.playerName : `AI ${index}`,
+    botIndex: kind === "bot" ? index - 1 : null,
+    name: kind === "user" ? settings.playerName : getBotName(index - 1),
+    rooted: Boolean(options.rooted),
     group,
     rig,
     alive: true,
@@ -733,6 +803,7 @@ function createEntity(kind, index, position) {
   };
   updateLifeBadge(entity);
   characters.push(entity);
+  if (entity.rooted) rootedBot = entity;
   return entity;
 }
 
@@ -803,14 +874,23 @@ function clearCharacters() {
     if (entity.lifeBadge) scene.remove(entity.lifeBadge);
   });
   user = null;
+  rootedBot = null;
 }
 
 function createCharacters() {
   clearCharacters();
-  const userSection = Math.min(3, sectionDefs.length - 1);
-  user = createEntity("user", 0, randomSpotInSection(userSection, 0.8));
+  if (settings.playMode === "player") {
+    const userSection = Math.min(3, sectionDefs.length - 1);
+    user = createEntity("user", 0, randomSpotInSection(userSection, 0.8));
+  }
+
   for (let i = 0; i < settings.botCount; i += 1) {
-    createEntity("bot", i + 1, randomSpotInSection(i % sectionDefs.length, 1.3));
+    const rooted = settings.playMode === "audience" && i === settings.rootBotIndex;
+    createEntity("bot", i + 1, randomSpotInSection(i % sectionDefs.length, 1.3), {
+      rooted,
+      highlight: rooted,
+      materials: rooted ? makeFanMaterialSet() : undefined,
+    });
   }
 }
 
@@ -938,16 +1018,170 @@ function setupSettingsControls() {
 
   syncRangePair(botCountInput, botCountNumberInput, 1, 20);
   syncRangePair(livesInput, livesNumberInput, 1, 5);
+  setupAudienceControls();
   syncLivesMode();
 
   settingsForm.addEventListener("change", (event) => {
     if (event.target?.name === "eliminationMode") syncLivesMode();
+    if (event.target?.name === "playMode") syncAudienceMode();
+    if (event.target?.name === "fanShirtColor") {
+      audienceState.shirtColor = event.target.value;
+      resetShirtDrawing();
+    }
+    if (event.target?.name === "fanInkColor") {
+      audienceState.inkColor = event.target.value;
+    }
   });
 
   settingsForm.addEventListener("submit", (event) => {
     event.preventDefault();
     startGame();
   });
+}
+
+function setupAudienceControls() {
+  syncAudienceMode();
+  resetShirtDrawing();
+  renderBotRoster();
+
+  botCountInput?.addEventListener("input", renderBotRoster);
+  botCountNumberInput?.addEventListener("input", renderBotRoster);
+  clearShirtButton?.addEventListener("click", resetShirtDrawing);
+
+  if (shirtCanvasEl) {
+    shirtCanvasEl.addEventListener("pointerdown", beginShirtStroke);
+    shirtCanvasEl.addEventListener("pointermove", continueShirtStroke);
+    shirtCanvasEl.addEventListener("pointerup", endShirtStroke);
+    shirtCanvasEl.addEventListener("pointercancel", endShirtStroke);
+    shirtCanvasEl.addEventListener("lostpointercapture", endShirtStroke);
+  }
+}
+
+function syncAudienceMode() {
+  const playMode = getCheckedValue("playMode", DEFAULT_SETTINGS.playMode);
+  const audienceMode = playMode === "audience";
+  audiencePanelEl?.classList.toggle("hidden", !audienceMode);
+  nameFieldEl?.classList.toggle("hidden", audienceMode);
+  if (playerNameInput) playerNameInput.disabled = audienceMode;
+  if (playButton) playButton.textContent = audienceMode ? "Start Audience Mode" : "Start Game";
+  if (settingsForm) settingsForm.dataset.playMode = playMode;
+  if (audienceMode) renderBotRoster();
+}
+
+function renderBotRoster() {
+  if (!botRosterEl) return;
+
+  const count = clampInt(botCountInput?.value ?? DEFAULT_SETTINGS.botCount, 1, 20);
+  audienceState.rootBotIndex = Math.min(audienceState.rootBotIndex, count - 1);
+  botRosterEl.replaceChildren();
+
+  for (let i = 0; i < count; i += 1) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "bot-pick";
+    button.dataset.botIndex = String(i);
+    button.setAttribute("aria-pressed", i === audienceState.rootBotIndex ? "true" : "false");
+    button.textContent = getBotName(i);
+    button.addEventListener("click", () => {
+      audienceState.rootBotIndex = i;
+      renderBotRoster();
+    });
+    botRosterEl.append(button);
+  }
+}
+
+function getBotName(index) {
+  return BOT_NAMES[index % BOT_NAMES.length];
+}
+
+function getAudienceShirtCanvas() {
+  if (shirtCanvasEl) return shirtCanvasEl;
+  if (!fallbackShirtCanvas) {
+    fallbackShirtCanvas = document.createElement("canvas");
+    fallbackShirtCanvas.width = 256;
+    fallbackShirtCanvas.height = 256;
+  }
+  return fallbackShirtCanvas;
+}
+
+function resetShirtDrawing() {
+  const shirtCanvas = getAudienceShirtCanvas();
+  const ctx = shirtCanvas.getContext("2d");
+  if (!ctx) return;
+
+  ctx.clearRect(0, 0, shirtCanvas.width, shirtCanvas.height);
+  ctx.fillStyle = audienceState.shirtColor;
+  ctx.fillRect(0, 0, shirtCanvas.width, shirtCanvas.height);
+  ctx.save();
+  ctx.globalAlpha = 0.18;
+  ctx.strokeStyle = "#05070d";
+  ctx.lineWidth = 8;
+  ctx.beginPath();
+  ctx.moveTo(42, 24);
+  ctx.lineTo(82, 76);
+  ctx.lineTo(128, 42);
+  ctx.lineTo(174, 76);
+  ctx.lineTo(214, 24);
+  ctx.stroke();
+  ctx.globalAlpha = 0.12;
+  ctx.lineWidth = 5;
+  ctx.beginPath();
+  ctx.moveTo(44, 0);
+  ctx.lineTo(44, 256);
+  ctx.moveTo(212, 0);
+  ctx.lineTo(212, 256);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function beginShirtStroke(event) {
+  if (!shirtCanvasEl) return;
+  event.preventDefault();
+  audienceState.drawing = true;
+  audienceState.lastPoint = getShirtCanvasPoint(event);
+  shirtCanvasEl.setPointerCapture?.(event.pointerId);
+  drawShirtSegment(audienceState.lastPoint, audienceState.lastPoint);
+}
+
+function continueShirtStroke(event) {
+  if (!audienceState.drawing || !audienceState.lastPoint) return;
+  event.preventDefault();
+  const nextPoint = getShirtCanvasPoint(event);
+  drawShirtSegment(audienceState.lastPoint, nextPoint);
+  audienceState.lastPoint = nextPoint;
+}
+
+function endShirtStroke(event) {
+  if (!audienceState.drawing) return;
+  event.preventDefault?.();
+  if (shirtCanvasEl && event.pointerId !== undefined && shirtCanvasEl.hasPointerCapture?.(event.pointerId)) {
+    shirtCanvasEl.releasePointerCapture(event.pointerId);
+  }
+  audienceState.drawing = false;
+  audienceState.lastPoint = null;
+}
+
+function getShirtCanvasPoint(event) {
+  const rect = shirtCanvasEl.getBoundingClientRect();
+  return {
+    x: ((event.clientX - rect.left) / rect.width) * shirtCanvasEl.width,
+    y: ((event.clientY - rect.top) / rect.height) * shirtCanvasEl.height,
+  };
+}
+
+function drawShirtSegment(from, to) {
+  const ctx = getAudienceShirtCanvas().getContext("2d");
+  if (!ctx) return;
+  ctx.save();
+  ctx.strokeStyle = audienceState.inkColor;
+  ctx.lineWidth = 14;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.beginPath();
+  ctx.moveTo(from.x, from.y);
+  ctx.lineTo(to.x, to.y);
+  ctx.stroke();
+  ctx.restore();
 }
 
 function syncRangePair(rangeInput, numberInput, min, max) {
@@ -976,6 +1210,7 @@ function syncLivesMode() {
 function readSettingsFromForm() {
   const next = { ...DEFAULT_SETTINGS };
   if (settingsForm) {
+    next.playMode = getCheckedValue("playMode", DEFAULT_SETTINGS.playMode);
     next.sectionCount = clampInt(getCheckedValue("sectionCount", DEFAULT_SETTINGS.sectionCount), 4, 10);
     if (![4, 6, 8, 10].includes(next.sectionCount)) next.sectionCount = 4;
     next.botCount = clampInt(botCountInput?.value ?? DEFAULT_SETTINGS.botCount, 1, 20);
@@ -985,15 +1220,19 @@ function readSettingsFromForm() {
     next.eliminationMode = getCheckedValue("eliminationMode", DEFAULT_SETTINGS.eliminationMode);
     next.lives = clampInt(livesInput?.value ?? DEFAULT_SETTINGS.lives, 1, 5);
     next.theme = getCheckedValue("theme", DEFAULT_SETTINGS.theme);
+    next.rootBotIndex = Math.min(audienceState.rootBotIndex, next.botCount - 1);
+    next.fanShirtColor = audienceState.shirtColor;
   }
 
   settings = next;
   sectionDefs = buildSectionDefs(settings.sectionCount, settings.theme);
   applySceneTheme();
+  document.body.dataset.playMode = settings.playMode;
   document.body.dataset.sectionCount = String(settings.sectionCount);
   document.body.dataset.botCount = String(settings.botCount);
   document.body.dataset.eliminationMode = settings.eliminationMode;
   document.body.dataset.roundSpeed = settings.roundSpeed;
+  document.body.dataset.rootBot = getBotName(settings.rootBotIndex);
 }
 
 function getCheckedValue(name, fallback) {
@@ -1093,10 +1332,12 @@ function triggerFall(now) {
   });
 
   const outText = buildFallOutcomeText(eliminated.length, saved.length);
-  showAnnouncement(`${def.name} corner fell. ${outText}.`);
+  const rootedOutText =
+    settings.playMode === "audience" && eliminated.includes(rootedBot) ? ` ${rootedBot.name} is out.` : "";
+  showAnnouncement(`${def.name} corner fell. ${outText}.${rootedOutText}`);
 
   schedule(() => restoreSection(sectionId), FALL_MS + 300);
-  if (eliminated.includes(user)) {
+  if (settings.playMode === "player" && eliminated.includes(user)) {
     schedule(() => finishGame(false), 650);
     return;
   }
@@ -1149,12 +1390,18 @@ function restoreSection(sectionId) {
 
 function finishRoundOrContinue() {
   if (game.ended) return;
-  if (!user?.alive) {
+
+  if (settings.playMode === "player" && !user?.alive) {
     finishGame(false);
     return;
   }
+
   if (aliveCount() <= 1) {
-    finishGame(Boolean(user?.alive) && aliveCount() === 1);
+    const won =
+      settings.playMode === "audience"
+        ? Boolean(rootedBot?.alive) && aliveCount() === 1
+        : Boolean(user?.alive) && aliveCount() === 1;
+    finishGame(won);
     return;
   }
   startRound();
@@ -1166,6 +1413,24 @@ function finishGame(won) {
   game.phase = "ended";
   game.nextFallAt = 0;
   clearMovementInput();
+
+  if (settings.playMode === "audience") {
+    const winner = characters.find((entity) => entity.alive);
+    const pickedName = rootedBot?.name || getBotName(settings.rootBotIndex);
+    if (won && rootedBot) {
+      endTitle.textContent = `${rootedBot.name} Won`;
+      endCopy.textContent = `Your custom bot was the last one standing after ${game.round} rounds.`;
+    } else if (winner) {
+      endTitle.textContent = `${winner.name} Won`;
+      endCopy.textContent = `${pickedName} was eliminated before the final round ended.`;
+    } else {
+      endTitle.textContent = "No Winner";
+      endCopy.textContent = `${pickedName} did not survive the floating floor.`;
+    }
+    endScreen.classList.remove("hidden");
+    return;
+  }
+
   const playerName = settings.playerName || "You";
   endTitle.textContent = won ? `${playerName} Survived` : "Eliminated";
   if (won) {
@@ -1363,7 +1628,7 @@ function setupJoystickControls() {
   if (!joystickEl || !joystickStickEl) return;
 
   joystickEl.addEventListener("pointerdown", (event) => {
-    if (!game.started || game.ended) return;
+    if (!game.started || game.ended || settings.playMode !== "player") return;
     event.preventDefault();
     canvas.focus();
     joystickInput.active = true;
@@ -1551,8 +1816,9 @@ function faceDirection(entity, x, z, dt) {
 
 function updateCamera(dt) {
   const mobile = window.innerWidth < 700;
-  if (user?.alive) {
-    centerTarget.set(user.group.position.x * 0.16, 0, user.group.position.z * 0.16);
+  const subject = getCameraSubject();
+  if (subject) {
+    centerTarget.set(subject.group.position.x * 0.16, 0, subject.group.position.z * 0.16);
   } else {
     centerTarget.set(0, 0, 0);
   }
@@ -1565,6 +1831,15 @@ function updateCamera(dt) {
   camera.position.lerp(desiredCameraPosition, 1 - Math.pow(0.006, dt));
   lookTarget.lerp(new THREE.Vector3(centerTarget.x, 0.15, centerTarget.z), 1 - Math.pow(0.002, dt));
   camera.lookAt(lookTarget);
+}
+
+function getCameraSubject() {
+  if (user?.alive) return user;
+  if (settings.playMode === "audience") {
+    if (rootedBot?.alive) return rootedBot;
+    return characters.find((entity) => entity.alive) || null;
+  }
+  return null;
 }
 
 function updateHud(now) {
@@ -1584,8 +1859,23 @@ function updateHud(now) {
   }
 
   if (lifeLabelEl && lifeCardEl) {
-    lifeLabelEl.textContent = String(Math.max(0, user?.lives ?? settings.lives));
+    const trackedEntity = settings.playMode === "audience" ? rootedBot : user;
+    lifeLabelEl.textContent = String(Math.max(0, trackedEntity?.lives ?? settings.lives));
     lifeCardEl.classList.toggle("hidden", settings.eliminationMode !== "lives");
+  }
+
+  if (fanNameEl && fanStatusEl) {
+    const audienceMode = settings.playMode === "audience";
+    const fanCardEl = fanNameEl.closest(".fan-card");
+    fanCardEl?.classList.toggle("hidden", !audienceMode);
+    if (audienceMode) {
+      fanNameEl.textContent = rootedBot?.name || getBotName(settings.rootBotIndex);
+      if (game.ended && rootedBot?.alive && alive === 1) {
+        fanStatusEl.textContent = "champion";
+      } else {
+        fanStatusEl.textContent = rootedBot?.alive ? "rooting for" : "eliminated";
+      }
+    }
   }
 
   const counts = new Array(sectionDefs.length).fill(0);
@@ -1609,9 +1899,13 @@ function updateHud(now) {
   });
 
   document.body.dataset.phase = game.phase;
+  document.body.dataset.playMode = settings.playMode;
   document.body.dataset.round = String(game.round);
   document.body.dataset.alive = String(alive);
   document.body.dataset.userLives = String(Math.max(0, user?.lives ?? settings.lives));
+  document.body.dataset.rootBot = rootedBot?.name || getBotName(settings.rootBotIndex);
+  document.body.dataset.rootBotAlive = rootedBot?.alive ? "true" : "false";
+  document.body.dataset.rootBotLives = String(Math.max(0, rootedBot?.lives ?? settings.lives));
   document.body.dataset.visibleLifeBadges = String(visibleLifeBadgeCount());
   document.body.dataset.visibleHearts = String(visibleHeartCount());
   document.body.dataset.sectionCount = String(sectionDefs.length);
@@ -1764,6 +2058,14 @@ window.__fourCorners = {
     botsAlive: characters.filter((entity) => entity.kind === "bot" && entity.alive).length,
     userAlive: Boolean(user?.alive),
     userLives: user?.lives ?? null,
+    rootedBot: rootedBot
+      ? {
+          name: rootedBot.name,
+          alive: rootedBot.alive,
+          lives: rootedBot.lives,
+          botIndex: rootedBot.botIndex,
+        }
+      : null,
     visibleLifeBadges: visibleLifeBadgeCount(),
     visibleHearts: visibleHeartCount(),
     settings: { ...settings },
