@@ -110,6 +110,7 @@ const game = {
   message: "Ready",
   messageUntil: 0,
   lastFrame: performance.now(),
+  botTrail: [],
 };
 
 const scatterChaseSchedule = [
@@ -240,6 +241,7 @@ function resetRoundPositions() {
   game.modeTime = 0;
   game.frightenedUntil = 0;
   game.frightenedChain = 0;
+  game.botTrail = [];
   game.phase = "playing";
   game.message = "Ready";
   game.messageUntil = game.time + 1.1;
@@ -384,6 +386,7 @@ function updatePlayer(dt) {
     const decisionKey = `${tile.x},${tile.y},${chosenDir || "stop"},${game.autopilot}`;
 
     if (chosenDir && player.lastDecisionTile !== decisionKey) {
+      if (game.autopilot) rememberBotTile(tile);
       captureMoveSample(chosenDir, game.autopilot ? "ml bot move" : "manual move");
       player.lastDecisionTile = decisionKey;
     }
@@ -774,15 +777,40 @@ function chooseAutopilotDirection() {
   const tile = entityTile(player);
   const options = legalDirectionsFrom(tile, canEnterPlayer);
   if (options.length === 0) return player.dir;
-  const samplePower = clamp(learner.samples.length / 55, 0.08, 1);
+  const samplePower = clamp(learner.samples.length / 90, 0.08, 0.72);
+  const reverseDir = DIRECTIONS[player.dir]?.opposite;
+  const forcedReverse = options.length === 1 && options[0] === reverseDir;
+
   const scored = options.map((action) => {
     const features = featuresForAction(action);
-    const learned = dot(learner.weights, features);
+    const learned = Math.tanh(dot(learner.weights, features)) * 1.4;
     const heuristic = heuristicForAction(action, features);
-    return { action, score: learned * samplePower + heuristic * (1 - samplePower) };
+    const next = neighborTile(tile.x, tile.y, action, canEnterPlayer);
+    const revisitPenalty = botRevisitPenalty(next);
+    const reversePenalty = action === reverseDir && !forcedReverse ? 2.8 : 0;
+    const corridorBonus = action === player.dir && options.length <= 2 ? 0.85 : 0;
+    const score = learned * samplePower + heuristic * (1 - samplePower) + corridorBonus - revisitPenalty - reversePenalty;
+    return { action, score };
   });
+
   scored.sort((a, b) => b.score - a.score);
   return scored[0].action;
+}
+
+function rememberBotTile(tile) {
+  const key = keyOf(tile.x, tile.y);
+  game.botTrail.push(key);
+  if (game.botTrail.length > 18) game.botTrail.shift();
+}
+
+function botRevisitPenalty(tile) {
+  if (!tile || game.botTrail.length === 0) return 0;
+  const key = keyOf(tile.x, tile.y);
+  const ageFromEnd = [...game.botTrail].reverse().findIndex((trailKey) => trailKey === key);
+  if (ageFromEnd < 0) return 0;
+  if (ageFromEnd === 0) return 3.2;
+  if (ageFromEnd === 1) return 2.35;
+  return clamp(1.5 - ageFromEnd * 0.13, 0.25, 1.5);
 }
 
 function heuristicForAction(action, features) {
@@ -1202,6 +1230,21 @@ function bindEvents() {
     if (event.code === "KeyM") toggleAutopilot();
   });
 }
+
+window.__mazeMuncherDebug = {
+  getState() {
+    return {
+      autopilot: game.autopilot,
+      botTrail: [...game.botTrail],
+      dir: player.dir,
+      dots: pellets.size + energizers.size,
+      phase: game.phase,
+      player: { x: Number(player.x.toFixed(2)), y: Number(player.y.toFixed(2)) },
+      score: game.score,
+      samples: learner.samples.length,
+    };
+  },
+};
 
 validateMap();
 loadLearner();
