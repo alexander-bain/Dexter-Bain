@@ -132,6 +132,8 @@ const livesInput = document.querySelector("#lives-count");
 const livesNumberInput = document.querySelector("#lives-count-number");
 const playButton = document.querySelector("#play-button");
 const restartButton = document.querySelector("#restart-button");
+const joystickEl = document.querySelector("#joystick");
+const joystickStickEl = document.querySelector("#joystick-stick");
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x060914);
@@ -208,6 +210,13 @@ let capturedFrame = false;
 let heartTexture = null;
 const activeMoveKeys = new Map();
 let activeMoveKey = null;
+const joystickInput = {
+  active: false,
+  pointerId: null,
+  xAxis: 0,
+  zAxis: 0,
+};
+const JOYSTICK_DEAD_ZONE = 0.12;
 
 const game = {
   started: false,
@@ -1226,12 +1235,13 @@ function updateUser(dt) {
   const { xAxis, zAxis } = getMovementInput(performance.now());
 
   tmpVec.set(xAxis, 0, zAxis);
-  const moving = tmpVec.lengthSq() > 0;
+  const inputStrength = Math.min(1, tmpVec.length());
+  const moving = inputStrength > 0;
   if (moving) {
     tmpVec.normalize();
     const nextPosition = clampPositionToBoard(
-      user.group.position.x + tmpVec.x * USER_SPEED * dt,
-      user.group.position.z + tmpVec.z * USER_SPEED * dt,
+      user.group.position.x + tmpVec.x * USER_SPEED * inputStrength * dt,
+      user.group.position.z + tmpVec.z * USER_SPEED * inputStrength * dt,
     );
     const nextSection = getSectionFromPosition(nextPosition.x, nextPosition.z);
 
@@ -1243,7 +1253,7 @@ function updateUser(dt) {
     faceDirection(user, tmpVec.x, tmpVec.z, dt);
   }
 
-  updateCharacterMotion(user, moving ? USER_SPEED : 0, dt);
+  updateCharacterMotion(user, moving ? USER_SPEED * inputStrength : 0, dt);
 }
 
 function clampPositionToBoard(x, z) {
@@ -1284,6 +1294,9 @@ function getMovementInput(now) {
         break;
     }
   }
+
+  xAxis += joystickInput.xAxis;
+  zAxis += joystickInput.zAxis;
 
   return { xAxis, zAxis };
 }
@@ -1343,6 +1356,83 @@ function getLatestMoveKey() {
 function clearMovementInput() {
   activeMoveKeys.clear();
   activeMoveKey = null;
+  resetJoystickInput();
+}
+
+function setupJoystickControls() {
+  if (!joystickEl || !joystickStickEl) return;
+
+  joystickEl.addEventListener("pointerdown", (event) => {
+    if (!game.started || game.ended) return;
+    event.preventDefault();
+    canvas.focus();
+    joystickInput.active = true;
+    joystickInput.pointerId = event.pointerId;
+    joystickEl.classList.add("active");
+    joystickEl.setPointerCapture?.(event.pointerId);
+    updateJoystickInput(event);
+  });
+
+  joystickEl.addEventListener("pointermove", (event) => {
+    if (!joystickInput.active || event.pointerId !== joystickInput.pointerId) return;
+    event.preventDefault();
+    updateJoystickInput(event);
+  });
+
+  const endDrag = (event) => {
+    if (joystickInput.pointerId !== null && event.pointerId !== joystickInput.pointerId) return;
+    event.preventDefault();
+    if (joystickInput.pointerId !== null && joystickEl.hasPointerCapture?.(joystickInput.pointerId)) {
+      joystickEl.releasePointerCapture(joystickInput.pointerId);
+    }
+    resetJoystickInput();
+  };
+
+  joystickEl.addEventListener("pointerup", endDrag);
+  joystickEl.addEventListener("pointercancel", endDrag);
+  joystickEl.addEventListener("lostpointercapture", resetJoystickInput);
+}
+
+function updateJoystickInput(event) {
+  if (!joystickEl || !joystickStickEl) return;
+
+  const rect = joystickEl.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  const stickRadius = joystickStickEl.offsetWidth / 2 || rect.width * 0.22;
+  const maxDistance = Math.max(1, rect.width / 2 - stickRadius - 8);
+  const rawX = event.clientX - centerX;
+  const rawY = event.clientY - centerY;
+  const distance = Math.hypot(rawX, rawY);
+  const clamp = distance > maxDistance ? maxDistance / distance : 1;
+  const stickX = rawX * clamp;
+  const stickY = rawY * clamp;
+  const axisX = stickX / maxDistance;
+  const axisZ = stickY / maxDistance;
+  const strength = Math.hypot(axisX, axisZ);
+
+  if (strength < JOYSTICK_DEAD_ZONE) {
+    joystickInput.xAxis = 0;
+    joystickInput.zAxis = 0;
+  } else {
+    const adjustedStrength = (strength - JOYSTICK_DEAD_ZONE) / (1 - JOYSTICK_DEAD_ZONE);
+    const axisScale = adjustedStrength / strength;
+    joystickInput.xAxis = axisX * axisScale;
+    joystickInput.zAxis = axisZ * axisScale;
+  }
+
+  joystickEl.style.setProperty("--stick-x", `${stickX.toFixed(1)}px`);
+  joystickEl.style.setProperty("--stick-y", `${stickY.toFixed(1)}px`);
+}
+
+function resetJoystickInput() {
+  joystickInput.active = false;
+  joystickInput.pointerId = null;
+  joystickInput.xAxis = 0;
+  joystickInput.zAxis = 0;
+  joystickEl?.classList.remove("active");
+  joystickEl?.style.setProperty("--stick-x", "0px");
+  joystickEl?.style.setProperty("--stick-y", "0px");
 }
 
 function normalizeMoveCode(event) {
@@ -1528,6 +1618,8 @@ function updateHud(now) {
   document.body.dataset.roundMs = String(getRoundMs());
   document.body.dataset.cornerCounts = counts.join(",");
   document.body.dataset.activeMoveKey = activeMoveKey || "";
+  document.body.dataset.joystickActive = joystickInput.active ? "true" : "false";
+  document.body.dataset.joystick = `${joystickInput.xAxis.toFixed(3)},${joystickInput.zAxis.toFixed(3)}`;
   if (user) {
     document.body.dataset.userX = user.group.position.x.toFixed(3);
     document.body.dataset.userZ = user.group.position.z.toFixed(3);
@@ -1655,6 +1747,7 @@ canvas.addEventListener("pointerdown", () => {
   canvas.focus();
 });
 
+setupJoystickControls();
 setupSettingsControls();
 if (!settingsForm) {
   playButton.addEventListener("click", startGame);
@@ -1686,6 +1779,11 @@ window.__fourCorners = {
       ? getSectionFromPosition(user.group.position.x, user.group.position.z)
       : null,
     activeMoveKey,
+    joystick: {
+      active: joystickInput.active,
+      xAxis: Number(joystickInput.xAxis.toFixed(3)),
+      zAxis: Number(joystickInput.zAxis.toFixed(3)),
+    },
     fallingSection: game.fallingSection,
     floorStates: floorSections.map((section) => ({
       id: section.id,

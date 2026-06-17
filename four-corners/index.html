@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Four Corners: Floating Floor</title>
-    <link rel="stylesheet" href="./styles.css?v=20260615-lives-hearts" />
+    <link rel="stylesheet" href="./styles.css?v=20260616-joystick" />
     <script>
       window.__consoleErrors = [];
       window.addEventListener("error", (event) => {
@@ -40,6 +40,10 @@
       </div>
 
       <div id="announcement" aria-live="assertive"></div>
+
+      <div id="joystick" class="joystick" aria-label="Movement joystick">
+        <div id="joystick-stick" class="joystick-stick"></div>
+      </div>
 
       <section id="start-screen" class="screen-panel start-panel">
         <form id="settings-form" class="settings-card" data-testid="settings-form">
@@ -166,6 +170,6 @@
       </section>
     </main>
 
-    <script type="module" src="./game.js?v=20260615-lives-hearts"></script>
+    <script type="module" src="./game.js?v=20260616-joystick"></script>
   </body>
 </html>

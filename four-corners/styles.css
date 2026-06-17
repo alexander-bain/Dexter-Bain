@@ -189,6 +189,94 @@ body[data-phase="ended"] #timer-label {
   transform: translateX(-50%) translateY(-4px);
 }
 
+.joystick {
+  --stick-x: 0px;
+  --stick-y: 0px;
+  position: fixed;
+  left: max(20px, env(safe-area-inset-left));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 2;
+  width: 126px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 244, 201, 0.18), transparent 28%),
+    linear-gradient(145deg, rgba(20, 28, 45, 0.72), rgba(5, 8, 15, 0.7));
+  box-shadow:
+    0 22px 46px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -10px 22px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  touch-action: none;
+  transform: translateY(10px) scale(0.96);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease,
+    border-color 160ms ease;
+  user-select: none;
+}
+
+.joystick::before,
+.joystick::after {
+  content: "";
+  position: absolute;
+  inset: 19px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.joystick::before {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.joystick::after {
+  inset: 44px;
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.joystick-stick {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 54px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.58), transparent 18%),
+    linear-gradient(145deg, #fff4c9, #78dcff);
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.36),
+    0 0 28px rgba(120, 220, 255, 0.22);
+  transform: translate(calc(-50% + var(--stick-x)), calc(-50% + var(--stick-y)));
+  transition:
+    box-shadow 140ms ease,
+    transform 70ms linear;
+  will-change: transform;
+}
+
+.joystick.active {
+  border-color: rgba(158, 232, 255, 0.46);
+  transform: scale(1);
+}
+
+.joystick.active .joystick-stick {
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.4),
+    0 0 34px rgba(120, 220, 255, 0.34);
+}
+
+body[data-phase="running"] .joystick,
+body[data-phase="falling"] .joystick,
+body[data-phase="restoring"] .joystick {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
 .screen-panel {
   position: fixed;
   inset: 0;
@@ -511,9 +599,19 @@ button:active {
   }
 
   #announcement {
-    bottom: 14px;
+    bottom: 132px;
     min-height: 40px;
     font-size: 13px;
+  }
+
+  .joystick {
+    left: max(14px, env(safe-area-inset-left));
+    bottom: max(14px, env(safe-area-inset-bottom));
+    width: 112px;
+  }
+
+  .joystick-stick {
+    width: 48px;
   }
 
   #center-timer {
