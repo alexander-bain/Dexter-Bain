@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Machine Mind</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #071013;
+      --panel: #101820;
+      --panel-strong: #0b1218;
+      --ink: #f8fafc;
+      --muted: #aab7c4;
+      --line: rgba(255, 255, 255, 0.14);
+      --left: #42d9a2;
+      --middle: #5aa7ff;
+      --right: #ffb74a;
+      --danger: #ff6575;
+      --machine: #d4f44f;
+      --player: #7dd3fc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(140deg, #0e1f25 0%, #071013 42%, #101219 100%);
+      background-size: 44px 44px, 44px 44px, auto;
+      color: var(--ink);
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      width: min(1180px, 100%);
+      min-height: calc(100vh - 36px);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 14px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 10px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(66, 217, 162, 0.34), transparent 58%),
+        linear-gradient(45deg, rgba(255, 183, 74, 0.25), rgba(90, 167, 255, 0.2)),
+        #0c151b;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+      flex: 0 0 auto;
+    }
+
+    .brand-mark span {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--ink);
+      border-radius: 50%;
+      display: block;
+      position: relative;
+    }
+
+    .brand-mark span::before,
+    .brand-mark span::after {
+      content: "";
+      position: absolute;
+      width: 9px;
+      height: 2px;
+      background: var(--ink);
+      top: 7px;
+    }
+
+    .brand-mark span::before {
+      right: 17px;
+    }
+
+    .brand-mark span::after {
+      left: 17px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.85rem;
+      line-height: 1.05;
+    }
+
+    .subtitle {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .link-button,
+    .control-button {
+      min-height: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(11, 18, 24, 0.82);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 12px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+    }
+
+    .link-button:hover,
+    .control-button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(125, 211, 252, 0.62);
+      background: rgba(16, 24, 32, 0.96);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 34%),
+        rgba(16, 24, 32, 0.92);
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.26);
+      overflow: hidden;
+    }
+
+    .arena {
+      display: grid;
+      grid-template-rows: auto minmax(240px, 1fr) auto auto;
+      min-height: 640px;
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-bottom: 1px solid var(--line);
+    }
+
+    .score-tile {
+      padding: 14px;
+      min-width: 0;
+      border-right: 1px solid var(--line);
+    }
+
+    .score-tile:last-child {
+      border-right: 0;
+    }
+
+    .score-label {
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin: 0 0 4px;
+    }
+
+    .score-value {
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 850;
+      line-height: 1.1;
+    }
+
+    .machine-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 280px;
+      background:
+        linear-gradient(90deg, rgba(66, 217, 162, 0.09), transparent 26%, transparent 74%, rgba(255, 183, 74, 0.09)),
+        linear-gradient(180deg, rgba(125, 211, 252, 0.09), transparent 42%),
+        var(--panel-strong);
+      isolation: isolate;
+    }
+
+    #brainCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .lock-card {
+      position: relative;
+      z-index: 2;
+      width: min(430px, calc(100% - 36px));
+      min-height: 158px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(7, 16, 19, 0.82);
+      backdrop-filter: blur(10px);
+      display: grid;
+      gap: 12px;
+      align-content: center;
+      justify-items: center;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 20px 42px rgba(0, 0, 0, 0.28);
+    }
+
+    .lock-label {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .lock-title {
+      margin: 0;
+      font-size: 1.9rem;
+      line-height: 1.05;
+    }
+
+    .confidence-wrap {
+      width: 100%;
+      max-width: 280px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .confidence-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .meter {
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.11);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.11);
+    }
+
+    .meter-fill {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--player), var(--machine));
+      transition: width 220ms ease;
+    }
+
+    .lane-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      padding: 14px;
+      border-top: 1px solid var(--line);
+      background: rgba(7, 16, 19, 0.62);
+    }
+
+    .lane-button {
+      position: relative;
+      min-height: 132px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02)),
+        #111b22;
+      overflow: hidden;
+      display: grid;
+      align-content: end;
+      justify-items: start;
+      padding: 14px;
+      text-align: left;
+      transition: transform 120ms ease, border-color 120ms ease, filter 120ms ease;
+    }
+
+    .lane-button::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 8px;
+      background: var(--lane-color);
+      box-shadow: 0 0 26px var(--lane-glow);
+    }
+
+    .lane-button::after {
+      content: "";
+      position: absolute;
+      inset: 22px 18px auto auto;
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      border: 2px solid var(--lane-color);
+      opacity: 0.7;
+      transform: rotate(45deg);
+    }
+
+    .lane-button:hover {
+      transform: translateY(-2px);
+      border-color: var(--lane-color);
+      filter: brightness(1.06);
+    }
+
+    .lane-button:disabled {
+      cursor: default;
+      opacity: 0.55;
+      transform: none;
+    }
+
+    .lane-name {
+      position: relative;
+      z-index: 1;
+      font-size: 1.2rem;
+      font-weight: 850;
+      line-height: 1.1;
+    }
+
+    .lane-sub {
+      position: relative;
+      z-index: 1;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-top: 5px;
+    }
+
+    .result-strip {
+      min-height: 88px;
+      padding: 16px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      background: rgba(10, 18, 24, 0.96);
+    }
+
+    .result-text {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.35;
+    }
+
+    .result-text strong {
+      color: var(--machine);
+    }
+
+    .new-match {
+      min-width: 112px;
+      background: linear-gradient(135deg, #d4f44f, #42d9a2);
+      color: #091012;
+      border: 0;
+    }
+
+    .model-panel {
+      display: grid;
+      align-content: start;
+    }
+
+    .side-section {
+      padding: 15px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .side-section:last-child {
+      border-bottom: 0;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .stat {
+      min-height: 72px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-bottom: 5px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.22rem;
+      line-height: 1.1;
+    }
+
+    .prob-list,
+    .weight-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .prob-row,
+    .weight-row {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr) 42px;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .prob-track,
+    .weight-track {
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    .prob-fill,
+    .weight-fill {
+      display: block;
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: var(--bar-color);
+      transition: width 220ms ease;
+    }
+
+    .history-row {
+      min-height: 38px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .history-chip {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--ink);
+      font-weight: 850;
+      font-size: 0.78rem;
+    }
+
+    .history-chip.left {
+      border-color: rgba(66, 217, 162, 0.68);
+      color: var(--left);
+    }
+
+    .history-chip.middle {
+      border-color: rgba(90, 167, 255, 0.68);
+      color: var(--middle);
+    }
+
+    .history-chip.right {
+      border-color: rgba(255, 183, 74, 0.68);
+      color: var(--right);
+    }
+
+    .danger {
+      color: #19080b;
+      border: 0;
+      background: linear-gradient(135deg, #ff8f9a, #ff6575);
+    }
+
+    .is-player {
+      color: var(--player);
+    }
+
+    .is-machine {
+      color: var(--machine);
+    }
+
+    @media (max-width: 920px) {
+      body {
+        padding: 12px;
+      }
+
+      .app {
+        min-height: calc(100vh - 24px);
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .arena {
+        min-height: 0;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .topbar {
+        align-items: stretch;
+      }
+
+      .brand,
+      .top-actions {
+        width: 100%;
+      }
+
+      .top-actions {
+        justify-content: stretch;
+      }
+
+      .link-button,
+      .control-button {
+        flex: 1 1 140px;
+      }
+
+      h1 {
+        font-size: 1.55rem;
+      }
+
+      .score-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .score-tile:nth-child(2) {
+        border-right: 0;
+      }
+
+      .score-tile:nth-child(-n + 2) {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .lane-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lane-button {
+        min-height: 92px;
+      }
+
+      .result-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span></span></div>
+        <div>
+          <h1>Machine Mind</h1>
+          <p class="subtitle">A tiny model learns your lane patterns round by round.</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <a class="link-button" href="../index.html">Arcade</a>
+        <button class="control-button" id="resetModel" type="button">Reset Model</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <section class="panel arena" aria-label="Machine Mind game">
+        <div class="score-row">
+          <div class="score-tile">
+            <p class="score-label">You</p>
+            <p class="score-value is-player" id="playerScore">0</p>
+          </div>
+          <div class="score-tile">
+            <p class="score-label">Machine</p>
+            <p class="score-value is-machine" id="machineScore">0</p>
+          </div>
+          <div class="score-tile">
+            <p class="score-label">Round</p>
+            <p class="score-value" id="roundCount">1</p>
+          </div>
+          <div class="score-tile">
+            <p class="score-label">Goal</p>
+            <p class="score-value" id="goalScore">12</p>
+          </div>
+        </div>
+
+        <div class="machine-stage">
+          <canvas id="brainCanvas" aria-hidden="true"></canvas>
+          <div class="lock-card" aria-live="polite">
+            <p class="lock-label" id="lockLabel">Machine guess locked</p>
+            <p class="lock-title" id="lockTitle">Choose a lane</p>
+            <div class="confidence-wrap">
+              <div class="confidence-line">
+                <span>Confidence</span>
+                <strong id="confidenceText">33%</strong>
+              </div>
+              <div class="meter" aria-hidden="true">
+                <span class="meter-fill" id="confidenceFill"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lane-grid" id="laneGrid">
+          <button class="lane-button" type="button" data-lane="left" style="--lane-color: var(--left); --lane-glow: rgba(66, 217, 162, 0.52);">
+            <span class="lane-name">Left</span>
+            <span class="lane-sub">L</span>
+          </button>
+          <button class="lane-button" type="button" data-lane="middle" style="--lane-color: var(--middle); --lane-glow: rgba(90, 167, 255, 0.52);">
+            <span class="lane-name">Middle</span>
+            <span class="lane-sub">M</span>
+          </button>
+          <button class="lane-button" type="button" data-lane="right" style="--lane-color: var(--right); --lane-glow: rgba(255, 183, 74, 0.52);">
+            <span class="lane-name">Right</span>
+            <span class="lane-sub">R</span>
+          </button>
+        </div>
+
+        <div class="result-strip">
+          <p class="result-text" id="resultText">The machine has made its hidden guess.</p>
+          <button class="control-button new-match" id="newMatch" type="button">New Match</button>
+        </div>
+      </section>
+
+      <aside class="panel model-panel" aria-label="Machine learning model">
+        <section class="side-section">
+          <h2 class="section-title">Model</h2>
+          <div class="stat-grid">
+            <div class="stat">
+              <span>Samples</span>
+              <strong id="sampleCount">0</strong>
+            </div>
+            <div class="stat">
+              <span>Accuracy</span>
+              <strong id="accuracyText">0%</strong>
+            </div>
+            <div class="stat">
+              <span>Recent</span>
+              <strong id="recentText">0%</strong>
+            </div>
+            <div class="stat">
+              <span>Loss</span>
+              <strong id="lossText">--</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="side-section">
+          <h2 class="section-title">Next Guess</h2>
+          <div class="prob-list" id="probList"></div>
+        </section>
+
+        <section class="side-section">
+          <h2 class="section-title">Weight Strength</h2>
+          <div class="weight-list" id="weightList"></div>
+        </section>
+
+        <section class="side-section">
+          <h2 class="section-title">Move History</h2>
+          <div class="history-row" id="historyRow" aria-label="Recent player moves"></div>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const LANES = [
+      { id: "left", label: "Left", short: "L", color: "#42d9a2" },
+      { id: "middle", label: "Middle", short: "M", color: "#5aa7ff" },
+      { id: "right", label: "Right", short: "R", color: "#ffb74a" }
+    ];
+
+    const STORAGE_KEY = "machine-mind-v1";
+    const FEATURE_COUNT = 18;
+    const TARGET_SCORE = 12;
+    const LEARNING_RATE = 0.18;
+    const MAX_HISTORY = 36;
+
+    const els = {
+      playerScore: document.querySelector("#playerScore"),
+      machineScore: document.querySelector("#machineScore"),
+      roundCount: document.querySelector("#roundCount"),
+      goalScore: document.querySelector("#goalScore"),
+      lockLabel: document.querySelector("#lockLabel"),
+      lockTitle: document.querySelector("#lockTitle"),
+      confidenceText: document.querySelector("#confidenceText"),
+      confidenceFill: document.querySelector("#confidenceFill"),
+      resultText: document.querySelector("#resultText"),
+      laneButtons: [...document.querySelectorAll(".lane-button")],
+      newMatch: document.querySelector("#newMatch"),
+      resetModel: document.querySelector("#resetModel"),
+      sampleCount: document.querySelector("#sampleCount"),
+      accuracyText: document.querySelector("#accuracyText"),
+      recentText: document.querySelector("#recentText"),
+      lossText: document.querySelector("#lossText"),
+      probList: document.querySelector("#probList"),
+      weightList: document.querySelector("#weightList"),
+      historyRow: document.querySelector("#historyRow"),
+      canvas: document.querySelector("#brainCanvas")
+    };
+
+    const ctx = els.canvas.getContext("2d");
+    let animationFrame = 0;
+    let pulse = 0;
+
+    function randomWeight() {
+      return (Math.random() - 0.5) * 0.06;
+    }
+
+    function freshState() {
+      return {
+        weights: LANES.map(() => Array.from({ length: FEATURE_COUNT }, randomWeight)),
+        history: [],
+        samples: 0,
+        correct: 0,
+        recent: [],
+        lastLoss: null,
+        scores: { player: 0, machine: 0 },
+        gameOver: false,
+        result: "The machine has made its hidden guess.",
+        locked: null
+      };
+    }
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!saved || !Array.isArray(saved.weights) || saved.weights.length !== LANES.length) {
+          return freshState();
+        }
+
+        const state = freshState();
+        state.weights = saved.weights.map((row) => {
+          const clean = Array.isArray(row) ? row.slice(0, FEATURE_COUNT) : [];
+          while (clean.length < FEATURE_COUNT) clean.push(randomWeight());
+          return clean.map((value) => Number.isFinite(value) ? value : randomWeight());
+        });
+        state.history = Array.isArray(saved.history) ? saved.history.filter(isLaneId).slice(-MAX_HISTORY) : [];
+        state.samples = Number.isFinite(saved.samples) ? saved.samples : 0;
+        state.correct = Number.isFinite(saved.correct) ? saved.correct : 0;
+        state.recent = Array.isArray(saved.recent) ? saved.recent.map(Boolean).slice(-20) : [];
+        state.lastLoss = Number.isFinite(saved.lastLoss) ? saved.lastLoss : null;
+        state.scores = saved.scores && Number.isFinite(saved.scores.player) && Number.isFinite(saved.scores.machine)
+          ? { player: saved.scores.player, machine: saved.scores.machine }
+          : { player: 0, machine: 0 };
+        state.gameOver = Boolean(saved.gameOver);
+        state.result = typeof saved.result === "string" ? saved.result : state.result;
+        return state;
+      } catch {
+        return freshState();
+      }
+    }
+
+    let state = loadState();
+
+    function saveState() {
+      const saved = {
+        weights: state.weights,
+        history: state.history.slice(-MAX_HISTORY),
+        samples: state.samples,
+        correct: state.correct,
+        recent: state.recent.slice(-20),
+        lastLoss: state.lastLoss,
+        scores: state.scores,
+        gameOver: state.gameOver,
+        result: state.result
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+    }
+
+    function isLaneId(value) {
+      return LANES.some((lane) => lane.id === value);
+    }
+
+    function laneIndex(id) {
+      return LANES.findIndex((lane) => lane.id === id);
+    }
+
+    function oneHot(id) {
+      return LANES.map((lane) => lane.id === id ? 1 : 0);
+    }
+
+    function moveStreak(history) {
+      const last = history[history.length - 1];
+      if (!last) return 0;
+      let count = 0;
+      for (let i = history.length - 1; i >= 0 && history[i] === last; i -= 1) {
+        count += 1;
+      }
+      return Math.min(count, 6) / 6;
+    }
+
+    function extractFeatures(history) {
+      const last = history[history.length - 1] || null;
+      const twoBack = history[history.length - 2] || null;
+      const threeBack = history[history.length - 3] || null;
+      const recent = history.slice(-8);
+      const frequencies = LANES.map((lane) => {
+        if (!recent.length) return 0;
+        return recent.filter((move) => move === lane.id).length / recent.length;
+      });
+      const repeated = last && twoBack && last === twoBack ? 1 : 0;
+      const alternating = last && twoBack && threeBack && last === threeBack && last !== twoBack ? 1 : 0;
+      const turn = history.length;
+      return [
+        1,
+        ...oneHot(last),
+        ...oneHot(twoBack),
+        ...oneHot(threeBack),
+        ...frequencies,
+        moveStreak(history),
+        repeated,
+        alternating,
+        Math.sin(turn / 2),
+        Math.cos(turn / 2)
+      ];
+    }
+
+    function dot(a, b) {
+      let total = 0;
+      for (let i = 0; i < a.length; i += 1) {
+        total += a[i] * b[i];
+      }
+      return total;
+    }
+
+    function softmax(logits) {
+      const max = Math.max(...logits);
+      const exps = logits.map((value) => Math.exp(value - max));
+      const total = exps.reduce((sum, value) => sum + value, 0);
+      return exps.map((value) => value / total);
+    }
+
+    function modelPrediction(features) {
+      const logits = state.weights.map((row) => dot(row, features));
+      const probabilities = softmax(logits);
+      let index = 0;
+      probabilities.forEach((value, nextIndex) => {
+        if (value > probabilities[index]) index = nextIndex;
+      });
+      return {
+        index,
+        probabilities,
+        confidence: probabilities[index]
+      };
+    }
+
+    function lockPrediction() {
+      const features = extractFeatures(state.history);
+      const model = modelPrediction(features);
+      const index = state.samples < 3 ? Math.floor(Math.random() * LANES.length) : model.index;
+      return {
+        index,
+        features,
+        probabilities: state.samples < 3 ? LANES.map(() => 1 / LANES.length) : model.probabilities,
+        confidence: state.samples < 3 ? 1 / LANES.length : model.confidence
+      };
+    }
+
+    function ensurePrediction() {
+      if (!state.locked || !Array.isArray(state.locked.features) || state.locked.features.length !== FEATURE_COUNT) {
+        state.locked = lockPrediction();
+      }
+    }
+
+    function train(features, actualIndex) {
+      const probabilities = modelPrediction(features).probabilities;
+      const loss = -Math.log(Math.max(probabilities[actualIndex], 0.000001));
+      for (let lane = 0; lane < LANES.length; lane += 1) {
+        const target = lane === actualIndex ? 1 : 0;
+        const error = target - probabilities[lane];
+        for (let i = 0; i < FEATURE_COUNT; i += 1) {
+          state.weights[lane][i] += LEARNING_RATE * error * features[i];
+          state.weights[lane][i] *= 0.999;
+        }
+      }
+      state.lastLoss = loss;
+    }
+
+    function submitMove(laneId) {
+      if (state.gameOver || !isLaneId(laneId)) return;
+      ensurePrediction();
+
+      const actualIndex = laneIndex(laneId);
+      const predictedIndex = state.locked.index;
+      const actualLane = LANES[actualIndex];
+      const predictedLane = LANES[predictedIndex];
+      const machineHit = actualIndex === predictedIndex;
+
+      if (machineHit) {
+        state.scores.machine += 1;
+        state.correct += 1;
+      } else {
+        state.scores.player += 1;
+      }
+
+      train(state.locked.features, actualIndex);
+      state.samples += 1;
+      state.recent.push(machineHit);
+      state.recent = state.recent.slice(-20);
+      state.history.push(laneId);
+      state.history = state.history.slice(-MAX_HISTORY);
+
+      const opener = machineHit ? "Caught." : "Escaped.";
+      state.result = `${opener} You picked ${actualLane.label}; the machine guessed ${predictedLane.label}.`;
+
+      if (state.scores.player >= TARGET_SCORE || state.scores.machine >= TARGET_SCORE) {
+        const winner = state.scores.player > state.scores.machine ? "You win the match." : "The machine wins the match.";
+        state.result = `${state.result} ${winner}`;
+        state.gameOver = true;
+      }
+
+      state.locked = state.gameOver ? null : lockPrediction();
+      pulse = 1;
+      saveState();
+      render();
+    }
+
+    function newMatch() {
+      state.scores = { player: 0, machine: 0 };
+      state.gameOver = false;
+      state.result = "The machine has made its hidden guess.";
+      state.locked = lockPrediction();
+      saveState();
+      render();
+    }
+
+    function resetModel() {
+      state = freshState();
+      state.locked = lockPrediction();
+      pulse = 1;
+      saveState();
+      render();
+    }
+
+    function percent(value) {
+      return `${Math.round(value * 100)}%`;
+    }
+
+    function scoreAccuracy() {
+      return state.samples ? state.correct / state.samples : 0;
+    }
+
+    function recentAccuracy() {
+      if (!state.recent.length) return 0;
+      return state.recent.filter(Boolean).length / state.recent.length;
+    }
+
+    function classWeightStrength(index) {
+      const row = state.weights[index];
+      const mean = row.reduce((sum, value) => sum + Math.abs(value), 0) / row.length;
+      return Math.min(mean * 2.8, 1);
+    }
+
+    function renderProbabilities() {
+      ensurePrediction();
+      els.probList.innerHTML = LANES.map((lane, index) => {
+        const probability = state.locked.probabilities[index] || 0;
+        return `
+          <div class="prob-row">
+            <span>${lane.label}</span>
+            <span class="prob-track"><span class="prob-fill" style="--bar-color: ${lane.color}; width: ${probability * 100}%"></span></span>
+            <strong>${percent(probability)}</strong>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderWeights() {
+      els.weightList.innerHTML = LANES.map((lane, index) => {
+        const strength = classWeightStrength(index);
+        return `
+          <div class="weight-row">
+            <span>${lane.label}</span>
+            <span class="weight-track"><span class="weight-fill" style="--bar-color: ${lane.color}; width: ${Math.max(4, strength * 100)}%"></span></span>
+            <strong>${percent(strength)}</strong>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderHistory() {
+      const recent = state.history.slice(-14);
+      els.historyRow.innerHTML = recent.length
+        ? recent.map((id) => {
+          const lane = LANES[laneIndex(id)];
+          return `<span class="history-chip ${lane.id}" title="${lane.label}">${lane.short}</span>`;
+        }).join("")
+        : `<span class="history-chip">--</span>`;
+    }
+
+    function render() {
+      ensurePrediction();
+      const round = state.scores.player + state.scores.machine + 1;
+
+      els.playerScore.textContent = state.scores.player;
+      els.machineScore.textContent = state.scores.machine;
+      els.roundCount.textContent = state.gameOver ? Math.max(1, round - 1) : round;
+      els.goalScore.textContent = TARGET_SCORE;
+      els.resultText.innerHTML = state.result.replace("Caught.", "<strong>Caught.</strong>").replace("Escaped.", "<strong>Escaped.</strong>");
+
+      const confidence = state.gameOver ? 0 : state.locked.confidence;
+      els.confidenceText.textContent = percent(confidence);
+      els.confidenceFill.style.width = `${confidence * 100}%`;
+      els.lockLabel.textContent = state.gameOver ? "Match complete" : "Machine guess locked";
+      els.lockTitle.textContent = state.gameOver ? "New match?" : "Choose a lane";
+
+      els.sampleCount.textContent = state.samples;
+      els.accuracyText.textContent = percent(scoreAccuracy());
+      els.recentText.textContent = percent(recentAccuracy());
+      els.lossText.textContent = state.lastLoss === null ? "--" : state.lastLoss.toFixed(2);
+
+      els.laneButtons.forEach((button) => {
+        button.disabled = state.gameOver;
+      });
+
+      renderProbabilities();
+      renderWeights();
+      renderHistory();
+      drawBrain();
+    }
+
+    function resizeCanvas() {
+      const rect = els.canvas.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+      els.canvas.width = Math.max(1, Math.floor(rect.width * ratio));
+      els.canvas.height = Math.max(1, Math.floor(rect.height * ratio));
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      drawBrain();
+    }
+
+    function drawNode(x, y, radius, color, label) {
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "rgba(255,255,255,0.62)";
+      ctx.stroke();
+      ctx.fillStyle = "#071013";
+      ctx.font = "700 11px system-ui";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(label, x, y + 0.5);
+    }
+
+    function drawBrain() {
+      const rect = els.canvas.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+      if (!width || !height) return;
+
+      ensurePrediction();
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "rgba(255,255,255,0.035)";
+      for (let x = 0; x < width; x += 44) {
+        ctx.fillRect(x, 0, 1, height);
+      }
+      for (let y = 0; y < height; y += 44) {
+        ctx.fillRect(0, y, width, 1);
+      }
+
+      const features = [
+        { x: width * 0.15, y: height * 0.22, label: "1" },
+        { x: width * 0.13, y: height * 0.4, label: "L" },
+        { x: width * 0.16, y: height * 0.58, label: "2" },
+        { x: width * 0.12, y: height * 0.76, label: "F" }
+      ];
+      const hidden = [
+        { x: width * 0.5, y: height * 0.25, label: "A" },
+        { x: width * 0.47, y: height * 0.5, label: "B" },
+        { x: width * 0.51, y: height * 0.75, label: "C" }
+      ];
+      const outputs = LANES.map((lane, index) => ({
+        x: width * 0.85,
+        y: height * (0.25 + index * 0.25),
+        label: lane.short,
+        color: lane.color,
+        probability: state.locked.probabilities[index] || 0
+      }));
+
+      const pulseAlpha = 0.16 + pulse * 0.34;
+      features.forEach((feature, featureIndex) => {
+        hidden.forEach((node, hiddenIndex) => {
+          const alpha = 0.08 + ((featureIndex + hiddenIndex + state.samples) % 3) * 0.04 + pulse * 0.1;
+          ctx.beginPath();
+          ctx.moveTo(feature.x, feature.y);
+          ctx.lineTo(node.x, node.y);
+          ctx.strokeStyle = `rgba(125,211,252,${alpha})`;
+          ctx.lineWidth = 1 + pulse * 1.5;
+          ctx.stroke();
+        });
+      });
+
+      hidden.forEach((node) => {
+        outputs.forEach((output) => {
+          ctx.beginPath();
+          ctx.moveTo(node.x, node.y);
+          ctx.lineTo(output.x, output.y);
+          ctx.strokeStyle = `${hexToRgb(output.color, 0.12 + output.probability * 0.42 + pulseAlpha * 0.18)}`;
+          ctx.lineWidth = 1 + output.probability * 4 + pulse;
+          ctx.stroke();
+        });
+      });
+
+      features.forEach((node) => drawNode(node.x, node.y, 13, "rgba(248,250,252,0.88)", node.label));
+      hidden.forEach((node) => drawNode(node.x, node.y, 15, "rgba(212,244,79,0.86)", node.label));
+      outputs.forEach((node) => drawNode(node.x, node.y, 17 + node.probability * 8, node.color, node.label));
+    }
+
+    function hexToRgb(hex, alpha) {
+      const clean = hex.replace("#", "");
+      const r = parseInt(clean.slice(0, 2), 16);
+      const g = parseInt(clean.slice(2, 4), 16);
+      const b = parseInt(clean.slice(4, 6), 16);
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
+
+    function animate() {
+      if (pulse > 0.01) {
+        pulse *= 0.92;
+        drawBrain();
+      } else if (pulse !== 0) {
+        pulse = 0;
+        drawBrain();
+      }
+      animationFrame = requestAnimationFrame(animate);
+    }
+
+    els.laneButtons.forEach((button) => {
+      button.addEventListener("click", () => submitMove(button.dataset.lane));
+    });
+    els.newMatch.addEventListener("click", newMatch);
+    els.resetModel.addEventListener("click", resetModel);
+    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("beforeunload", () => cancelAnimationFrame(animationFrame));
+
+    document.addEventListener("keydown", (event) => {
+      const keyMap = { ArrowLeft: "left", ArrowUp: "middle", ArrowRight: "right", a: "left", s: "middle", d: "right" };
+      const lane = keyMap[event.key];
+      if (lane) {
+        event.preventDefault();
+        submitMove(lane);
+      }
+    });
+
+    state.locked = lockPrediction();
+    render();
+    resizeCanvas();
+    animate();
+  </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Maze Muncher ML</title>
+    <link rel="stylesheet" href="./styles.css?v=mlbot2" />
+    <script>
+      window.__consoleErrors = [];
+      window.addEventListener("error", (event) => {
+        window.__consoleErrors.push(event.message || "Unknown error");
+      });
+      window.addEventListener("unhandledrejection", (event) => {
+        window.__consoleErrors.push(String(event.reason || "Unhandled promise rejection"));
+      });
+    </script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero-panel" aria-labelledby="game-title">
+        <div>
+          <p class="eyebrow">Arcade maze + self-training ML</p>
+          <h1 id="game-title">Maze Muncher ML</h1>
+          <p class="lede">
+            Play manually or hand the turn to the ML bot. The learner now trains itself from
+            rewards: dots, survival, energizers, bonuses, and getting caught.
+          </p>
+        </div>
+        <div class="top-actions" aria-label="Primary game controls">
+          <button id="start-button" type="button">Start Game</button>
+          <button id="pause-button" type="button" class="secondary">Pause</button>
+        </div>
+      </section>
+
+      <section class="game-layout">
+        <div class="cabinet" aria-label="Maze Muncher ML arcade cabinet">
+          <canvas id="game-canvas" width="672" height="744" aria-label="Playable maze game"></canvas>
+          <div id="overlay" class="overlay">
+            <h2 id="overlay-title">Ready?</h2>
+            <p id="overlay-copy">Use arrow keys or WASD. Eat dots, dodge hunters, and collect energizers.</p>
+            <button id="overlay-button" type="button">Start</button>
+          </div>
+        </div>
+
+        <aside class="side-panel" aria-label="Machine learning panel">
+          <section class="score-grid" aria-live="polite">
+            <div class="stat-card">
+              <span>Score</span>
+              <strong id="score-label">0</strong>
+            </div>
+            <div class="stat-card">
+              <span>Level</span>
+              <strong id="level-label">1</strong>
+            </div>
+            <div class="stat-card">
+              <span>Lives</span>
+              <strong id="lives-label">3</strong>
+            </div>
+            <div class="stat-card">
+              <span>Dots Left</span>
+              <strong id="dots-label">0</strong>
+            </div>
+          </section>
+
+          <section class="brain-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">Learner</p>
+                <h2>Move Brain</h2>
+              </div>
+              <span id="brain-strength" class="pill">0%</span>
+            </div>
+
+            <div class="brain-meter" aria-hidden="true">
+              <span id="brain-meter-fill"></span>
+            </div>
+
+            <dl class="sample-stats">
+              <div>
+                <dt>Total samples</dt>
+                <dd id="samples-label">0</dd>
+              </div>
+              <div>
+                <dt>Rewarded moves</dt>
+                <dd id="good-label">0</dd>
+              </div>
+              <div>
+                <dt>Penalized moves</dt>
+                <dd id="bad-label">0</dd>
+              </div>
+              <div>
+                <dt>Last lesson</dt>
+                <dd id="lesson-label">None yet</dd>
+              </div>
+            </dl>
+
+            <div class="brain-actions">
+              <button id="autopilot-button" type="button">ML Bot Turn: Off</button>
+              <button id="clear-button" type="button" class="ghost-button">Clear Brain</button>
+            </div>
+          </section>
+
+          <section class="help-card">
+            <h2>How It Learns</h2>
+            <ol>
+              <li>Play manually with arrows or WASD.</li>
+              <li>Every turn creates a training sample automatically.</li>
+              <li>Dots, survival, energizers, and bonuses reward recent moves.</li>
+              <li>Getting caught penalizes the recent moves that led there.</li>
+              <li>Press <kbd>M</kbd> or the ML Bot Turn button to let it play.</li>
+            </ol>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script type="module" src="./game.js?v=mlbot2"></script>
+  </body>
+</html>
