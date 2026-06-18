@@ -438,6 +438,7 @@
         "2026-06-06": "JELLY",
         "2026-06-07": "BRAVE",
         "2026-06-08": "ATLAS",
+        "2026-06-18": "SHINE",
       };
       const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
       const RESET_CODE = "CENA";
@@ -632,16 +633,26 @@
         updateStatsPanel();
       }
 
-      function loadActivePuzzle() {
+      function loadActivePuzzle(options = {}) {
+        const { advanceCustomOnReload = false } = options;
         try {
           const saved = JSON.parse(localStorage.getItem(ACTIVE_PUZZLE_KEY) || "null");
           const savedPuzzle = getPuzzleById(saved?.puzzleId);
           if (!savedPuzzle) return DAILY_PUZZLE;
           if (saved?.word && saved.word !== savedPuzzle.word) return DAILY_PUZZLE;
+          if (advanceCustomOnReload && isJohnPuzzleId(savedPuzzle.id)) {
+            return nextJohnPuzzleFromPuzzleId(saved.puzzleId);
+          }
           return savedPuzzle;
         } catch {
           return DAILY_PUZZLE;
         }
+      }
+
+      function nextJohnPuzzleFromPuzzleId(puzzleId) {
+        const savedPuzzle = getPuzzleById(puzzleId);
+        if (!savedPuzzle || !isJohnPuzzleId(savedPuzzle.id)) return DAILY_PUZZLE;
+        return johnPuzzleAt((savedPuzzle.johnIndex || 0) + 1);
       }
 
       function saveActivePuzzle(puzzle = currentPuzzle) {
@@ -674,8 +685,7 @@
         return nextProgress;
       }
 
-      function loadProgress() {
-        const activePuzzle = loadActivePuzzle();
+      function loadProgress(activePuzzle = loadActivePuzzle()) {
         try {
           const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "null");
           const savedPuzzle = getPuzzleById(saved?.puzzleId);
@@ -886,17 +896,18 @@
         beginPuzzle(nextJohnPuzzle(), "New word", false);
       }
 
-      function syncDailyPuzzle(forceToast = false) {
-        const latestDailyPuzzle = getDailyPuzzle();
-        const onCustomPuzzle = isJohnPuzzleId(currentPuzzle?.id);
-        const dailyProgressIsCurrent =
-          progress?.dayKey === todayKey() &&
-          progress?.dailyPuzzleId === latestDailyPuzzle.id &&
-          progress?.puzzleId === latestDailyPuzzle.id &&
-          progress?.word === latestDailyPuzzle.word;
-        if (onCustomPuzzle) return;
-        if (currentPuzzle?.id === latestDailyPuzzle.id && dailyProgressIsCurrent) return;
-        beginPuzzle(latestDailyPuzzle, forceToast ? "New daily word" : "Fresh start", false);
+      function latestPuzzleForSession() {
+        const activePuzzle = loadActivePuzzle();
+        if (isJohnPuzzleId(activePuzzle?.id)) return activePuzzle;
+        return getDailyPuzzle();
+      }
+
+      function syncPuzzleState(forceToast = false) {
+        const latestPuzzle = latestPuzzleForSession();
+        const puzzleChanged = currentPuzzle?.id !== latestPuzzle.id || answer !== latestPuzzle.word;
+        const progressChanged = progress?.puzzleId !== latestPuzzle.id || progress?.word !== latestPuzzle.word;
+        if (!puzzleChanged && !progressChanged) return;
+        beginPuzzle(latestPuzzle, forceToast ? "Word refreshed" : "Fresh start", false);
       }
 
       function shake() {
@@ -1014,11 +1025,9 @@
       }
 
       function startGame() {
-        const activePuzzle = loadActivePuzzle();
-        currentPuzzle = isJohnPuzzleId(activePuzzle?.id) ? activePuzzle : DAILY_PUZZLE;
+        currentPuzzle = loadActivePuzzle({ advanceCustomOnReload: true });
         answer = currentPuzzle.word;
-        progress = loadProgress();
-        syncDailyPuzzle(false);
+        progress = loadProgress(currentPuzzle);
         saveActivePuzzle(currentPuzzle);
         saveProgress();
         buildBoard();
@@ -1040,15 +1049,15 @@
         if (event.key === "Enter") press("ENTER");
       });
       document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "visible") syncDailyPuzzle(true);
+        if (document.visibilityState === "visible") syncPuzzleState(true);
       });
-      addEventListener("focus", () => syncDailyPuzzle(true));
+      addEventListener("focus", () => syncPuzzleState(true));
       addEventListener("pageshow", (event) => {
         if (event.persisted) {
           location.reload();
           return;
         }
-        syncDailyPuzzle(true);
+        syncPuzzleState(true);
       });
 
       startGame();
