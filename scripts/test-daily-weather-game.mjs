@@ -259,13 +259,15 @@ async function run() {
           const botPicks = game.questions.map((question, index) => {
             const answers = test.getAnswers(question).slice();
             const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
-            const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
-              .sort((left, right) => right.points - left.points || right.odds - left.odds);
-            const choice = index % 3 === 1
-              ? (risks[0] || favorites[0])
-              : index % 4 === 3
-              ? (risks[1] || favorites[0])
+            const upside = answers.slice().sort((left, right) => right.points - left.points || right.odds - left.odds);
+            const liveOptions = answers.filter((candidate) => Number(candidate.odds) >= 8);
+            const mids = liveOptions.slice().sort((left, right) => Math.abs(left.odds - 50) - Math.abs(right.odds - 50) || right.points - left.points);
+            const choice = index % 5 === 1
+              ? (upside[0] || favorites[0])
+              : index % 5 === 2
+              ? (mids[0] || favorites[0])
+              : index % 5 === 4
+              ? (upside[1] || mids[1] || favorites[0])
               : favorites[0];
             return [test.getQuestionId(question, index), choice.id];
           });
@@ -312,10 +314,10 @@ async function run() {
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
-              leaderboard.includes("max from picks") &&
+              leaderboard.includes("100% chance to win") &&
+              leaderboard.includes("risk ceiling") &&
               pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
+              pickView.includes("risk ceiling") &&
               entryCount.trim() === "1" &&
               storage.playerName === "Weather Bot"
             ) {

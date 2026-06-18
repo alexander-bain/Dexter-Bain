@@ -158,16 +158,6 @@ function windSpeedMax(text) {
   return match ? Number(match[2] || match[1]) : 8;
 }
 
-function rotateSelection(items, count, seed) {
-  if (!Array.isArray(items) || !items.length || count <= 0) {
-    return [];
-  }
-
-  const start = Math.abs(Number(seed) || 0) % items.length;
-  const total = Math.min(count, items.length);
-  return Array.from({ length: total }, (_, index) => items[(start + index) % items.length]);
-}
-
 function yesNoQuestion({
   text,
   idSuffix,
@@ -222,8 +212,8 @@ function dayWatchEvent(date, forecast) {
   const windSpeed = windSpeedMax(day.windSpeed || night.windSpeed || "8 mph");
   const dateLabel = labelDate(date);
   const idDate = slugDate(date);
-  const daySeed = Number(idDate);
   const warmByNoonThreshold = Math.max(60, Math.round((high - 5) / 5) * 5);
+  const windByFiveThreshold = Math.max(10, Math.round(windSpeed / 5) * 5);
   const locks = {
     warmByNoon: lockDate(date, 12).toISOString(),
     gasNoon: lockDate(date, 12, 15).toISOString(),
@@ -240,78 +230,43 @@ function dayWatchEvent(date, forecast) {
   const likelyBreaksWarmByNoon = high >= warmByNoonThreshold && !includesAny(skyText, ["fog", "cold"]);
   const likelyRainLater = includesAny(skyText, ["rain", "shower", "drizzle", "thunderstorm"]);
   const likelySkySunnyLater = sky === "mostly-sunny" || sky === "partly-cloudy";
-  const likelyWindyLater = windSpeed >= 12;
+  const likelyWindyLater = windSpeed > windByFiveThreshold;
   const likelyNightCooler = low <= 60 || low <= high - 10;
   const likelyMarketUp = !includesAny(skyText, ["storm", "rain"]) && day.temperature >= 65;
-  const likelyGasUp = daySeed % 2 === 0 || high >= 74;
-  const likelyMusicChanged = daySeed % 3 !== 0;
-  const likelySportsLive = daySeed % 4 !== 0;
+  const likelyGasUp = high >= 74 || low >= 56;
+  const likelyMusicChanged = high >= 68 || sky === "mostly-sunny";
+  const likelySportsLive = true;
   const likelyWeatherLead = sky === "rain-likely" || (sky === "mostly-cloudy" && !likelyMarketUp);
-  const likelySportsLead = likelySportsLive && daySeed % 5 !== 0;
+  const likelySportsLead = likelySportsLive && !likelyWeatherLead;
   const localHeadlineOdds = {
     weather: [sky === "rain-likely" ? 36 : 28, "Weather"],
     stocks: [likelyMarketUp ? 30 : 24, "Stocks"],
     sports: [likelySportsLive ? 24 : 18, "Sports"],
     traffic: [18, "Traffic"]
   };
-  const weatherQuestions = rotateSelection([
-    () => yesNoQuestion({
+  const selectedQuestions = [
+    yesNoQuestion({
       text: `By noon, will it be warmer than ${warmByNoonThreshold} degrees?`,
       idSuffix: "warm-by-noon",
       autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.warmByNoon,
       likely: likelyBreaksWarmByNoon
     }),
-    () => yesNoQuestion({
-      text: "By 3 PM, will rain show up in the forecast?",
-      idSuffix: "rain-by-3pm",
-      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
-      lockAt: locks.weatherAfternoon,
-      likely: likelyRainLater
-    }),
-    () => yesNoQuestion({
-      text: `By 5 PM, will the wind be stronger than ${Math.max(10, Math.round(windSpeed / 5) * 5)} mph?`,
-      idSuffix: "wind-by-5pm",
-      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
-      lockAt: locks.weatherWind,
-      likely: likelyWindyLater
-    }),
-    () => yesNoQuestion({
-      text: "By 3 PM, will the sky still be mostly sunny?",
-      idSuffix: "sky-still-sunny",
-      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
-      lockAt: locks.weatherAfternoon,
-      likely: likelySkySunnyLater
-    }),
-    () => yesNoQuestion({
-      text: "Tonight, will it stay cooler than 60 degrees?",
-      idSuffix: "cool-tonight",
-      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
-      lockAt: locks.weatherNight,
-      likely: likelyNightCooler
-    })
-  ], 4, daySeed);
-  const moneyQuestionPool = [
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By noon, will gas prices be higher than this morning?",
       idSuffix: "gas-noon",
       autoSource: gasSource,
       lockAt: locks.gasNoon,
       likely: likelyGasUp
-    })
-  ];
-  if (!weekend) {
-    moneyQuestionPool.push(() => yesNoQuestion({
+    }),
+    ...(!weekend ? [yesNoQuestion({
       text: "By 1 PM, will the stock market go up?",
       idSuffix: "market-lunch",
       autoSource: marketSource,
       lockAt: locks.marketLunch,
       likely: likelyMarketUp
-    }));
-  }
-  const moneyQuestions = rotateSelection(moneyQuestionPool, moneyQuestionPool.length, daySeed + 7);
-  const newsQuestions = rotateSelection([
-    () => choiceQuestion({
+    })] : []),
+    choiceQuestion({
       text: "By 2 PM, what will the local news talk about most?",
       idSuffix: "local-headline",
       autoSource: localNewsSource,
@@ -323,7 +278,28 @@ function dayWatchEvent(date, forecast) {
         { label: localHeadlineOdds.traffic[1], odds: localHeadlineOdds.traffic[0], id: "traffic" }
       ]
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
+      text: "By 3 PM, will rain show up in the forecast?",
+      idSuffix: "rain-by-3pm",
+      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
+      lockAt: locks.weatherAfternoon,
+      likely: likelyRainLater
+    }),
+    yesNoQuestion({
+      text: `By 5 PM, will the wind be stronger than ${Math.max(10, Math.round(windSpeed / 5) * 5)} mph?`,
+      idSuffix: "wind-by-5pm",
+      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
+      lockAt: locks.weatherWind,
+      likely: likelyWindyLater
+    }),
+    yesNoQuestion({
+      text: "By 3 PM, will the sky still be mostly sunny?",
+      idSuffix: "sky-still-sunny",
+      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
+      lockAt: locks.weatherAfternoon,
+      likely: likelySkySunnyLater
+    }),
+    yesNoQuestion({
       text: "By 3 PM, will weather be the top local news story?",
       idSuffix: "weather-headline",
       autoSource: localNewsSource,
@@ -332,7 +308,7 @@ function dayWatchEvent(date, forecast) {
       yesLikely: 60,
       yesUnlikely: 40
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 4 PM, will sports be one of the top local news stories?",
       idSuffix: "sports-headline",
       autoSource: localNewsSource,
@@ -340,47 +316,47 @@ function dayWatchEvent(date, forecast) {
       likely: likelySportsLead,
       yesLikely: 58,
       yesUnlikely: 42
-    })
-  ], 2, daySeed + 11);
-  const musicQuestions = rotateSelection([
-    () => yesNoQuestion({
+    }),
+    yesNoQuestion({
       text: "By 4 PM, will the top Apple Music song be different?",
       idSuffix: "music-four",
       autoSource: musicSource,
       lockAt: locks.musicFour,
       likely: likelyMusicChanged
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 5 PM, will a new song reach No. 1?",
       idSuffix: "music-five",
       autoSource: musicSource,
       lockAt: lockDate(date, 17).toISOString(),
-      likely: likelyMusicChanged
-    })
-  ], weekend ? 2 : 1, daySeed + 23);
-  const sportsQuestions = rotateSelection([
-    () => yesNoQuestion({
+      likely: likelyMusicChanged,
+      yesLikely: 42,
+      yesUnlikely: 58
+    }),
+    yesNoQuestion({
       text: "By 6 PM, will the sports page still show a live game?",
       idSuffix: "sports-six",
       autoSource: sportsSource,
       lockAt: locks.sportsSix,
       likely: likelySportsLive
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 7 PM, will the top sports story be about a live game?",
       idSuffix: "sports-seven",
       autoSource: sportsSource,
       lockAt: locks.sportsSeven,
-      likely: likelySportsLive
+      likely: likelySportsLive,
+      yesLikely: 58,
+      yesUnlikely: 42
+    }),
+    yesNoQuestion({
+      text: "Tonight, will it stay cooler than 60 degrees?",
+      idSuffix: "cool-tonight",
+      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
+      lockAt: locks.weatherNight,
+      likely: likelyNightCooler
     })
-  ], 1, daySeed + 37);
-  const selectedQuestions = [
-    ...weatherQuestions,
-    ...moneyQuestions,
-    ...newsQuestions,
-    ...musicQuestions,
-    ...sportsQuestions
-  ].map((questionFactory) => questionFactory()).sort((left, right) => {
+  ].sort((left, right) => {
     if (left.lockAt === right.lockAt) {
       return left.idSuffix.localeCompare(right.idSuffix);
     }
