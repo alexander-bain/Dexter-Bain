@@ -389,6 +389,7 @@ function dayWatchEvent(date, forecast) {
     }
     return left.lockAt.localeCompare(right.lockAt);
   });
+  const questionCount = selectedQuestions.length;
 
   return `      {
         id: "daily-weather-${idDate}",
@@ -396,7 +397,7 @@ function dayWatchEvent(date, forecast) {
         type: "Day",
         month: ${date.getMonth()},
         day: ${date.getDate()},
-        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: 10 simple questions about weather, money, news, music, and sports that settle through the day. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.`)},
+        summary: ${jsString(`Generated at 6 AM for ${dateLabel}: ${questionCount} simple questions about weather, money, news, music, and sports that settle through the day. Forecast: ${day.shortForecast || "local forecast"}, high near ${high}.`)},
         questions: [
 ${selectedQuestions.map((question) => renderQuestion(question, idDate)).join(",\n")}
         ]
