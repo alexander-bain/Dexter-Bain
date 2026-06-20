@@ -205,6 +205,24 @@ function choiceQuestion({
   };
 }
 
+function buildLocalHeadlineAnswers({ weekend, likelyWeatherLead, likelySportsLead }) {
+  if (weekend) {
+    return [
+      { label: "Weather", odds: likelyWeatherLead ? 36 : 28, id: "weather" },
+      { label: "Weekend events", odds: likelyWeatherLead ? 24 : 30, id: "weekend-events" },
+      { label: "Sports", odds: likelySportsLead ? 22 : 18, id: "sports" },
+      { label: "Traffic", odds: 18, id: "traffic" }
+    ];
+  }
+
+  return [
+    { label: "Weather", odds: likelyWeatherLead ? 36 : 28, id: "weather" },
+    { label: "Stocks", odds: 30, id: "stocks" },
+    { label: "Sports", odds: likelySportsLead ? 24 : 18, id: "sports" },
+    { label: "Traffic", odds: likelyWeatherLead ? 10 : 24, id: "traffic" }
+  ];
+}
+
 function renderQuestion(question, idDate) {
   return `          question(${jsString(question.text)}, [
             ${question.answers.map((answer) => `answer(${jsString(answer.label)}, ${Number(answer.odds)}, ${jsString(answer.id)})`).join(",\n            ")}
@@ -248,12 +266,11 @@ function dayWatchEvent(date, forecast) {
   const likelySportsLive = daySeed % 4 !== 0;
   const likelyWeatherLead = sky === "rain-likely" || (sky === "mostly-cloudy" && !likelyMarketUp);
   const likelySportsLead = likelySportsLive && daySeed % 5 !== 0;
-  const localHeadlineOdds = {
-    weather: [sky === "rain-likely" ? 36 : 28, "Weather"],
-    stocks: [likelyMarketUp ? 30 : 24, "Stocks"],
-    sports: [likelySportsLive ? 24 : 18, "Sports"],
-    traffic: [18, "Traffic"]
-  };
+  const localHeadlineAnswers = buildLocalHeadlineAnswers({
+    weekend,
+    likelyWeatherLead,
+    likelySportsLead
+  });
   const weatherQuestions = rotateSelection([
     () => yesNoQuestion({
       text: `By noon, will it be warmer than ${warmByNoonThreshold} degrees?`,
@@ -316,12 +333,7 @@ function dayWatchEvent(date, forecast) {
       idSuffix: "local-headline",
       autoSource: localNewsSource,
       lockAt: locks.localHeadline,
-      answers: [
-        { label: localHeadlineOdds.weather[1], odds: localHeadlineOdds.weather[0], id: "weather" },
-        { label: localHeadlineOdds.stocks[1], odds: localHeadlineOdds.stocks[0], id: "stocks" },
-        { label: localHeadlineOdds.sports[1], odds: localHeadlineOdds.sports[0], id: "sports" },
-        { label: localHeadlineOdds.traffic[1], odds: localHeadlineOdds.traffic[0], id: "traffic" }
-      ]
+      answers: localHeadlineAnswers
     }),
     () => yesNoQuestion({
       text: "By 3 PM, will weather be the top local news story?",

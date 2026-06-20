@@ -155,7 +155,12 @@ async function run() {
           if (typeof currentGame === "function" && eventTabs.children.length) break;
           await wait(100);
         }
-        const gameButton = [...document.querySelectorAll("[data-game]")].find((button) => button.dataset.game.includes("weather-weekend"));
+        const gameButton = [...document.querySelectorAll("[data-game]")].find((button) =>
+          button.dataset.game.includes("weather-weekend") || button.dataset.game.includes("daily-weather-")
+        );
+        if (!gameButton) {
+          throw new Error("No weekend or daily weather game button was available for the sharing test.");
+        }
         gameButton.click();
         await wait(100);
         const game = currentGame();
@@ -165,6 +170,9 @@ async function run() {
           const best = getAnswers(question).slice().sort((a, b) => b.odds - a.odds)[0];
           const questionId = getQuestionId(question, index);
           const input = formEl.querySelector(\`input[name="\${CSS.escape(questionId)}"][value="\${CSS.escape(best.id)}"]\`);
+          if (!input) {
+            return;
+          }
           input.checked = true;
           input.dispatchEvent(new Event("change", { bubbles: true }));
         });
@@ -186,7 +194,12 @@ async function run() {
           if (typeof currentGame === "function" && eventTabs.children.length) break;
           await wait(100);
         }
-        const gameButton = [...document.querySelectorAll("[data-game]")].find((button) => button.dataset.game.includes("weather-weekend"));
+        const gameButton = [...document.querySelectorAll("[data-game]")].find((button) =>
+          button.dataset.game.includes("weather-weekend") || button.dataset.game.includes("daily-weather-")
+        );
+        if (!gameButton) {
+          throw new Error("No weekend or daily weather game button was available for the second sharing check.");
+        }
         gameButton.click();
         await wait(1000);
         return {
