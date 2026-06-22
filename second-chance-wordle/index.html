@@ -345,7 +345,7 @@
     </section>
   </div>
 
-  <script src="dictionaries.js?v=2026-06-08-1"></script>
+  <script src="dictionaries.js?v=2026-06-22-1"></script>
   <script>
     (() => {
       const WORDS = [
@@ -439,7 +439,12 @@
         "2026-06-07": "BRAVE",
         "2026-06-08": "ATLAS",
         "2026-06-18": "SHINE",
+        "2026-06-19": "GRASS",
+        "2026-06-20": "SHELF",
+        "2026-06-21": "CHALK",
+        "2026-06-22": "CHIDE",
       };
+      const PUZZLE_STATE_VERSION = "2026-06-22-1";
       const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
       const RESET_CODE = "CENA";
       const ALT_WORD_CODE = "JOHN";
@@ -637,6 +642,9 @@
         const { advanceCustomOnReload = false } = options;
         try {
           const saved = JSON.parse(localStorage.getItem(ACTIVE_PUZZLE_KEY) || "null");
+          if (saved?.version !== PUZZLE_STATE_VERSION && !isJohnPuzzleId(saved?.puzzleId)) {
+            return DAILY_PUZZLE;
+          }
           const savedPuzzle = getPuzzleById(saved?.puzzleId);
           if (!savedPuzzle) return DAILY_PUZZLE;
           if (saved?.word && saved.word !== savedPuzzle.word) return DAILY_PUZZLE;
@@ -660,6 +668,7 @@
           localStorage.setItem(ACTIVE_PUZZLE_KEY, JSON.stringify({
             puzzleId: puzzle?.id || DAILY_PUZZLE.id,
             word: puzzle?.word || DAILY_PUZZLE.word,
+            version: PUZZLE_STATE_VERSION,
           }));
         } catch {}
       }
@@ -668,6 +677,7 @@
         return {
           puzzleId: puzzle.id,
           word: puzzle.word,
+          version: PUZZLE_STATE_VERSION,
           guesses: [],
           done: false,
           won: false,
@@ -688,6 +698,9 @@
       function loadProgress(activePuzzle = loadActivePuzzle()) {
         try {
           const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "null");
+          if (saved?.version !== PUZZLE_STATE_VERSION && !isJohnPuzzleId(saved?.puzzleId)) {
+            return replaceWithFreshProgress(activePuzzle);
+          }
           const savedPuzzle = getPuzzleById(saved?.puzzleId);
           const restoreDaily = saved?.puzzleId === DAILY_PUZZLE.id && saved?.word === DAILY_PUZZLE.word;
           const restoreJohn = isJohnPuzzleId(saved?.puzzleId) && savedPuzzle && saved?.word === savedPuzzle.word;
@@ -701,6 +714,7 @@
           return {
             puzzleId: currentPuzzle.id,
             word: currentPuzzle.word,
+            version: PUZZLE_STATE_VERSION,
             guesses,
             done: doneGame,
             won: doneGame ? Boolean(saved.won || won) : false,
