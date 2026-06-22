@@ -260,20 +260,23 @@ async function run() {
             const answers = test.getAnswers(question).slice();
             const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
             const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
-              .sort((left, right) => right.points - left.points || right.odds - left.odds);
-            const choice = index % 3 === 1
-              ? (risks[0] || favorites[0])
-              : index % 4 === 3
-              ? (risks[1] || favorites[0])
+              .filter((candidate) => candidate.odds < favorites[0].odds && candidate.points > favorites[0].points)
+              .sort((left, right) => {
+                const leftLeverage = (left.points - favorites[0].points) * (1 - left.odds / 100);
+                const rightLeverage = (right.points - favorites[0].points) * (1 - right.odds / 100);
+                return rightLeverage - leftLeverage || right.points - left.points || right.odds - left.odds;
+              });
+            const choice = (index % 3 === 1 || index % 5 === 4) && risks.length
+              ? risks[0]
               : favorites[0];
             return [test.getQuestionId(question, index), choice.id];
           });
           const picks = Object.fromEntries(botPicks);
           const favoritePickMap = Object.fromEntries(favoritePicks);
           const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
-          if (!usedRiskPick) {
-            throw new Error("Weather Bot only picked favorites.");
+          const riskyPickCount = botPicks.filter(([questionId, answerId]) => favoritePickMap[questionId] !== answerId).length;
+          if (!usedRiskPick || riskyPickCount < 2) {
+            throw new Error("Weather Bot did not make enough calculated risk picks.");
           }
           const entry = {
             name: "Weather Bot",
@@ -330,6 +333,7 @@ async function run() {
                 botPicks,
                 favoritePicks,
                 storedState: storage,
+                riskyPickCount,
               };
             }
             await wait(100);
@@ -364,11 +368,12 @@ async function run() {
 
     const botPickMap = Object.fromEntries(value.botPicks || []);
     const favoritePickMap = Object.fromEntries(value.favoritePicks || []);
-    if (!Object.keys(botPickMap).some((questionId) => botPickMap[questionId] !== favoritePickMap[questionId])) {
-      throw new Error(`Saved picks only used favorites: ${JSON.stringify({ botPickMap, favoritePickMap })}`);
+    const riskyPickCount = Object.keys(botPickMap).filter((questionId) => botPickMap[questionId] !== favoritePickMap[questionId]).length;
+    if (riskyPickCount < 2) {
+      throw new Error(`Saved picks did not include enough risk: ${JSON.stringify({ botPickMap, favoritePickMap, riskyPickCount })}`);
     }
 
-    console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);
+    console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}; ${riskyPickCount} risk picks.`);
   } finally {
     connection?.close();
     chrome.kill("SIGTERM");
