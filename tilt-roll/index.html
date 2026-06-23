@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Tilt Roll 3D | DexterBain</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #111827;
+      --muted: #64748b;
+      --line: rgba(15, 23, 42, 0.16);
+      --panel: rgba(255, 255, 255, 0.78);
+      --panel-strong: rgba(255, 255, 255, 0.94);
+      --accent: #0f766e;
+      --accent-ink: #f8fafc;
+      --danger: #b91c1c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #ffffff;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+      user-select: none;
+      touch-action: none;
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    .game-shell {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      background: #ffffff;
+      outline: none;
+    }
+
+    canvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      background: #ffffff;
+    }
+
+    .hud {
+      position: fixed;
+      inset: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) auto max(12px, env(safe-area-inset-left));
+      z-index: 4;
+      display: grid;
+      grid-template-columns: minmax(142px, 1fr) auto minmax(142px, 1fr);
+      gap: 10px;
+      align-items: start;
+      pointer-events: none;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 14px 38px rgba(15, 23, 42, 0.12);
+      backdrop-filter: blur(18px);
+      pointer-events: auto;
+    }
+
+    .brand {
+      width: max-content;
+      max-width: 100%;
+      padding: 10px 12px;
+    }
+
+    h1,
+    h2,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(0.96rem, 2vw, 1.08rem);
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .theme-name {
+      display: block;
+      margin-top: 5px;
+      max-width: 240px;
+      color: var(--muted);
+      font-size: 0.74rem;
+      font-weight: 800;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .stats {
+      justify-self: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      pointer-events: auto;
+    }
+
+    .stat {
+      min-width: 76px;
+      padding: 9px 11px;
+      text-align: center;
+    }
+
+    .stat b {
+      display: block;
+      font-size: 1.15rem;
+      line-height: 1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.64rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .actions {
+      justify-self: end;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+      pointer-events: auto;
+    }
+
+    .button {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 11px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      background: var(--panel-strong);
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    .button.primary {
+      border-color: transparent;
+      background: var(--accent);
+      color: var(--accent-ink);
+      box-shadow: 0 12px 30px rgba(15, 118, 110, 0.18);
+    }
+
+    .button:disabled {
+      cursor: default;
+      opacity: 0.72;
+    }
+
+    .center-panel {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      z-index: 5;
+      width: min(320px, calc(100vw - 32px));
+      padding: 18px;
+      transform: translate(-50%, -50%);
+      display: grid;
+      gap: 14px;
+      text-align: center;
+    }
+
+    .center-panel.is-hidden {
+      display: none;
+    }
+
+    .center-panel h2 {
+      font-size: 1.4rem;
+      line-height: 1.1;
+    }
+
+    .center-panel p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 750;
+    }
+
+    .status-line {
+      position: fixed;
+      left: 50%;
+      bottom: max(14px, env(safe-area-inset-bottom));
+      z-index: 4;
+      min-width: 132px;
+      max-width: calc(100vw - 28px);
+      padding: 9px 12px;
+      transform: translateX(-50%);
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 850;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 180ms ease, transform 180ms ease;
+      pointer-events: none;
+    }
+
+    .status-line.is-visible {
+      opacity: 1;
+      transform: translate(-50%, -4px);
+    }
+
+    .fatal {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      place-items: center;
+      padding: 24px;
+      background: #ffffff;
+      color: var(--danger);
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .fatal.is-visible {
+      display: grid;
+    }
+
+    @media (max-width: 720px) {
+      .hud {
+        grid-template-columns: 1fr;
+      }
+
+      .brand,
+      .stats,
+      .actions {
+        justify-self: stretch;
+      }
+
+      .brand {
+        width: auto;
+      }
+
+      .stats,
+      .actions {
+        justify-content: space-between;
+      }
+
+      .stat {
+        min-width: 0;
+        flex: 1 1 72px;
+      }
+
+      .button {
+        flex: 1 1 auto;
+        min-width: 84px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .hud {
+        gap: 7px;
+      }
+
+      .brand,
+      .stat,
+      .button {
+        padding: 8px;
+      }
+
+      .theme-name {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="game-shell" id="gameShell" tabindex="0" aria-label="Tilt Roll 3D">
+    <canvas id="sceneCanvas"></canvas>
+
+    <section class="hud" aria-label="Game status">
+      <div class="brand panel">
+        <h1>Tilt Roll 3D</h1>
+        <span class="theme-name" id="themeName">Loading</span>
+      </div>
+
+      <div class="stats">
+        <div class="stat panel">
+          <b id="levelText">1</b>
+          <span>Level</span>
+        </div>
+        <div class="stat panel">
+          <b id="bestText">1</b>
+          <span>Best</span>
+        </div>
+        <div class="stat panel">
+          <b id="fallsText">0</b>
+          <span>Falls</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="button primary" id="tiltButton" type="button">Enable Tilt</button>
+        <button class="button" id="restartButton" type="button">Restart</button>
+        <a class="button" href="../index.html">Arcade</a>
+      </div>
+    </section>
+
+    <div class="center-panel panel" id="startPanel">
+      <h2 id="panelTitle">Level 1</h2>
+      <p id="panelTheme">Sky Glass</p>
+      <button class="button primary" id="startButton" type="button">Start</button>
+    </div>
+
+    <div class="status-line panel" id="statusLine">Ready</div>
+    <div class="fatal" id="fatal">Tilt Roll 3D could not load the 3D engine.</div>
+  </main>
+
+  <script type="module">
+    const engineUrls = [
+      "../highway/vendor/three.module.js",
+      "https://unpkg.com/three@0.165.0/build/three.module.js",
+    ];
+
+    let THREE = null;
+    let lastEngineError = null;
+
+    for (const engineUrl of engineUrls) {
+      try {
+        THREE = await import(engineUrl);
+        break;
+      } catch (error) {
+        lastEngineError = error;
+      }
+    }
+
+    if (THREE) {
+      try {
+        startGame(THREE);
+      } catch (error) {
+        document.getElementById("fatal").classList.add("is-visible");
+        console.error(error);
+      }
+    } else {
+      document.getElementById("fatal").classList.add("is-visible");
+      console.error(lastEngineError);
+    }
+
+    function startGame(THREE) {
+      const canvas = document.getElementById("sceneCanvas");
+      const gameShell = document.getElementById("gameShell");
+      const hud = {
+        themeName: document.getElementById("themeName"),
+        level: document.getElementById("levelText"),
+        best: document.getElementById("bestText"),
+        falls: document.getElementById("fallsText"),
+        startPanel: document.getElementById("startPanel"),
+        panelTitle: document.getElementById("panelTitle"),
+        panelTheme: document.getElementById("panelTheme"),
+        startButton: document.getElementById("startButton"),
+        restartButton: document.getElementById("restartButton"),
+        tiltButton: document.getElementById("tiltButton"),
+        statusLine: document.getElementById("statusLine"),
+      };
+
+      const BALL_RADIUS = 0.42;
+      const PLATFORM_TOP = 0;
+      const GRAVITY = 15;
+      const BASE_ACCELERATION = 13.8;
+      const MAX_PIXEL_RATIO = 2;
+      const clamp = THREE.MathUtils.clamp;
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xffffff);
+      const camera = new THREE.PerspectiveCamera(52, window.innerWidth / window.innerHeight, 0.1, 170);
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        alpha: false,
+        powerPreference: "high-performance",
+        preserveDrawingBuffer: true,
+      });
+      renderer.setClearColor(0xffffff, 1);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO));
+      renderer.setSize(window.innerWidth, window.innerHeight, false);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+      const clock = new THREE.Clock();
+      const platformGroup = new THREE.Group();
+      const decorGroup = new THREE.Group();
+      const goalGroup = new THREE.Group();
+      const lightRig = new THREE.Group();
+      scene.add(platformGroup, decorGroup, goalGroup, lightRig);
+
+      const hemi = new THREE.HemisphereLight(0xffffff, 0xdbeafe, 2.2);
+      const sun = new THREE.DirectionalLight(0xffffff, 2.8);
+      sun.position.set(-6, 12, -7);
+      sun.castShadow = true;
+      sun.shadow.mapSize.set(1536, 1536);
+      sun.shadow.camera.near = 1;
+      sun.shadow.camera.far = 52;
+      sun.shadow.camera.left = -18;
+      sun.shadow.camera.right = 18;
+      sun.shadow.camera.top = 18;
+      sun.shadow.camera.bottom = -18;
+      lightRig.add(hemi, sun);
+
+      const fill = new THREE.DirectionalLight(0xeff6ff, 1.2);
+      fill.position.set(8, 8, 8);
+      lightRig.add(fill);
+
+      const ball = new THREE.Mesh(
+        new THREE.SphereGeometry(BALL_RADIUS, 48, 32),
+        new THREE.MeshStandardMaterial({
+          color: 0xffffff,
+          roughness: 0.32,
+          metalness: 0.02,
+        })
+      );
+      ball.castShadow = true;
+      ball.receiveShadow = true;
+      scene.add(ball);
+
+      const ballVelocity = new THREE.Vector3();
+      const cameraTarget = new THREE.Vector3();
+      const cameraGoal = new THREE.Vector3();
+      const lookTarget = new THREE.Vector3();
+
+      const state = {
+        level: readStoredNumber("tiltRollLevel", 1),
+        best: readStoredNumber("tiltRollBest", 1),
+        falls: 0,
+        running: false,
+        grounded: true,
+        slabs: [],
+        spawn: { x: 0, z: -8 },
+        goal: { x: 0, z: 8 },
+        currentTheme: null,
+        platformMaterial: null,
+        keys: new Set(),
+        pointerActive: false,
+        pointerId: null,
+        pointerStart: { x: 0, y: 0 },
+        pointerInput: { x: 0, z: 0 },
+        motionInput: { x: 0, z: 0 },
+        motionReady: false,
+        motionSeen: false,
+        motionNeutral: null,
+        statusTimer: null,
+      };
+
+      function readStoredNumber(key, fallback) {
+        const value = Number(localStorage.getItem(key));
+        return Number.isFinite(value) && value >= 1 ? Math.floor(value) : fallback;
+      }
+
+      function saveProgress() {
+        localStorage.setItem("tiltRollLevel", String(state.level));
+        localStorage.setItem("tiltRollBest", String(Math.max(state.best, state.level)));
+      }
+
+      function makeRng(seed) {
+        let t = seed >>> 0;
+        return () => {
+          t += 0x6d2b79f5;
+          let result = Math.imul(t ^ (t >>> 15), 1 | t);
+          result ^= result + Math.imul(result ^ (result >>> 7), 61 | result);
+          return ((result ^ (result >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+
+      function makeCssColor(hex) {
+        return `#${new THREE.Color(hex).getHexString()}`;
+      }
+
+      function hslColor(hue, saturation, lightness) {
+        const color = new THREE.Color().setHSL(hue / 360, saturation, lightness);
+        return {
+          hex: color.getHex(),
+          css: `#${color.getHexString()}`,
+        };
+      }
+
+      function themeForLevel(level) {
+        const decade = Math.floor(level / 10);
+        const fixedThemes = {
+          0: {
+            name: "Sky Glass",
+            base: 0x64d8ff,
+            accent: 0x0f766e,
+            trim: 0x1d4ed8,
+            kind: "clean",
+            light: 0xe0f2fe,
+          },
+          1: {
+            name: "10s Candy Circuit",
+            base: 0xff8ab3,
+            accent: 0x38bdf8,
+            trim: 0xffffff,
+            kind: "candy",
+            light: 0xffe4f1,
+          },
+          2: {
+            name: "20s Rainbow Unicorn",
+            base: 0xffffff,
+            accent: 0xff4fd8,
+            trim: 0x7c3aed,
+            kind: "rainbow",
+            light: 0xfdf4ff,
+          },
+          3: {
+            name: "30s Ocean Glow",
+            base: 0x0284c7,
+            accent: 0x22d3ee,
+            trim: 0x164e63,
+            kind: "ocean",
+            light: 0xe0f7ff,
+          },
+          4: {
+            name: "40s Dark Lava",
+            base: 0x16110f,
+            accent: 0xff3d00,
+            trim: 0xffb703,
+            kind: "lava",
+            light: 0xffedd5,
+          },
+          5: {
+            name: "50s Moon Lab",
+            base: 0xcbd5e1,
+            accent: 0x6366f1,
+            trim: 0x1e293b,
+            kind: "moon",
+            light: 0xf8fafc,
+          },
+          6: {
+            name: "60s Jungle Quartz",
+            base: 0x22c55e,
+            accent: 0xfacc15,
+            trim: 0x166534,
+            kind: "jungle",
+            light: 0xecfccb,
+          },
+          7: {
+            name: "70s Ice Signal",
+            base: 0xcffafe,
+            accent: 0x0891b2,
+            trim: 0x0f172a,
+            kind: "ice",
+            light: 0xf0fdff,
+          },
+          8: {
+            name: "80s Solar Dune",
+            base: 0xfbbf24,
+            accent: 0x14b8a6,
+            trim: 0x7c2d12,
+            kind: "dune",
+            light: 0xfffbeb,
+          },
+          9: {
+            name: "90s Neon Grid",
+            base: 0x111827,
+            accent: 0x22d3ee,
+            trim: 0xff4fd8,
+            kind: "neon",
+            light: 0xf5f3ff,
+          },
+        };
+
+        if (fixedThemes[decade]) {
+          const theme = fixedThemes[decade];
+          return {
+            ...theme,
+            cssAccent: makeCssColor(theme.accent),
+          };
+        }
+
+        const hue = (decade * 47 + level * 11) % 360;
+        const base = hslColor(hue, 0.68, 0.48);
+        const accent = hslColor((hue + 132) % 360, 0.78, 0.54);
+        const trim = hslColor((hue + 248) % 360, 0.62, 0.34);
+        const names = ["Prism Run", "Comet Glass", "Crystal Drift", "Voltage Bloom", "Aurora Stone"];
+        return {
+          name: `${decade * 10}s ${names[decade % names.length]}`,
+          base: base.hex,
+          accent: accent.hex,
+          trim: trim.hex,
+          kind: ["clean", "neon", "ice", "candy", "ocean"][decade % 5],
+          light: 0xffffff,
+          cssAccent: accent.css,
+        };
+      }
+
+      function clearGroup(group) {
+        for (let i = group.children.length - 1; i >= 0; i -= 1) {
+          const child = group.children[i];
+          group.remove(child);
+          child.traverse?.((node) => {
+            if (node.geometry) node.geometry.dispose();
+            if (node.material) {
+              const materials = Array.isArray(node.material) ? node.material : [node.material];
+              materials.forEach((material) => {
+                if (material.map) material.map.dispose();
+                material.dispose();
+              });
+            }
+          });
+        }
+      }
+
+      function makePlatformTexture(theme, level) {
+        const textureCanvas = document.createElement("canvas");
+        textureCanvas.width = 512;
+        textureCanvas.height = 512;
+        const ctx = textureCanvas.getContext("2d");
+        const base = makeCssColor(theme.base);
+        const accent = makeCssColor(theme.accent);
+        const trim = makeCssColor(theme.trim);
+        ctx.fillStyle = base;
+        ctx.fillRect(0, 0, 512, 512);
+
+        if (theme.kind === "rainbow") {
+          const gradient = ctx.createLinearGradient(0, 0, 512, 0);
+          ["#ff4fd8", "#ff8a3d", "#facc15", "#4ade80", "#22d3ee", "#8b5cf6"].forEach((color, index, list) => {
+            gradient.addColorStop(index / (list.length - 1), color);
+          });
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, 512, 512);
+          ctx.fillStyle = "rgba(255,255,255,0.58)";
+          for (let i = 0; i < 48; i += 1) {
+            const x = (i * 97 + level * 19) % 512;
+            const y = (i * 53 + level * 37) % 512;
+            drawStar(ctx, x, y, 7 + (i % 4), 0.58);
+          }
+        } else if (theme.kind === "lava") {
+          ctx.fillStyle = "#15100f";
+          ctx.fillRect(0, 0, 512, 512);
+          ctx.strokeStyle = "#ff4d00";
+          ctx.lineWidth = 7;
+          for (let i = 0; i < 18; i += 1) {
+            ctx.beginPath();
+            let x = (i * 83 + level * 41) % 512;
+            let y = (i * 131 + level * 23) % 512;
+            ctx.moveTo(x, y);
+            for (let j = 0; j < 4; j += 1) {
+              x += 24 + ((i + j) % 3) * 16;
+              y += ((i * j + level) % 45) - 22;
+              ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+          }
+          ctx.strokeStyle = "#ffb703";
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        } else if (theme.kind === "ocean") {
+          ctx.strokeStyle = "rgba(255,255,255,0.38)";
+          ctx.lineWidth = 8;
+          for (let y = -40; y < 560; y += 44) {
+            ctx.beginPath();
+            for (let x = 0; x <= 540; x += 22) {
+              const waveY = y + Math.sin((x + level * 13) / 34) * 14;
+              if (x === 0) ctx.moveTo(x, waveY);
+              else ctx.lineTo(x, waveY);
+            }
+            ctx.stroke();
+          }
+        } else if (theme.kind === "ice") {
+          ctx.strokeStyle = "rgba(8,145,178,0.34)";
+          ctx.lineWidth = 3;
+          for (let i = 0; i < 34; i += 1) {
+            const x = (i * 73 + level * 11) % 512;
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo((x + 170 + i * 9) % 512, 512);
+            ctx.stroke();
+          }
+        } else if (theme.kind === "neon") {
+          ctx.fillStyle = "#111827";
+          ctx.fillRect(0, 0, 512, 512);
+          ctx.strokeStyle = accent;
+          ctx.lineWidth = 3;
+          for (let x = 0; x <= 512; x += 64) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, 512);
+            ctx.stroke();
+          }
+          ctx.strokeStyle = trim;
+          for (let y = 0; y <= 512; y += 64) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(512, y);
+            ctx.stroke();
+          }
+        } else if (theme.kind === "candy") {
+          ctx.fillStyle = base;
+          ctx.fillRect(0, 0, 512, 512);
+          ctx.strokeStyle = "rgba(255,255,255,0.66)";
+          ctx.lineWidth = 34;
+          for (let x = -512; x < 768; x += 92) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x + 512, 512);
+            ctx.stroke();
+          }
+        } else {
+          ctx.strokeStyle = "rgba(255,255,255,0.34)";
+          ctx.lineWidth = 5;
+          for (let y = 42; y < 512; y += 82) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(512, y + ((level + y) % 23) - 11);
+            ctx.stroke();
+          }
+        }
+
+        ctx.fillStyle = "rgba(255,255,255,0.24)";
+        ctx.fillRect(0, 0, 512, 18);
+        ctx.fillStyle = "rgba(15,23,42,0.14)";
+        ctx.fillRect(0, 494, 512, 18);
+
+        const texture = new THREE.CanvasTexture(textureCanvas);
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(1, 2);
+        return texture;
+      }
+
+      function drawStar(ctx, cx, cy, radius, opacity) {
+        ctx.save();
+        ctx.globalAlpha = opacity;
+        ctx.beginPath();
+        for (let i = 0; i < 10; i += 1) {
+          const angle = -Math.PI / 2 + (i * Math.PI) / 5;
+          const r = i % 2 === 0 ? radius : radius * 0.46;
+          const x = cx + Math.cos(angle) * r;
+          const y = cy + Math.sin(angle) * r;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function loadLevel() {
+        clearGroup(platformGroup);
+        clearGroup(decorGroup);
+        clearGroup(goalGroup);
+        if (state.platformMaterial) {
+          if (state.platformMaterial.map) state.platformMaterial.map.dispose();
+          state.platformMaterial.dispose();
+        }
+
+        const theme = themeForLevel(state.level);
+        const rng = makeRng((state.level * 2654435761) ^ 0x9e3779b9);
+        const texture = makePlatformTexture(theme, state.level);
+        const emissiveStrength = theme.kind === "lava" || theme.kind === "neon" ? 0.25 : 0.04;
+        const platformMaterial = new THREE.MeshStandardMaterial({
+          color: theme.base,
+          map: texture,
+          roughness: theme.kind === "moon" || theme.kind === "ice" ? 0.42 : 0.72,
+          metalness: theme.kind === "moon" ? 0.18 : 0.04,
+          emissive: theme.kind === "lava" || theme.kind === "neon" ? theme.accent : 0x000000,
+          emissiveIntensity: emissiveStrength,
+        });
+        const edgeMaterial = new THREE.LineBasicMaterial({
+          color: theme.trim,
+          transparent: true,
+          opacity: theme.kind === "lava" || theme.kind === "neon" ? 0.8 : 0.34,
+        });
+        state.platformMaterial = platformMaterial;
+        state.currentTheme = theme;
+        state.slabs = [];
+
+        const difficulty = Math.min(1, state.level / 82);
+        const segmentCount = 7 + Math.min(14, Math.floor(Math.sqrt(state.level) * 1.55)) + (state.level % 3);
+        const widthBase = clamp(4.9 - difficulty * 2.15 - Math.log10(state.level + 1) * 0.34, 2.05, 4.9);
+        let zCursor = -8.5;
+        let xCursor = 0;
+
+        for (let index = 0; index < segmentCount; index += 1) {
+          const segmentLength = 3.1 + rng() * 1.85 + Math.min(state.level, 160) * 0.006;
+          const width = clamp(widthBase + (rng() - 0.5) * 0.62, 1.82, 5.15);
+          const maxShift = Math.min(width * 0.42, 0.35 + difficulty * 1.45 + (index % 3) * 0.08);
+          xCursor = clamp(xCursor + (rng() - 0.5) * maxShift * 2, -5.4, 5.4);
+          const z = zCursor + segmentLength / 2;
+          const slab = {
+            x: xCursor,
+            z,
+            width,
+            length: segmentLength,
+            index,
+          };
+          state.slabs.push(slab);
+
+          const mesh = new THREE.Mesh(
+            new THREE.BoxGeometry(width, 0.3, segmentLength),
+            platformMaterial
+          );
+          mesh.position.set(xCursor, PLATFORM_TOP - 0.15, z);
+          mesh.receiveShadow = true;
+          mesh.castShadow = theme.kind === "lava" || theme.kind === "neon";
+          platformGroup.add(mesh);
+
+          const edges = new THREE.LineSegments(
+            new THREE.EdgesGeometry(mesh.geometry),
+            edgeMaterial
+          );
+          edges.position.copy(mesh.position);
+          platformGroup.add(edges);
+
+          zCursor += segmentLength - 0.08;
+        }
+
+        const first = state.slabs[0];
+        const last = state.slabs[state.slabs.length - 1];
+        state.spawn = {
+          x: first.x,
+          z: first.z - first.length * 0.34,
+        };
+        state.goal = {
+          x: last.x,
+          z: last.z + last.length * 0.32,
+        };
+
+        makeGoal(theme);
+        makeDecor(theme, rng);
+        updateHud();
+        updateAccent(theme);
+      }
+
+      function makeGoal(theme) {
+        const goalMaterial = new THREE.MeshStandardMaterial({
+          color: 0xffffff,
+          emissive: theme.accent,
+          emissiveIntensity: 0.62,
+          roughness: 0.32,
+          metalness: 0.08,
+          transparent: true,
+          opacity: 0.92,
+        });
+        const ringMaterial = new THREE.MeshBasicMaterial({
+          color: theme.accent,
+          transparent: true,
+          opacity: 0.92,
+        });
+        const pad = new THREE.Mesh(new THREE.CylinderGeometry(0.94, 0.94, 0.055, 64), goalMaterial);
+        pad.position.set(state.goal.x, PLATFORM_TOP + 0.035, state.goal.z);
+        pad.receiveShadow = true;
+        goalGroup.add(pad);
+
+        for (let i = 0; i < 3; i += 1) {
+          const ring = new THREE.Mesh(new THREE.TorusGeometry(1.05 + i * 0.22, 0.018, 8, 96), ringMaterial);
+          ring.position.set(state.goal.x, PLATFORM_TOP + 0.08 + i * 0.014, state.goal.z);
+          ring.rotation.x = Math.PI / 2;
+          ring.userData.spin = i % 2 === 0 ? 1 : -1;
+          goalGroup.add(ring);
+        }
+
+        const light = new THREE.PointLight(theme.accent, 1.4, 8);
+        light.position.set(state.goal.x, 1.2, state.goal.z);
+        goalGroup.add(light);
+      }
+
+      function makeDecor(theme, rng) {
+        const startZ = state.slabs[0].z - state.slabs[0].length;
+        const endZ = state.goal.z + 2.5;
+        const count = 12 + Math.min(18, Math.floor(state.level / 3));
+        const accentMaterial = new THREE.MeshStandardMaterial({
+          color: theme.accent,
+          emissive: theme.kind === "lava" || theme.kind === "neon" ? theme.accent : 0x000000,
+          emissiveIntensity: theme.kind === "lava" || theme.kind === "neon" ? 0.85 : 0.08,
+          roughness: 0.44,
+          metalness: theme.kind === "moon" ? 0.32 : 0.04,
+        });
+        const trimMaterial = new THREE.MeshStandardMaterial({
+          color: theme.trim,
+          emissive: theme.kind === "lava" ? theme.trim : 0x000000,
+          emissiveIntensity: theme.kind === "lava" ? 0.65 : 0.04,
+          roughness: 0.52,
+        });
+
+        for (let i = 0; i < count; i += 1) {
+          const side = rng() > 0.5 ? 1 : -1;
+          const z = startZ + (endZ - startZ) * rng();
+          const x = side * (5.8 + rng() * 3.2);
+          const y = 0.34 + rng() * 1.8;
+          let mesh;
+          if (theme.kind === "rainbow") {
+            mesh = new THREE.Mesh(new THREE.ConeGeometry(0.18 + rng() * 0.09, 0.82 + rng() * 0.35, 5), i % 2 ? accentMaterial : trimMaterial);
+            mesh.rotation.z = rng() * Math.PI;
+          } else if (theme.kind === "lava") {
+            mesh = new THREE.Mesh(new THREE.ConeGeometry(0.12 + rng() * 0.14, 0.6 + rng() * 0.7, 3), i % 2 ? accentMaterial : trimMaterial);
+            mesh.rotation.x = rng() * Math.PI;
+            mesh.rotation.z = rng() * Math.PI;
+          } else if (theme.kind === "ocean") {
+            mesh = new THREE.Mesh(new THREE.TorusGeometry(0.22 + rng() * 0.14, 0.025, 8, 32), accentMaterial);
+            mesh.rotation.x = rng() * Math.PI;
+          } else if (theme.kind === "ice") {
+            mesh = new THREE.Mesh(new THREE.OctahedronGeometry(0.2 + rng() * 0.16, 0), i % 2 ? accentMaterial : trimMaterial);
+          } else {
+            mesh = new THREE.Mesh(new THREE.BoxGeometry(0.22 + rng() * 0.36, 0.08 + rng() * 0.18, 0.22 + rng() * 0.36), i % 2 ? accentMaterial : trimMaterial);
+            mesh.rotation.y = rng() * Math.PI;
+          }
+          mesh.position.set(x, y, z);
+          mesh.userData.spin = (rng() > 0.5 ? 1 : -1) * (0.25 + rng() * 0.85);
+          decorGroup.add(mesh);
+        }
+      }
+
+      function updateAccent(theme) {
+        document.documentElement.style.setProperty("--accent", theme.cssAccent);
+        document.documentElement.style.setProperty("--accent-ink", theme.kind === "lava" || theme.kind === "neon" ? "#ffffff" : "#f8fafc");
+      }
+
+      function updateHud() {
+        state.best = Math.max(state.best, state.level);
+        hud.level.textContent = state.level.toLocaleString();
+        hud.best.textContent = state.best.toLocaleString();
+        hud.falls.textContent = state.falls.toLocaleString();
+        hud.themeName.textContent = state.currentTheme?.name || "Loading";
+        hud.panelTitle.textContent = `Level ${state.level.toLocaleString()}`;
+        hud.panelTheme.textContent = state.currentTheme?.name || "";
+      }
+
+      function setStatus(message) {
+        hud.statusLine.textContent = message;
+        hud.statusLine.classList.add("is-visible");
+        clearTimeout(state.statusTimer);
+        state.statusTimer = window.setTimeout(() => {
+          hud.statusLine.classList.remove("is-visible");
+        }, 1300);
+      }
+
+      function resetBall() {
+        ball.position.set(state.spawn.x, BALL_RADIUS + 0.02, state.spawn.z);
+        ball.rotation.set(0, 0, 0);
+        ballVelocity.set(0, 0, 0);
+        state.grounded = true;
+        state.pointerInput.x = 0;
+        state.pointerInput.z = 0;
+        state.motionNeutral = null;
+        camera.position.set(ball.position.x, 6.4, ball.position.z - 8.4);
+        cameraTarget.set(ball.position.x, 0.4, ball.position.z + 3);
+        camera.lookAt(cameraTarget);
+      }
+
+      function startRun() {
+        state.running = true;
+        hud.startPanel.classList.add("is-hidden");
+        resetBall();
+        gameShell.focus({ preventScroll: true });
+        setStatus(`Level ${state.level.toLocaleString()}`);
+      }
+
+      function restartLevel() {
+        resetBall();
+        state.running = true;
+        hud.startPanel.classList.add("is-hidden");
+        gameShell.focus({ preventScroll: true });
+        setStatus("Restarted");
+      }
+
+      function advanceLevel() {
+        state.level += 1;
+        state.best = Math.max(state.best, state.level);
+        saveProgress();
+        loadLevel();
+        resetBall();
+        state.running = true;
+        setStatus(`Level ${state.level.toLocaleString()}`);
+      }
+
+      function getGroundSlab(x, z) {
+        for (const slab of state.slabs) {
+          const insideX = Math.abs(x - slab.x) <= slab.width / 2 + BALL_RADIUS * 0.2;
+          const insideZ = Math.abs(z - slab.z) <= slab.length / 2 + BALL_RADIUS * 0.18;
+          if (insideX && insideZ) return slab;
+        }
+        return null;
+      }
+
+      function getKeyboardInput() {
+        let x = 0;
+        let z = 0;
+        if (state.keys.has("ArrowLeft") || state.keys.has("KeyA")) x -= 1;
+        if (state.keys.has("ArrowRight") || state.keys.has("KeyD")) x += 1;
+        if (state.keys.has("ArrowUp") || state.keys.has("KeyW")) z += 1;
+        if (state.keys.has("ArrowDown") || state.keys.has("KeyS")) z -= 1;
+        return { x, z };
+      }
+
+      function getInput() {
+        const keyInput = getKeyboardInput();
+        let x = state.motionInput.x + state.pointerInput.x + keyInput.x;
+        let z = state.motionInput.z + state.pointerInput.z + keyInput.z;
+        const length = Math.hypot(x, z);
+        if (length > 1) {
+          x /= length;
+          z /= length;
+        }
+        return { x, z };
+      }
+
+      function stepPhysics(dt) {
+        const ground = getGroundSlab(ball.position.x, ball.position.z);
+        const canLand = ground && ball.position.y <= BALL_RADIUS + 0.08 && ballVelocity.y <= 0;
+        if (canLand) {
+          ball.position.y = BALL_RADIUS;
+          ballVelocity.y = 0;
+          state.grounded = true;
+        } else {
+          state.grounded = false;
+        }
+
+        const input = getInput();
+        const inputStrength = Math.hypot(input.x, input.z);
+        const acceleration = BASE_ACCELERATION + Math.min(state.level, 140) * 0.018;
+
+        if (state.grounded) {
+          ballVelocity.x += input.x * acceleration * dt;
+          ballVelocity.z += input.z * acceleration * dt;
+          const friction = Math.pow(inputStrength > 0.05 ? 0.986 : 0.82, dt * 60);
+          ballVelocity.x *= friction;
+          ballVelocity.z *= friction;
+        } else {
+          ballVelocity.y -= GRAVITY * dt;
+          ballVelocity.x += input.x * acceleration * 0.14 * dt;
+          ballVelocity.z += input.z * acceleration * 0.14 * dt;
+          ballVelocity.x *= Math.pow(0.995, dt * 60);
+          ballVelocity.z *= Math.pow(0.995, dt * 60);
+        }
+
+        const maxSpeed = 6.4 + Math.min(state.level, 180) * 0.008;
+        const horizontalSpeed = Math.hypot(ballVelocity.x, ballVelocity.z);
+        if (horizontalSpeed > maxSpeed) {
+          const scale = maxSpeed / horizontalSpeed;
+          ballVelocity.x *= scale;
+          ballVelocity.z *= scale;
+        }
+
+        ball.position.addScaledVector(ballVelocity, dt);
+        ball.rotation.x -= (ballVelocity.z * dt) / BALL_RADIUS;
+        ball.rotation.z += (ballVelocity.x * dt) / BALL_RADIUS;
+
+        if (state.grounded) {
+          const goalDistance = Math.hypot(ball.position.x - state.goal.x, ball.position.z - state.goal.z);
+          if (goalDistance < 0.98 || (ball.position.z > state.goal.z - 0.38 && Math.abs(ball.position.x - state.goal.x) < 1.02)) {
+            advanceLevel();
+            return;
+          }
+        }
+
+        if (ball.position.y < -8) {
+          state.falls += 1;
+          updateHud();
+          resetBall();
+          setStatus("Try Again");
+        }
+      }
+
+      function updateCamera(dt) {
+        cameraGoal.set(
+          ball.position.x * 0.68,
+          5.8 + Math.min(2.4, state.level * 0.006),
+          ball.position.z - 8.5
+        );
+        const cameraEase = 1 - Math.pow(0.002, dt);
+        camera.position.lerp(cameraGoal, cameraEase);
+        lookTarget.set(ball.position.x * 0.72, 0.38, ball.position.z + 2.3);
+        cameraTarget.lerp(lookTarget, 1 - Math.pow(0.001, dt));
+        camera.lookAt(cameraTarget);
+      }
+
+      function animateDecor(dt, elapsed) {
+        goalGroup.children.forEach((child) => {
+          if (child.userData.spin) {
+            child.rotation.z += child.userData.spin * dt * 1.5;
+          }
+        });
+        decorGroup.children.forEach((child, index) => {
+          child.rotation.x += child.userData.spin * dt * 0.55;
+          child.rotation.y += child.userData.spin * dt;
+          child.position.y += Math.sin(elapsed * 1.2 + index) * dt * 0.08;
+        });
+      }
+
+      function loop() {
+        const dt = Math.min(clock.getDelta(), 0.034);
+        const elapsed = clock.elapsedTime;
+        if (state.running) {
+          stepPhysics(dt);
+        }
+        updateCamera(dt);
+        animateDecor(dt, elapsed);
+        renderer.render(scene, camera);
+      }
+
+      function handleResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO));
+        renderer.setSize(window.innerWidth, window.innerHeight, false);
+      }
+
+      function normalizeKey(event) {
+        return event.code || event.key;
+      }
+
+      function handleKeyDown(event) {
+        const code = normalizeKey(event);
+        if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "KeyW", "KeyA", "KeyS", "KeyD", "Space", "Enter"].includes(code)) {
+          event.preventDefault();
+          gameShell.focus({ preventScroll: true });
+        }
+        if (code === "Space" || code === "Enter") {
+          if (!state.running) startRun();
+          return;
+        }
+        state.keys.add(code);
+      }
+
+      function handleKeyUp(event) {
+        state.keys.delete(normalizeKey(event));
+      }
+
+      function handlePointerDown(event) {
+        if (event.pointerType === "mouse" && event.button !== 0) return;
+        gameShell.focus({ preventScroll: true });
+        if (!state.running && hud.startPanel.classList.contains("is-hidden")) state.running = true;
+        state.pointerActive = true;
+        state.pointerId = event.pointerId;
+        state.pointerStart.x = event.clientX;
+        state.pointerStart.y = event.clientY;
+        state.pointerInput.x = 0;
+        state.pointerInput.z = 0;
+        try {
+          canvas.setPointerCapture(event.pointerId);
+        } catch {
+          // Older embedded browsers can miss pointer capture without breaking play.
+        }
+      }
+
+      function handlePointerMove(event) {
+        if (!state.pointerActive || event.pointerId !== state.pointerId) return;
+        const x = clamp((event.clientX - state.pointerStart.x) / 92, -1, 1);
+        const z = clamp((state.pointerStart.y - event.clientY) / 92, -1, 1);
+        state.pointerInput.x = x;
+        state.pointerInput.z = z;
+      }
+
+      function handlePointerUp(event) {
+        if (event.pointerId !== state.pointerId) return;
+        state.pointerActive = false;
+        state.pointerId = null;
+        state.pointerInput.x = 0;
+        state.pointerInput.z = 0;
+      }
+
+      function handleDeviceOrientation(event) {
+        const beta = Number(event.beta);
+        const gamma = Number(event.gamma);
+        if (!Number.isFinite(beta) || !Number.isFinite(gamma)) return;
+        state.motionSeen = true;
+        if (!state.motionNeutral) {
+          state.motionNeutral = { beta, gamma };
+        }
+
+        let side = gamma - state.motionNeutral.gamma;
+        let forward = beta - state.motionNeutral.beta;
+        const angle = Number(screen.orientation?.angle ?? window.orientation ?? 0);
+        if (Math.abs(angle) === 90) {
+          side = beta - state.motionNeutral.beta;
+          forward = -(gamma - state.motionNeutral.gamma);
+          if (angle === -90 || angle === 270) {
+            side = -side;
+            forward = -forward;
+          }
+        }
+
+        state.motionInput.x = clamp(side / 20, -1, 1);
+        state.motionInput.z = clamp(forward / 20, -1, 1);
+        if (state.motionReady) {
+          hud.tiltButton.textContent = "Tilt On";
+          hud.tiltButton.disabled = true;
+        }
+      }
+
+      async function enableTilt() {
+        state.motionNeutral = null;
+        try {
+          if (typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function") {
+            const result = await DeviceOrientationEvent.requestPermission();
+            if (result !== "granted") {
+              setStatus("Tilt Blocked");
+              return;
+            }
+          }
+          state.motionReady = true;
+          window.addEventListener("deviceorientation", handleDeviceOrientation, true);
+          hud.tiltButton.textContent = "Tilt On";
+          hud.tiltButton.disabled = true;
+          setStatus("Tilt On");
+        } catch {
+          setStatus("Tilt Blocked");
+        }
+      }
+
+      if (typeof DeviceOrientationEvent === "undefined") {
+        hud.tiltButton.textContent = "Tilt";
+      } else {
+        window.addEventListener("deviceorientation", handleDeviceOrientation, true);
+      }
+
+      hud.startButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        startRun();
+      });
+      hud.restartButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        restartLevel();
+      });
+      hud.tiltButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        enableTilt();
+      });
+      window.addEventListener("keydown", handleKeyDown, { passive: false });
+      window.addEventListener("keyup", handleKeyUp);
+      canvas.addEventListener("pointerdown", handlePointerDown);
+      canvas.addEventListener("pointermove", handlePointerMove);
+      canvas.addEventListener("pointerup", handlePointerUp);
+      canvas.addEventListener("pointercancel", handlePointerUp);
+      window.addEventListener("resize", handleResize);
+      window.addEventListener("orientationchange", () => {
+        state.motionNeutral = null;
+        handleResize();
+      });
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) {
+          gameShell.focus({ preventScroll: true });
+          state.motionNeutral = null;
+        }
+      });
+
+      loadLevel();
+      resetBall();
+      updateHud();
+      renderer.setAnimationLoop(loop);
+    }
+  </script>
+</body>
+</html>
