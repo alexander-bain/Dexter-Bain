@@ -317,7 +317,7 @@
       </div>
 
       <div class="actions">
-        <button class="button primary" id="tiltButton" type="button">Enable Tilt</button>
+        <button class="button primary" id="tiltButton" type="button">Recenter Tilt</button>
         <button class="button" id="restartButton" type="button">Restart</button>
         <a class="button" href="../index.html">Arcade</a>
       </div>
@@ -454,6 +454,7 @@
         slabs: [],
         spawn: { x: 0, z: -8 },
         goal: { x: 0, z: 8 },
+        levelBounds: { minX: -6, maxX: 6, minZ: -8, maxZ: 8 },
         currentTheme: null,
         platformMaterial: null,
         keys: new Set(),
@@ -465,6 +466,9 @@
         motionReady: false,
         motionSeen: false,
         motionNeutral: null,
+        motionNeedsRecenter: true,
+        motionListening: false,
+        lastOrientation: null,
         statusTimer: null,
       };
 
@@ -762,6 +766,140 @@
         ctx.restore();
       }
 
+      function makeLevelPlan(level, rng, corridorWidth) {
+        const difficulty = Math.min(1, level / 90);
+        const turnCount = 5 + Math.min(11, Math.floor(Math.sqrt(level) * 1.45)) + (level % 2);
+        const maxX = 7.5 + Math.min(2.2, level * 0.018);
+        const points = [{ x: 0, z: -7.5 }];
+        const branches = [];
+        let x = 0;
+        let z = -7.5;
+        let horizontalSign = rng() > 0.5 ? 1 : -1;
+
+        for (let index = 0; index < turnCount; index += 1) {
+          if (index % 2 === 0) {
+            const forward = 3.7 + rng() * 3.1 + difficulty * 1.7;
+            z += forward;
+          } else {
+            const sideways = 3.2 + rng() * 5.4 + difficulty * 2.4;
+            x = clamp(x + horizontalSign * sideways, -maxX, maxX);
+            if (rng() > 0.18) horizontalSign *= -1;
+          }
+          points.push({ x, z });
+        }
+
+        if (points[points.length - 1].z < 15 + level * 0.12) {
+          z += 4.4 + rng() * 3.4;
+          points.push({ x, z });
+        }
+
+        const branchCount = 2 + Math.min(5, Math.floor(level / 7)) + (level % 3 === 0 ? 1 : 0);
+        for (let index = 0; index < branchCount; index += 1) {
+          const anchorIndex = 1 + Math.floor(rng() * Math.max(1, points.length - 2));
+          const anchor = points[anchorIndex];
+          const isDropLeg = index === 0 || rng() > 0.52;
+          const direction = rng() > 0.5 ? 1 : -1;
+          const length = 2.9 + rng() * 5.8 + difficulty * 2.2;
+          const branchStart = { x: anchor.x, z: anchor.z };
+          let branchEnd;
+
+          if (isDropLeg) {
+            branchEnd = { x: anchor.x, z: anchor.z - length };
+          } else {
+            branchEnd = {
+              x: clamp(anchor.x + direction * length, -maxX - 1.8, maxX + 1.8),
+              z: anchor.z,
+            };
+          }
+          branches.push([branchStart, branchEnd]);
+
+          if (rng() > 0.56) {
+            const hookDirection = rng() > 0.5 ? 1 : -1;
+            const hookLength = 2.2 + rng() * 3.6;
+            branches.push([
+              branchEnd,
+              {
+                x: clamp(branchEnd.x + hookDirection * hookLength, -maxX - 2.4, maxX + 2.4),
+                z: branchEnd.z,
+              },
+            ]);
+          }
+        }
+
+        return {
+          points,
+          branches,
+          corridorWidth,
+        };
+      }
+
+      function addCorridorSlab(slabs, start, end, corridorWidth, index) {
+        const dx = end.x - start.x;
+        const dz = end.z - start.z;
+        if (Math.abs(dx) >= Math.abs(dz)) {
+          slabs.push({
+            x: (start.x + end.x) / 2,
+            z: start.z,
+            width: Math.abs(dx) + corridorWidth,
+            length: corridorWidth,
+            index,
+          });
+          return;
+        }
+
+        slabs.push({
+          x: start.x,
+          z: (start.z + end.z) / 2,
+          width: corridorWidth,
+          length: Math.abs(dz) + corridorWidth,
+          index,
+        });
+      }
+
+      function addJoinSlab(slabs, point, corridorWidth, index) {
+        slabs.push({
+          x: point.x,
+          z: point.z,
+          width: corridorWidth * 1.08,
+          length: corridorWidth * 1.08,
+          index,
+          isJoin: true,
+        });
+      }
+
+      function updateLevelBounds() {
+        state.levelBounds = state.slabs.reduce((bounds, slab) => {
+          bounds.minX = Math.min(bounds.minX, slab.x - slab.width / 2);
+          bounds.maxX = Math.max(bounds.maxX, slab.x + slab.width / 2);
+          bounds.minZ = Math.min(bounds.minZ, slab.z - slab.length / 2);
+          bounds.maxZ = Math.max(bounds.maxZ, slab.z + slab.length / 2);
+          return bounds;
+        }, {
+          minX: Infinity,
+          maxX: -Infinity,
+          minZ: Infinity,
+          maxZ: -Infinity,
+        });
+      }
+
+      function addPlatformMesh(slab, platformMaterial, edgeMaterial, theme) {
+        const mesh = new THREE.Mesh(
+          new THREE.BoxGeometry(slab.width, 0.3, slab.length),
+          platformMaterial
+        );
+        mesh.position.set(slab.x, PLATFORM_TOP - 0.15, slab.z);
+        mesh.receiveShadow = true;
+        mesh.castShadow = theme.kind === "lava" || theme.kind === "neon";
+        platformGroup.add(mesh);
+
+        const edges = new THREE.LineSegments(
+          new THREE.EdgesGeometry(mesh.geometry),
+          edgeMaterial
+        );
+        edges.position.copy(mesh.position);
+        platformGroup.add(edges);
+      }
+
       function loadLevel() {
         clearGroup(platformGroup);
         clearGroup(decorGroup);
@@ -793,54 +931,37 @@
         state.slabs = [];
 
         const difficulty = Math.min(1, state.level / 82);
-        const segmentCount = 7 + Math.min(14, Math.floor(Math.sqrt(state.level) * 1.55)) + (state.level % 3);
-        const widthBase = clamp(4.9 - difficulty * 2.15 - Math.log10(state.level + 1) * 0.34, 2.05, 4.9);
-        let zCursor = -8.5;
-        let xCursor = 0;
+        const corridorWidth = clamp(5.2 - difficulty * 2.05 - Math.log10(state.level + 1) * 0.28, 2.15, 5.2);
+        const plan = makeLevelPlan(state.level, rng, corridorWidth);
 
-        for (let index = 0; index < segmentCount; index += 1) {
-          const segmentLength = 3.1 + rng() * 1.85 + Math.min(state.level, 160) * 0.006;
-          const width = clamp(widthBase + (rng() - 0.5) * 0.62, 1.82, 5.15);
-          const maxShift = Math.min(width * 0.42, 0.35 + difficulty * 1.45 + (index % 3) * 0.08);
-          xCursor = clamp(xCursor + (rng() - 0.5) * maxShift * 2, -5.4, 5.4);
-          const z = zCursor + segmentLength / 2;
-          const slab = {
-            x: xCursor,
-            z,
-            width,
-            length: segmentLength,
-            index,
-          };
-          state.slabs.push(slab);
+        plan.points.forEach((point, index) => {
+          addJoinSlab(state.slabs, point, corridorWidth, index);
+        });
 
-          const mesh = new THREE.Mesh(
-            new THREE.BoxGeometry(width, 0.3, segmentLength),
-            platformMaterial
-          );
-          mesh.position.set(xCursor, PLATFORM_TOP - 0.15, z);
-          mesh.receiveShadow = true;
-          mesh.castShadow = theme.kind === "lava" || theme.kind === "neon";
-          platformGroup.add(mesh);
-
-          const edges = new THREE.LineSegments(
-            new THREE.EdgesGeometry(mesh.geometry),
-            edgeMaterial
-          );
-          edges.position.copy(mesh.position);
-          platformGroup.add(edges);
-
-          zCursor += segmentLength - 0.08;
+        for (let index = 0; index < plan.points.length - 1; index += 1) {
+          addCorridorSlab(state.slabs, plan.points[index], plan.points[index + 1], corridorWidth, index);
         }
 
-        const first = state.slabs[0];
-        const last = state.slabs[state.slabs.length - 1];
+        plan.branches.forEach((branch, index) => {
+          addCorridorSlab(state.slabs, branch[0], branch[1], corridorWidth * (0.82 + rng() * 0.22), plan.points.length + index);
+          addJoinSlab(state.slabs, branch[1], corridorWidth * 0.86, plan.points.length + index);
+        });
+
+        updateLevelBounds();
+
+        for (const slab of state.slabs) {
+          addPlatformMesh(slab, platformMaterial, edgeMaterial, theme);
+        }
+
+        const first = plan.points[0];
+        const last = plan.points[plan.points.length - 1];
         state.spawn = {
           x: first.x,
-          z: first.z - first.length * 0.34,
+          z: first.z,
         };
         state.goal = {
           x: last.x,
-          z: last.z + last.length * 0.32,
+          z: last.z,
         };
 
         makeGoal(theme);
@@ -883,8 +1004,9 @@
       }
 
       function makeDecor(theme, rng) {
-        const startZ = state.slabs[0].z - state.slabs[0].length;
-        const endZ = state.goal.z + 2.5;
+        const bounds = state.levelBounds;
+        const startZ = bounds.minZ - 1.5;
+        const endZ = bounds.maxZ + 2.5;
         const count = 12 + Math.min(18, Math.floor(state.level / 3));
         const accentMaterial = new THREE.MeshStandardMaterial({
           color: theme.accent,
@@ -903,7 +1025,8 @@
         for (let i = 0; i < count; i += 1) {
           const side = rng() > 0.5 ? 1 : -1;
           const z = startZ + (endZ - startZ) * rng();
-          const x = side * (5.8 + rng() * 3.2);
+          const outsideEdge = side > 0 ? bounds.maxX : Math.abs(bounds.minX);
+          const x = side * (outsideEdge + 2.2 + rng() * 3.2);
           const y = 0.34 + rng() * 1.8;
           let mesh;
           if (theme.kind === "rainbow") {
@@ -959,10 +1082,13 @@
         state.grounded = true;
         state.pointerInput.x = 0;
         state.pointerInput.z = 0;
-        state.motionNeutral = null;
+        state.motionInput.x = 0;
+        state.motionInput.z = 0;
+        state.motionNeedsRecenter = true;
         camera.position.set(ball.position.x, 6.4, ball.position.z - 8.4);
         cameraTarget.set(ball.position.x, 0.4, ball.position.z + 3);
         camera.lookAt(cameraTarget);
+        recenterTilt(false);
       }
 
       function startRun() {
@@ -1177,72 +1303,142 @@
         state.pointerInput.z = 0;
       }
 
+      function applyTiltDeadzone(value) {
+        const deadzone = 1.15;
+        const magnitude = Math.abs(value);
+        if (magnitude <= deadzone) return 0;
+        return Math.sign(value) * (magnitude - deadzone);
+      }
+
+      function updateTiltButton() {
+        if (typeof DeviceOrientationEvent === "undefined") {
+          hud.tiltButton.textContent = "Drag";
+          hud.tiltButton.disabled = true;
+          return;
+        }
+
+        hud.tiltButton.disabled = false;
+        hud.tiltButton.textContent = state.motionReady ? "Recenter Tilt" : "Start Tilt";
+      }
+
+      function ensureMotionListener() {
+        if (state.motionListening || typeof DeviceOrientationEvent === "undefined") return;
+        window.addEventListener("deviceorientation", handleDeviceOrientation, true);
+        state.motionListening = true;
+      }
+
+      function recenterTilt(showStatus = true) {
+        state.motionInput.x = 0;
+        state.motionInput.z = 0;
+        if (state.lastOrientation) {
+          state.motionNeutral = {
+            beta: state.lastOrientation.beta,
+            gamma: state.lastOrientation.gamma,
+          };
+          state.motionNeedsRecenter = false;
+          if (showStatus) setStatus("Tilt Centered");
+          return;
+        }
+
+        state.motionNeutral = null;
+        state.motionNeedsRecenter = true;
+        if (showStatus) setStatus("Hold Level");
+      }
+
       function handleDeviceOrientation(event) {
         const beta = Number(event.beta);
         const gamma = Number(event.gamma);
         if (!Number.isFinite(beta) || !Number.isFinite(gamma)) return;
         state.motionSeen = true;
-        if (!state.motionNeutral) {
+        state.lastOrientation = { beta, gamma };
+        if (!state.motionReady) return;
+        if (!state.motionNeutral || state.motionNeedsRecenter) {
           state.motionNeutral = { beta, gamma };
+          state.motionNeedsRecenter = false;
         }
 
-        let side = gamma - state.motionNeutral.gamma;
-        let forward = beta - state.motionNeutral.beta;
+        const rawSide = gamma - state.motionNeutral.gamma;
+        const rawForward = beta - state.motionNeutral.beta;
         const angle = Number(screen.orientation?.angle ?? window.orientation ?? 0);
-        if (Math.abs(angle) === 90) {
-          side = beta - state.motionNeutral.beta;
-          forward = -(gamma - state.motionNeutral.gamma);
-          if (angle === -90 || angle === 270) {
-            side = -side;
-            forward = -forward;
-          }
+        let side = rawSide;
+        let forward = rawForward;
+
+        if (angle === 90) {
+          side = rawForward;
+          forward = -rawSide;
+        } else if (angle === -90 || angle === 270) {
+          side = -rawForward;
+          forward = rawSide;
+        } else if (Math.abs(angle) === 180) {
+          side = -rawSide;
+          forward = -rawForward;
         }
 
-        state.motionInput.x = clamp(side / 20, -1, 1);
-        state.motionInput.z = clamp(forward / 20, -1, 1);
-        if (state.motionReady) {
-          hud.tiltButton.textContent = "Tilt On";
-          hud.tiltButton.disabled = true;
-        }
+        const targetX = clamp(applyTiltDeadzone(side) / 14, -1, 1);
+        const targetZ = clamp(applyTiltDeadzone(forward) / 14, -1, 1);
+        state.motionInput.x += (targetX - state.motionInput.x) * 0.34;
+        state.motionInput.z += (targetZ - state.motionInput.z) * 0.34;
       }
 
-      async function enableTilt() {
-        state.motionNeutral = null;
+      async function enableTilt(options = {}) {
+        const quiet = options.quiet === true;
         try {
+          if (typeof DeviceOrientationEvent === "undefined") {
+            updateTiltButton();
+            if (!quiet) setStatus("Drag Works");
+            return false;
+          }
           if (typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function") {
             const result = await DeviceOrientationEvent.requestPermission();
             if (result !== "granted") {
+              state.motionReady = false;
+              updateTiltButton();
               setStatus("Tilt Blocked");
-              return;
+              return false;
             }
           }
           state.motionReady = true;
-          window.addEventListener("deviceorientation", handleDeviceOrientation, true);
-          hud.tiltButton.textContent = "Tilt On";
-          hud.tiltButton.disabled = true;
-          setStatus("Tilt On");
+          ensureMotionListener();
+          recenterTilt(false);
+          updateTiltButton();
+          if (!quiet) setStatus("Tilt On");
+          return true;
         } catch {
+          state.motionReady = false;
+          updateTiltButton();
           setStatus("Tilt Blocked");
+          return false;
         }
       }
 
-      if (typeof DeviceOrientationEvent === "undefined") {
-        hud.tiltButton.textContent = "Tilt";
-      } else {
-        window.addEventListener("deviceorientation", handleDeviceOrientation, true);
+      function initializeTilt() {
+        if (typeof DeviceOrientationEvent === "undefined") {
+          updateTiltButton();
+          return;
+        }
+
+        ensureMotionListener();
+        state.motionReady = typeof DeviceOrientationEvent.requestPermission !== "function";
+        updateTiltButton();
       }
 
-      hud.startButton.addEventListener("click", (event) => {
+      hud.startButton.addEventListener("click", async (event) => {
         event.preventDefault();
+        await enableTilt({ quiet: true });
         startRun();
       });
-      hud.restartButton.addEventListener("click", (event) => {
+      hud.restartButton.addEventListener("click", async (event) => {
         event.preventDefault();
+        await enableTilt({ quiet: true });
         restartLevel();
       });
-      hud.tiltButton.addEventListener("click", (event) => {
+      hud.tiltButton.addEventListener("click", async (event) => {
         event.preventDefault();
-        enableTilt();
+        if (state.motionReady) {
+          recenterTilt();
+        } else {
+          await enableTilt();
+        }
       });
       window.addEventListener("keydown", handleKeyDown, { passive: false });
       window.addEventListener("keyup", handleKeyUp);
@@ -1258,10 +1454,11 @@
       document.addEventListener("visibilitychange", () => {
         if (!document.hidden) {
           gameShell.focus({ preventScroll: true });
-          state.motionNeutral = null;
+          state.motionNeedsRecenter = true;
         }
       });
 
+      initializeTilt();
       loadLevel();
       resetBall();
       updateHud();
