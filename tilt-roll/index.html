@@ -384,6 +384,11 @@
       const PLATFORM_TOP = 0;
       const GRAVITY = 15;
       const BASE_ACCELERATION = 13.8;
+      const MOTION_SIDE_POLARITY = 1;
+      const MOTION_FORWARD_POLARITY = -1;
+      const ORIENTATION_SIDE_POLARITY = 1;
+      const ORIENTATION_FORWARD_POLARITY = -1;
+      const ORIENTATION_FALLBACK_DELAY = 2500;
       const MAX_PIXEL_RATIO = 2;
       const clamp = THREE.MathUtils.clamp;
       const scene = new THREE.Scene();
@@ -1283,7 +1288,9 @@
         if (state.grounded) {
           ballVelocity.x += input.x * acceleration * dt;
           ballVelocity.z += input.z * acceleration * dt;
-          const friction = Math.pow(inputStrength > 0.05 ? 0.986 : 0.82, dt * 60);
+          const inputDotVelocity = ballVelocity.x * input.x + ballVelocity.z * input.z;
+          const reversing = inputStrength > 0.1 && inputDotVelocity < -0.06;
+          const friction = Math.pow(reversing ? 0.91 : inputStrength > 0.05 ? 0.986 : 0.82, dt * 60);
           ballVelocity.x *= friction;
           ballVelocity.z *= friction;
         } else {
@@ -1548,8 +1555,8 @@
         const rawSide = x - state.motionNeutral.x;
         const rawForward = y - state.motionNeutral.y;
         const tilt = rotateDeviceTiltToScreen(rawSide, rawForward);
-        const targetX = clamp(-applyTiltDeadzone(tilt.side, 0.18) / 4.8, -1, 1);
-        const targetZ = clamp(-applyTiltDeadzone(tilt.forward, 0.18) / 4.8, -1, 1);
+        const targetX = clamp((MOTION_SIDE_POLARITY * applyTiltDeadzone(tilt.side, 0.18)) / 4.8, -1, 1);
+        const targetZ = clamp((MOTION_FORWARD_POLARITY * applyTiltDeadzone(tilt.forward, 0.18)) / 4.8, -1, 1);
         state.activeSensor = "motion";
         smoothMotionInput(targetX, targetZ, 0.32);
         syncSensorDebug();
@@ -1564,7 +1571,7 @@
         state.lastOrientationAt = performance.now();
         if (!state.motionReady) return;
 
-        if (state.activeSensor === "motion" && performance.now() - state.lastMotionAt < 900) return;
+        if (state.lastMotionAt > 0 && performance.now() - state.lastMotionAt < ORIENTATION_FALLBACK_DELAY) return;
 
         if (!state.motionNeutral || state.motionNeedsRecenter || state.motionNeutral.kind !== "orientation") {
           state.motionNeutral = { kind: "orientation", beta, gamma };
@@ -1574,8 +1581,8 @@
         const rawSide = gamma - state.motionNeutral.gamma;
         const rawForward = beta - state.motionNeutral.beta;
         const tilt = rotateDeviceTiltToScreen(rawSide, rawForward);
-        const targetX = clamp(-applyTiltDeadzone(tilt.side) / 13, -1, 1);
-        const targetZ = clamp(-applyTiltDeadzone(tilt.forward) / 13, -1, 1);
+        const targetX = clamp((ORIENTATION_SIDE_POLARITY * applyTiltDeadzone(tilt.side)) / 13, -1, 1);
+        const targetZ = clamp((ORIENTATION_FORWARD_POLARITY * applyTiltDeadzone(tilt.forward)) / 13, -1, 1);
         state.activeSensor = "orientation";
         smoothMotionInput(targetX, targetZ);
         syncSensorDebug();
