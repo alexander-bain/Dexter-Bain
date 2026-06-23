@@ -444,6 +444,8 @@
       const cameraTarget = new THREE.Vector3();
       const cameraGoal = new THREE.Vector3();
       const lookTarget = new THREE.Vector3();
+      const cameraForward = new THREE.Vector3();
+      const cameraRight = new THREE.Vector3();
 
       const state = {
         level: readStoredNumber("tiltRollLevel", 1),
@@ -463,6 +465,7 @@
         pointerStart: { x: 0, y: 0 },
         pointerInput: { x: 0, z: 0 },
         motionInput: { x: 0, z: 0 },
+        viewInput: { x: 0, z: 0 },
         motionReady: false,
         motionSeen: false,
         motionNeutral: null,
@@ -731,7 +734,7 @@
           for (let y = 42; y < 512; y += 82) {
             ctx.beginPath();
             ctx.moveTo(0, y);
-            ctx.lineTo(512, y + ((level + y) % 23) - 11);
+            ctx.lineTo(512, y);
             ctx.stroke();
           }
         }
@@ -867,6 +870,93 @@
         });
       }
 
+      function nearlyEqual(a, b) {
+        return Math.abs(a - b) < 0.001;
+      }
+
+      function uniqueSorted(values) {
+        return [...values]
+          .sort((a, b) => a - b)
+          .filter((value, index, list) => index === 0 || !nearlyEqual(value, list[index - 1]));
+      }
+
+      function slabContainsPoint(slab, x, z) {
+        return (
+          x >= slab.x - slab.width / 2 - 0.001 &&
+          x <= slab.x + slab.width / 2 + 0.001 &&
+          z >= slab.z - slab.length / 2 - 0.001 &&
+          z <= slab.z + slab.length / 2 + 0.001
+        );
+      }
+
+      function unionSlabs(rawSlabs) {
+        const xEdges = [];
+        const zEdges = [];
+        rawSlabs.forEach((slab) => {
+          xEdges.push(slab.x - slab.width / 2, slab.x + slab.width / 2);
+          zEdges.push(slab.z - slab.length / 2, slab.z + slab.length / 2);
+        });
+
+        const xs = uniqueSorted(xEdges);
+        const zs = uniqueSorted(zEdges);
+        const width = xs.length - 1;
+        const height = zs.length - 1;
+        const occupied = Array.from({ length: height }, () => Array(width).fill(false));
+        const used = Array.from({ length: height }, () => Array(width).fill(false));
+
+        for (let row = 0; row < height; row += 1) {
+          for (let col = 0; col < width; col += 1) {
+            const x = (xs[col] + xs[col + 1]) / 2;
+            const z = (zs[row] + zs[row + 1]) / 2;
+            occupied[row][col] = rawSlabs.some((slab) => slabContainsPoint(slab, x, z));
+          }
+        }
+
+        const merged = [];
+        for (let row = 0; row < height; row += 1) {
+          for (let col = 0; col < width; col += 1) {
+            if (!occupied[row][col] || used[row][col]) continue;
+
+            let endCol = col;
+            while (endCol < width && occupied[row][endCol] && !used[row][endCol]) {
+              endCol += 1;
+            }
+
+            let endRow = row + 1;
+            let canGrow = true;
+            while (endRow < height && canGrow) {
+              for (let scanCol = col; scanCol < endCol; scanCol += 1) {
+                if (!occupied[endRow][scanCol] || used[endRow][scanCol]) {
+                  canGrow = false;
+                  break;
+                }
+              }
+              if (canGrow) endRow += 1;
+            }
+
+            for (let markRow = row; markRow < endRow; markRow += 1) {
+              for (let markCol = col; markCol < endCol; markCol += 1) {
+                used[markRow][markCol] = true;
+              }
+            }
+
+            const x1 = xs[col];
+            const x2 = xs[endCol];
+            const z1 = zs[row];
+            const z2 = zs[endRow];
+            merged.push({
+              x: (x1 + x2) / 2,
+              z: (z1 + z2) / 2,
+              width: x2 - x1,
+              length: z2 - z1,
+              index: merged.length,
+            });
+          }
+        }
+
+        return merged;
+      }
+
       function updateLevelBounds() {
         state.levelBounds = state.slabs.reduce((bounds, slab) => {
           bounds.minX = Math.min(bounds.minX, slab.x - slab.width / 2);
@@ -924,29 +1014,30 @@
         const edgeMaterial = new THREE.LineBasicMaterial({
           color: theme.trim,
           transparent: true,
-          opacity: theme.kind === "lava" || theme.kind === "neon" ? 0.8 : 0.34,
+          opacity: theme.kind === "lava" || theme.kind === "neon" ? 0.46 : 0.18,
         });
         state.platformMaterial = platformMaterial;
         state.currentTheme = theme;
-        state.slabs = [];
+        const rawSlabs = [];
 
         const difficulty = Math.min(1, state.level / 82);
         const corridorWidth = clamp(5.2 - difficulty * 2.05 - Math.log10(state.level + 1) * 0.28, 2.15, 5.2);
         const plan = makeLevelPlan(state.level, rng, corridorWidth);
 
         plan.points.forEach((point, index) => {
-          addJoinSlab(state.slabs, point, corridorWidth, index);
+          addJoinSlab(rawSlabs, point, corridorWidth, index);
         });
 
         for (let index = 0; index < plan.points.length - 1; index += 1) {
-          addCorridorSlab(state.slabs, plan.points[index], plan.points[index + 1], corridorWidth, index);
+          addCorridorSlab(rawSlabs, plan.points[index], plan.points[index + 1], corridorWidth, index);
         }
 
         plan.branches.forEach((branch, index) => {
-          addCorridorSlab(state.slabs, branch[0], branch[1], corridorWidth * (0.82 + rng() * 0.22), plan.points.length + index);
-          addJoinSlab(state.slabs, branch[1], corridorWidth * 0.86, plan.points.length + index);
+          addCorridorSlab(rawSlabs, branch[0], branch[1], corridorWidth * (0.82 + rng() * 0.22), plan.points.length + index);
+          addJoinSlab(rawSlabs, branch[1], corridorWidth * 0.86, plan.points.length + index);
         });
 
+        state.slabs = unionSlabs(rawSlabs);
         updateLevelBounds();
 
         for (const slab of state.slabs) {
@@ -1084,6 +1175,8 @@
         state.pointerInput.z = 0;
         state.motionInput.x = 0;
         state.motionInput.z = 0;
+        state.viewInput.x = 0;
+        state.viewInput.z = 0;
         state.motionNeedsRecenter = true;
         camera.position.set(ball.position.x, 6.4, ball.position.z - 8.4);
         cameraTarget.set(ball.position.x, 0.4, ball.position.z + 3);
@@ -1138,13 +1231,33 @@
 
       function getInput() {
         const keyInput = getKeyboardInput();
-        let x = state.motionInput.x + state.pointerInput.x + keyInput.x;
-        let z = state.motionInput.z + state.pointerInput.z + keyInput.z;
-        const length = Math.hypot(x, z);
-        if (length > 1) {
-          x /= length;
-          z /= length;
+        let screenX = state.motionInput.x + state.pointerInput.x + keyInput.x;
+        let screenZ = state.motionInput.z + state.pointerInput.z + keyInput.z;
+        const screenLength = Math.hypot(screenX, screenZ);
+        if (screenLength > 1) {
+          screenX /= screenLength;
+          screenZ /= screenLength;
         }
+
+        cameraForward.subVectors(cameraTarget, camera.position);
+        cameraForward.y = 0;
+        if (cameraForward.lengthSq() < 0.001) {
+          cameraForward.set(0, 0, 1);
+        } else {
+          cameraForward.normalize();
+        }
+        cameraRight.set(cameraForward.z, 0, -cameraForward.x).normalize();
+
+        let x = cameraRight.x * screenX + cameraForward.x * screenZ;
+        let z = cameraRight.z * screenX + cameraForward.z * screenZ;
+        const worldLength = Math.hypot(x, z);
+        if (worldLength > 1) {
+          x /= worldLength;
+          z /= worldLength;
+        }
+
+        state.viewInput.x += (screenX - state.viewInput.x) * 0.12;
+        state.viewInput.z += (screenZ - state.viewInput.z) * 0.12;
         return { x, z };
       }
 
@@ -1206,16 +1319,23 @@
       }
 
       function updateCamera(dt) {
+        const viewX = state.viewInput.x;
+        const viewZ = state.viewInput.z;
         cameraGoal.set(
-          ball.position.x * 0.68,
-          5.8 + Math.min(2.4, state.level * 0.006),
-          ball.position.z - 8.5
+          ball.position.x * 0.68 + viewX * 1.4,
+          5.8 + Math.min(2.4, state.level * 0.006) + Math.abs(viewZ) * 0.45,
+          ball.position.z - 8.5 - viewZ * 1.15
         );
         const cameraEase = 1 - Math.pow(0.002, dt);
         camera.position.lerp(cameraGoal, cameraEase);
-        lookTarget.set(ball.position.x * 0.72, 0.38, ball.position.z + 2.3);
+        lookTarget.set(
+          ball.position.x * 0.72 + viewX * 2.2,
+          0.38,
+          ball.position.z + 2.3 + viewZ * 2.4
+        );
         cameraTarget.lerp(lookTarget, 1 - Math.pow(0.001, dt));
         camera.lookAt(cameraTarget);
+        camera.rotateZ(-viewX * 0.055);
       }
 
       function animateDecor(dt, elapsed) {
@@ -1330,6 +1450,8 @@
       function recenterTilt(showStatus = true) {
         state.motionInput.x = 0;
         state.motionInput.z = 0;
+        state.viewInput.x = 0;
+        state.viewInput.z = 0;
         if (state.lastOrientation) {
           state.motionNeutral = {
             beta: state.lastOrientation.beta,
@@ -1374,8 +1496,8 @@
           forward = -rawForward;
         }
 
-        const targetX = clamp(applyTiltDeadzone(side) / 14, -1, 1);
-        const targetZ = clamp(applyTiltDeadzone(forward) / 14, -1, 1);
+        const targetX = clamp(-applyTiltDeadzone(side) / 13, -1, 1);
+        const targetZ = clamp(-applyTiltDeadzone(forward) / 13, -1, 1);
         state.motionInput.x += (targetX - state.motionInput.x) * 0.34;
         state.motionInput.z += (targetZ - state.motionInput.z) * 0.34;
       }
@@ -1449,6 +1571,8 @@
       window.addEventListener("resize", handleResize);
       window.addEventListener("orientationchange", () => {
         state.motionNeutral = null;
+        state.viewInput.x = 0;
+        state.viewInput.z = 0;
         handleResize();
       });
       document.addEventListener("visibilitychange", () => {
