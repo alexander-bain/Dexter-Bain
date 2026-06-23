@@ -472,6 +472,10 @@
         motionNeedsRecenter: true,
         motionListening: false,
         lastOrientation: null,
+        lastAcceleration: null,
+        lastMotionAt: 0,
+        lastOrientationAt: 0,
+        activeSensor: "none",
         statusTimer: null,
       };
 
@@ -1423,15 +1427,75 @@
         state.pointerInput.z = 0;
       }
 
-      function applyTiltDeadzone(value) {
-        const deadzone = 1.15;
+      function applyTiltDeadzone(value, deadzone = 1.15) {
         const magnitude = Math.abs(value);
         if (magnitude <= deadzone) return 0;
         return Math.sign(value) * (magnitude - deadzone);
       }
 
+      function supportsDeviceMotion() {
+        return typeof DeviceMotionEvent !== "undefined";
+      }
+
+      function supportsDeviceOrientation() {
+        return typeof DeviceOrientationEvent !== "undefined";
+      }
+
+      function supportsTiltSensors() {
+        return supportsDeviceMotion() || supportsDeviceOrientation();
+      }
+
+      function needsSensorPermission() {
+        return [globalThis.DeviceMotionEvent, globalThis.DeviceOrientationEvent].some((EventCtor) => (
+          typeof EventCtor !== "undefined" && typeof EventCtor.requestPermission === "function"
+        ));
+      }
+
+      function normalizeScreenAngle(value) {
+        if (!Number.isFinite(value)) return 0;
+        const snapped = Math.round(value / 90) * 90;
+        return ((snapped % 360) + 360) % 360;
+      }
+
+      function getScreenAngle() {
+        const legacyAngle = Number(window.orientation);
+        if (Number.isFinite(legacyAngle)) return normalizeScreenAngle(legacyAngle);
+
+        const modernAngle = Number(screen.orientation?.angle);
+        if (Number.isFinite(modernAngle)) return normalizeScreenAngle(modernAngle);
+
+        return 0;
+      }
+
+      function rotateDeviceTiltToScreen(side, forward) {
+        const angle = getScreenAngle();
+        if (angle === 90) {
+          return { side: forward, forward: -side };
+        }
+        if (angle === 270) {
+          return { side: -forward, forward: side };
+        }
+        if (angle === 180) {
+          return { side: -side, forward: -forward };
+        }
+        return { side, forward };
+      }
+
+      function smoothMotionInput(targetX, targetZ, amount = 0.34) {
+        state.motionInput.x += (targetX - state.motionInput.x) * amount;
+        state.motionInput.z += (targetZ - state.motionInput.z) * amount;
+      }
+
+      function syncSensorDebug() {
+        gameShell.dataset.sensor = state.activeSensor;
+        gameShell.dataset.tiltX = state.motionInput.x.toFixed(3);
+        gameShell.dataset.tiltZ = state.motionInput.z.toFixed(3);
+        gameShell.dataset.screenAngle = String(getScreenAngle());
+        gameShell.dataset.neutral = state.motionNeutral?.kind ?? "none";
+      }
+
       function updateTiltButton() {
-        if (typeof DeviceOrientationEvent === "undefined") {
+        if (!supportsTiltSensors()) {
           hud.tiltButton.textContent = "Drag";
           hud.tiltButton.disabled = true;
           return;
@@ -1442,8 +1506,13 @@
       }
 
       function ensureMotionListener() {
-        if (state.motionListening || typeof DeviceOrientationEvent === "undefined") return;
-        window.addEventListener("deviceorientation", handleDeviceOrientation, true);
+        if (state.motionListening || !supportsTiltSensors()) return;
+        if (supportsDeviceMotion()) {
+          window.addEventListener("devicemotion", handleDeviceMotion, true);
+        }
+        if (supportsDeviceOrientation()) {
+          window.addEventListener("deviceorientation", handleDeviceOrientation, true);
+        }
         state.motionListening = true;
       }
 
@@ -1452,19 +1521,38 @@
         state.motionInput.z = 0;
         state.viewInput.x = 0;
         state.viewInput.z = 0;
-        if (state.lastOrientation) {
-          state.motionNeutral = {
-            beta: state.lastOrientation.beta,
-            gamma: state.lastOrientation.gamma,
-          };
-          state.motionNeedsRecenter = false;
-          if (showStatus) setStatus("Tilt Centered");
-          return;
-        }
-
         state.motionNeutral = null;
         state.motionNeedsRecenter = true;
+        state.activeSensor = "none";
+        syncSensorDebug();
         if (showStatus) setStatus("Hold Level");
+      }
+
+      function handleDeviceMotion(event) {
+        const acceleration = event.accelerationIncludingGravity;
+        const x = Number(acceleration?.x);
+        const y = Number(acceleration?.y);
+        const z = Number(acceleration?.z);
+        if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+
+        state.motionSeen = true;
+        state.lastAcceleration = { x, y, z: Number.isFinite(z) ? z : null };
+        state.lastMotionAt = performance.now();
+        if (!state.motionReady) return;
+
+        if (!state.motionNeutral || state.motionNeedsRecenter || state.motionNeutral.kind !== "motion") {
+          state.motionNeutral = { kind: "motion", x, y };
+          state.motionNeedsRecenter = false;
+        }
+
+        const rawSide = x - state.motionNeutral.x;
+        const rawForward = y - state.motionNeutral.y;
+        const tilt = rotateDeviceTiltToScreen(rawSide, rawForward);
+        const targetX = clamp(-applyTiltDeadzone(tilt.side, 0.18) / 4.8, -1, 1);
+        const targetZ = clamp(-applyTiltDeadzone(tilt.forward, 0.18) / 4.8, -1, 1);
+        state.activeSensor = "motion";
+        smoothMotionInput(targetX, targetZ, 0.32);
+        syncSensorDebug();
       }
 
       function handleDeviceOrientation(event) {
@@ -1473,56 +1561,55 @@
         if (!Number.isFinite(beta) || !Number.isFinite(gamma)) return;
         state.motionSeen = true;
         state.lastOrientation = { beta, gamma };
+        state.lastOrientationAt = performance.now();
         if (!state.motionReady) return;
-        if (!state.motionNeutral || state.motionNeedsRecenter) {
-          state.motionNeutral = { beta, gamma };
+
+        if (state.activeSensor === "motion" && performance.now() - state.lastMotionAt < 900) return;
+
+        if (!state.motionNeutral || state.motionNeedsRecenter || state.motionNeutral.kind !== "orientation") {
+          state.motionNeutral = { kind: "orientation", beta, gamma };
           state.motionNeedsRecenter = false;
         }
 
         const rawSide = gamma - state.motionNeutral.gamma;
         const rawForward = beta - state.motionNeutral.beta;
-        const angle = Number(screen.orientation?.angle ?? window.orientation ?? 0);
-        let side = rawSide;
-        let forward = rawForward;
-
-        if (angle === 90) {
-          side = rawForward;
-          forward = -rawSide;
-        } else if (angle === -90 || angle === 270) {
-          side = -rawForward;
-          forward = rawSide;
-        } else if (Math.abs(angle) === 180) {
-          side = -rawSide;
-          forward = -rawForward;
-        }
-
-        const targetX = clamp(-applyTiltDeadzone(side) / 13, -1, 1);
-        const targetZ = clamp(-applyTiltDeadzone(forward) / 13, -1, 1);
-        state.motionInput.x += (targetX - state.motionInput.x) * 0.34;
-        state.motionInput.z += (targetZ - state.motionInput.z) * 0.34;
+        const tilt = rotateDeviceTiltToScreen(rawSide, rawForward);
+        const targetX = clamp(-applyTiltDeadzone(tilt.side) / 13, -1, 1);
+        const targetZ = clamp(-applyTiltDeadzone(tilt.forward) / 13, -1, 1);
+        state.activeSensor = "orientation";
+        smoothMotionInput(targetX, targetZ);
+        syncSensorDebug();
       }
 
       async function enableTilt(options = {}) {
         const quiet = options.quiet === true;
         try {
-          if (typeof DeviceOrientationEvent === "undefined") {
+          if (!supportsTiltSensors()) {
             updateTiltButton();
             if (!quiet) setStatus("Drag Works");
             return false;
           }
-          if (typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function") {
-            const result = await DeviceOrientationEvent.requestPermission();
-            if (result !== "granted") {
-              state.motionReady = false;
-              updateTiltButton();
-              setStatus("Tilt Blocked");
-              return false;
-            }
+
+          const sensorSeenAtStart = Math.max(state.lastMotionAt, state.lastOrientationAt);
+          const [motionAllowed, orientationAllowed] = await Promise.all([
+            requestSensorAccess(globalThis.DeviceMotionEvent),
+            requestSensorAccess(globalThis.DeviceOrientationEvent),
+          ]);
+          if (!motionAllowed && !orientationAllowed) {
+            state.motionReady = false;
+            updateTiltButton();
+            setStatus("Tilt Blocked");
+            return false;
           }
+
           state.motionReady = true;
           ensureMotionListener();
           recenterTilt(false);
           updateTiltButton();
+          window.setTimeout(() => {
+            const latestSensorAt = Math.max(state.lastMotionAt, state.lastOrientationAt);
+            if (state.motionReady && latestSensorAt <= sensorSeenAtStart) setStatus("Tilt Waiting");
+          }, 1200);
           if (!quiet) setStatus("Tilt On");
           return true;
         } catch {
@@ -1533,14 +1620,24 @@
         }
       }
 
+      async function requestSensorAccess(EventCtor) {
+        if (typeof EventCtor === "undefined") return false;
+        if (typeof EventCtor.requestPermission !== "function") return true;
+        try {
+          return await EventCtor.requestPermission() === "granted";
+        } catch {
+          return false;
+        }
+      }
+
       function initializeTilt() {
-        if (typeof DeviceOrientationEvent === "undefined") {
+        if (!supportsTiltSensors()) {
           updateTiltButton();
           return;
         }
 
         ensureMotionListener();
-        state.motionReady = typeof DeviceOrientationEvent.requestPermission !== "function";
+        state.motionReady = !needsSensorPermission();
         updateTiltButton();
       }
 
@@ -1571,8 +1668,11 @@
       window.addEventListener("resize", handleResize);
       window.addEventListener("orientationchange", () => {
         state.motionNeutral = null;
+        state.motionNeedsRecenter = true;
+        state.activeSensor = "none";
         state.viewInput.x = 0;
         state.viewInput.z = 0;
+        syncSensorDebug();
         handleResize();
       });
       document.addEventListener("visibilitychange", () => {
@@ -1586,6 +1686,16 @@
       loadLevel();
       resetBall();
       updateHud();
+      window.tiltRollDebug = () => ({
+        motionReady: state.motionReady,
+        motionSeen: state.motionSeen,
+        activeSensor: state.activeSensor,
+        screenAngle: getScreenAngle(),
+        input: { ...state.motionInput },
+        neutralKind: state.motionNeutral?.kind ?? null,
+        lastAcceleration: state.lastAcceleration,
+        lastOrientation: state.lastOrientation,
+      });
       renderer.setAnimationLoop(loop);
     }
   </script>
