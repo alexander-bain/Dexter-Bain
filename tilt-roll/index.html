@@ -382,6 +382,7 @@
 
       const BALL_RADIUS = 0.42;
       const PLATFORM_TOP = 0;
+      const PLATFORM_THICKNESS = 0.14;
       const GRAVITY = 15;
       const BASE_ACCELERATION = 13.8;
       const REVERSE_ACCELERATION_BOOST = 2.45;
@@ -516,6 +517,10 @@
           hex: color.getHex(),
           css: `#${color.getHexString()}`,
         };
+      }
+
+      function snapToGrid(value) {
+        return Math.round(value * 2) / 2;
       }
 
       function themeForLevel(level) {
@@ -662,52 +667,55 @@
           });
           ctx.fillStyle = gradient;
           ctx.fillRect(0, 0, 512, 512);
-          ctx.fillStyle = "rgba(255,255,255,0.58)";
-          for (let i = 0; i < 48; i += 1) {
-            const x = (i * 97 + level * 19) % 512;
-            const y = (i * 53 + level * 37) % 512;
-            drawStar(ctx, x, y, 7 + (i % 4), 0.58);
+          ctx.strokeStyle = "rgba(255,255,255,0.42)";
+          ctx.lineWidth = 4;
+          for (let y = 48; y < 512; y += 72) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(512, y);
+            ctx.stroke();
           }
         } else if (theme.kind === "lava") {
           ctx.fillStyle = "#15100f";
           ctx.fillRect(0, 0, 512, 512);
           ctx.strokeStyle = "#ff4d00";
-          ctx.lineWidth = 7;
-          for (let i = 0; i < 18; i += 1) {
+          ctx.lineWidth = 5;
+          for (let y = 36; y < 512; y += 66) {
             ctx.beginPath();
-            let x = (i * 83 + level * 41) % 512;
-            let y = (i * 131 + level * 23) % 512;
-            ctx.moveTo(x, y);
-            for (let j = 0; j < 4; j += 1) {
-              x += 24 + ((i + j) % 3) * 16;
-              y += ((i * j + level) % 45) - 22;
-              ctx.lineTo(x, y);
-            }
+            ctx.moveTo(0, y);
+            ctx.lineTo(512, y);
             ctx.stroke();
           }
           ctx.strokeStyle = "#ffb703";
           ctx.lineWidth = 2;
-          ctx.stroke();
+          for (let y = 68; y < 512; y += 132) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(512, y);
+            ctx.stroke();
+          }
         } else if (theme.kind === "ocean") {
           ctx.strokeStyle = "rgba(255,255,255,0.38)";
-          ctx.lineWidth = 8;
-          for (let y = -40; y < 560; y += 44) {
+          ctx.lineWidth = 5;
+          for (let y = 38; y < 512; y += 58) {
             ctx.beginPath();
-            for (let x = 0; x <= 540; x += 22) {
-              const waveY = y + Math.sin((x + level * 13) / 34) * 14;
-              if (x === 0) ctx.moveTo(x, waveY);
-              else ctx.lineTo(x, waveY);
-            }
+            ctx.moveTo(0, y);
+            ctx.lineTo(512, y);
             ctx.stroke();
           }
         } else if (theme.kind === "ice") {
           ctx.strokeStyle = "rgba(8,145,178,0.34)";
           ctx.lineWidth = 3;
-          for (let i = 0; i < 34; i += 1) {
-            const x = (i * 73 + level * 11) % 512;
+          for (let x = 0; x <= 512; x += 86) {
             ctx.beginPath();
             ctx.moveTo(x, 0);
-            ctx.lineTo((x + 170 + i * 9) % 512, 512);
+            ctx.lineTo(x, 512);
+            ctx.stroke();
+          }
+          for (let y = 0; y <= 512; y += 86) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(512, y);
             ctx.stroke();
           }
         } else if (theme.kind === "neon") {
@@ -732,11 +740,11 @@
           ctx.fillStyle = base;
           ctx.fillRect(0, 0, 512, 512);
           ctx.strokeStyle = "rgba(255,255,255,0.66)";
-          ctx.lineWidth = 34;
-          for (let x = -512; x < 768; x += 92) {
+          ctx.lineWidth = 18;
+          for (let y = 36; y < 512; y += 74) {
             ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x + 512, 512);
+            ctx.moveTo(0, y);
+            ctx.lineTo(512, y);
             ctx.stroke();
           }
         } else {
@@ -750,34 +758,17 @@
           }
         }
 
-        ctx.fillStyle = "rgba(255,255,255,0.24)";
-        ctx.fillRect(0, 0, 512, 18);
-        ctx.fillStyle = "rgba(15,23,42,0.14)";
-        ctx.fillRect(0, 494, 512, 18);
+        ctx.fillStyle = "rgba(255,255,255,0.14)";
+        ctx.fillRect(0, 0, 512, 10);
+        ctx.fillStyle = "rgba(15,23,42,0.08)";
+        ctx.fillRect(0, 502, 512, 10);
 
         const texture = new THREE.CanvasTexture(textureCanvas);
         texture.colorSpace = THREE.SRGBColorSpace;
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;
-        texture.repeat.set(1, 2);
+        texture.repeat.set(1, 1);
         return texture;
-      }
-
-      function drawStar(ctx, cx, cy, radius, opacity) {
-        ctx.save();
-        ctx.globalAlpha = opacity;
-        ctx.beginPath();
-        for (let i = 0; i < 10; i += 1) {
-          const angle = -Math.PI / 2 + (i * Math.PI) / 5;
-          const r = i % 2 === 0 ? radius : radius * 0.46;
-          const x = cx + Math.cos(angle) * r;
-          const y = cy + Math.sin(angle) * r;
-          if (i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.closePath();
-        ctx.fill();
-        ctx.restore();
       }
 
       function makeLevelPlan(level, rng, corridorWidth) {
@@ -785,7 +776,6 @@
         const turnCount = 5 + Math.min(11, Math.floor(Math.sqrt(level) * 1.45)) + (level % 2);
         const maxX = 7.5 + Math.min(2.2, level * 0.018);
         const points = [{ x: 0, z: -7.5 }];
-        const branches = [];
         let x = 0;
         let z = -7.5;
         let horizontalSign = rng() > 0.5 ? 1 : -1;
@@ -793,56 +783,22 @@
         for (let index = 0; index < turnCount; index += 1) {
           if (index % 2 === 0) {
             const forward = 3.7 + rng() * 3.1 + difficulty * 1.7;
-            z += forward;
+            z = snapToGrid(z + forward);
           } else {
             const sideways = 3.2 + rng() * 5.4 + difficulty * 2.4;
-            x = clamp(x + horizontalSign * sideways, -maxX, maxX);
+            x = snapToGrid(clamp(x + horizontalSign * sideways, -maxX, maxX));
             if (rng() > 0.18) horizontalSign *= -1;
           }
           points.push({ x, z });
         }
 
         if (points[points.length - 1].z < 15 + level * 0.12) {
-          z += 4.4 + rng() * 3.4;
+          z = snapToGrid(z + 4.4 + rng() * 3.4);
           points.push({ x, z });
-        }
-
-        const branchCount = 2 + Math.min(5, Math.floor(level / 7)) + (level % 3 === 0 ? 1 : 0);
-        for (let index = 0; index < branchCount; index += 1) {
-          const anchorIndex = 1 + Math.floor(rng() * Math.max(1, points.length - 2));
-          const anchor = points[anchorIndex];
-          const isDropLeg = index === 0 || rng() > 0.52;
-          const direction = rng() > 0.5 ? 1 : -1;
-          const length = 2.9 + rng() * 5.8 + difficulty * 2.2;
-          const branchStart = { x: anchor.x, z: anchor.z };
-          let branchEnd;
-
-          if (isDropLeg) {
-            branchEnd = { x: anchor.x, z: anchor.z - length };
-          } else {
-            branchEnd = {
-              x: clamp(anchor.x + direction * length, -maxX - 1.8, maxX + 1.8),
-              z: anchor.z,
-            };
-          }
-          branches.push([branchStart, branchEnd]);
-
-          if (rng() > 0.56) {
-            const hookDirection = rng() > 0.5 ? 1 : -1;
-            const hookLength = 2.2 + rng() * 3.6;
-            branches.push([
-              branchEnd,
-              {
-                x: clamp(branchEnd.x + hookDirection * hookLength, -maxX - 2.4, maxX + 2.4),
-                z: branchEnd.z,
-              },
-            ]);
-          }
         }
 
         return {
           points,
-          branches,
           corridorWidth,
         };
       }
@@ -867,17 +823,6 @@
           width: corridorWidth,
           length: Math.abs(dz) + corridorWidth,
           index,
-        });
-      }
-
-      function addJoinSlab(slabs, point, corridorWidth, index) {
-        slabs.push({
-          x: point.x,
-          z: point.z,
-          width: corridorWidth * 1.08,
-          length: corridorWidth * 1.08,
-          index,
-          isJoin: true,
         });
       }
 
@@ -983,22 +928,15 @@
         });
       }
 
-      function addPlatformMesh(slab, platformMaterial, edgeMaterial, theme) {
+      function addPlatformMesh(slab, platformMaterial, theme) {
         const mesh = new THREE.Mesh(
-          new THREE.BoxGeometry(slab.width, 0.3, slab.length),
+          new THREE.BoxGeometry(slab.width, PLATFORM_THICKNESS, slab.length),
           platformMaterial
         );
-        mesh.position.set(slab.x, PLATFORM_TOP - 0.15, slab.z);
+        mesh.position.set(slab.x, PLATFORM_TOP - PLATFORM_THICKNESS / 2, slab.z);
         mesh.receiveShadow = true;
         mesh.castShadow = theme.kind === "lava" || theme.kind === "neon";
         platformGroup.add(mesh);
-
-        const edges = new THREE.LineSegments(
-          new THREE.EdgesGeometry(mesh.geometry),
-          edgeMaterial
-        );
-        edges.position.copy(mesh.position);
-        platformGroup.add(edges);
       }
 
       function loadLevel() {
@@ -1022,37 +960,23 @@
           emissive: theme.kind === "lava" || theme.kind === "neon" ? theme.accent : 0x000000,
           emissiveIntensity: emissiveStrength,
         });
-        const edgeMaterial = new THREE.LineBasicMaterial({
-          color: theme.trim,
-          transparent: true,
-          opacity: theme.kind === "lava" || theme.kind === "neon" ? 0.46 : 0.18,
-        });
         state.platformMaterial = platformMaterial;
         state.currentTheme = theme;
         const rawSlabs = [];
 
         const difficulty = Math.min(1, state.level / 82);
-        const corridorWidth = clamp(5.2 - difficulty * 2.05 - Math.log10(state.level + 1) * 0.28, 2.15, 5.2);
+        const corridorWidth = snapToGrid(clamp(5.2 - difficulty * 2.05 - Math.log10(state.level + 1) * 0.28, 2.5, 5.2));
         const plan = makeLevelPlan(state.level, rng, corridorWidth);
-
-        plan.points.forEach((point, index) => {
-          addJoinSlab(rawSlabs, point, corridorWidth, index);
-        });
 
         for (let index = 0; index < plan.points.length - 1; index += 1) {
           addCorridorSlab(rawSlabs, plan.points[index], plan.points[index + 1], corridorWidth, index);
         }
 
-        plan.branches.forEach((branch, index) => {
-          addCorridorSlab(rawSlabs, branch[0], branch[1], corridorWidth * (0.82 + rng() * 0.22), plan.points.length + index);
-          addJoinSlab(rawSlabs, branch[1], corridorWidth * 0.86, plan.points.length + index);
-        });
-
         state.slabs = unionSlabs(rawSlabs);
         updateLevelBounds();
 
         for (const slab of state.slabs) {
-          addPlatformMesh(slab, platformMaterial, edgeMaterial, theme);
+          addPlatformMesh(slab, platformMaterial, theme);
         }
 
         const first = plan.points[0];
