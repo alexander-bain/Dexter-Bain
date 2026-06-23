@@ -384,6 +384,8 @@
       const PLATFORM_TOP = 0;
       const GRAVITY = 15;
       const BASE_ACCELERATION = 13.8;
+      const REVERSE_ACCELERATION_BOOST = 2.45;
+      const REVERSE_BRAKE_FRICTION = 0.66;
       const MOTION_SIDE_POLARITY = 1;
       const MOTION_FORWARD_POLARITY = -1;
       const ORIENTATION_SIDE_POLARITY = 1;
@@ -1284,13 +1286,16 @@
         const input = getInput();
         const inputStrength = Math.hypot(input.x, input.z);
         const acceleration = BASE_ACCELERATION + Math.min(state.level, 140) * 0.018;
+        const speedAgainstInput = inputStrength > 0.01
+          ? (ballVelocity.x * input.x + ballVelocity.z * input.z) / inputStrength
+          : 0;
+        const reversing = inputStrength > 0.1 && speedAgainstInput < -0.05;
+        const moveAcceleration = acceleration * (reversing ? REVERSE_ACCELERATION_BOOST : 1);
 
         if (state.grounded) {
-          ballVelocity.x += input.x * acceleration * dt;
-          ballVelocity.z += input.z * acceleration * dt;
-          const inputDotVelocity = ballVelocity.x * input.x + ballVelocity.z * input.z;
-          const reversing = inputStrength > 0.1 && inputDotVelocity < -0.06;
-          const friction = Math.pow(reversing ? 0.91 : inputStrength > 0.05 ? 0.986 : 0.82, dt * 60);
+          ballVelocity.x += input.x * moveAcceleration * dt;
+          ballVelocity.z += input.z * moveAcceleration * dt;
+          const friction = Math.pow(reversing ? REVERSE_BRAKE_FRICTION : inputStrength > 0.05 ? 0.986 : 0.82, dt * 60);
           ballVelocity.x *= friction;
           ballVelocity.z *= friction;
         } else {
