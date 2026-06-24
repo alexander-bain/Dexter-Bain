@@ -329,6 +329,7 @@
         <button class="button primary" id="tiltButton" type="button">Recenter Tilt</button>
         <button class="button" id="restartButton" type="button">Restart</button>
         <button class="button" id="previewButton" type="button">Preview</button>
+        <button class="button" id="rebirthButton" type="button">Rebirth</button>
         <button class="button" id="adminCodeButton" type="button">Admin Code</button>
         <a class="button" href="../index.html">Arcade</a>
       </div>
@@ -390,6 +391,7 @@
         restartButton: document.getElementById("restartButton"),
         quickRestartButton: document.getElementById("quickRestartButton"),
         previewButton: document.getElementById("previewButton"),
+        rebirthButton: document.getElementById("rebirthButton"),
         adminCodeButton: document.getElementById("adminCodeButton"),
         tiltButton: document.getElementById("tiltButton"),
         statusLine: document.getElementById("statusLine"),
@@ -1282,6 +1284,26 @@
         setStatus(`Level ${state.level.toLocaleString()}`);
       }
 
+      function rebirth() {
+        if (!window.confirm("Are you sure?")) return;
+        if (!window.confirm("Are you positive?")) return;
+        if (!window.confirm("This nukes your progress: level 1, best score 1.")) return;
+        if (!window.confirm("Final call?")) return;
+
+        stopPreview(false, false);
+        state.level = 1;
+        state.best = 1;
+        state.falls = 0;
+        saveProgress();
+        loadLevel();
+        resetBall();
+        state.running = false;
+        hud.startPanel.classList.remove("is-hidden");
+        updateHud();
+        gameShell.focus({ preventScroll: true });
+        setStatus("Rebirthed");
+      }
+
       function openAdminCode() {
         const code = window.prompt("Admin code");
         if (code === null) return;
@@ -1792,6 +1814,10 @@
       hud.previewButton.addEventListener("click", (event) => {
         event.preventDefault();
         togglePreview();
+      });
+      hud.rebirthButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        rebirth();
       });
       hud.adminCodeButton.addEventListener("click", (event) => {
         event.preventDefault();
