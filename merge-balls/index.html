@@ -466,13 +466,13 @@
 
       function updateWorld() {
         const bottomGap = Math.max(78, Math.min(118, height * 0.13));
-        const topWidth = Math.min(width * 0.43, 330);
+        const topWidth = Math.min(width * 0.36, 285);
         const bottomWidth = topWidth * 0.48;
         const centerX = width * 0.5;
         const bottomY = height - bottomGap;
         const oldWallHeight = clamp(height * 0.58, 300, 430);
         const dropY = Math.max(108, bottomY - oldWallHeight);
-        const wallHeight = oldWallHeight * 0.5;
+        const wallHeight = oldWallHeight * 0.42;
         const topY = Math.max(108, bottomY - wallHeight);
 
         world = {
