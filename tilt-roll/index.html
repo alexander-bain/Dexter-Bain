@@ -226,6 +226,15 @@
       transform: translate(-50%, -4px);
     }
 
+    .quick-restart {
+      position: fixed;
+      right: max(14px, env(safe-area-inset-right));
+      bottom: max(14px, env(safe-area-inset-bottom));
+      z-index: 4;
+      min-width: 104px;
+      pointer-events: auto;
+    }
+
     .fatal {
       position: fixed;
       inset: 0;
@@ -329,6 +338,7 @@
       <button class="button primary" id="startButton" type="button">Start</button>
     </div>
 
+    <button class="button quick-restart" id="quickRestartButton" type="button">Restart</button>
     <div class="status-line panel" id="statusLine">Ready</div>
     <div class="fatal" id="fatal">Tilt Roll 3D could not load the 3D engine.</div>
   </main>
@@ -376,6 +386,7 @@
         panelTheme: document.getElementById("panelTheme"),
         startButton: document.getElementById("startButton"),
         restartButton: document.getElementById("restartButton"),
+        quickRestartButton: document.getElementById("quickRestartButton"),
         tiltButton: document.getElementById("tiltButton"),
         statusLine: document.getElementById("statusLine"),
       };
@@ -965,7 +976,7 @@
         const rawSlabs = [];
 
         const difficulty = Math.min(1, state.level / 82);
-        const corridorWidth = snapToGrid(clamp(5.2 - difficulty * 2.05 - Math.log10(state.level + 1) * 0.28, 2.5, 5.2));
+        const corridorWidth = snapToGrid(clamp(4.25 - difficulty * 1.45 - Math.log10(state.level + 1) * 0.22, 1.85, 4.25));
         const plan = makeLevelPlan(state.level, rng, corridorWidth);
 
         for (let index = 0; index < plan.points.length - 1; index += 1) {
@@ -1583,6 +1594,11 @@
         startRun();
       });
       hud.restartButton.addEventListener("click", async (event) => {
+        event.preventDefault();
+        await enableTilt({ quiet: true });
+        restartLevel();
+      });
+      hud.quickRestartButton.addEventListener("click", async (event) => {
         event.preventDefault();
         await enableTilt({ quiet: true });
         restartLevel();
