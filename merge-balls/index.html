@@ -465,13 +465,13 @@
       }
 
       function updateWorld() {
-        const topGap = Math.max(112, Math.min(176, height * 0.2));
         const bottomGap = Math.max(78, Math.min(118, height * 0.13));
         const topWidth = Math.min(width * 0.86, 660);
         const bottomWidth = topWidth * 0.48;
         const centerX = width * 0.5;
-        const topY = topGap;
-        const bottomY = Math.max(topY + 310, height - bottomGap);
+        const bottomY = height - bottomGap;
+        const wallHeight = clamp(height * 0.58, 300, 430);
+        const topY = Math.max(108, bottomY - wallHeight);
 
         world = {
           topY,
@@ -573,9 +573,9 @@
 
         const r = tierRadius(nextType);
         const x = clamp(dropX, world.leftTopX + r + 8, world.rightTopX - r - 8);
-        balls.push(makeBall(nextType, x, world.topY - r * 1.8, (Math.random() - 0.5) * 34, 20, 1350));
+        balls.push(makeBall(nextType, x, world.topY - r * 1.8, (Math.random() - 0.5) * 22, 8, 1800));
         nextType = randomDropType();
-        dropCooldown = 330;
+        dropCooldown = 420;
         updateNextFace();
       }
 
@@ -650,8 +650,8 @@
           ball.y += edge.ny * correction;
           const normalVelocity = ball.vx * edge.nx + ball.vy * edge.ny;
           if (normalVelocity < 0) {
-            ball.vx -= normalVelocity * 1.24 * edge.nx;
-            ball.vy -= normalVelocity * 1.24 * edge.ny;
+            ball.vx -= normalVelocity * 1.06 * edge.nx;
+            ball.vy -= normalVelocity * 1.06 * edge.ny;
           }
           const tx = -edge.ny;
           const ty = edge.nx;
@@ -659,7 +659,7 @@
           ball.vx -= tangentVelocity * 0.035 * tx;
           ball.vy -= tangentVelocity * 0.035 * ty;
           ball.av += tangentVelocity * 0.0009;
-          ball.squish = Math.max(ball.squish, clamp((correction / ball.r) * 1.45, 0, 1.18));
+          ball.squish = Math.max(ball.squish, clamp((correction / ball.r) * 1.18, 0, 1.04));
           ball.squishAngle = Math.atan2(edge.ny, edge.nx);
         }
       }
@@ -706,7 +706,7 @@
         const relVy = b.vy - a.vy;
         const velocityAlongNormal = relVx * nx + relVy * ny;
         if (velocityAlongNormal < 0) {
-          const bounce = 0.18;
+          const bounce = 0.1;
           const impulse = (-(1 + bounce) * velocityAlongNormal) / invTotal;
           a.vx -= impulse * invA * nx;
           a.vy -= impulse * invA * ny;
@@ -717,7 +717,7 @@
         const tx = -ny;
         const ty = nx;
         const tangentVelocity = relVx * tx + relVy * ty;
-        const friction = tangentVelocity * 0.018;
+        const friction = tangentVelocity * 0.026;
         a.vx += friction * tx;
         a.vy += friction * ty;
         b.vx -= friction * tx;
@@ -725,7 +725,7 @@
         a.av -= tangentVelocity * 0.00022;
         b.av += tangentVelocity * 0.00022;
 
-        const squish = clamp((overlap / Math.min(a.r, b.r)) * 1.18, 0, 1.18);
+        const squish = clamp((overlap / Math.min(a.r, b.r)) * 1.32, 0, 1.08);
         a.squish = Math.max(a.squish, squish);
         b.squish = Math.max(b.squish, squish);
         a.squishAngle = Math.atan2(-ny, -nx);
@@ -781,18 +781,18 @@
       function updatePhysics(dt, now) {
         const step = Math.min(dt, 1 / 45);
         dropCooldown = Math.max(0, dropCooldown - step * 1000);
-        const gravity = 1780;
+        const gravity = 1360;
 
         for (const ball of balls) {
           updateBlink(ball, now);
           ball.vy += gravity * step;
-          ball.vx *= 0.999;
-          ball.vy *= 0.999;
+          ball.vx *= 0.994;
+          ball.vy *= 0.995;
           ball.x += ball.vx * step;
           ball.y += ball.vy * step;
           ball.angle += ball.av * step;
           ball.av *= 0.992;
-          ball.squish *= Math.pow(0.055, step);
+          ball.squish *= Math.pow(0.01, step);
         }
 
         const candidates = [];
@@ -837,14 +837,14 @@
             ball.y - ball.r > height + 80 ||
             ball.x + ball.r < -80 ||
             ball.x - ball.r > width + 80;
-          const aboveRim = ball.y < world.topY - ball.r * 0.2;
-          const leftWall = leftAtY(ball.y) - ball.r * 0.42;
-          const rightWall = rightAtY(ball.y) + ball.r * 0.42;
+          const aboveRim = ball.y < world.topY - ball.r * 1.15;
+          const leftWall = leftAtY(ball.y) - ball.r * 0.98;
+          const rightWall = rightAtY(ball.y) + ball.r * 0.98;
           const outsideSide = ball.y > world.topY + ball.r * 0.35 && (ball.x < leftWall || ball.x > rightWall);
 
           if (outOfScreen || aboveRim || outsideSide) {
             ball.outSince = ball.outSince || now;
-            if (now - ball.outSince > 620 || outOfScreen) {
+            if (now - ball.outSince > 1100 || outOfScreen) {
               setGameOver();
               return;
             }
@@ -960,7 +960,7 @@
           vy: Math.sin(now * 0.006) * 24,
           r,
           angle: 0,
-          squish: 0.08 + Math.abs(Math.sin(now * 0.006)) * 0.08,
+          squish: 0,
           squishAngle: Math.PI / 2,
           blink: Math.max(0, Math.sin(now * 0.003) > 0.985 ? 1 : 0)
         }, now, true);
@@ -969,12 +969,9 @@
       function drawBallVisual(ball, now, preview = false) {
         const tier = tiers[ball.type];
         const r = ball.r;
-        const age = now - (ball.born || now);
-        const fallStretch = clamp(Math.abs(ball.vy) / 2600, 0, 0.2);
-        const squish = clamp(ball.squish || 0, 0, 1.18);
-        const wobble = Math.sin(age * 0.012 + ball.id * 1.7) * 0.042;
-        const sx = clamp(1 + squish * 0.66 - fallStretch * 0.36 + wobble, 0.62, 1.86);
-        const sy = clamp(1 - squish * 0.44 + fallStretch * 0.58 - wobble * 0.45, 0.54, 1.64);
+        const squish = clamp(ball.squish || 0, 0, 1.08);
+        const sx = clamp(1 + squish * 0.64, 1, 1.72);
+        const sy = clamp(1 - squish * 0.38, 0.6, 1);
         const lookSource = pointer.active ? pointer : { x: dropX, y: world.topY };
         const lookX = clamp((lookSource.x - ball.x) / 260, -1, 1) * r * 0.1;
         const lookY = clamp((lookSource.y - ball.y) / 260, -1, 1) * r * 0.08;
@@ -1017,19 +1014,23 @@
       }
 
       function drawBlobPath(ball, r, now, squish) {
+        if (squish < 0.03) {
+          ctx.beginPath();
+          ctx.ellipse(0, 0, r, r, 0, 0, Math.PI * 2);
+          return;
+        }
+
         const points = [];
         const count = 20;
         const seed = ball.id * 1.91;
-        const age = now - (ball.born || now);
-        const pulse = Math.sin(age * 0.01 + seed) * 0.035;
 
         for (let i = 0; i < count; i += 1) {
           const angle = (i / count) * Math.PI * 2;
-          const ripple =
-            Math.sin(angle * 3 + now * 0.009 + seed) * 0.038 +
-            Math.sin(angle * 5 - now * 0.006 + seed * 0.7) * 0.026;
           const sideBulge = Math.sin(angle * 2) * squish * 0.055;
-          const radius = r * (1 + ripple + sideBulge + pulse);
+          const contactDent = Math.max(0, Math.cos(angle)) * squish * 0.06;
+          const contactBulge = Math.max(0, -Math.cos(angle)) * squish * 0.08;
+          const tinyUnevenness = Math.sin(angle * 3 + seed) * squish * 0.016;
+          const radius = r * (1 + sideBulge - contactDent + contactBulge + tinyUnevenness);
           points.push({
             x: Math.cos(angle) * radius,
             y: Math.sin(angle) * radius
