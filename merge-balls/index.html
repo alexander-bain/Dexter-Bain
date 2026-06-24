@@ -466,15 +466,18 @@
 
       function updateWorld() {
         const bottomGap = Math.max(78, Math.min(118, height * 0.13));
-        const topWidth = Math.min(width * 0.86, 660);
+        const topWidth = Math.min(width * 0.43, 330);
         const bottomWidth = topWidth * 0.48;
         const centerX = width * 0.5;
         const bottomY = height - bottomGap;
-        const wallHeight = clamp(height * 0.58, 300, 430);
+        const oldWallHeight = clamp(height * 0.58, 300, 430);
+        const dropY = Math.max(108, bottomY - oldWallHeight);
+        const wallHeight = oldWallHeight * 0.5;
         const topY = Math.max(108, bottomY - wallHeight);
 
         world = {
           topY,
+          dropY,
           bottomY,
           leftTopX: centerX - topWidth * 0.5,
           rightTopX: centerX + topWidth * 0.5,
@@ -496,7 +499,7 @@
 
         dropX = clamp(dropX || centerX, world.leftTopX + 24, world.rightTopX - 24);
         pointer.x = pointer.x || dropX;
-        pointer.y = pointer.y || world.topY;
+        pointer.y = pointer.y || world.dropY;
       }
 
       function makeEdge(ax, ay, bx, by) {
@@ -573,7 +576,7 @@
 
         const r = tierRadius(nextType);
         const x = clamp(dropX, world.leftTopX + r + 8, world.rightTopX - r - 8);
-        balls.push(makeBall(nextType, x, world.topY - r * 1.8, (Math.random() - 0.5) * 22, 8, 1800));
+        balls.push(makeBall(nextType, x, world.dropY - r * 1.8, (Math.random() - 0.5) * 22, 8, 1800));
         nextType = randomDropType();
         dropCooldown = 420;
         updateNextFace();
@@ -939,7 +942,7 @@
         const type = nextType;
         const r = tierRadius(type);
         const x = clamp(dropX, world.leftTopX + r + 8, world.rightTopX - r - 8);
-        const y = world.topY - r * 1.88;
+        const y = world.dropY - r * 1.88;
 
         ctx.save();
         ctx.setLineDash([5, 12]);
@@ -972,7 +975,7 @@
         const squish = clamp(ball.squish || 0, 0, 1.2);
         const sx = clamp(1 + squish * 0.22, 1, 1.32);
         const sy = clamp(1 - squish * 0.12, 0.82, 1);
-        const lookSource = pointer.active ? pointer : { x: dropX, y: world.topY };
+        const lookSource = pointer.active ? pointer : { x: dropX, y: world.dropY };
         const lookX = clamp((lookSource.x - ball.x) / 260, -1, 1) * r * 0.1;
         const lookY = clamp((lookSource.y - ball.y) / 260, -1, 1) * r * 0.08;
         const blink = clamp(ball.blink || 0, 0, 1);
