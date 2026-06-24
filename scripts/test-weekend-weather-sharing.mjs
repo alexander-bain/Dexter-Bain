@@ -146,6 +146,15 @@ async function run() {
   const server = createStaticServer({ apiBase });
   const port = await waitForServer(server);
   const url = `http://127.0.0.1:${port}/minigames/index.html`;
+  const pickTargetGame = `
+    (() => {
+      const buttons = [...document.querySelectorAll("[data-game]")];
+      return buttons.find((button) => button.dataset.game.includes("weather-weekend"))
+        || buttons.find((button) => button.dataset.game.includes("daily-weather-"))
+        || buttons[0]
+        || null;
+    })()
+  `;
 
   try {
     const submitResult = await withChrome(url, `
@@ -155,7 +164,10 @@ async function run() {
           if (typeof currentGame === "function" && eventTabs.children.length) break;
           await wait(100);
         }
-        const gameButton = [...document.querySelectorAll("[data-game]")].find((button) => button.dataset.game.includes("weather-weekend"));
+        const gameButton = ${pickTargetGame};
+        if (!gameButton) {
+          throw new Error("No playable minigame tab was visible.");
+        }
         gameButton.click();
         await wait(100);
         const game = currentGame();
@@ -186,7 +198,10 @@ async function run() {
           if (typeof currentGame === "function" && eventTabs.children.length) break;
           await wait(100);
         }
-        const gameButton = [...document.querySelectorAll("[data-game]")].find((button) => button.dataset.game.includes("weather-weekend"));
+        const gameButton = ${pickTargetGame};
+        if (!gameButton) {
+          throw new Error("No playable minigame tab was visible.");
+        }
         gameButton.click();
         await wait(1000);
         return {
