@@ -328,6 +328,7 @@
       <div class="actions">
         <button class="button primary" id="tiltButton" type="button">Recenter Tilt</button>
         <button class="button" id="restartButton" type="button">Restart</button>
+        <button class="button" id="adminCodeButton" type="button">Admin Code</button>
         <a class="button" href="../index.html">Arcade</a>
       </div>
     </section>
@@ -387,6 +388,7 @@
         startButton: document.getElementById("startButton"),
         restartButton: document.getElementById("restartButton"),
         quickRestartButton: document.getElementById("quickRestartButton"),
+        adminCodeButton: document.getElementById("adminCodeButton"),
         tiltButton: document.getElementById("tiltButton"),
         statusLine: document.getElementById("statusLine"),
       };
@@ -403,6 +405,7 @@
       const ORIENTATION_SIDE_POLARITY = 1;
       const ORIENTATION_FORWARD_POLARITY = -1;
       const ORIENTATION_FALLBACK_DELAY = 2500;
+      const ADMIN_CODE = "John";
       const MAX_PIXEL_RATIO = 2;
       const clamp = THREE.MathUtils.clamp;
       const scene = new THREE.Scene();
@@ -785,7 +788,7 @@
       function makeLevelPlan(level, rng, corridorWidth) {
         const difficulty = Math.min(1, level / 90);
         const turnCount = 5 + Math.min(11, Math.floor(Math.sqrt(level) * 1.45)) + (level % 2);
-        const maxX = 7.5 + Math.min(2.2, level * 0.018);
+        const maxX = 13 + Math.min(4, level * 0.025);
         const points = [{ x: 0, z: -7.5 }];
         let x = 0;
         let z = -7.5;
@@ -793,10 +796,10 @@
 
         for (let index = 0; index < turnCount; index += 1) {
           if (index % 2 === 0) {
-            const forward = 3.7 + rng() * 3.1 + difficulty * 1.7;
+            const forward = 7.2 + rng() * 4 + difficulty * 2.5;
             z = snapToGrid(z + forward);
           } else {
-            const sideways = 3.2 + rng() * 5.4 + difficulty * 2.4;
+            const sideways = 7.6 + rng() * 5.4 + difficulty * 3;
             x = snapToGrid(clamp(x + horizontalSign * sideways, -maxX, maxX));
             if (rng() > 0.18) horizontalSign *= -1;
           }
@@ -804,7 +807,7 @@
         }
 
         if (points[points.length - 1].z < 15 + level * 0.12) {
-          z = snapToGrid(z + 4.4 + rng() * 3.4);
+          z = snapToGrid(z + 7 + rng() * 4.8);
           points.push({ x, z });
         }
 
@@ -976,7 +979,7 @@
         const rawSlabs = [];
 
         const difficulty = Math.min(1, state.level / 82);
-        const corridorWidth = snapToGrid(clamp(4.25 - difficulty * 1.45 - Math.log10(state.level + 1) * 0.22, 1.85, 4.25));
+        const corridorWidth = snapToGrid(clamp(3.8 - difficulty * 1.35 - Math.log10(state.level + 1) * 0.18, 1.65, 3.8));
         const plan = makeLevelPlan(state.level, rng, corridorWidth);
 
         for (let index = 0; index < plan.points.length - 1; index += 1) {
@@ -1154,6 +1157,36 @@
         resetBall();
         state.running = true;
         setStatus(`Level ${state.level.toLocaleString()}`);
+      }
+
+      function goToLevel(level) {
+        state.level = level;
+        state.best = Math.max(state.best, state.level);
+        saveProgress();
+        loadLevel();
+        resetBall();
+        state.running = true;
+        hud.startPanel.classList.add("is-hidden");
+        gameShell.focus({ preventScroll: true });
+        setStatus(`Level ${state.level.toLocaleString()}`);
+      }
+
+      function openAdminCode() {
+        const code = window.prompt("Admin code");
+        if (code === null) return;
+        if (code !== ADMIN_CODE) {
+          setStatus("Wrong Code");
+          return;
+        }
+
+        const levelText = window.prompt("Level");
+        if (levelText === null) return;
+        const level = Math.floor(Number(levelText));
+        if (!Number.isFinite(level) || level < 1) {
+          setStatus("Bad Level");
+          return;
+        }
+        goToLevel(level);
       }
 
       function getGroundSlab(x, z) {
@@ -1602,6 +1635,10 @@
         event.preventDefault();
         await enableTilt({ quiet: true });
         restartLevel();
+      });
+      hud.adminCodeButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        openAdminCode();
       });
       hud.tiltButton.addEventListener("click", async (event) => {
         event.preventDefault();
