@@ -659,8 +659,8 @@
           ball.vx -= tangentVelocity * 0.035 * tx;
           ball.vy -= tangentVelocity * 0.035 * ty;
           ball.av += tangentVelocity * 0.0009;
-          ball.squish = Math.max(ball.squish, clamp((correction / ball.r) * 1.18, 0, 1.04));
-          ball.squishAngle = Math.atan2(edge.ny, edge.nx);
+          ball.squish = Math.max(ball.squish, clamp((correction / ball.r) * 1.32, 0, 1.16));
+          ball.squishAngle = Math.atan2(-edge.ny, -edge.nx);
         }
       }
 
@@ -725,11 +725,11 @@
         a.av -= tangentVelocity * 0.00022;
         b.av += tangentVelocity * 0.00022;
 
-        const squish = clamp((overlap / Math.min(a.r, b.r)) * 1.32, 0, 1.08);
+        const squish = clamp((overlap / Math.min(a.r, b.r)) * 1.55, 0, 1.2);
         a.squish = Math.max(a.squish, squish);
         b.squish = Math.max(b.squish, squish);
-        a.squishAngle = Math.atan2(-ny, -nx);
-        b.squishAngle = Math.atan2(ny, nx);
+        a.squishAngle = Math.atan2(ny, nx);
+        b.squishAngle = Math.atan2(-ny, -nx);
 
       }
 
@@ -969,9 +969,9 @@
       function drawBallVisual(ball, now, preview = false) {
         const tier = tiers[ball.type];
         const r = ball.r;
-        const squish = clamp(ball.squish || 0, 0, 1.08);
-        const sx = clamp(1 + squish * 0.64, 1, 1.72);
-        const sy = clamp(1 - squish * 0.38, 0.6, 1);
+        const squish = clamp(ball.squish || 0, 0, 1.2);
+        const sx = clamp(1 + squish * 0.22, 1, 1.32);
+        const sy = clamp(1 - squish * 0.12, 0.82, 1);
         const lookSource = pointer.active ? pointer : { x: dropX, y: world.topY };
         const lookX = clamp((lookSource.x - ball.x) / 260, -1, 1) * r * 0.1;
         const lookY = clamp((lookSource.y - ball.y) / 260, -1, 1) * r * 0.08;
@@ -1021,19 +1021,31 @@
         }
 
         const points = [];
-        const count = 20;
+        const count = 22;
         const seed = ball.id * 1.91;
+        const flatX = r * (1 - squish * 0.28);
 
         for (let i = 0; i < count; i += 1) {
           const angle = (i / count) * Math.PI * 2;
-          const sideBulge = Math.sin(angle * 2) * squish * 0.055;
-          const contactDent = Math.max(0, Math.cos(angle)) * squish * 0.06;
-          const contactBulge = Math.max(0, -Math.cos(angle)) * squish * 0.08;
-          const tinyUnevenness = Math.sin(angle * 3 + seed) * squish * 0.016;
-          const radius = r * (1 + sideBulge - contactDent + contactBulge + tinyUnevenness);
+          const contact = Math.max(0, Math.cos(angle));
+          const away = Math.max(0, -Math.cos(angle));
+          const vertical = Math.abs(Math.sin(angle));
+          const contactDent = Math.pow(contact, 1.7) * squish * 0.34;
+          const awayBulge = Math.pow(away, 1.35) * squish * 0.18;
+          const cheekBulge = Math.pow(vertical, 1.6) * squish * 0.08;
+          const tinyUnevenness = Math.sin(angle * 3 + seed) * squish * 0.012;
+          const radius = r * (1 - contactDent + awayBulge + cheekBulge + tinyUnevenness);
+          let x = Math.cos(angle) * radius;
+          let y = Math.sin(angle) * radius;
+
+          if (squish > 0.1 && x > flatX) {
+            x = flatX + (x - flatX) * clamp(1 - squish * 0.82, 0.12, 0.85);
+            y *= 1 + squish * 0.05;
+          }
+
           points.push({
-            x: Math.cos(angle) * radius,
-            y: Math.sin(angle) * radius
+            x,
+            y
           });
         }
 
