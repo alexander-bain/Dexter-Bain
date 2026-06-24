@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Ball Guys Merge</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #101828;
+      --paper: #fffaf0;
+      --line: #0b0d13;
+      --mint: #8ff0cf;
+      --sky: #8bd7ff;
+      --sun: #ffd166;
+      --pink: #ff6fa9;
+      --blue: #3bb6ff;
+      --green: #65d46e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #f4fbff;
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    .game-shell {
+      position: relative;
+      width: 100vw;
+      height: 100dvh;
+      min-height: 520px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.12) 34%, rgba(255, 246, 224, 0.74)),
+        radial-gradient(circle at 18% 18%, rgba(255, 209, 102, 0.42), transparent 24%),
+        radial-gradient(circle at 82% 20%, rgba(143, 240, 207, 0.44), transparent 24%),
+        linear-gradient(135deg, #aee8ff 0%, #fef3c7 54%, #ffe0ef 100%);
+    }
+
+    .game-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(16, 24, 40, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 24, 40, 0.045) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.34), transparent 78%);
+    }
+
+    canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    .hud {
+      position: absolute;
+      top: max(14px, env(safe-area-inset-top));
+      left: max(14px, env(safe-area-inset-left));
+      right: max(14px, env(safe-area-inset-right));
+      z-index: 2;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: start;
+      pointer-events: none;
+    }
+
+    .home-link,
+    .score-box,
+    .next-box,
+    .action-button {
+      border: 3px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 5px 6px 0 rgba(16, 24, 40, 0.18);
+    }
+
+    .home-link {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 12px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 900;
+      pointer-events: auto;
+    }
+
+    .title-block {
+      align-self: stretch;
+      min-width: 0;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    h1 {
+      margin: 0;
+      color: #0f172a;
+      font-size: clamp(1.6rem, 4vw, 3.2rem);
+      line-height: 0.96;
+      letter-spacing: 0;
+      text-shadow: 3px 3px 0 rgba(255, 255, 255, 0.9), 5px 5px 0 rgba(16, 24, 40, 0.12);
+    }
+
+    .score-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .score-box {
+      min-width: 96px;
+      padding: 7px 10px 8px;
+      text-align: center;
+    }
+
+    .score-label {
+      display: block;
+      color: #667085;
+      font-size: 0.7rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .score-value {
+      display: block;
+      margin-top: 1px;
+      color: #101828;
+      font-size: 1.2rem;
+      font-weight: 950;
+      line-height: 1;
+    }
+
+    .next-box {
+      display: grid;
+      min-width: 86px;
+      justify-items: center;
+      gap: 5px;
+      padding: 8px 9px;
+      font-weight: 900;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    .next-label {
+      color: #667085;
+      font-size: 0.68rem;
+    }
+
+    .next-face {
+      position: relative;
+      width: 42px;
+      height: 42px;
+      border: 3px solid var(--line);
+      border-radius: 50%;
+      background: var(--pink);
+      box-shadow: inset -7px -8px 0 rgba(16, 24, 40, 0.12);
+    }
+
+    .next-face::before,
+    .next-face::after {
+      content: "";
+      position: absolute;
+      top: 14px;
+      width: 7px;
+      height: 10px;
+      border-radius: 50%;
+      background: #101828;
+      animation: previewBlink 3.8s infinite;
+    }
+
+    .next-face::before {
+      left: 11px;
+    }
+
+    .next-face::after {
+      right: 11px;
+    }
+
+    .controls {
+      position: absolute;
+      left: 50%;
+      bottom: max(16px, env(safe-area-inset-bottom));
+      z-index: 3;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .action-button {
+      min-width: 112px;
+      min-height: 46px;
+      padding: 9px 16px;
+      color: #101828;
+      background: linear-gradient(135deg, #ffffff, #fff7d6);
+      cursor: pointer;
+      font-weight: 950;
+      pointer-events: auto;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .action-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 6px 8px 0 rgba(16, 24, 40, 0.16);
+    }
+
+    .action-button:active {
+      transform: translateY(1px);
+      box-shadow: 3px 4px 0 rgba(16, 24, 40, 0.18);
+    }
+
+    .action-button.primary {
+      background: linear-gradient(135deg, #8ff0cf, #ffd166 58%, #ff99c8);
+    }
+
+    .game-over {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      background: rgba(255, 250, 240, 0.68);
+      backdrop-filter: blur(10px);
+    }
+
+    .game-over[hidden] {
+      display: none;
+    }
+
+    .game-over-card {
+      width: min(420px, 100%);
+      padding: 22px;
+      border: 4px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 9px 11px 0 rgba(16, 24, 40, 0.18);
+      text-align: center;
+    }
+
+    .game-over-card h2 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 8vw, 3.8rem);
+      line-height: 0.92;
+      letter-spacing: 0;
+    }
+
+    .game-over-card p {
+      margin: 0 0 18px;
+      color: #475467;
+      font-weight: 800;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @keyframes previewBlink {
+      0%, 88%, 100% {
+        transform: scaleY(1);
+      }
+
+      92%, 94% {
+        transform: scaleY(0.08);
+      }
+    }
+
+    @media (max-width: 700px) {
+      .game-shell {
+        min-height: 480px;
+      }
+
+      .hud {
+        grid-template-columns: 1fr auto;
+      }
+
+      .home-link {
+        display: none;
+      }
+
+      .title-block {
+        text-align: left;
+      }
+
+      .score-row {
+        justify-content: flex-start;
+      }
+
+      .score-box {
+        min-width: 82px;
+        padding: 6px 8px;
+      }
+
+      .next-box {
+        min-width: 72px;
+      }
+
+      .controls {
+        width: calc(100vw - 28px);
+      }
+
+      .action-button {
+        flex: 1 1 126px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="game-shell" id="gameShell">
+    <canvas id="gameCanvas" aria-label="Ball Guys Merge game canvas"></canvas>
+    <div class="hud">
+      <a class="home-link" href="../index.html">Arcade</a>
+      <div class="title-block">
+        <h1>Ball Guys Merge</h1>
+        <div class="score-row" aria-live="polite">
+          <div class="score-box">
+            <span class="score-label">Score</span>
+            <span class="score-value" id="scoreValue">0</span>
+          </div>
+          <div class="score-box">
+            <span class="score-label">Best</span>
+            <span class="score-value" id="bestValue">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="next-box" aria-label="Next ball">
+        <span class="next-label">Next</span>
+        <span class="next-face" id="nextFace"></span>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="action-button primary" id="dropButton" type="button">Drop</button>
+      <button class="action-button" id="restartButton" type="button">Restart</button>
+    </div>
+
+    <section class="game-over" id="gameOver" hidden>
+      <div class="game-over-card">
+        <h2>Game Over</h2>
+        <p id="finalScore">Score 0</p>
+        <button class="action-button primary" id="playAgainButton" type="button">Play Again</button>
+      </div>
+    </section>
+
+    <p class="sr-only" id="gameHelp">
+      Move the drop spot with mouse, touch, or arrow keys. Drop matching balls so they merge into bigger balls.
+    </p>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const canvas = document.getElementById("gameCanvas");
+      const ctx = canvas.getContext("2d");
+      const shell = document.getElementById("gameShell");
+      const scoreValue = document.getElementById("scoreValue");
+      const bestValue = document.getElementById("bestValue");
+      const nextFace = document.getElementById("nextFace");
+      const gameOver = document.getElementById("gameOver");
+      const finalScore = document.getElementById("finalScore");
+      const dropButton = document.getElementById("dropButton");
+      const restartButton = document.getElementById("restartButton");
+      const playAgainButton = document.getElementById("playAgainButton");
+
+      const bestKey = "dexterbain-ball-guys-merge-best";
+      const dropChoices = 3;
+      const tiers = [
+        { name: "Pop", radius: 17, color: "#ff6fa9", shade: "#cc3f73", score: 4 },
+        { name: "Boop", radius: 22, color: "#55c7ff", shade: "#238ec4", score: 9 },
+        { name: "Bean", radius: 28, color: "#73df78", shade: "#3aa144", score: 17 },
+        { name: "Bumble", radius: 35, color: "#ffd166", shade: "#c89218", score: 32 },
+        { name: "Pogo", radius: 43, color: "#b891ff", shade: "#7857c9", score: 58 },
+        { name: "Gumdrop", radius: 52, color: "#ff8f5a", shade: "#c74f28", score: 102 },
+        { name: "Splash", radius: 63, color: "#38d6c2", shade: "#148d81", score: 176 },
+        { name: "Mega", radius: 75, color: "#ff5c67", shade: "#bd2637", score: 302 },
+        { name: "Jumbo", radius: 88, color: "#6c8cff", shade: "#354dbd", score: 520 },
+        { name: "Colossus", radius: 104, color: "#f6d743", shade: "#ba9713", score: 900 }
+      ];
+
+      let width = 0;
+      let height = 0;
+      let ratio = 1;
+      let radiusScale = 1;
+      let world = null;
+      let balls = [];
+      let effects = [];
+      let nextType = 0;
+      let dropX = 0;
+      let pointer = { x: 0, y: 0, active: false };
+      let score = 0;
+      let best = Number(localStorage.getItem(bestKey) || 0) || 0;
+      let lastFrame = 0;
+      let dropCooldown = 0;
+      let ballId = 1;
+      let gameState = "playing";
+
+      function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+      }
+
+      function randomDropType() {
+        return Math.floor(Math.random() * dropChoices);
+      }
+
+      function tierRadius(type) {
+        return tiers[type].radius * radiusScale;
+      }
+
+      function syncScore() {
+        scoreValue.textContent = String(score);
+        bestValue.textContent = String(best);
+      }
+
+      function updateNextFace() {
+        nextFace.style.background = tiers[nextType].color;
+        nextFace.style.width = `${Math.round(34 + nextType * 5)}px`;
+        nextFace.style.height = `${Math.round(34 + nextType * 5)}px`;
+      }
+
+      function leftAtY(y) {
+        const t = clamp((y - world.topY) / (world.bottomY - world.topY), 0, 1);
+        return world.leftTopX + (world.leftBottomX - world.leftTopX) * t;
+      }
+
+      function rightAtY(y) {
+        const t = clamp((y - world.topY) / (world.bottomY - world.topY), 0, 1);
+        return world.rightTopX + (world.rightBottomX - world.rightTopX) * t;
+      }
+
+      function updateWorld() {
+        const topGap = Math.max(112, Math.min(176, height * 0.2));
+        const bottomGap = Math.max(78, Math.min(118, height * 0.13));
+        const topWidth = Math.min(width * 0.86, 660);
+        const bottomWidth = topWidth * 0.48;
+        const centerX = width * 0.5;
+        const topY = topGap;
+        const bottomY = Math.max(topY + 310, height - bottomGap);
+
+        world = {
+          topY,
+          bottomY,
+          leftTopX: centerX - topWidth * 0.5,
+          rightTopX: centerX + topWidth * 0.5,
+          leftBottomX: centerX - bottomWidth * 0.5,
+          rightBottomX: centerX + bottomWidth * 0.5
+        };
+
+        radiusScale = clamp(topWidth / 650, 0.67, 1.05);
+        world.edges = [
+          makeEdge(world.leftTopX, world.topY, world.leftBottomX, world.bottomY),
+          makeEdge(world.leftBottomX, world.bottomY, world.rightBottomX, world.bottomY),
+          makeEdge(world.rightBottomX, world.bottomY, world.rightTopX, world.topY)
+        ];
+
+        balls.forEach((ball) => {
+          ball.r = tierRadius(ball.type);
+          ball.mass = ball.r * ball.r;
+        });
+
+        dropX = clamp(dropX || centerX, world.leftTopX + 24, world.rightTopX - 24);
+        pointer.x = pointer.x || dropX;
+        pointer.y = pointer.y || world.topY;
+      }
+
+      function makeEdge(ax, ay, bx, by) {
+        const dx = bx - ax;
+        const dy = by - ay;
+        const length = Math.hypot(dx, dy) || 1;
+        return {
+          ax,
+          ay,
+          bx,
+          by,
+          dx,
+          dy,
+          length,
+          nx: dy / length,
+          ny: -dx / length
+        };
+      }
+
+      function resize() {
+        ratio = Math.min(window.devicePixelRatio || 1, 2);
+        width = Math.max(320, window.innerWidth);
+        height = Math.max(480, window.innerHeight);
+        canvas.width = Math.round(width * ratio);
+        canvas.height = Math.round(height * ratio);
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+        updateWorld();
+      }
+
+      function resetGame() {
+        balls = [];
+        effects = [];
+        score = 0;
+        dropCooldown = 0;
+        nextType = randomDropType();
+        gameState = "playing";
+        gameOver.hidden = true;
+        ballId = 1;
+        syncScore();
+        updateNextFace();
+      }
+
+      function makeBall(type, x, y, vx = 0, vy = 0, safeMs = 0) {
+        const r = tierRadius(type);
+        const now = performance.now();
+        return {
+          id: ballId++,
+          type,
+          x,
+          y,
+          vx,
+          vy,
+          r,
+          mass: r * r,
+          angle: Math.random() * Math.PI * 2,
+          av: (Math.random() - 0.5) * 2,
+          born: now,
+          mergeLockUntil: now + 180,
+          safeUntil: now + safeMs,
+          outSince: 0,
+          squish: 0,
+          squishAngle: 0,
+          blinkAt: now + 900 + Math.random() * 2600,
+          blink: 0
+        };
+      }
+
+      function dropBall() {
+        if (gameState !== "playing" || dropCooldown > 0) {
+          return;
+        }
+
+        const r = tierRadius(nextType);
+        const x = clamp(dropX, world.leftTopX + r + 8, world.rightTopX - r - 8);
+        balls.push(makeBall(nextType, x, world.topY - r * 1.8, (Math.random() - 0.5) * 34, 20, 1350));
+        nextType = randomDropType();
+        dropCooldown = 330;
+        updateNextFace();
+      }
+
+      function addEffect(x, y, type, size) {
+        const color = tiers[type].color;
+        for (let i = 0; i < 10; i += 1) {
+          const angle = (Math.PI * 2 * i) / 10 + Math.random() * 0.2;
+          const speed = 80 + Math.random() * 110;
+          effects.push({
+            kind: "dot",
+            x,
+            y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed - 30,
+            age: 0,
+            life: 0.55 + Math.random() * 0.18,
+            size: 3 + Math.random() * 4,
+            color
+          });
+        }
+        effects.push({
+          kind: "ring",
+          x,
+          y,
+          age: 0,
+          life: 0.38,
+          size,
+          color
+        });
+      }
+
+      function setGameOver() {
+        if (gameState === "over") {
+          return;
+        }
+        gameState = "over";
+        finalScore.textContent = `Score ${score}`;
+        gameOver.hidden = false;
+      }
+
+      function updateBlink(ball, now) {
+        if (now > ball.blinkAt) {
+          const p = (now - ball.blinkAt) / 180;
+          if (p < 1) {
+            ball.blink = Math.sin(p * Math.PI);
+          } else {
+            ball.blink = 0;
+            ball.blinkAt = now + 1500 + Math.random() * 4200;
+          }
+        }
+      }
+
+      function resolveEdge(ball, edge) {
+        const relX = ball.x - edge.ax;
+        const relY = ball.y - edge.ay;
+        const t = clamp((relX * edge.dx + relY * edge.dy) / (edge.length * edge.length), 0, 1);
+        const cx = edge.ax + edge.dx * t;
+        const cy = edge.ay + edge.dy * t;
+        const sep = (ball.x - cx) * edge.nx + (ball.y - cy) * edge.ny;
+
+        if (sep < ball.r) {
+          const correction = ball.r - sep;
+          ball.x += edge.nx * correction;
+          ball.y += edge.ny * correction;
+          const normalVelocity = ball.vx * edge.nx + ball.vy * edge.ny;
+          if (normalVelocity < 0) {
+            ball.vx -= normalVelocity * 1.24 * edge.nx;
+            ball.vy -= normalVelocity * 1.24 * edge.ny;
+          }
+          const tx = -edge.ny;
+          const ty = edge.nx;
+          const tangentVelocity = ball.vx * tx + ball.vy * ty;
+          ball.vx -= tangentVelocity * 0.035 * tx;
+          ball.vy -= tangentVelocity * 0.035 * ty;
+          ball.av += tangentVelocity * 0.0009;
+          ball.squish = Math.max(ball.squish, clamp(correction / ball.r, 0, 0.82));
+          ball.squishAngle = Math.atan2(edge.ny, edge.nx);
+        }
+      }
+
+      function resolveBallPair(a, b, candidates, now) {
+        let dx = b.x - a.x;
+        let dy = b.y - a.y;
+        let distance = Math.hypot(dx, dy);
+        const minDistance = a.r + b.r;
+        if (distance >= minDistance) {
+          return;
+        }
+
+        if (distance < 0.001) {
+          dx = 1;
+          dy = 0;
+          distance = 1;
+        }
+
+        const nx = dx / distance;
+        const ny = dy / distance;
+        const overlap = minDistance - distance;
+        const invA = 1 / a.mass;
+        const invB = 1 / b.mass;
+        const invTotal = invA + invB;
+        const moveA = (overlap * invA) / invTotal;
+        const moveB = (overlap * invB) / invTotal;
+
+        a.x -= nx * moveA;
+        a.y -= ny * moveA;
+        b.x += nx * moveB;
+        b.y += ny * moveB;
+
+        const relVx = b.vx - a.vx;
+        const relVy = b.vy - a.vy;
+        const velocityAlongNormal = relVx * nx + relVy * ny;
+        if (velocityAlongNormal < 0) {
+          const bounce = 0.18;
+          const impulse = (-(1 + bounce) * velocityAlongNormal) / invTotal;
+          a.vx -= impulse * invA * nx;
+          a.vy -= impulse * invA * ny;
+          b.vx += impulse * invB * nx;
+          b.vy += impulse * invB * ny;
+        }
+
+        const tx = -ny;
+        const ty = nx;
+        const tangentVelocity = relVx * tx + relVy * ty;
+        const friction = tangentVelocity * 0.018;
+        a.vx += friction * tx;
+        a.vy += friction * ty;
+        b.vx -= friction * tx;
+        b.vy -= friction * ty;
+        a.av -= tangentVelocity * 0.00022;
+        b.av += tangentVelocity * 0.00022;
+
+        const squish = clamp(overlap / minDistance, 0, 0.74);
+        a.squish = Math.max(a.squish, squish);
+        b.squish = Math.max(b.squish, squish);
+        a.squishAngle = Math.atan2(-ny, -nx);
+        b.squishAngle = Math.atan2(ny, nx);
+
+        if (
+          a.type === b.type &&
+          now > a.mergeLockUntil &&
+          now > b.mergeLockUntil &&
+          overlap > Math.max(2, minDistance * 0.045)
+        ) {
+          candidates.push({ a, b, overlap });
+        }
+      }
+
+      function mergeCandidates(candidates) {
+        if (!candidates.length) {
+          return;
+        }
+
+        candidates.sort((left, right) => right.overlap - left.overlap);
+        const removed = new Set();
+
+        for (const item of candidates) {
+          const a = item.a;
+          const b = item.b;
+          if (removed.has(a.id) || removed.has(b.id) || !balls.includes(a) || !balls.includes(b)) {
+            continue;
+          }
+
+          removed.add(a.id);
+          removed.add(b.id);
+          const x = (a.x * a.mass + b.x * b.mass) / (a.mass + b.mass);
+          const y = (a.y * a.mass + b.y * b.mass) / (a.mass + b.mass);
+          const vx = (a.vx + b.vx) * 0.32;
+          const vy = Math.min((a.vy + b.vy) * 0.22 - 95, 80);
+          const next = a.type + 1;
+
+          balls = balls.filter((ball) => ball.id !== a.id && ball.id !== b.id);
+
+          if (next < tiers.length) {
+            const merged = makeBall(next, x, y, vx, vy, 420);
+            merged.squish = 0.56;
+            merged.mergeLockUntil = performance.now() + 320;
+            balls.push(merged);
+            score += tiers[next].score;
+            addEffect(x, y, next, merged.r);
+          } else {
+            score += tiers[a.type].score * 2;
+            addEffect(x, y, a.type, a.r * 1.3);
+          }
+
+          if (score > best) {
+            best = score;
+            localStorage.setItem(bestKey, String(best));
+          }
+          syncScore();
+        }
+      }
+
+      function updatePhysics(dt, now) {
+        const step = Math.min(dt, 1 / 45);
+        dropCooldown = Math.max(0, dropCooldown - step * 1000);
+        const gravity = 1780;
+
+        for (const ball of balls) {
+          updateBlink(ball, now);
+          ball.vy += gravity * step;
+          ball.vx *= 0.999;
+          ball.vy *= 0.999;
+          ball.x += ball.vx * step;
+          ball.y += ball.vy * step;
+          ball.angle += ball.av * step;
+          ball.av *= 0.992;
+          ball.squish *= Math.pow(0.018, step);
+        }
+
+        const candidates = [];
+        for (let pass = 0; pass < 6; pass += 1) {
+          for (const ball of balls) {
+            for (const edge of world.edges) {
+              resolveEdge(ball, edge);
+            }
+          }
+
+          for (let i = 0; i < balls.length; i += 1) {
+            for (let j = i + 1; j < balls.length; j += 1) {
+              resolveBallPair(balls[i], balls[j], candidates, now);
+            }
+          }
+        }
+
+        mergeCandidates(candidates);
+
+        for (const effect of effects) {
+          effect.age += step;
+          if (effect.kind === "dot") {
+            effect.vy += 500 * step;
+            effect.x += effect.vx * step;
+            effect.y += effect.vy * step;
+          }
+        }
+        effects = effects.filter((effect) => effect.age < effect.life);
+
+        if (gameState === "playing") {
+          checkForSpill(now);
+        }
+      }
+
+      function checkForSpill(now) {
+        for (const ball of balls) {
+          if (now < ball.safeUntil) {
+            continue;
+          }
+
+          const outOfScreen =
+            ball.y - ball.r > height + 80 ||
+            ball.x + ball.r < -80 ||
+            ball.x - ball.r > width + 80;
+          const aboveRim = ball.y < world.topY - ball.r * 0.2;
+          const leftWall = leftAtY(ball.y) - ball.r * 0.42;
+          const rightWall = rightAtY(ball.y) + ball.r * 0.42;
+          const outsideSide = ball.y > world.topY + ball.r * 0.35 && (ball.x < leftWall || ball.x > rightWall);
+
+          if (outOfScreen || aboveRim || outsideSide) {
+            ball.outSince = ball.outSince || now;
+            if (now - ball.outSince > 620 || outOfScreen) {
+              setGameOver();
+              return;
+            }
+          } else {
+            ball.outSince = 0;
+          }
+        }
+      }
+
+      function drawBackground(now) {
+        ctx.clearRect(0, 0, width, height);
+
+        ctx.save();
+        ctx.globalAlpha = 0.25;
+        for (let i = 0; i < 9; i += 1) {
+          const x = ((i * 147 + now * 0.012) % (width + 180)) - 90;
+          const y = 96 + Math.sin(now * 0.0007 + i) * 18 + (i % 3) * 46;
+          drawCloud(x, y, 0.62 + (i % 3) * 0.18);
+        }
+        ctx.restore();
+
+        ctx.save();
+        ctx.fillStyle = "rgba(255, 255, 255, 0.44)";
+        ctx.strokeStyle = "rgba(16, 24, 40, 0.08)";
+        ctx.lineWidth = 2;
+        for (let y = world.bottomY + 26; y < height + 40; y += 28) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(width, y + Math.sin(y * 0.04) * 4);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      function drawCloud(x, y, s) {
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.ellipse(x, y, 42 * s, 18 * s, 0, 0, Math.PI * 2);
+        ctx.ellipse(x + 26 * s, y - 10 * s, 30 * s, 22 * s, 0, 0, Math.PI * 2);
+        ctx.ellipse(x + 58 * s, y, 38 * s, 17 * s, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function drawContainer() {
+        const path = new Path2D();
+        path.moveTo(world.leftTopX, world.topY);
+        path.lineTo(world.leftBottomX, world.bottomY);
+        path.lineTo(world.rightBottomX, world.bottomY);
+        path.lineTo(world.rightTopX, world.topY);
+
+        ctx.save();
+        ctx.lineJoin = "round";
+        ctx.lineCap = "round";
+        ctx.fillStyle = "rgba(255, 255, 255, 0.34)";
+        ctx.beginPath();
+        ctx.moveTo(world.leftTopX, world.topY);
+        ctx.lineTo(world.leftBottomX, world.bottomY);
+        ctx.lineTo(world.rightBottomX, world.bottomY);
+        ctx.lineTo(world.rightTopX, world.topY);
+        ctx.lineTo(world.rightTopX - 30, world.topY + 28);
+        ctx.lineTo(world.rightBottomX - 18, world.bottomY - 28);
+        ctx.lineTo(world.leftBottomX + 18, world.bottomY - 28);
+        ctx.lineTo(world.leftTopX + 30, world.topY + 28);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
+        ctx.lineWidth = 18;
+        ctx.stroke(path);
+        ctx.strokeStyle = "#080a0f";
+        ctx.lineWidth = 10;
+        ctx.stroke(path);
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.9)";
+        ctx.lineWidth = 3;
+        ctx.stroke(path);
+
+        ctx.setLineDash([10, 12]);
+        ctx.strokeStyle = "rgba(255, 92, 103, 0.44)";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(world.leftTopX + 14, world.topY - 3);
+        ctx.lineTo(world.rightTopX - 14, world.topY - 3);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawDropper(now) {
+        if (gameState !== "playing") {
+          return;
+        }
+
+        const type = nextType;
+        const r = tierRadius(type);
+        const x = clamp(dropX, world.leftTopX + r + 8, world.rightTopX - r - 8);
+        const y = world.topY - r * 1.88;
+
+        ctx.save();
+        ctx.setLineDash([5, 12]);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "rgba(16, 24, 40, 0.22)";
+        ctx.beginPath();
+        ctx.moveTo(x, Math.max(78, y - r * 0.95));
+        ctx.lineTo(x, world.bottomY - 18);
+        ctx.stroke();
+        ctx.restore();
+
+        drawBallVisual({
+          id: 0,
+          type,
+          x,
+          y,
+          vx: 0,
+          vy: Math.sin(now * 0.006) * 24,
+          r,
+          angle: 0,
+          squish: 0.08 + Math.abs(Math.sin(now * 0.006)) * 0.08,
+          squishAngle: Math.PI / 2,
+          blink: Math.max(0, Math.sin(now * 0.003) > 0.985 ? 1 : 0)
+        }, now, true);
+      }
+
+      function drawBallVisual(ball, now, preview = false) {
+        const tier = tiers[ball.type];
+        const r = ball.r;
+        const fallStretch = clamp(Math.abs(ball.vy) / 2800, 0, 0.12);
+        const wobble = Math.sin((now - ball.born) * 0.01 + ball.id * 1.7) * 0.025;
+        const sx = 1 + ball.squish * 0.28 - fallStretch * 0.4 + wobble;
+        const sy = 1 - ball.squish * 0.18 + fallStretch + wobble * 0.35;
+        const lookSource = pointer.active ? pointer : { x: dropX, y: world.topY };
+        const lookX = clamp((lookSource.x - ball.x) / 260, -1, 1) * r * 0.1;
+        const lookY = clamp((lookSource.y - ball.y) / 260, -1, 1) * r * 0.08;
+        const blink = clamp(ball.blink || 0, 0, 1);
+
+        ctx.save();
+        ctx.translate(ball.x, ball.y);
+        ctx.rotate(ball.angle * 0.08);
+        ctx.rotate(ball.squishAngle || 0);
+        ctx.scale(sx, sy);
+        ctx.rotate(-(ball.squishAngle || 0));
+
+        ctx.shadowColor = "rgba(16, 24, 40, 0.26)";
+        ctx.shadowBlur = preview ? 10 : 16;
+        ctx.shadowOffsetY = preview ? 5 : 9;
+        ctx.lineWidth = Math.max(3, r * 0.1);
+        ctx.strokeStyle = "#080a0f";
+
+        const body = ctx.createRadialGradient(-r * 0.38, -r * 0.42, r * 0.1, 0, 0, r * 1.06);
+        body.addColorStop(0, "#ffffff");
+        body.addColorStop(0.09, tier.color);
+        body.addColorStop(0.72, tier.color);
+        body.addColorStop(1, tier.shade);
+
+        ctx.fillStyle = body;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, r, r, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.shadowColor = "transparent";
+        ctx.fillStyle = "rgba(255, 255, 255, 0.54)";
+        ctx.beginPath();
+        ctx.ellipse(-r * 0.32, -r * 0.4, r * 0.2, r * 0.11, -0.55, 0, Math.PI * 2);
+        ctx.fill();
+
+        drawEye(-r * 0.32, -r * 0.13, r, lookX, lookY, blink);
+        drawEye(r * 0.32, -r * 0.13, r, lookX, lookY, blink);
+
+        ctx.strokeStyle = "rgba(8, 10, 15, 0.9)";
+        ctx.lineWidth = Math.max(2, r * 0.045);
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.arc(0, r * 0.2, r * 0.19, 0.16 * Math.PI, 0.84 * Math.PI);
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      function drawEye(x, y, r, lookX, lookY, blink) {
+        const eyeW = Math.max(6, r * 0.24);
+        const eyeH = Math.max(3, r * 0.3 * (1 - blink * 0.92));
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.fillStyle = "#ffffff";
+        ctx.strokeStyle = "#080a0f";
+        ctx.lineWidth = Math.max(2, r * 0.045);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, eyeW * 0.5, eyeH * 0.5, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        if (eyeH > 4) {
+          ctx.fillStyle = "#111827";
+          ctx.beginPath();
+          ctx.ellipse(lookX, lookY, eyeW * 0.18, eyeH * 0.26, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      function drawEffects() {
+        for (const effect of effects) {
+          const p = effect.age / effect.life;
+          const alpha = 1 - p;
+          ctx.save();
+          ctx.globalAlpha = alpha;
+          if (effect.kind === "ring") {
+            ctx.strokeStyle = effect.color;
+            ctx.lineWidth = 5 * alpha;
+            ctx.beginPath();
+            ctx.arc(effect.x, effect.y, effect.size * (0.48 + p * 0.75), 0, Math.PI * 2);
+            ctx.stroke();
+          } else {
+            ctx.fillStyle = effect.color;
+            ctx.beginPath();
+            ctx.arc(effect.x, effect.y, effect.size * (1 - p * 0.4), 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+      }
+
+      function draw(now) {
+        drawBackground(now);
+        drawContainer();
+
+        const sorted = [...balls].sort((a, b) => a.y - b.y);
+        for (const ball of sorted) {
+          drawBallVisual(ball, now);
+        }
+
+        drawEffects();
+        drawDropper(now);
+      }
+
+      function frame(now) {
+        if (!lastFrame) {
+          lastFrame = now;
+        }
+        const dt = Math.min((now - lastFrame) / 1000, 0.033);
+        lastFrame = now;
+
+        if (gameState === "playing") {
+          updatePhysics(dt, now);
+        } else {
+          for (const ball of balls) {
+            updateBlink(ball, now);
+            ball.squish *= 0.96;
+          }
+        }
+
+        draw(now);
+        requestAnimationFrame(frame);
+      }
+
+      function setDropFromClientX(clientX) {
+        const r = tierRadius(nextType);
+        dropX = clamp(clientX, world.leftTopX + r + 8, world.rightTopX - r - 8);
+        pointer.x = clientX;
+        pointer.active = true;
+      }
+
+      shell.addEventListener("pointermove", (event) => {
+        setDropFromClientX(event.clientX);
+        pointer.y = event.clientY;
+      });
+
+      shell.addEventListener("pointerleave", () => {
+        pointer.active = false;
+      });
+
+      canvas.addEventListener("pointerdown", (event) => {
+        setDropFromClientX(event.clientX);
+        pointer.y = event.clientY;
+        dropBall();
+      });
+
+      dropButton.addEventListener("click", dropBall);
+      restartButton.addEventListener("click", resetGame);
+      playAgainButton.addEventListener("click", resetGame);
+
+      window.addEventListener("keydown", (event) => {
+        if (event.key === " " || event.key === "Enter") {
+          event.preventDefault();
+          dropBall();
+          return;
+        }
+
+        if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") {
+          event.preventDefault();
+          dropX = clamp(dropX - 28, world.leftTopX + 22, world.rightTopX - 22);
+          pointer.active = false;
+        }
+
+        if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") {
+          event.preventDefault();
+          dropX = clamp(dropX + 28, world.leftTopX + 22, world.rightTopX - 22);
+          pointer.active = false;
+        }
+
+        if (event.key.toLowerCase() === "r") {
+          resetGame();
+        }
+      });
+
+      window.addEventListener("resize", resize);
+      resize();
+      nextType = randomDropType();
+      syncScore();
+      updateNextFace();
+      requestAnimationFrame(frame);
+    })();
+  </script>
+</body>
+</html>
