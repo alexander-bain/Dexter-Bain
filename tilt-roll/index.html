@@ -786,9 +786,9 @@
       }
 
       function makeLevelPlan(level, rng, corridorWidth) {
-        const difficulty = Math.min(1, level / 90);
-        const turnCount = 5 + Math.min(11, Math.floor(Math.sqrt(level) * 1.45)) + (level % 2);
-        const maxX = 13 + Math.min(4, level * 0.025);
+        const difficulty = Math.min(1, Math.max(0, (level - 1) / 95));
+        const turnCount = 3 + Math.floor(difficulty * 9) + (level > 18 && rng() > 0.42 ? 1 : 0);
+        const maxX = 11 + difficulty * 10;
         const points = [{ x: 0, z: -7.5 }];
         let x = 0;
         let z = -7.5;
@@ -796,18 +796,24 @@
 
         for (let index = 0; index < turnCount; index += 1) {
           if (index % 2 === 0) {
-            const forward = 7.2 + rng() * 4 + difficulty * 2.5;
+            const forward = 9 - difficulty * 1.7 + rng() * (3.1 - difficulty * 0.9);
             z = snapToGrid(z + forward);
           } else {
-            const sideways = 7.6 + rng() * 5.4 + difficulty * 3;
-            x = snapToGrid(clamp(x + horizontalSign * sideways, -maxX, maxX));
+            const minimumSideGap = corridorWidth + 4.6 + difficulty * 3.2;
+            const sideways = minimumSideGap + rng() * (2.6 + difficulty * 3.4);
+            let nextX = x + horizontalSign * sideways;
+            if (Math.abs(nextX) > maxX) {
+              horizontalSign *= -1;
+              nextX = x + horizontalSign * sideways;
+            }
+            x = snapToGrid(clamp(nextX, -maxX, maxX));
             if (rng() > 0.18) horizontalSign *= -1;
           }
           points.push({ x, z });
         }
 
-        if (points[points.length - 1].z < 15 + level * 0.12) {
-          z = snapToGrid(z + 7 + rng() * 4.8);
+        if (points[points.length - 1].z < 16 + difficulty * 8) {
+          z = snapToGrid(z + 9 - difficulty * 1.8 + rng() * 3.2);
           points.push({ x, z });
         }
 
@@ -978,8 +984,8 @@
         state.currentTheme = theme;
         const rawSlabs = [];
 
-        const difficulty = Math.min(1, state.level / 82);
-        const corridorWidth = snapToGrid(clamp(3.8 - difficulty * 1.35 - Math.log10(state.level + 1) * 0.18, 1.65, 3.8));
+        const difficulty = Math.min(1, Math.max(0, (state.level - 1) / 100));
+        const corridorWidth = snapToGrid(clamp(5.6 - difficulty * 3.25 - Math.log10(state.level + 1) * 0.05, 2, 5.6));
         const plan = makeLevelPlan(state.level, rng, corridorWidth);
 
         for (let index = 0; index < plan.points.length - 1; index += 1) {
