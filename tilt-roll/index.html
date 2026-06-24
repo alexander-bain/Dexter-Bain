@@ -328,6 +328,7 @@
       <div class="actions">
         <button class="button primary" id="tiltButton" type="button">Recenter Tilt</button>
         <button class="button" id="restartButton" type="button">Restart</button>
+        <button class="button" id="previewButton" type="button">Preview</button>
         <button class="button" id="adminCodeButton" type="button">Admin Code</button>
         <a class="button" href="../index.html">Arcade</a>
       </div>
@@ -388,6 +389,7 @@
         startButton: document.getElementById("startButton"),
         restartButton: document.getElementById("restartButton"),
         quickRestartButton: document.getElementById("quickRestartButton"),
+        previewButton: document.getElementById("previewButton"),
         adminCodeButton: document.getElementById("adminCodeButton"),
         tiltButton: document.getElementById("tiltButton"),
         statusLine: document.getElementById("statusLine"),
@@ -397,6 +399,9 @@
       const PLATFORM_TOP = 0;
       const PLATFORM_THICKNESS = 0.14;
       const GRAVITY = 15;
+      const LANDING_SNAP_DEPTH = 0.24;
+      const OFF_TRACK_GRAVITY_MULTIPLIER = 8.5;
+      const OFF_TRACK_DRAG = 0.82;
       const BASE_ACCELERATION = 13.8;
       const REVERSE_ACCELERATION_BOOST = 2.45;
       const REVERSE_BRAKE_FRICTION = 0.66;
@@ -468,6 +473,8 @@
       const lookTarget = new THREE.Vector3();
       const cameraForward = new THREE.Vector3();
       const cameraRight = new THREE.Vector3();
+      const previewPoint = new THREE.Vector3();
+      const previewAhead = new THREE.Vector3();
 
       const state = {
         level: readStoredNumber("tiltRollLevel", 1),
@@ -476,6 +483,15 @@
         running: false,
         grounded: true,
         slabs: [],
+        pathPoints: [],
+        pathSegments: [],
+        pathLength: 0,
+        previewActive: false,
+        previewDistance: 0,
+        previewSpeed: 7,
+        previewAtEnd: false,
+        wasRunningBeforePreview: false,
+        startPanelWasVisibleBeforePreview: true,
         spawn: { x: 0, z: -8 },
         goal: { x: 0, z: 8 },
         levelBounds: { minX: -6, maxX: 6, minZ: -8, maxZ: 8 },
@@ -948,6 +964,46 @@
         });
       }
 
+      function updatePathMetrics() {
+        state.pathSegments = [];
+        state.pathLength = 0;
+        for (let index = 0; index < state.pathPoints.length - 1; index += 1) {
+          const start = state.pathPoints[index];
+          const end = state.pathPoints[index + 1];
+          const length = Math.hypot(end.x - start.x, end.z - start.z);
+          if (length <= 0.001) continue;
+          state.pathSegments.push({
+            start,
+            end,
+            length,
+            startDistance: state.pathLength,
+          });
+          state.pathLength += length;
+        }
+        state.previewSpeed = clamp(state.pathLength / 9, 4.8, 10.5);
+      }
+
+      function samplePath(distance) {
+        if (state.pathSegments.length === 0) {
+          return state.spawn;
+        }
+
+        const clampedDistance = clamp(distance, 0, state.pathLength);
+        let segment = state.pathSegments[state.pathSegments.length - 1];
+        for (const candidate of state.pathSegments) {
+          if (clampedDistance <= candidate.startDistance + candidate.length) {
+            segment = candidate;
+            break;
+          }
+        }
+
+        const t = clamp((clampedDistance - segment.startDistance) / segment.length, 0, 1);
+        return {
+          x: THREE.MathUtils.lerp(segment.start.x, segment.end.x, t),
+          z: THREE.MathUtils.lerp(segment.start.z, segment.end.z, t),
+        };
+      }
+
       function addPlatformMesh(slab, platformMaterial, theme) {
         const mesh = new THREE.Mesh(
           new THREE.BoxGeometry(slab.width, PLATFORM_THICKNESS, slab.length),
@@ -987,6 +1043,8 @@
         const difficulty = Math.min(1, Math.max(0, (state.level - 1) / 100));
         const corridorWidth = snapToGrid(clamp(5.6 - difficulty * 3.25 - Math.log10(state.level + 1) * 0.05, 2, 5.6));
         const plan = makeLevelPlan(state.level, rng, corridorWidth);
+        state.pathPoints = plan.points.map((point) => ({ x: point.x, z: point.z }));
+        updatePathMetrics();
 
         for (let index = 0; index < plan.points.length - 1; index += 1) {
           addCorridorSlab(rawSlabs, plan.points[index], plan.points[index + 1], corridorWidth, index);
@@ -1139,7 +1197,51 @@
         recenterTilt(false);
       }
 
+      function startPreview() {
+        if (state.pathLength <= 0) return;
+        state.wasRunningBeforePreview = state.running;
+        state.startPanelWasVisibleBeforePreview = !hud.startPanel.classList.contains("is-hidden");
+        state.previewActive = true;
+        state.previewDistance = 0;
+        state.previewAtEnd = false;
+        state.running = false;
+        state.pointerActive = false;
+        state.pointerInput.x = 0;
+        state.pointerInput.z = 0;
+        ballVelocity.set(0, 0, 0);
+        hud.startPanel.classList.add("is-hidden");
+        hud.previewButton.textContent = "Stop Preview";
+        gameShell.focus({ preventScroll: true });
+        setStatus("Preview");
+      }
+
+      function stopPreview(showStatus = true, restoreRunState = true) {
+        const wasPreviewing = state.previewActive;
+        state.previewActive = false;
+        state.previewDistance = 0;
+        state.previewAtEnd = false;
+        hud.previewButton.textContent = "Preview";
+        if (wasPreviewing && restoreRunState) {
+          state.running = state.wasRunningBeforePreview;
+          if (state.startPanelWasVisibleBeforePreview && !state.running) {
+            hud.startPanel.classList.remove("is-hidden");
+          }
+        }
+        if (wasPreviewing && showStatus) {
+          setStatus("Preview Off");
+        }
+      }
+
+      function togglePreview() {
+        if (state.previewActive) {
+          stopPreview();
+        } else {
+          startPreview();
+        }
+      }
+
       function startRun() {
+        stopPreview(false, false);
         state.running = true;
         hud.startPanel.classList.add("is-hidden");
         resetBall();
@@ -1148,6 +1250,7 @@
       }
 
       function restartLevel() {
+        stopPreview(false, false);
         resetBall();
         state.running = true;
         hud.startPanel.classList.add("is-hidden");
@@ -1156,6 +1259,7 @@
       }
 
       function advanceLevel() {
+        stopPreview(false, false);
         state.level += 1;
         state.best = Math.max(state.best, state.level);
         saveProgress();
@@ -1166,6 +1270,7 @@
       }
 
       function goToLevel(level) {
+        stopPreview(false, false);
         state.level = level;
         state.best = Math.max(state.best, state.level);
         saveProgress();
@@ -1248,7 +1353,12 @@
 
       function stepPhysics(dt) {
         const ground = getGroundSlab(ball.position.x, ball.position.z);
-        const canLand = ground && ball.position.y <= BALL_RADIUS + 0.08 && ballVelocity.y <= 0;
+        const canLand = (
+          ground &&
+          ball.position.y <= BALL_RADIUS + 0.08 &&
+          ball.position.y >= BALL_RADIUS - LANDING_SNAP_DEPTH &&
+          ballVelocity.y <= 0
+        );
         if (canLand) {
           ball.position.y = BALL_RADIUS;
           ballVelocity.y = 0;
@@ -1273,11 +1383,15 @@
           ballVelocity.x *= friction;
           ballVelocity.z *= friction;
         } else {
-          ballVelocity.y -= GRAVITY * dt;
-          ballVelocity.x += input.x * acceleration * 0.14 * dt;
-          ballVelocity.z += input.z * acceleration * 0.14 * dt;
-          ballVelocity.x *= Math.pow(0.995, dt * 60);
-          ballVelocity.z *= Math.pow(0.995, dt * 60);
+          const offTrack = !ground;
+          const gravity = offTrack ? GRAVITY * OFF_TRACK_GRAVITY_MULTIPLIER : GRAVITY;
+          const airControl = offTrack ? 0.02 : 0.14;
+          const airDrag = offTrack ? OFF_TRACK_DRAG : 0.995;
+          ballVelocity.y -= gravity * dt;
+          ballVelocity.x += input.x * acceleration * airControl * dt;
+          ballVelocity.z += input.z * acceleration * airControl * dt;
+          ballVelocity.x *= Math.pow(airDrag, dt * 60);
+          ballVelocity.z *= Math.pow(airDrag, dt * 60);
         }
 
         const maxSpeed = 6.4 + Math.min(state.level, 180) * 0.008;
@@ -1328,6 +1442,34 @@
         camera.rotateZ(-viewX * 0.055);
       }
 
+      function updatePreviewCamera(dt) {
+        if (state.previewDistance < state.pathLength) {
+          state.previewDistance = Math.min(state.pathLength, state.previewDistance + state.previewSpeed * dt);
+          if (state.previewDistance >= state.pathLength && !state.previewAtEnd) {
+            state.previewAtEnd = true;
+            setStatus("End Preview");
+          }
+        }
+
+        const current = samplePath(state.previewDistance);
+        const ahead = samplePath(Math.min(state.pathLength, state.previewDistance + 5.5));
+        previewPoint.set(current.x, PLATFORM_TOP + 2.4, current.z);
+        previewAhead.set(ahead.x, PLATFORM_TOP + 0.35, ahead.z);
+
+        const dx = previewAhead.x - previewPoint.x;
+        const dz = previewAhead.z - previewPoint.z;
+        const directionLength = Math.hypot(dx, dz) || 1;
+        cameraGoal.set(
+          previewPoint.x - (dx / directionLength) * 2.3,
+          PLATFORM_TOP + 3.2,
+          previewPoint.z - (dz / directionLength) * 2.3
+        );
+        const cameraEase = 1 - Math.pow(0.0008, dt);
+        camera.position.lerp(cameraGoal, cameraEase);
+        cameraTarget.lerp(previewAhead, 1 - Math.pow(0.0008, dt));
+        camera.lookAt(cameraTarget);
+      }
+
       function animateDecor(dt, elapsed) {
         goalGroup.children.forEach((child) => {
           if (child.userData.spin) {
@@ -1344,10 +1486,14 @@
       function loop() {
         const dt = Math.min(clock.getDelta(), 0.034);
         const elapsed = clock.elapsedTime;
-        if (state.running) {
+        if (state.running && !state.previewActive) {
           stepPhysics(dt);
         }
-        updateCamera(dt);
+        if (state.previewActive) {
+          updatePreviewCamera(dt);
+        } else {
+          updateCamera(dt);
+        }
         animateDecor(dt, elapsed);
         renderer.render(scene, camera);
       }
@@ -1382,6 +1528,7 @@
 
       function handlePointerDown(event) {
         if (event.pointerType === "mouse" && event.button !== 0) return;
+        if (state.previewActive) stopPreview(false, false);
         gameShell.focus({ preventScroll: true });
         if (!state.running && hud.startPanel.classList.contains("is-hidden")) state.running = true;
         state.pointerActive = true;
@@ -1642,6 +1789,10 @@
         await enableTilt({ quiet: true });
         restartLevel();
       });
+      hud.previewButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        togglePreview();
+      });
       hud.adminCodeButton.addEventListener("click", (event) => {
         event.preventDefault();
         openAdminCode();
@@ -1687,6 +1838,10 @@
         activeSensor: state.activeSensor,
         screenAngle: getScreenAngle(),
         input: { ...state.motionInput },
+        previewActive: state.previewActive,
+        previewDistance: state.previewDistance,
+        pathLength: state.pathLength,
+        ball: { x: ball.position.x, y: ball.position.y, z: ball.position.z },
         neutralKind: state.motionNeutral?.kind ?? null,
         lastAcceleration: state.lastAcceleration,
         lastOrientation: state.lastOrientation,
