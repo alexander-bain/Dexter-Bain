@@ -169,6 +169,13 @@
       pointer-events: none;
     }
 
+    .right-tools {
+      display: grid;
+      justify-items: end;
+      gap: 8px;
+      pointer-events: auto;
+    }
+
     .next-label {
       color: #667085;
       font-size: 0.68rem;
@@ -204,19 +211,6 @@
       right: 11px;
     }
 
-    .controls {
-      position: absolute;
-      left: 50%;
-      bottom: max(16px, env(safe-area-inset-bottom));
-      z-index: 3;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      transform: translateX(-50%);
-      pointer-events: none;
-    }
-
     .action-button {
       min-width: 112px;
       min-height: 46px;
@@ -241,6 +235,13 @@
 
     .action-button.primary {
       background: linear-gradient(135deg, #8ff0cf, #ffd166 58%, #ff99c8);
+    }
+
+    .restart-top {
+      min-width: 86px;
+      min-height: 38px;
+      padding: 7px 12px;
+      background: linear-gradient(135deg, #ffffff, #e0f7ff);
     }
 
     .game-over {
@@ -333,12 +334,12 @@
         min-width: 72px;
       }
 
-      .controls {
-        width: calc(100vw - 28px);
-      }
-
       .action-button {
         flex: 1 1 126px;
+      }
+
+      .restart-top {
+        min-width: 72px;
       }
     }
   </style>
@@ -361,15 +362,13 @@
           </div>
         </div>
       </div>
-      <div class="next-box" aria-label="Next ball">
-        <span class="next-label">Next</span>
-        <span class="next-face" id="nextFace"></span>
+      <div class="right-tools">
+        <div class="next-box" aria-label="Next ball">
+          <span class="next-label">Next</span>
+          <span class="next-face" id="nextFace"></span>
+        </div>
+        <button class="action-button restart-top" id="restartButton" type="button">Restart</button>
       </div>
-    </div>
-
-    <div class="controls">
-      <button class="action-button primary" id="dropButton" type="button">Drop</button>
-      <button class="action-button" id="restartButton" type="button">Restart</button>
     </div>
 
     <section class="game-over" id="gameOver" hidden>
@@ -381,7 +380,7 @@
     </section>
 
     <p class="sr-only" id="gameHelp">
-      Move the drop spot with mouse, touch, or arrow keys. Drop matching balls so they merge into bigger balls.
+      Move the drop spot with mouse, touch, or arrow keys. Click or tap the game to drop matching balls so they merge into bigger balls.
     </p>
   </main>
 
@@ -397,7 +396,6 @@
       const nextFace = document.getElementById("nextFace");
       const gameOver = document.getElementById("gameOver");
       const finalScore = document.getElementById("finalScore");
-      const dropButton = document.getElementById("dropButton");
       const restartButton = document.getElementById("restartButton");
       const playAgainButton = document.getElementById("playAgainButton");
 
@@ -558,7 +556,7 @@
           angle: Math.random() * Math.PI * 2,
           av: (Math.random() - 0.5) * 2,
           born: now,
-          mergeLockUntil: now + 180,
+          mergeLockUntil: now + 110,
           safeUntil: now + safeMs,
           outSince: 0,
           squish: 0,
@@ -630,6 +628,14 @@
         }
       }
 
+      function canMergeBalls(a, b, now) {
+        return (
+          a.type === b.type &&
+          now > a.mergeLockUntil &&
+          now > b.mergeLockUntil
+        );
+      }
+
       function resolveEdge(ball, edge) {
         const relX = ball.x - edge.ax;
         const relY = ball.y - edge.ay;
@@ -653,7 +659,7 @@
           ball.vx -= tangentVelocity * 0.035 * tx;
           ball.vy -= tangentVelocity * 0.035 * ty;
           ball.av += tangentVelocity * 0.0009;
-          ball.squish = Math.max(ball.squish, clamp(correction / ball.r, 0, 0.82));
+          ball.squish = Math.max(ball.squish, clamp((correction / ball.r) * 1.45, 0, 1.18));
           ball.squishAngle = Math.atan2(edge.ny, edge.nx);
         }
       }
@@ -663,6 +669,15 @@
         let dy = b.y - a.y;
         let distance = Math.hypot(dx, dy);
         const minDistance = a.r + b.r;
+        const mergeTouchDistance = minDistance + Math.max(5, Math.min(a.r, b.r) * 0.22);
+        if (distance <= mergeTouchDistance && canMergeBalls(a, b, now)) {
+          candidates.push({
+            a,
+            b,
+            overlap: minDistance - distance + mergeTouchDistance
+          });
+        }
+
         if (distance >= minDistance) {
           return;
         }
@@ -710,20 +725,12 @@
         a.av -= tangentVelocity * 0.00022;
         b.av += tangentVelocity * 0.00022;
 
-        const squish = clamp(overlap / minDistance, 0, 0.74);
+        const squish = clamp((overlap / Math.min(a.r, b.r)) * 1.18, 0, 1.18);
         a.squish = Math.max(a.squish, squish);
         b.squish = Math.max(b.squish, squish);
         a.squishAngle = Math.atan2(-ny, -nx);
         b.squishAngle = Math.atan2(ny, nx);
 
-        if (
-          a.type === b.type &&
-          now > a.mergeLockUntil &&
-          now > b.mergeLockUntil &&
-          overlap > Math.max(2, minDistance * 0.045)
-        ) {
-          candidates.push({ a, b, overlap });
-        }
       }
 
       function mergeCandidates(candidates) {
@@ -753,8 +760,8 @@
 
           if (next < tiers.length) {
             const merged = makeBall(next, x, y, vx, vy, 420);
-            merged.squish = 0.56;
-            merged.mergeLockUntil = performance.now() + 320;
+            merged.squish = 0.95;
+            merged.mergeLockUntil = performance.now() + 190;
             balls.push(merged);
             score += tiers[next].score;
             addEffect(x, y, next, merged.r);
@@ -785,7 +792,7 @@
           ball.y += ball.vy * step;
           ball.angle += ball.av * step;
           ball.av *= 0.992;
-          ball.squish *= Math.pow(0.018, step);
+          ball.squish *= Math.pow(0.055, step);
         }
 
         const candidates = [];
@@ -962,10 +969,12 @@
       function drawBallVisual(ball, now, preview = false) {
         const tier = tiers[ball.type];
         const r = ball.r;
-        const fallStretch = clamp(Math.abs(ball.vy) / 2800, 0, 0.12);
-        const wobble = Math.sin((now - ball.born) * 0.01 + ball.id * 1.7) * 0.025;
-        const sx = 1 + ball.squish * 0.28 - fallStretch * 0.4 + wobble;
-        const sy = 1 - ball.squish * 0.18 + fallStretch + wobble * 0.35;
+        const age = now - (ball.born || now);
+        const fallStretch = clamp(Math.abs(ball.vy) / 2600, 0, 0.2);
+        const squish = clamp(ball.squish || 0, 0, 1.18);
+        const wobble = Math.sin(age * 0.012 + ball.id * 1.7) * 0.042;
+        const sx = clamp(1 + squish * 0.66 - fallStretch * 0.36 + wobble, 0.62, 1.86);
+        const sy = clamp(1 - squish * 0.44 + fallStretch * 0.58 - wobble * 0.45, 0.54, 1.64);
         const lookSource = pointer.active ? pointer : { x: dropX, y: world.topY };
         const lookX = clamp((lookSource.x - ball.x) / 260, -1, 1) * r * 0.1;
         const lookY = clamp((lookSource.y - ball.y) / 260, -1, 1) * r * 0.08;
@@ -991,8 +1000,7 @@
         body.addColorStop(1, tier.shade);
 
         ctx.fillStyle = body;
-        ctx.beginPath();
-        ctx.ellipse(0, 0, r, r, 0, 0, Math.PI * 2);
+        drawBlobPath(ball, r, now, squish);
         ctx.fill();
         ctx.stroke();
 
@@ -1005,14 +1013,44 @@
         drawEye(-r * 0.32, -r * 0.13, r, lookX, lookY, blink);
         drawEye(r * 0.32, -r * 0.13, r, lookX, lookY, blink);
 
-        ctx.strokeStyle = "rgba(8, 10, 15, 0.9)";
-        ctx.lineWidth = Math.max(2, r * 0.045);
-        ctx.lineCap = "round";
-        ctx.beginPath();
-        ctx.arc(0, r * 0.2, r * 0.19, 0.16 * Math.PI, 0.84 * Math.PI);
-        ctx.stroke();
-
         ctx.restore();
+      }
+
+      function drawBlobPath(ball, r, now, squish) {
+        const points = [];
+        const count = 20;
+        const seed = ball.id * 1.91;
+        const age = now - (ball.born || now);
+        const pulse = Math.sin(age * 0.01 + seed) * 0.035;
+
+        for (let i = 0; i < count; i += 1) {
+          const angle = (i / count) * Math.PI * 2;
+          const ripple =
+            Math.sin(angle * 3 + now * 0.009 + seed) * 0.038 +
+            Math.sin(angle * 5 - now * 0.006 + seed * 0.7) * 0.026;
+          const sideBulge = Math.sin(angle * 2) * squish * 0.055;
+          const radius = r * (1 + ripple + sideBulge + pulse);
+          points.push({
+            x: Math.cos(angle) * radius,
+            y: Math.sin(angle) * radius
+          });
+        }
+
+        const first = points[0];
+        const last = points[points.length - 1];
+        ctx.beginPath();
+        ctx.moveTo((last.x + first.x) * 0.5, (last.y + first.y) * 0.5);
+        for (let i = 0; i < points.length; i += 1) {
+          const current = points[i];
+          const next = points[(i + 1) % points.length];
+          ctx.quadraticCurveTo(
+            current.x,
+            current.y,
+            (current.x + next.x) * 0.5,
+            (current.y + next.y) * 0.5
+          );
+        }
+        ctx.closePath();
       }
 
       function drawEye(x, y, r, lookX, lookY, blink) {
@@ -1115,7 +1153,6 @@
         dropBall();
       });
 
-      dropButton.addEventListener("click", dropBall);
       restartButton.addEventListener("click", resetGame);
       playAgainButton.addEventListener("click", resetGame);
 
