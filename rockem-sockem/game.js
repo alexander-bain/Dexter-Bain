@@ -6,6 +6,7 @@ const ui = {
   overlay: document.getElementById("startOverlay"),
   overlayCopy: document.getElementById("overlayCopy"),
   startButton: document.getElementById("startButton"),
+  modeButtons: [...document.querySelectorAll("[data-mode]")],
   difficultyButtons: [...document.querySelectorAll("[data-difficulty]")],
   announcer: document.getElementById("announcer"),
   timerText: document.getElementById("timerText"),
@@ -83,8 +84,10 @@ const tmpColor = new THREE.Color();
 const clock = new THREE.Clock();
 const keys = new Set();
 const heldControls = {
-  advance: false,
-  retreat: false,
+  blueAdvance: false,
+  blueRetreat: false,
+  redAdvance: false,
+  redRetreat: false,
   guard: false,
 };
 const DUCK_DURATION = 0.42;
@@ -98,6 +101,7 @@ let audioCtx = null;
 
 const game = {
   mode: "intro",
+  playMode: "single",
   difficulty: "rookie",
   round: 1,
   timer: 90,
@@ -148,12 +152,12 @@ const mats = {
   chrome: material(0xdde5ee, { metalness: 0.96, roughness: 0.16, clearcoat: 0.9 }),
   darkChrome: material(0x788594, { metalness: 0.86, roughness: 0.23 }),
   brass: material(0xf0c565, { metalness: 0.84, roughness: 0.22, clearcoat: 0.7 }),
-  matBlue: material(0x24466c, { metalness: 0.38, roughness: 0.42 }),
-  matRed: material(0x6b2725, { metalness: 0.38, roughness: 0.42 }),
+  matBlue: material(0x2b64a6, { metalness: 0.35, roughness: 0.38 }),
+  matRed: material(0xa63b31, { metalness: 0.35, roughness: 0.38 }),
   ropeBlue: material(0x5db6ff, { metalness: 0.35, roughness: 0.35, emissive: 0x0b3d6e, emissiveIntensity: 0.15 }),
   ropeRed: material(0xff5c55, { metalness: 0.35, roughness: 0.35, emissive: 0x5c0e0d, emissiveIntensity: 0.15 }),
-  canvas: material(0x495664, { metalness: 0.1, roughness: 0.76, clearcoat: 0 }),
-  board: material(0x2d3540, { metalness: 0.28, roughness: 0.44 }),
+  canvas: material(0xf5c84b, { metalness: 0.18, roughness: 0.58, clearcoat: 0.18 }),
+  board: material(0xd6a530, { metalness: 0.42, roughness: 0.34, clearcoat: 0.26 }),
 };
 
 function makeBox(width, height, depth, mat, x = 0, y = 0, z = 0) {
@@ -489,6 +493,18 @@ function bindEvents() {
     startFight();
   });
 
+  ui.modeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      game.playMode = button.dataset.mode || "single";
+      ui.modeButtons.forEach((candidate) => {
+        candidate.classList.toggle("is-active", candidate === button);
+      });
+      ui.overlayCopy.textContent = game.playMode === "multi"
+        ? "Two players share the keyboard. First head to pop loses."
+        : "Blue versus the computer. First head to pop loses.";
+    });
+  });
+
   ui.difficultyButtons.forEach((button) => {
     button.addEventListener("click", () => {
       game.difficulty = button.dataset.difficulty || "rookie";
@@ -541,17 +557,33 @@ function handleKeyDown(event) {
   }
 
   if (!event.repeat) {
-    if (event.code === "KeyJ") startPunch(player, "punch");
-    if (event.code === "KeyK") startPunch(player, "push");
+    if (event.code === "KeyQ") startPunch(player, "punch");
+    if (event.code === "KeyE") startPunch(player, "push");
     if (event.code === "KeyS" || event.code === "ArrowDown") dodge(player);
+    if (game.playMode === "single") {
+      if (event.code === "KeyJ") startPunch(player, "punch");
+      if (event.code === "KeyK") startPunch(player, "push");
+    } else {
+      if (event.code === "KeyO") startPunch(opponent, "punch");
+      if (event.code === "KeyP") startPunch(opponent, "push");
+      if (event.code === "KeyK") dodge(opponent);
+    }
   }
 
   keys.add(event.code);
 }
 
 function handleControlDown(control) {
-  if (control === "advance" || control === "retreat" || control === "guard") {
-    heldControls[control] = true;
+  if (control === "advance") {
+    heldControls.blueAdvance = true;
+    return;
+  }
+  if (control === "retreat") {
+    heldControls.blueRetreat = true;
+    return;
+  }
+  if (control === "guard") {
+    heldControls.guard = true;
     return;
   }
   if (control === "duck") {
@@ -564,8 +596,14 @@ function handleControlDown(control) {
 }
 
 function handleControlUp(control) {
-  if (control === "advance" || control === "retreat" || control === "guard") {
-    heldControls[control] = false;
+  if (control === "advance") {
+    heldControls.blueAdvance = false;
+  }
+  if (control === "retreat") {
+    heldControls.blueRetreat = false;
+  }
+  if (control === "guard") {
+    heldControls.guard = false;
   }
 }
 
@@ -605,9 +643,10 @@ function startFight() {
   game.winner = "";
   resetFighter(player, -1.28);
   resetFighter(opponent, 1.28);
+  opponent.ai = game.playMode === "single";
   ui.overlay.classList.remove("is-visible");
   ui.startButton.textContent = "Start Fight";
-  setMessage(`${DIFFICULTY[game.difficulty].label} match. Fight!`, true);
+  setMessage(game.playMode === "multi" ? "2-player match. Fight!" : `${DIFFICULTY[game.difficulty].label} match. Fight!`, true);
   playBell();
   updateUi();
 }
@@ -677,8 +716,10 @@ function updateFight(dt) {
     endByDecision();
   }
 
-  updatePlayerIntent();
-  updateAi(dt);
+  updateHumanIntents();
+  if (game.playMode === "single") {
+    updateAi(dt);
+  }
   updateFighter(player, opponent, dt);
   updateFighter(opponent, player, dt);
   separateFighters();
@@ -687,11 +728,20 @@ function updateFight(dt) {
   game.pressure = lerp(game.pressure, opponent.punch || opponent.guarding ? 100 : Math.max(0, 100 - opponent.stamina), dt * 2.8);
 }
 
-function updatePlayerIntent() {
-  const advance = heldControls.advance || keys.has("KeyD") || keys.has("ArrowRight");
-  const retreat = heldControls.retreat || keys.has("KeyA") || keys.has("ArrowLeft");
+function updateHumanIntents() {
+  const advance = heldControls.blueAdvance || keys.has("KeyD") || keys.has("ArrowRight");
+  const retreat = heldControls.blueRetreat || keys.has("KeyA") || keys.has("ArrowLeft");
   player.intent = (advance ? 1 : 0) - (retreat ? 1 : 0);
   player.guarding = (heldControls.guard || keys.has("KeyW") || keys.has("ArrowUp")) && !player.punch && player.dodgeTimer <= 0;
+
+  if (game.playMode !== "multi") {
+    return;
+  }
+
+  const redAdvance = heldControls.redAdvance || keys.has("KeyJ");
+  const redRetreat = heldControls.redRetreat || keys.has("KeyL");
+  opponent.intent = (redRetreat ? 1 : 0) - (redAdvance ? 1 : 0);
+  opponent.guarding = false;
 }
 
 function updateAi(dt) {

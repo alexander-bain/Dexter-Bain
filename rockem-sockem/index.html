@@ -344,11 +344,19 @@
         font-weight: 700;
       }
 
+      .mode-row,
       .difficulty-row {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 8px;
         margin: 0 0 16px;
+      }
+
+      .mode-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .difficulty-row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
       .keyboard-card {
@@ -358,20 +366,54 @@
         margin: 0 0 16px;
       }
 
-      .keyboard-card .key-group {
-        min-height: 48px;
-        justify-content: center;
-        padding: 8px;
+      .control-card {
+        min-height: 106px;
+        padding: 10px;
         border: 1px solid rgba(255, 255, 255, 0.18);
         border-radius: 8px;
         background: rgba(255, 255, 255, 0.08);
-        text-align: center;
+        display: grid;
+        gap: 8px;
       }
 
-      .keyboard-card span {
+      .control-title {
+        color: #fff2b8;
+        font-size: 0.76rem;
+        font-weight: 950;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .control-line {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
         color: #f6f9fc;
+        font-size: 0.8rem;
+        font-weight: 900;
       }
 
+      .control-line span:first-child {
+        display: inline-flex;
+        gap: 4px;
+      }
+
+      .control-mini {
+        display: grid;
+        gap: 6px;
+      }
+
+      .control-mini .control-title {
+        color: #fff2b8;
+        font-size: 0.68rem;
+      }
+
+      .control-mini .key-group {
+        justify-content: space-between;
+      }
+
+      .mode-row button,
       .difficulty-row button,
       .primary-action,
       .touch-button {
@@ -381,12 +423,14 @@
         cursor: pointer;
       }
 
+      .mode-row button,
       .difficulty-row button {
         min-height: 42px;
         border-radius: 8px;
         font-weight: 950;
       }
 
+      .mode-row button.is-active,
       .difficulty-row button.is-active {
         color: #061018;
         border-color: rgba(255, 255, 255, 0.42);
@@ -575,10 +619,20 @@
 
       <div class="announcer" id="announcer">Blue corner versus red corner.</div>
       <div class="keyboard-strip" aria-label="Computer keyboard controls">
-        <span class="key-group"><kbd>A</kbd><kbd>D</kbd><span>move</span></span>
-        <span class="key-group"><kbd>S</kbd><span>duck</span></span>
-        <span class="key-group"><kbd>J</kbd><span>punch</span></span>
-        <span class="key-group"><kbd>K</kbd><span>push</span></span>
+        <span class="control-mini">
+          <span class="control-title">Blue</span>
+          <span class="key-group"><kbd>A</kbd><kbd>D</kbd><span>move</span></span>
+          <span class="key-group"><kbd>S</kbd><span>duck</span></span>
+          <span class="key-group"><kbd>Q</kbd><span>punch</span></span>
+          <span class="key-group"><kbd>E</kbd><span>push</span></span>
+        </span>
+        <span class="control-mini">
+          <span class="control-title">Red</span>
+          <span class="key-group"><kbd>J</kbd><kbd>L</kbd><span>move</span></span>
+          <span class="key-group"><kbd>K</kbd><span>duck</span></span>
+          <span class="key-group"><kbd>O</kbd><span>punch</span></span>
+          <span class="key-group"><kbd>P</kbd><span>push</span></span>
+        </span>
       </div>
 
       <section class="side-panel left" aria-label="Blue stats">
@@ -606,12 +660,26 @@
       <section class="overlay is-visible" id="startOverlay" aria-labelledby="gameTitle">
         <div class="overlay-panel">
           <h1 id="gameTitle">Rock'em Sock'em Robots</h1>
-          <p id="overlayCopy">Blue corner versus red corner. First head to pop loses.</p>
+          <p id="overlayCopy">Choose solo or 2 players. First head to pop loses.</p>
+          <div class="mode-row" role="group" aria-label="Play mode">
+            <button type="button" class="is-active" data-mode="single">Solo</button>
+            <button type="button" data-mode="multi">2 Players</button>
+          </div>
           <div class="keyboard-card" aria-label="Computer keyboard controls">
-            <span class="key-group"><kbd>A</kbd><kbd>D</kbd><span>move</span></span>
-            <span class="key-group"><kbd>S</kbd><span>duck</span></span>
-            <span class="key-group"><kbd>J</kbd><span>punch</span></span>
-            <span class="key-group"><kbd>K</kbd><span>push</span></span>
+            <section class="control-card blue-keys" aria-label="Blue robot keys">
+              <span class="control-title">Blue keys</span>
+              <span class="control-line"><span><kbd>A</kbd><kbd>D</kbd></span><span>move</span></span>
+              <span class="control-line"><span><kbd>S</kbd></span><span>duck</span></span>
+              <span class="control-line"><span><kbd>Q</kbd></span><span>punch</span></span>
+              <span class="control-line"><span><kbd>E</kbd></span><span>push</span></span>
+            </section>
+            <section class="control-card red-keys" aria-label="Red robot keys">
+              <span class="control-title">Red keys</span>
+              <span class="control-line"><span><kbd>J</kbd><kbd>L</kbd></span><span>move</span></span>
+              <span class="control-line"><span><kbd>K</kbd></span><span>duck</span></span>
+              <span class="control-line"><span><kbd>O</kbd></span><span>punch</span></span>
+              <span class="control-line"><span><kbd>P</kbd></span><span>push</span></span>
+            </section>
           </div>
           <div class="difficulty-row" role="group" aria-label="Difficulty">
             <button type="button" class="is-active" data-difficulty="rookie">Rookie</button>
