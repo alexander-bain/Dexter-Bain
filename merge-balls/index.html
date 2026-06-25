@@ -563,6 +563,7 @@
           safeUntil: now + safeMs,
           outSince: 0,
           squish: 0,
+          squishTarget: 0,
           squishVelocity: 0,
           squishAngle: 0,
           blinkAt: now + 900 + Math.random() * 2600,
@@ -633,17 +634,18 @@
       }
 
       function applySquash(ball, angle, strength) {
-        const amount = clamp(strength, 0, 0.9);
+        const amount = clamp(strength * 1.28, 0, 1.15);
         if (amount < 0.025) {
           return;
         }
 
-        if (Math.abs(ball.squish) < amount || Math.abs(ball.squish) < 0.1) {
+        if (Math.abs(ball.squishTarget || 0) < amount || Math.abs(ball.squish) < 0.1) {
           ball.squishAngle = angle;
         }
 
-        ball.squish = Math.max(ball.squish, amount);
-        ball.squishVelocity = clamp((ball.squishVelocity || 0) - amount * 4.3, -7, 5);
+        ball.squishTarget = Math.max(ball.squishTarget || 0, amount);
+        ball.squish = Math.max(ball.squish, amount * 0.1);
+        ball.squishVelocity = clamp((ball.squishVelocity || 0) + amount * 1.85, -5, 7.2);
       }
 
       function canMergeBalls(a, b, now) {
@@ -777,8 +779,9 @@
 
           if (next < tiers.length) {
             const merged = makeBall(next, x, y, vx, vy, 420);
-            merged.squish = 0.55;
-            merged.squishVelocity = -3.2;
+            merged.squish = 0.12;
+            merged.squishTarget = 1.05;
+            merged.squishVelocity = 3.2;
             merged.squishAngle = Math.atan2(vy || -1, vx || 1);
             merged.mergeLockUntil = performance.now() + 190;
             balls.push(merged);
@@ -847,14 +850,18 @@
       }
 
       function updateVisualSpring(ball, step) {
-        const stiffness = 118;
-        const damping = 9.4;
-        const acceleration = -stiffness * ball.squish - damping * ball.squishVelocity;
+        const target = ball.squishTarget || 0;
+        const stiffness = 62;
+        const damping = 6.4;
+        const acceleration = (target - ball.squish) * stiffness - damping * ball.squishVelocity;
         ball.squishVelocity += acceleration * step;
         ball.squish += ball.squishVelocity * step;
 
-        if (Math.abs(ball.squish) < 0.004 && Math.abs(ball.squishVelocity) < 0.04) {
+        ball.squishTarget = Math.max(0, target - step * 1.35);
+
+        if (Math.abs(ball.squish) < 0.004 && Math.abs(ball.squishVelocity) < 0.04 && ball.squishTarget < 0.004) {
           ball.squish = 0;
+          ball.squishTarget = 0;
           ball.squishVelocity = 0;
         }
       }
@@ -995,6 +1002,7 @@
           r,
           angle: 0,
           squish: 0,
+          squishTarget: 0,
           squishVelocity: 0,
           squishAngle: Math.PI / 2,
           blink: Math.max(0, Math.sin(now * 0.003) > 0.985 ? 1 : 0)
@@ -1004,11 +1012,11 @@
       function drawBallVisual(ball, now, preview = false) {
         const tier = tiers[ball.type];
         const r = ball.r;
-        const squish = clamp(ball.squish || 0, -0.45, 0.85);
+        const squish = clamp(ball.squish || 0, -0.5, 1.08);
         const squash = Math.max(0, squish);
         const stretch = Math.max(0, -squish);
-        const axisScale = clamp(1 - squash * 0.44 + stretch * 0.34, 0.58, 1.28);
-        const crossScale = clamp(1 / axisScale, 0.78, 1.46);
+        const axisScale = clamp(1 - squash * 0.54 + stretch * 0.32, 0.44, 1.3);
+        const crossScale = clamp(1 / axisScale, 0.78, 1.72);
         const deformationAngle = Math.abs(squish) > 0.03 ? (ball.squishAngle || 0) : 0;
         const lookSource = pointer.active ? pointer : { x: dropX, y: world.dropY };
         const lookX = clamp((lookSource.x - ball.x) / 260, -1, 1) * r * 0.1;
@@ -1047,8 +1055,8 @@
         ctx.save();
         ctx.translate(ball.x, ball.y);
         ctx.scale(
-          clamp(1 + squash * 0.08 - stretch * 0.05, 0.92, 1.1),
-          clamp(1 - squash * 0.05 + stretch * 0.08, 0.9, 1.1)
+          clamp(1 + squash * 0.12 - stretch * 0.06, 0.9, 1.16),
+          clamp(1 - squash * 0.08 + stretch * 0.1, 0.86, 1.14)
         );
         drawEye(-r * 0.32, -r * 0.13, r, lookX, lookY, blink);
         drawEye(r * 0.32, -r * 0.13, r, lookX, lookY, blink);
@@ -1066,24 +1074,24 @@
         const points = [];
         const count = 22;
         const seed = ball.id * 1.91;
-        const flatX = r * (1 - squish * 0.28);
+        const flatX = r * (1 - squish * 0.38);
 
         for (let i = 0; i < count; i += 1) {
           const angle = (i / count) * Math.PI * 2;
           const contact = Math.max(0, Math.cos(angle));
           const away = Math.max(0, -Math.cos(angle));
           const vertical = Math.abs(Math.sin(angle));
-          const contactDent = Math.pow(contact, 1.7) * squish * 0.34;
-          const awayBulge = Math.pow(away, 1.35) * squish * 0.18;
-          const cheekBulge = Math.pow(vertical, 1.6) * squish * 0.08;
-          const tinyUnevenness = Math.sin(angle * 3 + seed) * squish * 0.012;
+          const contactDent = Math.pow(contact, 1.55) * squish * 0.46;
+          const awayBulge = Math.pow(away, 1.25) * squish * 0.22;
+          const cheekBulge = Math.pow(vertical, 1.45) * squish * 0.15;
+          const tinyUnevenness = Math.sin(angle * 3 + seed) * squish * 0.018;
           const radius = r * (1 - contactDent + awayBulge + cheekBulge + tinyUnevenness);
           let x = Math.cos(angle) * radius;
           let y = Math.sin(angle) * radius;
 
           if (squish > 0.1 && x > flatX) {
-            x = flatX + (x - flatX) * clamp(1 - squish * 0.82, 0.12, 0.85);
-            y *= 1 + squish * 0.05;
+            x = flatX + (x - flatX) * clamp(1 - squish * 0.95, 0.08, 0.78);
+            y *= 1 + squish * 0.1;
           }
 
           points.push({
