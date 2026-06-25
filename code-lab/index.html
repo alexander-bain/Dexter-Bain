@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Code Lab Arcade</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #071014;
+      --ink: #f8fafc;
+      --muted: #a5b4c8;
+      --panel: rgba(10, 20, 28, 0.88);
+      --panel-strong: rgba(14, 28, 39, 0.96);
+      --line: rgba(255, 255, 255, 0.14);
+      --green: #6ee7a8;
+      --yellow: #f6d365;
+      --red: #fb7185;
+      --blue: #67e8f9;
+      --violet: #c084fc;
+      --orange: #fb923c;
+      --shadow: rgba(0, 0, 0, 0.42);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    html {
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        radial-gradient(circle at 8% 12%, rgba(110, 231, 168, 0.18), transparent 26%),
+        radial-gradient(circle at 88% 18%, rgba(251, 146, 60, 0.16), transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(103, 232, 249, 0.14), transparent 30%),
+        linear-gradient(135deg, #071014 0%, #101623 46%, #090b13 100%);
+      background-size: 38px 38px, 38px 38px, auto, auto, auto, auto;
+      color: var(--ink);
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      padding: 18px clamp(14px, 3vw, 36px) 32px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin: 0 auto 18px;
+      max-width: 1320px;
+    }
+
+    .home-link,
+    .status-pill {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(4, 10, 15, 0.76);
+      text-decoration: none;
+      color: #e2e8f0;
+      font-size: 0.9rem;
+      font-weight: 800;
+      backdrop-filter: blur(14px);
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 0 5px rgba(110, 231, 168, 0.14), 0 0 18px rgba(110, 231, 168, 0.48);
+    }
+
+    .masthead {
+      max-width: 1320px;
+      min-height: 132px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(230px, 330px);
+      align-items: stretch;
+      gap: 16px;
+      margin: 0 auto 18px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+    }
+
+    .title-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--blue);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4.8rem);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      max-width: 780px;
+      margin: 12px 0 0;
+      color: #d4deeb;
+      font-size: clamp(0.98rem, 1.7vw, 1.2rem);
+      line-height: 1.5;
+    }
+
+    .pixel-marquee {
+      position: relative;
+      overflow: hidden;
+      min-height: 132px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(110, 231, 168, 0.18), rgba(103, 232, 249, 0.08), rgba(251, 146, 60, 0.12)),
+        rgba(6, 13, 20, 0.82);
+      box-shadow: 0 20px 50px var(--shadow);
+    }
+
+    .pixel-marquee::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      background:
+        linear-gradient(90deg, transparent 0 18px, rgba(255, 255, 255, 0.12) 18px 20px, transparent 20px 38px),
+        linear-gradient(180deg, transparent 0 18px, rgba(255, 255, 255, 0.1) 18px 20px, transparent 20px 38px);
+      background-size: 38px 38px;
+      opacity: 0.55;
+    }
+
+    .pixel-ship {
+      position: absolute;
+      left: 34px;
+      bottom: 30px;
+      width: 28px;
+      height: 28px;
+      background: var(--green);
+      box-shadow:
+        28px 0 0 var(--yellow),
+        56px 0 0 var(--green),
+        28px -28px 0 var(--blue),
+        28px 28px 0 var(--red),
+        84px -28px 0 var(--violet),
+        112px 0 0 var(--orange),
+        140px 28px 0 var(--blue),
+        168px 0 0 var(--green),
+        196px -28px 0 var(--yellow);
+      image-rendering: pixelated;
+      animation: pixelFloat 2.8s ease-in-out infinite;
+    }
+
+    @keyframes pixelFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .workspace {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(250px, 310px) minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015)), var(--panel);
+      box-shadow: 0 22px 48px var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--yellow), var(--red), var(--blue), var(--violet));
+    }
+
+    .side-panel {
+      padding: 16px;
+    }
+
+    .panel-title {
+      margin: 0 0 12px;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 900;
+    }
+
+    .project-list {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .project-button {
+      width: 100%;
+      min-height: 68px;
+      padding: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.04);
+      text-align: left;
+    }
+
+    .project-button[aria-pressed="true"] {
+      border-color: rgba(110, 231, 168, 0.75);
+      background: linear-gradient(135deg, rgba(110, 231, 168, 0.16), rgba(103, 232, 249, 0.08));
+      box-shadow: 0 0 0 2px rgba(110, 231, 168, 0.08);
+    }
+
+    .project-name {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .project-meta {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+
+    .template-grid,
+    .side-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .template-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .button {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 0;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--green), #34d399);
+      color: #03130d;
+      font-weight: 950;
+      text-decoration: none;
+      box-shadow: 0 12px 24px rgba(52, 211, 153, 0.22);
+    }
+
+    .button.secondary {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.06);
+      color: #e2e8f0;
+      box-shadow: none;
+    }
+
+    .button.warn {
+      background: linear-gradient(135deg, var(--red), #f97316);
+      color: #fff7ed;
+      box-shadow: 0 12px 24px rgba(251, 113, 133, 0.18);
+    }
+
+    .button:focus-visible,
+    .project-button:focus-visible,
+    .field:focus-visible,
+    .editor:focus-visible {
+      outline: 3px solid rgba(103, 232, 249, 0.42);
+      outline-offset: 2px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .stat {
+      min-height: 74px;
+      padding: 11px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .stat-label {
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 900;
+    }
+
+    .stat-value {
+      margin: 0;
+      font-size: 1.35rem;
+      font-weight: 950;
+      overflow-wrap: anywhere;
+    }
+
+    .main-panel {
+      min-width: 0;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(190px, 1fr) auto auto auto;
+      gap: 8px;
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(6, 12, 18, 0.45);
+    }
+
+    .field {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      background: rgba(3, 8, 12, 0.84);
+      color: var(--ink);
+      padding: 8px 10px;
+      font-weight: 800;
+    }
+
+    .builder-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 0.9fr);
+      min-height: 660px;
+    }
+
+    .editor-wrap,
+    .stage-wrap {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .editor-wrap {
+      border-right: 1px solid var(--line);
+    }
+
+    .section-head {
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #dbeafe;
+      font-weight: 950;
+    }
+
+    .status-text {
+      min-width: 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 750;
+      overflow-wrap: anywhere;
+    }
+
+    .editor {
+      width: 100%;
+      min-height: 614px;
+      flex: 1;
+      resize: vertical;
+      border: 0;
+      border-radius: 0;
+      padding: 16px;
+      background: #071016;
+      color: #d8f7e6;
+      line-height: 1.5;
+      font: 0.9rem ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      tab-size: 2;
+      white-space: pre;
+      overflow: auto;
+    }
+
+    .stage-shell {
+      display: grid;
+      gap: 12px;
+      padding: 14px;
+      flex: 1;
+      align-content: start;
+    }
+
+    .stage-frame {
+      width: 100%;
+      aspect-ratio: 16 / 11;
+      min-height: 320px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      background: #05080d;
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.36);
+    }
+
+    .history {
+      display: grid;
+      gap: 8px;
+    }
+
+    .history-row {
+      min-height: 48px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.045);
+      color: #dbeafe;
+      font-size: 0.86rem;
+      font-weight: 800;
+    }
+
+    .history-time {
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 750;
+    }
+
+    .empty {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 980px) {
+      .masthead,
+      .workspace,
+      .builder-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .editor-wrap {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .field {
+        grid-column: 1 / -1;
+      }
+
+      .editor {
+        min-height: 430px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .app {
+        padding: 12px 10px 22px;
+      }
+
+      .topbar {
+        align-items: stretch;
+      }
+
+      .home-link,
+      .status-pill,
+      .button {
+        width: 100%;
+      }
+
+      .masthead {
+        min-height: 0;
+      }
+
+      .pixel-marquee {
+        min-height: 104px;
+      }
+
+      .toolbar,
+      .template-grid,
+      .side-actions,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .stage-frame {
+        min-height: 260px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <nav class="topbar" aria-label="Code Lab navigation">
+      <a class="home-link" href="../index.html">DexterBain.com Arcade</a>
+      <span class="status-pill"><span class="status-dot" aria-hidden="true"></span><span id="saveStatus">Loaded</span></span>
+    </nav>
+
+    <header class="masthead">
+      <div class="title-block">
+        <p class="eyebrow">Code Lab Arcade</p>
+        <h1>Build it, run it, keep it.</h1>
+        <p class="subtitle">A tiny arcade lab for making canvas games, playing them instantly, and saving projects with score history on this device.</p>
+      </div>
+      <div class="pixel-marquee" aria-hidden="true">
+        <div class="pixel-ship"></div>
+      </div>
+    </header>
+
+    <section class="workspace" aria-label="Code Lab workspace">
+      <aside class="panel side-panel">
+        <h2 class="panel-title">Saved Games</h2>
+        <div class="project-list" id="projectList"></div>
+
+        <h2 class="panel-title">Templates</h2>
+        <div class="template-grid" id="templateGrid"></div>
+
+        <div class="side-actions">
+          <button class="button secondary" type="button" id="newProjectBtn">New</button>
+          <button class="button secondary" type="button" id="copyProjectBtn">Duplicate</button>
+          <button class="button warn" type="button" id="deleteProjectBtn">Delete</button>
+          <button class="button secondary" type="button" id="resetProjectBtn">Reset</button>
+        </div>
+
+        <h2 class="panel-title">Score</h2>
+        <div class="stats">
+          <div class="stat">
+            <p class="stat-label">Current</p>
+            <p class="stat-value" id="currentScore">0</p>
+          </div>
+          <div class="stat">
+            <p class="stat-label">Best</p>
+            <p class="stat-value" id="bestScore">0</p>
+          </div>
+          <div class="stat">
+            <p class="stat-label">Plays</p>
+            <p class="stat-value" id="playCount">0</p>
+          </div>
+          <div class="stat">
+            <p class="stat-label">Saved</p>
+            <p class="stat-value" id="savedCount">0</p>
+          </div>
+        </div>
+      </aside>
+
+      <section class="panel main-panel">
+        <div class="toolbar">
+          <label>
+            <span class="sr-only">Project name</span>
+            <input class="field" id="projectTitle" maxlength="44" autocomplete="off" />
+          </label>
+          <button class="button" type="button" id="runBtn">Run</button>
+          <button class="button secondary" type="button" id="saveBtn">Save</button>
+          <button class="button secondary" type="button" id="restartBtn">Restart</button>
+        </div>
+
+        <div class="builder-grid">
+          <section class="editor-wrap" aria-labelledby="editorTitle">
+            <div class="section-head">
+              <h2 class="section-title" id="editorTitle">Code</h2>
+              <span class="status-text" id="editorStatus">Ready</span>
+            </div>
+            <textarea class="editor" id="codeEditor" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+          </section>
+
+          <section class="stage-wrap" aria-labelledby="stageTitle">
+            <div class="section-head">
+              <h2 class="section-title" id="stageTitle">Stage</h2>
+              <span class="status-text" id="stageStatus">Waiting</span>
+            </div>
+            <div class="stage-shell">
+              <iframe class="stage-frame" id="stageFrame" title="Playable game preview" sandbox="allow-scripts"></iframe>
+              <div>
+                <h2 class="panel-title">Run History</h2>
+                <div class="history" id="historyList"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = "dexterbain-code-lab-v1";
+
+    const templates = {
+      dodge: {
+        title: "Pixel Dodge",
+        label: "Pixel Dodge",
+        code: `const canvas = Game.canvas;
+const ctx = Game.ctx;
+const keys = Game.keys;
+
+let player;
+let hazards;
+let coins;
+let score;
+let speed;
+let alive;
+let lastSpawn;
+
+function reset() {
+  player = { x: 58, y: 200, size: 26 };
+  hazards = [];
+  coins = [];
+  score = 0;
+  speed = 2.4;
+  alive = true;
+  lastSpawn = 0;
+  Game.setScore(score, "Coins");
+}
+
+function hit(a, b) {
+  return a.x < b.x + b.size &&
+    a.x + a.size > b.x &&
+    a.y < b.y + b.size &&
+    a.y + a.size > b.y;
+}
+
+function spawn() {
+  hazards.push({ x: canvas.width + 30, y: 36 + Math.random() * 340, size: 28 });
+  if (Math.random() > 0.35) {
+    coins.push({ x: canvas.width + 70, y: 34 + Math.random() * 350, size: 18 });
+  }
+}
+
+function drawBackground() {
+  ctx.fillStyle = "#071016";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = "rgba(103, 232, 249, 0.12)";
+  for (let x = 0; x < canvas.width; x += 32) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, canvas.height);
+    ctx.stroke();
+  }
+  for (let y = 0; y < canvas.height; y += 32) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(canvas.width, y);
+    ctx.stroke();
+  }
+}
+
+function loop(time) {
+  drawBackground();
+
+  if (alive) {
+    if (keys.has("arrowup") || keys.has("w")) player.y -= 4.2;
+    if (keys.has("arrowdown") || keys.has("s")) player.y += 4.2;
+    if (keys.has("arrowleft") || keys.has("a")) player.x -= 4.2;
+    if (keys.has("arrowright") || keys.has("d")) player.x += 4.2;
+    player.x = Math.max(0, Math.min(canvas.width - player.size, player.x));
+    player.y = Math.max(0, Math.min(canvas.height - player.size, player.y));
+
+    if (time - lastSpawn > 700) {
+      spawn();
+      lastSpawn = time;
+      speed += 0.06;
+    }
+  }
+
+  ctx.fillStyle = "#6ee7a8";
+  ctx.fillRect(player.x, player.y, player.size, player.size);
+  ctx.fillStyle = "#071016";
+  ctx.fillRect(player.x + 7, player.y + 7, 5, 5);
+  ctx.fillRect(player.x + 18, player.y + 7, 5, 5);
+
+  hazards.forEach((hazard) => {
+    if (alive) hazard.x -= speed;
+    ctx.fillStyle = "#fb7185";
+    ctx.fillRect(hazard.x, hazard.y, hazard.size, hazard.size);
+    ctx.fillStyle = "#f6d365";
+    ctx.fillRect(hazard.x + 8, hazard.y + 8, hazard.size - 16, hazard.size - 16);
+    if (alive && hit(player, hazard)) {
+      alive = false;
+      Game.save(score, "Coins");
+    }
+  });
+
+  coins.forEach((coin) => {
+    if (alive) coin.x -= speed;
+    ctx.fillStyle = "#f6d365";
+    ctx.beginPath();
+    ctx.arc(coin.x + coin.size / 2, coin.y + coin.size / 2, coin.size / 2, 0, Math.PI * 2);
+    ctx.fill();
+    if (!coin.taken && alive && hit(player, coin)) {
+      coin.taken = true;
+      score += 1;
+      Game.setScore(score, "Coins");
+    }
+  });
+
+  hazards = hazards.filter((hazard) => hazard.x > -50);
+  coins = coins.filter((coin) => !coin.taken && coin.x > -50);
+
+  ctx.fillStyle = "#f8fafc";
+  ctx.font = "20px ui-monospace, monospace";
+  ctx.fillText("Coins: " + score, 18, 30);
+
+  if (!alive) {
+    ctx.fillStyle = "rgba(7, 16, 22, 0.76)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#f8fafc";
+    ctx.font = "34px system-ui, sans-serif";
+    ctx.fillText("Game saved", 220, 190);
+    ctx.font = "18px system-ui, sans-serif";
+    ctx.fillText("Click the stage or press Space to play again", 154, 230);
+  }
+
+  requestAnimationFrame(loop);
+}
+
+canvas.addEventListener("pointerdown", () => {
+  if (!alive) reset();
+});
+
+window.addEventListener("keydown", (event) => {
+  if (!alive && event.key === " ") reset();
+});
+
+Game.restart = reset;
+reset();
+requestAnimationFrame(loop);`
+      },
+      clicker: {
+        title: "Click Sprint",
+        label: "Click Sprint",
+        code: `const canvas = Game.canvas;
+const ctx = Game.ctx;
+
+let target;
+let score;
+let timeLeft;
+let running;
+let lastTime;
+
+function placeTarget() {
+  target = {
+    x: 34 + Math.random() * (canvas.width - 68),
+    y: 52 + Math.random() * (canvas.height - 96),
+    r: 18 + Math.random() * 18
+  };
+}
+
+function reset() {
+  score = 0;
+  timeLeft = 20;
+  running = true;
+  lastTime = performance.now();
+  placeTarget();
+  Game.setScore(score, "Hits");
+}
+
+function draw() {
+  ctx.fillStyle = "#09111b";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#67e8f9";
+  ctx.fillRect(0, 0, canvas.width * (timeLeft / 20), 8);
+
+  ctx.fillStyle = "#f6d365";
+  ctx.beginPath();
+  ctx.arc(target.x, target.y, target.r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = "#fb7185";
+  ctx.beginPath();
+  ctx.arc(target.x, target.y, target.r * 0.52, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = "#f8fafc";
+  ctx.font = "22px ui-monospace, monospace";
+  ctx.fillText("Hits: " + score, 18, 38);
+  ctx.fillText("Time: " + Math.ceil(timeLeft), 500, 38);
+
+  if (!running) {
+    ctx.fillStyle = "rgba(9, 17, 27, 0.78)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#f8fafc";
+    ctx.font = "34px system-ui, sans-serif";
+    ctx.fillText("Saved: " + score + " hits", 190, 196);
+    ctx.font = "18px system-ui, sans-serif";
+    ctx.fillText("Click to start a new sprint", 224, 236);
+  }
+}
+
+function loop(now) {
+  if (running) {
+    const delta = (now - lastTime) / 1000;
+    timeLeft = Math.max(0, timeLeft - delta);
+    if (timeLeft === 0) {
+      running = false;
+      Game.save(score, "Hits");
+    }
+  }
+  lastTime = now;
+  draw();
+  requestAnimationFrame(loop);
+}
+
+canvas.addEventListener("pointerdown", (event) => {
+  if (!running) {
+    reset();
+    return;
+  }
+  const box = canvas.getBoundingClientRect();
+  const x = (event.clientX - box.left) * (canvas.width / box.width);
+  const y = (event.clientY - box.top) * (canvas.height / box.height);
+  const distance = Math.hypot(x - target.x, y - target.y);
+  if (distance <= target.r) {
+    score += 1;
+    Game.setScore(score, "Hits");
+    placeTarget();
+  }
+});
+
+Game.restart = reset;
+reset();
+requestAnimationFrame(loop);`
+      },
+      blank: {
+        title: "Blank Canvas",
+        label: "Blank Canvas",
+        code: `const canvas = Game.canvas;
+const ctx = Game.ctx;
+let score = 0;
+let hue = 0;
+
+function loop() {
+  hue = (hue + 1) % 360;
+  ctx.fillStyle = "#071016";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "hsl(" + hue + " 90% 68%)";
+  ctx.fillRect(260, 150, 120, 120);
+  ctx.fillStyle = "#f8fafc";
+  ctx.font = "24px system-ui, sans-serif";
+  ctx.fillText("Score: " + score, 24, 38);
+  requestAnimationFrame(loop);
+}
+
+canvas.addEventListener("pointerdown", () => {
+  score += 1;
+  Game.setScore(score, "Score");
+  if (score % 10 === 0) {
+    Game.save(score, "Score");
+  }
+});
+
+loop();`
+      }
+    };
+
+    const projectListEl = document.getElementById("projectList");
+    const templateGridEl = document.getElementById("templateGrid");
+    const projectTitleEl = document.getElementById("projectTitle");
+    const codeEditorEl = document.getElementById("codeEditor");
+    const stageFrameEl = document.getElementById("stageFrame");
+    const saveStatusEl = document.getElementById("saveStatus");
+    const editorStatusEl = document.getElementById("editorStatus");
+    const stageStatusEl = document.getElementById("stageStatus");
+    const currentScoreEl = document.getElementById("currentScore");
+    const bestScoreEl = document.getElementById("bestScore");
+    const playCountEl = document.getElementById("playCount");
+    const savedCountEl = document.getElementById("savedCount");
+    const historyListEl = document.getElementById("historyList");
+    const runBtn = document.getElementById("runBtn");
+    const saveBtn = document.getElementById("saveBtn");
+    const restartBtn = document.getElementById("restartBtn");
+    const newProjectBtn = document.getElementById("newProjectBtn");
+    const copyProjectBtn = document.getElementById("copyProjectBtn");
+    const deleteProjectBtn = document.getElementById("deleteProjectBtn");
+    const resetProjectBtn = document.getElementById("resetProjectBtn");
+
+    let state = loadState();
+    let autosaveTimer = null;
+    let scoreSaveTimer = null;
+
+    function uid() {
+      if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return window.crypto.randomUUID();
+      }
+      return `project-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function formatTime(value) {
+      const date = new Date(value || Date.now());
+      if (!Number.isFinite(date.getTime())) return "Just now";
+      return date.toLocaleDateString([], { month: "short", day: "numeric" }) + " " +
+        date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    }
+
+    function makeProject(templateKey = "dodge") {
+      const template = templates[templateKey] || templates.dodge;
+      const now = new Date().toISOString();
+      return {
+        id: uid(),
+        title: template.title,
+        templateKey,
+        code: template.code,
+        createdAt: now,
+        updatedAt: now,
+        lastScore: 0,
+        lastLabel: "Score",
+        bestScore: 0,
+        plays: 0,
+        history: []
+      };
+    }
+
+    function normalizeProject(project) {
+      return {
+        ...makeProject("dodge"),
+        ...project,
+        id: project?.id || uid(),
+        title: String(project?.title || "Untitled Game").slice(0, 44),
+        code: String(project?.code || templates.dodge.code),
+        history: Array.isArray(project?.history) ? project.history.slice(0, 12) : [],
+        plays: Number(project?.plays) || 0,
+        lastScore: Number(project?.lastScore) || 0,
+        bestScore: Number(project?.bestScore) || 0,
+        lastLabel: String(project?.lastLabel || "Score").slice(0, 32),
+        updatedAt: project?.updatedAt || new Date().toISOString(),
+        createdAt: project?.createdAt || new Date().toISOString()
+      };
+    }
+
+    function loadState() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        const projects = Array.isArray(parsed.projects)
+          ? parsed.projects.map(normalizeProject)
+          : [makeProject("dodge")];
+        const activeId = projects.some((project) => project.id === parsed.activeId)
+          ? parsed.activeId
+          : projects[0].id;
+        return { projects, activeId };
+      } catch {
+        const project = makeProject("dodge");
+        return { projects: [project], activeId: project.id };
+      }
+    }
+
+    function saveState(status = "Saved") {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      saveStatusEl.textContent = status;
+      editorStatusEl.textContent = status;
+    }
+
+    function activeProject() {
+      let project = state.projects.find((candidate) => candidate.id === state.activeId);
+      if (!project) {
+        project = state.projects[0] || makeProject("dodge");
+        state.projects = state.projects.length ? state.projects : [project];
+        state.activeId = project.id;
+      }
+      return project;
+    }
+
+    function setActiveProject(projectId) {
+      saveProjectFromEditor("Saved");
+      state.activeId = projectId;
+      saveState("Loaded");
+      render();
+      runProject(false);
+    }
+
+    function saveProjectFromEditor(status = "Saved") {
+      const project = activeProject();
+      project.title = (projectTitleEl.value || "Untitled Game").trim().slice(0, 44);
+      project.code = codeEditorEl.value;
+      project.updatedAt = new Date().toISOString();
+      saveState(status);
+      renderProjectList();
+    }
+
+    function queueAutosave() {
+      window.clearTimeout(autosaveTimer);
+      saveStatusEl.textContent = "Editing";
+      editorStatusEl.textContent = "Editing";
+      autosaveTimer = window.setTimeout(() => {
+        saveProjectFromEditor("Autosaved");
+      }, 650);
+    }
+
+    function queueScoreSave() {
+      window.clearTimeout(scoreSaveTimer);
+      scoreSaveTimer = window.setTimeout(() => saveState("Saved"), 250);
+    }
+
+    function projectScoreLabel(project) {
+      const label = project.lastLabel || "Score";
+      return `${label}: ${project.lastScore || 0}`;
+    }
+
+    function renderProjectList() {
+      projectListEl.innerHTML = state.projects.map((project) => `
+        <button class="project-button" type="button" data-project-id="${escapeHtml(project.id)}" aria-pressed="${project.id === state.activeId}">
+          <span class="project-name">${escapeHtml(project.title)}</span>
+          <span class="project-meta">${escapeHtml(projectScoreLabel(project))} | ${project.plays || 0} plays</span>
+        </button>
+      `).join("");
+
+      projectListEl.querySelectorAll("[data-project-id]").forEach((button) => {
+        button.addEventListener("click", () => setActiveProject(button.dataset.projectId));
+      });
+    }
+
+    function renderTemplates() {
+      templateGridEl.innerHTML = Object.entries(templates).map(([key, template]) => `
+        <button class="button secondary" type="button" data-template="${escapeHtml(key)}">${escapeHtml(template.label)}</button>
+      `).join("");
+
+      templateGridEl.querySelectorAll("[data-template]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const project = makeProject(button.dataset.template);
+          state.projects.unshift(project);
+          state.activeId = project.id;
+          saveState("Template added");
+          render();
+          runProject(false);
+        });
+      });
+    }
+
+    function renderStats() {
+      const project = activeProject();
+      currentScoreEl.textContent = String(project.lastScore || 0);
+      bestScoreEl.textContent = String(project.bestScore || 0);
+      playCountEl.textContent = String(project.plays || 0);
+      savedCountEl.textContent = String(project.history.length || 0);
+
+      if (!project.history.length) {
+        historyListEl.innerHTML = `<p class="empty">No saved runs yet.</p>`;
+        return;
+      }
+
+      historyListEl.innerHTML = project.history.slice(0, 6).map((run) => `
+        <div class="history-row">
+          <span>${escapeHtml(run.label || "Score")}: ${escapeHtml(String(run.score || 0))}</span>
+          <span class="history-time">${escapeHtml(formatTime(run.playedAt))}</span>
+        </div>
+      `).join("");
+    }
+
+    function render() {
+      const project = activeProject();
+      projectTitleEl.value = project.title;
+      codeEditorEl.value = project.code;
+      renderProjectList();
+      renderStats();
+    }
+
+    function safeScript(code) {
+      return String(code || "").replace(/<\/script/gi, "<\\/script");
+    }
+
+    function frameSource(project) {
+      return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; media-src data:;" />
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; min-height: 100%; overflow: hidden; background: #05080d; color: #f8fafc; font-family: system-ui, sans-serif; }
+    body { display: grid; place-items: center; }
+    canvas { width: min(100vw, 760px); height: auto; max-height: 100vh; aspect-ratio: 16 / 10.5; border: 0; background: #071016; outline: none; image-rendering: pixelated; }
+    .error { position: fixed; inset: auto 12px 12px; padding: 10px 12px; border-radius: 8px; background: rgba(251, 113, 133, 0.92); color: #fff; font: 14px ui-monospace, monospace; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <canvas id="game" width="640" height="420" tabindex="0"></canvas>
+  <script>
+    const projectId = ${JSON.stringify(project.id)};
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const keys = new Set();
+
+    function post(type, payload) {
+      parent.postMessage({ source: "code-lab-game", type, projectId, ...payload }, "*");
+    }
+
+    function showError(error) {
+      const message = error && error.message ? error.message : String(error);
+      const box = document.createElement("div");
+      box.className = "error";
+      box.textContent = message;
+      document.body.appendChild(box);
+      post("code-lab-error", { message });
+    }
+
+    window.addEventListener("keydown", (event) => {
+      keys.add(event.key.toLowerCase());
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(event.key)) {
+        event.preventDefault();
+      }
+    });
+    window.addEventListener("keyup", (event) => keys.delete(event.key.toLowerCase()));
+    window.addEventListener("blur", () => keys.clear());
+    window.addEventListener("error", (event) => showError(event.error || event.message));
+    window.addEventListener("unhandledrejection", (event) => showError(event.reason || "Unhandled promise rejection"));
+
+    window.Game = {
+      canvas,
+      ctx,
+      keys,
+      restart: null,
+      setScore(score, label = "Score") {
+        const value = Number(score);
+        post("code-lab-score", {
+          score: Number.isFinite(value) ? value : 0,
+          label: String(label || "Score").slice(0, 32)
+        });
+      },
+      save(score, label = "Score") {
+        const value = Number(score);
+        post("code-lab-save", {
+          score: Number.isFinite(value) ? value : 0,
+          label: String(label || "Score").slice(0, 32)
+        });
+      },
+      log(message) {
+        post("code-lab-log", { message: String(message || "").slice(0, 180) });
+      }
+    };
+
+    canvas.addEventListener("pointerdown", () => canvas.focus());
+    canvas.focus();
+    post("code-lab-ready", {});
+  <\/script>
+  <script>
+    try {
+${safeScript(project.code)}
+    } catch (error) {
+      showError(error);
+    }
+  <\/script>
+</body>
+</html>`;
+    }
+
+    function runProject(saveFirst = true) {
+      if (saveFirst) {
+        saveProjectFromEditor("Saved");
+      }
+      const project = activeProject();
+      project.plays = (project.plays || 0) + 1;
+      project.updatedAt = new Date().toISOString();
+      stageStatusEl.textContent = "Running";
+      stageFrameEl.srcdoc = frameSource(project);
+      saveState("Running");
+      renderStats();
+      renderProjectList();
+    }
+
+    function updateScore(score, label, finished) {
+      const project = activeProject();
+      project.lastScore = Number(score) || 0;
+      project.lastLabel = String(label || "Score").slice(0, 32);
+      project.bestScore = Math.max(Number(project.bestScore) || 0, project.lastScore);
+      stageStatusEl.textContent = `${project.lastLabel}: ${project.lastScore}`;
+
+      if (finished) {
+        project.history.unshift({
+          score: project.lastScore,
+          label: project.lastLabel,
+          playedAt: new Date().toISOString()
+        });
+        project.history = project.history.slice(0, 12);
+        saveState("Run saved");
+      } else {
+        queueScoreSave();
+      }
+
+      renderStats();
+      renderProjectList();
+    }
+
+    function duplicateProject() {
+      saveProjectFromEditor("Saved");
+      const source = activeProject();
+      const copy = {
+        ...source,
+        id: uid(),
+        title: `${source.title} Copy`.slice(0, 44),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        history: [],
+        plays: 0,
+        lastScore: 0,
+        bestScore: 0
+      };
+      state.projects.unshift(copy);
+      state.activeId = copy.id;
+      saveState("Duplicated");
+      render();
+      runProject(false);
+    }
+
+    function deleteProject() {
+      if (state.projects.length <= 1) {
+        const project = makeProject("dodge");
+        state.projects = [project];
+        state.activeId = project.id;
+      } else {
+        state.projects = state.projects.filter((project) => project.id !== state.activeId);
+        state.activeId = state.projects[0].id;
+      }
+      saveState("Deleted");
+      render();
+      runProject(false);
+    }
+
+    function resetProject() {
+      const project = activeProject();
+      const template = templates[project.templateKey] || templates.dodge;
+      project.code = template.code;
+      project.title = template.title;
+      project.updatedAt = new Date().toISOString();
+      saveState("Reset");
+      render();
+      runProject(false);
+    }
+
+    window.addEventListener("message", (event) => {
+      const data = event.data || {};
+      if (data.source !== "code-lab-game" || data.projectId !== activeProject().id) {
+        return;
+      }
+
+      if (data.type === "code-lab-ready") {
+        stageStatusEl.textContent = "Running";
+        return;
+      }
+
+      if (data.type === "code-lab-score") {
+        updateScore(data.score, data.label, false);
+        return;
+      }
+
+      if (data.type === "code-lab-save") {
+        updateScore(data.score, data.label, true);
+        return;
+      }
+
+      if (data.type === "code-lab-error") {
+        stageStatusEl.textContent = data.message || "Code error";
+        return;
+      }
+
+      if (data.type === "code-lab-log") {
+        stageStatusEl.textContent = data.message || "Log";
+      }
+    });
+
+    codeEditorEl.addEventListener("input", queueAutosave);
+    projectTitleEl.addEventListener("input", queueAutosave);
+    runBtn.addEventListener("click", () => runProject(true));
+    restartBtn.addEventListener("click", () => runProject(true));
+    saveBtn.addEventListener("click", () => saveProjectFromEditor("Saved"));
+    newProjectBtn.addEventListener("click", () => {
+      const project = makeProject("blank");
+      state.projects.unshift(project);
+      state.activeId = project.id;
+      saveState("New game");
+      render();
+      runProject(false);
+    });
+    copyProjectBtn.addEventListener("click", duplicateProject);
+    deleteProjectBtn.addEventListener("click", deleteProject);
+    resetProjectBtn.addEventListener("click", resetProject);
+
+    renderTemplates();
+    render();
+    runProject(false);
+  </script>
+</body>
+</html>
