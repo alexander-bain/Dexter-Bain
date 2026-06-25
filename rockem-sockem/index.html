@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rock'em Sock'em Robots | DexterBain</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --ink: #f8fafc;
+        --muted: #d3dce7;
+        --panel: rgba(18, 24, 33, 0.7);
+        --panel-strong: rgba(18, 24, 33, 0.9);
+        --line: rgba(255, 255, 255, 0.24);
+        --blue: #4da3ff;
+        --red: #ff4b45;
+        --amber: #ffc857;
+        --green: #66e6a6;
+        --steel: #aeb8c5;
+        --dark: #07090d;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 30% 12%, rgba(255, 230, 168, 0.2), transparent 28%),
+          linear-gradient(180deg, #344052 0%, #1d2632 58%, #141a22 100%),
+          #1d2632;
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        letter-spacing: 0;
+        user-select: none;
+        touch-action: none;
+      }
+
+      button,
+      a {
+        font: inherit;
+      }
+
+      canvas {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .game-shell {
+        min-height: 100vh;
+        position: relative;
+        isolation: isolate;
+        background:
+          linear-gradient(90deg, rgba(77, 163, 255, 0.16), transparent 32%, transparent 68%, rgba(255, 75, 69, 0.15)),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 48%),
+          #1d2632;
+      }
+
+      .hud {
+        position: fixed;
+        z-index: 4;
+        inset: 14px 14px auto;
+        display: grid;
+        grid-template-columns: minmax(140px, 1fr) auto minmax(140px, 1fr);
+        gap: 12px;
+        align-items: start;
+        pointer-events: none;
+      }
+
+      .home-link,
+      .fighter-card,
+      .round-card,
+      .side-panel,
+      .overlay-panel {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        backdrop-filter: blur(16px);
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+      }
+
+      .fighter-card {
+        min-height: 92px;
+        padding: 12px;
+        border-radius: 8px;
+        display: grid;
+        gap: 9px;
+      }
+
+      .fighter-card.red {
+        text-align: right;
+      }
+
+      .fighter-name {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: baseline;
+        min-width: 0;
+        font-weight: 950;
+        text-transform: uppercase;
+        font-size: 0.82rem;
+        letter-spacing: 0.08em;
+      }
+
+      .fighter-card.red .fighter-name {
+        flex-direction: row-reverse;
+      }
+
+      .fighter-value {
+        color: var(--muted);
+        font-size: 0.76rem;
+        font-weight: 850;
+      }
+
+      .bar {
+        height: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 999px;
+        overflow: hidden;
+        background: rgba(4, 8, 13, 0.36);
+      }
+
+      .bar-fill {
+        height: 100%;
+        width: 100%;
+        border-radius: inherit;
+        transform-origin: left center;
+        transition: width 0.14s ease;
+      }
+
+      .fighter-card.red .bar-fill {
+        margin-left: auto;
+        transform-origin: right center;
+      }
+
+      .blue .health-fill {
+        background: linear-gradient(90deg, #2d6ee8, #6dc7ff, #dff6ff);
+        box-shadow: 0 0 20px rgba(77, 163, 255, 0.42);
+      }
+
+      .red .health-fill {
+        background: linear-gradient(90deg, #ffe0dc, #ff827a, #d42725);
+        box-shadow: 0 0 20px rgba(255, 75, 69, 0.42);
+      }
+
+      .power-fill {
+        background: linear-gradient(90deg, #856a22, var(--amber), #fff2b8);
+      }
+
+      .round-card {
+        min-width: 146px;
+        min-height: 92px;
+        padding: 11px 14px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        text-align: center;
+      }
+
+      .round-card strong {
+        display: block;
+        font-size: 1.72rem;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .round-card span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.74rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+      }
+
+      .home-link {
+        position: fixed;
+        z-index: 5;
+        left: 14px;
+        bottom: 14px;
+        min-height: 38px;
+        padding: 9px 12px;
+        border-radius: 8px;
+        color: var(--ink);
+        text-decoration: none;
+        font-weight: 900;
+        pointer-events: auto;
+      }
+
+      .announcer {
+        position: fixed;
+        z-index: 5;
+        left: 50%;
+        top: 120px;
+        width: min(540px, calc(100vw - 32px));
+        min-height: 44px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        transform: translateX(-50%);
+        border: 1px solid rgba(255, 200, 87, 0.36);
+        background: rgba(17, 23, 31, 0.72);
+        backdrop-filter: blur(16px);
+        color: #fff7cf;
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32);
+        text-align: center;
+        font-weight: 950;
+        letter-spacing: 0.03em;
+        pointer-events: none;
+      }
+
+      .side-panel {
+        position: fixed;
+        z-index: 4;
+        top: 126px;
+        width: 150px;
+        min-height: 116px;
+        padding: 12px;
+        border-radius: 8px;
+        display: grid;
+        gap: 10px;
+        pointer-events: none;
+      }
+
+      .side-panel.left {
+        left: 14px;
+      }
+
+      .side-panel.right {
+        right: 14px;
+        text-align: right;
+      }
+
+      .keyboard-strip {
+        position: fixed;
+        z-index: 5;
+        left: 14px;
+        top: 256px;
+        width: 150px;
+        min-height: 42px;
+        padding: 9px 11px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(18, 24, 33, 0.66);
+        backdrop-filter: blur(14px);
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 8px;
+        color: #f8fafc;
+        font-size: 0.74rem;
+        font-weight: 900;
+        pointer-events: none;
+      }
+
+      .key-group {
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 4px;
+        white-space: nowrap;
+      }
+
+      kbd {
+        display: inline-grid;
+        place-items: center;
+        min-width: 24px;
+        min-height: 24px;
+        padding: 2px 6px;
+        border: 1px solid rgba(255, 255, 255, 0.34);
+        border-bottom-color: rgba(0, 0, 0, 0.45);
+        border-radius: 6px;
+        color: #081018;
+        background: linear-gradient(180deg, #ffffff, #d8e2ee);
+        box-shadow: 0 2px 0 rgba(0, 0, 0, 0.28);
+        font: inherit;
+        font-size: 0.76rem;
+        font-weight: 950;
+      }
+
+      .stat-label {
+        display: block;
+        margin: 0 0 5px;
+        color: var(--muted);
+        font-size: 0.68rem;
+        font-weight: 950;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .stat-value {
+        font-size: 1.18rem;
+        font-weight: 950;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .overlay {
+        position: fixed;
+        z-index: 8;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        padding: 18px;
+        background: linear-gradient(180deg, rgba(22, 30, 41, 0.22), rgba(16, 22, 30, 0.68));
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.18s ease;
+      }
+
+      .overlay.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .overlay-panel {
+        width: min(520px, 100%);
+        border-radius: 10px;
+        padding: 22px;
+        background:
+          linear-gradient(135deg, rgba(77, 163, 255, 0.18), rgba(255, 255, 255, 0.05) 38%, rgba(255, 75, 69, 0.16)),
+          var(--panel-strong);
+      }
+
+      .overlay-panel h1 {
+        margin: 0 0 8px;
+        font-size: clamp(2.4rem, 8vw, 4.8rem);
+        line-height: 0.88;
+        letter-spacing: 0;
+      }
+
+      .overlay-panel p {
+        margin: 0 0 18px;
+        color: var(--muted);
+        line-height: 1.5;
+        font-weight: 700;
+      }
+
+      .difficulty-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin: 0 0 16px;
+      }
+
+      .keyboard-card {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin: 0 0 16px;
+      }
+
+      .keyboard-card .key-group {
+        min-height: 48px;
+        justify-content: center;
+        padding: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.08);
+        text-align: center;
+      }
+
+      .keyboard-card span {
+        color: #f6f9fc;
+      }
+
+      .difficulty-row button,
+      .primary-action,
+      .touch-button {
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.08);
+        cursor: pointer;
+      }
+
+      .difficulty-row button {
+        min-height: 42px;
+        border-radius: 8px;
+        font-weight: 950;
+      }
+
+      .difficulty-row button.is-active {
+        color: #061018;
+        border-color: rgba(255, 255, 255, 0.42);
+        background: linear-gradient(135deg, #66e6a6, #ffc857);
+      }
+
+      .primary-action {
+        width: 100%;
+        min-height: 50px;
+        border-radius: 8px;
+        color: #061018;
+        background: linear-gradient(135deg, #4da3ff, #ffc857 52%, #ff4b45);
+        font-weight: 950;
+        box-shadow: 0 16px 30px rgba(255, 200, 87, 0.2);
+      }
+
+      .touch-controls {
+        position: fixed;
+        z-index: 6;
+        inset: auto 14px 16px;
+        display: grid;
+        grid-template-columns: repeat(6, minmax(48px, 1fr));
+        gap: 8px;
+        pointer-events: none;
+      }
+
+      .touch-button {
+        min-height: 54px;
+        border-radius: 8px;
+        background: rgba(18, 24, 33, 0.68);
+        backdrop-filter: blur(14px);
+        font-weight: 950;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.26);
+        pointer-events: auto;
+      }
+
+      .touch-button:active,
+      .touch-button.is-held {
+        transform: translateY(1px);
+        border-color: rgba(255, 200, 87, 0.8);
+        background: rgba(255, 200, 87, 0.2);
+      }
+
+      .fatal {
+        position: fixed;
+        z-index: 10;
+        inset: 0;
+        display: none;
+        place-items: center;
+        padding: 24px;
+        background: #07090d;
+        color: #fff7cf;
+        text-align: center;
+        font-weight: 900;
+      }
+
+      .fatal.is-visible {
+        display: grid;
+      }
+
+      @media (max-width: 820px) {
+        .hud {
+          inset: 10px 10px auto;
+          grid-template-columns: 1fr 92px 1fr;
+          gap: 8px;
+        }
+
+        .fighter-card {
+          min-height: 78px;
+          padding: 9px;
+        }
+
+        .fighter-name {
+          font-size: 0.68rem;
+          letter-spacing: 0.05em;
+        }
+
+        .fighter-value {
+          font-size: 0.68rem;
+        }
+
+        .round-card {
+          min-width: 92px;
+          min-height: 78px;
+          padding: 8px;
+        }
+
+        .round-card strong {
+          font-size: 1.3rem;
+        }
+
+        .announcer {
+          top: 99px;
+          font-size: 0.86rem;
+        }
+
+        .keyboard-strip {
+          display: none;
+        }
+
+        .keyboard-card {
+          grid-template-columns: 1fr;
+        }
+
+        .side-panel {
+          display: none;
+        }
+
+        .home-link {
+          bottom: auto;
+          top: 104px;
+          min-height: 34px;
+          padding: 7px 9px;
+          font-size: 0.78rem;
+        }
+
+        .touch-controls {
+          grid-template-columns: repeat(3, minmax(70px, 1fr));
+        }
+      }
+
+      @media (max-height: 560px) {
+        .announcer,
+        .keyboard-strip,
+        .side-panel {
+          display: none;
+        }
+
+        .touch-button {
+          min-height: 44px;
+        }
+      }
+    </style>
+    <script>
+      window.__consoleErrors = [];
+      window.addEventListener("error", (event) => {
+        window.__consoleErrors.push(event.message || "Unknown error");
+      });
+      window.addEventListener("unhandledrejection", (event) => {
+        window.__consoleErrors.push(String(event.reason || "Unhandled promise rejection"));
+      });
+    </script>
+  </head>
+  <body>
+    <main class="game-shell" aria-label="Rock'em Sock'em Robots arena">
+      <canvas id="sceneCanvas" aria-label="3D robot boxing arena"></canvas>
+      <canvas id="pixelProbe" width="15" height="15" hidden aria-hidden="true"></canvas>
+
+      <header class="hud" aria-live="polite">
+        <section class="fighter-card blue" aria-label="Blue robot status">
+          <div class="fighter-name">
+            <span>Blue Bruiser</span>
+            <span class="fighter-value" id="blueHealthText">100</span>
+          </div>
+          <div class="bar"><div class="bar-fill health-fill" id="blueHealthBar"></div></div>
+          <div class="bar"><div class="bar-fill power-fill" id="bluePowerBar"></div></div>
+        </section>
+
+        <section class="round-card" aria-label="Round timer">
+          <span id="roundLabel">Round 1</span>
+          <strong id="timerText">90</strong>
+        </section>
+
+        <section class="fighter-card red" aria-label="Red robot status">
+          <div class="fighter-name">
+            <span>Red Ripper</span>
+            <span class="fighter-value" id="redHealthText">100</span>
+          </div>
+          <div class="bar"><div class="bar-fill health-fill" id="redHealthBar"></div></div>
+          <div class="bar"><div class="bar-fill power-fill" id="redPowerBar"></div></div>
+        </section>
+      </header>
+
+      <div class="announcer" id="announcer">Blue corner versus red corner.</div>
+      <div class="keyboard-strip" aria-label="Computer keyboard controls">
+        <span class="key-group"><kbd>A</kbd><kbd>D</kbd><span>move</span></span>
+        <span class="key-group"><kbd>S</kbd><span>duck</span></span>
+        <span class="key-group"><kbd>J</kbd><span>punch</span></span>
+        <span class="key-group"><kbd>K</kbd><span>push</span></span>
+      </div>
+
+      <section class="side-panel left" aria-label="Blue stats">
+        <div>
+          <span class="stat-label">Combo</span>
+          <span class="stat-value" id="comboText">0</span>
+        </div>
+        <div>
+          <span class="stat-label">Head Lift</span>
+          <span class="stat-value" id="blueLiftText">0%</span>
+        </div>
+      </section>
+
+      <section class="side-panel right" aria-label="Red stats">
+        <div>
+          <span class="stat-label">Pressure</span>
+          <span class="stat-value" id="pressureText">0%</span>
+        </div>
+        <div>
+          <span class="stat-label">Head Lift</span>
+          <span class="stat-value" id="redLiftText">0%</span>
+        </div>
+      </section>
+
+      <section class="overlay is-visible" id="startOverlay" aria-labelledby="gameTitle">
+        <div class="overlay-panel">
+          <h1 id="gameTitle">Rock'em Sock'em Robots</h1>
+          <p id="overlayCopy">Blue corner versus red corner. First head to pop loses.</p>
+          <div class="keyboard-card" aria-label="Computer keyboard controls">
+            <span class="key-group"><kbd>A</kbd><kbd>D</kbd><span>move</span></span>
+            <span class="key-group"><kbd>S</kbd><span>duck</span></span>
+            <span class="key-group"><kbd>J</kbd><span>punch</span></span>
+            <span class="key-group"><kbd>K</kbd><span>push</span></span>
+          </div>
+          <div class="difficulty-row" role="group" aria-label="Difficulty">
+            <button type="button" class="is-active" data-difficulty="rookie">Rookie</button>
+            <button type="button" data-difficulty="contender">Contender</button>
+            <button type="button" data-difficulty="champ">Champ</button>
+          </div>
+          <button class="primary-action" type="button" id="startButton">Start Fight</button>
+        </div>
+      </section>
+
+      <div class="touch-controls" aria-label="Fight controls">
+        <button class="touch-button" type="button" data-control="retreat">Back</button>
+        <button class="touch-button" type="button" data-control="duck">Duck</button>
+        <button class="touch-button" type="button" data-control="advance">In</button>
+        <button class="touch-button" type="button" data-control="punch">Punch</button>
+        <button class="touch-button" type="button" data-control="push">Push</button>
+      </div>
+
+      <a class="home-link" href="../index.html">Arcade</a>
+      <div class="fatal" id="fatal">The 3D arena could not load.</div>
+    </main>
+
+    <script type="module" src="./game.js"></script>
+  </body>
+</html>
