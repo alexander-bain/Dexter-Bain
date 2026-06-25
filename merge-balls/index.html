@@ -435,6 +435,14 @@
         return Math.max(min, Math.min(max, value));
       }
 
+      function angleDistance(a, b) {
+        return Math.atan2(Math.sin(b - a), Math.cos(b - a));
+      }
+
+      function mixAngle(from, to, amount) {
+        return from + angleDistance(from, to) * amount;
+      }
+
       function randomDropType() {
         return Math.floor(Math.random() * dropChoices);
       }
@@ -634,18 +642,22 @@
       }
 
       function applySquash(ball, angle, strength) {
-        const amount = clamp(strength * 1.28, 0, 1.15);
+        const amount = clamp(strength * 0.92, 0, 0.85);
         if (amount < 0.025) {
           return;
         }
 
-        if (Math.abs(ball.squishTarget || 0) < amount || Math.abs(ball.squish) < 0.1) {
+        const previousTarget = ball.squishTarget || 0;
+        if (previousTarget < 0.02) {
           ball.squishAngle = angle;
+        } else {
+          const turn = clamp(amount / (previousTarget + amount), 0.18, 0.78);
+          ball.squishAngle = mixAngle(ball.squishAngle || angle, angle, turn);
         }
 
-        ball.squishTarget = Math.max(ball.squishTarget || 0, amount);
-        ball.squish = Math.max(ball.squish, amount * 0.1);
-        ball.squishVelocity = clamp((ball.squishVelocity || 0) + amount * 1.85, -5, 7.2);
+        ball.squishTarget = Math.max(previousTarget, amount);
+        ball.squish = Math.max(ball.squish, amount * 0.08);
+        ball.squishVelocity = clamp((ball.squishVelocity || 0) + amount * 1.45, -4.5, 5.8);
       }
 
       function canMergeBalls(a, b, now) {
@@ -1012,11 +1024,11 @@
       function drawBallVisual(ball, now, preview = false) {
         const tier = tiers[ball.type];
         const r = ball.r;
-        const squish = clamp(ball.squish || 0, -0.5, 1.08);
+        const squish = clamp(ball.squish || 0, -0.28, 0.82);
         const squash = Math.max(0, squish);
         const stretch = Math.max(0, -squish);
-        const axisScale = clamp(1 - squash * 0.54 + stretch * 0.32, 0.44, 1.3);
-        const crossScale = clamp(1 / axisScale, 0.78, 1.72);
+        const axisScale = clamp(1 - squash * 0.08 + stretch * 0.04, 0.93, 1.04);
+        const crossScale = clamp(1 + squash * 0.04 - stretch * 0.03, 0.96, 1.07);
         const deformationAngle = Math.abs(squish) > 0.03 ? (ball.squishAngle || 0) : 0;
         const lookSource = pointer.active ? pointer : { x: dropX, y: world.dropY };
         const lookX = clamp((lookSource.x - ball.x) / 260, -1, 1) * r * 0.1;
@@ -1027,6 +1039,7 @@
         ctx.translate(ball.x, ball.y);
         ctx.rotate(deformationAngle);
         ctx.scale(axisScale, crossScale);
+        ctx.rotate(-deformationAngle);
 
         ctx.shadowColor = "rgba(16, 24, 40, 0.26)";
         ctx.shadowBlur = preview ? 10 : 16;
@@ -1041,7 +1054,7 @@
         body.addColorStop(1, tier.shade);
 
         ctx.fillStyle = body;
-        drawBlobPath(ball, r, now, squash);
+        drawBlobPath(ball, r, now, squash, deformationAngle);
         ctx.fill();
         ctx.stroke();
 
@@ -1064,7 +1077,7 @@
         ctx.restore();
       }
 
-      function drawBlobPath(ball, r, now, squish) {
+      function drawBlobPath(ball, r, now, squish, contactAngle = 0) {
         if (squish < 0.03) {
           ctx.beginPath();
           ctx.ellipse(0, 0, r, r, 0, 0, Math.PI * 2);
@@ -1072,26 +1085,36 @@
         }
 
         const points = [];
-        const count = 22;
+        const count = 30;
         const seed = ball.id * 1.91;
-        const flatX = r * (1 - squish * 0.38);
+        const contactX = Math.cos(contactAngle);
+        const contactY = Math.sin(contactAngle);
+        const tangentX = -contactY;
+        const tangentY = contactX;
+        const contactWidth = 0.62;
 
         for (let i = 0; i < count; i += 1) {
           const angle = (i / count) * Math.PI * 2;
-          const contact = Math.max(0, Math.cos(angle));
-          const away = Math.max(0, -Math.cos(angle));
-          const vertical = Math.abs(Math.sin(angle));
-          const contactDent = Math.pow(contact, 1.55) * squish * 0.46;
-          const awayBulge = Math.pow(away, 1.25) * squish * 0.22;
-          const cheekBulge = Math.pow(vertical, 1.45) * squish * 0.15;
-          const tinyUnevenness = Math.sin(angle * 3 + seed) * squish * 0.018;
-          const radius = r * (1 - contactDent + awayBulge + cheekBulge + tinyUnevenness);
+          const diff = angleDistance(contactAngle, angle);
+          const contact = Math.exp(-(diff * diff) / (2 * contactWidth * contactWidth));
+          const cheekA = Math.exp(-Math.pow(diff - 1.05, 2) / 0.28);
+          const cheekB = Math.exp(-Math.pow(diff + 1.05, 2) / 0.28);
+          const away = Math.exp(-Math.pow(Math.abs(diff) - Math.PI, 2) / 0.5);
+          const contactDent = contact * contact * squish * 0.4;
+          const cheekBulge = (cheekA + cheekB) * squish * 0.11;
+          const awayBulge = away * squish * 0.05;
+          const tinyUnevenness = Math.sin(angle * 4 + seed) * squish * 0.01;
+          const radius = r * (1 - contactDent + cheekBulge + awayBulge + tinyUnevenness);
           let x = Math.cos(angle) * radius;
           let y = Math.sin(angle) * radius;
 
-          if (squish > 0.1 && x > flatX) {
-            x = flatX + (x - flatX) * clamp(1 - squish * 0.95, 0.08, 0.78);
-            y *= 1 + squish * 0.1;
+          if (contact > 0.14) {
+            const inward = r * contact * squish * 0.2;
+            const sideSlide = Math.sin(diff) * contact * squish * r * 0.08;
+            x -= contactX * inward;
+            y -= contactY * inward;
+            x += tangentX * sideSlide;
+            y += tangentY * sideSlide;
           }
 
           points.push({
