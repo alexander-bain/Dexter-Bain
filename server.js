@@ -17,7 +17,8 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
   if (
     req.path.startsWith("/api/minigames") ||
-    req.path.startsWith("/api/notifications")
+    req.path.startsWith("/api/notifications") ||
+    req.path.startsWith("/api/rockem-sockem")
   ) {
     res.set("Cache-Control", "no-store");
   }
@@ -61,6 +62,9 @@ let vapidKeysPromise = null;
 const resultCheckCooldowns = new Map();
 const resultCheckCooldownMs = Number(process.env.MINIGAMES_RESULT_CHECK_COOLDOWN_MS) || 60000;
 const maxAutoResultQuestions = 24;
+const robotBoxingRooms = new Map();
+const robotBoxingRoomTtlMs =
+  Number(process.env.ROBOT_BOXING_ROOM_TTL_MS) || 45 * 60 * 1000;
 
 // IMPORTANT: set this in your environment on Render, don't hardcode it in code
 const openai = new OpenAI({
@@ -1077,6 +1081,121 @@ function uniqueRoomCode(data, gameId) {
     }
   }
   return "";
+}
+
+function cleanRobotPlayerId(value) {
+  return cleanText(value, 80).replace(/[^a-zA-Z0-9_-]/g, "");
+}
+
+function makeRobotPlayerId(value) {
+  return cleanRobotPlayerId(value) || crypto.randomUUID();
+}
+
+function emptyRobotInput() {
+  return {
+    advance: false,
+    retreat: false,
+    duckSeq: 0,
+    punchSeq: 0,
+    pushSeq: 0,
+    updatedAt: "",
+  };
+}
+
+function cleanRobotInput(value) {
+  const input = value || {};
+  return {
+    advance: Boolean(input.advance),
+    retreat: Boolean(input.retreat),
+    duckSeq: clamp(Math.floor(Number(input.duckSeq) || 0), 0, 1000000),
+    punchSeq: clamp(Math.floor(Number(input.punchSeq) || 0), 0, 1000000),
+    pushSeq: clamp(Math.floor(Number(input.pushSeq) || 0), 0, 1000000),
+    updatedAt: new Date().toISOString(),
+  };
+}
+
+function makeRobotRoomCode() {
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    const code = makeRoomCode();
+    if (!robotBoxingRooms.has(code)) {
+      return code;
+    }
+  }
+  return "";
+}
+
+function cleanupRobotBoxingRooms() {
+  const now = Date.now();
+  for (const [roomCode, room] of robotBoxingRooms.entries()) {
+    const updatedAt = Date.parse(room.updatedAt || room.createdAt || "");
+    if (!Number.isFinite(updatedAt) || now - updatedAt > robotBoxingRoomTtlMs) {
+      robotBoxingRooms.delete(roomCode);
+    }
+  }
+}
+
+function robotPlayerSide(room, playerId) {
+  if (!playerId) {
+    return "";
+  }
+  if (room.players.blue?.id === playerId) {
+    return "blue";
+  }
+  if (room.players.red?.id === playerId) {
+    return "red";
+  }
+  return "";
+}
+
+function joinRobotBoxingRoom(room, playerId) {
+  const existingSide = robotPlayerSide(room, playerId);
+  const side =
+    existingSide ||
+    (!room.players.blue ? "blue" : !room.players.red ? "red" : "");
+
+  if (!side) {
+    const err = new Error("Room is full");
+    err.statusCode = 409;
+    throw err;
+  }
+
+  const now = new Date().toISOString();
+  room.players[side] = {
+    id: playerId,
+    joinedAt: room.players[side]?.joinedAt || now,
+    lastSeenAt: now,
+  };
+  room.updatedAt = now;
+  return side;
+}
+
+function touchRobotBoxingPlayer(room, playerId) {
+  const side = robotPlayerSide(room, playerId);
+  if (!side) {
+    return "";
+  }
+
+  const now = new Date().toISOString();
+  room.players[side].lastSeenAt = now;
+  room.updatedAt = now;
+  return side;
+}
+
+function robotBoxingRoomSummary(room, roomCode, playerId) {
+  const side = robotPlayerSide(room, playerId);
+  return {
+    roomCode,
+    playerId,
+    side,
+    ready: Boolean(room.players.blue && room.players.red),
+    players: {
+      blue: Boolean(room.players.blue),
+      red: Boolean(room.players.red),
+    },
+    inputs: room.inputs,
+    createdAt: room.createdAt,
+    updatedAt: room.updatedAt,
+  };
 }
 
 async function readNotificationsData() {
@@ -2422,6 +2541,125 @@ app.post("/api/minigames/:gameId/rooms/:roomCode/entries", async (req, res) => {
     console.error("Minigames room save error:", err);
     res.status(500).json({ error: "Failed to save minigame room entry" });
   }
+});
+
+app.post("/api/rockem-sockem/rooms", (req, res) => {
+  cleanupRobotBoxingRooms();
+
+  const playerId = makeRobotPlayerId(req.body?.playerId);
+  const requestedCode = req.body?.roomCode ? cleanRoomCode(req.body.roomCode) : "";
+  const roomCode = requestedCode || makeRobotRoomCode();
+
+  if (!roomCode) {
+    res.status(500).json({ error: "Could not make room code" });
+    return;
+  }
+
+  if (!isValidRoomCode(roomCode)) {
+    res.status(400).json({ error: "Invalid room code" });
+    return;
+  }
+
+  if (robotBoxingRooms.has(roomCode)) {
+    res.status(409).json({ error: "Room code already exists" });
+    return;
+  }
+
+  const now = new Date().toISOString();
+  const room = {
+    createdAt: now,
+    updatedAt: now,
+    players: {
+      blue: null,
+      red: null,
+    },
+    inputs: {
+      blue: emptyRobotInput(),
+      red: emptyRobotInput(),
+    },
+  };
+
+  robotBoxingRooms.set(roomCode, room);
+  joinRobotBoxingRoom(room, playerId);
+  res.status(201).json(robotBoxingRoomSummary(room, roomCode, playerId));
+});
+
+app.post("/api/rockem-sockem/rooms/:roomCode/join", (req, res) => {
+  cleanupRobotBoxingRooms();
+
+  const roomCode = cleanRoomCode(req.params.roomCode);
+  if (!isValidRoomCode(roomCode)) {
+    res.status(400).json({ error: "Invalid room code" });
+    return;
+  }
+
+  const room = robotBoxingRooms.get(roomCode);
+  if (!room) {
+    res.status(404).json({ error: "Room not found" });
+    return;
+  }
+
+  const playerId = makeRobotPlayerId(req.body?.playerId);
+  try {
+    joinRobotBoxingRoom(room, playerId);
+    res.json(robotBoxingRoomSummary(room, roomCode, playerId));
+  } catch (err) {
+    res.status(err.statusCode || 500).json({
+      error: err.statusCode === 409 ? "Room is full" : "Could not join room",
+    });
+  }
+});
+
+app.get("/api/rockem-sockem/rooms/:roomCode", (req, res) => {
+  cleanupRobotBoxingRooms();
+
+  const roomCode = cleanRoomCode(req.params.roomCode);
+  if (!isValidRoomCode(roomCode)) {
+    res.status(400).json({ error: "Invalid room code" });
+    return;
+  }
+
+  const room = robotBoxingRooms.get(roomCode);
+  if (!room) {
+    res.status(404).json({ error: "Room not found" });
+    return;
+  }
+
+  const playerId = cleanRobotPlayerId(req.query?.playerId);
+  touchRobotBoxingPlayer(room, playerId);
+  res.json(robotBoxingRoomSummary(room, roomCode, playerId));
+});
+
+app.post("/api/rockem-sockem/rooms/:roomCode/input", (req, res) => {
+  cleanupRobotBoxingRooms();
+
+  const roomCode = cleanRoomCode(req.params.roomCode);
+  if (!isValidRoomCode(roomCode)) {
+    res.status(400).json({ error: "Invalid room code" });
+    return;
+  }
+
+  const room = robotBoxingRooms.get(roomCode);
+  if (!room) {
+    res.status(404).json({ error: "Room not found" });
+    return;
+  }
+
+  const playerId = cleanRobotPlayerId(req.body?.playerId);
+  const side = req.body?.side === "red" ? "red" : req.body?.side === "blue" ? "blue" : "";
+  if (!playerId || !side) {
+    res.status(400).json({ error: "Missing player or side" });
+    return;
+  }
+
+  if (robotPlayerSide(room, playerId) !== side) {
+    res.status(403).json({ error: "Player does not own that side" });
+    return;
+  }
+
+  room.inputs[side] = cleanRobotInput(req.body?.input);
+  touchRobotBoxingPlayer(room, playerId);
+  res.json(robotBoxingRoomSummary(room, roomCode, playerId));
 });
 
 // Basic health check

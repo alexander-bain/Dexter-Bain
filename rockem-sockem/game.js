@@ -7,6 +7,11 @@ const ui = {
   overlayCopy: document.getElementById("overlayCopy"),
   startButton: document.getElementById("startButton"),
   modeButtons: [...document.querySelectorAll("[data-mode]")],
+  onlinePanel: document.getElementById("onlinePanel"),
+  createOnlineButton: document.getElementById("createOnlineButton"),
+  joinOnlineButton: document.getElementById("joinOnlineButton"),
+  roomCodeInput: document.getElementById("roomCodeInput"),
+  onlineStatus: document.getElementById("onlineStatus"),
   difficultyButtons: [...document.querySelectorAll("[data-difficulty]")],
   announcer: document.getElementById("announcer"),
   timerText: document.getElementById("timerText"),
@@ -91,6 +96,33 @@ const heldControls = {
   guard: false,
 };
 const DUCK_DURATION = 0.42;
+const ONLINE_API_BASE =
+  window.ROBOT_BOXING_API_BASE ||
+  (["localhost", "127.0.0.1"].includes(window.location.hostname)
+    ? "http://127.0.0.1:8080"
+    : "https://dexter-bain.onrender.com");
+const ONLINE_SEND_MS = 120;
+const ONLINE_POLL_MS = 180;
+
+const online = {
+  active: false,
+  ready: false,
+  connecting: false,
+  roomCode: "",
+  side: "",
+  playerId: getOnlinePlayerId(),
+  localInput: makeOnlineInput(),
+  remoteInput: makeOnlineInput(),
+  lastRemoteSeq: {
+    duckSeq: 0,
+    punchSeq: 0,
+    pushSeq: 0,
+  },
+  sendTimer: null,
+  pollTimer: null,
+  lastSend: 0,
+  sending: false,
+};
 
 let scene;
 let camera;
@@ -132,6 +164,48 @@ function easeOutCubic(t) {
 function easeInOut(t) {
   const n = clamp(t, 0, 1);
   return n < 0.5 ? 2 * n * n : 1 - Math.pow(-2 * n + 2, 2) / 2;
+}
+
+function makeOnlineInput() {
+  return {
+    advance: false,
+    retreat: false,
+    duckSeq: 0,
+    punchSeq: 0,
+    pushSeq: 0,
+  };
+}
+
+function getOnlinePlayerId() {
+  const storageKey = "rockem-sockem-tab-player-id";
+  try {
+    const saved = window.sessionStorage.getItem(storageKey);
+    if (saved) {
+      return saved;
+    }
+    const made = window.crypto?.randomUUID?.() || `player-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+    window.sessionStorage.setItem(storageKey, made);
+    return made;
+  } catch {
+    return `player-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  }
+}
+
+function normalizeOnlineInput(input = {}) {
+  return {
+    advance: Boolean(input.advance),
+    retreat: Boolean(input.retreat),
+    duckSeq: clamp(Math.floor(Number(input.duckSeq) || 0), 0, 1000000),
+    punchSeq: clamp(Math.floor(Number(input.punchSeq) || 0), 0, 1000000),
+    pushSeq: clamp(Math.floor(Number(input.pushSeq) || 0), 0, 1000000),
+  };
+}
+
+function cleanOnlineCode(value) {
+  return String(value || "")
+    .replace(/[^a-zA-Z0-9]/g, "")
+    .toUpperCase()
+    .slice(0, 6);
 }
 
 function material(color, options = {}) {
@@ -450,6 +524,7 @@ function init() {
   opponent.ai = true;
 
   bindEvents();
+  updateOnlineUi();
   resize();
   window.ROBOT_GAME_SAMPLE = sampleCanvasPixels;
   updateUi();
@@ -490,19 +565,31 @@ function bindEvents() {
 
   ui.startButton.addEventListener("click", () => {
     ensureAudio();
+    if (game.playMode === "online" && !online.ready) {
+      setOnlineStatus(online.roomCode ? `Room ${online.roomCode}: waiting for Red to join.` : "Create or join a room code first.");
+      return;
+    }
     startFight();
   });
 
   ui.modeButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      game.playMode = button.dataset.mode || "single";
-      ui.modeButtons.forEach((candidate) => {
-        candidate.classList.toggle("is-active", candidate === button);
-      });
-      ui.overlayCopy.textContent = game.playMode === "multi"
-        ? "Two players share the keyboard. First head to pop loses."
-        : "Blue versus the computer. First head to pop loses.";
+      selectPlayMode(button.dataset.mode || "single");
     });
+  });
+
+  ui.createOnlineButton.addEventListener("click", () => {
+    ensureAudio();
+    createOnlineRoom();
+  });
+
+  ui.joinOnlineButton.addEventListener("click", () => {
+    ensureAudio();
+    joinOnlineRoom();
+  });
+
+  ui.roomCodeInput.addEventListener("input", () => {
+    ui.roomCodeInput.value = cleanOnlineCode(ui.roomCodeInput.value);
   });
 
   ui.difficultyButtons.forEach((button) => {
@@ -537,6 +624,334 @@ function bindEvents() {
   });
 }
 
+function selectPlayMode(mode) {
+  const nextMode = ["single", "multi", "online"].includes(mode) ? mode : "single";
+  if (game.playMode === "online" && nextMode !== "online") {
+    stopOnlineRoom();
+  }
+
+  game.playMode = nextMode;
+  ui.modeButtons.forEach((candidate) => {
+    candidate.classList.toggle("is-active", candidate.dataset.mode === nextMode);
+  });
+
+  if (nextMode === "online") {
+    ui.overlayCopy.textContent = "Create a code or join one. The creator is Blue and the joiner is Red.";
+  } else if (nextMode === "multi") {
+    ui.overlayCopy.textContent = "Two players share the keyboard. First head to pop loses.";
+  } else {
+    ui.overlayCopy.textContent = "Blue versus the computer. First head to pop loses.";
+  }
+
+  updateOnlineUi();
+}
+
+function setOnlineStatus(text) {
+  ui.onlineStatus.textContent = text;
+}
+
+function updateOnlineUi() {
+  const isOnlineMode = game.playMode === "online";
+  ui.onlinePanel.classList.toggle("is-visible", isOnlineMode);
+  ui.createOnlineButton.disabled = online.connecting;
+  ui.joinOnlineButton.disabled = online.connecting;
+
+  if (isOnlineMode && game.mode !== "finished") {
+    ui.startButton.disabled = !online.ready;
+    ui.startButton.textContent = online.ready ? "Start Online Fight" : "Create or Join a Code";
+  } else if (!isOnlineMode && game.mode !== "finished") {
+    ui.startButton.disabled = false;
+    ui.startButton.textContent = "Start Fight";
+  }
+}
+
+function updateOnlineStatusFromRoom() {
+  if (!online.roomCode) {
+    setOnlineStatus("Create a code, or type your friend's code.");
+    return;
+  }
+
+  const sideName = online.side === "red" ? "Red" : "Blue";
+  if (online.ready) {
+    setOnlineStatus(`Room ${online.roomCode}. You are ${sideName}. Fight!`);
+  } else {
+    setOnlineStatus(`Room ${online.roomCode}. You are ${sideName}. Give this code to the other player.`);
+  }
+}
+
+async function fetchOnlineJson(pathname, options = {}) {
+  const response = await fetch(`${ONLINE_API_BASE}${pathname}`, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers || {}),
+    },
+  });
+
+  let payload = {};
+  try {
+    payload = await response.json();
+  } catch {
+    payload = {};
+  }
+
+  if (!response.ok) {
+    throw new Error(payload.error || "Online room did not answer.");
+  }
+
+  return payload;
+}
+
+async function createOnlineRoom() {
+  selectPlayMode("online");
+  stopOnlineRoom(false);
+  online.connecting = true;
+  setOnlineStatus("Making a room code...");
+  updateOnlineUi();
+
+  try {
+    const payload = await fetchOnlineJson("/api/rockem-sockem/rooms", {
+      method: "POST",
+      body: JSON.stringify({ playerId: online.playerId }),
+    });
+    activateOnlineRoom(payload);
+  } catch (error) {
+    setOnlineStatus("Could not make a room code yet.");
+    console.error(error);
+  } finally {
+    online.connecting = false;
+    updateOnlineUi();
+  }
+}
+
+async function joinOnlineRoom() {
+  selectPlayMode("online");
+  const roomCode = cleanOnlineCode(ui.roomCodeInput.value);
+  ui.roomCodeInput.value = roomCode;
+  if (roomCode.length !== 6) {
+    setOnlineStatus("Type the 6-letter room code first.");
+    return;
+  }
+
+  stopOnlineRoom(false);
+  online.connecting = true;
+  setOnlineStatus(`Joining room ${roomCode}...`);
+  updateOnlineUi();
+
+  try {
+    const payload = await fetchOnlineJson(`/api/rockem-sockem/rooms/${roomCode}/join`, {
+      method: "POST",
+      body: JSON.stringify({ playerId: online.playerId }),
+    });
+    activateOnlineRoom(payload);
+  } catch (error) {
+    setOnlineStatus("Could not join that room.");
+    console.error(error);
+  } finally {
+    online.connecting = false;
+    updateOnlineUi();
+  }
+}
+
+function activateOnlineRoom(payload) {
+  online.active = true;
+  online.ready = Boolean(payload.ready);
+  online.roomCode = cleanOnlineCode(payload.roomCode);
+  online.side = payload.side === "red" ? "red" : "blue";
+  online.localInput = makeOnlineInput();
+  online.remoteInput = makeOnlineInput();
+  online.lastRemoteSeq = {
+    duckSeq: 0,
+    punchSeq: 0,
+    pushSeq: 0,
+  };
+  ui.roomCodeInput.value = online.roomCode;
+  startOnlineTimers();
+  handleOnlineRoomUpdate(payload, true);
+}
+
+function stopOnlineRoom(showStatus = true) {
+  if (online.sendTimer) {
+    window.clearInterval(online.sendTimer);
+  }
+  if (online.pollTimer) {
+    window.clearInterval(online.pollTimer);
+  }
+  online.active = false;
+  online.ready = false;
+  online.roomCode = "";
+  online.side = "";
+  online.localInput = makeOnlineInput();
+  online.remoteInput = makeOnlineInput();
+  online.lastRemoteSeq = {
+    duckSeq: 0,
+    punchSeq: 0,
+    pushSeq: 0,
+  };
+  online.sendTimer = null;
+  online.pollTimer = null;
+  online.sending = false;
+  if (showStatus) {
+    setOnlineStatus("Create a code, or type your friend's code.");
+  }
+  updateOnlineUi();
+}
+
+function startOnlineTimers() {
+  if (online.sendTimer) {
+    window.clearInterval(online.sendTimer);
+  }
+  if (online.pollTimer) {
+    window.clearInterval(online.pollTimer);
+  }
+  online.sendTimer = window.setInterval(() => sendOnlineInput(false), ONLINE_SEND_MS);
+  online.pollTimer = window.setInterval(pollOnlineRoom, ONLINE_POLL_MS);
+  pollOnlineRoom();
+}
+
+async function pollOnlineRoom() {
+  if (!online.active || !online.roomCode) {
+    return;
+  }
+
+  try {
+    const payload = await fetchOnlineJson(
+      `/api/rockem-sockem/rooms/${online.roomCode}?playerId=${encodeURIComponent(online.playerId)}`
+    );
+    handleOnlineRoomUpdate(payload);
+  } catch (error) {
+    setOnlineStatus("Online room connection paused.");
+    console.error(error);
+  }
+}
+
+async function sendOnlineInput(force = false) {
+  if (!online.active || !online.roomCode || !online.side || online.sending) {
+    return;
+  }
+
+  const now = performance.now();
+  if (!force && now - online.lastSend < ONLINE_SEND_MS) {
+    return;
+  }
+
+  online.lastSend = now;
+  online.sending = true;
+  try {
+    const payload = await fetchOnlineJson(`/api/rockem-sockem/rooms/${online.roomCode}/input`, {
+      method: "POST",
+      body: JSON.stringify({
+        playerId: online.playerId,
+        side: online.side,
+        input: online.localInput,
+      }),
+    });
+    handleOnlineRoomUpdate(payload);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    online.sending = false;
+  }
+}
+
+function handleOnlineRoomUpdate(payload, skipRemoteActions = false) {
+  if (!payload || !online.active) {
+    return;
+  }
+
+  online.ready = Boolean(payload.ready);
+  online.roomCode = cleanOnlineCode(payload.roomCode || online.roomCode);
+  online.side = payload.side === "red" || payload.side === "blue" ? payload.side : online.side;
+  ui.roomCodeInput.value = online.roomCode;
+
+  const side = getOnlineRemoteSide();
+  if (side && payload.inputs?.[side]) {
+    receiveOnlineRemoteInput(payload.inputs[side], skipRemoteActions);
+  }
+
+  updateOnlineStatusFromRoom();
+  updateOnlineUi();
+
+  if (online.ready && game.playMode === "online" && game.mode === "intro") {
+    startFight();
+  }
+}
+
+function getOnlineRemoteSide() {
+  if (online.side === "blue") {
+    return "red";
+  }
+  if (online.side === "red") {
+    return "blue";
+  }
+  return "";
+}
+
+function getOnlineLocalFighter() {
+  return online.side === "red" ? opponent : player;
+}
+
+function getOnlineRemoteFighter() {
+  return online.side === "red" ? player : opponent;
+}
+
+function onlineIntentForSide(side, input) {
+  if (side === "red") {
+    return (input.retreat ? 1 : 0) - (input.advance ? 1 : 0);
+  }
+  return (input.advance ? 1 : 0) - (input.retreat ? 1 : 0);
+}
+
+function updateOnlineLocalInputFromControls() {
+  if (online.side === "red") {
+    online.localInput.advance = heldControls.blueAdvance || keys.has("KeyJ");
+    online.localInput.retreat = heldControls.blueRetreat || keys.has("KeyL");
+    return;
+  }
+
+  online.localInput.advance = heldControls.blueAdvance || keys.has("KeyD") || keys.has("ArrowRight");
+  online.localInput.retreat = heldControls.blueRetreat || keys.has("KeyA") || keys.has("ArrowLeft");
+}
+
+function performOnlineLocalAction(type) {
+  if (!online.active || !online.side) {
+    return false;
+  }
+
+  const fighter = getOnlineLocalFighter();
+  const didAct = type === "duck" ? dodge(fighter) : startPunch(fighter, type);
+  if (!didAct) {
+    return false;
+  }
+
+  const seqKey = type === "duck" ? "duckSeq" : `${type}Seq`;
+  online.localInput[seqKey] = clamp((online.localInput[seqKey] || 0) + 1, 0, 1000000);
+  sendOnlineInput(true);
+  return true;
+}
+
+function receiveOnlineRemoteInput(input, skipActions = false) {
+  const nextInput = normalizeOnlineInput(input);
+  const fighter = getOnlineRemoteFighter();
+
+  if (!skipActions && fighter && game.mode === "fighting") {
+    if (nextInput.duckSeq > online.lastRemoteSeq.duckSeq) {
+      dodge(fighter);
+    }
+    if (nextInput.punchSeq > online.lastRemoteSeq.punchSeq) {
+      startPunch(fighter, "punch");
+    }
+    if (nextInput.pushSeq > online.lastRemoteSeq.pushSeq) {
+      startPunch(fighter, "push");
+    }
+  }
+
+  online.lastRemoteSeq.duckSeq = Math.max(online.lastRemoteSeq.duckSeq, nextInput.duckSeq);
+  online.lastRemoteSeq.punchSeq = Math.max(online.lastRemoteSeq.punchSeq, nextInput.punchSeq);
+  online.lastRemoteSeq.pushSeq = Math.max(online.lastRemoteSeq.pushSeq, nextInput.pushSeq);
+  online.remoteInput = nextInput;
+}
+
 function resize() {
   const width = window.innerWidth;
   const height = window.innerHeight;
@@ -552,21 +967,37 @@ function handleKeyDown(event) {
 
   if (event.code === "Space" && game.mode !== "fighting") {
     ensureAudio();
+    if (game.playMode === "online" && !online.ready) {
+      setOnlineStatus(online.roomCode ? `Room ${online.roomCode}: waiting for the other player.` : "Create or join a room code first.");
+      return;
+    }
     startFight();
     return;
   }
 
   if (!event.repeat) {
-    if (event.code === "KeyQ") startPunch(player, "punch");
-    if (event.code === "KeyE") startPunch(player, "push");
-    if (event.code === "KeyS" || event.code === "ArrowDown") dodge(player);
-    if (game.playMode === "single") {
-      if (event.code === "KeyJ") startPunch(player, "punch");
-      if (event.code === "KeyK") startPunch(player, "push");
+    if (online.active && game.playMode === "online") {
+      if (online.side === "red") {
+        if (event.code === "KeyO") performOnlineLocalAction("punch");
+        if (event.code === "KeyP") performOnlineLocalAction("push");
+        if (event.code === "KeyK") performOnlineLocalAction("duck");
+      } else {
+        if (event.code === "KeyQ") performOnlineLocalAction("punch");
+        if (event.code === "KeyE") performOnlineLocalAction("push");
+        if (event.code === "KeyS" || event.code === "ArrowDown") performOnlineLocalAction("duck");
+      }
     } else {
-      if (event.code === "KeyO") startPunch(opponent, "punch");
-      if (event.code === "KeyP") startPunch(opponent, "push");
-      if (event.code === "KeyK") dodge(opponent);
+      if (event.code === "KeyQ") startPunch(player, "punch");
+      if (event.code === "KeyE") startPunch(player, "push");
+      if (event.code === "KeyS" || event.code === "ArrowDown") dodge(player);
+      if (game.playMode === "single") {
+        if (event.code === "KeyJ") startPunch(player, "punch");
+        if (event.code === "KeyK") startPunch(player, "push");
+      } else {
+        if (event.code === "KeyO") startPunch(opponent, "punch");
+        if (event.code === "KeyP") startPunch(opponent, "push");
+        if (event.code === "KeyK") dodge(opponent);
+      }
     }
   }
 
@@ -585,6 +1016,16 @@ function handleControlDown(control) {
   if (control === "guard") {
     heldControls.guard = true;
     return;
+  }
+  if (online.active && game.playMode === "online") {
+    if (control === "duck") {
+      performOnlineLocalAction("duck");
+      return;
+    }
+    if (control === "punch" || control === "push") {
+      performOnlineLocalAction(control);
+      return;
+    }
   }
   if (control === "duck") {
     dodge(player);
@@ -633,6 +1074,12 @@ function resetFighter(fighter, x) {
 }
 
 function startFight() {
+  if (game.playMode === "online" && (!online.active || !online.ready)) {
+    setOnlineStatus(online.roomCode ? `Room ${online.roomCode}: waiting for the other player.` : "Create or join a room code first.");
+    updateOnlineUi();
+    return false;
+  }
+
   game.mode = "fighting";
   game.timer = 90;
   game.elapsed = 0;
@@ -646,9 +1093,15 @@ function startFight() {
   opponent.ai = game.playMode === "single";
   ui.overlay.classList.remove("is-visible");
   ui.startButton.textContent = "Start Fight";
-  setMessage(game.playMode === "multi" ? "2-player match. Fight!" : `${DIFFICULTY[game.difficulty].label} match. Fight!`, true);
+  const message = game.playMode === "online"
+    ? `Online room ${online.roomCode}. Fight!`
+    : game.playMode === "multi"
+      ? "2-player match. Fight!"
+      : `${DIFFICULTY[game.difficulty].label} match. Fight!`;
+  setMessage(message, true);
   playBell();
   updateUi();
+  return true;
 }
 
 function endFight(winner, loser, decision = "head pop") {
@@ -700,13 +1153,14 @@ function startPunch(fighter, type) {
 }
 
 function dodge(fighter) {
-  if (game.mode !== "fighting") return;
-  if (fighter.dodgeCooldown > 0 || fighter.punch || fighter.stamina < 12) return;
+  if (game.mode !== "fighting") return false;
+  if (fighter.dodgeCooldown > 0 || fighter.punch || fighter.stamina < 12) return false;
   fighter.dodgeTimer = DUCK_DURATION;
   fighter.dodgeCooldown = 0.95;
   fighter.stamina = clamp(fighter.stamina - 12, 0, 100);
   setMessage(`${fighter.name} ducks.`);
   playSlip();
+  return true;
 }
 
 function updateFight(dt) {
@@ -729,6 +1183,20 @@ function updateFight(dt) {
 }
 
 function updateHumanIntents() {
+  if (online.active && game.playMode === "online") {
+    updateOnlineLocalInputFromControls();
+    player.intent = online.side === "blue"
+      ? onlineIntentForSide("blue", online.localInput)
+      : onlineIntentForSide("blue", online.remoteInput);
+    opponent.intent = online.side === "red"
+      ? onlineIntentForSide("red", online.localInput)
+      : onlineIntentForSide("red", online.remoteInput);
+    player.guarding = false;
+    opponent.guarding = false;
+    sendOnlineInput(false);
+    return;
+  }
+
   const advance = heldControls.blueAdvance || keys.has("KeyD") || keys.has("ArrowRight");
   const retreat = heldControls.blueRetreat || keys.has("KeyA") || keys.has("ArrowLeft");
   player.intent = (advance ? 1 : 0) - (retreat ? 1 : 0);
