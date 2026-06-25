@@ -574,6 +574,9 @@
           squishTarget: 0,
           squishVelocity: 0,
           squishAngle: 0,
+          squishImpulseAt: 0,
+          squishLastStrength: 0,
+          contactPatches: [],
           blinkAt: now + 900 + Math.random() * 2600,
           blink: 0
         };
@@ -641,8 +644,8 @@
         }
       }
 
-      function applySquash(ball, angle, strength) {
-        const amount = clamp(strength * 0.92, 0, 0.85);
+      function applySquash(ball, angle, strength, now) {
+        const amount = clamp(strength * 0.68, 0, 0.58);
         if (amount < 0.025) {
           return;
         }
@@ -651,13 +654,66 @@
         if (previousTarget < 0.02) {
           ball.squishAngle = angle;
         } else {
-          const turn = clamp(amount / (previousTarget + amount), 0.18, 0.78);
+          const turn = clamp(amount / (previousTarget + amount), 0.08, 0.36);
           ball.squishAngle = mixAngle(ball.squishAngle || angle, angle, turn);
         }
 
-        ball.squishTarget = Math.max(previousTarget, amount);
-        ball.squish = Math.max(ball.squish, amount * 0.08);
-        ball.squishVelocity = clamp((ball.squishVelocity || 0) + amount * 1.45, -4.5, 5.8);
+        ball.squishTarget = Math.max(previousTarget, amount * 0.46);
+        ball.squish = Math.max(ball.squish, amount * 0.04);
+
+        const canKick =
+          !ball.squishImpulseAt ||
+          now - ball.squishImpulseAt > 80 ||
+          amount > (ball.squishLastStrength || 0) + 0.08;
+        if (canKick) {
+          ball.squishVelocity = clamp((ball.squishVelocity || 0) + amount * 0.7, -2.8, 3.4);
+          ball.squishImpulseAt = now;
+          ball.squishLastStrength = amount;
+        }
+
+        addContactPatch(ball, angle, amount);
+      }
+
+      function addContactPatch(ball, angle, amount) {
+        if (!ball.contactPatches) {
+          ball.contactPatches = [];
+        }
+
+        let patch = null;
+        let bestDistance = Infinity;
+        for (const item of ball.contactPatches) {
+          const distance = Math.abs(angleDistance(item.angle, angle));
+          if (distance < bestDistance) {
+            bestDistance = distance;
+            patch = item;
+          }
+        }
+
+        if (!patch || bestDistance > 0.7) {
+          if (ball.contactPatches.length < 3) {
+            patch = {
+              angle,
+              amount: amount * 0.18,
+              target: amount,
+              velocity: 0
+            };
+            ball.contactPatches.push(patch);
+          } else {
+            patch = ball.contactPatches.reduce((weakest, item) => (
+              (item.target + item.amount) < (weakest.target + weakest.amount) ? item : weakest
+            ), ball.contactPatches[0]);
+            patch.angle = angle;
+            patch.amount = amount * 0.14;
+            patch.target = amount;
+            patch.velocity = 0;
+          }
+        } else {
+          patch.angle = mixAngle(patch.angle, angle, 0.24);
+          patch.target = Math.max(patch.target, amount);
+          patch.amount = Math.max(patch.amount, amount * 0.16);
+        }
+
+        patch.velocity = clamp((patch.velocity || 0) + amount * 0.65, -2.6, 3.8);
       }
 
       function canMergeBalls(a, b, now) {
@@ -668,7 +724,7 @@
         );
       }
 
-      function resolveEdge(ball, edge) {
+      function resolveEdge(ball, edge, now) {
         const relX = ball.x - edge.ax;
         const relY = ball.y - edge.ay;
         const t = clamp((relX * edge.dx + relY * edge.dy) / (edge.length * edge.length), 0, 1);
@@ -682,7 +738,7 @@
           ball.y += edge.ny * correction;
           const normalVelocity = ball.vx * edge.nx + ball.vy * edge.ny;
           const impactStrength = Math.max(0, -normalVelocity) / 640 + (correction / ball.r) * 0.52;
-          applySquash(ball, Math.atan2(-edge.ny, -edge.nx), impactStrength);
+          applySquash(ball, Math.atan2(-edge.ny, -edge.nx), impactStrength, now);
           if (normalVelocity < 0) {
             ball.vx -= normalVelocity * 1.06 * edge.nx;
             ball.vy -= normalVelocity * 1.06 * edge.ny;
@@ -740,8 +796,8 @@
         const impactStrength =
           Math.max(0, -velocityAlongNormal) / 680 +
           (overlap / Math.min(a.r, b.r)) * 0.62;
-        applySquash(a, Math.atan2(ny, nx), impactStrength);
-        applySquash(b, Math.atan2(-ny, -nx), impactStrength);
+        applySquash(a, Math.atan2(ny, nx), impactStrength, now);
+        applySquash(b, Math.atan2(-ny, -nx), impactStrength, now);
 
         if (velocityAlongNormal < 0) {
           const bounce = 0.1;
@@ -792,9 +848,10 @@
           if (next < tiers.length) {
             const merged = makeBall(next, x, y, vx, vy, 420);
             merged.squish = 0.12;
-            merged.squishTarget = 1.05;
-            merged.squishVelocity = 3.2;
+            merged.squishTarget = 0.34;
+            merged.squishVelocity = 1.4;
             merged.squishAngle = Math.atan2(vy || -1, vx || 1);
+            addContactPatch(merged, merged.squishAngle, 0.48);
             merged.mergeLockUntil = performance.now() + 190;
             balls.push(merged);
             score += tiers[next].score;
@@ -833,7 +890,7 @@
         for (let pass = 0; pass < 6; pass += 1) {
           for (const ball of balls) {
             for (const edge of world.edges) {
-              resolveEdge(ball, edge);
+              resolveEdge(ball, edge, now);
             }
           }
 
@@ -863,13 +920,25 @@
 
       function updateVisualSpring(ball, step) {
         const target = ball.squishTarget || 0;
-        const stiffness = 62;
-        const damping = 6.4;
+        const stiffness = 48;
+        const damping = 7.2;
         const acceleration = (target - ball.squish) * stiffness - damping * ball.squishVelocity;
         ball.squishVelocity += acceleration * step;
         ball.squish += ball.squishVelocity * step;
 
-        ball.squishTarget = Math.max(0, target - step * 1.35);
+        ball.squishTarget = Math.max(0, target - step * 1.8);
+
+        if (ball.contactPatches) {
+          for (const patch of ball.contactPatches) {
+            const patchAcceleration = (patch.target - patch.amount) * 72 - (patch.velocity || 0) * 8.5;
+            patch.velocity = (patch.velocity || 0) + patchAcceleration * step;
+            patch.amount += patch.velocity * step;
+            patch.target = Math.max(0, patch.target - step * 1.9);
+          }
+          ball.contactPatches = ball.contactPatches.filter((patch) => (
+            patch.target > 0.01 || patch.amount > 0.012 || Math.abs(patch.velocity || 0) > 0.06
+          ));
+        }
 
         if (Math.abs(ball.squish) < 0.004 && Math.abs(ball.squishVelocity) < 0.04 && ball.squishTarget < 0.004) {
           ball.squish = 0;
@@ -1024,11 +1093,11 @@
       function drawBallVisual(ball, now, preview = false) {
         const tier = tiers[ball.type];
         const r = ball.r;
-        const squish = clamp(ball.squish || 0, -0.28, 0.82);
+        const squish = clamp(ball.squish || 0, -0.18, 0.48);
         const squash = Math.max(0, squish);
         const stretch = Math.max(0, -squish);
-        const axisScale = clamp(1 - squash * 0.08 + stretch * 0.04, 0.93, 1.04);
-        const crossScale = clamp(1 + squash * 0.04 - stretch * 0.03, 0.96, 1.07);
+        const axisScale = clamp(1 - squash * 0.045 + stretch * 0.03, 0.96, 1.03);
+        const crossScale = clamp(1 + squash * 0.028 - stretch * 0.02, 0.98, 1.04);
         const deformationAngle = Math.abs(squish) > 0.03 ? (ball.squishAngle || 0) : 0;
         const lookSource = pointer.active ? pointer : { x: dropX, y: world.dropY };
         const lookX = clamp((lookSource.x - ball.x) / 260, -1, 1) * r * 0.1;
@@ -1068,8 +1137,8 @@
         ctx.save();
         ctx.translate(ball.x, ball.y);
         ctx.scale(
-          clamp(1 + squash * 0.12 - stretch * 0.06, 0.9, 1.16),
-          clamp(1 - squash * 0.08 + stretch * 0.1, 0.86, 1.14)
+          clamp(1 + squash * 0.04 - stretch * 0.03, 0.96, 1.05),
+          clamp(1 - squash * 0.03 + stretch * 0.04, 0.95, 1.05)
         );
         drawEye(-r * 0.32, -r * 0.13, r, lookX, lookY, blink);
         drawEye(r * 0.32, -r * 0.13, r, lookX, lookY, blink);
@@ -1078,7 +1147,21 @@
       }
 
       function drawBlobPath(ball, r, now, squish, contactAngle = 0) {
-        if (squish < 0.03) {
+        const patches = (ball.contactPatches || [])
+          .map((patch) => ({
+            angle: patch.angle,
+            amount: clamp(patch.amount || 0, 0, 0.62)
+          }))
+          .filter((patch) => patch.amount > 0.018);
+
+        if (!patches.length && squish > 0.03) {
+          patches.push({
+            angle: contactAngle,
+            amount: squish * 0.72
+          });
+        }
+
+        if (!patches.length) {
           ctx.beginPath();
           ctx.ellipse(0, 0, r, r, 0, 0, Math.PI * 2);
           return;
@@ -1087,35 +1170,40 @@
         const points = [];
         const count = 30;
         const seed = ball.id * 1.91;
-        const contactX = Math.cos(contactAngle);
-        const contactY = Math.sin(contactAngle);
-        const tangentX = -contactY;
-        const tangentY = contactX;
-        const contactWidth = 0.62;
+        const contactWidth = 0.78;
 
         for (let i = 0; i < count; i += 1) {
           const angle = (i / count) * Math.PI * 2;
-          const diff = angleDistance(contactAngle, angle);
-          const contact = Math.exp(-(diff * diff) / (2 * contactWidth * contactWidth));
-          const cheekA = Math.exp(-Math.pow(diff - 1.05, 2) / 0.28);
-          const cheekB = Math.exp(-Math.pow(diff + 1.05, 2) / 0.28);
-          const away = Math.exp(-Math.pow(Math.abs(diff) - Math.PI, 2) / 0.5);
-          const contactDent = contact * contact * squish * 0.4;
-          const cheekBulge = (cheekA + cheekB) * squish * 0.11;
-          const awayBulge = away * squish * 0.05;
-          const tinyUnevenness = Math.sin(angle * 4 + seed) * squish * 0.01;
+          let contactDent = 0;
+          let cheekBulge = 0;
+          let awayBulge = 0;
+          let offsetX = 0;
+          let offsetY = 0;
+
+          for (const patch of patches) {
+            const diff = angleDistance(patch.angle, angle);
+            const contact = Math.exp(-(diff * diff) / (2 * contactWidth * contactWidth));
+            const shoulder = Math.exp(-Math.pow(Math.abs(diff) - 0.92, 2) / 0.28);
+            const away = Math.exp(-Math.pow(Math.abs(diff) - Math.PI, 2) / 0.62);
+            const amount = patch.amount;
+            const contactX = Math.cos(patch.angle);
+            const contactY = Math.sin(patch.angle);
+
+            contactDent += contact * contact * amount * 0.18;
+            cheekBulge += shoulder * amount * 0.085;
+            awayBulge += away * amount * 0.028;
+
+            const inward = r * contact * amount * 0.1;
+            offsetX -= contactX * inward;
+            offsetY -= contactY * inward;
+          }
+
+          const tinyUnevenness = Math.sin(angle * 4 + seed) * Math.min(0.32, squish + patches.length * 0.08) * 0.008;
           const radius = r * (1 - contactDent + cheekBulge + awayBulge + tinyUnevenness);
           let x = Math.cos(angle) * radius;
           let y = Math.sin(angle) * radius;
-
-          if (contact > 0.14) {
-            const inward = r * contact * squish * 0.2;
-            const sideSlide = Math.sin(diff) * contact * squish * r * 0.08;
-            x -= contactX * inward;
-            y -= contactY * inward;
-            x += tangentX * sideSlide;
-            y += tangentY * sideSlide;
-          }
+          x += offsetX;
+          y += offsetY;
 
           points.push({
             x,
@@ -1210,7 +1298,7 @@
         } else {
           for (const ball of balls) {
             updateBlink(ball, now);
-            ball.squish *= 0.96;
+            updateVisualSpring(ball, dt);
           }
         }
 
