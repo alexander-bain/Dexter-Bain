@@ -323,6 +323,8 @@
 
       .overlay-panel {
         width: min(520px, 100%);
+        max-height: calc(100vh - 36px);
+        overflow: auto;
         border-radius: 10px;
         padding: 22px;
         background:
@@ -352,7 +354,7 @@
       }
 
       .mode-row {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
 
       .difficulty-row {
@@ -364,6 +366,54 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
         margin: 0 0 16px;
+      }
+
+      .online-panel {
+        display: none;
+        gap: 8px;
+        margin: 0 0 16px;
+      }
+
+      .online-panel.is-visible {
+        display: grid;
+      }
+
+      .online-row {
+        display: grid;
+        grid-template-columns: minmax(110px, 1fr) minmax(96px, 0.9fr) minmax(82px, 0.7fr);
+        gap: 8px;
+      }
+
+      .online-button,
+      .room-code-input {
+        min-height: 42px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 8px;
+        font-weight: 950;
+      }
+
+      .online-button {
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.08);
+        cursor: pointer;
+      }
+
+      .room-code-input {
+        width: 100%;
+        padding: 0 10px;
+        color: #061018;
+        background: rgba(255, 255, 255, 0.92);
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .online-status {
+        margin: 0;
+        min-height: 22px;
+        color: #fff2b8;
+        font-size: 0.84rem;
+        font-weight: 900;
       }
 
       .control-card {
@@ -421,6 +471,11 @@
         color: var(--ink);
         background: rgba(255, 255, 255, 0.08);
         cursor: pointer;
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.56;
       }
 
       .mode-row button,
@@ -532,6 +587,10 @@
         }
 
         .keyboard-card {
+          grid-template-columns: 1fr;
+        }
+
+        .online-row {
           grid-template-columns: 1fr;
         }
 
@@ -664,6 +723,15 @@
           <div class="mode-row" role="group" aria-label="Play mode">
             <button type="button" class="is-active" data-mode="single">Solo</button>
             <button type="button" data-mode="multi">2 Players</button>
+            <button type="button" data-mode="online">Online Code</button>
+          </div>
+          <div class="online-panel" id="onlinePanel" aria-label="Online room code">
+            <div class="online-row">
+              <button class="online-button" type="button" id="createOnlineButton">Create code</button>
+              <input class="room-code-input" id="roomCodeInput" type="text" maxlength="6" autocomplete="off" inputmode="text" placeholder="CODE" aria-label="Room code" />
+              <button class="online-button" type="button" id="joinOnlineButton">Join</button>
+            </div>
+            <p class="online-status" id="onlineStatus">Create a code, or type your friend's code.</p>
           </div>
           <div class="keyboard-card" aria-label="Computer keyboard controls">
             <section class="control-card blue-keys" aria-label="Blue robot keys">
