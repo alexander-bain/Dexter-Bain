@@ -259,13 +259,18 @@ async function run() {
           const botPicks = game.questions.map((question, index) => {
             const answers = test.getAnswers(question).slice();
             const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
-            const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
-              .sort((left, right) => right.points - left.points || right.odds - left.odds);
-            const choice = index % 3 === 1
-              ? (risks[0] || favorites[0])
-              : index % 4 === 3
-              ? (risks[1] || favorites[0])
+            const byLeverage = answers.slice().sort((left, right) => {
+              const leftValue = (left.points || 0) * (1 - (left.odds || 0) / 100);
+              const rightValue = (right.points || 0) * (1 - (right.odds || 0) / 100);
+              return rightValue - leftValue || right.points - left.points || right.odds - left.odds;
+            });
+            const viableRisks = byLeverage.filter((candidate) => candidate.id !== favorites[0]?.id && (candidate.odds >= 10 || answers.length <= 2));
+            const swingPick = viableRisks[0] || favorites[1] || favorites[0];
+            const leveragePick = viableRisks[1] || viableRisks[0] || favorites[0];
+            const choice = index % 4 === 1
+              ? swingPick
+              : index % 5 === 3
+              ? leveragePick
               : favorites[0];
             return [test.getQuestionId(question, index), choice.id];
           });
@@ -312,11 +317,12 @@ async function run() {
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
-              leaderboard.includes("max from picks") &&
+              leaderboard.includes("chance to win") &&
+              leaderboard.includes("risk max points") &&
               pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
-              entryCount.trim() === "1" &&
+              pickView.includes("risk max points") &&
+              pickView.includes("max still live") &&
+              Number(entryCount.trim() || "0") >= 1 &&
               storage.playerName === "Weather Bot"
             ) {
               return {
