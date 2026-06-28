@@ -178,6 +178,33 @@ function cdpConnection(wsUrl) {
   };
 }
 
+function botPickForQuestion(testExpressionSeed) {
+  return `
+    ((question, index) => {
+      const answers = test.getAnswers(question).slice();
+      const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
+      const favorite = favorites[0];
+      const upside = answers
+        .filter((candidate) => candidate.id !== favorite.id)
+        .sort((left, right) => {
+          const leftValue = left.points * (left.odds / 100);
+          const rightValue = right.points * (right.odds / 100);
+          return rightValue - leftValue || right.points - left.points || right.odds - left.odds;
+        });
+      const reach = answers
+        .filter((candidate) => candidate.points >= favorite.points + 4)
+        .sort((left, right) => right.points - left.points || right.odds - left.odds);
+      if ((index + ${testExpressionSeed}) % 4 === 1 && upside[0]) {
+        return upside[0];
+      }
+      if ((index + ${testExpressionSeed}) % 5 === 3 && reach[0]) {
+        return reach[0];
+      }
+      return favorite;
+    })(question, index)
+  `;
+}
+
 async function run() {
   const { server, entriesByGameId } = createStaticServer();
   const port = await waitForServer(server);
@@ -257,23 +284,14 @@ async function run() {
             return [test.getQuestionId(question, index), favorite.id];
           });
           const botPicks = game.questions.map((question, index) => {
-            const answers = test.getAnswers(question).slice();
-            const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
-            const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
-              .sort((left, right) => right.points - left.points || right.odds - left.odds);
-            const choice = index % 3 === 1
-              ? (risks[0] || favorites[0])
-              : index % 4 === 3
-              ? (risks[1] || favorites[0])
-              : favorites[0];
+            const choice = ${botPickForQuestion(2)};
             return [test.getQuestionId(question, index), choice.id];
           });
           const picks = Object.fromEntries(botPicks);
           const favoritePickMap = Object.fromEntries(favoritePicks);
-          const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
-          if (!usedRiskPick) {
-            throw new Error("Weather Bot only picked favorites.");
+          const riskPickCount = botPicks.filter(([questionId, answerId]) => favoritePickMap[questionId] !== answerId).length;
+          if (riskPickCount < 2) {
+            throw new Error("Weather Bot did not take enough risky picks.");
           }
           const entry = {
             name: "Weather Bot",
@@ -312,10 +330,10 @@ async function run() {
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
-              leaderboard.includes("max from picks") &&
+              leaderboard.includes("100% chance to win") &&
+              leaderboard.includes("max points if risky picks hit") &&
               pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
+              pickView.includes("max points if the risky picks hit") &&
               entryCount.trim() === "1" &&
               storage.playerName === "Weather Bot"
             ) {
