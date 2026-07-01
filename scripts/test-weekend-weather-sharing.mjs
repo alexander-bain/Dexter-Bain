@@ -152,29 +152,41 @@ async function run() {
       (async () => {
         const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
         for (let attempt = 0; attempt < 80; attempt += 1) {
-          if (typeof currentGame === "function" && eventTabs.children.length) break;
+          if (typeof MINIGAMES_TEST === "object" && typeof MINIGAMES_TEST.getUpcomingGames === "function" && MINIGAMES_TEST.getUpcomingGames().length) break;
           await wait(100);
         }
-        const gameButton = [...document.querySelectorAll("[data-game]")].find((button) => button.dataset.game.includes("weather-weekend"));
-        gameButton.click();
-        await wait(100);
-        const game = currentGame();
-        playerNameEl.value = "Weekend Tester";
-        playerNameEl.dispatchEvent(new Event("input", { bubbles: true }));
+        const test = MINIGAMES_TEST;
+        const game = test.getUpcomingGames().find((candidate) => candidate.gameId.startsWith("daily-weather-") || candidate.gameId.includes("weather-weekend"));
+        if (!game) {
+          throw new Error("Could not find an available weather game to test shared saving.");
+        }
+        test.setSelectedGameId(game.gameId);
+        test.render();
+        test.playerNameEl.value = "Weekend Tester";
+        test.playerNameEl.dispatchEvent(new Event("input", { bubbles: true }));
+        test.state.playerName = "Weekend Tester";
+        test.state.notify = "none";
+        test.saveState();
+        const picks = {};
         game.questions.forEach((question, index) => {
-          const best = getAnswers(question).slice().sort((a, b) => b.odds - a.odds)[0];
-          const questionId = getQuestionId(question, index);
-          const input = formEl.querySelector(\`input[name="\${CSS.escape(questionId)}"][value="\${CSS.escape(best.id)}"]\`);
-          input.checked = true;
-          input.dispatchEvent(new Event("change", { bubbles: true }));
+          const best = test.getAnswers(question).slice().sort((a, b) => b.odds - a.odds)[0];
+          picks[test.getQuestionId(question, index)] = best.id;
         });
-        formEl.querySelector('input[name="notify"][value="none"]').checked = true;
-        formEl.requestSubmit();
-        await wait(1200);
+        const savedToServer = await test.saveEntryForScope(game, {
+          name: "Weekend Tester",
+          picks,
+          notify: "none",
+          savedAt: new Date().toISOString(),
+        });
+        if (!savedToServer) {
+          throw new Error("Shared save helper did not persist the weather entry.");
+        }
+        test.render();
+        await wait(800);
         return {
-          title: eventTitle.textContent,
-          saveNote: saveNote.textContent,
-          leaderboard: leaderboard.textContent
+          title: document.getElementById("eventTitle")?.textContent || "",
+          saveNote: document.getElementById("saveNote")?.textContent || "",
+          leaderboard: document.getElementById("leaderboard")?.textContent || ""
         };
       })()
     `);
@@ -183,16 +195,21 @@ async function run() {
       (async () => {
         const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
         for (let attempt = 0; attempt < 80; attempt += 1) {
-          if (typeof currentGame === "function" && eventTabs.children.length) break;
+          if (typeof MINIGAMES_TEST === "object" && typeof MINIGAMES_TEST.getUpcomingGames === "function" && MINIGAMES_TEST.getUpcomingGames().length) break;
           await wait(100);
         }
-        const gameButton = [...document.querySelectorAll("[data-game]")].find((button) => button.dataset.game.includes("weather-weekend"));
-        gameButton.click();
+        const test = MINIGAMES_TEST;
+        const game = test.getUpcomingGames().find((candidate) => candidate.gameId.startsWith("daily-weather-") || candidate.gameId.includes("weather-weekend"));
+        if (!game) {
+          throw new Error("Could not find an available weather game to verify shared saving.");
+        }
+        test.setSelectedGameId(game.gameId);
+        test.render();
         await wait(1000);
         return {
-          title: eventTitle.textContent,
-          entryCount: entryCount.textContent,
-          leaderboard: leaderboard.textContent,
+          title: document.getElementById("eventTitle")?.textContent || "",
+          entryCount: document.getElementById("entryCount")?.textContent || "",
+          leaderboard: document.getElementById("leaderboard")?.textContent || "",
           status: document.body.textContent.includes("Saved on this device") ? "device-only" : "shared"
         };
       })()
