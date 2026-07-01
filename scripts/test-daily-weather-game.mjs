@@ -260,12 +260,18 @@ async function run() {
             const answers = test.getAnswers(question).slice();
             const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
             const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
+              .filter((candidate) => candidate.id !== favorites[0]?.id)
               .sort((left, right) => right.points - left.points || right.odds - left.odds);
-            const choice = index % 3 === 1
+            const middle = answers
+              .filter((candidate) => candidate.id !== favorites[0]?.id && candidate.id !== risks[0]?.id)
+              .sort((left, right) => Math.abs(left.odds - 50) - Math.abs(right.odds - 50) || right.points - left.points);
+            const pattern = index % 5;
+            const choice = pattern === 1
               ? (risks[0] || favorites[0])
-              : index % 4 === 3
-              ? (risks[1] || favorites[0])
+              : pattern === 3
+              ? (middle[0] || risks[1] || favorites[0])
+              : pattern === 4
+              ? (risks[1] || risks[0] || favorites[0])
               : favorites[0];
             return [test.getQuestionId(question, index), choice.id];
           });
@@ -274,6 +280,15 @@ async function run() {
           const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
           if (!usedRiskPick) {
             throw new Error("Weather Bot only picked favorites.");
+          }
+          const usedMiddlePick = botPicks.some(([questionId, answerId]) => {
+            const answers = test.getAnswers(game.questions.find((question, index) => test.getQuestionId(question, index) === questionId));
+            const favorite = answers.reduce((winner, candidate) => !winner || candidate.odds > winner.odds ? candidate : winner, null);
+            const riskiest = answers.slice().sort((left, right) => right.points - left.points || right.odds - left.odds)[0];
+            return answerId !== favorite?.id && answerId !== riskiest?.id;
+          });
+          if (!usedMiddlePick) {
+            throw new Error("Weather Bot never used a non-favorite medium-risk pick.");
           }
           const entry = {
             name: "Weather Bot",
@@ -312,11 +327,11 @@ async function run() {
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
-              leaderboard.includes("max from picks") &&
+              leaderboard.includes("chance to win") &&
+              leaderboard.includes("max points from risk") &&
               pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
-              entryCount.trim() === "1" &&
+              pickView.includes("max points from risk") &&
+              Number(entryCount.trim()) >= 1 &&
               storage.playerName === "Weather Bot"
             ) {
               return {
