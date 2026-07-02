@@ -253,6 +253,11 @@ async function run() {
           });
           const botPicks = test.weatherBotPicks(game);
           const picks = Object.fromEntries(botPicks);
+          const favoritePickMap = Object.fromEntries(favoritePicks);
+          const riskPickCount = botPicks.filter(([questionId, answerId]) => favoritePickMap[questionId] !== answerId).length;
+          if (riskPickCount < Math.max(2, Math.floor(game.questions.length / 4))) {
+            throw new Error("Weather Bot did not make enough non-favorite picks.");
+          }
           const entry = {
             name: "Weather Bot",
             picks,
@@ -355,25 +360,9 @@ async function run() {
     if (!Object.keys(botPickMap).length) {
       throw new Error(`Weather Bot picks were empty: ${JSON.stringify(value)}`);
     }
-    if (JSON.stringify(botPickMap) === JSON.stringify(favoritePickMap)) {
-      throw new Error(`Weather Bot still matched the favorite picks: ${JSON.stringify({ botPickMap, favoritePickMap })}`);
-    }
-
-    const sourceHtml = fs.readFileSync(path.join(repoRoot, "minigames", "index.html"), "utf8");
-    const answerBlocks = [...sourceHtml.matchAll(/question\("([^"]+)", \[\s*([\s\S]*?)\s*\], "(\d{8}-[^"]+)"/g)];
-    const favoriteByQuestionId = Object.fromEntries(answerBlocks.map(([, , rawAnswers, questionId]) => {
-      const answers = [...rawAnswers.matchAll(/answer\("([^"]+)",\s*(\d+),\s*"([^"]+)"/g)].map((match) => ({
-        label: match[1],
-        odds: Number(match[2]),
-        id: match[3],
-      }));
-      answers.sort((left, right) => right.odds - left.odds);
-      return [questionId, answers[0]?.id || ""];
-    }));
-    const pickedQuestionIds = Object.keys(botPickMap);
-    const nonFavoriteCount = pickedQuestionIds.filter((questionId) => botPickMap[questionId] && favoriteByQuestionId[questionId] && botPickMap[questionId] !== favoriteByQuestionId[questionId]).length;
-    if (pickedQuestionIds.length > 1 && nonFavoriteCount === 0) {
-      throw new Error(`Weather Bot only picked favorites: ${JSON.stringify({ botPickMap, favoriteByQuestionId })}`);
+    const riskPickCount = Object.keys(botPickMap).filter((questionId) => botPickMap[questionId] !== favoritePickMap[questionId]).length;
+    if (riskPickCount < 2) {
+      throw new Error(`Saved picks did not use enough risk: ${JSON.stringify({ botPickMap, favoritePickMap, riskPickCount })}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);
