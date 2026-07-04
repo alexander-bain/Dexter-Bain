@@ -443,6 +443,7 @@
         "2026-06-20": "SHELF",
         "2026-06-21": "CHALK",
         "2026-06-22": "CHIDE",
+        "2026-07-02": "BRICK",
       };
       const PUZZLE_STATE_VERSION = "2026-06-22-1";
       const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
@@ -702,9 +703,11 @@
             return replaceWithFreshProgress(activePuzzle);
           }
           const savedPuzzle = getPuzzleById(saved?.puzzleId);
-          const restoreDaily = saved?.puzzleId === DAILY_PUZZLE.id && saved?.word === DAILY_PUZZLE.word;
-          const restoreJohn = isJohnPuzzleId(saved?.puzzleId) && savedPuzzle && saved?.word === savedPuzzle.word;
-          if (!restoreDaily && !restoreJohn) return replaceWithFreshProgress(activePuzzle);
+          const restoreCurrentPuzzle = savedPuzzle
+            && saved?.puzzleId === activePuzzle.id
+            && saved?.word === activePuzzle.word
+            && saved?.word === savedPuzzle.word;
+          if (!restoreCurrentPuzzle) return replaceWithFreshProgress(activePuzzle);
           currentPuzzle = savedPuzzle;
           answer = currentPuzzle.word;
           const guesses = (saved.guesses || []).filter((guess) => /^[A-Z]{5}$/.test(guess)).slice(0, ROWS);
