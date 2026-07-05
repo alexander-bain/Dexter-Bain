@@ -123,6 +123,10 @@ if (weekendBlock.includes('"20260516-market-lunch"')) {
   throw new Error("Weekend daily weather game still included the stock question.");
 }
 
+if (weekendBlock.includes('answer("Stocks"')) {
+  throw new Error("Weekend daily weather game still included a stock-market news answer.");
+}
+
 if (!weekendBlock.includes('"20260516-gas-noon"')) {
   throw new Error("Weekend daily weather game is missing the gas question.");
 }

@@ -158,6 +158,34 @@ function windSpeedMax(text) {
   return match ? Number(match[2] || match[1]) : 8;
 }
 
+function distributeOdds(items) {
+  const total = items.reduce((sum, item) => sum + Math.max(0, Number(item.odds) || 0), 0);
+  if (total <= 0) {
+    const evenOdds = Math.floor(100 / Math.max(1, items.length));
+    return items.map((item, index) => ({
+      ...item,
+      odds: index === items.length - 1 ? 100 - evenOdds * (items.length - 1) : evenOdds
+    }));
+  }
+
+  let used = 0;
+  return items.map((item, index) => {
+    if (index === items.length - 1) {
+      return {
+        ...item,
+        odds: Math.max(4, 100 - used)
+      };
+    }
+
+    const normalized = Math.max(4, Math.round((Math.max(0, Number(item.odds) || 0) / total) * 100));
+    used += normalized;
+    return {
+      ...item,
+      odds: normalized
+    };
+  });
+}
+
 function rotateSelection(items, count, seed) {
   if (!Array.isArray(items) || !items.length || count <= 0) {
     return [];
@@ -248,12 +276,19 @@ function dayWatchEvent(date, forecast) {
   const likelySportsLive = daySeed % 4 !== 0;
   const likelyWeatherLead = sky === "rain-likely" || (sky === "mostly-cloudy" && !likelyMarketUp);
   const likelySportsLead = likelySportsLive && daySeed % 5 !== 0;
-  const localHeadlineOdds = {
-    weather: [sky === "rain-likely" ? 36 : 28, "Weather"],
-    stocks: [likelyMarketUp ? 30 : 24, "Stocks"],
-    sports: [likelySportsLive ? 24 : 18, "Sports"],
-    traffic: [18, "Traffic"]
-  };
+  const localHeadlineAnswers = distributeOdds(weekend
+    ? [
+        { label: "Weather", odds: sky === "rain-likely" ? 38 : 30, id: "weather" },
+        { label: "Sports", odds: likelySportsLive ? 28 : 20, id: "sports" },
+        { label: "Traffic", odds: 18, id: "traffic" },
+        { label: "Local events", odds: 20, id: "events" }
+      ]
+    : [
+        { label: "Weather", odds: sky === "rain-likely" ? 36 : 28, id: "weather" },
+        { label: "Stocks", odds: likelyMarketUp ? 30 : 24, id: "stocks" },
+        { label: "Sports", odds: likelySportsLive ? 24 : 18, id: "sports" },
+        { label: "Traffic", odds: 18, id: "traffic" }
+      ]);
   const weatherQuestions = rotateSelection([
     () => yesNoQuestion({
       text: `By noon, will it be warmer than ${warmByNoonThreshold} degrees?`,
@@ -316,12 +351,7 @@ function dayWatchEvent(date, forecast) {
       idSuffix: "local-headline",
       autoSource: localNewsSource,
       lockAt: locks.localHeadline,
-      answers: [
-        { label: localHeadlineOdds.weather[1], odds: localHeadlineOdds.weather[0], id: "weather" },
-        { label: localHeadlineOdds.stocks[1], odds: localHeadlineOdds.stocks[0], id: "stocks" },
-        { label: localHeadlineOdds.sports[1], odds: localHeadlineOdds.sports[0], id: "sports" },
-        { label: localHeadlineOdds.traffic[1], odds: localHeadlineOdds.traffic[0], id: "traffic" }
-      ]
+      answers: localHeadlineAnswers
     }),
     () => yesNoQuestion({
       text: "By 3 PM, will weather be the top local news story?",
