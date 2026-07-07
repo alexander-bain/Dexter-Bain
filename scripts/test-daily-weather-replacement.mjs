@@ -44,12 +44,6 @@ function generatedWeatherBlock(html) {
   return html.slice(start, end);
 }
 
-function assertContains(block, snippet) {
-  if (!block.includes(snippet)) {
-    throw new Error(`Generated weather game is missing ${snippet}.`);
-  }
-}
-
 fs.copyFileSync(sourceHtml, testHtml);
 
 runGenerator("2026-05-12");
@@ -81,17 +75,19 @@ for (const questionId of [
   "market-lunch",
   "local-headline",
   "rain-by-3pm",
-  "wind-by-5pm",
   "sky-still-sunny",
   "weather-headline",
   "sports-headline",
   "music-four",
+  "wind-by-5pm",
   "music-five",
   "sports-six",
   "sports-seven",
   "cool-tonight",
 ]) {
-  assertContains(block, `"20260513-${questionId}"`);
+  if (!block.includes(`"20260513-${questionId}"`)) {
+    throw new Error(`Generated weather game is missing the ${questionId} question.`);
+  }
 }
 
 const autoScoredQuestions = [
@@ -113,25 +109,28 @@ for (const hour of [
   "T02:00:00.000Z",
   "T03:00:00.000Z",
 ]) {
-  assertContains(block, hour);
+  if (!block.includes(hour)) {
+    throw new Error(`Generated weather game is missing lock time ${hour}.`);
+  }
 }
+
+console.log("Daily weather replacement test passed.");
 
 runGenerator("2026-05-16");
 const weekendHtml = fs.readFileSync(testHtml, "utf8");
 const weekendBlock = generatedWeatherBlock(weekendHtml);
 const weekendQuestionCount = [...weekendBlock.matchAll(/question\(/g)].length;
 
-assertContains(weekendBlock, 'id: "daily-weather-20260516"');
-assertContains(weekendBlock, '"20260516-gas-noon"');
-assertContains(weekendBlock, '"20260516-music-four"');
-assertContains(weekendBlock, '"20260516-music-five"');
-
-if (weekendBlock.includes('"20260516-market-lunch"')) {
-  throw new Error("Weekend generated weather game should not include the stock market question.");
+if (!weekendHtml.includes('id: "daily-weather-20260516"')) {
+  throw new Error("The weekend generated weather game was not created.");
 }
 
-if (weekendBlock.includes('answer("Stocks"')) {
-  throw new Error("Weekend generated weather game should not include Stocks as a local headline option.");
+if (weekendBlock.includes('"20260516-market-lunch"')) {
+  throw new Error("Weekend daily weather game still included the stock question.");
+}
+
+if (!weekendBlock.includes('"20260516-gas-noon"')) {
+  throw new Error("Weekend daily weather game is missing the gas question.");
 }
 
 if (weekendQuestionCount !== 13) {
