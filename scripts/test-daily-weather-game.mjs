@@ -221,7 +221,7 @@ async function run() {
     for (let attempt = 0; attempt < 200; attempt += 1) {
       const ready = await connection.send("Runtime.evaluate", {
         returnByValue: true,
-        expression: '(() => { try { return typeof MINIGAMES_TEST === "object" && typeof MINIGAMES_TEST.getUpcomingGames === "function" && Array.isArray(MINIGAMES_TEST.getUpcomingGames()) && MINIGAMES_TEST.getUpcomingGames().length > 0; } catch { return false; } })()'
+        expression: '(() => { try { return window.MINIGAMES_READY === true && typeof MINIGAMES_TEST === "object" && Array.isArray(eventCatalog) && eventCatalog.some((candidate) => String(candidate.id || "").startsWith("daily-weather-")); } catch { return false; } })()'
       }, sessionId);
       if (ready.result?.value === true) {
         break;
@@ -239,13 +239,23 @@ async function run() {
         (async () => {
           const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
           const test = MINIGAMES_TEST;
-          const game = test.getUpcomingGames().find((candidate) => candidate.gameId.startsWith("daily-weather-"));
-          if (!game) {
+          const sourceGame = eventCatalog
+            .filter((candidate) => String(candidate.id || "").startsWith("daily-weather-"))
+            .sort((left, right) => String(right.id || "").localeCompare(String(left.id || "")))[0];
+          if (!sourceGame) {
             throw new Error("No daily weather game was loaded.");
           }
 
-          test.setSelectedGameId(game.gameId);
+          const now = new Date();
+          sourceGame.month = now.getMonth();
+          sourceGame.day = now.getDate();
+          const selectedGameId = String(sourceGame.id) + "-" + now.getFullYear();
+          test.setSelectedGameId(selectedGameId);
           test.render();
+          const game = test.getCurrentGame();
+          if (!game || game.gameId !== selectedGameId) {
+            throw new Error("Daily weather game did not become selectable.");
+          }
 
           const favoritePicks = game.questions.map((question, index) => {
             const favorite = test.getAnswers(question).reduce((winner, candidate) => {
@@ -329,13 +339,15 @@ async function run() {
             }
             const pickView = document.getElementById("leaderboardPicks")?.textContent || "";
             const storage = JSON.parse(localStorage.getItem("dexterbain-minigames-v1") || "{}");
+            const hasMaxPointsCopy = leaderboard.includes("max from picks") || leaderboard.includes("max possible pts from these picks");
+            const pickViewHasMaxPointsCopy = pickView.includes("max from picks") || pickView.includes("max possible pts from these picks");
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
               leaderboard.includes("% win") &&
-              leaderboard.includes("max from picks") &&
+              hasMaxPointsCopy &&
               pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
+              pickViewHasMaxPointsCopy &&
               Number(entryCount.trim() || "0") >= 1 &&
               storage.playerName === "Weather Bot"
             ) {
