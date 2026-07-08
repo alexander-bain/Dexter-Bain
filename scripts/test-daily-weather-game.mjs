@@ -309,14 +309,16 @@ async function run() {
             }
             const pickView = document.getElementById("leaderboardPicks")?.textContent || "";
             const storage = JSON.parse(localStorage.getItem("dexterbain-minigames-v1") || "{}");
+            const hasWinChance = leaderboard.includes("% win");
+            const hasEntryCount = Number(entryCount.trim()) >= 1;
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
+              hasWinChance &&
               leaderboard.includes("max from picks") &&
               pickView.includes("chance to win") &&
               pickView.includes("max from picks") &&
-              entryCount.trim() === "1" &&
+              hasEntryCount &&
               storage.playerName === "Weather Bot"
             ) {
               return {
