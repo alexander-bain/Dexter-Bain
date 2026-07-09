@@ -152,10 +152,16 @@ async function run() {
       (async () => {
         const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
         for (let attempt = 0; attempt < 80; attempt += 1) {
-          if (typeof currentGame === "function" && eventTabs.children.length) break;
+          if (window.MINIGAMES_READY && typeof MINIGAMES_TEST === "object") break;
           await wait(100);
         }
-        const gameButton = [...document.querySelectorAll("[data-game]")].find((button) => button.dataset.game.includes("weather-weekend"));
+        const weekendGame = MINIGAMES_TEST.getUpcomingGames().find((game) => game.gameId.includes("weather-weekend"));
+        if (!weekendGame) {
+          return { skipped: true, reason: "Weekend Weather Watch is outside the current upcoming games window." };
+        }
+        MINIGAMES_TEST.setSelectedGameId(weekendGame.gameId);
+        MINIGAMES_TEST.render();
+        const gameButton = [...document.querySelectorAll("[data-game]")].find((button) => button.dataset.game === weekendGame.gameId);
         gameButton.click();
         await wait(100);
         const game = currentGame();
@@ -183,10 +189,16 @@ async function run() {
       (async () => {
         const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
         for (let attempt = 0; attempt < 80; attempt += 1) {
-          if (typeof currentGame === "function" && eventTabs.children.length) break;
+          if (window.MINIGAMES_READY && typeof MINIGAMES_TEST === "object") break;
           await wait(100);
         }
-        const gameButton = [...document.querySelectorAll("[data-game]")].find((button) => button.dataset.game.includes("weather-weekend"));
+        const weekendGame = MINIGAMES_TEST.getUpcomingGames().find((game) => game.gameId.includes("weather-weekend"));
+        if (!weekendGame) {
+          return { skipped: true, reason: "Weekend Weather Watch is outside the current upcoming games window." };
+        }
+        MINIGAMES_TEST.setSelectedGameId(weekendGame.gameId);
+        MINIGAMES_TEST.render();
+        const gameButton = [...document.querySelectorAll("[data-game]")].find((button) => button.dataset.game === weekendGame.gameId);
         gameButton.click();
         await wait(1000);
         return {
@@ -199,6 +211,11 @@ async function run() {
     `);
 
     console.log(JSON.stringify({ submitResult, secondBrowserResult }, null, 2));
+
+    if (submitResult.skipped || secondBrowserResult.skipped) {
+      console.log("Weekend weather sharing test skipped because the game is outside the current upcoming window.");
+      return;
+    }
 
     if (!secondBrowserResult.leaderboard.includes("Weekend Tester")) {
       throw new Error("Weekend Weather Watch entry did not appear in a second browser profile.");

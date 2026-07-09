@@ -56,6 +56,7 @@ runGenerator("2026-05-13");
 const secondRunHtml = fs.readFileSync(testHtml, "utf8");
 const ids = dailyWeatherIds(secondRunHtml);
 const block = generatedWeatherBlock(secondRunHtml);
+const weekdayQuestionCount = [...block.matchAll(/question\(/g)].length;
 
 if (!secondRunHtml.includes('id: "daily-weather-20260513"')) {
   throw new Error("The May 13 generated weather game was not created.");
@@ -69,16 +70,24 @@ if (ids.length !== 1) {
   throw new Error(`Expected exactly one generated daily weather game, found ${ids.length}.`);
 }
 
+if (weekdayQuestionCount !== 14) {
+  throw new Error(`Expected 14 weekday daily weather questions, found ${weekdayQuestionCount}.`);
+}
+
 for (const questionId of [
   "warm-by-noon",
   "gas-noon",
   "market-lunch",
   "local-headline",
   "rain-by-3pm",
+  "wind-by-5pm",
   "sky-still-sunny",
   "weather-headline",
+  "sports-headline",
+  "music-five",
   "music-four",
   "sports-six",
+  "sports-seven",
   "cool-tonight",
 ]) {
   if (!block.includes(`"20260513-${questionId}"`)) {
@@ -89,8 +98,8 @@ for (const questionId of [
 const autoScoredQuestions = [
   ...block.matchAll(/autoSource: "https:\/\/forecast\.weather\.gov\/MapClick\.php\?lat=37\.453&lon=-122\.182"/g)
 ].length;
-if (autoScoredQuestions !== 4) {
-  throw new Error(`Expected 4 auto-scored weather questions, found ${autoScoredQuestions}.`);
+if (autoScoredQuestions !== 5) {
+  throw new Error(`Expected 5 auto-scored weather questions, found ${autoScoredQuestions}.`);
 }
 
 for (const hour of [
@@ -100,7 +109,9 @@ for (const hour of [
   "T21:00:00.000Z",
   "T22:00:00.000Z",
   "T23:00:00.000Z",
+  "T00:00:00.000Z",
   "T01:00:00.000Z",
+  "T02:00:00.000Z",
   "T03:00:00.000Z",
 ]) {
   if (!block.includes(hour)) {
@@ -127,8 +138,12 @@ if (!weekendBlock.includes('"20260516-gas-noon"')) {
   throw new Error("Weekend daily weather game is missing the gas question.");
 }
 
-if (weekendQuestionCount !== 10) {
-  throw new Error(`Expected 10 weekend daily weather questions, found ${weekendQuestionCount}.`);
+if (!weekendBlock.includes('"20260516-music-five"') || !weekendBlock.includes('"20260516-sports-seven"')) {
+  throw new Error("Weekend daily weather game is missing the full music or sports slate.");
+}
+
+if (weekendQuestionCount !== 13) {
+  throw new Error(`Expected 13 weekend daily weather questions, found ${weekendQuestionCount}.`);
 }
 
 console.log("Weekend daily weather replacement test passed.");
