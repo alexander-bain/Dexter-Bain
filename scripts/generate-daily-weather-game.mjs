@@ -220,13 +220,19 @@ function dayWatchEvent(date, forecast) {
   const likelySportsLive = !weekend || includesAny(skyText, ["sunny", "clear"]);
   const likelyWeatherLead = sky === "rain-likely" || (sky === "mostly-cloudy" && !likelyMarketUp);
   const likelySportsLead = likelySportsLive && !likelyWeatherLead;
-  const localHeadlineOdds = {
-    weather: [sky === "rain-likely" ? 36 : 30, "Weather"],
-    sports: [likelySportsLive ? 28 : 22, "Sports"],
-    traffic: [20, "Traffic"],
-    publicSafety: [16, "Public safety"]
-  };
-
+  const localHeadlineAnswers = weekend
+    ? [
+      { label: "Weather", odds: sky === "rain-likely" ? 36 : 30, id: "weather" },
+      { label: "Sports", odds: likelySportsLive ? 28 : 22, id: "sports" },
+      { label: "Traffic", odds: 20, id: "traffic" },
+      { label: "Events", odds: 20, id: "events" }
+    ]
+    : [
+      { label: "Weather", odds: sky === "rain-likely" ? 36 : 30, id: "weather" },
+      { label: "Sports", odds: likelySportsLive ? 28 : 22, id: "sports" },
+      { label: "Traffic", odds: 20, id: "traffic" },
+      { label: "Public safety", odds: 16, id: "public-safety" }
+    ];
   const selectedQuestions = [
     yesNoQuestion({
       text: `By noon, will it be warmer than ${warmByNoonThreshold} degrees?`,
@@ -254,12 +260,7 @@ function dayWatchEvent(date, forecast) {
       idSuffix: "local-headline",
       autoSource: localNewsSource,
       lockAt: locks.localHeadline,
-      answers: [
-        { label: localHeadlineOdds.weather[1], odds: localHeadlineOdds.weather[0], id: "weather" },
-        { label: localHeadlineOdds.sports[1], odds: localHeadlineOdds.sports[0], id: "sports" },
-        { label: localHeadlineOdds.traffic[1], odds: localHeadlineOdds.traffic[0], id: "traffic" },
-        { label: localHeadlineOdds.publicSafety[1], odds: localHeadlineOdds.publicSafety[0], id: "public-safety" }
-      ]
+      answers: localHeadlineAnswers
     }),
     yesNoQuestion({
       text: "By 3 PM, will rain show up in the forecast?",

@@ -334,6 +334,7 @@ async function run() {
             const leaderboard = document.getElementById("leaderboard")?.textContent || "";
             const entryCount = document.getElementById("entryCount")?.textContent || "";
             const leaderButton = document.querySelector('[data-leader-name="Weather Bot"]');
+            const leaderText = leaderButton?.textContent || "";
             if (leaderButton) {
               leaderButton.click();
             }
@@ -356,6 +357,7 @@ async function run() {
                 entryCount,
                 saveNote,
                 leaderboard,
+                leaderText,
                 pickView,
                 savedEntryName: storage.playerName || "",
                 chosen: botPicks.map(([, answerId]) => answerId),
