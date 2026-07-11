@@ -444,8 +444,9 @@
         "2026-06-21": "CHALK",
         "2026-06-22": "CHIDE",
         "2026-07-02": "BRICK",
+        "2026-07-09": "HEAVY",
       };
-      const PUZZLE_STATE_VERSION = "2026-06-22-1";
+      const PUZZLE_STATE_VERSION = "2026-07-09-1";
       const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
       const RESET_CODE = "CENA";
       const ALT_WORD_CODE = "JOHN";
@@ -639,8 +640,7 @@
         updateStatsPanel();
       }
 
-      function loadActivePuzzle(options = {}) {
-        const { advanceCustomOnReload = false } = options;
+      function loadActivePuzzle() {
         try {
           const saved = JSON.parse(localStorage.getItem(ACTIVE_PUZZLE_KEY) || "null");
           if (saved?.version !== PUZZLE_STATE_VERSION && !isJohnPuzzleId(saved?.puzzleId)) {
@@ -649,19 +649,10 @@
           const savedPuzzle = getPuzzleById(saved?.puzzleId);
           if (!savedPuzzle) return DAILY_PUZZLE;
           if (saved?.word && saved.word !== savedPuzzle.word) return DAILY_PUZZLE;
-          if (advanceCustomOnReload && isJohnPuzzleId(savedPuzzle.id)) {
-            return nextJohnPuzzleFromPuzzleId(saved.puzzleId);
-          }
-          return savedPuzzle;
+          return isJohnPuzzleId(savedPuzzle.id) ? savedPuzzle : DAILY_PUZZLE;
         } catch {
           return DAILY_PUZZLE;
         }
-      }
-
-      function nextJohnPuzzleFromPuzzleId(puzzleId) {
-        const savedPuzzle = getPuzzleById(puzzleId);
-        if (!savedPuzzle || !isJohnPuzzleId(savedPuzzle.id)) return DAILY_PUZZLE;
-        return johnPuzzleAt((savedPuzzle.johnIndex || 0) + 1);
       }
 
       function saveActivePuzzle(puzzle = currentPuzzle) {
@@ -1042,7 +1033,7 @@
       }
 
       function startGame() {
-        currentPuzzle = loadActivePuzzle({ advanceCustomOnReload: true });
+        currentPuzzle = loadActivePuzzle();
         answer = currentPuzzle.word;
         progress = loadProgress(currentPuzzle);
         saveActivePuzzle(currentPuzzle);
