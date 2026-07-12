@@ -77,10 +77,10 @@ for (const questionId of [
   "rain-by-3pm",
   "sky-still-sunny",
   "weather-headline",
-  "sports-headline",
   "music-four",
-  "wind-by-5pm",
+  "sports-headline",
   "music-five",
+  "wind-by-5pm",
   "sports-six",
   "sports-seven",
   "cool-tonight",
@@ -114,6 +114,11 @@ for (const hour of [
   }
 }
 
+const weekdayQuestionCount = [...block.matchAll(/question\(/g)].length;
+if (weekdayQuestionCount !== 14) {
+  throw new Error(`Expected 14 weekday daily weather questions, found ${weekdayQuestionCount}.`);
+}
+
 console.log("Daily weather replacement test passed.");
 
 runGenerator("2026-05-16");
@@ -127,6 +132,14 @@ if (!weekendHtml.includes('id: "daily-weather-20260516"')) {
 
 if (weekendBlock.includes('"20260516-market-lunch"')) {
   throw new Error("Weekend daily weather game still included the stock question.");
+}
+
+if (weekendBlock.includes('answer("Stocks"')) {
+  throw new Error("Weekend daily weather game still offered Stocks in local news.");
+}
+
+if (!weekendBlock.includes('answer("Events"')) {
+  throw new Error("Weekend daily weather game is missing the Events local news option.");
 }
 
 if (!weekendBlock.includes('"20260516-gas-noon"')) {

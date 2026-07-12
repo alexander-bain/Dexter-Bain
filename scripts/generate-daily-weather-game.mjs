@@ -53,6 +53,10 @@ function jsString(value) {
   return JSON.stringify(String(value ?? ""));
 }
 
+function chance(highConfidence, lowConfidence, isLikely) {
+  return isLikely ? highConfidence : lowConfidence;
+}
+
 async function fetchJson(url) {
   const response = await fetch(url, {
     headers: {
@@ -122,16 +126,31 @@ function fallbackForecast() {
 }
 
 function includesAny(text, words) {
-  const lower = String(text || "").toLowerCase();
+  const lower = text.toLowerCase();
   return words.some((word) => lower.includes(word));
+}
+
+function windBucket(text) {
+  const match = text.match(/(\d+)(?:\s*to\s*(\d+))?\s*mph/i);
+  const speed = match ? Number(match[2] || match[1]) : 8;
+  if (speed >= 16) return "windy";
+  if (speed >= 9) return "noticeable-breeze";
+  return "light-wind";
 }
 
 function skyBucket(text) {
   if (includesAny(text, ["rain", "shower", "thunderstorm", "drizzle"])) return "rain-likely";
-  if (includesAny(text, ["mostly cloudy", "cloudy", "overcast"])) return "mostly-cloudy";
-  if (includesAny(text, ["mostly sunny", "sunny", "clear"])) return "mostly-sunny";
+  if (includesAny(text, ["mostly cloudy", "cloudy"])) return "mostly-cloudy";
+  if (includesAny(text, ["mostly sunny", "sunny"])) return "mostly-sunny";
   if (includesAny(text, ["partly", "partly sunny"])) return "partly-cloudy";
   return "mostly-sunny";
+}
+
+function nightBucket(text, temp) {
+  if (includesAny(text, ["rain", "shower", "drizzle"])) return "rainy";
+  if (temp <= 51) return "chilly";
+  if (includesAny(text, ["cloud", "overcast"])) return "cloudy-mild";
+  return "clear-cool";
 }
 
 function windSpeedMax(text) {
@@ -193,8 +212,9 @@ function dayWatchEvent(date, forecast) {
   const windSpeed = windSpeedMax(day.windSpeed || night.windSpeed || "8 mph");
   const dateLabel = labelDate(date);
   const idDate = slugDate(date);
+  const daySeed = Number(idDate);
   const warmByNoonThreshold = Math.max(60, Math.round((high - 5) / 5) * 5);
-  const windByFiveThreshold = Math.max(10, Math.round(windSpeed / 5) * 5);
+  const windThreshold = Math.max(10, Math.round(windSpeed / 5) * 5);
   const locks = {
     warmByNoon: lockDate(date, 12).toISOString(),
     gasNoon: lockDate(date, 12, 15).toISOString(),
@@ -213,31 +233,31 @@ function dayWatchEvent(date, forecast) {
   const likelySkySunnyLater = sky === "mostly-sunny" || sky === "partly-cloudy";
   const likelyWindyLater = windSpeed >= 12;
   const likelyNightCooler = low <= 60 || low <= high - 10;
-  const likelyMarketUp = !includesAny(skyText, ["storm", "rain"]) && high >= 65;
-  const likelyGasUp = high >= 72 || low >= 56;
-  const likelyMusicChanged = !includesAny(day.detailedForecast || "", ["wind advisory", "gust"]);
-  const likelyNewSongAtNo1 = likelyMusicChanged && !weekend;
-  const likelySportsLive = !weekend || includesAny(skyText, ["sunny", "clear"]);
+  const likelyMarketUp = !includesAny(skyText, ["storm", "rain"]) && day.temperature >= 65;
+  const likelyGasUp = daySeed % 2 === 0 || high >= 74;
+  const likelyMusicChanged = daySeed % 3 !== 0;
+  const likelySportsLive = daySeed % 4 !== 0;
   const likelyWeatherLead = sky === "rain-likely" || (sky === "mostly-cloudy" && !likelyMarketUp);
-  const likelySportsLead = likelySportsLive && !likelyWeatherLead;
+  const likelySportsLead = likelySportsLive && daySeed % 5 !== 0;
   const localHeadlineAnswers = weekend
     ? [
-      { label: "Weather", odds: sky === "rain-likely" ? 36 : 30, id: "weather" },
-      { label: "Sports", odds: likelySportsLive ? 28 : 22, id: "sports" },
-      { label: "Traffic", odds: 20, id: "traffic" },
-      { label: "Events", odds: 20, id: "events" }
-    ]
+        { label: "Weather", odds: sky === "rain-likely" ? 34 : 28, id: "weather" },
+        { label: "Sports", odds: likelySportsLive ? 26 : 20, id: "sports" },
+        { label: "Traffic", odds: 20, id: "traffic" },
+        { label: "Events", odds: 20, id: "events" }
+      ]
     : [
-      { label: "Weather", odds: sky === "rain-likely" ? 36 : 30, id: "weather" },
-      { label: "Sports", odds: likelySportsLive ? 28 : 22, id: "sports" },
-      { label: "Traffic", odds: 20, id: "traffic" },
-      { label: "Public safety", odds: 16, id: "public-safety" }
-    ];
+        { label: "Weather", odds: sky === "rain-likely" ? 36 : 28, id: "weather" },
+        { label: "Stocks", odds: likelyMarketUp ? 30 : 24, id: "stocks" },
+        { label: "Sports", odds: likelySportsLive ? 24 : 18, id: "sports" },
+        { label: "Traffic", odds: 18, id: "traffic" }
+      ];
+
   const selectedQuestions = [
     yesNoQuestion({
       text: `By noon, will it be warmer than ${warmByNoonThreshold} degrees?`,
       idSuffix: "warm-by-noon",
-      autoSource: sourceUrl,
+      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.warmByNoon,
       likely: likelyBreaksWarmByNoon
     }),
@@ -248,13 +268,13 @@ function dayWatchEvent(date, forecast) {
       lockAt: locks.gasNoon,
       likely: likelyGasUp
     }),
-    !weekend ? yesNoQuestion({
+    ...(!weekend ? [yesNoQuestion({
       text: "By 1 PM, will the stock market go up?",
       idSuffix: "market-lunch",
       autoSource: marketSource,
       lockAt: locks.marketLunch,
       likely: likelyMarketUp
-    }) : null,
+    })] : []),
     choiceQuestion({
       text: "By 2 PM, what will the local news talk about most?",
       idSuffix: "local-headline",
@@ -265,14 +285,14 @@ function dayWatchEvent(date, forecast) {
     yesNoQuestion({
       text: "By 3 PM, will rain show up in the forecast?",
       idSuffix: "rain-by-3pm",
-      autoSource: sourceUrl,
+      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.weatherAfternoon,
       likely: likelyRainLater
     }),
     yesNoQuestion({
       text: "By 3 PM, will the sky still be mostly sunny?",
       idSuffix: "sky-still-sunny",
-      autoSource: sourceUrl,
+      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.weatherAfternoon,
       likely: likelySkySunnyLater
     }),
@@ -280,19 +300,10 @@ function dayWatchEvent(date, forecast) {
       text: "By 3 PM, will weather be the top local news story?",
       idSuffix: "weather-headline",
       autoSource: localNewsSource,
-      lockAt: locks.weatherAfternoon,
+      lockAt: lockDate(date, 15).toISOString(),
       likely: likelyWeatherLead,
       yesLikely: 60,
       yesUnlikely: 40
-    }),
-    yesNoQuestion({
-      text: "By 4 PM, will sports be one of the top local news stories?",
-      idSuffix: "sports-headline",
-      autoSource: localNewsSource,
-      lockAt: locks.musicFour,
-      likely: likelySportsLead,
-      yesLikely: 58,
-      yesUnlikely: 42
     }),
     yesNoQuestion({
       text: "By 4 PM, will the top Apple Music song be different?",
@@ -302,18 +313,27 @@ function dayWatchEvent(date, forecast) {
       likely: likelyMusicChanged
     }),
     yesNoQuestion({
-      text: `By 5 PM, will the wind be stronger than ${windByFiveThreshold} mph?`,
-      idSuffix: "wind-by-5pm",
-      autoSource: sourceUrl,
-      lockAt: locks.weatherWind,
-      likely: likelyWindyLater
+      text: "By 4 PM, will sports be one of the top local news stories?",
+      idSuffix: "sports-headline",
+      autoSource: localNewsSource,
+      lockAt: lockDate(date, 16).toISOString(),
+      likely: likelySportsLead,
+      yesLikely: 58,
+      yesUnlikely: 42
     }),
     yesNoQuestion({
       text: "By 5 PM, will a new song reach No. 1?",
       idSuffix: "music-five",
       autoSource: musicSource,
+      lockAt: lockDate(date, 17).toISOString(),
+      likely: likelyMusicChanged
+    }),
+    yesNoQuestion({
+      text: `By 5 PM, will the wind be stronger than ${windThreshold} mph?`,
+      idSuffix: "wind-by-5pm",
+      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.weatherWind,
-      likely: likelyNewSongAtNo1
+      likely: likelyWindyLater
     }),
     yesNoQuestion({
       text: "By 6 PM, will the sports page still show a live game?",
@@ -332,12 +352,16 @@ function dayWatchEvent(date, forecast) {
     yesNoQuestion({
       text: "Tonight, will it stay cooler than 60 degrees?",
       idSuffix: "cool-tonight",
-      autoSource: sourceUrl,
+      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.weatherNight,
       likely: likelyNightCooler
     })
-  ].filter(Boolean);
-
+  ].sort((left, right) => {
+    if (left.lockAt === right.lockAt) {
+      return left.idSuffix.localeCompare(right.idSuffix);
+    }
+    return left.lockAt.localeCompare(right.lockAt);
+  });
   const questionCount = selectedQuestions.length;
   const categorySummary = weekend
     ? "weather, gas, news, music, and sports"

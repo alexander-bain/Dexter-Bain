@@ -2081,55 +2081,67 @@
     const eventCatalog = [
       // DAILY_WEATHER_GAME_START
       {
-        id: "daily-weather-20260711",
-        name: "Menlo Park Day Watch - Jul 11",
+        id: "daily-weather-20260712",
+        name: "Menlo Park Day Watch - Jul 12",
         type: "Day",
         month: 6,
-        day: 11,
-        summary: "Generated at 6 AM for Jul 11: 10 simple questions about weather, gas, news, music, and sports that settle through the day. Forecast: Partly Sunny, high near 70.",
+        day: 12,
+        summary: "Generated at 6 AM for Jul 12: 13 simple questions about weather, gas, news, music, and sports that settle through the day. Forecast: Partly Sunny, high near 70.",
         questions: [
+          question("By noon, will it be warmer than 65 degrees?", [
+            answer("Yes", 64, "yes"),
+            answer("No", 36, "no")
+          ], "20260712-warm-by-noon", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-07-12T19:00:00.000Z" }),
           question("By noon, will gas prices be higher than this morning?", [
-            answer("Yes", 36, "yes"),
-            answer("No", 64, "no")
-          ], "20260711-gas-noon", { autoSource: "https://r.jina.ai/http://gasprices.aaa.com/", lockAt: "2026-07-11T19:15:00.000Z" }),
+            answer("Yes", 64, "yes"),
+            answer("No", 36, "no")
+          ], "20260712-gas-noon", { autoSource: "https://r.jina.ai/http://gasprices.aaa.com/", lockAt: "2026-07-12T19:15:00.000Z" }),
           question("By 2 PM, what will the local news talk about most?", [
-            answer("Weather", 30, "weather"),
-            answer("Sports", 28, "sports"),
-            answer("Traffic", 22, "traffic"),
+            answer("Weather", 28, "weather"),
+            answer("Sports", 20, "sports"),
+            answer("Traffic", 20, "traffic"),
             answer("Events", 20, "events")
-          ], "20260711-local-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-07-11T21:00:00.000Z" }),
+          ], "20260712-local-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-07-12T21:00:00.000Z" }),
           question("By 3 PM, will rain show up in the forecast?", [
             answer("Yes", 36, "yes"),
             answer("No", 64, "no")
-          ], "20260711-rain-by-3pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-07-11T22:00:00.000Z" }),
+          ], "20260712-rain-by-3pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-07-12T22:00:00.000Z" }),
           question("By 3 PM, will the sky still be mostly sunny?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260711-sky-still-sunny", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-07-11T22:00:00.000Z" }),
+          ], "20260712-sky-still-sunny", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-07-12T22:00:00.000Z" }),
           question("By 3 PM, will weather be the top local news story?", [
             answer("Yes", 40, "yes"),
             answer("No", 60, "no")
-          ], "20260711-weather-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-07-11T22:00:00.000Z" }),
+          ], "20260712-weather-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-07-12T22:00:00.000Z" }),
           question("By 4 PM, will the top Apple Music song be different?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260711-music-four", { autoSource: "https://r.jina.ai/http://music.apple.com/us/charts/songs", lockAt: "2026-07-11T23:00:00.000Z" }),
+          ], "20260712-music-four", { autoSource: "https://r.jina.ai/http://music.apple.com/us/charts/songs", lockAt: "2026-07-12T23:00:00.000Z" }),
+          question("By 4 PM, will sports be one of the top local news stories?", [
+            answer("Yes", 42, "yes"),
+            answer("No", 58, "no")
+          ], "20260712-sports-headline", { autoSource: "https://r.jina.ai/http://www.mercurynews.com/", lockAt: "2026-07-12T23:00:00.000Z" }),
           question("By 5 PM, will a new song reach No. 1?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260711-music-five", { autoSource: "https://r.jina.ai/http://music.apple.com/us/charts/songs", lockAt: "2026-07-12T00:00:00.000Z" }),
+          ], "20260712-music-five", { autoSource: "https://r.jina.ai/http://music.apple.com/us/charts/songs", lockAt: "2026-07-13T00:00:00.000Z" }),
           question("By 5 PM, will the wind be stronger than 10 mph?", [
             answer("Yes", 36, "yes"),
             answer("No", 64, "no")
-          ], "20260711-wind-by-5pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-07-12T00:00:00.000Z" }),
+          ], "20260712-wind-by-5pm", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-07-13T00:00:00.000Z" }),
           question("By 6 PM, will the sports page still show a live game?", [
-            answer("Yes", 64, "yes"),
-            answer("No", 36, "no")
-          ], "20260711-sports-six", { autoSource: "https://r.jina.ai/http://www.espn.com/scoreboard", lockAt: "2026-07-12T01:00:00.000Z" }),
+            answer("Yes", 36, "yes"),
+            answer("No", 64, "no")
+          ], "20260712-sports-six", { autoSource: "https://r.jina.ai/http://www.espn.com/scoreboard", lockAt: "2026-07-13T01:00:00.000Z" }),
+          question("By 7 PM, will the top sports story be about a live game?", [
+            answer("Yes", 36, "yes"),
+            answer("No", 64, "no")
+          ], "20260712-sports-seven", { autoSource: "https://r.jina.ai/http://www.espn.com/scoreboard", lockAt: "2026-07-13T02:00:00.000Z" }),
           question("Tonight, will it stay cooler than 60 degrees?", [
             answer("Yes", 64, "yes"),
             answer("No", 36, "no")
-          ], "20260711-cool-tonight", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-07-12T03:00:00.000Z" })
+          ], "20260712-cool-tonight", { autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182", lockAt: "2026-07-13T03:00:00.000Z" })
         ]
       },
       // DAILY_WEATHER_GAME_END
@@ -2834,125 +2846,48 @@
         name: "NBA Finals Game 1",
         type: "Sports",
         month: 5,
-        day: 3,
-        summary: "Game 1 is tonight: Spurs vs. Knicks with live checks from ESPN for first score, quarter breaks, halftime, and the final horn.",
+        day: 4,
+        summary: "Tipoff predictions for the first game of the finals: runs, threes, lead changes, and buzzer tension.",
         questions: [
+          question("How hot is the first-quarter three-point shooting?", [
+            answer("One team hits 5+", 26),
+            answer("Both stay under 5", 58),
+            answer("Both hit 5+", 16)
+          ]),
+          question("How many lead changes will there be?", [
+            answer("0 to 4", 25),
+            answer("5 to 8", 43),
+            answer("9 to 12", 22),
+            answer("13+", 10)
+          ]),
           question("Which team scores first?", [
-            answer("Spurs", 51, "spurs"),
-            answer("Knicks", 49, "knicks")
-          ], "2026-finals-g1-first-score", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/playbyplay/_/gameId/401859963", lockAt: "2026-06-04T00:40:00.000Z" }),
-          question("Who leads after the first quarter?", [
-            answer("Spurs", 44, "spurs"),
-            answer("Knicks", 44, "knicks"),
-            answer("Tied", 12, "tied")
-          ], "2026-finals-g1-q1-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859963", lockAt: "2026-06-04T01:25:00.000Z" }),
-          question("Who leads at halftime?", [
-            answer("Spurs", 43, "spurs"),
-            answer("Knicks", 43, "knicks"),
-            answer("Tied", 14, "tied")
-          ], "2026-finals-g1-half-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859963", lockAt: "2026-06-04T02:10:00.000Z" }),
-          question("Who leads after three quarters?", [
-            answer("Spurs", 42, "spurs"),
-            answer("Knicks", 42, "knicks"),
-            answer("Tied", 16, "tied")
-          ], "2026-finals-g1-q3-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859963", lockAt: "2026-06-04T03:00:00.000Z" }),
-          question("Who wins Game 1?", [
-            answer("Spurs", 54, "spurs"),
-            answer("Knicks", 46, "knicks")
-          ], "2026-finals-g1-winner", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859963", lockAt: "2026-06-04T03:40:00.000Z" }),
-          question("What is the winning margin?", [
-            answer("1 to 5 points", 31, "1-5"),
-            answer("6 to 10 points", 33, "6-10"),
-            answer("11+ points", 36, "11-plus")
-          ], "2026-finals-g1-margin", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859963", lockAt: "2026-06-04T03:40:00.000Z" }),
-          question("Will Game 1 go to overtime?", [
-            answer("Yes", 16, "yes"),
-            answer("No", 84, "no")
-          ], "2026-finals-g1-ot", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859963", lockAt: "2026-06-04T03:40:00.000Z" })
-        ]
-      },
-      {
-        id: "nba-finals-game-2-2026",
-        name: "NBA Finals Game 2",
-        type: "Sports",
-        month: 5,
-        day: 5,
-        summary: "Game 2 stays in San Antonio on Friday, June 5. It is set up with ESPN live checks for first score, quarter breaks, halftime, and the final horn.",
-        questions: [
-          question("Which team scores first?", [
-            answer("Spurs", 52, "spurs"),
-            answer("Knicks", 48, "knicks")
-          ], "2026-finals-g2-first-score", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/playbyplay/_/gameId/401859964", lockAt: "2026-06-06T00:40:00.000Z" }),
-          question("Who leads after the first quarter?", [
-            answer("Spurs", 45, "spurs"),
-            answer("Knicks", 43, "knicks"),
-            answer("Tied", 12, "tied")
-          ], "2026-finals-g2-q1-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859964", lockAt: "2026-06-06T01:25:00.000Z" }),
-          question("Who leads at halftime?", [
-            answer("Spurs", 44, "spurs"),
-            answer("Knicks", 42, "knicks"),
-            answer("Tied", 14, "tied")
-          ], "2026-finals-g2-half-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859964", lockAt: "2026-06-06T02:10:00.000Z" }),
-          question("Who leads after three quarters?", [
-            answer("Spurs", 43, "spurs"),
-            answer("Knicks", 41, "knicks"),
-            answer("Tied", 16, "tied")
-          ], "2026-finals-g2-q3-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859964", lockAt: "2026-06-06T03:00:00.000Z" }),
-          question("Who wins Game 2?", [
-            answer("Spurs", 55, "spurs"),
-            answer("Knicks", 45, "knicks")
-          ], "2026-finals-g2-winner", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859964", lockAt: "2026-06-06T04:05:00.000Z" }),
-          question("What is the winning margin?", [
-            answer("1 to 5 points", 30, "1-5"),
-            answer("6 to 10 points", 34, "6-10"),
-            answer("11+ points", 36, "11-plus")
-          ], "2026-finals-g2-margin", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859964", lockAt: "2026-06-06T04:05:00.000Z" }),
-          question("Will Game 2 go to overtime?", [
-            answer("Yes", 15, "yes"),
-            answer("No", 85, "no")
-          ], "2026-finals-g2-ot", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859964", lockAt: "2026-06-06T04:05:00.000Z" })
-        ]
-      },
-      {
-        id: "nba-finals-game-3-2026",
-        name: "NBA Finals Game 3",
-        type: "Sports",
-        month: 5,
-        day: 8,
-        summary: "Game 3 shifts to New York on Monday, June 8. It is set up with ESPN live checks for first score, quarter breaks, halftime, and the final horn.",
-        questions: [
-          question("Which team scores first?", [
-            answer("Knicks", 51, "knicks"),
-            answer("Spurs", 49, "spurs")
-          ], "2026-finals-g3-first-score", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/playbyplay/_/gameId/401859965", lockAt: "2026-06-09T00:40:00.000Z" }),
-          question("Who leads after the first quarter?", [
-            answer("Knicks", 44, "knicks"),
-            answer("Spurs", 44, "spurs"),
-            answer("Tied", 12, "tied")
-          ], "2026-finals-g3-q1-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859965", lockAt: "2026-06-09T01:25:00.000Z" }),
-          question("Who leads at halftime?", [
-            answer("Knicks", 43, "knicks"),
-            answer("Spurs", 43, "spurs"),
-            answer("Tied", 14, "tied")
-          ], "2026-finals-g3-half-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859965", lockAt: "2026-06-09T02:10:00.000Z" }),
-          question("Who leads after three quarters?", [
-            answer("Knicks", 42, "knicks"),
-            answer("Spurs", 42, "spurs"),
-            answer("Tied", 16, "tied")
-          ], "2026-finals-g3-q3-leader", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859965", lockAt: "2026-06-09T03:00:00.000Z" }),
-          question("Who wins Game 3?", [
-            answer("Knicks", 52, "knicks"),
-            answer("Spurs", 48, "spurs")
-          ], "2026-finals-g3-winner", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859965", lockAt: "2026-06-09T04:05:00.000Z" }),
-          question("What is the winning margin?", [
-            answer("1 to 5 points", 31, "1-5"),
-            answer("6 to 10 points", 33, "6-10"),
-            answer("11+ points", 36, "11-plus")
-          ], "2026-finals-g3-margin", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859965", lockAt: "2026-06-09T04:05:00.000Z" }),
-          question("Will Game 3 go to overtime?", [
-            answer("Yes", 16, "yes"),
-            answer("No", 84, "no")
-          ], "2026-finals-g3-ot", { autoSource: "https://r.jina.ai/http://www.espn.com/nba/boxscore/_/gameId/401859965", lockAt: "2026-06-09T04:05:00.000Z" })
+            answer("Home team", 52),
+            answer("Away team", 48)
+          ]),
+          question("Who gets the biggest scoring night?", [
+            answer("One player scores 30+", 55),
+            answer("Two players score 30+", 20),
+            answer("Nobody reaches 30", 25)
+          ]),
+          question("How close is it with two minutes left?", [
+            answer("Within 3 points", 24),
+            answer("4 to 6 points", 26),
+            answer("7 to 12 points", 30),
+            answer("Blowout", 20)
+          ]),
+          question("What is the first made basket?", [
+            answer("Layup or dunk", 41),
+            answer("Corner three", 17),
+            answer("Midrange jumper", 24),
+            answer("Free throw", 10),
+            answer("Putback", 8)
+          ]),
+          question("When does the first coach challenge happen?", [
+            answer("First quarter", 12),
+            answer("Second or third quarter", 38),
+            answer("Fourth quarter", 31),
+            answer("No challenge", 19)
+          ])
         ]
       },
       {
@@ -3246,24 +3181,6 @@
           return a.date - b.date;
         })
         .slice(0, 12);
-    }
-
-    function isGeneratedDailyGame(game) {
-      return /^daily-weather-\d{8}$/.test(String(game?.gameId || game?.id || ""));
-    }
-
-    function latestGeneratedDailyGame(games) {
-      return games
-        .filter((game) => isGeneratedDailyGame(game))
-        .sort((a, b) => b.date - a.date)[0] || null;
-    }
-
-    function preferredGameId(games) {
-      const gameFromUrl = hydrateGameFromUrl(games);
-      if (gameFromUrl) {
-        return gameFromUrl;
-      }
-      return latestGeneratedDailyGame(games)?.gameId || games[0]?.gameId || null;
     }
 
     function loadState() {
@@ -3821,43 +3738,6 @@
       return results.some(Boolean);
     }
 
-    function isGameInLiveWindow(game) {
-      if (!game) {
-        return false;
-      }
-
-      const now = Date.now();
-      const gameStart = game.date instanceof Date ? game.date.getTime() : Date.now();
-      const latestLock = Math.max(
-        gameStart,
-        ...game.questions.map((question) => questionLockDate(game, question).getTime()).filter(Number.isFinite)
-      );
-
-      return now >= gameStart - 15 * 60000 && now <= latestLock + 15 * 60000;
-    }
-
-    async function refreshCurrentGameLiveData() {
-      const game = currentGame();
-      if (!game) {
-        return false;
-      }
-
-      const [entriesLoaded, resultsLoaded] = await Promise.all([
-        loadEntriesForScope(game, true),
-        loadResultsForGame(game, true),
-      ]);
-
-      const checkedResults = lockedQuestions(game).length > 0
-        ? await checkResultsForGame(game)
-        : resultsLoaded;
-
-      if (currentGame()?.gameId === game.gameId && (entriesLoaded || resultsLoaded || checkedResults)) {
-        renderGame(game);
-      }
-
-      return Boolean(entriesLoaded || resultsLoaded || checkedResults);
-    }
-
     function cleanRoomCode(value) {
       return String(value || "").replace(/[^A-HJ-NP-Z2-9]/gi, "").toUpperCase().slice(0, 6);
     }
@@ -4400,6 +4280,14 @@
       }, 0);
     }
 
+    function maxPointsForPicks(game, picks) {
+      return game.questions.reduce((total, question, index) => {
+        const pick = normalizePickId(question, getSavedPick(picks, question, index));
+        const pickedAnswer = getAnswers(question).find((answerOption) => answerOption.id === pick);
+        return total + (pickedAnswer?.points || 0);
+      }, 0);
+    }
+
     function questionLockDate(game, question) {
       if (question.lockAt) {
         return new Date(question.lockAt);
@@ -4443,85 +4331,6 @@
       }
 
       return "";
-    }
-
-    function legacyFinalsGame1PicksForCurrentGame(game, picks) {
-      if (game?.gameId !== "nba-finals" || !picks || typeof picks !== "object" || Array.isArray(picks)) {
-        return picks;
-      }
-
-      const legacyKeys = Object.keys(picks);
-      if (!legacyKeys.length) {
-        return picks;
-      }
-
-      const hasCurrentFinalsKeys = legacyKeys.some((key) => key.startsWith("2026-finals-g1-") && key !== "2026-finals-g1-top-scorer");
-      const hasLegacyLiveKeys = legacyKeys.includes("2026-finals-g1-top-scorer");
-      if (!hasLegacyLiveKeys || hasCurrentFinalsKeys) {
-        return picks;
-      }
-
-      return {
-        "2026-finals-g1-first-score": "",
-        "2026-finals-g1-q1-leader": picks["2026-finals-g1-q1-leader"] || "",
-        "2026-finals-g1-half-leader": picks["2026-finals-g1-half-leader"] || "",
-        "2026-finals-g1-q3-leader": picks["2026-finals-g1-q3-leader"] || "",
-        "2026-finals-g1-winner": picks["2026-finals-g1-winner"] || "",
-        "2026-finals-g1-margin": picks["2026-finals-g1-margin"] || "",
-        "2026-finals-g1-ot": picks["2026-finals-g1-ot"] || "",
-      };
-    }
-
-    function normalizedEntryPicksForGame(game, picks) {
-      return legacyFinalsGame1PicksForCurrentGame(game, picks);
-    }
-
-    function compatiblePickCountForGame(game, picks) {
-      const normalizedPicks = normalizedEntryPicksForGame(game, picks);
-      return game.questions.reduce((count, question, index) => {
-        const pickedAnswer = pickedAnswerForQuestion(question, getSavedPick(normalizedPicks, question, index));
-        return pickedAnswer ? count + 1 : count;
-      }, 0);
-    }
-
-    function entryIsCompatibleWithGame(game, entry) {
-      return compatiblePickCountForGame(game, entry?.picks) > 0;
-    }
-
-    function legacyLocalEntriesForGame(game) {
-      if (game?.gameId !== "nba-finals") {
-        return [];
-      }
-
-      return Array.isArray(state.entries?.["nba-finals-game-1-2026"])
-        ? state.entries["nba-finals-game-1-2026"]
-        : [];
-    }
-
-    function mergeEntriesByName(entries, game) {
-      const merged = new Map();
-      entries.forEach((entry) => {
-        const cleanName = normalizedEntryName(entry?.name);
-        if (!cleanName) {
-          return;
-        }
-
-        const nextCompatibility = compatiblePickCountForGame(game, entry.picks);
-        const current = merged.get(cleanName);
-        if (!current) {
-          merged.set(cleanName, entry);
-          return;
-        }
-
-        const currentCompatibility = compatiblePickCountForGame(game, current.picks);
-        const nextSavedAt = Date.parse(entry.savedAt || 0) || 0;
-        const currentSavedAt = Date.parse(current.savedAt || 0) || 0;
-        if (nextCompatibility > currentCompatibility || (nextCompatibility === currentCompatibility && nextSavedAt > currentSavedAt)) {
-          merged.set(cleanName, entry);
-        }
-      });
-
-      return Array.from(merged.values());
     }
 
     function findSavedEntryForName(game, entries, name) {
@@ -4684,21 +4493,6 @@
         .filter(({ question, index }) => resultForQuestion(game, question, index)?.status !== "resolved");
     }
 
-    function maxPossibleScore(game, picks) {
-      return game.questions.reduce((total, question, index) => {
-        const result = resultForQuestion(game, question, index);
-        if (result?.status === "resolved" && result.answerId) {
-          const correctAnswerId = normalizePickId(question, result.answerId);
-          const correctAnswer = getAnswers(question).find((answerOption) => answerOption.id === correctAnswerId);
-          const savedPick = normalizePickId(question, getSavedPick(picks, question, index));
-          return total + (savedPick === correctAnswerId ? (correctAnswer?.points || 0) : 0);
-        }
-
-        const pickedAnswer = pickedAnswerForQuestion(question, getSavedPick(picks, question, index));
-        return total + (pickedAnswer?.points || 0);
-      }, 0);
-    }
-
     function seededRandom(seed) {
       let value = 2166136261;
       for (const char of String(seed)) {
@@ -4724,77 +4518,6 @@
         }
       }
       return answers[answers.length - 1];
-    }
-
-    function weatherBotPicks(game) {
-      const questions = Array.isArray(game?.questions) ? game.questions : [];
-      const random = seededRandom(`weather-bot:${game?.gameId || ""}`);
-      const favoriteByQuestion = new Map();
-      const upsetCandidates = [];
-      const picks = questions.map((question, index) => {
-        const answers = getAnswers(question).slice();
-        if (!answers.length) {
-          return [getQuestionId(question, index), ""];
-        }
-
-        const favorite = answers.slice().sort((left, right) => (
-          right.odds - left.odds || left.points - right.points || left.label.localeCompare(right.label)
-        ))[0];
-        favoriteByQuestion.set(getQuestionId(question, index), favorite.id);
-
-        const ranked = answers
-          .map((answerOption) => {
-            const risk = Math.max(0, 100 - answerOption.odds);
-            const leverage = answerOption.points / Math.max(1, favorite.points);
-            const score = (answerOption.odds * 0.6) + (risk * 0.16) + (leverage * 32) + (random() * 3);
-            return { answerOption, score, favoriteGap: favorite.odds - answerOption.odds };
-          })
-          .sort((left, right) => right.score - left.score || right.answerOption.points - left.answerOption.points);
-
-        const selected = ranked[0]?.answerOption || favorite;
-        if (selected.id !== favorite.id) {
-          upsetCandidates.push({
-            questionId: getQuestionId(question, index),
-            answerId: selected.id,
-            favoriteId: favorite.id,
-            score: ranked[0]?.score || 0,
-            gap: ranked[0]?.favoriteGap || 0,
-          });
-        }
-        return [getQuestionId(question, index), selected.id];
-      });
-
-      if (picks.length > 0 && upsetCandidates.length === 0) {
-        const fallback = questions
-          .map((question, index) => {
-            const answers = getAnswers(question).slice().sort((left, right) => (
-              right.points - left.points || right.odds - left.odds
-            ));
-            const favoriteId = favoriteByQuestion.get(getQuestionId(question, index));
-            const alternative = answers.find((answerOption) => answerOption.id !== favoriteId);
-            if (!alternative) {
-              return null;
-            }
-            return {
-              questionId: getQuestionId(question, index),
-              answerId: alternative.id,
-              favoriteId,
-              points: alternative.points,
-              odds: alternative.odds,
-            };
-          })
-          .filter(Boolean)
-          .sort((left, right) => right.points - left.points || right.odds - left.odds)[0];
-
-        if (fallback) {
-          const pickIndex = picks.findIndex(([questionId]) => questionId === fallback.questionId);
-          if (pickIndex >= 0) {
-            picks[pickIndex] = [fallback.questionId, fallback.answerId];
-          }
-        }
-      }
-
-      return picks;
     }
 
     function estimateWinChances(game, entries) {
@@ -4870,7 +4593,8 @@
         return;
       }
 
-      const maxPossible = maxPossibleScore(game, entry.picks);
+      const maxPickPoints = maxPointsForPicks(game, entry.picks);
+      const gameMaxPoints = maxPointsForGame(game);
 
       const rows = game.questions.map((question, questionIndex) => {
         const pick = getSavedPick(entry.picks, question, questionIndex);
@@ -4887,7 +4611,7 @@
       }).join("");
 
       leaderboardPicksEl.innerHTML = `
-        <h4 class="pick-view-title">${escapeHtml(entry.name)}'s picks · ${escapeHtml(formatWinChance(winChance))} chance to win · ${escapeHtml(String(maxPossible))}/${maxPointsForGame(game)} max possible pts from these picks</h4>
+        <h4 class="pick-view-title">${escapeHtml(entry.name)}'s picks · ${escapeHtml(formatWinChance(winChance))} chance to win · ${maxPickPoints}/${gameMaxPoints} max from picks</h4>
         <ul class="pick-list">${rows}</ul>
       `;
     }
@@ -4944,37 +4668,26 @@
       const scope = leaderboardScope(game);
       const roomKey = roomEntriesKey(game.gameId, scope.roomCode);
       const localEntries = Array.isArray(state.entries?.[game.gameId]) ? state.entries[game.gameId] : [];
-      const legacyLocalEntries = legacyLocalEntriesForGame(game);
       const sharedGameEntries = Array.isArray(sharedEntries[game.gameId]) ? sharedEntries[game.gameId] : null;
       const sourceEntries = scope.type === "room"
         ? (Array.isArray(sharedRooms[roomKey]) ? sharedRooms[roomKey] : [])
-        : mergeEntriesByName([
+        : [
             ...(sharedGameEntries || []),
             ...localEntries.filter((localEntry) => {
               const localName = normalizedEntryName(localEntry.name);
               return !(sharedGameEntries || []).some((sharedEntry) => normalizedEntryName(sharedEntry.name) === localName);
             }),
-            ...legacyLocalEntries.filter((legacyEntry) => {
-              const legacyName = normalizedEntryName(legacyEntry.name);
-              return !(sharedGameEntries || []).some((sharedEntry) => normalizedEntryName(sharedEntry.name) === legacyName);
-            }),
-          ], game);
+          ];
 
       return sourceEntries.map((entry) => ({
         ...entry,
-        picks: normalizedEntryPicksForGame(game, entry.picks),
+        score: scorePicks(game, entry.picks),
         source: scope.type === "room"
           ? "room"
           : localEntries.includes(entry)
           ? "device"
           : "shared"
-      }))
-        .filter((entry) => entryIsCompatibleWithGame(game, entry))
-        .map((entry) => ({
-          ...entry,
-          score: scorePicks(game, entry.picks),
-        }))
-        .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+      })).sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
     }
 
     function renderTabs(games) {
@@ -5187,8 +4900,7 @@
             <span class="rank">${index + 1}</span>
             <span>
               <span class="leader-name">${escapeHtml(entry.name)}</span>
-              <div class="leader-details">${scope.type === "room" ? `Room ${scope.roomCode}` : "Public board"} · ${entry.score}/${maxPoints} scored · ${formatWinChance(winChances[entry.name] || 0)} chance to win · ${maxPossibleScore(game, entry.picks)}/${maxPoints} max possible pts from these picks · click for picks</div>
-              <div class="leader-details">${scope.type === "room" ? `Room ${scope.roomCode}` : "Public board"} · ${entry.score}/${maxPoints} scored · ${formatWinChance(winChances[entry.name] || 0)} chance to win · ${maxPossibleScore(game, entry.picks)}/${maxPoints} max possible pts from these picks · click for picks</div>
+              <div class="leader-details">${scope.type === "room" ? `Room ${scope.roomCode}` : "Public board"} · ${entry.score}/${maxPoints} scored · ${maxPointsForPicks(game, entry.picks)}/${maxPoints} max from picks · click for picks</div>
             </span>
             <span class="points">
               ${entry.score}
@@ -5237,7 +4949,7 @@
 
     function render() {
       const games = upcomingGames();
-      selectedGameId = selectedGameId || preferredGameId(games);
+      selectedGameId = selectedGameId || hydrateGameFromUrl(games) || games[0].gameId;
       const game = currentGame();
       renderTabs(games);
       renderGame(game);
@@ -5245,7 +4957,7 @@
         if (loaded) {
           const refreshedGames = upcomingGames();
           if (!refreshedGames.some((candidate) => candidate.gameId === selectedGameId)) {
-            selectedGameId = preferredGameId(refreshedGames) || selectedGameId;
+            selectedGameId = refreshedGames[0]?.gameId || selectedGameId;
           }
           renderTabs(refreshedGames);
           renderGame(currentGame());
@@ -5822,17 +5534,12 @@
     });
 
     window.setInterval(() => {
-      const game = currentGame();
-      const refresh = isGameInLiveWindow(game)
-        ? refreshCurrentGameLiveData()
-        : refreshLockedGameResults();
-
-      refresh.then((loaded) => {
+      refreshLockedGameResults().then((loaded) => {
         if (loaded && currentGame()) {
           renderGame(currentGame());
         }
       });
-    }, 15000);
+    }, 60000);
 
     window.setInterval(updateCountdowns, 1000);
 
@@ -5846,7 +5553,6 @@
       getCurrentGame: () => currentGame(),
       getAnswers,
       getQuestionId,
-      weatherBotPicks,
       scorePicks,
       saveEntryForScope,
       render,
