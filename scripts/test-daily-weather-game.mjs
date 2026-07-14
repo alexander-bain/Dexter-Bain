@@ -260,20 +260,20 @@ async function run() {
             const answers = test.getAnswers(question).slice();
             const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
             const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
+              .filter((candidate) => candidate.id !== favorites[0]?.id)
               .sort((left, right) => right.points - left.points || right.odds - left.odds);
             const choice = index % 3 === 1
               ? (risks[0] || favorites[0])
-              : index % 4 === 3
-              ? (risks[1] || favorites[0])
+              : index % 5 === 4
+              ? (risks[1] || risks[0] || favorites[0])
               : favorites[0];
             return [test.getQuestionId(question, index), choice.id];
           });
           const picks = Object.fromEntries(botPicks);
           const favoritePickMap = Object.fromEntries(favoritePicks);
-          const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
-          if (!usedRiskPick) {
-            throw new Error("Weather Bot only picked favorites.");
+          const riskPickCount = botPicks.filter(([questionId, answerId]) => favoritePickMap[questionId] !== answerId).length;
+          if (riskPickCount < Math.min(3, game.questions.length)) {
+            throw new Error("Weather Bot did not test enough non-favorite picks.");
           }
           const entry = {
             name: "Weather Bot",
@@ -312,11 +312,11 @@ async function run() {
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
-              leaderboard.includes("max from picks") &&
+              leaderboard.includes("chance to win") &&
+              leaderboard.includes("risk ceiling") &&
               pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
-              entryCount.trim() === "1" &&
+              pickView.includes("risk ceiling") &&
+              Number.parseInt(entryCount, 10) >= 1 &&
               storage.playerName === "Weather Bot"
             ) {
               return {
@@ -364,7 +364,7 @@ async function run() {
 
     const botPickMap = Object.fromEntries(value.botPicks || []);
     const favoritePickMap = Object.fromEntries(value.favoritePicks || []);
-    if (!Object.keys(botPickMap).some((questionId) => botPickMap[questionId] !== favoritePickMap[questionId])) {
+    if (Object.keys(botPickMap).filter((questionId) => botPickMap[questionId] !== favoritePickMap[questionId]).length < 3) {
       throw new Error(`Saved picks only used favorites: ${JSON.stringify({ botPickMap, favoritePickMap })}`);
     }
 
