@@ -249,7 +249,7 @@ async function run() {
 
           const favoritePicks = game.questions.map((question, index) => {
             const favorite = test.getAnswers(question).reduce((winner, candidate) => {
-              if (!winner || candidate.odds > winner.odds) {
+              if (!winner || candidate.odds > winner.odds || (candidate.odds === winner.odds && candidate.points < winner.points)) {
                 return candidate;
               }
               return winner;
@@ -269,39 +269,63 @@ async function run() {
               : favorites[0];
             return [test.getQuestionId(question, index), choice.id];
           });
-          const picks = Object.fromEntries(botPicks);
+          const longshotPicks = game.questions.map((question, index) => {
+            const answers = test.getAnswers(question).slice().sort((left, right) => {
+              if (right.points !== left.points) {
+                return right.points - left.points;
+              }
+              return left.odds - right.odds;
+            });
+            const choice = index % 2 === 0
+              ? (answers[0] || null)
+              : (answers[1] || answers[0] || null);
+            return [test.getQuestionId(question, index), choice?.id || ""];
+          });
           const favoritePickMap = Object.fromEntries(favoritePicks);
+          const weatherPickMap = Object.fromEntries(botPicks);
           const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
           if (!usedRiskPick) {
             throw new Error("Weather Bot only picked favorites.");
           }
-          const entry = {
-            name: "Weather Bot",
-            picks,
-            notify: "none",
-            score: test.scorePicks(game, picks),
+
+          const botEntries = [
+            { name: "Favorite Bot", picks: Object.fromEntries(favoritePicks), notify: "none" },
+            { name: "Weather Bot", picks: weatherPickMap, notify: "none" },
+            { name: "Longshot Bot", picks: Object.fromEntries(longshotPicks), notify: "none" },
+          ].map((entry) => ({
+            ...entry,
+            score: test.scorePicks(game, entry.picks),
             savedAt: new Date().toISOString(),
-          };
+          }));
 
-          test.playerNameEl.value = entry.name;
-          test.playerNameEl.dispatchEvent(new Event("input", { bubbles: true }));
-          test.state.playerName = entry.name;
-          test.state.notify = entry.notify;
-          test.saveState();
+          for (const entry of botEntries) {
+            test.playerNameEl.value = entry.name;
+            test.playerNameEl.dispatchEvent(new Event("input", { bubbles: true }));
+            test.state.playerName = entry.name;
+            test.state.notify = entry.notify;
+            test.saveState();
 
-          const savedToServer = await test.saveEntryForScope(game, entry);
-          if (!savedToServer) {
-            throw new Error(
-              "The daily weather save helper did not write to the test API server: " +
-              JSON.stringify({ lastSaveError: test.state.lastSaveError || "", apiUrl: "/api/minigames/" + encodeURIComponent(game.gameId) + "/entries" })
-            );
+            const savedToServer = await test.saveEntryForScope(game, entry);
+            if (!savedToServer) {
+              throw new Error(
+                "The daily weather save helper did not write to the test API server: " +
+                JSON.stringify({ entry: entry.name, lastSaveError: test.state.lastSaveError || "", apiUrl: "/api/minigames/" + encodeURIComponent(game.gameId) + "/entries" })
+              );
+            }
           }
+
+          test.playerNameEl.value = "Weather Bot";
+          test.playerNameEl.dispatchEvent(new Event("input", { bubbles: true }));
+          test.state.playerName = "Weather Bot";
+          test.state.notify = "none";
+          test.saveState();
 
           test.render();
           const start = Date.now();
           while (Date.now() - start < 15000) {
             const saveNote = document.getElementById("saveNote")?.textContent || "";
             const leaderboard = document.getElementById("leaderboard")?.textContent || "";
+            const leaderboardRows = [...document.querySelectorAll("#leaderboard .leader-row")].map((row) => row.textContent || "");
             const entryCount = document.getElementById("entryCount")?.textContent || "";
             const leaderButton = document.querySelector('[data-leader-name="Weather Bot"]');
             if (leaderButton) {
@@ -309,14 +333,17 @@ async function run() {
             }
             const pickView = document.getElementById("leaderboardPicks")?.textContent || "";
             const storage = JSON.parse(localStorage.getItem("dexterbain-minigames-v1") || "{}");
+            const hasNonTrivialWinChance = leaderboardRows.some((row) => /(?:^|\\s)(?:[1-9]\\d?|<1)% win/.test(row) && !row.includes("100% win"));
             if (
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
-              leaderboard.includes("100% win") &&
+              leaderboard.includes("Favorite Bot") &&
+              leaderboard.includes("Longshot Bot") &&
               leaderboard.includes("max from picks") &&
               pickView.includes("chance to win") &&
               pickView.includes("max from picks") &&
-              entryCount.trim() === "1" &&
+              hasNonTrivialWinChance &&
+              Number(entryCount.trim()) >= 3 &&
               storage.playerName === "Weather Bot"
             ) {
               return {
@@ -324,11 +351,13 @@ async function run() {
                 entryCount,
                 saveNote,
                 leaderboard,
+                leaderboardRows,
                 pickView,
                 savedEntryName: storage.playerName || "",
                 chosen: botPicks.map(([, answerId]) => answerId),
                 botPicks,
                 favoritePicks,
+                longshotPicks,
                 storedState: storage,
               };
             }
@@ -366,6 +395,10 @@ async function run() {
     const favoritePickMap = Object.fromEntries(value.favoritePicks || []);
     if (!Object.keys(botPickMap).some((questionId) => botPickMap[questionId] !== favoritePickMap[questionId])) {
       throw new Error(`Saved picks only used favorites: ${JSON.stringify({ botPickMap, favoritePickMap })}`);
+    }
+
+    if (!(value.leaderboardRows || []).some((row) => row.includes("Weather Bot") && row.includes("max from picks") && row.includes("win"))) {
+      throw new Error(`Weather Bot leaderboard row is missing win/max copy: ${JSON.stringify(value.leaderboardRows || [])}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);

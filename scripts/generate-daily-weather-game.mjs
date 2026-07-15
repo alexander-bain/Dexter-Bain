@@ -168,6 +168,23 @@ function rotateSelection(items, count, seed) {
   return Array.from({ length: total }, (_, index) => items[(start + index) % items.length]);
 }
 
+function rebalanceOdds(answers) {
+  const total = answers.reduce((sum, answerOption) => sum + (Number(answerOption.odds) || 0), 0);
+  if (!total) {
+    return answers;
+  }
+
+  const scaled = answers.map((answerOption) => ({
+    ...answerOption,
+    odds: Math.max(1, Math.round((Number(answerOption.odds) || 0) * 100 / total))
+  }));
+  const delta = 100 - scaled.reduce((sum, answerOption) => sum + answerOption.odds, 0);
+  if (delta !== 0 && scaled.length) {
+    scaled[0].odds += delta;
+  }
+  return scaled;
+}
+
 function yesNoQuestion({
   text,
   idSuffix,
@@ -248,82 +265,74 @@ function dayWatchEvent(date, forecast) {
   const likelySportsLive = daySeed % 4 !== 0;
   const likelyWeatherLead = sky === "rain-likely" || (sky === "mostly-cloudy" && !likelyMarketUp);
   const likelySportsLead = likelySportsLive && daySeed % 5 !== 0;
-  const localHeadlineOdds = {
-    weather: [sky === "rain-likely" ? 36 : 28, "Weather"],
-    stocks: [likelyMarketUp ? 30 : 24, "Stocks"],
-    sports: [likelySportsLive ? 24 : 18, "Sports"],
-    traffic: [18, "Traffic"]
-  };
-  const weatherQuestions = rotateSelection([
-    () => yesNoQuestion({
+  const localHeadlineAnswers = rebalanceOdds([
+    { label: "Weather", odds: sky === "rain-likely" ? 36 : 28, id: "weather" },
+    ...(!weekend ? [{ label: "Stocks", odds: likelyMarketUp ? 30 : 24, id: "stocks" }] : []),
+    { label: "Sports", odds: likelySportsLive ? 24 : 18, id: "sports" },
+    { label: "Traffic", odds: 18, id: "traffic" }
+  ]);
+  const weatherQuestions = [
+    yesNoQuestion({
       text: `By noon, will it be warmer than ${warmByNoonThreshold} degrees?`,
       idSuffix: "warm-by-noon",
       autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.warmByNoon,
       likely: likelyBreaksWarmByNoon
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 3 PM, will rain show up in the forecast?",
       idSuffix: "rain-by-3pm",
       autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.weatherAfternoon,
       likely: likelyRainLater
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: `By 5 PM, will the wind be stronger than ${Math.max(10, Math.round(windSpeed / 5) * 5)} mph?`,
       idSuffix: "wind-by-5pm",
       autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.weatherWind,
       likely: likelyWindyLater
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 3 PM, will the sky still be mostly sunny?",
       idSuffix: "sky-still-sunny",
       autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.weatherAfternoon,
       likely: likelySkySunnyLater
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "Tonight, will it stay cooler than 60 degrees?",
       idSuffix: "cool-tonight",
       autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
       lockAt: locks.weatherNight,
       likely: likelyNightCooler
     })
-  ], 4, daySeed);
-  const moneyQuestionPool = [
-    () => yesNoQuestion({
+  ];
+  const moneyQuestions = [
+    yesNoQuestion({
       text: "By noon, will gas prices be higher than this morning?",
       idSuffix: "gas-noon",
       autoSource: gasSource,
       lockAt: locks.gasNoon,
       likely: likelyGasUp
-    })
-  ];
-  if (!weekend) {
-    moneyQuestionPool.push(() => yesNoQuestion({
+    }),
+    ...(!weekend ? [yesNoQuestion({
       text: "By 1 PM, will the stock market go up?",
       idSuffix: "market-lunch",
       autoSource: marketSource,
       lockAt: locks.marketLunch,
       likely: likelyMarketUp
-    }));
-  }
-  const moneyQuestions = rotateSelection(moneyQuestionPool, moneyQuestionPool.length, daySeed + 7);
-  const newsQuestions = rotateSelection([
-    () => choiceQuestion({
+    })] : [])
+  ];
+  const newsQuestions = [
+    choiceQuestion({
       text: "By 2 PM, what will the local news talk about most?",
       idSuffix: "local-headline",
       autoSource: localNewsSource,
       lockAt: locks.localHeadline,
-      answers: [
-        { label: localHeadlineOdds.weather[1], odds: localHeadlineOdds.weather[0], id: "weather" },
-        { label: localHeadlineOdds.stocks[1], odds: localHeadlineOdds.stocks[0], id: "stocks" },
-        { label: localHeadlineOdds.sports[1], odds: localHeadlineOdds.sports[0], id: "sports" },
-        { label: localHeadlineOdds.traffic[1], odds: localHeadlineOdds.traffic[0], id: "traffic" }
-      ]
+      answers: localHeadlineAnswers
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 3 PM, will weather be the top local news story?",
       idSuffix: "weather-headline",
       autoSource: localNewsSource,
@@ -332,7 +341,7 @@ function dayWatchEvent(date, forecast) {
       yesLikely: 60,
       yesUnlikely: 40
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 4 PM, will sports be one of the top local news stories?",
       idSuffix: "sports-headline",
       autoSource: localNewsSource,
@@ -341,46 +350,46 @@ function dayWatchEvent(date, forecast) {
       yesLikely: 58,
       yesUnlikely: 42
     })
-  ], 2, daySeed + 11);
-  const musicQuestions = rotateSelection([
-    () => yesNoQuestion({
+  ];
+  const musicQuestions = [
+    yesNoQuestion({
       text: "By 4 PM, will the top Apple Music song be different?",
       idSuffix: "music-four",
       autoSource: musicSource,
       lockAt: locks.musicFour,
       likely: likelyMusicChanged
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 5 PM, will a new song reach No. 1?",
       idSuffix: "music-five",
       autoSource: musicSource,
       lockAt: lockDate(date, 17).toISOString(),
       likely: likelyMusicChanged
     })
-  ], weekend ? 2 : 1, daySeed + 23);
-  const sportsQuestions = rotateSelection([
-    () => yesNoQuestion({
+  ];
+  const sportsQuestions = [
+    yesNoQuestion({
       text: "By 6 PM, will the sports page still show a live game?",
       idSuffix: "sports-six",
       autoSource: sportsSource,
       lockAt: locks.sportsSix,
       likely: likelySportsLive
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 7 PM, will the top sports story be about a live game?",
       idSuffix: "sports-seven",
       autoSource: sportsSource,
       lockAt: locks.sportsSeven,
       likely: likelySportsLive
     })
-  ], 1, daySeed + 37);
+  ];
   const selectedQuestions = [
     ...weatherQuestions,
     ...moneyQuestions,
     ...newsQuestions,
     ...musicQuestions,
     ...sportsQuestions
-  ].map((questionFactory) => questionFactory()).sort((left, right) => {
+  ].sort((left, right) => {
     if (left.lockAt === right.lockAt) {
       return left.idSuffix.localeCompare(right.idSuffix);
     }
