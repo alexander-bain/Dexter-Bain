@@ -345,7 +345,7 @@
     </section>
   </div>
 
-  <script src="dictionaries.js?v=2026-06-22-1"></script>
+  <script src="dictionaries.js?v=2026-07-17-1"></script>
   <script>
     (() => {
       const WORDS = [
@@ -1036,7 +1036,7 @@
       }
 
       function startGame() {
-        currentPuzzle = loadActivePuzzle();
+        currentPuzzle = latestPuzzleForSession();
         answer = currentPuzzle.word;
         progress = loadProgress(currentPuzzle);
         saveActivePuzzle(currentPuzzle);
