@@ -345,7 +345,7 @@
     </section>
   </div>
 
-  <script src="dictionaries.js?v=2026-07-17-1"></script>
+  <script src="dictionaries.js?v=2026-07-19-1"></script>
   <script>
     (() => {
       const WORDS = [
@@ -443,13 +443,11 @@
         "2026-06-20": "SHELF",
         "2026-06-21": "CHALK",
         "2026-06-22": "CHIDE",
-        "2026-07-02": "BRICK",
-        "2026-07-09": "HEAVY",
-        "2026-07-13": "CIDER",
-        "2026-07-14": "CHORD",
-        "2026-07-17": "AWAKE",
+        "2026-07-12": "CIVIL",
+        "2026-07-18": "BRIAR",
+        "2026-07-19": "SOLAR",
       };
-      const PUZZLE_STATE_VERSION = "2026-07-17-1";
+      const PUZZLE_STATE_VERSION = "2026-07-19-1";
       const JOHN_PUZZLE_PREFIX = "2026-05-19-john";
       const RESET_CODE = "CENA";
       const ALT_WORD_CODE = "JOHN";
@@ -652,7 +650,7 @@
           const savedPuzzle = getPuzzleById(saved?.puzzleId);
           if (!savedPuzzle) return DAILY_PUZZLE;
           if (saved?.word && saved.word !== savedPuzzle.word) return DAILY_PUZZLE;
-          return isJohnPuzzleId(savedPuzzle.id) ? savedPuzzle : DAILY_PUZZLE;
+          return savedPuzzle;
         } catch {
           return DAILY_PUZZLE;
         }
@@ -697,11 +695,9 @@
             return replaceWithFreshProgress(activePuzzle);
           }
           const savedPuzzle = getPuzzleById(saved?.puzzleId);
-          const restoreCurrentPuzzle = savedPuzzle
-            && saved?.puzzleId === activePuzzle.id
-            && saved?.word === activePuzzle.word
-            && saved?.word === savedPuzzle.word;
-          if (!restoreCurrentPuzzle) return replaceWithFreshProgress(activePuzzle);
+          const restoreDaily = saved?.puzzleId === DAILY_PUZZLE.id && saved?.word === DAILY_PUZZLE.word;
+          const restoreJohn = isJohnPuzzleId(saved?.puzzleId) && savedPuzzle && saved?.word === savedPuzzle.word;
+          if (!restoreDaily && !restoreJohn) return replaceWithFreshProgress(activePuzzle);
           currentPuzzle = savedPuzzle;
           answer = currentPuzzle.word;
           const guesses = (saved.guesses || []).filter((guess) => /^[A-Z]{5}$/.test(guess)).slice(0, ROWS);
@@ -1036,7 +1032,7 @@
       }
 
       function startGame() {
-        currentPuzzle = latestPuzzleForSession();
+        currentPuzzle = loadActivePuzzle();
         answer = currentPuzzle.word;
         progress = loadProgress(currentPuzzle);
         saveActivePuzzle(currentPuzzle);
