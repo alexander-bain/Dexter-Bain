@@ -539,6 +539,100 @@ function stripSourceText(raw) {
     .slice(0, 12000);
 }
 
+function answerIdForBinaryChoice(answers, expected) {
+  const normalizedExpected = expected.toLowerCase();
+  return answers.find((answer) => answer.id.toLowerCase() === normalizedExpected)
+    ?.id || answers.find((answer) => answer.label.toLowerCase() === normalizedExpected)?.id || "";
+}
+
+function numericMatch(sourceText, patterns) {
+  for (const pattern of patterns) {
+    const match = sourceText.match(pattern);
+    if (match) {
+      return Number(match[1]);
+    }
+  }
+  return null;
+}
+
+function weatherAnswerFromSource(questionText, answers, sourceText) {
+  const yesId = answerIdForBinaryChoice(answers, "yes");
+  const noId = answerIdForBinaryChoice(answers, "no");
+  if (!yesId || !noId) {
+    return null;
+  }
+
+  const text = questionText.toLowerCase();
+  const source = sourceText.toLowerCase();
+  const high = numericMatch(sourceText, [/\bhigh near (\d+)/i, /\bhigh\s+(\d+)/i]);
+  const low = numericMatch(sourceText, [/\blow around (\d+)/i, /\blow near (\d+)/i, /\blow\s+(\d+)/i]);
+  const wind = numericMatch(sourceText, [/wind[^.]{0,40}?(\d+)(?:\s*to\s*(\d+))?\s*mph/i, /(\d+)(?:\s*to\s*(\d+))?\s*mph/i]);
+  const maxWind = (() => {
+    const rangeMatch = sourceText.match(/(\d+)(?:\s*to\s*(\d+))?\s*mph/i);
+    if (!rangeMatch) {
+      return wind;
+    }
+    return Number(rangeMatch[2] || rangeMatch[1]);
+  })();
+
+  if (text.includes("rain show up in the forecast")) {
+    const rainy = ["rain", "shower", "drizzle", "thunderstorm", "precipitation"].some((word) => source.includes(word));
+    return {
+      answerId: rainy ? yesId : noId,
+      explanation: rainy
+        ? "The forecast text mentions rain or showers."
+        : "The forecast text does not mention rain or showers.",
+    };
+  }
+
+  if (text.includes("sky still be mostly sunny")) {
+    const cloudy = ["mostly cloudy", "cloudy", "overcast", "rain", "shower", "drizzle"].some((word) => source.includes(word));
+    const sunny = ["mostly sunny", "sunny", "partly sunny"].some((word) => source.includes(word));
+    if (!cloudy && sunny) {
+      return {
+        answerId: yesId,
+        explanation: "The forecast still calls for sunny or mostly sunny conditions.",
+      };
+    }
+    if (cloudy) {
+      return {
+        answerId: noId,
+        explanation: "The forecast has turned cloudy or rainy instead of mostly sunny.",
+      };
+    }
+    return null;
+  }
+
+  const warmerThan = text.match(/warmer than (\d+)/i);
+  if (warmerThan && Number.isFinite(high)) {
+    const threshold = Number(warmerThan[1]);
+    return {
+      answerId: high >= threshold + 2 ? yesId : noId,
+      explanation: `The forecast high is near ${high}, which ${high >= threshold + 2 ? "clears" : "does not clearly clear"} ${threshold}.`,
+    };
+  }
+
+  const windStrongerThan = text.match(/wind be stronger than (\d+)\s*mph/i);
+  if (windStrongerThan && Number.isFinite(maxWind)) {
+    const threshold = Number(windStrongerThan[1]);
+    return {
+      answerId: maxWind > threshold ? yesId : noId,
+      explanation: `The forecast wind tops out around ${maxWind} mph.`,
+    };
+  }
+
+  const coolerThan = text.match(/cooler than (\d+)/i);
+  if (coolerThan && Number.isFinite(low)) {
+    const threshold = Number(coolerThan[1]);
+    return {
+      answerId: low < threshold ? yesId : noId,
+      explanation: `The overnight low is around ${low}.`,
+    };
+  }
+
+  return null;
+}
+
 async function fetchResultSource(source) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 7000);
@@ -616,6 +710,18 @@ async function automaticResultForQuestion(question, questionIndex) {
   if (source) {
     try {
       const sourceText = await fetchResultSource(source);
+      const weatherChoice = weatherAnswerFromSource(text, answers, sourceText);
+      if (weatherChoice?.answerId) {
+        return {
+          questionId,
+          status: "resolved",
+          answerId: weatherChoice.answerId,
+          source,
+          note: weatherChoice.explanation || "Confirmed by forecast text.",
+          checkedAt: new Date().toISOString(),
+        };
+      }
+
       const choice = await chooseAnswerFromSource(text, answers, sourceText);
       if (choice?.answerId) {
         return {

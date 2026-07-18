@@ -9,10 +9,11 @@ const minigamesPath =
 const sourceUrl = "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182";
 const pointsUrl = "https://api.weather.gov/points/37.453,-122.182";
 const marketSource = "https://r.jina.ai/http://finance.yahoo.com/quote/%5EGSPC";
-const localNewsSource = "https://r.jina.ai/http://www.mercurynews.com/";
+const localNewsSource = "https://r.jina.ai/http://www.nbcbayarea.com/news/local/";
 const musicSource = "https://r.jina.ai/http://music.apple.com/us/charts/songs";
 const sportsSource = "https://r.jina.ai/http://www.espn.com/scoreboard";
-const gasSource = "https://r.jina.ai/http://gasprices.aaa.com/";
+const sportsHeadlineSource = "https://r.jina.ai/http://www.espn.com/";
+const gasSource = "https://r.jina.ai/http://gasprices.aaa.com/?state=CA";
 const startMarker = "      // DAILY_WEATHER_GAME_START";
 const endMarker = "      // DAILY_WEATHER_GAME_END";
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -110,16 +111,16 @@ async function loadForecast(date) {
 function fallbackForecast() {
   return {
     dayPeriod: {
-      temperature: 70,
+      temperature: 74,
       windSpeed: "5 to 10 mph",
-      shortForecast: "Partly Sunny",
-      detailedForecast: "Partly sunny, with a high near 70. Light west wind."
+      shortForecast: "Sunny",
+      detailedForecast: "Sunny, with a high near 74. Light west wind 5 to 10 mph."
     },
     nightPeriod: {
-      temperature: 54,
+      temperature: 56,
       windSpeed: "5 mph",
       shortForecast: "Mostly Clear",
-      detailedForecast: "Mostly clear, with a low around 54."
+      detailedForecast: "Mostly clear, with a low around 56."
     },
     source: "fallback"
   };
@@ -246,81 +247,87 @@ function dayWatchEvent(date, forecast) {
         traffic: [19, "Traffic"]
       }
     : {
-        publicSafety: [likelyWeatherLead ? 26 : 32, "Public safety"],
-        weather: [likelyWeatherLead ? 30 : 21, "Weather"],
-        sports: [likelySportsLive ? 22 : 17, "Sports"],
-        traffic: [20, "Traffic"]
+        weather: [sky === "rain-likely" ? 36 : 28, "Weather"],
+        stocks: [likelyMarketUp ? 30 : 24, "Stocks"],
+        sports: [likelySportsLive ? 24 : 18, "Sports"],
+        traffic: [18, "Traffic"]
       };
   const weatherQuestions = [
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: `By noon, will it be warmer than ${warmByNoonThreshold} degrees?`,
       idSuffix: "warm-by-noon",
-      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
+      autoSource: sourceUrl,
       lockAt: locks.warmByNoon,
       likely: likelyBreaksWarmByNoon
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 3 PM, will rain show up in the forecast?",
       idSuffix: "rain-by-3pm",
-      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
+      autoSource: sourceUrl,
       lockAt: locks.weatherAfternoon,
       likely: likelyRainLater
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: `By 5 PM, will the wind be stronger than ${Math.max(10, Math.round(windSpeed / 5) * 5)} mph?`,
       idSuffix: "wind-by-5pm",
-      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
+      autoSource: sourceUrl,
       lockAt: locks.weatherWind,
       likely: likelyWindyLater
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 3 PM, will the sky still be mostly sunny?",
       idSuffix: "sky-still-sunny",
-      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
+      autoSource: sourceUrl,
       lockAt: locks.weatherAfternoon,
       likely: likelySkySunnyLater
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "Tonight, will it stay cooler than 60 degrees?",
       idSuffix: "cool-tonight",
-      autoSource: "https://forecast.weather.gov/MapClick.php?lat=37.453&lon=-122.182",
+      autoSource: sourceUrl,
       lockAt: locks.weatherNight,
       likely: likelyNightCooler
     })
   ];
-  const moneyQuestionPool = [
-    () => yesNoQuestion({
+  const moneyQuestions = [
+    yesNoQuestion({
       text: "By noon, will gas prices be higher than this morning?",
       idSuffix: "gas-noon",
       autoSource: gasSource,
       lockAt: locks.gasNoon,
       likely: likelyGasUp
-    })
+    }),
+    ...(!weekend ? [
+      yesNoQuestion({
+        text: "By 1 PM, will the stock market go up?",
+        idSuffix: "market-lunch",
+        autoSource: marketSource,
+        lockAt: locks.marketLunch,
+        likely: likelyMarketUp
+      })
+    ] : [])
   ];
-  if (!weekend) {
-    moneyQuestionPool.push(() => yesNoQuestion({
-      text: "By 1 PM, will the stock market go up?",
-      idSuffix: "market-lunch",
-      autoSource: marketSource,
-      lockAt: locks.marketLunch,
-      likely: likelyMarketUp
-    }));
-  }
-  const moneyQuestions = moneyQuestionPool;
   const newsQuestions = [
-    () => choiceQuestion({
+    choiceQuestion({
       text: "By 2 PM, what will the local news talk about most?",
       idSuffix: "local-headline",
       autoSource: localNewsSource,
       lockAt: locks.localHeadline,
-      answers: [
-        { label: localHeadlineOdds.publicSafety[1], odds: localHeadlineOdds.publicSafety[0], id: "public-safety" },
-        { label: localHeadlineOdds.weather[1], odds: localHeadlineOdds.weather[0], id: "weather" },
-        { label: localHeadlineOdds.sports[1], odds: localHeadlineOdds.sports[0], id: "sports" },
-        { label: localHeadlineOdds.traffic[1], odds: localHeadlineOdds.traffic[0], id: "traffic" }
-      ]
+      answers: weekend
+        ? [
+            { label: localHeadlineOdds.publicSafety[1], odds: localHeadlineOdds.publicSafety[0], id: "public-safety" },
+            { label: localHeadlineOdds.weather[1], odds: localHeadlineOdds.weather[0], id: "weather" },
+            { label: localHeadlineOdds.sports[1], odds: localHeadlineOdds.sports[0], id: "sports" },
+            { label: localHeadlineOdds.traffic[1], odds: localHeadlineOdds.traffic[0], id: "traffic" }
+          ]
+        : [
+            { label: localHeadlineOdds.weather[1], odds: localHeadlineOdds.weather[0], id: "weather" },
+            { label: localHeadlineOdds.stocks[1], odds: localHeadlineOdds.stocks[0], id: "stocks" },
+            { label: localHeadlineOdds.sports[1], odds: localHeadlineOdds.sports[0], id: "sports" },
+            { label: localHeadlineOdds.traffic[1], odds: localHeadlineOdds.traffic[0], id: "traffic" }
+          ]
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 3 PM, will weather be the top local news story?",
       idSuffix: "weather-headline",
       autoSource: localNewsSource,
@@ -329,7 +336,7 @@ function dayWatchEvent(date, forecast) {
       yesLikely: 60,
       yesUnlikely: 40
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 4 PM, will sports be one of the top local news stories?",
       idSuffix: "sports-headline",
       autoSource: localNewsSource,
@@ -340,14 +347,14 @@ function dayWatchEvent(date, forecast) {
     })
   ];
   const musicQuestions = [
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 4 PM, will the top Apple Music song be different?",
       idSuffix: "music-four",
       autoSource: musicSource,
       lockAt: locks.musicFour,
       likely: likelyMusicChanged
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 5 PM, will a new song reach No. 1?",
       idSuffix: "music-five",
       autoSource: musicSource,
@@ -356,17 +363,17 @@ function dayWatchEvent(date, forecast) {
     })
   ];
   const sportsQuestions = [
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 6 PM, will the sports page still show a live game?",
       idSuffix: "sports-six",
       autoSource: sportsSource,
       lockAt: locks.sportsSix,
       likely: likelySportsLive
     }),
-    () => yesNoQuestion({
+    yesNoQuestion({
       text: "By 7 PM, will the top sports story be about a live game?",
       idSuffix: "sports-seven",
-      autoSource: sportsSource,
+      autoSource: sportsHeadlineSource,
       lockAt: locks.sportsSeven,
       likely: likelySportsLive
     })
@@ -377,7 +384,7 @@ function dayWatchEvent(date, forecast) {
     ...newsQuestions,
     ...musicQuestions,
     ...sportsQuestions
-  ].map((questionFactory) => questionFactory()).sort((left, right) => {
+  ].sort((left, right) => {
     if (left.lockAt === right.lockAt) {
       return left.idSuffix.localeCompare(right.idSuffix);
     }

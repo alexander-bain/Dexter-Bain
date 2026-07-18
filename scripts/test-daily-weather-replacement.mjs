@@ -75,6 +75,7 @@ for (const questionId of [
   "market-lunch",
   "local-headline",
   "rain-by-3pm",
+  "wind-by-5pm",
   "sky-still-sunny",
   "wind-by-5pm",
   "weather-headline",
