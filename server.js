@@ -57,7 +57,7 @@ let webpushClientPromise = null;
 let vapidKeysPromise = null;
 const resultCheckCooldowns = new Map();
 const resultCheckCooldownMs = Number(process.env.MINIGAMES_RESULT_CHECK_COOLDOWN_MS) || 60000;
-const maxAutoResultQuestions = 12;
+const maxAutoResultQuestions = 16;
 
 // IMPORTANT: set this in your environment on Render, don't hardcode it in code
 const openai = new OpenAI({
