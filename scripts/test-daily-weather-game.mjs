@@ -256,24 +256,55 @@ async function run() {
             }, null);
             return [test.getQuestionId(question, index), favorite.id];
           });
+          const maxUpsidePicks = game.questions.map((question, index) => {
+            const maxUpside = test.getAnswers(question).reduce((winner, candidate) => {
+              if (!winner || candidate.points > winner.points || (candidate.points === winner.points && candidate.odds > winner.odds)) {
+                return candidate;
+              }
+              return winner;
+            }, null);
+            return [test.getQuestionId(question, index), maxUpside.id];
+          });
           const botPicks = game.questions.map((question, index) => {
             const answers = test.getAnswers(question).slice();
-            const favorites = answers.slice().sort((left, right) => right.odds - left.odds || left.points - right.points);
-            const risks = answers
-              .filter((candidate) => candidate.odds >= 12 || answers.length <= 2)
-              .sort((left, right) => right.points - left.points || right.odds - left.odds);
-            const choice = index % 3 === 1
-              ? (risks[0] || favorites[0])
-              : index % 4 === 3
-              ? (risks[1] || favorites[0])
-              : favorites[0];
+            const ranked = answers.map((candidate) => ({
+              candidate,
+              expectedValue: (candidate.odds / 100) * candidate.points,
+              volatility: candidate.points * (1 - candidate.odds / 100),
+            }));
+            const favorites = ranked
+              .slice()
+              .sort((left, right) => right.candidate.odds - left.candidate.odds || left.candidate.points - right.candidate.points);
+            const upside = ranked
+              .slice()
+              .sort((left, right) => right.volatility - left.volatility || right.candidate.points - left.candidate.points || right.candidate.odds - left.candidate.odds);
+            const balanced = ranked
+              .slice()
+              .sort((left, right) => right.expectedValue - left.expectedValue || right.volatility - left.volatility || right.candidate.odds - left.candidate.odds);
+            const strategy = index % 4;
+            const choice = strategy === 0
+              ? (favorites[0]?.candidate || answers[0])
+              : strategy === 1
+              ? (balanced[0]?.candidate || favorites[0]?.candidate || answers[0])
+              : strategy === 2
+              ? (upside[0]?.candidate || favorites[0]?.candidate || answers[0])
+              : (upside[1]?.candidate || balanced[0]?.candidate || favorites[0]?.candidate || answers[0]);
             return [test.getQuestionId(question, index), choice.id];
           });
           const picks = Object.fromEntries(botPicks);
           const favoritePickMap = Object.fromEntries(favoritePicks);
-          const usedRiskPick = botPicks.some(([questionId, answerId]) => favoritePickMap[questionId] !== answerId);
-          if (!usedRiskPick) {
-            throw new Error("Weather Bot only picked favorites.");
+          const maxUpsidePickMap = Object.fromEntries(maxUpsidePicks);
+          const favoriteCount = botPicks.filter(([questionId, answerId]) => favoritePickMap[questionId] === answerId).length;
+          const riskCount = botPicks.filter(([questionId, answerId]) => favoritePickMap[questionId] !== answerId).length;
+          const pureUpsideCount = botPicks.filter(([questionId, answerId]) => maxUpsidePickMap[questionId] === answerId).length;
+          if (riskCount < 2) {
+            throw new Error("Weather Bot did not take enough upside shots.");
+          }
+          if (favoriteCount < 2) {
+            throw new Error("Weather Bot stopped using likely picks entirely.");
+          }
+          if (pureUpsideCount < 2) {
+            throw new Error("Weather Bot did not use the risk-based max-upside lane.");
           }
           const entry = {
             name: "Weather Bot",
@@ -313,9 +344,9 @@ async function run() {
               saveNote.includes("Weather Bot") &&
               leaderboard.includes("Weather Bot") &&
               leaderboard.includes("100% win") &&
-              leaderboard.includes("max from picks") &&
+              leaderboard.includes("max upside from risk") &&
               pickView.includes("chance to win") &&
-              pickView.includes("max from picks") &&
+              pickView.includes("max upside from risk") &&
               entryCount.trim() === "1" &&
               storage.playerName === "Weather Bot"
             ) {
@@ -329,6 +360,7 @@ async function run() {
                 chosen: botPicks.map(([, answerId]) => answerId),
                 botPicks,
                 favoritePicks,
+                maxUpsidePicks,
                 storedState: storage,
               };
             }
@@ -364,8 +396,12 @@ async function run() {
 
     const botPickMap = Object.fromEntries(value.botPicks || []);
     const favoritePickMap = Object.fromEntries(value.favoritePicks || []);
+    const maxUpsidePickMap = Object.fromEntries(value.maxUpsidePicks || []);
     if (!Object.keys(botPickMap).some((questionId) => botPickMap[questionId] !== favoritePickMap[questionId])) {
       throw new Error(`Saved picks only used favorites: ${JSON.stringify({ botPickMap, favoritePickMap })}`);
+    }
+    if (!Object.keys(botPickMap).some((questionId) => botPickMap[questionId] === maxUpsidePickMap[questionId])) {
+      throw new Error(`Saved picks never used max-upside choices: ${JSON.stringify({ botPickMap, maxUpsidePickMap })}`);
     }
 
     console.log(`Daily weather game test passed: ${value.title}; ${value.saveNote}`);
