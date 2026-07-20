@@ -314,13 +314,27 @@ function makeDeck() {
 
 function draw(deck, faceUp = false) {
   const card = deck.pop();
-  return { ...card, faceUp };
+  return { ...card, faceUp, motion: faceUp ? "flip" : "deal" };
+}
+
+function revealCard(card) {
+  if (card.faceUp) return;
+  card.faceUp = true;
+  card.motion = "flip";
+}
+
+function clearCardMotion(cards) {
+  cards.forEach((card) => {
+    card.motion = "";
+  });
 }
 
 function cardHtml(card, options = {}) {
   const classes = [
     "playing-card",
     card.faceUp ? "face-up" : "face-down",
+    card.motion === "deal" ? "is-dealing" : "",
+    card.motion === "flip" ? "is-flipping" : "",
     options.held ? "held" : "",
     options.clickable ? "clickable" : "",
   ].filter(Boolean).join(" ");
@@ -328,15 +342,12 @@ function cardHtml(card, options = {}) {
 
   return `
     <div class="${classes}" style="animation-delay:${options.delay || 0}ms">
-      ${
-        card.faceUp
-          ? `<div class="card-face ${red}">
-              <span class="card-rank">${card.rank}</span>
-              <span class="card-suit">${card.suit}</span>
-              ${options.held ? `<span class="hold-tag">Held</span>` : ""}
-            </div>`
-          : `<div class="card-back" aria-label="Face-down card"></div>`
-      }
+      <div class="card-face ${red}">
+        <span class="card-rank">${card.rank}</span>
+        <span class="card-suit">${card.suit}</span>
+        ${options.held ? `<span class="hold-tag">Held</span>` : ""}
+      </div>
+      <div class="card-back" aria-label="Face-down card"></div>
     </div>
   `;
 }
@@ -406,9 +417,9 @@ function startBlackjack(bet) {
 function flipBlackjackInitialCards() {
   const bj = state.blackjack;
   const sequence = [
-    () => { bj.player[0].faceUp = true; },
-    () => { bj.dealer[0].faceUp = true; },
-    () => { bj.player[1].faceUp = true; },
+    () => revealCard(bj.player[0]),
+    () => revealCard(bj.dealer[0]),
+    () => revealCard(bj.player[1]),
   ];
 
   sequence.forEach((step, index) => {
@@ -486,6 +497,7 @@ function renderBlackjack() {
       </aside>
     </section>
   `;
+  clearCardMotion([...bj.dealer, ...bj.player]);
 }
 
 function blackjackHit() {
@@ -500,7 +512,7 @@ function blackjackHit() {
 
   window.setTimeout(() => {
     if (state.blackjack !== bj) return;
-    card.faceUp = true;
+    revealCard(card);
     const total = blackjackTotal(bj.player);
     if (total > 21) {
       bj.phase = "round-over";
@@ -526,7 +538,7 @@ function blackjackRevealAndSettle() {
   const bj = state.blackjack;
   if (!bj || state.activeGame !== "blackjack") return;
   bj.dealer.forEach((card) => {
-    card.faceUp = true;
+    revealCard(card);
   });
   renderBlackjack();
   window.setTimeout(dealerStep, 620);
@@ -543,7 +555,7 @@ function dealerStep() {
     renderBlackjack();
     window.setTimeout(() => {
       if (state.blackjack !== bj) return;
-      card.faceUp = true;
+      revealCard(card);
       renderBlackjack();
       window.setTimeout(dealerStep, 520);
     }, 380);
@@ -606,7 +618,7 @@ function startPoker(bet) {
   poker.player.forEach((card, index) => {
     window.setTimeout(() => {
       if (state.poker !== poker) return;
-      card.faceUp = true;
+      revealCard(card);
       renderPoker();
     }, 280 + index * 220);
   });
@@ -679,6 +691,7 @@ function renderPoker() {
       </aside>
     </section>
   `;
+  clearCardMotion([...poker.ai, ...poker.player]);
 }
 
 function pokerDraw() {
@@ -704,7 +717,7 @@ function pokerDraw() {
     if (poker.held[index]) return;
     window.setTimeout(() => {
       if (state.poker !== poker) return;
-      card.faceUp = true;
+      revealCard(card);
       renderPoker();
     }, 260 + index * 170);
   });
@@ -715,7 +728,7 @@ function pokerDraw() {
     poker.ai.forEach((card, index) => {
       window.setTimeout(() => {
         if (state.poker !== poker) return;
-        card.faceUp = true;
+        revealCard(card);
         renderPoker();
       }, index * 220);
     });

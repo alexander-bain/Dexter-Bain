@@ -528,6 +528,7 @@ button {
   gap: 12px;
   min-height: 128px;
   align-items: center;
+  perspective: 900px;
 }
 
 .playing-card {
@@ -538,12 +539,24 @@ button {
   height: clamp(94px, 12.6vw, 126px);
   border-radius: 8px;
   transform-style: preserve-3d;
-  transition: transform 0.25s ease, translate 0.25s ease, box-shadow 0.25s ease;
-  animation: cardFlip 0.48s ease both;
+  transform-origin: center center;
+  transition: translate 0.25s ease, box-shadow 0.25s ease;
 }
 
 .playing-card.face-down {
+  transform: rotateY(180deg);
+}
+
+.playing-card.face-up {
+  transform: rotateY(0deg);
+}
+
+.playing-card.is-dealing {
   animation: dealIn 0.42s ease both;
+}
+
+.playing-card.is-flipping {
+  animation: cardFlip 0.72s cubic-bezier(0.2, 0.68, 0.24, 1) both;
 }
 
 .playing-card.held {
@@ -563,9 +576,11 @@ button {
   place-items: center;
   border-radius: 8px;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .card-face {
+  transform: rotateY(0deg);
   border: 4px solid #f3e7cc;
   color: var(--ink);
   background:
@@ -592,6 +607,7 @@ button {
 }
 
 .card-back {
+  transform: rotateY(180deg);
   border: 4px solid #e7b83a;
   background:
     linear-gradient(45deg, transparent 42%, rgba(255, 255, 255, 0.18) 42% 58%, transparent 58%),
@@ -881,22 +897,30 @@ button {
 @keyframes dealIn {
   from {
     opacity: 0;
-    transform: translateY(-18px) rotateY(180deg);
+    transform: translateY(-18px) rotateZ(-4deg) rotateY(180deg);
   }
   to {
     opacity: 1;
-    transform: translateY(0) rotateY(0deg);
+    transform: translateY(0) rotateZ(0deg) rotateY(180deg);
   }
 }
 
 @keyframes cardFlip {
   from {
-    opacity: 0.8;
-    transform: rotateY(90deg) scale(0.95);
+    transform: rotateY(180deg) translateY(0) scale(1);
+    filter: brightness(0.98);
+  }
+  46% {
+    transform: rotateY(96deg) translateY(-4px) scale(1.03);
+    filter: brightness(0.9);
+  }
+  54% {
+    transform: rotateY(84deg) translateY(-4px) scale(1.03);
+    filter: brightness(1.08);
   }
   to {
-    opacity: 1;
-    transform: rotateY(0deg) scale(1);
+    transform: rotateY(0deg) translateY(0) scale(1);
+    filter: brightness(1);
   }
 }
 
