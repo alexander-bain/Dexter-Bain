@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lucky Felt Casino</title>
+    <meta
+      name="description"
+      content="A simple green-table casino with blackjack, AI poker, and low-odds animated slots."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="casino-shell">
+      <header class="topbar">
+        <button class="brand-button" id="homeButton" type="button" aria-label="Go to game lobby">
+          <span class="brand-mark" aria-hidden="true">$</span>
+          <span>
+            <strong>Lucky Felt</strong>
+            <small>Simple Casino</small>
+          </span>
+        </button>
+
+        <div class="wallet" aria-live="polite">
+          <span>Bankroll</span>
+          <strong id="bankroll">$10,000</strong>
+        </div>
+
+        <button class="icon-button" id="resetButton" type="button" title="Reset bankroll" aria-label="Reset bankroll">
+          &#8635;
+        </button>
+      </header>
+
+      <main id="gameView" class="game-view" aria-live="polite"></main>
+    </div>
+
+    <div class="modal-backdrop is-hidden" id="chipModal" role="presentation">
+      <section
+        class="chip-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="chipModalTitle"
+        aria-describedby="chipModalDescription"
+      >
+        <div class="modal-heading">
+          <div>
+            <p class="eyebrow">Choose your chips</p>
+            <h2 id="chipModalTitle">Place your bet</h2>
+          </div>
+          <button class="icon-button ghost" id="chipCancelButton" type="button" aria-label="Close chip picker">
+            &times;
+          </button>
+        </div>
+
+        <p id="chipModalDescription" class="modal-copy">
+          Chip values are shown below. Pick how many chips you want to play this round.
+        </p>
+
+        <div class="chip-value-row" id="chipValueRow"></div>
+        <div class="chip-controls" id="chipControls"></div>
+
+        <div class="bet-summary">
+          <span>Total bet</span>
+          <strong id="betTotal">$0</strong>
+        </div>
+
+        <p class="bet-warning" id="betWarning" role="alert"></p>
+
+        <div class="modal-actions">
+          <button class="secondary-button" id="clearBetButton" type="button">Clear</button>
+          <button class="primary-button" id="confirmBetButton" type="button">Play round</button>
+        </div>
+      </section>
+    </div>
+
+    <script src="game.js"></script>
+  </body>
+</html>
