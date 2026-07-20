@@ -34,6 +34,14 @@ const SUITS = [
 
 const SLOT_SYMBOLS = ["7", "BAR", "BELL", "STAR", "CROWN", "CHERRY", "LEMON", "CLUB", "DIAMOND"];
 
+const POKER_SEATS = [
+  { id: "mike", name: "Mike", stack: 980, position: "top-left" },
+  { id: "alex", name: "Alex", stack: 1250, position: "top-center" },
+  { id: "jason", name: "Jason", stack: 1420, position: "top-right" },
+  { id: "tom", name: "Tom", stack: 1110, position: "bottom-left" },
+  { id: "ethan", name: "Ethan", stack: 870, position: "bottom-right" },
+];
+
 const state = {
   bankroll: loadBankroll(),
   view: "lobby",
@@ -85,17 +93,8 @@ view.addEventListener("click", (event) => {
   if (action === "hit") blackjackHit();
   if (action === "stand") blackjackStand();
   if (action === "new-bet") openChipModal(state.activeGame);
-  if (action === "poker-draw") pokerDraw();
+  if (action === "poker-showdown") pokerShowdown();
   if (action === "slot-spin-same") spinSlots(true);
-});
-
-view.addEventListener("click", (event) => {
-  const pokerCard = event.target.closest("[data-poker-index]");
-  if (!pokerCard || !state.poker || state.poker.phase !== "choose") return;
-
-  const index = Number(pokerCard.dataset.pokerIndex);
-  state.poker.held[index] = !state.poker.held[index];
-  renderPoker();
 });
 
 renderChipValues();
@@ -172,7 +171,7 @@ function renderLobby() {
         ${gameCard({
           action: "open-poker",
           title: "AI Poker",
-          copy: "Five-card draw against the house AI. Hold cards, draw once, then watch the AI reveal.",
+          copy: "A Hold'em-style table with five AI players, a center pot, shared cards, and a showdown reveal.",
           art: `<div class="mini-card-row"><span class="mini-card red">Q</span><span class="mini-card">Q</span><span class="mini-back"></span><span class="mini-back"></span></div>`,
           button: "Play poker",
         })}
@@ -335,7 +334,9 @@ function cardHtml(card, options = {}) {
     card.faceUp ? "face-up" : "face-down",
     card.motion === "deal" ? "is-dealing" : "",
     card.motion === "flip" ? "is-flipping" : "",
-    options.held ? "held" : "",
+    options.compact ? "compact-card" : "",
+    options.board ? "board-card" : "",
+    options.hero ? "hero-card" : "",
     options.clickable ? "clickable" : "",
   ].filter(Boolean).join(" ");
   const red = card.color === "red" ? "red-card" : "";
@@ -345,7 +346,6 @@ function cardHtml(card, options = {}) {
       <div class="card-face ${red}">
         <span class="card-rank">${card.rank}</span>
         <span class="card-suit">${card.suit}</span>
-        ${options.held ? `<span class="hold-tag">Held</span>` : ""}
       </div>
       <div class="card-back" aria-label="Face-down card"></div>
     </div>
@@ -601,82 +601,97 @@ function startPoker(bet) {
   spendBet(bet);
 
   const deck = makeDeck();
+  const seats = POKER_SEATS.map((seat) => ({
+    ...seat,
+    cards: [draw(deck), draw(deck)],
+    rank: null,
+  }));
+
   state.poker = {
     deck,
     bet,
     phase: "dealing",
-    player: Array.from({ length: 5 }, () => draw(deck)),
-    ai: Array.from({ length: 5 }, () => draw(deck)),
-    held: [false, false, false, false, false],
-    message: "Your cards are being dealt. The AI keeps its hand hidden.",
+    pot: bet * (seats.length + 1),
+    player: [draw(deck), draw(deck)],
+    community: Array.from({ length: 5 }, () => draw(deck)),
+    seats,
+    message: "Cards are sliding around the table. Your hand and the board will flip up first.",
     playerRank: null,
-    aiRank: null,
+    winningSeatIds: [],
   };
 
   const poker = state.poker;
   renderPoker();
-  poker.player.forEach((card, index) => {
+
+  const revealQueue = [
+    ...poker.player.map((card, index) => ({ card, delay: 360 + index * 260 })),
+    ...poker.community.map((card, index) => ({ card, delay: 980 + index * 290 })),
+  ];
+
+  revealQueue.forEach(({ card, delay }) => {
     window.setTimeout(() => {
       if (state.poker !== poker) return;
       revealCard(card);
       renderPoker();
-    }, 280 + index * 220);
+    }, delay);
   });
 
   window.setTimeout(() => {
     if (state.poker !== poker) return;
-    poker.phase = "choose";
-    poker.message = "Tap cards to hold them, then draw once.";
+    poker.phase = "showdown";
+    poker.message = "The board is set. Hit showdown to make the AI players reveal their cards.";
     renderPoker();
-  }, 1500);
+  }, 2600);
 }
 
 function renderPoker() {
   const poker = state.poker;
   if (!poker || state.activeGame !== "poker") return;
-  const playerRank = poker.playerRank || evaluatePokerHand(poker.player);
-  const aiLabel = poker.phase === "round-over" && poker.aiRank ? poker.aiRank.name : "Hidden";
+  const boardReady = poker.community.every((card) => card.faceUp);
+  const playerRank = poker.playerRank || (boardReady ? bestPokerHand([...poker.player, ...poker.community]) : { name: "Waiting for board" });
 
   view.innerHTML = `
     <section class="game-title">
-      <h1>AI Poker</h1>
-      <p>Five-card draw against the house AI. Hold what you like, then draw one time.</p>
+      <h1>AI Poker Table</h1>
+      <p>A simple Hold'em-style table with AI players, a shared board, a center pot, and your hand at the rail.</p>
     </section>
     <section class="game-layout">
-      <div class="table">
+      <div class="table poker-table-surface">
         <div class="table-header">
-          <span class="stake-pill">Stake on table: ${money(poker.bet)}</span>
-          <span class="score-pill">Your hand: ${playerRank.name}</span>
+          <span class="stake-pill">Your buy-in: ${money(poker.bet)}</span>
+          <span class="score-pill">Best hand: ${playerRank.name}</span>
         </div>
 
-        <div class="hand-zone">
-          <div class="hand-label">
-            <span>House AI</span>
-            <strong>${aiLabel}</strong>
-          </div>
-          <div class="card-row">
-            ${poker.ai.map((card, index) => cardHtml(card, { delay: index * 70 })).join("")}
-          </div>
-        </div>
+        <div class="poker-room" aria-label="Poker table">
+          <div class="poker-felt">
+            ${poker.seats.map((seat) => pokerSeatHtml(seat, poker)).join("")}
 
-        <div class="hand-zone">
-          <div class="hand-label">
-            <span>Your hand</span>
-            <strong>${playerRank.name}</strong>
-          </div>
-          <div class="card-row">
-            ${poker.player.map((card, index) => `
-              <button class="poker-card-button" type="button" data-poker-index="${index}" ${poker.phase === "choose" ? "" : "disabled"} aria-label="${poker.held[index] ? "Release" : "Hold"} card ${index + 1}">
-                ${cardHtml(card, { held: poker.held[index], clickable: poker.phase === "choose", delay: index * 70 })}
-              </button>
-            `).join("")}
+            <div class="poker-center">
+              <div class="poker-pot">Pot: ${money(poker.pot)}</div>
+              <div class="community-row" aria-label="Community cards">
+                ${poker.community.map((card, index) => cardHtml(card, { board: true, delay: index * 70 })).join("")}
+              </div>
+              <div class="table-chip-pile" aria-hidden="true">
+                ${pokerChipPile(24)}
+              </div>
+            </div>
+
+            <div class="hero-seat ${poker.winningSeatIds.includes("you") ? "is-winner" : ""}">
+              <div class="hero-cards">
+                ${poker.player.map((card, index) => cardHtml(card, { hero: true, delay: index * 80 })).join("")}
+              </div>
+              <div class="seat-label hero-label">
+                <strong>You</strong>
+                <span>${money(state.bankroll)}</span>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="message">${poker.message}</div>
 
         <div class="table-actions">
-          <button class="primary-button" type="button" data-action="poker-draw" ${poker.phase === "choose" ? "" : "disabled"}>Draw cards</button>
+          <button class="primary-button" type="button" data-action="poker-showdown" ${poker.phase === "showdown" ? "" : "disabled"}>Showdown</button>
           <button class="secondary-button" type="button" data-action="new-bet" ${poker.phase === "round-over" ? "" : "disabled"}>New bet</button>
           <button class="secondary-button" type="button" data-action="lobby">Lobby</button>
         </div>
@@ -685,64 +700,69 @@ function renderPoker() {
       <aside class="side-panel">
         ${chipInfoBox()}
         <section class="status-box">
-          <h3>AI Rules</h3>
-          <p>The AI holds pairs or better. With no pair, it keeps aces and kings, then draws.</p>
+          <h3>Poker Rules</h3>
+          <p>You and five AI players each get two cards. Best five-card hand using the shared board wins the pot.</p>
         </section>
       </aside>
     </section>
   `;
-  clearCardMotion([...poker.ai, ...poker.player]);
+  clearCardMotion([
+    ...poker.player,
+    ...poker.community,
+    ...poker.seats.flatMap((seat) => seat.cards),
+  ]);
 }
 
-function pokerDraw() {
+function pokerSeatHtml(seat, poker) {
+  const winnerClass = poker.winningSeatIds.includes(seat.id) ? "is-winner" : "";
+  const rankText = poker.phase === "round-over" && seat.rank ? seat.rank.name : "AI player";
+
+  return `
+    <div class="poker-seat seat-${seat.position} ${winnerClass}">
+      <div class="seat-label">
+        <strong>${seat.name}</strong>
+        <span>${money(seat.stack)}</span>
+      </div>
+      <div class="seat-cards" aria-label="${seat.name}'s cards">
+        ${seat.cards.map((card, index) => cardHtml(card, { compact: true, delay: index * 70 })).join("")}
+      </div>
+      <div class="seat-chip-stack" aria-hidden="true">
+        ${pokerChipPile(7)}
+      </div>
+      <small>${rankText}</small>
+    </div>
+  `;
+}
+
+function pokerChipPile(count) {
+  const colors = ["red", "blue", "green", "black", "gold"];
+  return Array.from({ length: count }, (_, index) => {
+    const color = colors[index % colors.length];
+    const chipX = ((index % 8) - 4) * 13;
+    const chipY = Math.floor(index / 8) * 8;
+    const chipRotation = ((index % 5) - 2) * 12;
+    return `<span class="felt-chip chip-dot-${color}" style="--chip-x:${chipX}px; --chip-y:${chipY}px; --chip-r:${chipRotation}deg"></span>`;
+  }).join("");
+}
+
+function pokerShowdown() {
   const poker = state.poker;
-  if (!poker || poker.phase !== "choose") return;
-  poker.phase = "drawing";
-  poker.message = "Cards are flipping. The AI is making its draw.";
-
-  poker.player = poker.player.map((card, index) => {
-    if (poker.held[index]) return card;
-    return draw(poker.deck, false);
-  });
-
-  const aiHold = chooseAiPokerHolds(poker.ai);
-  poker.ai = poker.ai.map((card, index) => {
-    if (aiHold[index]) return card;
-    return draw(poker.deck, false);
-  });
-
+  if (!poker || poker.phase !== "showdown") return;
+  poker.phase = "revealing";
+  poker.message = "The AI players are flipping their cards.";
   renderPoker();
 
-  poker.player.forEach((card, index) => {
-    if (poker.held[index]) return;
-    window.setTimeout(() => {
-      if (state.poker !== poker) return;
-      revealCard(card);
-      renderPoker();
-    }, 260 + index * 170);
-  });
-
-  window.setTimeout(() => {
-    if (state.poker !== poker) return;
-    poker.message = "Showdown. The AI reveals its cards.";
-    poker.ai.forEach((card, index) => {
+  poker.seats.forEach((seat, seatIndex) => {
+    seat.cards.forEach((card, cardIndex) => {
       window.setTimeout(() => {
         if (state.poker !== poker) return;
         revealCard(card);
         renderPoker();
-      }, index * 220);
+      }, 250 + seatIndex * 280 + cardIndex * 120);
     });
-    window.setTimeout(settlePoker, 1300);
-  }, 1250);
-}
-
-function chooseAiPokerHolds(cards) {
-  const counts = rankCounts(cards);
-  const hasMadeHand = Object.values(counts).some((count) => count >= 2);
-  return cards.map((card) => {
-    if (hasMadeHand) return counts[card.value] >= 2;
-    return card.value >= 13;
   });
+
+  window.setTimeout(settlePoker, 1950);
 }
 
 function rankCounts(cards) {
@@ -801,22 +821,61 @@ function comparePokerHands(left, right) {
   return 0;
 }
 
+function bestPokerHand(cards) {
+  let best = null;
+  for (let first = 0; first < cards.length - 4; first += 1) {
+    for (let second = first + 1; second < cards.length - 3; second += 1) {
+      for (let third = second + 1; third < cards.length - 2; third += 1) {
+        for (let fourth = third + 1; fourth < cards.length - 1; fourth += 1) {
+          for (let fifth = fourth + 1; fifth < cards.length; fifth += 1) {
+            const hand = evaluatePokerHand([
+              cards[first],
+              cards[second],
+              cards[third],
+              cards[fourth],
+              cards[fifth],
+            ]);
+            if (!best || comparePokerHands(hand, best) > 0) {
+              best = hand;
+            }
+          }
+        }
+      }
+    }
+  }
+  return best;
+}
+
 function settlePoker() {
   const poker = state.poker;
   if (!poker || state.activeGame !== "poker") return;
-  poker.playerRank = evaluatePokerHand(poker.player);
-  poker.aiRank = evaluatePokerHand(poker.ai);
-  poker.phase = "round-over";
-  const result = comparePokerHands(poker.playerRank, poker.aiRank);
+  poker.playerRank = bestPokerHand([...poker.player, ...poker.community]);
+  poker.seats.forEach((seat) => {
+    seat.rank = bestPokerHand([...seat.cards, ...poker.community]);
+  });
 
-  if (result > 0) {
-    pay(poker.bet * 2);
-    poker.message = `${poker.playerRank.name} beats ${poker.aiRank.name}. You win ${money(poker.bet)}.`;
-  } else if (result === 0) {
-    pay(poker.bet);
-    poker.message = `Both hands tie with ${poker.playerRank.name}. Your bet comes back.`;
+  const contenders = [
+    { id: "you", name: "You", rank: poker.playerRank },
+    ...poker.seats.map((seat) => ({ id: seat.id, name: seat.name, rank: seat.rank })),
+  ];
+
+  const best = contenders.reduce((leader, contender) => (
+    comparePokerHands(contender.rank, leader.rank) > 0 ? contender : leader
+  ));
+  const winners = contenders.filter((contender) => comparePokerHands(contender.rank, best.rank) === 0);
+  const userWon = winners.some((winner) => winner.id === "you");
+  poker.winningSeatIds = winners.map((winner) => winner.id);
+  poker.phase = "round-over";
+
+  if (userWon && winners.length === 1) {
+    pay(poker.pot);
+    poker.message = `You win the ${money(poker.pot)} pot with ${poker.playerRank.name}. Profit: ${money(poker.pot - poker.bet)}.`;
+  } else if (userWon) {
+    const payout = Math.floor(poker.pot / winners.length);
+    pay(payout);
+    poker.message = `Split pot with ${poker.playerRank.name}. You receive ${money(payout)}.`;
   } else {
-    poker.message = `${poker.aiRank.name} beats ${poker.playerRank.name}. You lose ${money(poker.bet)}.`;
+    poker.message = `${winners.map((winner) => winner.name).join(" and ")} wins with ${best.rank.name}. You lose ${money(poker.bet)}.`;
   }
   renderPoker();
 }
