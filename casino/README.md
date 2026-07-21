@@ -10,7 +10,7 @@ between games.
 ## Games
 
 - Blackjack with dealer play, hit/stand controls, and card flip animations.
-- Hold'em-style poker against five AI players at a green oval table.
+- Hold'em-style poker against five AI players, with a $10 ante, flop/turn/river betting, and call/raise chips.
 - Three-reel slots with low odds, sequential reel spinning, and payout rules.
 
 ## Chips
