@@ -703,6 +703,29 @@ button {
   font-weight: 850;
 }
 
+.poker-announcement {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 95, 95, 0.45);
+  border-radius: 8px;
+  color: #fff7df;
+  background: linear-gradient(90deg, rgba(125, 19, 19, 0.76), rgba(5, 35, 24, 0.82));
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
+}
+
+.poker-announcement strong {
+  font-size: clamp(0.98rem, 2vw, 1.2rem);
+}
+
+.poker-announcement span {
+  color: rgba(255, 247, 223, 0.78);
+}
+
 .community-row,
 .hero-cards,
 .seat-cards {
@@ -815,12 +838,32 @@ button {
 .poker-seat {
   position: absolute;
   z-index: 3;
+  isolation: isolate;
   display: grid;
   justify-items: center;
   gap: 8px;
   width: clamp(116px, 14vw, 158px);
   color: rgba(255, 247, 223, 0.78);
   text-align: center;
+}
+
+.poker-seat::before,
+.hero-seat::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  z-index: -1;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.poker-seat.is-turn::before,
+.hero-seat.is-turn::before {
+  border-color: #ff3b3b;
+  box-shadow:
+    0 0 0 4px rgba(255, 59, 59, 0.16),
+    0 0 24px rgba(255, 59, 59, 0.46);
 }
 
 .poker-seat small {
@@ -858,6 +901,28 @@ button {
   border-width: 3px;
 }
 
+.poker-seat.is-folded {
+  opacity: 0.62;
+}
+
+.poker-seat.is-folded .seat-chip-stack {
+  display: none;
+}
+
+.folded-marker {
+  display: grid;
+  place-items: center;
+  min-width: 68px;
+  min-height: 36px;
+  border: 1px solid rgba(255, 247, 223, 0.22);
+  border-radius: 8px;
+  color: rgba(255, 247, 223, 0.68);
+  background: rgba(0, 0, 0, 0.28);
+  font-size: 0.72rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
 .seat-top-left {
   top: 10%;
   left: 5%;
@@ -887,6 +952,7 @@ button {
 .hero-seat {
   position: absolute;
   z-index: 4;
+  isolation: isolate;
   left: 50%;
   bottom: 5%;
   display: grid;

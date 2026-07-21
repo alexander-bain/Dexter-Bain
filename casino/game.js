@@ -619,6 +619,9 @@ function startPoker() {
     ...seat,
     cards: [draw(deck), draw(deck)],
     rank: null,
+    folded: false,
+    streetBet: 0,
+    lastAction: "Waiting",
   }));
 
   state.poker = {
@@ -627,8 +630,12 @@ function startPoker() {
     street: "preflop",
     pot: 0,
     userInvested: 0,
+    userStreetBet: 0,
+    currentCall: 0,
     selectedRaise: 50,
     visibleCommunity: 0,
+    activeTurnId: null,
+    announcement: "Your cards are being dealt.",
     player: [draw(deck), draw(deck)],
     community: Array.from({ length: 5 }, () => draw(deck)),
     seats,
@@ -651,6 +658,8 @@ function startPoker() {
   window.setTimeout(() => {
     if (state.poker !== poker) return;
     poker.phase = "preflop-choice";
+    poker.activeTurnId = "you";
+    poker.announcement = "Your turn: play or fold";
     poker.message = "Play the hand for a $10 ante, or fold and wait for a new hand.";
     renderPoker();
   }, 1050);
@@ -673,6 +682,10 @@ function renderPoker() {
           <span class="stake-pill">Your money in hand: ${money(poker.userInvested)}</span>
           <span class="score-pill">Best hand: ${playerRank.name}</span>
         </div>
+        <div class="poker-announcement">
+          <strong>${poker.announcement}</strong>
+          <span>${pokerTurnHelp(poker)}</span>
+        </div>
 
         <div class="poker-room" aria-label="Poker table">
           <div class="poker-felt">
@@ -692,7 +705,7 @@ function renderPoker() {
               </div>
             </div>
 
-            <div class="hero-seat ${poker.winningSeatIds.includes("you") ? "is-winner" : ""}">
+            <div class="hero-seat ${poker.winningSeatIds.includes("you") ? "is-winner" : ""} ${poker.activeTurnId === "you" ? "is-turn" : ""}">
               <div class="hero-cards">
                 ${poker.player.map((card, index) => cardHtml(card, { hero: true, delay: index * 80 })).join("")}
               </div>
@@ -725,12 +738,26 @@ function renderPoker() {
   ]);
 }
 
+function pokerTurnHelp(poker) {
+  if (poker.phase === "preflop-choice") return `Choose Play to ante ${money(POKER_ANTE)}, or Fold.`;
+  if (["flop-action", "turn-action", "river-action"].includes(poker.phase)) {
+    return `Your options: fold, call ${money(poker.currentCall)}, or raise.`;
+  }
+  if (poker.activeTurnId && poker.activeTurnId !== "you") {
+    const seat = poker.seats.find((playerSeat) => playerSeat.id === poker.activeTurnId);
+    return seat ? `${seat.name} is deciding.` : "";
+  }
+  if (poker.phase === "round-over") return "Hand complete.";
+  return "Watch the table.";
+}
+
 function pokerActionTray(poker, playerRank) {
   const activeStreet = POKER_STREETS[poker.street];
   const canActOnStreet = ["flop-action", "turn-action", "river-action"].includes(poker.phase);
-  const raiseTotal = activeStreet ? activeStreet.call + poker.selectedRaise : 0;
+  const callAmount = canActOnStreet ? poker.currentCall : 0;
+  const raiseTotal = activeStreet ? poker.currentCall + poker.selectedRaise : 0;
   const canAnte = state.bankroll >= POKER_ANTE;
-  const canCall = activeStreet && state.bankroll >= activeStreet.call;
+  const canCall = activeStreet && state.bankroll >= callAmount;
   const canRaise = activeStreet && state.bankroll >= raiseTotal;
 
   if (poker.phase === "preflop-choice") {
@@ -753,7 +780,7 @@ function pokerActionTray(poker, playerRank) {
       <div class="poker-action-tray">
         <div class="action-copy">
           <strong>${activeStreet.label} action</strong>
-          <span>Call ${money(activeStreet.call)}, or choose chips to raise.</span>
+          <span>${poker.announcement}. Call ${money(callAmount)}, raise, or fold.</span>
         </div>
         <div class="raise-chip-row" aria-label="Raise chip selector">
           ${POKER_RAISE_CHIPS.map((amount) => `
@@ -770,8 +797,8 @@ function pokerActionTray(poker, playerRank) {
         </div>
         <div class="action-buttons">
           <button class="secondary-button" type="button" data-action="poker-fold">Fold</button>
-          <button class="secondary-button" type="button" data-action="poker-call" ${canCall ? "" : "disabled"}>Call ${money(activeStreet.call)}</button>
-          <button class="primary-button" type="button" data-action="poker-raise" ${canRaise ? "" : "disabled"}>Raise to ${money(raiseTotal)}</button>
+          <button class="secondary-button" type="button" data-action="poker-call" ${canCall ? "" : "disabled"}>Call ${money(callAmount)}</button>
+          <button class="primary-button" type="button" data-action="poker-raise" ${canRaise ? "" : "disabled"}>Call + raise to ${money(raiseTotal)}</button>
         </div>
       </div>
     `;
@@ -787,19 +814,25 @@ function pokerActionTray(poker, playerRank) {
 
 function pokerSeatHtml(seat, poker) {
   const winnerClass = poker.winningSeatIds.includes(seat.id) ? "is-winner" : "";
-  const rankText = poker.phase === "round-over" && seat.rank ? seat.rank.name : "AI player";
+  const turnClass = poker.activeTurnId === seat.id ? "is-turn" : "";
+  const foldedClass = seat.folded ? "is-folded" : "";
+  const rankText = seat.folded
+    ? "Folded"
+    : poker.phase === "round-over" && seat.rank
+      ? seat.rank.name
+      : seat.lastAction;
 
   return `
-    <div class="poker-seat seat-${seat.position} ${winnerClass}">
+    <div class="poker-seat seat-${seat.position} ${winnerClass} ${turnClass} ${foldedClass}">
       <div class="seat-label">
         <strong>${seat.name}</strong>
         <span>${money(seat.stack)}</span>
       </div>
       <div class="seat-cards" aria-label="${seat.name}'s cards">
-        ${seat.cards.map((card, index) => cardHtml(card, { compact: true, delay: index * 70 })).join("")}
+        ${seat.folded ? `<div class="folded-marker">Folded</div>` : seat.cards.map((card, index) => cardHtml(card, { compact: true, delay: index * 70 })).join("")}
       </div>
       <div class="seat-chip-stack" aria-hidden="true">
-        ${pokerChipPile(7)}
+        ${seat.folded ? "" : pokerChipPile(7)}
       </div>
       <small>${rankText}</small>
     </div>
@@ -827,7 +860,9 @@ function pokerPlayHand() {
   }
 
   pokerPostUserBet(POKER_ANTE);
-  pokerPotFromTable(POKER_ANTE);
+  pokerSeatsPostBet(POKER_ANTE);
+  poker.activeTurnId = null;
+  poker.announcement = `You played for ${money(POKER_ANTE)}`;
   poker.message = `You ante ${money(POKER_ANTE)}. The flop is coming out.`;
   dealPokerStreet("flop");
 }
@@ -836,7 +871,9 @@ function pokerFold() {
   const poker = state.poker;
   if (!poker || poker.phase === "round-over" || poker.phase === "dealing") return;
   poker.phase = "round-over";
+  poker.activeTurnId = null;
   poker.winningSeatIds = [];
+  poker.announcement = poker.userInvested > 0 ? `You folded` : "You folded before the ante";
   poker.message = poker.userInvested > 0
     ? `You folded and lost ${money(poker.userInvested)} from this hand.`
     : "You folded before the ante. No money lost.";
@@ -855,7 +892,7 @@ function pokerCommitBet(kind) {
   const street = POKER_STREETS[poker?.street];
   if (!poker || !street || !["flop-action", "turn-action", "river-action"].includes(poker.phase)) return;
 
-  const userAmount = kind === "raise" ? street.call + poker.selectedRaise : street.call;
+  const userAmount = kind === "raise" ? poker.currentCall + poker.selectedRaise : poker.currentCall;
   if (state.bankroll < userAmount) {
     poker.message = `You need ${money(userAmount)} to ${kind}.`;
     renderPoker();
@@ -863,19 +900,23 @@ function pokerCommitBet(kind) {
   }
 
   pokerPostUserBet(userAmount);
-  pokerPotFromTable(userAmount);
+  poker.userStreetBet += userAmount;
+  if (kind === "raise") poker.currentCall = userAmount;
 
   const actionText = kind === "raise"
-    ? `raised to ${money(userAmount)}`
+    ? `raised by ${money(poker.selectedRaise)}`
     : `called ${money(userAmount)}`;
-  poker.message = `You ${actionText}. The AI players call.`;
+  poker.activeTurnId = null;
+  poker.announcement = `You ${actionText}`;
+  poker.message = kind === "raise"
+    ? `You ${actionText}. The AI players decide whether to call or fold.`
+    : `You ${actionText}.`;
 
-  if (poker.street === "flop") {
-    window.setTimeout(() => dealPokerStreet("turn"), 450);
-  } else if (poker.street === "turn") {
-    window.setTimeout(() => dealPokerStreet("river"), 450);
+  if (kind === "raise") {
+    renderPoker();
+    window.setTimeout(() => runAiResponseToUserRaise(poker.selectedRaise), 450);
   } else {
-    window.setTimeout(pokerRevealShowdown, 450);
+    advanceAfterUserAction();
   }
   renderPoker();
 }
@@ -884,16 +925,28 @@ function pokerPostUserBet(amount) {
   const poker = state.poker;
   spendBet(amount);
   poker.userInvested += amount;
+  poker.pot += amount;
 }
 
-function pokerPotFromTable(userAmount) {
+function pokerSeatsPostBet(userAmount) {
   const poker = state.poker;
-  poker.pot += userAmount;
   poker.seats.forEach((seat) => {
+    if (seat.folded) return;
     const contribution = Math.min(userAmount, seat.stack);
     seat.stack -= contribution;
+    seat.streetBet += contribution;
+    seat.lastAction = `Called ${money(contribution)}`;
     poker.pot += contribution;
   });
+}
+
+function pokerCommitSeatBet(seat, amount) {
+  const poker = state.poker;
+  const contribution = Math.min(amount, seat.stack);
+  seat.stack -= contribution;
+  seat.streetBet += contribution;
+  poker.pot += contribution;
+  return contribution;
 }
 
 function dealPokerStreet(streetName) {
@@ -903,7 +956,15 @@ function dealPokerStreet(streetName) {
 
   poker.street = streetName;
   poker.phase = `${streetName}-dealing`;
+  poker.currentCall = street.call;
+  poker.userStreetBet = 0;
+  poker.activeTurnId = null;
+  poker.seats.forEach((seat) => {
+    seat.streetBet = 0;
+    if (!seat.folded) seat.lastAction = "Waiting";
+  });
   poker.visibleCommunity = street.cardCount;
+  poker.announcement = `${street.label} is dealing`;
   poker.message = `${street.label} cards are flipping onto the felt.`;
   renderPoker();
 
@@ -919,20 +980,182 @@ function dealPokerStreet(streetName) {
   const actionDelay = streetName === "flop" ? 1150 : 650;
   window.setTimeout(() => {
     if (state.poker !== poker) return;
-    poker.phase = `${streetName}-action`;
-    poker.message = `${street.label} is out. Fold, call ${money(street.call)}, or raise with the chips below.`;
-    renderPoker();
+    poker.message = `${street.label} is out. AI players are deciding.`;
+    runAiStreetActions(streetName);
   }, actionDelay);
+}
+
+function runAiStreetActions(streetName) {
+  const poker = state.poker;
+  const seats = poker?.seats.filter((seat) => !seat.folded) || [];
+  if (!poker) return;
+
+  let index = 0;
+  function nextSeat() {
+    if (state.poker !== poker) return;
+    if (index >= seats.length) {
+      if (poker.seats.every((seat) => seat.folded)) {
+        pokerWinByFold("Everyone folded before your action.");
+        return;
+      }
+      poker.activeTurnId = "you";
+      poker.phase = `${streetName}-action`;
+      poker.announcement = "Your turn";
+      poker.message = `${POKER_STREETS[streetName].label} action. Fold, call ${money(poker.currentCall)}, or raise.`;
+      renderPoker();
+      return;
+    }
+
+    const seat = seats[index];
+    index += 1;
+    if (seat.folded) {
+      nextSeat();
+      return;
+    }
+
+    poker.activeTurnId = seat.id;
+    poker.announcement = `${seat.name}'s turn`;
+    poker.message = `${seat.name} is deciding.`;
+    renderPoker();
+
+    window.setTimeout(() => {
+      if (state.poker !== poker) return;
+      const decision = chooseAiPokerDecision(seat, poker, false);
+      applyAiPokerDecision(seat, decision);
+      renderPoker();
+      window.setTimeout(nextSeat, 480);
+    }, 650);
+  }
+
+  nextSeat();
+}
+
+function runAiResponseToUserRaise(raiseBy) {
+  const poker = state.poker;
+  const seats = poker?.seats.filter((seat) => !seat.folded) || [];
+  if (!poker) return;
+
+  let index = 0;
+  function nextSeat() {
+    if (state.poker !== poker) return;
+    if (index >= seats.length) {
+      if (poker.seats.every((seat) => seat.folded)) {
+        pokerWinByFold("Everyone folded to your raise.");
+        return;
+      }
+      poker.activeTurnId = null;
+      poker.announcement = `AI players responded to your ${money(raiseBy)} raise`;
+      advanceAfterUserAction();
+      return;
+    }
+
+    const seat = seats[index];
+    index += 1;
+    poker.activeTurnId = seat.id;
+    poker.announcement = `${seat.name}'s turn`;
+    poker.message = `${seat.name} is deciding whether to call your raise.`;
+    renderPoker();
+
+    window.setTimeout(() => {
+      if (state.poker !== poker) return;
+      const shouldFold = Math.random() < 0.24 && poker.currentCall >= 75;
+      if (shouldFold) {
+        applyAiPokerDecision(seat, { type: "fold" });
+      } else {
+        const needed = Math.max(0, poker.userStreetBet - seat.streetBet);
+        applyAiPokerDecision(seat, { type: "call", amount: needed });
+      }
+      renderPoker();
+      window.setTimeout(nextSeat, 480);
+    }, 650);
+  }
+
+  nextSeat();
+}
+
+function chooseAiPokerDecision(seat, poker, respondingToRaise) {
+  const visibleBoard = poker.community.slice(0, poker.visibleCommunity);
+  const hand = visibleBoard.length >= 3 ? bestPokerHand([...seat.cards, ...visibleBoard]) : null;
+  const strength = hand ? hand.score : 0;
+  const foldChance = respondingToRaise ? 0.28 : Math.max(0.06, 0.34 - strength * 0.07);
+  const raiseChance = respondingToRaise ? 0 : 0.13 + strength * 0.035;
+
+  if (Math.random() < foldChance && strength < 2) return { type: "fold" };
+  if (seat.stack > poker.currentCall + 50 && Math.random() < raiseChance) {
+    const raiseOptions = [25, 50, 100].filter((amount) => seat.stack >= poker.currentCall + amount);
+    const raiseBy = raiseOptions[Math.floor(Math.random() * raiseOptions.length)] || 25;
+    return { type: "raise", raiseBy };
+  }
+  return { type: "call", amount: Math.max(0, poker.currentCall - seat.streetBet) };
+}
+
+function applyAiPokerDecision(seat, decision) {
+  const poker = state.poker;
+  if (!poker || seat.folded) return;
+
+  if (decision.type === "fold") {
+    seat.folded = true;
+    seat.cards.forEach((card) => {
+      card.faceUp = false;
+      card.motion = "";
+    });
+    seat.lastAction = "Folded";
+    poker.announcement = `${seat.name} folded`;
+    poker.message = `${seat.name} folded.`;
+    return;
+  }
+
+  if (decision.type === "raise") {
+    const newCall = poker.currentCall + decision.raiseBy;
+    const contribution = pokerCommitSeatBet(seat, Math.max(0, newCall - seat.streetBet));
+    poker.currentCall = newCall;
+    seat.lastAction = `Raised ${money(decision.raiseBy)}`;
+    poker.announcement = `${seat.name} raised by ${money(decision.raiseBy)}`;
+    poker.message = `${seat.name} raised by ${money(decision.raiseBy)}. At the bottom you can call, raise, or fold.`;
+    return;
+  }
+
+  const contribution = pokerCommitSeatBet(seat, decision.amount);
+  seat.lastAction = `Called ${money(contribution)}`;
+  poker.announcement = `${seat.name} called ${money(contribution)}`;
+  poker.message = `${seat.name} called.`;
+}
+
+function advanceAfterUserAction() {
+  const poker = state.poker;
+  if (!poker) return;
+
+  if (poker.street === "flop") {
+    window.setTimeout(() => dealPokerStreet("turn"), 450);
+  } else if (poker.street === "turn") {
+    window.setTimeout(() => dealPokerStreet("river"), 450);
+  } else {
+    window.setTimeout(pokerRevealShowdown, 450);
+  }
+}
+
+function pokerWinByFold(reason) {
+  const poker = state.poker;
+  if (!poker) return;
+  poker.phase = "round-over";
+  poker.activeTurnId = null;
+  poker.winningSeatIds = ["you"];
+  poker.announcement = "You win by fold";
+  pay(poker.pot);
+  poker.message = `${reason} You win the ${money(poker.pot)} pot.`;
+  renderPoker();
 }
 
 function pokerRevealShowdown() {
   const poker = state.poker;
   if (!poker) return;
   poker.phase = "revealing";
+  poker.activeTurnId = null;
+  poker.announcement = "Showdown";
   poker.message = "Final bets are in. The AI players are flipping their cards.";
   renderPoker();
 
-  poker.seats.forEach((seat, seatIndex) => {
+  poker.seats.filter((seat) => !seat.folded).forEach((seat, seatIndex) => {
     seat.cards.forEach((card, cardIndex) => {
       window.setTimeout(() => {
         if (state.poker !== poker) return;
@@ -1030,13 +1253,13 @@ function settlePoker() {
   const poker = state.poker;
   if (!poker || state.activeGame !== "poker") return;
   poker.playerRank = bestPokerHand([...poker.player, ...poker.community]);
-  poker.seats.forEach((seat) => {
+  poker.seats.filter((seat) => !seat.folded).forEach((seat) => {
     seat.rank = bestPokerHand([...seat.cards, ...poker.community]);
   });
 
   const contenders = [
     { id: "you", name: "You", rank: poker.playerRank },
-    ...poker.seats.map((seat) => ({ id: seat.id, name: seat.name, rank: seat.rank })),
+    ...poker.seats.filter((seat) => !seat.folded).map((seat) => ({ id: seat.id, name: seat.name, rank: seat.rank })),
   ];
 
   const best = contenders.reduce((leader, contender) => (
@@ -1046,15 +1269,19 @@ function settlePoker() {
   const userWon = winners.some((winner) => winner.id === "you");
   poker.winningSeatIds = winners.map((winner) => winner.id);
   poker.phase = "round-over";
+  poker.activeTurnId = null;
 
   if (userWon && winners.length === 1) {
     pay(poker.pot);
+    poker.announcement = `You won with ${poker.playerRank.name}`;
     poker.message = `You win the ${money(poker.pot)} pot with ${poker.playerRank.name}. Profit: ${money(poker.pot - poker.userInvested)}.`;
   } else if (userWon) {
     const payout = Math.floor(poker.pot / winners.length);
     pay(payout);
+    poker.announcement = `Split pot: ${poker.playerRank.name}`;
     poker.message = `Split pot with ${poker.playerRank.name}. You receive ${money(payout)}.`;
   } else {
+    poker.announcement = `${winners.map((winner) => winner.name).join(" and ")} won`;
     poker.message = `${winners.map((winner) => winner.name).join(" and ")} wins with ${best.rank.name}. You lose ${money(poker.userInvested)}.`;
   }
   renderPoker();
