@@ -42,12 +42,70 @@ const POKER_STREETS = {
 };
 const POKER_RAISE_CHIPS = [25, 50, 100, 250, 500];
 
+const POKER_PERSONALITIES = {
+  shark: {
+    label: "Aggressive",
+    sprite: "shark",
+    icon: "S",
+    aggression: 1.16,
+    bluff: 1.08,
+    tightness: 0.93,
+    callBias: 0.98,
+    raiseSize: 1.18,
+    random: 0.02,
+  },
+  bluff: {
+    label: "Bluff Master",
+    sprite: "mask",
+    icon: "B",
+    aggression: 1.08,
+    bluff: 1.2,
+    tightness: 0.98,
+    callBias: 0.94,
+    raiseSize: 1.08,
+    random: 0.03,
+  },
+  professor: {
+    label: "Tight & Smart",
+    sprite: "brain",
+    icon: "P",
+    aggression: 0.94,
+    bluff: 0.82,
+    tightness: 1.18,
+    callBias: 0.96,
+    raiseSize: 1,
+    random: 0.01,
+  },
+  lucky: {
+    label: "Wild Card",
+    sprite: "dice",
+    icon: "L",
+    aggression: 1.02,
+    bluff: 1.05,
+    tightness: 0.96,
+    callBias: 1.08,
+    raiseSize: 1.02,
+    random: 0.16,
+  },
+  grandma: {
+    label: "Safe Player",
+    sprite: "shield",
+    icon: "G",
+    aggression: 0.86,
+    bluff: 0.78,
+    tightness: 1.14,
+    callBias: 1.12,
+    raiseSize: 0.9,
+    random: 0.015,
+  },
+};
+
 const POKER_SEATS = [
-  { id: "mike", name: "Mike", stack: 980, position: "top-left" },
-  { id: "alex", name: "Alex", stack: 1250, position: "top-center" },
-  { id: "jason", name: "Jason", stack: 1420, position: "top-right" },
-  { id: "tom", name: "Tom", stack: 1110, position: "bottom-left" },
-  { id: "ethan", name: "Ethan", stack: 870, position: "bottom-right" },
+  { id: "shark-sam", name: "Shark Sam", stack: 1000, position: "top-left", personality: "shark", tablePosition: 1 },
+  { id: "bluffing-ben", name: "Bluffing Ben", stack: 1000, position: "top-center", personality: "bluff", tablePosition: 2 },
+  { id: "professor-penny", name: "Professor Penny", stack: 1000, position: "top-right", personality: "professor", tablePosition: 3 },
+  { id: "lucky-larry", name: "Lucky Larry", stack: 1000, position: "bottom-left", personality: "lucky", tablePosition: 4 },
+  { id: "grandma-grace", name: "Grandma Grace", stack: 1000, position: "bottom-right", personality: "grandma", tablePosition: 5 },
 ];
 
 const state = {
@@ -97,7 +155,7 @@ view.addEventListener("click", (event) => {
 
   if (action === "lobby") renderLobby();
   if (action === "open-blackjack") openChipModal("blackjack");
-  if (action === "open-poker") startPoker();
+  if (action === "open-poker" || action === "open-poker-ultima") startPoker();
   if (action === "open-slots") openChipModal("slots");
   if (action === "hit") blackjackHit();
   if (action === "stand") blackjackStand();
@@ -185,11 +243,11 @@ function renderLobby() {
           button: "Play blackjack",
         })}
         ${gameCard({
-          action: "open-poker",
-          title: "AI Poker",
-          copy: "A Hold'em-style table with five AI players, a center pot, shared cards, and a showdown reveal.",
-          art: `<div class="mini-card-row"><span class="mini-card red">Q</span><span class="mini-card">Q</span><span class="mini-back"></span><span class="mini-back"></span></div>`,
-          button: "Play poker",
+          action: "open-poker-ultima",
+          title: "Poker Ultima",
+          copy: "Texas Hold'em with bot personalities, turn rings, bluffing, folds, raises, and flop-turn-river action.",
+          art: `<div class="mini-card-row"><span class="mini-card red">A</span><span class="mini-card">K</span><span class="mini-back"></span><span class="mini-back"></span></div>`,
+          button: "Play Poker Ultima",
         })}
         ${gameCard({
           action: "open-slots",
@@ -221,7 +279,7 @@ function openChipModal(game) {
 
   const gameName = {
     blackjack: "Blackjack",
-    poker: "AI Poker",
+    poker: "Poker Ultima",
     slots: "Low-Odds Slots",
   }[game];
 
@@ -360,10 +418,29 @@ function cardHtml(card, options = {}) {
   return `
     <div class="${classes}" style="animation-delay:${options.delay || 0}ms">
       <div class="card-face ${red}">
-        <span class="card-rank">${card.rank}</span>
-        <span class="card-suit">${card.suit}</span>
+        <span class="card-corner card-corner-top"><strong>${card.rank}</strong><span>${card.suit}</span></span>
+        ${cardCenterHtml(card)}
+        <span class="card-corner card-corner-bottom"><strong>${card.rank}</strong><span>${card.suit}</span></span>
       </div>
       <div class="card-back" aria-label="Face-down card"></div>
+    </div>
+  `;
+}
+
+function cardCenterHtml(card) {
+  if (["J", "Q", "K"].includes(card.rank)) {
+    return `
+      <div class="face-card-sprite" aria-hidden="true">
+        <strong>${card.rank}</strong>
+        <span>${card.suit}</span>
+      </div>
+    `;
+  }
+
+  const pipCount = card.rank === "A" ? 1 : Math.min(Number(card.rank), 10);
+  return `
+    <div class="card-pips pip-count-${pipCount}" aria-hidden="true">
+      ${Array.from({ length: pipCount }, () => `<span>${card.suit}</span>`).join("")}
     </div>
   `;
 }
@@ -619,6 +696,7 @@ function startPoker() {
     ...seat,
     cards: [draw(deck), draw(deck)],
     rank: null,
+    profile: POKER_PERSONALITIES[seat.personality],
     folded: false,
     streetBet: 0,
     lastAction: "Waiting",
@@ -673,8 +751,8 @@ function renderPoker() {
 
   view.innerHTML = `
     <section class="game-title">
-      <h1>AI Poker Table</h1>
-      <p>See your cards, ante $10 to play, then call or raise after the flop, turn, and river.</p>
+      <h1>Poker Ultima</h1>
+      <p>Texas Hold'em with AI personalities, card sprites, bot sprites, and flop-turn-river betting.</p>
     </section>
     <section class="game-layout">
       <div class="table poker-table-surface">
@@ -727,6 +805,21 @@ function renderPoker() {
         <section class="status-box">
           <h3>Poker Rules</h3>
           <p>Play costs a $10 ante. The board reveals as flop, turn, river. You can fold, call, or raise after each street.</p>
+        </section>
+        <section class="status-box hand-ranks">
+          <h3>Hand Ranks</h3>
+          <ol>
+            <li>Royal flush</li>
+            <li>Straight flush</li>
+            <li>Four of a kind</li>
+            <li>Full house</li>
+            <li>Flush</li>
+            <li>Straight</li>
+            <li>Three of a kind</li>
+            <li>Two pair</li>
+            <li>Pair</li>
+            <li>High card</li>
+          </ol>
         </section>
       </aside>
     </section>
@@ -816,6 +909,7 @@ function pokerSeatHtml(seat, poker) {
   const winnerClass = poker.winningSeatIds.includes(seat.id) ? "is-winner" : "";
   const turnClass = poker.activeTurnId === seat.id ? "is-turn" : "";
   const foldedClass = seat.folded ? "is-folded" : "";
+  const profile = seat.profile || POKER_PERSONALITIES[seat.personality];
   const rankText = seat.folded
     ? "Folded"
     : poker.phase === "round-over" && seat.rank
@@ -824,9 +918,11 @@ function pokerSeatHtml(seat, poker) {
 
   return `
     <div class="poker-seat seat-${seat.position} ${winnerClass} ${turnClass} ${foldedClass}">
+      <div class="bot-sprite sprite-${profile.sprite}" aria-hidden="true">${profile.icon}</div>
       <div class="seat-label">
         <strong>${seat.name}</strong>
-        <span>${money(seat.stack)}</span>
+        <span>${profile.label}</span>
+        <em>${money(seat.stack)}</em>
       </div>
       <div class="seat-cards" aria-label="${seat.name}'s cards">
         ${seat.folded ? `<div class="folded-marker">Folded</div>` : seat.cards.map((card, index) => cardHtml(card, { compact: true, delay: index * 70 })).join("")}
@@ -1058,13 +1154,8 @@ function runAiResponseToUserRaise(raiseBy) {
 
     window.setTimeout(() => {
       if (state.poker !== poker) return;
-      const shouldFold = Math.random() < 0.24 && poker.currentCall >= 75;
-      if (shouldFold) {
-        applyAiPokerDecision(seat, { type: "fold" });
-      } else {
-        const needed = Math.max(0, poker.userStreetBet - seat.streetBet);
-        applyAiPokerDecision(seat, { type: "call", amount: needed });
-      }
+      const decision = chooseAiPokerDecision(seat, poker, true);
+      applyAiPokerDecision(seat, decision);
       renderPoker();
       window.setTimeout(nextSeat, 480);
     }, 650);
@@ -1076,17 +1167,83 @@ function runAiResponseToUserRaise(raiseBy) {
 function chooseAiPokerDecision(seat, poker, respondingToRaise) {
   const visibleBoard = poker.community.slice(0, poker.visibleCommunity);
   const hand = visibleBoard.length >= 3 ? bestPokerHand([...seat.cards, ...visibleBoard]) : null;
-  const strength = hand ? hand.score : 0;
-  const foldChance = respondingToRaise ? 0.28 : Math.max(0.06, 0.34 - strength * 0.07);
-  const raiseChance = respondingToRaise ? 0 : 0.13 + strength * 0.035;
+  const profile = seat.profile || POKER_PERSONALITIES[seat.personality];
+  const strength = estimatePokerStrength(seat, visibleBoard, hand);
+  const potOdds = poker.currentCall / Math.max(poker.pot + poker.currentCall, 1);
+  const stackPressure = poker.currentCall / Math.max(seat.stack, 1);
+  const latePositionBonus = seat.tablePosition >= 4 ? 0.04 : seat.tablePosition === 3 ? 0.02 : 0;
+  const randomWobble = (Math.random() - 0.5) * profile.random;
+  const drawingHand = hasPokerDraw(seat.cards, visibleBoard);
 
-  if (Math.random() < foldChance && strength < 2) return { type: "fold" };
+  let foldChance = 0.34 + potOdds * 0.34 + stackPressure * 0.28 - strength * 0.54 - latePositionBonus;
+  let raiseChance = 0.08 + strength * 0.34 + latePositionBonus;
+
+  foldChance *= profile.tightness;
+  foldChance /= profile.callBias;
+  raiseChance *= profile.aggression;
+
+  if (drawingHand) {
+    raiseChance += 0.05 * profile.bluff;
+    foldChance -= 0.04;
+  }
+  if (strength < 0.34) raiseChance += 0.05 * (profile.bluff - 1);
+  if (respondingToRaise) {
+    raiseChance = 0;
+    foldChance += 0.08;
+  }
+
+  foldChance = clamp(foldChance + randomWobble, 0.04, 0.72);
+  raiseChance = clamp(raiseChance + Math.max(0, randomWobble), 0.02, 0.48);
+
+  if (strength > 0.76) foldChance = Math.min(foldChance, 0.08);
+  if (strength < 0.24 && potOdds > 0.22) foldChance = Math.max(foldChance, 0.34);
+
+  if (Math.random() < foldChance && strength < 0.62) return { type: "fold" };
   if (seat.stack > poker.currentCall + 50 && Math.random() < raiseChance) {
-    const raiseOptions = [25, 50, 100].filter((amount) => seat.stack >= poker.currentCall + amount);
-    const raiseBy = raiseOptions[Math.floor(Math.random() * raiseOptions.length)] || 25;
+    const baseOptions = [25, 50, 100, 150].filter((amount) => seat.stack >= poker.currentCall + amount);
+    const preferredIndex = Math.min(baseOptions.length - 1, Math.max(0, Math.floor((strength + (profile.raiseSize - 1)) * baseOptions.length)));
+    const raiseBy = baseOptions[preferredIndex] || 25;
     return { type: "raise", raiseBy };
   }
   return { type: "call", amount: Math.max(0, poker.currentCall - seat.streetBet) };
+}
+
+function estimatePokerStrength(seat, visibleBoard, hand) {
+  if (!visibleBoard.length) {
+    const [first, second] = seat.cards;
+    const highCard = Math.max(first.value, second.value);
+    const pairBonus = first.value === second.value ? 0.34 : 0;
+    const suitedBonus = first.suit === second.suit ? 0.04 : 0;
+    const connectedBonus = Math.abs(first.value - second.value) <= 2 ? 0.04 : 0;
+    return clamp((highCard - 2) / 12 * 0.38 + pairBonus + suitedBonus + connectedBonus, 0.08, 0.88);
+  }
+
+  const madeHand = hand ? hand.score / 8 : 0;
+  const highCard = Math.max(...seat.cards.map((card) => card.value));
+  const kicker = (highCard - 2) / 12 * 0.12;
+  const drawBonus = hasPokerDraw(seat.cards, visibleBoard) ? 0.12 : 0;
+  return clamp(0.12 + madeHand * 0.78 + kicker + drawBonus, 0.06, 0.96);
+}
+
+function hasPokerDraw(holeCards, visibleBoard) {
+  if (visibleBoard.length < 3) return false;
+  const cards = [...holeCards, ...visibleBoard];
+  const suitCounts = cards.reduce((counts, card) => {
+    counts[card.suit] = (counts[card.suit] || 0) + 1;
+    return counts;
+  }, {});
+  if (Object.values(suitCounts).some((count) => count >= 4)) return true;
+
+  const values = [...new Set(cards.flatMap((card) => card.value === 14 ? [14, 1] : [card.value]))].sort((a, b) => a - b);
+  for (let index = 0; index <= values.length - 4; index += 1) {
+    const windowValues = values.slice(index, index + 4);
+    if (windowValues[3] - windowValues[0] <= 4) return true;
+  }
+  return false;
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
 }
 
 function applyAiPokerDecision(seat, decision) {

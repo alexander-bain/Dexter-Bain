@@ -588,17 +588,77 @@ button {
   color: var(--red);
 }
 
-.card-rank {
+.card-corner {
   position: absolute;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 0;
+  font-size: 0.78rem;
+  font-weight: 950;
+  line-height: 0.92;
+}
+
+.card-corner-top {
   top: 7px;
   left: 8px;
-  font-size: 0.95rem;
+}
+
+.card-corner-bottom {
+  right: 8px;
+  bottom: 7px;
+  transform: rotate(180deg);
+}
+
+.card-corner span {
+  font-size: 0.9rem;
+}
+
+.card-pips {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  place-items: center;
+  width: 62%;
+  min-height: 58%;
+  color: inherit;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.pip-count-1 {
+  grid-template-columns: 1fr;
+  font-size: 2.35rem;
+}
+
+.pip-count-2,
+.pip-count-3,
+.pip-count-4 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pip-count-5,
+.pip-count-7,
+.pip-count-8 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.face-card-sprite {
+  display: grid;
+  place-items: center;
+  width: 54%;
+  height: 52%;
+  border: 2px solid currentColor;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.56), transparent 48%),
+    rgba(0, 0, 0, 0.05);
+  font-size: 1.45rem;
   font-weight: 950;
 }
 
-.card-suit {
-  font-size: clamp(1.9rem, 4vw, 3rem);
-  font-weight: 950;
+.face-card-sprite span {
+  margin-top: -4px;
+  font-size: 1.2rem;
 }
 
 .card-back {
@@ -780,19 +840,46 @@ button {
   border-radius: 6px;
 }
 
-.board-card .card-rank,
-.hero-card .card-rank {
-  font-size: clamp(0.78rem, 1.6vw, 0.95rem);
+.board-card .card-corner,
+.hero-card .card-corner {
+  font-size: 0.72rem;
 }
 
-.compact-card .card-rank {
+.compact-card .card-corner {
   top: 4px;
   left: 5px;
-  font-size: 0.62rem;
+  font-size: 0.52rem;
 }
 
-.compact-card .card-suit {
-  font-size: clamp(1rem, 2vw, 1.55rem);
+.compact-card .card-corner-bottom {
+  right: 5px;
+  bottom: 4px;
+  left: auto;
+  top: auto;
+}
+
+.compact-card .card-corner span {
+  font-size: 0.55rem;
+}
+
+.compact-card .card-pips {
+  width: 58%;
+  font-size: 0.78rem;
+}
+
+.compact-card .pip-count-1 {
+  font-size: 1.25rem;
+}
+
+.compact-card .face-card-sprite {
+  width: 50%;
+  height: 46%;
+  border-width: 1px;
+  font-size: 0.78rem;
+}
+
+.compact-card .face-card-sprite span {
+  font-size: 0.76rem;
 }
 
 .table-chip-pile {
@@ -873,20 +960,87 @@ button {
   font-weight: 750;
 }
 
+.bot-sprite {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  overflow: hidden;
+  border: 3px solid rgba(255, 247, 223, 0.68);
+  border-radius: 50%;
+  color: #fff7df;
+  background: linear-gradient(160deg, #2e6c64, #12352d);
+  box-shadow:
+    inset 0 0 0 4px rgba(0, 0, 0, 0.18),
+    0 12px 22px rgba(0, 0, 0, 0.34);
+  font-size: 1.25rem;
+  font-weight: 950;
+}
+
+.bot-sprite::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 2px solid rgba(255, 247, 223, 0.58);
+  border-radius: var(--sprite-radius, 50%);
+  opacity: 0.72;
+  transform: rotate(var(--sprite-tilt, 0deg));
+}
+
+.sprite-shark {
+  --sprite-radius: 70% 48% 56% 42%;
+  --sprite-tilt: -14deg;
+  background: linear-gradient(160deg, #1f6d7f, #0d2631);
+}
+
+.sprite-mask {
+  --sprite-radius: 50% 50% 42% 42%;
+  background: linear-gradient(160deg, #8653c6, #24183f);
+}
+
+.sprite-brain {
+  --sprite-radius: 42% 58% 44% 56%;
+  --sprite-tilt: 8deg;
+  background: linear-gradient(160deg, #4b8fbf, #162f45);
+}
+
+.sprite-dice {
+  --sprite-radius: 8px;
+  --sprite-tilt: 9deg;
+  background: linear-gradient(160deg, #c74c47, #441818);
+}
+
+.sprite-shield {
+  --sprite-radius: 50% 50% 48% 48% / 36% 36% 66% 66%;
+  background: linear-gradient(160deg, #d09c35, #47310e);
+}
+
 .seat-label {
   min-width: 112px;
   padding: 8px 14px;
 }
 
 .seat-label strong,
-.seat-label span {
+.seat-label span,
+.seat-label em {
   display: block;
   line-height: 1.15;
 }
 
 .seat-label span {
   margin-top: 4px;
-  color: rgba(255, 247, 223, 0.92);
+  color: rgba(255, 247, 223, 0.66);
+  font-size: 0.66rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.seat-label em {
+  margin-top: 3px;
+  color: #55f078;
+  font-style: normal;
+  font-weight: 900;
 }
 
 .seat-chip-stack {
@@ -973,6 +1127,8 @@ button {
 
 .hero-label span {
   color: #55f078;
+  font-size: 1rem;
+  text-transform: none;
 }
 
 .poker-seat.is-winner .seat-label,
@@ -1068,6 +1224,16 @@ button {
   outline: 3px solid #ffe391;
   outline-offset: 3px;
   transform: translateY(-2px);
+}
+
+.hand-ranks ol {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.28;
 }
 
 .slot-machine {
