@@ -5,51 +5,375 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Describe a game idea. Turn it into a clean Codex prompt."
+      content="A beginner-friendly workspace for planning projects and creating clean Codex prompts."
     />
-    <meta name="theme-color" content="#f4f6f8" />
-    <title>Dexter's Vibe Lab</title>
+    <meta name="theme-color" content="#f2f4f7" />
+    <title>Dexter's Vibe Lab — Version 2</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="lab">
-      <div class="brand" aria-label="Dexter's Vibe Lab">
-        <span class="brand-mark" aria-hidden="true">D</span>
-        <h1>Dexter's Vibe Lab</h1>
+    <a class="skip-link" href="#workspace">Skip to workspace</a>
+
+    <header class="app-header">
+      <div class="header-left">
+        <button
+          class="icon-button sidebar-toggle"
+          id="sidebarToggle"
+          type="button"
+          aria-label="Open projects"
+          title="Open projects"
+        >
+          <span aria-hidden="true">&#9776;</span>
+        </button>
+        <a class="brand" href="#workspace" aria-label="Dexter's Vibe Lab home">
+          <span class="brand-mark" aria-hidden="true">D</span>
+          <span class="brand-name">Dexter's Vibe Lab</span>
+          <span class="version-chip">V2</span>
+        </a>
       </div>
 
-      <form class="chatbar" id="ideaForm">
-        <label class="sr-only" for="ideaInput">Describe your game idea</label>
-        <textarea
-          id="ideaInput"
-          name="idea"
-          rows="1"
-          maxlength="2000"
-          placeholder="Describe the game you want to make..."
-          autocomplete="off"
-          required
-        ></textarea>
-        <button class="send-button" type="submit" aria-label="Create prompt" title="Create prompt">
-          <span aria-hidden="true">↑</span>
+      <div class="header-project" aria-live="polite">
+        <span class="header-project-label">Current project</span>
+        <strong id="headerProjectName">No project open</strong>
+      </div>
+
+      <button
+        class="control-toggle"
+        id="commandToggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="commandBar"
+      >
+        <span>Controls</span>
+        <span class="chevron" aria-hidden="true">&#8964;</span>
+      </button>
+    </header>
+
+    <section class="command-bar" id="commandBar" aria-hidden="true">
+      <div class="command-inner">
+        <div class="command-heading">
+          <span class="command-kicker">Control center</span>
+          <strong>Quick project actions</strong>
+        </div>
+        <div class="command-actions">
+          <button type="button" data-command="new">
+            <span class="command-icon" aria-hidden="true">+</span>
+            New Project
+          </button>
+          <button type="button" data-command="restart">
+            <span class="command-icon" aria-hidden="true">&#8635;</span>
+            Restart Current
+          </button>
+          <button class="danger-command" type="button" data-command="delete">
+            <span class="command-icon" aria-hidden="true">&#215;</span>
+            Delete Current
+          </button>
+          <button type="button" data-command="undo">
+            <span class="command-icon" aria-hidden="true">&#8617;</span>
+            Undo Last Change
+          </button>
+          <button type="button" data-command="export">
+            <span class="command-icon" aria-hidden="true">&#8595;</span>
+            Export Prompt
+          </button>
+          <button type="button" data-command="settings">
+            <span class="command-icon" aria-hidden="true">&#9881;</span>
+            Settings
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="app-layout">
+      <button
+        class="sidebar-backdrop"
+        id="sidebarBackdrop"
+        type="button"
+        aria-label="Close projects"
+        tabindex="-1"
+      ></button>
+
+      <aside class="project-sidebar" id="projectSidebar" aria-label="Saved projects">
+        <div class="sidebar-heading">
+          <div>
+            <p class="eyebrow">Workspace</p>
+            <h2>Projects</h2>
+          </div>
+          <button
+            class="square-button"
+            id="newProjectButton"
+            type="button"
+            aria-label="New project"
+            title="New project"
+          >
+            +
+          </button>
+        </div>
+
+        <div class="project-list" id="projectList" aria-live="polite"></div>
+
+        <div class="sidebar-footer">
+          <span class="local-dot" aria-hidden="true"></span>
+          <span>Saved privately on this device</span>
+        </div>
+      </aside>
+
+      <main class="workspace" id="workspace">
+        <section class="workspace-top">
+          <div class="workspace-title-row">
+            <div>
+              <div class="mode-line">
+                <span class="mode-badge" id="modeBadge">Build mode</span>
+                <span class="context-label" id="contextLabel">Start a new project</span>
+              </div>
+              <h1 id="workspaceTitle">What should we build?</h1>
+              <p id="workspaceSummary">
+                Describe an idea naturally. Vibe Lab will plan it, save it, and prepare a
+                clean prompt for Codex.
+              </p>
+            </div>
+            <button class="text-button improve-button" id="improveProjectButton" type="button" hidden>
+              Improve this project
+            </button>
+          </div>
+
+          <form class="composer" id="ideaForm">
+            <label class="sr-only" for="ideaInput">Describe what you want to build or change</label>
+            <textarea
+              id="ideaInput"
+              name="idea"
+              rows="3"
+              maxlength="2400"
+              placeholder="Describe what you want to build or change…"
+              autocomplete="off"
+              required
+            ></textarea>
+            <div class="composer-footer">
+              <div class="composer-meta">
+                <span class="auto-dot" aria-hidden="true"></span>
+                <span>Auto-detects projects and Vibe Lab changes</span>
+                <span class="character-count" id="characterCount">0 / 2400</span>
+              </div>
+              <button class="primary-button submit-button" id="submitIdea" type="submit">
+                <span>Plan Project</span>
+                <span aria-hidden="true">&#8594;</span>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <section class="process-section" aria-labelledby="processTitle">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Build process</p>
+              <h2 id="processTitle">From idea to Codex-ready</h2>
+            </div>
+            <div class="progress-number" id="progressNumber">0%</div>
+          </div>
+
+          <div
+            class="progress-track"
+            id="progressTrack"
+            role="progressbar"
+            aria-label="Project planning progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <span id="progressFill"></span>
+          </div>
+
+          <div class="process-grid" id="processGrid"></div>
+        </section>
+
+        <section class="brief-section" id="briefSection" hidden>
+          <div class="section-header compact-header">
+            <div>
+              <p class="eyebrow">Project brief</p>
+              <h2 id="briefName">Project name</h2>
+            </div>
+            <span class="status-badge" id="briefStatus">Ready for Codex</span>
+          </div>
+          <div class="brief-grid">
+            <div class="brief-block">
+              <span class="brief-label">Goal</span>
+              <p id="briefGoal"></p>
+            </div>
+            <div class="brief-block">
+              <span class="brief-label">Design direction</span>
+              <p id="briefDesign"></p>
+            </div>
+            <div class="brief-block brief-wide">
+              <span class="brief-label">Feature list</span>
+              <ul id="briefFeatures"></ul>
+            </div>
+            <div class="brief-block brief-wide">
+              <span class="brief-label">Files</span>
+              <div class="file-list" id="briefFiles"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="self-edit-section" id="selfEditSection" hidden>
+          <div class="self-edit-heading">
+            <div>
+              <p class="eyebrow">Self-edit mode</p>
+              <h2>You are editing Dexter's Vibe Lab</h2>
+            </div>
+            <span class="risk-badge" id="riskBadge">Low risk</span>
+          </div>
+
+          <div class="self-edit-layout">
+            <div class="change-plan">
+              <div class="plan-row">
+                <span>Requested change</span>
+                <strong id="requestedChange"></strong>
+              </div>
+              <div class="plan-row">
+                <span>Planned UI changes</span>
+                <ul id="plannedChanges"></ul>
+              </div>
+              <div class="plan-row">
+                <span>Affected sections</span>
+                <div class="affected-list" id="affectedSections"></div>
+              </div>
+              <div class="checkpoint-row">
+                <span class="checkpoint-icon" aria-hidden="true">&#10003;</span>
+                <div>
+                  <strong>Undo checkpoint ready</strong>
+                  <p id="checkpointText">The current version will stay available in history.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="change-preview">
+              <div class="preview-label">
+                <span>Preview mockup</span>
+                <span>Simulation only</span>
+              </div>
+              <div class="preview-browser">
+                <div class="preview-top">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="preview-app">
+                  <div class="preview-sidebar" id="previewSidebar">
+                    <i></i><i></i><i></i><i></i>
+                  </div>
+                  <div class="preview-main">
+                    <div class="preview-bar" id="previewBar"></div>
+                    <div class="preview-lines">
+                      <i></i><i></i><i></i>
+                    </div>
+                    <div class="preview-panel" id="previewPanel"></div>
+                  </div>
+                </div>
+              </div>
+              <p id="previewCaption">A safe layout preview of the requested change.</p>
+            </div>
+          </div>
+
+          <div class="self-edit-actions">
+            <button class="secondary-button" id="cancelChange" type="button">Cancel</button>
+            <button class="primary-button" id="applyChange" type="button">Apply Change</button>
+          </div>
+          <p class="apply-explainer">
+            Apply Change approves the plan and prepares the Codex prompt. It does not rewrite
+            or publish the live website.
+          </p>
+        </section>
+
+        <div class="results-grid" id="resultsGrid" hidden>
+          <section class="prompt-section">
+            <div class="section-header compact-header">
+              <div>
+                <p class="eyebrow">Codex handoff</p>
+                <h2>Generated prompt</h2>
+              </div>
+              <span class="version-label" id="promptVersion">Version 1</span>
+            </div>
+            <textarea
+              class="prompt-output"
+              id="generatedPrompt"
+              readonly
+              aria-label="Generated Codex prompt"
+            ></textarea>
+            <button class="primary-button copy-prompt-button" id="copyPrompt" type="button">
+              Copy Codex Prompt
+            </button>
+          </section>
+
+          <section class="history-section">
+            <div class="section-header compact-header">
+              <div>
+                <p class="eyebrow">Undo and restore</p>
+                <h2>Version history</h2>
+              </div>
+              <span class="history-count" id="historyCount">0 versions</span>
+            </div>
+            <div class="history-list" id="historyList"></div>
+            <div class="next-version" id="nextVersion"></div>
+          </section>
+        </div>
+
+        <section class="safety-strip" aria-label="Safety limits">
+          <strong>Safe by design</strong>
+          <span>Confirm before delete</span>
+          <span>Undo before overwrite</span>
+          <span>No browser API keys</span>
+          <span>No generated code execution</span>
+          <span>AI is simulated</span>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="settings-dialog" id="settingsDialog">
+      <form method="dialog" id="settingsForm">
+        <div class="dialog-header">
+          <div>
+            <p class="eyebrow">Workspace</p>
+            <h2>Settings</h2>
+          </div>
+          <button
+            class="icon-button close-dialog"
+            value="cancel"
+            type="submit"
+            aria-label="Close settings"
+            title="Close settings"
+          >
+            &#215;
+          </button>
+        </div>
+
+        <label class="settings-field">
+          <span>Default device</span>
+          <select id="defaultDevice" name="defaultDevice">
+            <option value="all">Desktop, iPad, and phone</option>
+            <option value="desktop">Desktop</option>
+            <option value="ipad">iPad</option>
+            <option value="phone">Phone</option>
+          </select>
+        </label>
+
+        <label class="toggle-field">
+          <span>
+            <strong>Compact workspace</strong>
+            <small>Show more information on screen.</small>
+          </span>
+          <input id="compactMode" name="compactMode" type="checkbox" />
+        </label>
+
+        <label class="toggle-field">
+          <span>
+            <strong>Open prompt after planning</strong>
+            <small>Move focus to the generated prompt.</small>
+          </span>
+          <input id="focusPrompt" name="focusPrompt" type="checkbox" checked />
+        </label>
+
+        <button class="primary-button save-settings" value="save" type="submit">
+          Save Settings
         </button>
       </form>
-    </main>
-
-    <dialog class="prompt-dialog" id="promptDialog">
-      <div class="dialog-header">
-        <h2>Your Codex prompt</h2>
-        <button class="close-button" id="closeDialog" type="button" aria-label="Close" title="Close">
-          ×
-        </button>
-      </div>
-      <textarea
-        class="prompt-output"
-        id="generatedPrompt"
-        readonly
-        aria-label="Generated Codex prompt"
-      ></textarea>
-      <button class="copy-button" id="copyPrompt" type="button">Copy Prompt</button>
-      <p class="review-note">Games are reviewed before publishing.</p>
     </dialog>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
