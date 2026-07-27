@@ -1,250 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dexter's Vibe Lab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
       content="Describe a game idea. Turn it into a clean Codex prompt."
     />
+    <meta name="theme-color" content="#f4f6f8" />
+    <title>Dexter's Vibe Lab</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="site-hero">
-      <nav class="topbar" aria-label="Primary">
-        <a class="brand" href="#top" aria-label="Dexter's Vibe Lab home">
-          <span class="brand-mark" aria-hidden="true">D</span>
-          <span>Dexter's Vibe Lab</span>
-        </a>
-        <div class="nav-actions">
-          <a href="#savedIdeas">Saved Ideas</a>
-          <a href="#rules">Review Rules</a>
-        </div>
-      </nav>
-
-      <div class="hero-grid" id="top">
-        <section class="hero-copy" aria-labelledby="heroTitle">
-          <p class="eyebrow">Version 0.1</p>
-          <h1 id="heroTitle">Dexter's Vibe Lab</h1>
-          <p class="hero-description">
-            Describe a game idea. Turn it into a clean Codex prompt.
-          </p>
-          <div class="hero-actions">
-            <a class="primary-link" href="#builder">Start Building</a>
-            <a class="secondary-link" href="#savedIdeas">Review Ideas</a>
-          </div>
-        </section>
-
-        <aside class="lab-preview" aria-label="Prompt preview illustration">
-          <div class="preview-toolbar">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div class="preview-window">
-            <div class="mini-game-card arcade">
-              <span class="mini-icon" aria-hidden="true"></span>
-              <strong>Arcade</strong>
-            </div>
-            <div class="mini-game-card puzzle">
-              <span class="mini-icon" aria-hidden="true"></span>
-              <strong>Puzzle</strong>
-            </div>
-            <div class="prompt-lines" aria-hidden="true">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <div class="approval-strip">
-              <span class="check-dot" aria-hidden="true"></span>
-              <span>Reviewed before publishing</span>
-            </div>
-          </div>
-        </aside>
+    <main class="lab">
+      <div class="brand" aria-label="Dexter's Vibe Lab">
+        <span class="brand-mark" aria-hidden="true">D</span>
+        <h1>Dexter's Vibe Lab</h1>
       </div>
-    </header>
 
-    <main>
-      <section class="builder-band" id="builder">
-        <div class="section-heading">
-          <p class="eyebrow">Prompt Builder</p>
-          <h2>Shape the game idea</h2>
-        </div>
-
-        <div class="builder-layout">
-          <form class="idea-form tool-card" id="ideaForm">
-            <div class="field-group full">
-              <label for="gameTitle">Game title</label>
-              <input
-                id="gameTitle"
-                name="gameTitle"
-                type="text"
-                placeholder="Skyline Skater"
-                autocomplete="off"
-                required
-              />
-            </div>
-
-            <div class="field-group full">
-              <label for="basicIdea">Basic idea</label>
-              <textarea
-                id="basicIdea"
-                name="basicIdea"
-                rows="5"
-                placeholder="A quick game where the player..."
-                required
-              ></textarea>
-            </div>
-
-            <div class="field-group">
-              <label for="gameType">Game type</label>
-              <select id="gameType" name="gameType">
-                <option value="arcade">Arcade</option>
-                <option value="sports">Sports</option>
-                <option value="puzzle">Puzzle</option>
-                <option value="strategy">Strategy</option>
-                <option value="funny">Funny</option>
-                <option value="3D">3D</option>
-                <option value="simulator">Simulator</option>
-              </select>
-            </div>
-
-            <div class="field-group">
-              <label for="visualStyle">Visual style</label>
-              <input
-                id="visualStyle"
-                name="visualStyle"
-                type="text"
-                placeholder="Bright neon, cozy pixel, clean 3D..."
-                required
-              />
-            </div>
-
-            <div class="field-group">
-              <label for="controls">Controls</label>
-              <input
-                id="controls"
-                name="controls"
-                type="text"
-                placeholder="Arrow keys, tap, swipe, drag..."
-                required
-              />
-            </div>
-
-            <div class="field-group">
-              <label for="device">Device</label>
-              <select id="device" name="device">
-                <option value="all">All</option>
-                <option value="desktop">Desktop</option>
-                <option value="iPad">iPad</option>
-                <option value="phone">Phone</option>
-              </select>
-            </div>
-
-            <fieldset class="field-group full difficulty-field">
-              <legend>Difficulty</legend>
-              <label>
-                <input type="radio" name="difficulty" value="simple" checked />
-                <span>Simple</span>
-              </label>
-              <label>
-                <input type="radio" name="difficulty" value="medium" />
-                <span>Medium</span>
-              </label>
-              <label>
-                <input type="radio" name="difficulty" value="ambitious" />
-                <span>Ambitious</span>
-              </label>
-            </fieldset>
-
-            <div class="field-group full">
-              <label for="specialFeature">One special feature</label>
-              <input
-                id="specialFeature"
-                name="specialFeature"
-                type="text"
-                placeholder="Boss level, daily challenge, funny physics..."
-                required
-              />
-            </div>
-
-            <p class="status-message" id="safetyMessage" role="status"></p>
-
-            <button class="action-button create-button" type="submit">
-              Create Prompt
-            </button>
-          </form>
-
-          <section class="prompt-panel tool-card" aria-labelledby="promptTitle">
-            <div class="panel-header">
-              <div>
-                <p class="eyebrow">Generated Prompt</p>
-                <h2 id="promptTitle">Ready for Codex</h2>
-              </div>
-              <span class="pill" id="promptState">Draft</span>
-            </div>
-            <textarea
-              id="generatedPrompt"
-              class="prompt-output"
-              readonly
-              placeholder="Your Codex prompt will appear here."
-              aria-label="Generated Codex prompt"
-            ></textarea>
-            <button class="action-button copy-button" id="copyPrompt" type="button">
-              Copy Prompt
-            </button>
-          </section>
-        </div>
-      </section>
-
-      <section class="rules-band" id="rules">
-        <div class="section-heading">
-          <p class="eyebrow">Safety Rules</p>
-          <h2>Games are reviewed before publishing.</h2>
-        </div>
-        <div class="rules-grid">
-          <article class="rule-card">
-            <span class="rule-symbol" aria-hidden="true">$</span>
-            <h3>No real money gambling</h3>
-            <p>Ideas involving cash betting, crypto wagers, or payouts are blocked.</p>
-          </article>
-          <article class="rule-card">
-            <span class="rule-symbol" aria-hidden="true">C</span>
-            <h3>No copied copyrighted characters</h3>
-            <p>Original characters, worlds, teams, and brands keep the lab clean.</p>
-          </article>
-          <article class="rule-card">
-            <span class="rule-symbol" aria-hidden="true">!</span>
-            <h3>No unsafe or inappropriate games</h3>
-            <p>Prompts avoid harmful, hateful, sexual, or dangerous content.</p>
-          </article>
-          <article class="rule-card">
-            <span class="rule-symbol" aria-hidden="true">P</span>
-            <h3>No automatic publishing</h3>
-            <p>Generated prompts must keep publishing as a separate reviewed step.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="saved-band" id="savedIdeas">
-        <div class="saved-header">
-          <div>
-            <p class="eyebrow">Admin Review</p>
-            <h2>Saved ideas</h2>
-          </div>
-          <button class="ghost-button" id="clearIdeas" type="button">
-            Clear All
-          </button>
-        </div>
-        <div class="saved-list" id="savedList" aria-live="polite"></div>
-      </section>
+      <form class="chatbar" id="ideaForm">
+        <label class="sr-only" for="ideaInput">Describe your game idea</label>
+        <textarea
+          id="ideaInput"
+          name="idea"
+          rows="1"
+          maxlength="2000"
+          placeholder="Describe the game you want to make..."
+          autocomplete="off"
+          required
+        ></textarea>
+        <button class="send-button" type="submit" aria-label="Create prompt" title="Create prompt">
+          <span aria-hidden="true">↑</span>
+        </button>
+      </form>
     </main>
 
-    <footer class="site-footer">
-      <p>Dexter's Vibe Lab keeps Version 0.1 local, reviewable, and beginner-friendly.</p>
-    </footer>
+    <dialog class="prompt-dialog" id="promptDialog">
+      <div class="dialog-header">
+        <h2>Your Codex prompt</h2>
+        <button class="close-button" id="closeDialog" type="button" aria-label="Close" title="Close">
+          ×
+        </button>
+      </div>
+      <textarea
+        class="prompt-output"
+        id="generatedPrompt"
+        readonly
+        aria-label="Generated Codex prompt"
+      ></textarea>
+      <button class="copy-button" id="copyPrompt" type="button">Copy Prompt</button>
+      <p class="review-note">Games are reviewed before publishing.</p>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script src="script.js"></script>
   </body>

@@ -1,309 +1,191 @@
 const STORAGE_KEY = "dexters-vibe-lab-ideas-v01";
 
 const form = document.querySelector("#ideaForm");
+const ideaInput = document.querySelector("#ideaInput");
+const promptDialog = document.querySelector("#promptDialog");
 const generatedPrompt = document.querySelector("#generatedPrompt");
 const copyPromptButton = document.querySelector("#copyPrompt");
-const promptState = document.querySelector("#promptState");
-const safetyMessage = document.querySelector("#safetyMessage");
-const savedList = document.querySelector("#savedList");
-const clearIdeasButton = document.querySelector("#clearIdeas");
+const closeDialogButton = document.querySelector("#closeDialog");
+const toast = document.querySelector("#toast");
 
 const restrictedPatterns = [
   {
-    label: "real money gambling",
-    test: /\b(real money|cash bet|cash betting|bet money|crypto bet|crypto betting|wager|payout|casino for money|gambl(e|ing) for money)\b/i,
+    label: "real-money gambling",
+    test: /\b(real money|cash bet|bet money|crypto bet|wager|cash payout|gambling for money)\b/i,
   },
   {
-    label: "copied copyrighted characters",
+    label: "a copied copyrighted character or brand",
     test: /\b(mario|pokemon|pikachu|disney|mickey|marvel|spider-?man|batman|sonic|zelda|minecraft|fortnite|star wars|harry potter|spongebob)\b/i,
   },
   {
-    label: "unsafe or inappropriate games",
-    test: /\b(sexual|porn|nude|hate crime|racist|slur|self-harm|suicide|terror|school shooting|mass shooting|doxx|drug dealing)\b/i,
+    label: "unsafe or inappropriate content",
+    test: /\b(porn|sexual game|hate crime|racist game|self-harm|school shooting|mass shooting|doxx)\b/i,
   },
   {
     label: "automatic publishing",
-    test: /\b(auto publish|automatically publish|publish without review|skip review|go live automatically|deploy automatically)\b/i,
+    test: /\b(auto publish|automatically publish|publish without review|skip review|deploy automatically)\b/i,
   },
 ];
 
-copyPromptButton.disabled = true;
+let toastTimer;
+
+function cleanIdea(value) {
+  return String(value || "").trim().replace(/\n{3,}/g, "\n\n");
+}
+
+function findSafetyIssue(idea) {
+  return restrictedPatterns.find((rule) => rule.test.test(idea));
+}
+
+function createPrompt(idea) {
+  return `You are Codex, acting as a senior game developer and thoughtful product designer.
+
+Build Version 0.1 of a polished browser game based on this idea:
+
+"${idea}"
+
+First, interpret the idea and make sensible beginner-friendly decisions about the game type, visual style, controls, and scope. Do not stop to ask questions unless a missing detail truly prevents the game from working.
+
+Build requirements:
+- Use plain HTML, CSS, and JavaScript.
+- Make the game playable as a static website.
+- Support desktop, iPad, and phone with responsive, touch-friendly controls.
+- Include a clear start state, active gameplay, feedback such as score or progress, an end state, and a restart action.
+- Give the game a distinct visual identity that fits the idea.
+- Keep Version 0.1 focused, satisfying, and realistic to finish.
+
+Do not add yet:
+- No real AI connections or AI-generated content.
+- No paid APIs, accounts, payments, ads, crypto, NFTs, or real-money gambling.
+- No copied copyrighted characters, logos, brands, worlds, or music.
+- No unsafe, hateful, sexual, or inappropriate content.
+- No automatic publishing or deployment.
+
+Code quality:
+- Organize the project as index.html, styles.css, and script.js.
+- Use clear names and small, focused functions.
+- Keep game state, input, updates, rendering, and restart logic easy to follow.
+- Avoid unnecessary frameworks, build tools, and dependencies.
+- Add comments only where they explain important logic.
+- Make sure the layout does not overlap or break on small screens.
+- Test the main game flow before finishing.
+
+At the end, briefly explain what was built, how to run it, and what Version 0.2 should add next.`;
+}
 
 function getSavedIdeas() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  } catch (error) {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    return Array.isArray(saved) ? saved : [];
+  } catch {
     return [];
   }
 }
 
-function setSavedIdeas(ideas) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(ideas));
-}
-
-function getFormData() {
-  const data = new FormData(form);
-
-  return {
-    id: createIdeaId(),
-    gameTitle: cleanValue(data.get("gameTitle")),
-    basicIdea: cleanValue(data.get("basicIdea")),
-    gameType: cleanValue(data.get("gameType")),
-    visualStyle: cleanValue(data.get("visualStyle")),
-    controls: cleanValue(data.get("controls")),
-    device: cleanValue(data.get("device")),
-    difficulty: cleanValue(data.get("difficulty")),
-    specialFeature: cleanValue(data.get("specialFeature")),
+function saveIdea(idea, prompt) {
+  const savedIdeas = getSavedIdeas();
+  const record = {
+    id: globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`,
+    gameTitle: idea.slice(0, 64),
+    basicIdea: idea,
+    gameType: "chat",
+    device: "all",
+    difficulty: "simple",
+    prompt,
     createdAt: new Date().toISOString(),
   };
+
+  savedIdeas.unshift(record);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(savedIdeas.slice(0, 20)));
 }
 
-function cleanValue(value) {
-  return String(value || "").trim().replace(/\s+/g, " ");
+function resizeInput() {
+  ideaInput.style.height = "auto";
+  ideaInput.style.height = `${Math.min(ideaInput.scrollHeight, 190)}px`;
 }
 
-function createIdeaId() {
-  if (globalThis.crypto && typeof globalThis.crypto.randomUUID === "function") {
-    return globalThis.crypto.randomUUID();
-  }
+function showToast(message, isError = false) {
+  window.clearTimeout(toastTimer);
+  toast.textContent = message;
+  toast.classList.toggle("is-error", isError);
+  toast.classList.add("is-visible");
 
-  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  toastTimer = window.setTimeout(() => {
+    toast.classList.remove("is-visible");
+  }, 2800);
 }
 
-function findSafetyIssue(idea) {
-  const searchableText = Object.values(idea).join(" ");
-  return restrictedPatterns.find((rule) => rule.test.test(searchableText));
-}
-
-function generatePrompt(idea) {
-  const scopeLine = getScopeLine(idea.difficulty);
-  const deviceLine = getDeviceLine(idea.device);
-
-  return `You are Codex, acting as a senior game developer and careful product builder.
-
-Build Version 0.1 of a browser game called "${idea.gameTitle}".
-
-Game concept:
-${idea.basicIdea}
-
-Game type:
-${idea.gameType}
-
-Visual style:
-${idea.visualStyle}
-
-Controls:
-${idea.controls}
-
-Target device:
-${deviceLine}
-
-Difficulty target:
-${scopeLine}
-
-Special feature:
-${idea.specialFeature}
-
-Tech requirements:
-- Use plain HTML, CSS, and JavaScript.
-- Keep the project static and browser-based.
-- Organize the code into clear sections or files.
-- Make the game work on desktop, iPad, and phone when possible.
-- Use responsive layout, readable text, and touch-friendly controls.
-- Store only simple local game state in localStorage if needed.
-
-Features to include:
-- A playable first version with a clear start state, active gameplay, and end state.
-- A short title screen or intro panel.
-- A score, timer, lives, progress, or similar feedback that matches the idea.
-- Simple visual polish, motion, and sound placeholders only if they are easy to keep clean.
-- The special feature above as a visible part of Version 0.1.
-
-Do not add yet:
-- Do not connect real AI.
-- Do not use paid APIs.
-- Do not add accounts, payments, ads, real money gambling, crypto, or NFTs.
-- Do not copy copyrighted characters, worlds, logos, or brands.
-- Do not include unsafe, hateful, sexual, or inappropriate content.
-- Do not auto-publish or deploy the game.
-
-Code quality:
-- Keep the code beginner-friendly and easy to read.
-- Use meaningful names for functions, variables, and UI elements.
-- Separate setup, input handling, game state, rendering, and restart logic.
-- Avoid unnecessary frameworks, build tools, or dependencies.
-- Add short comments only where they help explain important logic.
-- Finish with a brief explanation of how to run the game locally and what to improve in Version 0.2.`;
-}
-
-function getScopeLine(difficulty) {
-  const scope = {
-    simple: "Simple: keep the first version small, polished, and easy to finish.",
-    medium: "Medium: add a few satisfying mechanics while keeping the code manageable.",
-    ambitious: "Ambitious: make it feel impressive, but still ship a stable Version 0.1.",
-  };
-
-  return scope[difficulty] || scope.simple;
-}
-
-function getDeviceLine(device) {
-  const devices = {
-    desktop: "Desktop browsers with keyboard or mouse controls.",
-    iPad: "iPad Safari with large touch targets and comfortable portrait/landscape support.",
-    phone: "Phone browsers with thumb-friendly controls and compact layout.",
-    all: "Desktop, iPad, and phone with responsive controls.",
-  };
-
-  return devices[device] || devices.all;
-}
-
-function saveIdea(idea, prompt) {
-  const ideas = getSavedIdeas();
-  const savedIdea = {
-    ...idea,
-    prompt,
-  };
-
-  ideas.unshift(savedIdea);
-  setSavedIdeas(ideas.slice(0, 20));
-  renderSavedIdeas();
-}
-
-function renderSavedIdeas() {
-  const ideas = getSavedIdeas();
-  savedList.innerHTML = "";
-
-  if (!ideas.length) {
-    const empty = document.createElement("p");
-    empty.className = "empty-state";
-    empty.textContent = "No saved ideas yet.";
-    savedList.append(empty);
-    return;
-  }
-
-  ideas.forEach((idea) => {
-    const card = document.createElement("article");
-    card.className = "saved-card";
-
-    const title = document.createElement("h3");
-    title.textContent = idea.gameTitle;
-
-    const meta = document.createElement("div");
-    meta.className = "saved-meta";
-    meta.innerHTML = `
-      <span>${escapeHtml(idea.gameType)}</span>
-      <span>${escapeHtml(idea.device)}</span>
-      <span>${escapeHtml(idea.difficulty)}</span>
-    `;
-
-    const description = document.createElement("p");
-    description.textContent = idea.basicIdea;
-
-    const actions = document.createElement("div");
-    actions.className = "saved-actions";
-
-    const loadButton = document.createElement("button");
-    loadButton.className = "small-button";
-    loadButton.type = "button";
-    loadButton.textContent = "Load";
-    loadButton.addEventListener("click", () => loadSavedIdea(idea));
-
-    const copyButton = document.createElement("button");
-    copyButton.className = "small-button";
-    copyButton.type = "button";
-    copyButton.textContent = "Copy Prompt";
-    copyButton.addEventListener("click", () => copyText(idea.prompt, copyButton));
-
-    actions.append(loadButton, copyButton);
-    card.append(meta, title, description, actions);
-    savedList.append(card);
-  });
-}
-
-function loadSavedIdea(idea) {
-  generatedPrompt.value = idea.prompt;
-  promptState.textContent = "Loaded";
-  copyPromptButton.disabled = false;
-  safetyMessage.textContent = `Loaded "${idea.gameTitle}" from saved ideas.`;
-  safetyMessage.classList.remove("is-error");
-  document.querySelector("#promptTitle").scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-async function copyText(text, button) {
-  if (!text.trim()) {
-    return;
-  }
-
+async function copyPrompt() {
   try {
-    await navigator.clipboard.writeText(text);
-    flashButton(button, "Copied");
-  } catch (error) {
-    generatedPrompt.value = text;
-    promptState.textContent = "Selected";
+    await navigator.clipboard.writeText(generatedPrompt.value);
+    copyPromptButton.textContent = "Copied";
+    showToast("Prompt copied.");
+  } catch {
     generatedPrompt.focus();
     generatedPrompt.select();
-    flashButton(button, "Select Prompt");
+    copyPromptButton.textContent = "Prompt selected";
+    showToast("Press Copy to copy the selected prompt.");
+  }
+
+  window.setTimeout(() => {
+    copyPromptButton.textContent = "Copy Prompt";
+  }, 1600);
+}
+
+function openPrompt(prompt) {
+  generatedPrompt.value = prompt;
+
+  if (typeof promptDialog.showModal === "function") {
+    promptDialog.showModal();
+  } else {
+    promptDialog.setAttribute("open", "");
   }
 }
 
-function flashButton(button, label) {
-  const originalLabel = button.textContent;
-  button.textContent = label;
-  window.setTimeout(() => {
-    button.textContent = originalLabel;
-  }, 1400);
+function closePrompt() {
+  promptDialog.close();
+  ideaInput.focus();
 }
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const idea = getFormData();
+  const idea = cleanIdea(ideaInput.value);
+
+  if (!idea) {
+    ideaInput.focus();
+    return;
+  }
+
   const issue = findSafetyIssue(idea);
-
   if (issue) {
-    promptState.textContent = "Blocked";
-    safetyMessage.textContent = `This idea was not saved because it appears to include ${issue.label}.`;
-    safetyMessage.classList.add("is-error");
+    showToast(`Please remove ${issue.label} and try again.`, true);
     return;
   }
 
-  const prompt = generatePrompt(idea);
-  generatedPrompt.value = prompt;
-  promptState.textContent = "Ready";
-  copyPromptButton.disabled = false;
-  safetyMessage.textContent = "Prompt created and saved for review.";
-  safetyMessage.classList.remove("is-error");
+  const prompt = createPrompt(idea);
   saveIdea(idea, prompt);
+  openPrompt(prompt);
 });
 
-copyPromptButton.addEventListener("click", () => {
-  copyText(generatedPrompt.value, copyPromptButton);
-});
+ideaInput.addEventListener("input", resizeInput);
 
-clearIdeasButton.addEventListener("click", () => {
-  const ideas = getSavedIdeas();
-
-  if (!ideas.length) {
-    return;
-  }
-
-  const shouldClear = window.confirm("Clear all saved ideas from this device?");
-
-  if (shouldClear) {
-    setSavedIdeas([]);
-    renderSavedIdeas();
-    safetyMessage.textContent = "Saved ideas cleared from this device.";
-    safetyMessage.classList.remove("is-error");
+ideaInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {
+    event.preventDefault();
+    form.requestSubmit();
   }
 });
 
-renderSavedIdeas();
+copyPromptButton.addEventListener("click", copyPrompt);
+closeDialogButton.addEventListener("click", closePrompt);
+
+promptDialog.addEventListener("click", (event) => {
+  if (event.target === promptDialog) {
+    closePrompt();
+  }
+});
+
+promptDialog.addEventListener("cancel", () => {
+  window.setTimeout(() => ideaInput.focus(), 0);
+});
