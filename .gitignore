@@ -1,0 +1,5 @@
+.DS_Store
+node_modules/
+.pnpm-store/
+skip-for-wishes-src/node_modules/
+skip-for-wishes-src/*.tsbuildinfo
