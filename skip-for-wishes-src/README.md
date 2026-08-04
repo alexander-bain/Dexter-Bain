@@ -8,13 +8,12 @@ Edit `public/config.js`, then rebuild the site. The same file is copied to `../s
 
 ```js
 window.skipForWishesConfig = {
-  fundraiserUrl: "https://official-make-a-wish-fundraiser-link.example",
+  fundraiserUrl: "https://wish.org/donate-make-wish-today",
   raised: 0,
-  goal: 100000,
+  goal: 10000,
   donors: 0,
   lastUpdated: "August 3, 2026"
 };
 ```
 
 All Donate Now buttons use `fundraiserUrl`. Keep donations on the official Make-A-Wish fundraising page.
-

@@ -346,15 +346,15 @@ function App() {
         </section>
 
         <section
-          id="official-make-a-wish-fundraiser-link-coming-soon"
+          id="donate"
           className="bg-sky-700 px-5 py-18 text-white sm:px-8 sm:py-24"
         >
           <div className="reveal mx-auto max-w-4xl text-center">
             <BadgeDollarSign className="mx-auto h-12 w-12 text-amber-300" aria-hidden="true" />
             <h2 className="mt-6 text-3xl font-black sm:text-5xl">Ready to help grant more wishes?</h2>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-sky-50">
-              Donations will go directly through the official Make-A-Wish fundraising page as soon as Dexter adds the
-              official link.
+              Donations go directly through the official Make-A-Wish donation page, where every gift is securely
+              handled by Make-A-Wish.
             </p>
             <DonateButton tone="light" className="mt-8 w-full sm:w-auto" />
           </div>
