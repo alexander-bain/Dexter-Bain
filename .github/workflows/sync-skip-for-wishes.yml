@@ -1,0 +1,44 @@
+name: Sync Skip for Wishes progress
+
+on:
+  schedule:
+    - cron: "3,18,33,48 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-skip-for-wishes-progress
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Sync official campaign progress
+        run: node scripts/sync-skip-for-wishes.mjs
+
+      - name: Publish updated progress
+        run: |
+          if git diff --quiet -- skip-for-wishes/config.js skip-for-wishes-src/public/config.js; then
+            echo "Skip for Wishes progress is already current."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add skip-for-wishes/config.js skip-for-wishes-src/public/config.js
+          git commit -m "Sync Skip for Wishes progress"
+          git pull --rebase origin main
+          git push origin HEAD:main

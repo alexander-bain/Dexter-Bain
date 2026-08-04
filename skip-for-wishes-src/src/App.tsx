@@ -152,7 +152,7 @@ function App() {
     { label: "Current Raised", value: <AnimatedMoney value={raised} />, icon: TrendingUp },
     { label: "Goal", value: formatCurrency(goal), icon: Goal },
     { label: "Percent Complete", value: percentLabel, icon: Star },
-    { label: "Number of Donors", value: <AnimatedNumber value={fundraisingConfig.donors} />, icon: Users }
+    { label: "Donors (editable)", value: <AnimatedNumber value={fundraisingConfig.donors} />, icon: Users }
   ];
 
   return (
@@ -342,6 +342,9 @@ function App() {
                 );
               })}
             </div>
+            <p className="reveal mt-6 text-center text-sm font-semibold text-slate-500">
+              Raised amount and goal are automatically synced from the official Make-A-Wish campaign. Last update: {fundraisingConfig.lastUpdated}.
+            </p>
           </div>
         </section>
 
@@ -353,8 +356,8 @@ function App() {
             <BadgeDollarSign className="mx-auto h-12 w-12 text-amber-300" aria-hidden="true" />
             <h2 className="mt-6 text-3xl font-black sm:text-5xl">Ready to help grant more wishes?</h2>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-sky-50">
-              Donations go directly through the official Make-A-Wish donation page, where every gift is securely
-              handled by Make-A-Wish.
+              Donations go directly through the official Skip for Wishes campaign page, where every gift is securely
+              handled and tracked by Make-A-Wish.
             </p>
             <DonateButton tone="light" className="mt-8 w-full sm:w-auto" />
           </div>
