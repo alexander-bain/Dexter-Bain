@@ -15,7 +15,7 @@ const dryRun = process.argv.includes("--dry-run");
 function parseConfig(source) {
   const trimmed = source.trim();
   if (!trimmed.startsWith(configPrefix) || !trimmed.endsWith(";")) {
-    throw new Error("Skip for Wishes config has an unexpected format.");
+    throw new Error("Make a Wish config has an unexpected format.");
   }
   return JSON.parse(trimmed.slice(configPrefix.length, -1));
 }
@@ -63,7 +63,7 @@ const participants = Array.isArray(participantValue)
 const participant = participants.find((item) => String(item.consId) === "11514783");
 
 if (!participant) {
-  throw new Error("The Skip for Wishes Make-A-Wish campaign was not found.");
+  throw new Error("The Make a Wish campaign was not found.");
 }
 
 const personalPageUrl = new URL(participant.personalPageUrl);
@@ -110,6 +110,6 @@ for (const configPath of configPaths) {
 
 console.log(
   changed
-    ? `Synced Skip for Wishes: $${raised.toLocaleString("en-US")} raised of $${goal.toLocaleString("en-US")}.`
-    : "Skip for Wishes progress is already current."
+    ? `Synced Make a Wish: $${raised.toLocaleString("en-US")} raised of $${goal.toLocaleString("en-US")}.`
+    : "Make a Wish progress is already current."
 );

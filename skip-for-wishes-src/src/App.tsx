@@ -170,11 +170,11 @@ function App() {
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent" aria-hidden="true" />
 
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-6 sm:px-8" aria-label="Primary">
-          <a className="inline-flex items-center gap-3 text-slate-950" href="#top" aria-label="Skip for Wishes home">
+          <a className="inline-flex items-center gap-3 text-slate-950" href="#top" aria-label="Make a Wish home">
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-sky-700 shadow-lg shadow-sky-900/10">
               <Sparkles className="h-5 w-5" aria-hidden="true" />
             </span>
-            <span className="text-base font-black uppercase tracking-[0.18em]">Skip for Wishes</span>
+            <span className="text-base font-black uppercase tracking-[0.18em]">Make a Wish</span>
           </a>
           <DonateButton tone="hero" className="hidden sm:inline-flex" />
         </nav>
@@ -355,7 +355,7 @@ function App() {
             <BadgeDollarSign className="mx-auto h-12 w-12 text-amber-300" aria-hidden="true" />
             <h2 className="mt-6 text-3xl font-black sm:text-5xl">Ready to help grant more wishes?</h2>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-sky-50">
-              Donations go directly through the official Skip for Wishes campaign page, where every gift is securely
+              Donations go directly through the official Make-A-Wish campaign page, where every gift is securely
               handled and tracked by Make-A-Wish.
             </p>
             <DonateButton tone="light" className="mt-8 w-full sm:w-auto" />
@@ -366,7 +366,7 @@ function App() {
       <footer className="bg-slate-950 px-5 py-10 text-slate-300 sm:px-8">
         <div className="mx-auto flex max-w-6xl flex-col gap-5 text-sm leading-7 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="font-black text-white">Skip for Wishes</p>
+            <p className="font-black text-white">Make a Wish</p>
             <p className="mt-1">This website was created by Dexter Bain to support the Make-A-Wish Foundation.</p>
           </div>
           <p className="max-w-2xl">

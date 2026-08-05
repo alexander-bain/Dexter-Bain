@@ -1,6 +1,6 @@
-# Skip for Wishes
+# Make a Wish
 
-Skip for Wishes is a React, TypeScript, and Tailwind CSS fundraiser page built as a static route for DexterBain.com.
+Make a Wish is a React, TypeScript, and Tailwind CSS fundraiser page built as a static route for DexterBain.com.
 
 ## Fundraising Progress
 

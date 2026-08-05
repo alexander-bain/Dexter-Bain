@@ -1,4 +1,4 @@
-name: Sync Skip for Wishes progress
+name: Sync Make a Wish progress
 
 on:
   schedule:
@@ -32,13 +32,13 @@ jobs:
       - name: Publish updated progress
         run: |
           if git diff --quiet -- skip-for-wishes/config.js skip-for-wishes-src/public/config.js; then
-            echo "Skip for Wishes progress is already current."
+            echo "Make a Wish progress is already current."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add skip-for-wishes/config.js skip-for-wishes-src/public/config.js
-          git commit -m "Sync Skip for Wishes progress"
+          git commit -m "Sync Make a Wish progress"
           git pull --rebase origin main
           git push origin HEAD:main
