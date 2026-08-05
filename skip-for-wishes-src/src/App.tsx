@@ -284,15 +284,14 @@ function App() {
               </div>
             </div>
             <div className="reveal">
-              <div className="flex aspect-[4/3] items-center justify-center rounded-lg border border-dashed border-sky-300 bg-slate-50 text-center shadow-xl shadow-slate-950/5">
-                <div className="max-w-xs px-6">
-                  <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-sky-100 text-sky-700">
-                    <Star className="h-8 w-8" aria-hidden="true" />
-                  </div>
-                  <p className="text-lg font-black text-slate-950">
-                    John Cena photo (replace with licensed image if used)
-                  </p>
-                </div>
+              <div className="overflow-hidden rounded-lg border border-sky-100 bg-slate-100 shadow-xl shadow-slate-950/10">
+                <img
+                  className="aspect-[2/1] w-full object-cover"
+                  src={`${import.meta.env.BASE_URL}john-cena-make-a-wish.jpg`}
+                  alt="John Cena with a Make-A-Wish participant at a Make-A-Wish event"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             </div>
           </div>
