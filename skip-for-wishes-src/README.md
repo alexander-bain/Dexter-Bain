@@ -10,6 +10,7 @@ Run the sync manually from the repository root with `node scripts/sync-skip-for-
 
 ```js
 window.skipForWishesConfig = {
+  "donationUrl": "https://secure2.wish.org/site/Donation2?df_id=6178&PROXY_ID=11514783&PROXY_TYPE=20&FR_ID=7471",
   "fundraiserUrl": "https://secure2.wish.org/site/TR/WishYourWay/Make-A-WishAmerica?pg=personal&px=11514783&fr_id=7471",
   "raised": 0,
   "goal": 10000,
@@ -18,4 +19,4 @@ window.skipForWishesConfig = {
 };
 ```
 
-All Donate Now buttons use `fundraiserUrl`. Keep donations on the official Make-A-Wish fundraising page.
+All Donate Now buttons use `donationUrl`, which opens Dexter's official Make-A-Wish donation form. `fundraiserUrl` identifies the campaign page used by the progress sync.

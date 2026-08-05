@@ -69,7 +69,7 @@ type DonateButtonProps = {
 };
 
 function DonateButton({ tone = "hero", label = "DONATE NOW", className = "" }: DonateButtonProps) {
-  const isExternalDonationLink = /^https?:\/\//i.test(fundraisingConfig.fundraiserUrl);
+  const isExternalDonationLink = /^https?:\/\//i.test(fundraisingConfig.donationUrl);
   const baseClass =
     "group inline-flex min-h-14 items-center justify-center gap-3 rounded-full px-7 py-4 text-sm font-black uppercase tracking-[0.16em] shadow-xl transition duration-300 focus:outline-none focus-visible:ring-4 focus-visible:ring-sky-300";
   const toneClass =
@@ -80,10 +80,10 @@ function DonateButton({ tone = "hero", label = "DONATE NOW", className = "" }: D
   return (
     <a
       className={`${baseClass} ${toneClass} ${className}`}
-      href={fundraisingConfig.fundraiserUrl}
+      href={fundraisingConfig.donationUrl}
       target={isExternalDonationLink ? "_blank" : undefined}
       rel={isExternalDonationLink ? "noreferrer" : undefined}
-      aria-label="Donate now through the official Make-A-Wish fundraising page"
+      aria-label="Donate now through the official Make-A-Wish donation form"
     >
       {label}
       <ArrowRight className="h-5 w-5 transition duration-300 group-hover:translate-x-1" aria-hidden="true" />
@@ -139,7 +139,7 @@ function App() {
     {
       icon: ShieldCheck,
       title: "100% Goes to Make-A-Wish",
-      copy: "All donations go directly through the official Make-A-Wish fundraising page."
+      copy: "All donations go directly through Dexter's official Make-A-Wish donation form."
     },
     {
       icon: Sparkles,
@@ -355,8 +355,8 @@ function App() {
             <BadgeDollarSign className="mx-auto h-12 w-12 text-amber-300" aria-hidden="true" />
             <h2 className="mt-6 text-3xl font-black sm:text-5xl">Ready to help grant more wishes?</h2>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-sky-50">
-              Donations go directly through the official Make-A-Wish campaign page, where every gift is securely
-              handled and tracked by Make-A-Wish.
+              Donations go directly through the official Make-A-Wish donation form, where every gift is securely
+              handled by Make-A-Wish and credited to Dexter's campaign.
             </p>
             <DonateButton tone="light" className="mt-8 w-full sm:w-auto" />
           </div>
