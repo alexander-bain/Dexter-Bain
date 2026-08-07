@@ -30,7 +30,10 @@ const els = {
   openComposer: document.querySelector("#openComposer"),
   closeComposer: document.querySelector("#closeComposer"),
   memoryForm: document.querySelector("#memoryForm"),
+  photoInput: document.querySelector("#memoryPhotos"),
   fileInput: document.querySelector("#memoryFiles"),
+  openPhotoPicker: document.querySelector("#openPhotoPicker"),
+  openFilePicker: document.querySelector("#openFilePicker"),
   fileSummary: document.querySelector("#fileSummary"),
   searchInput: document.querySelector("#searchInput"),
   categoryFilters: document.querySelector("#categoryFilters"),
@@ -556,7 +559,7 @@ async function createPost(form) {
   }
 
   const formData = new FormData(form);
-  const files = [...els.fileInput.files];
+  const files = getSelectedFiles();
   const attachmentRecords = [];
 
   for (const file of files) {
@@ -660,9 +663,9 @@ function clearLocalData() {
 }
 
 function updateFileSummary() {
-  const files = [...els.fileInput.files];
+  const files = getSelectedFiles();
   if (!files.length) {
-    els.fileSummary.textContent = "Choose photos, videos, audio, documents, or anything else you want saved in this memory.";
+    els.fileSummary.textContent = "Photos and videos go through Photos. Documents, audio, and anything else go through Files.";
     return;
   }
 
@@ -679,6 +682,10 @@ function updateFileSummary() {
     labelCount(counts.file, "file")
   ].filter(Boolean);
   els.fileSummary.textContent = `${parts.join(", ")} selected | ${formatSize(total)} total`;
+}
+
+function getSelectedFiles() {
+  return [...els.photoInput.files, ...els.fileInput.files];
 }
 
 function labelCount(count, label) {
@@ -729,6 +736,14 @@ els.closeComposer.addEventListener("click", () => {
   els.composer.hidden = true;
 });
 
+els.openPhotoPicker.addEventListener("click", () => {
+  els.photoInput.click();
+});
+
+els.openFilePicker.addEventListener("click", () => {
+  els.fileInput.click();
+});
+
 els.accountForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   await createAccount(event.currentTarget);
@@ -743,6 +758,7 @@ els.memoryForm.addEventListener("reset", () => {
   setTimeout(updateFileSummary, 0);
 });
 
+els.photoInput.addEventListener("change", updateFileSummary);
 els.fileInput.addEventListener("change", updateFileSummary);
 
 els.searchInput.addEventListener("input", (event) => {

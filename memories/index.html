@@ -137,11 +137,15 @@
               <textarea required name="caption" rows="4" placeholder="What happened? Why does it matter? What detail do you not want to forget?"></textarea>
             </label>
 
-            <label class="dropzone" id="dropzone">
-              <input id="memoryFiles" name="files" type="file" multiple accept="image/*,audio/*,video/*,.pdf,.doc,.docx,.txt,.zip,.heic,.mov,.mp4">
-              <span>Go to Photos and Files</span>
-              <small id="fileSummary">Choose photos, videos, audio, documents, or anything else you want saved in this memory.</small>
-            </label>
+            <div class="dropzone" id="dropzone">
+              <div class="picker-actions" aria-label="Add memory attachments">
+                <button class="picker-button" type="button" id="openPhotoPicker">Open Photos</button>
+                <button class="picker-button" type="button" id="openFilePicker">Open Files</button>
+              </div>
+              <input class="picker-input" id="memoryPhotos" name="photos" type="file" multiple accept="image/*,video/*,.heic,.heif,.mov,.mp4">
+              <input class="picker-input" id="memoryFiles" name="files" type="file" multiple>
+              <small id="fileSummary">Photos and videos go through Photos. Documents, audio, and anything else go through Files.</small>
+            </div>
 
             <div class="form-actions">
               <button class="ghost-button" type="reset">Clear</button>

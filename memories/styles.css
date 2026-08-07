@@ -344,6 +344,7 @@ textarea {
 
 .dropzone {
   display: grid;
+  gap: 12px;
   place-items: center;
   min-height: 126px;
   padding: 18px;
@@ -353,18 +354,35 @@ textarea {
   text-align: center;
 }
 
-.dropzone input {
-  width: auto;
-  min-height: auto;
-  padding: 0;
-  border: 0;
-  background: transparent;
+.picker-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
-.dropzone span {
-  margin-top: 8px;
+.picker-button {
+  min-width: 150px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid rgba(20, 108, 99, 0.25);
+  border-radius: 7px;
+  background: #ffffff;
   color: var(--teal-dark);
-  font-size: 1rem;
+  font-weight: 850;
+}
+
+.picker-button:hover {
+  background: #e8f1ee;
+}
+
+.picker-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .dropzone small {
