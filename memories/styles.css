@@ -354,6 +354,11 @@ textarea {
   text-align: center;
 }
 
+.dropzone.is-dragging {
+  border-color: var(--teal);
+  background: #e8f1ee;
+}
+
 .picker-actions {
   display: flex;
   justify-content: center;
@@ -375,6 +380,7 @@ textarea {
   color: var(--teal-dark);
   cursor: pointer;
   font-weight: 850;
+  text-decoration: none;
 }
 
 .picker-button:hover {

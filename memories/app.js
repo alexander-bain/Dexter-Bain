@@ -22,6 +22,7 @@ const defaultState = {
 
 let state = loadState();
 let attachmentCache = new Map();
+let droppedFiles = [];
 
 const els = {
   accountGate: document.querySelector("#accountGate"),
@@ -30,7 +31,7 @@ const els = {
   openComposer: document.querySelector("#openComposer"),
   closeComposer: document.querySelector("#closeComposer"),
   memoryForm: document.querySelector("#memoryForm"),
-  photoInput: document.querySelector("#memoryPhotos"),
+  dropzone: document.querySelector("#dropzone"),
   fileInput: document.querySelector("#memoryFiles"),
   fileSummary: document.querySelector("#fileSummary"),
   searchInput: document.querySelector("#searchInput"),
@@ -600,6 +601,7 @@ async function createPost(form) {
   state.posts.unshift(post);
   state.view = "profile";
   els.composer.hidden = true;
+  droppedFiles = [];
   form.reset();
   updateFileSummary();
   render();
@@ -663,7 +665,7 @@ function clearLocalData() {
 function updateFileSummary() {
   const files = getSelectedFiles();
   if (!files.length) {
-    els.fileSummary.textContent = "Photos and videos go through Photos. Documents, audio, and anything else go through Files.";
+    els.fileSummary.textContent = "Open Photos, then drag photos or videos here. Open Files uploads anything from Finder.";
     return;
   }
 
@@ -683,7 +685,13 @@ function updateFileSummary() {
 }
 
 function getSelectedFiles() {
-  return [...els.photoInput.files, ...els.fileInput.files];
+  return [...els.fileInput.files, ...droppedFiles];
+}
+
+function addDroppedFiles(files) {
+  if (!files.length) return;
+  droppedFiles = [...droppedFiles, ...files];
+  updateFileSummary();
 }
 
 function labelCount(count, label) {
@@ -745,11 +753,31 @@ els.memoryForm.addEventListener("submit", async (event) => {
 });
 
 els.memoryForm.addEventListener("reset", () => {
+  droppedFiles = [];
   setTimeout(updateFileSummary, 0);
 });
 
-els.photoInput.addEventListener("change", updateFileSummary);
 els.fileInput.addEventListener("change", updateFileSummary);
+
+["dragenter", "dragover"].forEach((type) => {
+  els.dropzone.addEventListener(type, (event) => {
+    event.preventDefault();
+    els.dropzone.classList.add("is-dragging");
+  });
+});
+
+["dragleave", "drop"].forEach((type) => {
+  els.dropzone.addEventListener(type, (event) => {
+    event.preventDefault();
+    if (type === "drop") addDroppedFiles([...event.dataTransfer.files]);
+    els.dropzone.classList.remove("is-dragging");
+  });
+});
+
+document.addEventListener("paste", (event) => {
+  if (els.composer.hidden || !event.clipboardData?.files?.length) return;
+  addDroppedFiles([...event.clipboardData.files]);
+});
 
 els.searchInput.addEventListener("input", (event) => {
   state.query = event.currentTarget.value;
