@@ -7,8 +7,7 @@ import {
   ShieldCheck,
   Sparkles,
   Star,
-  TrendingUp,
-  Users
+  TrendingUp
 } from "lucide-react";
 import { fundraisingConfig } from "./config";
 
@@ -18,7 +17,9 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0
 });
 
-const numberFormatter = new Intl.NumberFormat("en-US");
+const percentFormatter = new Intl.NumberFormat("en-US", {
+  maximumFractionDigits: 2
+});
 
 function formatCurrency(value: number) {
   return currencyFormatter.format(Math.round(value));
@@ -96,11 +97,6 @@ function AnimatedMoney({ value }: { value: number }) {
   return <>{formatCurrency(displayValue)}</>;
 }
 
-function AnimatedNumber({ value }: { value: number }) {
-  const displayValue = useCountUp(value);
-  return <>{numberFormatter.format(Math.round(displayValue))}</>;
-}
-
 function SectionHeading({
   eyebrow,
   title,
@@ -128,7 +124,7 @@ function App() {
   const raised = fundraisingConfig.raised;
   const goal = fundraisingConfig.goal;
   const percent = useMemo(() => clampPercent((raised / goal) * 100), [goal, raised]);
-  const percentLabel = `${Math.round(percent)}%`;
+  const percentLabel = `${percentFormatter.format(percent)}%`;
 
   const whyDonateCards = [
     {
@@ -152,7 +148,7 @@ function App() {
     { label: "Current Raised", value: <AnimatedMoney value={raised} />, icon: TrendingUp },
     { label: "Goal", value: formatCurrency(goal), icon: Goal },
     { label: "Percent Complete", value: percentLabel, icon: Star },
-    { label: "Donors (editable)", value: <AnimatedNumber value={fundraisingConfig.donors} />, icon: Users }
+    { label: "Progress Source", value: "Make-A-Wish", icon: ShieldCheck }
   ];
 
   return (
