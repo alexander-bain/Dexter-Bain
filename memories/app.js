@@ -32,8 +32,7 @@ const els = {
   closeComposer: document.querySelector("#closeComposer"),
   memoryForm: document.querySelector("#memoryForm"),
   dropzone: document.querySelector("#dropzone"),
-  openPhotosApp: document.querySelector("#openPhotosApp"),
-  photosPanel: document.querySelector("#photosPanel"),
+  photoInput: document.querySelector("#memoryPhotos"),
   fileInput: document.querySelector("#memoryFiles"),
   fileSummary: document.querySelector("#fileSummary"),
   searchInput: document.querySelector("#searchInput"),
@@ -667,7 +666,7 @@ function clearLocalData() {
 function updateFileSummary() {
   const files = getSelectedFiles();
   if (!files.length) {
-    els.fileSummary.textContent = "Open Photos prepares this box for dragging photos in. Open Files uploads anything from Finder.";
+    els.fileSummary.textContent = "Open Photos chooses photos and videos. Open Files chooses anything else.";
     return;
   }
 
@@ -687,7 +686,7 @@ function updateFileSummary() {
 }
 
 function getSelectedFiles() {
-  return [...els.fileInput.files, ...droppedFiles];
+  return [...els.photoInput.files, ...els.fileInput.files, ...droppedFiles];
 }
 
 function addDroppedFiles(files) {
@@ -756,17 +755,11 @@ els.memoryForm.addEventListener("submit", async (event) => {
 
 els.memoryForm.addEventListener("reset", () => {
   droppedFiles = [];
-  els.photosPanel.hidden = true;
   setTimeout(updateFileSummary, 0);
 });
 
+els.photoInput.addEventListener("change", updateFileSummary);
 els.fileInput.addEventListener("change", updateFileSummary);
-
-els.openPhotosApp.addEventListener("click", () => {
-  els.photosPanel.hidden = false;
-  els.dropzone.classList.add("is-dragging");
-  els.fileSummary.textContent = "Photos is ready. Drag photos or videos into this box.";
-});
 
 ["dragenter", "dragover"].forEach((type) => {
   els.dropzone.addEventListener(type, (event) => {
