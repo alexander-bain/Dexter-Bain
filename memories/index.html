@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Memories</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app" id="app">
+      <header class="topbar">
+        <button class="brand" type="button" data-view="feed" aria-label="Go to memory archive">
+          <span class="brand-mark">M</span>
+          <span>
+            <strong>Memories</strong>
+            <small>Important moments, saved clearly</small>
+          </span>
+        </button>
+
+        <label class="search">
+          <span>Search</span>
+          <input id="searchInput" type="search" placeholder="Trips, games, family days">
+        </label>
+
+        <div class="top-actions">
+          <button class="ghost-button" type="button" data-view="people">Network</button>
+          <button class="primary-button" type="button" id="openComposer">Save memory</button>
+        </div>
+      </header>
+
+      <aside class="sidebar" aria-label="Main navigation">
+        <nav>
+          <button class="nav-button active" type="button" data-view="feed">
+            <span class="nav-icon">H</span>
+            <span>Archive</span>
+          </button>
+          <button class="nav-button" type="button" data-view="profile">
+            <span class="nav-icon">A</span>
+            <span>Account</span>
+          </button>
+          <button class="nav-button" type="button" data-view="friends">
+            <span class="nav-icon">C</span>
+            <span>Friends</span>
+          </button>
+          <button class="nav-button" type="button" data-view="people">
+            <span class="nav-icon">N</span>
+            <span>Network</span>
+          </button>
+        </nav>
+
+        <section class="mini-panel">
+          <h2>Memory Library</h2>
+          <div class="category-stack" id="categoryFilters"></div>
+        </section>
+      </aside>
+
+      <main class="content">
+        <section class="account-gate" id="accountGate" hidden>
+          <div>
+            <p class="eyebrow">Create your account</p>
+            <h1>Build a clean archive for real memories.</h1>
+            <p>Make a profile, then save trips, sports games, family days, voice notes, videos, photos, and files into one organized memory document.</p>
+          </div>
+          <form class="account-form" id="accountForm">
+            <label>
+              <span>Name</span>
+              <input required name="name" type="text" placeholder="Your name">
+            </label>
+            <label>
+              <span>Username</span>
+              <input required name="handle" type="text" placeholder="username">
+            </label>
+            <label>
+              <span>Bio</span>
+              <textarea name="bio" rows="3" placeholder="What kinds of memories do you want to keep here?"></textarea>
+            </label>
+            <label>
+              <span>Profile photo</span>
+              <input name="avatar" type="file" accept="image/*">
+            </label>
+            <button class="primary-button" type="submit">Create account</button>
+          </form>
+        </section>
+
+        <section class="composer" id="composer" hidden>
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Save a memory</p>
+              <h2>Capture the important parts so you can find them later.</h2>
+            </div>
+            <button class="icon-button" type="button" id="closeComposer" aria-label="Close composer">x</button>
+          </div>
+
+          <form id="memoryForm" class="memory-form">
+            <div class="form-grid">
+              <label>
+                <span>Title</span>
+                <input required name="title" type="text" placeholder="Name this memory">
+              </label>
+              <label>
+                <span>Memory type</span>
+                <select name="category">
+                  <option>Family Day</option>
+                  <option>Trip</option>
+                  <option>Sports Game</option>
+                  <option>Friends</option>
+                  <option>School</option>
+                  <option>Holiday</option>
+                  <option>Other</option>
+                </select>
+              </label>
+              <label>
+                <span>Importance</span>
+                <select name="importance">
+                  <option>Important</option>
+                  <option>Milestone</option>
+                  <option>Once in a lifetime</option>
+                  <option>Everyday</option>
+                </select>
+              </label>
+              <label>
+                <span>Date</span>
+                <input name="date" type="date">
+              </label>
+              <label>
+                <span>Location</span>
+                <input name="location" type="text" placeholder="City, venue, or place">
+              </label>
+              <label>
+                <span>People there</span>
+                <input name="peopleNote" type="text" placeholder="Family, teammates, friends, guests">
+              </label>
+            </div>
+
+            <label>
+              <span>What to remember</span>
+              <textarea required name="caption" rows="4" placeholder="What happened? Why does it matter? What detail do you not want to forget?"></textarea>
+            </label>
+
+            <label class="dropzone" id="dropzone">
+              <input id="memoryFiles" name="files" type="file" multiple accept="image/*,audio/*,video/*,.pdf,.doc,.docx,.txt,.zip,.heic,.mov,.mp4">
+              <span>Go to Photos and Files</span>
+              <small id="fileSummary">Choose photos, videos, audio, documents, or anything else you want saved in this memory.</small>
+            </label>
+
+            <div class="form-actions">
+              <button class="ghost-button" type="reset">Clear</button>
+              <button class="primary-button" type="submit">Save memory</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="view active-view" id="feedView">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Archive</p>
+              <h2>Your saved memories are the main thing. Social sharing stays secondary.</h2>
+            </div>
+            <div class="segmented" id="feedMode">
+              <button class="active" type="button" data-mode="all">All</button>
+              <button type="button" data-mode="mine">Mine</button>
+              <button type="button" data-mode="following">Following</button>
+              <button type="button" data-mode="friends">Friends</button>
+            </div>
+          </div>
+          <div class="post-grid" id="feedPosts"></div>
+        </section>
+
+        <section class="view" id="profileView">
+          <div id="profilePanel"></div>
+          <div class="memory-list" id="profilePosts"></div>
+        </section>
+
+        <section class="view" id="friendsView">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Friends</p>
+              <h2>Accepted friends will appear here.</h2>
+            </div>
+          </div>
+          <div class="people-grid" id="friendsGrid"></div>
+        </section>
+
+        <section class="view" id="peopleView">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Network</p>
+              <h2>Real connected users will appear here.</h2>
+            </div>
+          </div>
+          <div class="people-grid" id="peopleGrid"></div>
+        </section>
+      </main>
+
+      <aside class="right-rail">
+        <section class="mini-panel" id="sessionCard"></section>
+        <section class="mini-panel">
+          <h2>Workspace</h2>
+          <div class="stat-list">
+            <div><strong id="postCount">0</strong><span>saved memories</span></div>
+            <div><strong id="mediaCount">0</strong><span>files saved</span></div>
+            <div><strong id="friendCount">0</strong><span>friends</span></div>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <dialog class="memory-dialog" id="memoryDialog">
+      <article id="memoryDocument" class="memory-document"></article>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
