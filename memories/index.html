@@ -139,11 +139,15 @@
 
             <div class="dropzone" id="dropzone">
               <div class="picker-actions" aria-label="Add memory attachments">
-                <a class="picker-button" id="openPhotosApp" href="photos-redirect://">Open Photos</a>
+                <button class="picker-button" id="openPhotosApp" type="button">Open Photos</button>
                 <label class="picker-button" for="memoryFiles">Open Files</label>
               </div>
               <input class="picker-input" id="memoryFiles" name="files" type="file" multiple>
-              <small id="fileSummary">Open Photos, then drag photos or videos here. Open Files uploads anything from Finder.</small>
+              <div class="photos-panel" id="photosPanel" hidden>
+                <strong>Photos</strong>
+                <span>Drag photos or videos from the Photos app into this box.</span>
+              </div>
+              <small id="fileSummary">Open Photos prepares this box for dragging photos in. Open Files uploads anything from Finder.</small>
             </div>
 
             <div class="form-actions">
