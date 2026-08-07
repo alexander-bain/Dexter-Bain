@@ -32,8 +32,6 @@ const els = {
   memoryForm: document.querySelector("#memoryForm"),
   photoInput: document.querySelector("#memoryPhotos"),
   fileInput: document.querySelector("#memoryFiles"),
-  openPhotoPicker: document.querySelector("#openPhotoPicker"),
-  openFilePicker: document.querySelector("#openFilePicker"),
   fileSummary: document.querySelector("#fileSummary"),
   searchInput: document.querySelector("#searchInput"),
   categoryFilters: document.querySelector("#categoryFilters"),
@@ -734,14 +732,6 @@ els.openComposer.addEventListener("click", () => {
 
 els.closeComposer.addEventListener("click", () => {
   els.composer.hidden = true;
-});
-
-els.openPhotoPicker.addEventListener("click", () => {
-  els.photoInput.click();
-});
-
-els.openFilePicker.addEventListener("click", () => {
-  els.fileInput.click();
 });
 
 els.accountForm.addEventListener("submit", async (event) => {

@@ -363,6 +363,9 @@ textarea {
 }
 
 .picker-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   min-width: 150px;
   min-height: 44px;
   padding: 0 16px;
@@ -370,6 +373,7 @@ textarea {
   border-radius: 7px;
   background: #ffffff;
   color: var(--teal-dark);
+  cursor: pointer;
   font-weight: 850;
 }
 
