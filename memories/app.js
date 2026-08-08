@@ -35,6 +35,8 @@ const els = {
   dropzone: document.querySelector("#dropzone"),
   openPhotosMode: document.querySelector("#openPhotosMode"),
   photosPanel: document.querySelector("#photosPanel"),
+  pastePhotoButton: document.querySelector("#pastePhotoButton"),
+  photoImportStatus: document.querySelector("#photoImportStatus"),
   fileInput: document.querySelector("#memoryFiles"),
   fileSummary: document.querySelector("#fileSummary"),
   searchInput: document.querySelector("#searchInput"),
@@ -691,10 +693,42 @@ function getSelectedFiles() {
   return [...els.fileInput.files, ...droppedFiles];
 }
 
-function addDroppedFiles(files) {
-  if (!files.length) return;
-  droppedFiles = [...droppedFiles, ...files];
-  showPhotosMode(`${labelCount(files.length, "item")} added from Photos or drag and drop.`);
+function filesFromTransfer(source) {
+  const files = [...(source?.files || [])];
+  for (const item of source?.items || []) {
+    if (item.kind !== "file") continue;
+    const file = item.getAsFile();
+    const alreadyAdded = file && files.some((existing) => (
+      existing.name === file.name
+      && existing.size === file.size
+      && existing.type === file.type
+      && existing.lastModified === file.lastModified
+    ));
+    if (file && !alreadyAdded) files.push(file);
+  }
+  return files.filter((file) => file && file.size > 0);
+}
+
+function transferHasFiles(source) {
+  return [...(source?.types || [])].includes("Files")
+    || Boolean(source?.files?.length)
+    || [...(source?.items || [])].some((item) => item.kind === "file");
+}
+
+function extensionFromMime(type = "") {
+  const subtype = type.split("/")[1] || "file";
+  return subtype.replace("jpeg", "jpg").replace(/[^a-z0-9]/gi, "");
+}
+
+function addDroppedFiles(files, source = "Photos") {
+  const incoming = files.filter((file) => file && file.size > 0);
+  if (!incoming.length) {
+    showPhotosMode("Nothing came through. Try dragging the actual photo thumbnail, or copy in Photos and paste here.");
+    return;
+  }
+
+  droppedFiles = [...droppedFiles, ...incoming];
+  showPhotosMode(`${labelCount(incoming.length, "item")} added from ${source}.`);
   updateFileSummary();
 }
 
@@ -703,11 +737,35 @@ function showPhotosMode(message = "Photos mode is open. Drag or paste photos and
   els.openPhotosMode.setAttribute("aria-expanded", "true");
   els.dropzone.classList.add("photos-ready");
   els.fileSummary.textContent = message;
+  els.photoImportStatus.textContent = message;
   els.photosPanel.focus({ preventScroll: true });
 }
 
 function openPhotosApp() {
   window.location.href = PHOTOS_APP_URL;
+}
+
+async function pastePhotoFromClipboard() {
+  if (!navigator.clipboard?.read) {
+    showPhotosMode("Copy a photo in Photos, return here, and press Command+V.");
+    return;
+  }
+
+  try {
+    const items = await navigator.clipboard.read();
+    const files = [];
+    for (const item of items) {
+      for (const type of item.types) {
+        if (!type.startsWith("image/") && !type.startsWith("video/")) continue;
+        const blob = await item.getType(type);
+        const name = `photos-clipboard-${Date.now()}.${extensionFromMime(type)}`;
+        files.push(new File([blob], name, { type }));
+      }
+    }
+    addDroppedFiles(files, "clipboard");
+  } catch {
+    showPhotosMode("I could not read the clipboard. Copy a photo in Photos, return here, and press Command+V.");
+  }
 }
 
 function labelCount(count, label) {
@@ -771,6 +829,7 @@ els.memoryForm.addEventListener("submit", async (event) => {
 els.memoryForm.addEventListener("reset", () => {
   droppedFiles = [];
   els.photosPanel.hidden = true;
+  els.photoImportStatus.textContent = "Ready for photos from Photos.";
   els.openPhotosMode.setAttribute("aria-expanded", "false");
   els.dropzone.classList.remove("photos-ready");
   setTimeout(updateFileSummary, 0);
@@ -780,8 +839,10 @@ els.fileInput.addEventListener("change", updateFileSummary);
 
 els.openPhotosMode.addEventListener("click", () => {
   showPhotosMode("Opening Photos Library. Drag or paste photos and videos here after Photos opens.");
-  openPhotosApp();
+  requestAnimationFrame(openPhotosApp);
 });
+
+els.pastePhotoButton.addEventListener("click", pastePhotoFromClipboard);
 
 ["dragenter", "dragover"].forEach((type) => {
   els.dropzone.addEventListener(type, (event) => {
@@ -793,14 +854,32 @@ els.openPhotosMode.addEventListener("click", () => {
 ["dragleave", "drop"].forEach((type) => {
   els.dropzone.addEventListener(type, (event) => {
     event.preventDefault();
-    if (type === "drop") addDroppedFiles([...event.dataTransfer.files]);
+    if (type === "drop") addDroppedFiles(filesFromTransfer(event.dataTransfer), "Photos");
     els.dropzone.classList.remove("is-dragging");
   });
 });
 
 document.addEventListener("paste", (event) => {
-  if (els.composer.hidden || !event.clipboardData?.files?.length) return;
-  addDroppedFiles([...event.clipboardData.files]);
+  if (els.composer.hidden) return;
+  const files = filesFromTransfer(event.clipboardData);
+  if (!files.length) return;
+  event.preventDefault();
+  addDroppedFiles(files, "paste");
+});
+
+document.addEventListener("dragover", (event) => {
+  if (els.composer.hidden || !transferHasFiles(event.dataTransfer)) return;
+  event.preventDefault();
+  els.dropzone.classList.add("is-dragging", "photos-ready");
+});
+
+document.addEventListener("drop", (event) => {
+  if (els.composer.hidden || els.dropzone.contains(event.target)) return;
+  const files = filesFromTransfer(event.dataTransfer);
+  if (!files.length) return;
+  event.preventDefault();
+  addDroppedFiles(files, "drop");
+  els.dropzone.classList.remove("is-dragging");
 });
 
 els.searchInput.addEventListener("input", (event) => {

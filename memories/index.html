@@ -144,10 +144,12 @@
               </div>
               <input class="picker-input" id="memoryFiles" name="files" type="file" multiple>
               <div class="photos-panel" id="photosPanel" tabindex="-1" hidden>
-                <strong>Photos mode is open</strong>
-                <span>Photos Library should open. Drag photos or videos back into this box, or copy one and paste it here.</span>
+                <strong>Drop photos here</strong>
+                <span>After Photos opens, drag photo or video thumbnails onto this box. You can also copy in Photos and paste here.</span>
+                <button class="small-button" id="pastePhotoButton" type="button">Paste copied photo</button>
+                <em id="photoImportStatus">Ready for photos from Photos.</em>
               </div>
-              <small id="fileSummary">Open Photos opens the Photos app. Open Files opens Finder.</small>
+              <small id="fileSummary" aria-live="polite">Open Photos opens the Photos app. Open Files opens Finder.</small>
             </div>
 
             <div class="form-actions">
