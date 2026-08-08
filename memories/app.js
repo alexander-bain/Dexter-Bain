@@ -3,6 +3,7 @@ const OLD_STORAGE_KEY = "memories-social-state-v1";
 const DB_NAME = "memories-media-store";
 const DB_STORE = "attachments";
 const CATEGORY_ALL = "All";
+const PHOTOS_APP_URL = "photos://library";
 const CATEGORIES = [CATEGORY_ALL, "Family Day", "Trip", "Sports Game", "Friends", "School", "Holiday", "Other"];
 
 const defaultState = {
@@ -667,7 +668,7 @@ function clearLocalData() {
 function updateFileSummary() {
   const files = getSelectedFiles();
   if (!files.length) {
-    els.fileSummary.textContent = "Open Photos opens the photo drop/paste area. Open Files opens Finder.";
+    els.fileSummary.textContent = "Open Photos opens the Photos app. Open Files opens Finder.";
     return;
   }
 
@@ -693,10 +694,20 @@ function getSelectedFiles() {
 function addDroppedFiles(files) {
   if (!files.length) return;
   droppedFiles = [...droppedFiles, ...files];
+  showPhotosMode(`${labelCount(files.length, "item")} added from Photos or drag and drop.`);
+  updateFileSummary();
+}
+
+function showPhotosMode(message = "Photos mode is open. Drag or paste photos and videos here.") {
   els.photosPanel.hidden = false;
   els.openPhotosMode.setAttribute("aria-expanded", "true");
   els.dropzone.classList.add("photos-ready");
-  updateFileSummary();
+  els.fileSummary.textContent = message;
+  els.photosPanel.focus({ preventScroll: true });
+}
+
+function openPhotosApp() {
+  window.location.href = PHOTOS_APP_URL;
 }
 
 function labelCount(count, label) {
@@ -768,11 +779,8 @@ els.memoryForm.addEventListener("reset", () => {
 els.fileInput.addEventListener("change", updateFileSummary);
 
 els.openPhotosMode.addEventListener("click", () => {
-  els.photosPanel.hidden = false;
-  els.openPhotosMode.setAttribute("aria-expanded", "true");
-  els.dropzone.classList.add("photos-ready");
-  els.fileSummary.textContent = "Photos mode is open. Drag or paste photos and videos here.";
-  els.photosPanel.focus({ preventScroll: true });
+  showPhotosMode("Opening Photos Library. Drag or paste photos and videos here after Photos opens.");
+  openPhotosApp();
 });
 
 ["dragenter", "dragover"].forEach((type) => {
