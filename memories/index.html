@@ -139,16 +139,15 @@
 
             <div class="dropzone" id="dropzone">
               <div class="picker-actions" aria-label="Add memory attachments">
-                <label class="picker-button" for="memoryPhotos">Open Photos</label>
+                <button class="picker-button" id="openPhotosMode" type="button" aria-expanded="false" aria-controls="photosPanel">Open Photos</button>
                 <label class="picker-button" for="memoryFiles">Open Files</label>
               </div>
-              <input class="picker-input" id="memoryPhotos" name="photos" type="file" multiple accept="image/*,video/*,.heic,.heif,.mov,.mp4">
               <input class="picker-input" id="memoryFiles" name="files" type="file" multiple>
-              <div class="photos-panel">
-                <strong>Drag from Photos</strong>
-                <span>You can also drag photos or videos from the Photos app into this box.</span>
+              <div class="photos-panel" id="photosPanel" tabindex="-1" hidden>
+                <strong>Photos mode is open</strong>
+                <span>Drag photos or videos into this box, or copy one and paste it here.</span>
               </div>
-              <small id="fileSummary">Open Photos chooses photos and videos. Open Files chooses anything else.</small>
+              <small id="fileSummary">Open Photos opens the photo drop/paste area. Open Files opens Finder.</small>
             </div>
 
             <div class="form-actions">

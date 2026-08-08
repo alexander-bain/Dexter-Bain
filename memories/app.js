@@ -32,7 +32,8 @@ const els = {
   closeComposer: document.querySelector("#closeComposer"),
   memoryForm: document.querySelector("#memoryForm"),
   dropzone: document.querySelector("#dropzone"),
-  photoInput: document.querySelector("#memoryPhotos"),
+  openPhotosMode: document.querySelector("#openPhotosMode"),
+  photosPanel: document.querySelector("#photosPanel"),
   fileInput: document.querySelector("#memoryFiles"),
   fileSummary: document.querySelector("#fileSummary"),
   searchInput: document.querySelector("#searchInput"),
@@ -666,7 +667,7 @@ function clearLocalData() {
 function updateFileSummary() {
   const files = getSelectedFiles();
   if (!files.length) {
-    els.fileSummary.textContent = "Open Photos chooses photos and videos. Open Files chooses anything else.";
+    els.fileSummary.textContent = "Open Photos opens the photo drop/paste area. Open Files opens Finder.";
     return;
   }
 
@@ -686,12 +687,15 @@ function updateFileSummary() {
 }
 
 function getSelectedFiles() {
-  return [...els.photoInput.files, ...els.fileInput.files, ...droppedFiles];
+  return [...els.fileInput.files, ...droppedFiles];
 }
 
 function addDroppedFiles(files) {
   if (!files.length) return;
   droppedFiles = [...droppedFiles, ...files];
+  els.photosPanel.hidden = false;
+  els.openPhotosMode.setAttribute("aria-expanded", "true");
+  els.dropzone.classList.add("photos-ready");
   updateFileSummary();
 }
 
@@ -755,11 +759,21 @@ els.memoryForm.addEventListener("submit", async (event) => {
 
 els.memoryForm.addEventListener("reset", () => {
   droppedFiles = [];
+  els.photosPanel.hidden = true;
+  els.openPhotosMode.setAttribute("aria-expanded", "false");
+  els.dropzone.classList.remove("photos-ready");
   setTimeout(updateFileSummary, 0);
 });
 
-els.photoInput.addEventListener("change", updateFileSummary);
 els.fileInput.addEventListener("change", updateFileSummary);
+
+els.openPhotosMode.addEventListener("click", () => {
+  els.photosPanel.hidden = false;
+  els.openPhotosMode.setAttribute("aria-expanded", "true");
+  els.dropzone.classList.add("photos-ready");
+  els.fileSummary.textContent = "Photos mode is open. Drag or paste photos and videos here.";
+  els.photosPanel.focus({ preventScroll: true });
+});
 
 ["dragenter", "dragover"].forEach((type) => {
   els.dropzone.addEventListener(type, (event) => {
