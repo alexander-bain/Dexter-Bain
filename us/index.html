@@ -32,6 +32,7 @@
     body {
       margin: 0;
       min-height: 100vh;
+      overflow-x: hidden;
       font-family: ui-rounded, "SF Pro Rounded", "Avenir Next", system-ui, sans-serif;
       background:
         linear-gradient(135deg, rgba(255, 217, 114, 0.34), transparent 34%),
@@ -186,6 +187,31 @@
       line-height: 1.5;
     }
 
+    .year-index {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 20px;
+    }
+
+    .year-index a {
+      border: 1px solid rgba(33, 24, 19, 0.14);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: rgba(255, 250, 243, 0.82);
+      color: var(--ink);
+      font-size: 0.9rem;
+      font-weight: 850;
+      line-height: 1;
+      text-decoration: none;
+    }
+
+    .year-index a:hover,
+    .year-index a:focus-visible {
+      border-color: var(--rose);
+      color: var(--rose);
+    }
+
     .timeline {
       display: none;
       gap: 28px;
@@ -265,6 +291,7 @@
     .photo-wall figure {
       display: inline-block;
       width: 100%;
+      min-height: 180px;
       margin: 0 0 12px;
       overflow: hidden;
       border: 1px solid rgba(33, 24, 19, 0.1);
@@ -465,7 +492,7 @@
 </head>
 <body>
   <main class="page">
-    <section class="hero" aria-label="Dexter and Oliver">
+    <section class="hero" id="intro" aria-label="Dexter and Oliver">
       <div class="hero-copy">
         <p class="kicker">Dexter + Oliver</p>
         <h1>Us, forever.</h1>
@@ -491,11 +518,11 @@
       </div>
       <figure class="hero-photo">
         <img
-          src="../assets/us/web/tahoe-fishing.jpeg"
-          alt="Young Dexter and Oliver smiling together on a fishing boat in Tahoe"
+          src="../assets/us/moments-web-v4/moment-06.jpg"
+          alt="Young Dexter and Oliver in matching Hawaiian shirts"
         />
         <figcaption class="hero-caption">
-          A blue-sky, best-day kind of memory.
+          Where the story starts — 2016.
         </figcaption>
       </figure>
     </section>
@@ -508,6 +535,20 @@
           photos where both of you somehow look grown up already.
         </p>
       </div>
+
+      <nav class="year-index" aria-label="Every year shown on this page">
+        <a href="#year-2016">2016</a>
+        <a href="#year-2017">2017</a>
+        <a href="#year-2018">2018</a>
+        <a href="#year-2019">2019</a>
+        <a href="#year-2020">2020</a>
+        <a href="#year-2021">2021</a>
+        <a href="#year-2022">2022</a>
+        <a href="#year-2023">2023</a>
+        <a href="#year-2024">2024</a>
+        <a href="#year-2025">2025</a>
+        <a href="#year-2026">2026</a>
+      </nav>
 
       <div class="gallery-view is-hidden" id="gallery-view"></div>
 
@@ -542,116 +583,165 @@
     </div>
   </div>
   <script>
+    const timelineYears = Array.from(
+      { length: 2026 - 2016 + 1 },
+      (_, index) => String(2016 + index),
+    );
+
     const photos = [
-      { src: "../assets/us/moments-web/moment-06.jpg", alt: "Dexter and Oliver in matching Hawaiian shirts", year: "2016", date: "September 30, 2016", location: "Menlo Park - Suburban Park" },
+      { src: "../assets/us/moments-web-v4/moment-06.jpg", alt: "Young Dexter and Oliver in matching Hawaiian shirts", year: "2016", date: "September 30, 2016", location: "Menlo Park - Suburban Park" },
 
-      { src: "../assets/us/moments-web/moment-40.jpg", alt: "Dexter and Oliver together", year: "2017", date: "January 23, 2017", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-41.jpg", alt: "Dexter and Oliver together", year: "2017", date: "February 13, 2017", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-46.jpg", alt: "Dexter and Oliver together", year: "2017", date: "March 9, 2017", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-47.jpg", alt: "Dexter and Oliver together", year: "2017", date: "April 7, 2017", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-48.jpg", alt: "Dexter and Oliver together", year: "2017", date: "June 7, 2017", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-42.jpg", alt: "Dexter and Oliver together", year: "2017", date: "July 2, 2017", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-43.jpg", alt: "Dexter and Oliver together", year: "2017", date: "July 4, 2017", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-44.jpg", alt: "Dexter and Oliver together", year: "2017", date: "July 7, 2017", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-45.jpg", alt: "Dexter and Oliver together", year: "2017", date: "July 10, 2017", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-49.jpg", alt: "Dexter and Oliver together", year: "2017", date: "August 5, 2017", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-50.jpg", alt: "Dexter and Oliver together", year: "2017", date: "August 27, 2017", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-01.jpg", alt: "Dexter and Oliver on a playground", year: "2017", date: "August 31, 2017", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-02.jpg", alt: "Dexter and Oliver in front of red doors", year: "2017", date: "September 3, 2017", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-51.jpg", alt: "Dexter and Oliver together", year: "2017", date: "October 5, 2017", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-14.jpg", alt: "Dexter and Oliver in jiu-jitsu uniforms", year: "2017", date: "2017", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web-v4/moment-40.jpg", alt: "Dexter and Oliver together", year: "2017", date: "January 23, 2017", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-41.jpg", alt: "Dexter and Oliver together", year: "2017", date: "February 13, 2017", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-46.jpg", alt: "Dexter and Oliver together", year: "2017", date: "March 9, 2017", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-47.jpg", alt: "Dexter and Oliver together", year: "2017", date: "April 7, 2017", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-48.jpg", alt: "Dexter and Oliver together", year: "2017", date: "June 7, 2017", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-42.jpg", alt: "Dexter and Oliver together", year: "2017", date: "July 2, 2017", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-43.jpg", alt: "Dexter and Oliver together", year: "2017", date: "July 4, 2017", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-44.jpg", alt: "Dexter and Oliver together", year: "2017", date: "July 7, 2017", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-45.jpg", alt: "Dexter and Oliver together", year: "2017", date: "July 10, 2017", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-49.jpg", alt: "Dexter and Oliver together", year: "2017", date: "August 5, 2017", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-50.jpg", alt: "Dexter and Oliver together", year: "2017", date: "August 27, 2017", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-01.jpg", alt: "Dexter and Oliver on a playground", year: "2017", date: "August 31, 2017", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-02.jpg", alt: "Dexter and Oliver in front of red doors", year: "2017", date: "September 3, 2017", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-51.jpg", alt: "Dexter and Oliver together", year: "2017", date: "October 5, 2017", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-14.jpg", alt: "Dexter and Oliver in jiu-jitsu uniforms", year: "2017", date: "2017", location: "" },
 
-      { src: "../assets/us/moments-web/moment-52.jpg", alt: "Dexter and Oliver together", year: "2019", date: "January 10, 2019", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-53.jpg", alt: "Dexter and Oliver together", year: "2019", date: "February 6, 2019", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-54.jpg", alt: "Dexter and Oliver together", year: "2019", date: "February 14, 2019", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-55.jpg", alt: "Dexter and Oliver together", year: "2019", date: "February 17, 2019", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-56.jpg", alt: "Dexter and Oliver together", year: "2019", date: "March 11, 2019", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-03.jpg", alt: "Dexter and Oliver smiling outside", year: "2019", date: "May 5, 2019", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-04.jpg", alt: "Dexter and Oliver at Flood Park", year: "2019", date: "May 25, 2019", location: "Flood Park" },
-      { src: "../assets/us/moments-web/moment-57.jpg", alt: "Dexter and Oliver together", year: "2019", date: "May 25, 2019", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-58.jpg", alt: "Dexter and Oliver together", year: "2019", date: "June 7, 2019", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-59.jpg", alt: "Dexter and Oliver together", year: "2019", date: "September 16, 2019", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-60.jpg", alt: "Dexter and Oliver together", year: "2019", date: "September 25, 2019", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-61.jpg", alt: "Dexter and Oliver together", year: "2019", date: "October 17, 2019", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-62.jpg", alt: "Dexter and Oliver together", year: "2019", date: "October 21, 2019", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-16.jpg", alt: "Dexter and Oliver by a fountain", year: "2019", date: "November 17, 2019", location: "Mountain View" },
-      { src: "../assets/us/moments-web/moment-63.jpg", alt: "Dexter and Oliver together", year: "2019", date: "December 24, 2019", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web-v4/moment-110.jpg", alt: "Dexter and Oliver together", year: "2018", date: "January 24, 2018", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-111.jpg", alt: "Dexter and Oliver together", year: "2018", date: "February 1, 2018", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-112.jpg", alt: "Dexter and Oliver together", year: "2018", date: "February 17, 2018", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-113.jpg", alt: "Dexter and Oliver together", year: "2018", date: "February 26, 2018", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-114.jpg", alt: "Dexter and Oliver together", year: "2018", date: "March 7, 2018", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-115.jpg", alt: "Dexter and Oliver together", year: "2018", date: "March 16, 2018", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-116.jpg", alt: "Dexter and Oliver together", year: "2018", date: "April 14, 2018", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-117.jpg", alt: "Dexter and Oliver together", year: "2018", date: "June 4, 2018", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-118.jpg", alt: "Dexter and Oliver together", year: "2018", date: "July 9, 2018", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-119.jpg", alt: "Dexter and Oliver together", year: "2018", date: "October 25, 2018", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-120.jpg", alt: "Dexter and Oliver together", year: "2018", date: "November 14, 2018", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-121.jpg", alt: "Dexter and Oliver together", year: "2018", date: "December 31, 2018", location: "" },
 
-      { src: "../assets/us/moments-web/moment-64.jpg", alt: "Dexter and Oliver together", year: "2020", date: "January 11, 2020", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-65.jpg", alt: "Dexter and Oliver together", year: "2020", date: "January 19, 2020", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-66.jpg", alt: "Dexter and Oliver together", year: "2020", date: "January 29, 2020", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-67.jpg", alt: "Dexter and Oliver together", year: "2020", date: "March 4, 2020", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-68.jpg", alt: "Dexter and Oliver together", year: "2020", date: "April 8, 2020", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-69.jpg", alt: "Dexter and Oliver together", year: "2020", date: "May 19, 2020", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-70.jpg", alt: "Dexter and Oliver together", year: "2020", date: "May 29, 2020", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-71.jpg", alt: "Dexter and Oliver together", year: "2020", date: "June 19, 2020", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-72.jpg", alt: "Dexter and Oliver together", year: "2020", date: "June 29, 2020", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-15.jpg", alt: "Dexter and Oliver on FaceTime", year: "2020", date: "July 1, 2020", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-73.jpg", alt: "Dexter and Oliver together", year: "2020", date: "July 20, 2020", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-74.jpg", alt: "Dexter and Oliver together", year: "2020", date: "August 25, 2020", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-75.jpg", alt: "Dexter and Oliver together", year: "2020", date: "September 2, 2020", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-76.jpg", alt: "Dexter and Oliver together", year: "2020", date: "October 9, 2020", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-77.jpg", alt: "Dexter and Oliver together", year: "2020", date: "October 27, 2020", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web-v4/moment-52.jpg", alt: "Dexter and Oliver together", year: "2019", date: "January 10, 2019", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-53.jpg", alt: "Dexter and Oliver together", year: "2019", date: "February 6, 2019", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-54.jpg", alt: "Dexter and Oliver together", year: "2019", date: "February 14, 2019", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-55.jpg", alt: "Dexter and Oliver together", year: "2019", date: "February 17, 2019", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-56.jpg", alt: "Dexter and Oliver together", year: "2019", date: "March 11, 2019", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-03.jpg", alt: "Dexter and Oliver smiling outside", year: "2019", date: "May 5, 2019", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-04.jpg", alt: "Dexter and Oliver at Flood Park", year: "2019", date: "May 25, 2019", location: "Flood Park" },
+      { src: "../assets/us/moments-web-v4/moment-57.jpg", alt: "Dexter and Oliver together", year: "2019", date: "May 25, 2019", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-58.jpg", alt: "Dexter and Oliver together", year: "2019", date: "June 7, 2019", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-59.jpg", alt: "Dexter and Oliver together", year: "2019", date: "September 16, 2019", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-60.jpg", alt: "Dexter and Oliver together", year: "2019", date: "September 25, 2019", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-61.jpg", alt: "Dexter and Oliver together", year: "2019", date: "October 17, 2019", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-62.jpg", alt: "Dexter and Oliver together", year: "2019", date: "October 21, 2019", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-16.jpg", alt: "Dexter and Oliver by a fountain", year: "2019", date: "November 17, 2019", location: "Mountain View" },
+      { src: "../assets/us/moments-web-v4/moment-63.jpg", alt: "Dexter and Oliver together", year: "2019", date: "December 24, 2019", location: "" },
 
-      { src: "../assets/us/moments-web/moment-78.jpg", alt: "Dexter and Oliver together", year: "2021", date: "January 6, 2021", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-79.jpg", alt: "Dexter and Oliver together", year: "2021", date: "January 13, 2021", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-80.jpg", alt: "Dexter and Oliver together", year: "2021", date: "January 21, 2021", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-81.jpg", alt: "Dexter and Oliver together", year: "2021", date: "February 4, 2021", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-82.jpg", alt: "Dexter and Oliver together", year: "2021", date: "April 15, 2021", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-83.jpg", alt: "Dexter and Oliver together", year: "2021", date: "June 11, 2021", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-18.jpg", alt: "Dexter and Oliver together", year: "2021", date: "June 27, 2021", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-84.jpg", alt: "Dexter and Oliver together", year: "2021", date: "July 28, 2021", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-85.jpg", alt: "Dexter and Oliver together", year: "2021", date: "August 27, 2021", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-86.jpg", alt: "Dexter and Oliver together", year: "2021", date: "September 10, 2021", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-87.jpg", alt: "Dexter and Oliver together", year: "2021", date: "September 14, 2021", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-88.jpg", alt: "Dexter and Oliver together", year: "2021", date: "September 21, 2021", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-89.jpg", alt: "Dexter and Oliver together", year: "2021", date: "September 23, 2021", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-90.jpg", alt: "Dexter and Oliver together", year: "2021", date: "November 15, 2021", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-91.jpg", alt: "Dexter and Oliver together", year: "2021", date: "December 3, 2021", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web-v4/moment-64.jpg", alt: "Dexter and Oliver together", year: "2020", date: "January 11, 2020", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-65.jpg", alt: "Dexter and Oliver together", year: "2020", date: "January 19, 2020", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-66.jpg", alt: "Dexter and Oliver together", year: "2020", date: "January 29, 2020", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-67.jpg", alt: "Dexter and Oliver together", year: "2020", date: "March 4, 2020", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-68.jpg", alt: "Dexter and Oliver together", year: "2020", date: "April 8, 2020", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-69.jpg", alt: "Dexter and Oliver together", year: "2020", date: "May 19, 2020", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-70.jpg", alt: "Dexter and Oliver together", year: "2020", date: "May 29, 2020", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-71.jpg", alt: "Dexter and Oliver together", year: "2020", date: "June 19, 2020", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-72.jpg", alt: "Dexter and Oliver together", year: "2020", date: "June 29, 2020", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-73.jpg", alt: "Dexter and Oliver together", year: "2020", date: "July 20, 2020", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-74.jpg", alt: "Dexter and Oliver together", year: "2020", date: "August 25, 2020", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-75.jpg", alt: "Dexter and Oliver together", year: "2020", date: "September 2, 2020", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-76.jpg", alt: "Dexter and Oliver together", year: "2020", date: "October 9, 2020", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-77.jpg", alt: "Dexter and Oliver together", year: "2020", date: "October 27, 2020", location: "" },
 
-      { src: "../assets/us/moments-web/moment-92.jpg", alt: "Dexter and Oliver together", year: "2025", date: "January 10, 2025", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-93.jpg", alt: "Dexter and Oliver together", year: "2025", date: "January 11, 2025", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-94.jpg", alt: "Dexter and Oliver together", year: "2025", date: "January 12, 2025", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-95.jpg", alt: "Dexter and Oliver together", year: "2025", date: "January 21, 2025", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-96.jpg", alt: "Dexter and Oliver together", year: "2025", date: "January 27, 2025", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-97.jpg", alt: "Dexter and Oliver together", year: "2025", date: "January 30, 2025", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-98.jpg", alt: "Dexter and Oliver together", year: "2025", date: "March 21, 2025", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-99.jpg", alt: "Dexter and Oliver together", year: "2025", date: "April 17, 2025", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-100.jpg", alt: "Dexter and Oliver together", year: "2025", date: "August 14, 2025", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-101.jpg", alt: "Dexter and Oliver together", year: "2025", date: "November 13, 2025", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-25.jpg", alt: "Dexter and Oliver at home", year: "2025", date: "2025", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web-v4/moment-78.jpg", alt: "Dexter and Oliver together", year: "2021", date: "January 6, 2021", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-79.jpg", alt: "Dexter and Oliver together", year: "2021", date: "January 13, 2021", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-80.jpg", alt: "Dexter and Oliver together", year: "2021", date: "January 21, 2021", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-81.jpg", alt: "Dexter and Oliver together", year: "2021", date: "February 4, 2021", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-82.jpg", alt: "Dexter and Oliver together", year: "2021", date: "April 15, 2021", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-83.jpg", alt: "Dexter and Oliver together", year: "2021", date: "June 11, 2021", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-18.jpg", alt: "Dexter and Oliver together", year: "2021", date: "June 27, 2021", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-84.jpg", alt: "Dexter and Oliver together", year: "2021", date: "July 28, 2021", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-85.jpg", alt: "Dexter and Oliver together", year: "2021", date: "August 27, 2021", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-86.jpg", alt: "Dexter and Oliver together", year: "2021", date: "September 10, 2021", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-87.jpg", alt: "Dexter and Oliver together", year: "2021", date: "September 14, 2021", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-88.jpg", alt: "Dexter and Oliver together", year: "2021", date: "September 21, 2021", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-89.jpg", alt: "Dexter and Oliver together", year: "2021", date: "September 23, 2021", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-90.jpg", alt: "Dexter and Oliver together", year: "2021", date: "November 15, 2021", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-91.jpg", alt: "Dexter and Oliver together", year: "2021", date: "December 3, 2021", location: "" },
 
-      { src: "../assets/us/moments-web/moment-102.jpg", alt: "Dexter and Oliver together", year: "2026", date: "January 22, 2026", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-103.jpg", alt: "Dexter and Oliver together", year: "2026", date: "February 10, 2026", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-104.jpg", alt: "Dexter and Oliver together", year: "2026", date: "February 18, 2026", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-24.jpg", alt: "Dexter and Oliver by a statue", year: "2026", date: "April 8, 2026", location: "Relais Piazza Signoria" },
-      { src: "../assets/us/moments-web/moment-08.jpg", alt: "Dexter and Oliver at a table in Italy", year: "2026", date: "April 9, 2026", location: "Barberino Tavarnelle" },
-      { src: "../assets/us/moments-web/moment-26.jpg", alt: "Dexter and Oliver making pasta", year: "2026", date: "April 9, 2026", location: "Barberino Tavarnelle" },
-      { src: "../assets/us/moments-web/moment-28.jpg", alt: "Dexter and Oliver together in Venice", year: "2026", date: "April 10, 2026", location: "Venice" },
-      { src: "../assets/us/moments-web/moment-39.jpg", alt: "Dexter and Oliver eating pastries", year: "2026", date: "April 10, 2026", location: "Rio Nuovo" },
-      { src: "../assets/us/moments-web/moment-38.jpg", alt: "Dexter and Oliver dressed for dinner", year: "2026", date: "April 2026", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-105.jpg", alt: "Dexter and Oliver together", year: "2026", date: "April 17, 2026", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-106.jpg", alt: "Dexter and Oliver together", year: "2026", date: "April 21, 2026", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-107.jpg", alt: "Dexter and Oliver together", year: "2026", date: "May 14, 2026", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-108.jpg", alt: "Dexter and Oliver together", year: "2026", date: "May 26, 2026", location: "Location not saved in Photos" },
-      { src: "../assets/us/moments-web/moment-109.jpg", alt: "Dexter and Oliver together", year: "2026", date: "June 24, 2026", location: "Location not saved in Photos" },
+      { src: "../assets/us/moments-web-v4/moment-122.jpg", alt: "Dexter and Oliver together", year: "2022", date: "January 4, 2022", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-123.jpg", alt: "Dexter and Oliver together", year: "2022", date: "February 11, 2022", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-124.jpg", alt: "Dexter and Oliver together", year: "2022", date: "March 20, 2022", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-125.jpg", alt: "Dexter and Oliver together", year: "2022", date: "April 4, 2022", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-126.jpg", alt: "Dexter and Oliver together", year: "2022", date: "April 6, 2022", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-127.jpg", alt: "Dexter and Oliver together", year: "2022", date: "April 30, 2022", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-128.jpg", alt: "Dexter and Oliver together", year: "2022", date: "May 12, 2022", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-129.jpg", alt: "Dexter and Oliver together", year: "2022", date: "June 8, 2022", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-130.jpg", alt: "Dexter and Oliver together", year: "2022", date: "August 25, 2022", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-131.jpg", alt: "Dexter and Oliver together", year: "2022", date: "September 22, 2022", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-132.jpg", alt: "Dexter and Oliver together", year: "2022", date: "November 10, 2022", location: "" },
+
+      { src: "../assets/us/moments-web-v4/moment-133.jpg", alt: "Dexter and Oliver together", year: "2023", date: "January 4, 2023", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-134.jpg", alt: "Dexter and Oliver together", year: "2023", date: "March 23, 2023", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-145.jpg", alt: "Dexter and Oliver together", year: "2023", date: "September 17, 2023", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-135.jpg", alt: "Dexter and Oliver together", year: "2023", date: "December 21, 2023", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-136.jpg", alt: "Dexter and Oliver together", year: "2023", date: "December 22, 2023", location: "" },
+
+      { src: "../assets/us/moments-web-v4/moment-138.jpg", alt: "Dexter and Oliver together", year: "2024", date: "January 29, 2024", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-139.jpg", alt: "Dexter and Oliver together", year: "2024", date: "May 25, 2024", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-140.jpg", alt: "Dexter and Oliver together", year: "2024", date: "June 24, 2024", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-141.jpg", alt: "Dexter and Oliver together", year: "2024", date: "July 17, 2024", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-142.jpg", alt: "Dexter and Oliver together", year: "2024", date: "August 7, 2024", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-137.jpg", alt: "Dexter and Oliver together", year: "2024", date: "September 3, 2024", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-143.jpg", alt: "Dexter and Oliver together", year: "2024", date: "September 24, 2024", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-144.jpg", alt: "Dexter and Oliver together", year: "2024", date: "December 18, 2024", location: "" },
+
+      { src: "../assets/us/moments-web-v4/moment-92.jpg", alt: "Dexter and Oliver together", year: "2025", date: "January 10, 2025", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-93.jpg", alt: "Dexter and Oliver together", year: "2025", date: "January 11, 2025", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-94.jpg", alt: "Dexter and Oliver together", year: "2025", date: "January 12, 2025", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-95.jpg", alt: "Dexter and Oliver together", year: "2025", date: "January 21, 2025", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-96.jpg", alt: "Dexter and Oliver together", year: "2025", date: "January 27, 2025", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-97.jpg", alt: "Dexter and Oliver together", year: "2025", date: "January 30, 2025", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-98.jpg", alt: "Dexter and Oliver together", year: "2025", date: "March 21, 2025", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-99.jpg", alt: "Dexter and Oliver together", year: "2025", date: "April 17, 2025", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-100.jpg", alt: "Dexter and Oliver together", year: "2025", date: "August 14, 2025", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-101.jpg", alt: "Dexter and Oliver together", year: "2025", date: "November 13, 2025", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-25.jpg", alt: "Dexter and Oliver at home", year: "2025", date: "2025", location: "" },
+
+      { src: "../assets/us/moments-web-v4/moment-102.jpg", alt: "Dexter and Oliver together", year: "2026", date: "January 22, 2026", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-103.jpg", alt: "Dexter and Oliver together", year: "2026", date: "February 10, 2026", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-104.jpg", alt: "Dexter and Oliver together", year: "2026", date: "February 18, 2026", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-24.jpg", alt: "Dexter and Oliver by a statue", year: "2026", date: "April 8, 2026", location: "Relais Piazza Signoria" },
+      { src: "../assets/us/moments-web-v4/moment-08.jpg", alt: "Dexter and Oliver at a table in Italy", year: "2026", date: "April 9, 2026", location: "Barberino Tavarnelle" },
+      { src: "../assets/us/moments-web-v4/moment-26.jpg", alt: "Dexter and Oliver making pasta", year: "2026", date: "April 9, 2026", location: "Barberino Tavarnelle" },
+      { src: "../assets/us/moments-web-v4/moment-28.jpg", alt: "Dexter and Oliver together in Venice", year: "2026", date: "April 10, 2026", location: "Venice" },
+      { src: "../assets/us/moments-web-v4/moment-39.jpg", alt: "Dexter and Oliver eating pastries", year: "2026", date: "April 10, 2026", location: "Rio Nuovo" },
+      { src: "../assets/us/moments-web-v4/moment-38.jpg", alt: "Dexter and Oliver dressed for dinner", year: "2026", date: "April 2026", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-105.jpg", alt: "Dexter and Oliver together", year: "2026", date: "April 17, 2026", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-106.jpg", alt: "Dexter and Oliver together", year: "2026", date: "April 21, 2026", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-107.jpg", alt: "Dexter and Oliver together", year: "2026", date: "May 14, 2026", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-108.jpg", alt: "Dexter and Oliver together", year: "2026", date: "May 26, 2026", location: "" },
+      { src: "../assets/us/moments-web-v4/moment-109.jpg", alt: "Dexter and Oliver together", year: "2026", date: "June 24, 2026", location: "" },
     ];
 
     const captions = {
-      "2016": "The tiny-years beginning.",
+      "2016": "Where the story starts.",
       "2017": "Still little, already a team.",
+      "2018": "Another year of everyday adventures together.",
       "2019": "The everyday stuff that became memory.",
       "2020": "Home days, screen days, and everything between.",
       "2021": "Growing up, still side by side.",
+      "2022": "More laughs, more stories, same team.",
+      "2023": "The years change. The brother energy does not.",
+      "2024": "Still showing up for each other.",
       "2025": "Big trips and bigger brother energy.",
       "2026": "The newest chapter so far.",
     };
 
     const createFigure = (photo) => {
       const figure = document.createElement("figure");
+      figure.dataset.year = photo.year;
       figure.tabIndex = 0;
       figure.setAttribute("role", "button");
-      figure.setAttribute("aria-label", `${photo.alt}. ${photo.date}. ${photo.location}.`);
+      figure.setAttribute("aria-label", `${[photo.alt, photo.date, photo.location].filter(Boolean).join(". ")}.`);
       figure.addEventListener("click", () => openLightbox(photo));
       figure.addEventListener("keydown", (event) => {
         if (event.key === "Enter" || event.key === " ") {
@@ -662,8 +752,8 @@
 
       const image = document.createElement("img");
       image.loading = "lazy";
-      image.src = photo.src;
       image.alt = photo.alt;
+      image.src = photo.src;
       figure.append(image);
       return figure;
     };
@@ -676,13 +766,16 @@
     };
 
     const galleryView = document.querySelector("#gallery-view");
-    galleryView.append(createPhotoWall(photos));
+    const galleryWall = document.createElement("div");
+    galleryWall.className = "photo-wall";
+    galleryView.append(galleryWall);
 
     const timeline = document.querySelector("#literal-timeline");
-    const years = [...new Set(photos.map((photo) => photo.year))];
-    years.forEach((year) => {
+    const yearWalls = new Map();
+    timelineYears.forEach((year) => {
       const era = document.createElement("section");
       era.className = "timeline-era";
+      era.id = `year-${year}`;
       era.setAttribute("aria-label", `${year} photos`);
 
       const marker = document.createElement("div");
@@ -698,7 +791,9 @@
       const copy = document.createElement("p");
       copy.textContent = captions[year];
 
-      content.append(heading, copy, createPhotoWall(photos.filter((photo) => photo.year === year)));
+      const wall = createPhotoWall(photos.filter((photo) => photo.year === year));
+      yearWalls.set(year, wall);
+      content.append(heading, copy, wall);
       era.append(marker, content);
       timeline.append(era);
     });
@@ -717,7 +812,8 @@
       lightboxImage.alt = photo.alt;
       lightboxTitle.textContent = photo.year;
       lightboxDate.textContent = photo.date;
-      lightboxLocation.textContent = photo.location;
+      lightboxLocation.textContent = photo.location || "";
+      lightboxLocation.hidden = !photo.location;
       lightbox.hidden = false;
       closeLightboxButton.focus();
     }
@@ -738,7 +834,21 @@
 
     const button = document.querySelector(".timeline-button");
     button.addEventListener("click", () => {
-      const showingTimeline = timeline.classList.toggle("is-visible");
+      const showingTimeline = !timeline.classList.contains("is-visible");
+
+      if (showingTimeline) {
+        timelineYears.forEach((year) => {
+          galleryWall
+            .querySelectorAll(`figure[data-year="${year}"]`)
+            .forEach((figure) => yearWalls.get(year).append(figure));
+        });
+      } else {
+        timeline
+          .querySelectorAll(".photo-wall figure")
+          .forEach((figure) => galleryWall.append(figure));
+      }
+
+      timeline.classList.toggle("is-visible", showingTimeline);
       galleryView.classList.toggle("is-hidden", showingTimeline);
       button.setAttribute("aria-expanded", String(showingTimeline));
       button.textContent = showingTimeline ? "Show Gallery" : "Show Timeline";
