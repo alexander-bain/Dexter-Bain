@@ -117,7 +117,8 @@
       margin-top: 28px;
     }
 
-    .timeline-button {
+    .timeline-button,
+    .slideshow-button {
       appearance: none;
       border: 1px solid rgba(33, 24, 19, 0.16);
       border-radius: 999px;
@@ -130,8 +131,19 @@
       line-height: 1;
     }
 
-    .timeline-button:hover {
+    .timeline-button:hover,
+    .timeline-button:focus-visible {
       background: #3b2a22;
+    }
+
+    .slideshow-button {
+      background: var(--rose);
+      color: white;
+    }
+
+    .slideshow-button:hover,
+    .slideshow-button:focus-visible {
+      background: #ad575d;
     }
 
     .hero-photo {
@@ -402,6 +414,206 @@
       line-height: 1;
     }
 
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    .slideshow {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(330px, 410px);
+      background: var(--paper);
+    }
+
+    .slideshow[hidden] {
+      display: none;
+    }
+
+    .slideshow-stage {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 16% 12%, rgba(255, 217, 114, 0.72), transparent 28%),
+        radial-gradient(circle at 84% 86%, rgba(131, 185, 200, 0.72), transparent 32%),
+        #e9d9cc;
+    }
+
+    .slideshow-image {
+      width: auto;
+      max-width: 100%;
+      max-height: calc(100vh - 48px);
+      max-height: calc(100dvh - 48px);
+      border: 10px solid rgba(255, 250, 243, 0.94);
+      background: var(--paper);
+      object-fit: contain;
+      box-shadow: 0 24px 70px rgba(74, 48, 34, 0.28);
+    }
+
+    .slideshow-panel {
+      min-height: 100vh;
+      min-height: 100dvh;
+      max-height: 100vh;
+      max-height: 100dvh;
+      overflow-y: auto;
+      padding: clamp(24px, 4vw, 42px);
+      border-left: 1px solid rgba(33, 24, 19, 0.12);
+      background: var(--paper);
+    }
+
+    .slideshow-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .slideshow-eyebrow,
+    .slideshow-song-label {
+      margin: 0;
+      color: var(--rose);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .slideshow-close {
+      border: 1px solid rgba(33, 24, 19, 0.16);
+      border-radius: 999px;
+      padding: 9px 13px;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 850;
+    }
+
+    .slideshow-panel h2 {
+      margin-top: 26px;
+      font-size: clamp(2.2rem, 5vw, 4.4rem);
+      line-height: 0.92;
+    }
+
+    .slideshow-counter {
+      margin: 24px 0 0;
+      color: var(--ink);
+      font-size: 1.04rem;
+      font-weight: 850;
+    }
+
+    .slideshow-progress {
+      height: 6px;
+      margin-top: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(33, 24, 19, 0.1);
+    }
+
+    .slideshow-progress span {
+      display: block;
+      width: 1%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--rose);
+    }
+
+    .slideshow-date,
+    .slideshow-location {
+      margin: 14px 0 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .slideshow-location {
+      margin-top: 4px;
+    }
+
+    .slideshow-controls {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr 1fr;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .slideshow-controls button {
+      min-height: 44px;
+      border: 1px solid rgba(33, 24, 19, 0.16);
+      border-radius: 999px;
+      padding: 10px 12px;
+      background: white;
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 850;
+    }
+
+    .slideshow-controls .slideshow-toggle {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .slideshow-song {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(33, 24, 19, 0.12);
+    }
+
+    .slideshow-song h3 {
+      margin: 10px 0 0;
+      font-size: 1.32rem;
+    }
+
+    .slideshow-artist,
+    .slideshow-player-note {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .slideshow-player {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      min-height: 200px;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #211813;
+      color: var(--paper);
+      text-align: center;
+    }
+
+    .slideshow-player iframe {
+      width: 100%;
+      min-height: 200px;
+      border: 0;
+      aspect-ratio: 16 / 9;
+    }
+
+    .slideshow-player-placeholder {
+      max-width: 230px;
+      margin: 0;
+      padding: 22px;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .slideshow-official-link {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--rose);
+      font-size: 0.88rem;
+      font-weight: 850;
+    }
+
     .footer {
       padding: 26px 0 0;
       color: var(--muted);
@@ -477,6 +689,31 @@
       .lightbox-details {
         min-height: auto;
       }
+
+      .slideshow {
+        display: block;
+        overflow-y: auto;
+      }
+
+      .slideshow-stage {
+        min-height: 54vh;
+        min-height: 54dvh;
+        padding: 12px;
+      }
+
+      .slideshow-image {
+        max-height: calc(54vh - 24px);
+        max-height: calc(54dvh - 24px);
+        border-width: 7px;
+      }
+
+      .slideshow-panel {
+        min-height: auto;
+        max-height: none;
+        overflow: visible;
+        border-top: 1px solid rgba(33, 24, 19, 0.12);
+        border-left: 0;
+      }
     }
 
     @media (max-width: 460px) {
@@ -486,6 +723,25 @@
 
       .photo-wall figure {
         margin-bottom: 8px;
+      }
+
+      .slideshow-panel {
+        padding: 22px 18px 34px;
+      }
+
+      .slideshow-controls {
+        gap: 6px;
+      }
+
+      .slideshow-controls button {
+        padding-inline: 8px;
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
       }
     }
   </style>
@@ -513,6 +769,14 @@
             aria-expanded="true"
           >
             Show Gallery
+          </button>
+          <button
+            class="slideshow-button"
+            type="button"
+            aria-controls="memory-slideshow"
+            aria-haspopup="dialog"
+          >
+            Play Slideshow + Song
           </button>
         </div>
       </div>
@@ -581,6 +845,61 @@
       <p class="lightbox-location"></p>
       <button class="close-lightbox" type="button">Close</button>
     </div>
+  </div>
+  <div
+    class="slideshow"
+    id="memory-slideshow"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="slideshow-heading"
+    hidden
+  >
+    <div class="slideshow-stage">
+      <img class="slideshow-image" alt="" />
+    </div>
+    <aside class="slideshow-panel">
+      <div class="slideshow-topline">
+        <p class="slideshow-eyebrow">Dexter + Oliver</p>
+        <button class="slideshow-close" type="button" aria-label="Close slideshow">
+          Close
+        </button>
+      </div>
+      <h2 id="slideshow-heading">The good old days.</h2>
+      <p class="slideshow-counter" aria-live="off"></p>
+      <div class="slideshow-progress" aria-hidden="true"><span></span></div>
+      <p class="slideshow-date"></p>
+      <p class="slideshow-location" hidden></p>
+      <div class="slideshow-controls" role="group" aria-label="Slideshow controls">
+        <button class="slideshow-previous" type="button" aria-label="Previous photo">
+          Previous
+        </button>
+        <button class="slideshow-toggle" type="button">Pause</button>
+        <button class="slideshow-next" type="button" aria-label="Next photo">
+          Next
+        </button>
+      </div>
+      <section class="slideshow-song" aria-label="Slideshow soundtrack">
+        <p class="slideshow-song-label">Soundtrack</p>
+        <h3>Good Old Days</h3>
+        <p class="slideshow-artist">Macklemore feat. Kesha</p>
+        <div class="slideshow-player">
+          <p class="slideshow-player-placeholder">
+            The official music player loads when the slideshow starts.
+          </p>
+        </div>
+        <p class="slideshow-player-note">
+          If the music does not start automatically, press Play in the official player.
+        </p>
+        <a
+          class="slideshow-official-link"
+          href="https://www.youtube.com/watch?v=1yYV9-KoSUM"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Open the official music video
+        </a>
+      </section>
+    </aside>
   </div>
   <script>
     const timelineYears = Array.from(
@@ -785,6 +1104,31 @@
     const closeLightboxButton = lightbox.querySelector(".close-lightbox");
     let lastFocusedPhoto = null;
 
+    const slideshow = document.querySelector(".slideshow");
+    const slideshowButton = document.querySelector(".slideshow-button");
+    const slideshowImage = slideshow.querySelector(".slideshow-image");
+    const slideshowCounter = slideshow.querySelector(".slideshow-counter");
+    const slideshowProgress = slideshow.querySelector(".slideshow-progress span");
+    const slideshowDate = slideshow.querySelector(".slideshow-date");
+    const slideshowLocation = slideshow.querySelector(".slideshow-location");
+    const slideshowPlayer = slideshow.querySelector(".slideshow-player");
+    const slideshowCloseButton = slideshow.querySelector(".slideshow-close");
+    const slideshowPreviousButton = slideshow.querySelector(".slideshow-previous");
+    const slideshowToggleButton = slideshow.querySelector(".slideshow-toggle");
+    const slideshowNextButton = slideshow.querySelector(".slideshow-next");
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const slideshowBackground = [
+      document.querySelector("main"),
+      document.querySelector("footer"),
+      lightbox,
+    ];
+    const slideInterval = 2500;
+    let slideshowIndex = 0;
+    let slideshowTimer = null;
+    let slideshowPlaying = false;
+    let lastFocusedBeforeSlideshow = null;
+    let failedSlideshowPhotos = new Set();
+
     function openLightbox(photo) {
       lastFocusedPhoto = document.activeElement;
       lightboxImage.src = photo.src;
@@ -807,7 +1151,167 @@
     lightbox.addEventListener("click", (event) => {
       if (event.target === lightbox) closeLightbox();
     });
+
+    function renderSlide() {
+      stopSlideTimer();
+      const photo = photos[slideshowIndex];
+      slideshowImage.src = photo.src;
+      slideshowImage.alt = photo.alt;
+      slideshowCounter.textContent = `${slideshowIndex + 1} / ${photos.length} · ${photo.year}`;
+      slideshowProgress.style.width = `${((slideshowIndex + 1) / photos.length) * 100}%`;
+      slideshowDate.textContent = photo.date;
+      slideshowLocation.textContent = photo.location || "";
+      slideshowLocation.hidden = !photo.location;
+      if (slideshowPlaying) startSlideTimer();
+    }
+
+    function stopSlideTimer() {
+      if (slideshowTimer !== null) {
+        window.clearTimeout(slideshowTimer);
+        slideshowTimer = null;
+      }
+    }
+
+    function startSlideTimer() {
+      stopSlideTimer();
+      if (
+        !slideshowPlaying ||
+        slideshow.hidden ||
+        !slideshowImage.complete ||
+        slideshowImage.naturalWidth === 0
+      ) {
+        return;
+      }
+      slideshowTimer = window.setTimeout(() => moveSlide(1), slideInterval);
+    }
+
+    function setSlideshowPlaying(playing) {
+      slideshowPlaying = playing;
+      slideshowToggleButton.textContent = playing ? "Pause" : "Play";
+      slideshowToggleButton.setAttribute(
+        "aria-label",
+        playing ? "Pause slideshow" : "Play slideshow",
+      );
+      slideshowCounter.setAttribute("aria-live", playing ? "off" : "polite");
+
+      if (playing) {
+        startSlideTimer();
+      } else {
+        stopSlideTimer();
+      }
+    }
+
+    function moveSlide(amount) {
+      slideshowIndex = (slideshowIndex + amount + photos.length) % photos.length;
+      renderSlide();
+    }
+
+    function createPlayerPlaceholder() {
+      const placeholder = document.createElement("p");
+      placeholder.className = "slideshow-player-placeholder";
+      placeholder.textContent = "The official music player loads when the slideshow starts.";
+      return placeholder;
+    }
+
+    function mountOfficialPlayer() {
+      const player = document.createElement("iframe");
+      player.src = "https://www.youtube.com/embed/1yYV9-KoSUM?autoplay=1&playsinline=1&rel=0&loop=1&playlist=1yYV9-KoSUM";
+      player.title = "Good Old Days by Macklemore featuring Kesha — official music video";
+      player.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      player.referrerPolicy = "strict-origin-when-cross-origin";
+      player.allowFullscreen = true;
+      slideshowPlayer.replaceChildren(player);
+    }
+
+    function openSlideshow() {
+      lastFocusedBeforeSlideshow = document.activeElement;
+      failedSlideshowPhotos = new Set();
+      slideshowIndex = 0;
+      renderSlide();
+      slideshow.hidden = false;
+      document.body.classList.add("modal-open");
+      slideshowBackground.forEach((element) => { element.inert = true; });
+      mountOfficialPlayer();
+      setSlideshowPlaying(!reducedMotionQuery.matches);
+      slideshowToggleButton.focus();
+    }
+
+    function closeSlideshow() {
+      stopSlideTimer();
+      slideshowPlaying = false;
+      slideshow.hidden = true;
+      slideshowImage.removeAttribute("src");
+      slideshowPlayer.replaceChildren(createPlayerPlaceholder());
+      document.body.classList.remove("modal-open");
+      slideshowCounter.setAttribute("aria-live", "off");
+      slideshowBackground.forEach((element) => { element.inert = false; });
+      if (lastFocusedBeforeSlideshow) lastFocusedBeforeSlideshow.focus();
+    }
+
+    function trapSlideshowFocus(event) {
+      const focusable = Array.from(
+        slideshow.querySelectorAll("button, a[href], iframe"),
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    slideshowButton.addEventListener("click", openSlideshow);
+    slideshowCloseButton.addEventListener("click", closeSlideshow);
+    slideshowPreviousButton.addEventListener("click", () => moveSlide(-1));
+    slideshowNextButton.addEventListener("click", () => moveSlide(1));
+    slideshowToggleButton.addEventListener("click", () => {
+      setSlideshowPlaying(!slideshowPlaying);
+    });
+    slideshowImage.addEventListener("load", () => {
+      if (slideshow.hidden) return;
+      const currentPhotoUrl = new URL(photos[slideshowIndex].src, document.baseURI).href;
+      if (slideshowImage.src === currentPhotoUrl) startSlideTimer();
+    });
+    slideshowImage.addEventListener("error", () => {
+      if (slideshow.hidden) return;
+      const currentPhotoUrl = new URL(photos[slideshowIndex].src, document.baseURI).href;
+      if (slideshowImage.src !== currentPhotoUrl) return;
+      failedSlideshowPhotos.add(slideshowIndex);
+      if (failedSlideshowPhotos.size >= photos.length) {
+        setSlideshowPlaying(false);
+        slideshowDate.textContent = "The photos could not load. Please try again.";
+        return;
+      }
+      moveSlide(1);
+    });
+
     document.addEventListener("keydown", (event) => {
+      if (!slideshow.hidden) {
+        if (event.key === "Escape") {
+          event.preventDefault();
+          closeSlideshow();
+        } else if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          moveSlide(-1);
+        } else if (event.key === "ArrowRight") {
+          event.preventDefault();
+          moveSlide(1);
+        } else if (
+          event.code === "Space" &&
+          !["BUTTON", "A", "IFRAME"].includes(document.activeElement.tagName)
+        ) {
+          event.preventDefault();
+          setSlideshowPlaying(!slideshowPlaying);
+        } else if (event.key === "Tab") {
+          trapSlideshowFocus(event);
+        }
+        return;
+      }
+
       if (event.key === "Escape" && !lightbox.hidden) closeLightbox();
     });
 
