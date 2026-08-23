@@ -581,9 +581,10 @@
     .slideshow-player {
       display: grid;
       place-items: center;
-      width: 100%;
+      width: 200px;
+      height: 200px;
       min-height: 200px;
-      margin-top: 14px;
+      margin: 14px auto 0;
       overflow: hidden;
       border-radius: 12px;
       background: #211813;
@@ -592,10 +593,11 @@
     }
 
     .slideshow-player iframe {
-      width: 100%;
-      min-height: 200px;
+      width: 200px;
+      height: 200px;
+      min-height: 0;
       border: 0;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: auto;
     }
 
     .slideshow-player-placeholder {
@@ -776,7 +778,7 @@
             aria-controls="memory-slideshow"
             aria-haspopup="dialog"
           >
-            Play Slideshow + Song
+            Open Slideshow
           </button>
         </div>
       </div>
@@ -873,7 +875,7 @@
         <button class="slideshow-previous" type="button" aria-label="Previous photo">
           Previous
         </button>
-        <button class="slideshow-toggle" type="button">Pause</button>
+        <button class="slideshow-toggle" type="button">Play</button>
         <button class="slideshow-next" type="button" aria-label="Next photo">
           Next
         </button>
@@ -884,7 +886,7 @@
         <p class="slideshow-artist">Macklemore feat. Kesha</p>
         <div class="slideshow-player">
           <p class="slideshow-player-placeholder">
-            The official music player loads when the slideshow starts.
+            Press Play to start the slideshow and music together.
           </p>
         </div>
         <p class="slideshow-player-note">
@@ -1116,7 +1118,6 @@
     const slideshowPreviousButton = slideshow.querySelector(".slideshow-previous");
     const slideshowToggleButton = slideshow.querySelector(".slideshow-toggle");
     const slideshowNextButton = slideshow.querySelector(".slideshow-next");
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const slideshowBackground = [
       document.querySelector("main"),
       document.querySelector("footer"),
@@ -1195,9 +1196,15 @@
       slideshowCounter.setAttribute("aria-live", playing ? "off" : "polite");
 
       if (playing) {
+        if (slideshowPlayer.querySelector("iframe")) {
+          controlOfficialPlayer("playVideo");
+        } else {
+          mountOfficialPlayer();
+        }
         startSlideTimer();
       } else {
         stopSlideTimer();
+        controlOfficialPlayer("pauseVideo");
       }
     }
 
@@ -1209,13 +1216,22 @@
     function createPlayerPlaceholder() {
       const placeholder = document.createElement("p");
       placeholder.className = "slideshow-player-placeholder";
-      placeholder.textContent = "The official music player loads when the slideshow starts.";
+      placeholder.textContent = "Press Play to start the slideshow and music together.";
       return placeholder;
+    }
+
+    function controlOfficialPlayer(command) {
+      const player = slideshowPlayer.querySelector("iframe");
+      if (!player?.contentWindow) return;
+      player.contentWindow.postMessage(
+        JSON.stringify({ event: "command", func: command, args: [] }),
+        "https://www.youtube.com",
+      );
     }
 
     function mountOfficialPlayer() {
       const player = document.createElement("iframe");
-      player.src = "https://www.youtube.com/embed/1yYV9-KoSUM?autoplay=1&playsinline=1&rel=0&loop=1&playlist=1yYV9-KoSUM";
+      player.src = `https://www.youtube.com/embed/1yYV9-KoSUM?autoplay=1&playsinline=1&rel=0&loop=1&playlist=1yYV9-KoSUM&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`;
       player.title = "Good Old Days by Macklemore featuring Kesha — official music video";
       player.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
       player.referrerPolicy = "strict-origin-when-cross-origin";
@@ -1231,14 +1247,12 @@
       slideshow.hidden = false;
       document.body.classList.add("modal-open");
       slideshowBackground.forEach((element) => { element.inert = true; });
-      mountOfficialPlayer();
-      setSlideshowPlaying(!reducedMotionQuery.matches);
+      setSlideshowPlaying(false);
       slideshowToggleButton.focus();
     }
 
     function closeSlideshow() {
-      stopSlideTimer();
-      slideshowPlaying = false;
+      setSlideshowPlaying(false);
       slideshow.hidden = true;
       slideshowImage.removeAttribute("src");
       slideshowPlayer.replaceChildren(createPlayerPlaceholder());
