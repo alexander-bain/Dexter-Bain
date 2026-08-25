@@ -884,6 +884,9 @@
         <p class="slideshow-song-label">Soundtrack</p>
         <h3>Good Old Days</h3>
         <p class="slideshow-artist">Macklemore feat. Kesha</p>
+        <p class="slideshow-player-note slideshow-song-queue">
+          Then: I Will Remember You · Sarah McLachlan
+        </p>
         <div class="slideshow-player">
           <p class="slideshow-player-placeholder">
             Press Play to start the slideshow and music together.
@@ -898,7 +901,15 @@
           target="_blank"
           rel="noreferrer"
         >
-          Open the official audio
+          Open Good Old Days official audio
+        </a>
+        <a
+          class="slideshow-official-link"
+          href="https://www.youtube.com/watch?v=KmRqMJE0Uk0"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Open I Will Remember You official audio
         </a>
       </section>
     </aside>
@@ -1202,8 +1213,8 @@
 
     function mountOfficialPlayer() {
       const player = document.createElement("iframe");
-      player.src = `https://www.youtube.com/embed/fUffrvUjwCY?autoplay=1&playsinline=1&rel=0&loop=1&playlist=fUffrvUjwCY&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`;
-      player.title = "Good Old Days by Macklemore featuring Kesha — official audio";
+      player.src = `https://www.youtube.com/embed/fUffrvUjwCY?autoplay=1&playsinline=1&rel=0&playlist=KmRqMJE0Uk0&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`;
+      player.title = "Good Old Days by Macklemore featuring Kesha, followed by I Will Remember You by Sarah McLachlan — official audio";
       player.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
       player.referrerPolicy = "strict-origin-when-cross-origin";
       player.allowFullscreen = true;
