@@ -39,7 +39,7 @@
             <p class="eyebrow"><span></span> The complete 2026 singles draws</p>
             <h1>2026 US Open<br /><em>Prediction Bracket</em></h1>
             <p class="hero-subtitle">
-              Pick every winner in the men's and women's singles draws. Share your bracket and see how far your champions can go.
+              See every matchup's projected winner and win chance, then click your picks through a complete seven-round bracket.
             </p>
             <div class="hero-actions">
               <button class="button button-primary button-large" type="button" data-view-link="create">
@@ -47,7 +47,7 @@
               </button>
               <button class="button button-secondary button-large" type="button" data-view-link="how">How it works</button>
             </div>
-            <p class="truth-note"><span aria-hidden="true">✓</span> No money, odds, prizes, or invented players.</p>
+            <p class="truth-note"><span aria-hidden="true">✓</span> Model projections, not betting odds. No money, prizes, or invented players.</p>
           </div>
 
           <aside class="tournament-card" aria-label="Tournament status">
@@ -73,7 +73,7 @@
         <div class="data-strip">
           <p><strong id="verified-count">256</strong><span>official draw positions loaded</span></p>
           <p><strong id="placeholder-count">—</strong><span>unresolved qualifier slots labeled honestly</span></p>
-          <p><strong>896</strong><span>maximum points for a perfect combined bracket</span></p>
+          <p><strong>3,584</strong><span>maximum theoretical points with the biggest upset bonuses</span></p>
         </div>
       </section>
 
@@ -122,26 +122,36 @@
 
           <div class="division-tabs" id="division-tabs" role="tablist" aria-label="Draw division"></div>
 
-          <div class="round-header">
-            <button class="round-arrow" id="previous-round" type="button" aria-label="Previous round">←</button>
-            <div>
-              <p id="round-label">Round 1 of 7</p>
-              <h3 id="round-name">Round of 128</h3>
-            </div>
-            <button class="round-arrow" id="next-round" type="button" aria-label="Next round">→</button>
-          </div>
-
           <div class="progress-block">
             <div><span id="progress-copy">0 of 254 picks complete</span><strong id="progress-percent">0%</strong></div>
             <div class="progress-track"><span id="progress-bar"></span></div>
           </div>
 
-          <div class="round-grid" id="round-grid" aria-live="polite"></div>
-
-          <div class="round-footer">
-            <button class="button button-secondary" id="previous-round-bottom" type="button">← Previous round</button>
-            <button class="button button-primary" id="next-round-bottom" type="button">Next round →</button>
+          <div class="projection-panel">
+            <div>
+              <p class="projection-kicker">Open Bracket projection model</p>
+              <h4>Seed strength predicts each matchup</h4>
+              <p>Percentages use tournament seed and entry status. They are a transparent game projection—not betting odds or a guarantee.</p>
+            </div>
+            <div class="bracket-totals" aria-label="Bracket totals">
+              <span>Current bracket value<strong id="potential-points">0 pts</strong></span>
+              <span>Upset picks<strong id="upset-picks">0</strong></span>
+            </div>
           </div>
+
+          <div class="bracket-key" aria-label="Bracket legend">
+            <span><i class="key-dot model-dot"></i> Model pick</span>
+            <span><i class="key-dot upset-dot"></i> Upset bonus</span>
+            <span><strong>%</strong> projected win chance</span>
+            <span><strong>+pts</strong> value if correct</span>
+          </div>
+
+          <div class="round-jumps" id="round-jumps" aria-label="Jump to a bracket round"></div>
+
+          <div class="bracket-scroller" id="bracket-scroller" tabindex="0" aria-label="Full seven-round tournament bracket. Scroll horizontally to view later rounds.">
+            <div class="bracket-board" id="bracket-board" aria-live="polite"></div>
+          </div>
+          <p class="scroll-hint"><span aria-hidden="true">↔</span> Scroll sideways to follow your winners all the way to the championship.</p>
         </div>
 
         <div class="submission-card" id="submission-card" hidden>
@@ -186,7 +196,7 @@
         <div class="page-heading">
           <p class="eyebrow"><span></span> Standings</p>
           <h2>Leaderboard</h2>
-          <p>Scores increase each round, with correct final picks worth 64 points.</p>
+          <p>Scores increase each round, and correctly calling an unlikely upset earns a multiplier.</p>
         </div>
         <div class="leaderboard-shell">
           <div class="leaderboard-head"><span>Rank</span><span>Bracket</span><span>Men</span><span>Women</span><span>Total</span><span>Max</span></div>
@@ -201,15 +211,19 @@
         <div class="page-heading">
           <p class="eyebrow"><span></span> Simple by design</p>
           <h2>How it works</h2>
-          <p>Choose every winner, share your finished bracket, and earn more points as the rounds get harder.</p>
+          <p>Choose every winner in one complete bracket, share it, and earn more for correct late-round and upset picks.</p>
         </div>
         <div class="steps-grid">
-          <article><span>01</span><h3>Pick</h3><p>Choose the winner of every match. Winners automatically advance into the next round.</p></article>
+          <article><span>01</span><h3>Pick</h3><p>Click a winner in each matchup. The player advances through the bracket and gets a fresh projection next round.</p></article>
           <article><span>02</span><h3>Share</h3><p>Finish every required pick to create a read-only link containing your exact bracket.</p></article>
-          <article><span>03</span><h3>Score</h3><p>Correct picks are worth more each round, from one point in Round 1 to 64 in the final.</p></article>
+          <article><span>03</span><h3>Score</h3><p>Correct picks are worth more each round. Underdogs below 45% can multiply that match's value up to 4×.</p></article>
         </div>
         <div class="scoring-card">
-          <div><h3>Scoring</h3><p>Applied separately to the men's and women's draws.</p></div>
+          <div>
+            <h3>Scoring</h3>
+            <p>Start with the round value, then multiply it for a selected underdog: 35–44% = 1.5×, 25–34% = 2×, 15–24% = 3×, and below 15% = 4×.</p>
+            <p class="model-disclaimer">The percentage displayed when you make the pick sets its possible point value.</p>
+          </div>
           <ol>
             <li><span>Round of 128</span><strong>1 pt</strong></li>
             <li><span>Round of 64</span><strong>2 pts</strong></li>

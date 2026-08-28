@@ -8,16 +8,18 @@ const ROUND_NAMES = [
   "Final",
 ];
 
+const ROUND_SHORT_NAMES = ["R128", "R64", "R32", "R16", "QF", "SF", "Final"];
 const ROUND_POINTS = [1, 2, 4, 8, 16, 32, 64];
 const LOCK_AT = new Date("2026-08-30T15:00:00Z");
 const STORAGE_KEY = "dexter-usopen-2026-bracket-v1";
+const BASE_MATCH_PITCH = 104;
+const MATCH_CARD_HEIGHT = 96;
 
 const state = {
   data: { men: null, women: null },
   meta: { displayName: "", title: "My 2026 US Open Bracket", scope: "both" },
   picks: { men: {}, women: {} },
   activeDivision: "men",
-  round: 1,
   started: false,
   submitted: false,
   readOnly: false,
@@ -85,6 +87,38 @@ function normalizePicks(division, picks) {
   return picks;
 }
 
+function ratingForPlayer(player) {
+  if (!player) return null;
+  if (player.seed) return 1900 - 55 * Math.log2(Number(player.seed));
+  const entryRatings = {
+    direct: 1500,
+    wildcard: 1475,
+    tbd: 1450,
+  };
+  return entryRatings[player.entryType] || 1500;
+}
+
+function projectionFor(players) {
+  if (!players[0] || !players[1]) return null;
+  const firstRating = ratingForPlayer(players[0]);
+  const secondRating = ratingForPlayer(players[1]);
+  const rawFirst = 100 / (1 + 10 ** ((secondRating - firstRating) / 400));
+  const first = Math.round(Math.min(95, Math.max(5, rawFirst)));
+  return [first, 100 - first];
+}
+
+function upsetMultiplier(probability) {
+  if (probability >= 45) return 1;
+  if (probability >= 35) return 1.5;
+  if (probability >= 25) return 2;
+  if (probability >= 15) return 3;
+  return 4;
+}
+
+function potentialPoints(round, probability) {
+  return Math.round(ROUND_POINTS[round - 1] * upsetMultiplier(probability));
+}
+
 function numberOfPicks(division) {
   return Object.keys(state.picks[division]).length;
 }
@@ -101,6 +135,27 @@ function championFor(division) {
   return playerByPosition(division, state.picks[division][pickKey(7, 1)]);
 }
 
+function selectedBracketStats() {
+  let points = 0;
+  let upsets = 0;
+  for (const division of visibleDivisions()) {
+    for (let round = 1; round <= 7; round += 1) {
+      for (let matchIndex = 1; matchIndex <= matchCount(round); matchIndex += 1) {
+        const selected = Number(state.picks[division][pickKey(round, matchIndex)]);
+        if (!selected) continue;
+        const players = participantsFor(division, round, matchIndex);
+        const projection = projectionFor(players);
+        const selectedIndex = players.findIndex((player) => player?.drawPosition === selected);
+        if (!projection || selectedIndex < 0) continue;
+        const probability = projection[selectedIndex];
+        points += potentialPoints(round, probability);
+        if (probability < 45) upsets += 1;
+      }
+    }
+  }
+  return { points, upsets };
+}
+
 function saveDraft() {
   if (state.readOnly) return;
   const saveState = $("#save-state");
@@ -110,7 +165,6 @@ function saveDraft() {
     meta: state.meta,
     picks: state.picks,
     activeDivision: state.activeDivision,
-    round: state.round,
     started: state.started,
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -133,7 +187,6 @@ function loadDraft() {
     state.activeDivision = visibleDivisions().includes(saved.activeDivision)
       ? saved.activeDivision
       : visibleDivisions()[0];
-    state.round = Math.min(7, Math.max(1, Number(saved.round) || 1));
     state.started = true;
     return true;
   } catch {
@@ -197,7 +250,6 @@ function loadSharedBracket() {
       women: normalizePicks("women", expandCompactPicks(payload.p?.w)),
     };
     state.activeDivision = visibleDivisions()[0];
-    state.round = 1;
     state.started = true;
     state.submitted = true;
     state.readOnly = true;
@@ -211,24 +263,47 @@ function loadSharedBracket() {
 
 function showView(name) {
   $$(".view").forEach((view) => view.classList.toggle("is-active", view.dataset.view === name));
-  $$('[data-view-link]').forEach((button) => button.classList.toggle("is-active", button.dataset.viewLink === name));
+  $$("[data-view-link]").forEach((button) => button.classList.toggle("is-active", button.dataset.viewLink === name));
   $("#site-nav").classList.remove("is-open");
   $("#menu-button").setAttribute("aria-expanded", "false");
   if (name === "create" && state.started) showBuilder();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function makePlayerButton(player, selectedPosition, division, round, matchIndex, slot) {
+function shortPlayerName(player) {
+  const pieces = player.name.trim().split(/\s+/);
+  return pieces.length > 1 ? pieces.at(-1) : player.name;
+}
+
+function makePlayerButton({
+  player,
+  selectedPosition,
+  division,
+  round,
+  matchIndex,
+  slot,
+  players,
+  projection,
+}) {
   const button = document.createElement("button");
   button.type = "button";
   button.className = "player-button";
+  const matchupReady = Boolean(players[0] && players[1]);
 
   if (!player) {
+    const sourceMatch = matchIndex * 2 - (slot === 0 ? 1 : 0);
     button.disabled = true;
-    button.innerHTML = `<span class="player-name">Winner of Match ${matchIndex * 2 - (slot === 0 ? 1 : 0)}</span><span class="country">TBD</span>`;
+    button.innerHTML = `<span class="player-copy"><span class="player-name">Winner of M${sourceMatch}</span><span class="entry-note">Pick the earlier round first</span></span><span class="probability">—</span><span class="pick-points">—</span>`;
     return button;
   }
 
+  const probability = projection?.[slot];
+  const points = probability == null ? null : potentialPoints(round, probability);
+  const isModelPick = probability != null && probability > projection[1 - slot];
+  const isUpset = probability != null && probability < 45;
+
+  const copy = document.createElement("span");
+  copy.className = "player-copy";
   const name = document.createElement("span");
   name.className = `player-name${player.entryType === "tbd" ? " tbd-label" : ""}`;
   if (player.seed) {
@@ -238,63 +313,141 @@ function makePlayerButton(player, selectedPosition, division, round, matchIndex,
     name.append(seed);
   }
   name.append(document.createTextNode(player.name));
+  if (isModelPick) {
+    const model = document.createElement("span");
+    model.className = "model-label";
+    model.textContent = "MODEL";
+    name.append(model);
+  }
+  const entry = document.createElement("span");
+  entry.className = "entry-note";
+  entry.textContent = player.countryCode || (player.entryType === "tbd" ? "QUALIFIER TBD" : "ENTRY");
+  copy.append(name, entry);
 
-  const country = document.createElement("span");
-  country.className = "country";
-  country.textContent = player.countryCode || (player.entryType === "tbd" ? "TBD" : "—");
+  const chance = document.createElement("span");
+  chance.className = "probability";
+  chance.textContent = probability == null ? "—" : `${probability}%`;
 
-  button.append(name, country);
+  const value = document.createElement("span");
+  value.className = `pick-points${isUpset ? " has-upset-bonus" : ""}`;
+  value.textContent = points == null ? "—" : `+${points}`;
+
+  button.append(copy, chance, value);
   button.classList.toggle("is-selected", Number(selectedPosition) === player.drawPosition);
+  button.classList.toggle("is-model-pick", isModelPick);
+  button.classList.toggle("is-upset", isUpset);
   button.setAttribute(
     "aria-label",
-    `${Number(selectedPosition) === player.drawPosition ? "Selected: " : "Pick "}${player.seed ? `seed ${player.seed} ` : ""}${player.name}`,
+    `${Number(selectedPosition) === player.drawPosition ? "Selected: " : "Pick "}${player.seed ? `seed ${player.seed} ` : ""}${player.name}${probability == null ? "" : `, ${probability} percent projected win chance, worth ${points} ${points === 1 ? "point" : "points"} if correct`}`,
   );
-  button.disabled = state.readOnly || isLocked();
+  button.title = probability == null
+    ? "Complete both sides of this matchup first"
+    : `${player.name}: ${probability}% projected win chance · ${points} possible points`;
+  button.disabled = !matchupReady || state.readOnly || isLocked();
   button.addEventListener("click", () => selectPlayer(division, round, matchIndex, player.drawPosition));
   return button;
 }
 
-function renderRound() {
+function makeMatchCard(division, round, matchIndex) {
+  const players = participantsFor(division, round, matchIndex);
+  const projection = projectionFor(players);
+  const selectedPosition = state.picks[division][pickKey(round, matchIndex)];
+  const card = document.createElement("article");
+  card.className = `match-card ${matchIndex % 2 === 1 ? "is-upper" : "is-lower"}`;
+  card.setAttribute("aria-label", `${ROUND_NAMES[round - 1]} match ${matchIndex}`);
+
+  const roundStride = BASE_MATCH_PITCH * 2 ** (round - 1);
+  const top = roundStride / 2 - MATCH_CARD_HEIGHT / 2 + (matchIndex - 1) * roundStride;
+  card.style.top = `${top}px`;
+  card.style.setProperty("--half-step", `${roundStride / 2}px`);
+
+  const shell = document.createElement("div");
+  shell.className = "match-card-shell";
+
+  const header = document.createElement("div");
+  header.className = "match-card-header";
+  const number = document.createElement("span");
+  number.textContent = `M${String(matchIndex).padStart(2, "0")}`;
+  const call = document.createElement("strong");
+  if (!projection) {
+    call.textContent = round === 1 ? "Projection unavailable" : "Awaiting earlier picks";
+  } else if (projection[0] === projection[1]) {
+    call.textContent = "Model: toss-up · 50–50";
+  } else {
+    const modelIndex = projection[0] > projection[1] ? 0 : 1;
+    call.textContent = `Model: ${shortPlayerName(players[modelIndex])} · ${projection[modelIndex]}%`;
+  }
+  header.append(number, call);
+
+  const options = document.createElement("div");
+  options.className = "player-options";
+  players.forEach((player, slot) => {
+    options.append(makePlayerButton({
+      player,
+      selectedPosition,
+      division,
+      round,
+      matchIndex,
+      slot,
+      players,
+      projection,
+    }));
+  });
+  shell.append(header, options);
+  card.append(shell);
+
+  if (round < 7) {
+    const connector = document.createElement("span");
+    connector.className = "connector-branch";
+    connector.setAttribute("aria-hidden", "true");
+    card.append(connector);
+  }
+  return card;
+}
+
+function renderBracket() {
   const division = state.activeDivision;
-  const round = state.round;
-  const grid = $("#round-grid");
-  grid.replaceChildren();
-  $("#round-label").textContent = `Round ${round} of 7 · ${division === "men" ? "Men's" : "Women's"} draw`;
-  $("#round-name").textContent = ROUND_NAMES[round - 1];
-  $("#previous-round").disabled = round === 1;
-  $("#previous-round-bottom").disabled = round === 1;
-  $("#next-round").disabled = round === 7;
-  $("#next-round-bottom").disabled = round === 7;
-  $("#next-round-bottom").textContent = round === 7 ? "Final round" : "Next round →";
+  const board = $("#bracket-board");
+  board.replaceChildren();
 
-  for (let matchIndex = 1; matchIndex <= matchCount(round); matchIndex += 1) {
-    const card = document.createElement("article");
-    card.className = "match-card";
-    card.setAttribute("aria-label", `${ROUND_NAMES[round - 1]} match ${matchIndex}`);
+  for (let round = 1; round <= 7; round += 1) {
+    const column = document.createElement("section");
+    column.className = "round-column";
+    column.dataset.round = String(round);
+    column.setAttribute("aria-label", ROUND_NAMES[round - 1]);
 
-    const number = document.createElement("span");
-    number.className = "match-number";
-    number.textContent = String(matchIndex).padStart(2, "0");
+    const header = document.createElement("header");
+    header.className = "round-column-header";
+    const copy = document.createElement("span");
+    copy.innerHTML = `<small>Round ${round}</small><strong>${ROUND_NAMES[round - 1]}</strong>`;
+    const points = document.createElement("span");
+    points.className = "round-base-points";
+    points.innerHTML = `<strong>${ROUND_POINTS[round - 1]}</strong><small>base pts</small>`;
+    header.append(copy, points);
 
-    const options = document.createElement("div");
-    options.className = "player-options";
-    const players = participantsFor(division, round, matchIndex);
-    const selectedPosition = state.picks[division][pickKey(round, matchIndex)];
-    players.forEach((player, slot) => options.append(makePlayerButton(player, selectedPosition, division, round, matchIndex, slot)));
-    card.append(number, options);
-    grid.append(card);
+    const matches = document.createElement("div");
+    matches.className = "bracket-matches";
+    for (let matchIndex = 1; matchIndex <= matchCount(round); matchIndex += 1) {
+      matches.append(makeMatchCard(division, round, matchIndex));
+    }
+    column.append(header, matches);
+    board.append(column);
   }
 
   renderProgress();
+  renderRoundJumps();
 }
 
 function renderProgress() {
   const completed = completedPicks();
   const required = requiredPicks();
   const percentage = Math.round((completed / required) * 100);
+  const stats = selectedBracketStats();
   $("#progress-copy").textContent = `${completed} of ${required} picks complete`;
   $("#progress-percent").textContent = `${percentage}%`;
   $("#progress-bar").style.width = `${percentage}%`;
+  $("#potential-points").textContent = `${stats.points.toLocaleString()} pts`;
+  $("#upset-picks").textContent = String(stats.upsets);
 }
 
 function renderDivisionTabs() {
@@ -308,13 +461,28 @@ function renderDivisionTabs() {
     button.setAttribute("aria-selected", String(state.activeDivision === division));
     button.addEventListener("click", () => {
       state.activeDivision = division;
-      state.round = 1;
       renderDivisionTabs();
-      renderRound();
+      renderBracket();
+      $("#bracket-scroller").scrollLeft = 0;
       saveDraft();
     });
     tabs.append(button);
   }
+}
+
+function renderRoundJumps() {
+  const jumps = $("#round-jumps");
+  jumps.replaceChildren();
+  ROUND_SHORT_NAMES.forEach((name, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = name;
+    button.addEventListener("click", () => {
+      const column = $(`.round-column[data-round="${index + 1}"]`);
+      $("#bracket-scroller").scrollTo({ left: Math.max(0, column.offsetLeft - 16), behavior: "smooth" });
+    });
+    jumps.append(button);
+  });
 }
 
 function showBuilder() {
@@ -331,7 +499,7 @@ function showBuilder() {
       ? " Brackets are locked"
       : " Saved on this device";
   renderDivisionTabs();
-  renderRound();
+  renderBracket();
 }
 
 function selectPlayer(division, round, matchIndex, position) {
@@ -347,19 +515,12 @@ function selectPlayer(division, round, matchIndex, position) {
   if (cleared >= 3 && !window.confirm(`Changing this pick will clear ${cleared} later picks that depend on it. Continue?`)) return;
 
   state.picks[division] = trial;
-  renderRound();
+  renderBracket();
   saveDraft();
 
   const currentRoundComplete = Array.from({ length: matchCount(round) }, (_, index) => pickKey(round, index + 1))
     .every((roundKey) => state.picks[division][roundKey]);
   if (currentRoundComplete && round < 7) showToast(`${ROUND_NAMES[round - 1]} complete. The next round is ready.`);
-}
-
-function changeRound(direction) {
-  state.round = Math.min(7, Math.max(1, state.round + direction));
-  renderRound();
-  saveDraft();
-  $("#round-grid").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function summaryArticle(label, value) {
@@ -380,7 +541,10 @@ function showReview() {
   summary.replaceChildren();
   const complete = completedPicks();
   const required = requiredPicks();
+  const stats = selectedBracketStats();
   summary.append(summaryArticle("Completed picks", `${complete} / ${required}`));
+  summary.append(summaryArticle("Possible points", stats.points.toLocaleString()));
+  summary.append(summaryArticle("Upset picks", String(stats.upsets)));
   summary.append(summaryArticle("Missing picks", String(required - complete)));
   for (const division of visibleDivisions()) {
     summary.append(summaryArticle(`${division === "men" ? "Men's" : "Women's"} champion`, championFor(division)?.name || "Not selected"));
@@ -426,7 +590,6 @@ function resetBracket() {
   state.meta = { displayName: "", title: "My 2026 US Open Bracket", scope: "both" };
   state.picks = { men: {}, women: {} };
   state.activeDivision = "men";
-  state.round = 1;
   state.started = false;
   state.submitted = false;
   state.readOnly = false;
@@ -453,7 +616,7 @@ function updateCountdown() {
 }
 
 function bindEvents() {
-  $$('[data-view-link]').forEach((button) => {
+  $$("[data-view-link]").forEach((button) => {
     button.addEventListener("click", (event) => {
       event.preventDefault();
       showView(button.dataset.viewLink);
@@ -480,10 +643,6 @@ function bindEvents() {
     saveDraft();
   });
 
-  $("#previous-round").addEventListener("click", () => changeRound(-1));
-  $("#previous-round-bottom").addEventListener("click", () => changeRound(-1));
-  $("#next-round").addEventListener("click", () => changeRound(1));
-  $("#next-round-bottom").addEventListener("click", () => changeRound(1));
   $("#review-bracket").addEventListener("click", showReview);
   $("#keep-editing").addEventListener("click", showBuilder);
   $("#submit-bracket").addEventListener("click", submitBracket);
