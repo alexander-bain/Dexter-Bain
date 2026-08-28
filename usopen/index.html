@@ -203,13 +203,33 @@
         <div class="page-heading">
           <p class="eyebrow"><span></span> Standings</p>
           <h2>Leaderboard</h2>
-          <p>This pre-tournament board is ordered simply by who completed their bracket first. Picks and possible point values stay visible on every entry.</p>
+          <p>Men's and women's brackets have separate standings. A completed bracket covering both draws appears once in each leaderboard.</p>
         </div>
-        <div class="leaderboard-shell">
-          <div class="leaderboard-head"><span>Place</span><span>Bracket</span><span>Completed</span><span>Bracket value</span><span>View</span></div>
-          <div class="leaderboard-body" id="leaderboard-body">
-            <div class="leaderboard-empty"><strong>Loading real brackets…</strong><span>No sample names or scores are shown.</span></div>
-          </div>
+        <div class="leaderboard-divisions">
+          <section class="leaderboard-division" aria-labelledby="men-leaderboard-title">
+            <div class="leaderboard-division-heading">
+              <div><span>Men's draw</span><h3 id="men-leaderboard-title">Men's leaderboard</h3></div>
+              <p>Only men's picks and points count here.</p>
+            </div>
+            <div class="leaderboard-shell">
+              <div class="leaderboard-head"><span>Place</span><span>Bracket</span><span>Completed</span><span>Bracket value</span><span>View</span></div>
+              <div class="leaderboard-body" id="leaderboard-men-body">
+                <div class="leaderboard-empty"><strong>Loading men's brackets…</strong><span>No sample names or scores are shown.</span></div>
+              </div>
+            </div>
+          </section>
+          <section class="leaderboard-division" aria-labelledby="women-leaderboard-title">
+            <div class="leaderboard-division-heading">
+              <div><span>Women's draw</span><h3 id="women-leaderboard-title">Women's leaderboard</h3></div>
+              <p>Only women's picks and points count here.</p>
+            </div>
+            <div class="leaderboard-shell">
+              <div class="leaderboard-head"><span>Place</span><span>Bracket</span><span>Completed</span><span>Bracket value</span><span>View</span></div>
+              <div class="leaderboard-body" id="leaderboard-women-body">
+                <div class="leaderboard-empty"><strong>Loading women's brackets…</strong><span>No sample names or scores are shown.</span></div>
+              </div>
+            </div>
+          </section>
         </div>
         <p class="shared-list-status" id="leaderboard-status" role="status"></p>
       </section>
@@ -266,6 +286,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <noscript>This bracket requires JavaScript to load the verified draw and record your picks.</noscript>
-    <script src="./app.js?v=20260828-owner" defer></script>
+    <script src="./app.js?v=20260828-split" defer></script>
   </body>
 </html>

@@ -142,25 +142,30 @@ function championFor(division) {
   return playerByPosition(division, state.picks[division][pickKey(7, 1)]);
 }
 
-function selectedBracketStats() {
+function bracketStatsForDivision(division, picks = state.picks[division]) {
   let points = 0;
   let upsets = 0;
-  for (const division of visibleDivisions()) {
-    for (let round = 1; round <= 7; round += 1) {
-      for (let matchIndex = 1; matchIndex <= matchCount(round); matchIndex += 1) {
-        const selected = Number(state.picks[division][pickKey(round, matchIndex)]);
-        if (!selected) continue;
-        const players = participantsFor(division, round, matchIndex);
-        const projection = projectionFor(players);
-        const selectedIndex = players.findIndex((player) => player?.drawPosition === selected);
-        if (!projection || selectedIndex < 0) continue;
-        const probability = projection[selectedIndex];
-        points += potentialPoints(round, probability);
-        if (probability < 45) upsets += 1;
-      }
+  for (let round = 1; round <= 7; round += 1) {
+    for (let matchIndex = 1; matchIndex <= matchCount(round); matchIndex += 1) {
+      const selected = Number(picks[pickKey(round, matchIndex)]);
+      if (!selected) continue;
+      const players = participantsFor(division, round, matchIndex, picks);
+      const projection = projectionFor(players);
+      const selectedIndex = players.findIndex((player) => player?.drawPosition === selected);
+      if (!projection || selectedIndex < 0) continue;
+      const probability = projection[selectedIndex];
+      points += potentialPoints(round, probability);
+      if (probability < 45) upsets += 1;
     }
   }
   return { points, upsets };
+}
+
+function selectedBracketStats() {
+  return visibleDivisions().reduce((total, division) => {
+    const stats = bracketStatsForDivision(division);
+    return { points: total.points + stats.points, upsets: total.upsets + stats.upsets };
+  }, { points: 0, upsets: 0 });
 }
 
 function stableHash(value) {
@@ -463,21 +468,39 @@ async function syncCompletedBracket({ announce = false } = {}) {
   }
 }
 
+function splitCloudBracket(row, data) {
+  const scope = ["men", "women", "both"].includes(data.share.s) ? data.share.s : "both";
+  const divisions = scope === "both" ? ["men", "women"] : [scope];
+  return divisions.map((division) => {
+    const compactPicks = data.share.p?.[division[0]] || [];
+    const picks = expandCompactPicks(compactPicks);
+    const stats = bracketStatsForDivision(division, picks);
+    const champion = playerByPosition(division, picks[pickKey(7, 1)])?.name || "";
+    const divisionShare = {
+      ...data.share,
+      s: division,
+      p: { [division[0]]: compactPicks },
+    };
+    return {
+      displayName: String(data.share.n || "Bracket maker").slice(0, 40),
+      title: String(data.share.t || "2026 US Open Bracket").slice(0, 80),
+      scope: division,
+      shareHash: `#bracket=${encodeJsonPayload(divisionShare)}`,
+      completedAt: data.completedAt || data.share.c || row.savedAt,
+      possiblePoints: stats.points,
+      upsetPicks: stats.upsets,
+      champion,
+      pickCount: Object.keys(picks).length,
+    };
+  });
+}
+
 async function fetchPublicBracketEntries() {
   return (await fetchCloudRows())
     .map((row) => ({ row, data: unpackCloudPicks(row.picks) }))
     .filter(({ data }) => data?.kind === CLOUD_RECORD_KIND && data?.share)
-    .map(({ row, data }) => ({
-      displayName: String(data.share.n || "Bracket maker").slice(0, 40),
-      title: String(data.share.t || "2026 US Open Bracket").slice(0, 80),
-      scope: ["men", "women", "both"].includes(data.share.s) ? data.share.s : "both",
-      shareHash: `#bracket=${encodeJsonPayload(data.share)}`,
-      completedAt: data.completedAt || data.share.c || row.savedAt,
-      possiblePoints: Number(data.possiblePoints) || 0,
-      upsetPicks: Number(data.upsetPicks) || 0,
-      menChampion: String(data.menChampion || ""),
-      womenChampion: String(data.womenChampion || ""),
-    }))
+    .flatMap(({ row, data }) => splitCloudBracket(row, data))
+    .filter((entry) => entry.pickCount === 127)
     .sort((first, second) => new Date(first.completedAt).getTime() - new Date(second.completedAt).getTime());
 }
 
@@ -519,14 +542,63 @@ function emptyList(title, copy) {
   return empty;
 }
 
+function publicBracketLink(entry) {
+  const link = document.createElement("a");
+  link.className = "leaderboard-view";
+  link.href = publicBracketUrl(entry);
+  link.target = "_blank";
+  link.rel = "noopener";
+  link.textContent = "View bracket ↗";
+  return link;
+}
+
+function leaderboardRow(entry, index) {
+  const row = document.createElement("article");
+  row.className = "leaderboard-row";
+  const place = document.createElement("strong");
+  place.className = "leaderboard-place";
+  place.textContent = `#${index + 1}`;
+  const bracket = document.createElement("div");
+  bracket.className = "leaderboard-bracket";
+  const name = document.createElement("strong");
+  const details = document.createElement("span");
+  name.textContent = entry.title;
+  details.textContent = `by ${entry.displayName} · ${scopeLabel(entry.scope)}`;
+  bracket.append(name, details);
+  const completed = document.createElement("span");
+  completed.className = "leaderboard-completed";
+  completed.textContent = `${ordinal(index + 1)} to finish · ${completionLabel(entry.completedAt)}`;
+  const value = document.createElement("span");
+  value.className = "leaderboard-value";
+  value.textContent = `${entry.possiblePoints.toLocaleString()} pts · ${entry.upsetPicks} upset${entry.upsetPicks === 1 ? "" : "s"}`;
+  const view = publicBracketLink(entry);
+  row.append(place, bracket, completed, value, view);
+  return row;
+}
+
 function renderPublicLists(entries) {
-  const leaderboard = $("#leaderboard-body");
+  const menLeaderboard = $("#leaderboard-men-body");
+  const womenLeaderboard = $("#leaderboard-women-body");
   const directory = $("#public-bracket-list");
-  leaderboard.replaceChildren();
+  menLeaderboard.replaceChildren();
+  womenLeaderboard.replaceChildren();
   directory.replaceChildren();
 
+  const menEntries = entries.filter((entry) => entry.scope === "men");
+  const womenEntries = entries.filter((entry) => entry.scope === "women");
+
+  for (const [divisionEntries, leaderboard, label] of [
+    [menEntries, menLeaderboard, "men's"],
+    [womenEntries, womenLeaderboard, "women's"],
+  ]) {
+    if (!divisionEntries.length) {
+      leaderboard.append(emptyList(`No completed ${label} brackets yet.`, `The first completed ${label} bracket will take first place.`));
+      continue;
+    }
+    divisionEntries.forEach((entry, index) => leaderboard.append(leaderboardRow(entry, index)));
+  }
+
   if (!entries.length) {
-    leaderboard.append(emptyList("No completed brackets yet.", "The first real completed bracket will take first place."));
     const empty = document.createElement("div");
     empty.className = "empty-state";
     const icon = document.createElement("span");
@@ -539,56 +611,29 @@ function renderPublicLists(entries) {
     empty.append(icon, heading, copy);
     directory.append(empty);
   } else {
-    entries.forEach((entry, index) => {
-      const row = document.createElement("article");
-      row.className = "leaderboard-row";
-      const place = document.createElement("strong");
-      place.className = "leaderboard-place";
-      place.textContent = `#${index + 1}`;
-      const bracket = document.createElement("div");
-      bracket.className = "leaderboard-bracket";
-      const name = document.createElement("strong");
-      const details = document.createElement("span");
-      name.textContent = entry.title;
-      details.textContent = `by ${entry.displayName} · ${scopeLabel(entry.scope)}`;
-      bracket.append(name, details);
-      const completed = document.createElement("span");
-      completed.className = "leaderboard-completed";
-      completed.textContent = `${ordinal(index + 1)} to finish · ${completionLabel(entry.completedAt)}`;
-      const value = document.createElement("span");
-      value.className = "leaderboard-value";
-      value.textContent = `${entry.possiblePoints.toLocaleString()} pts · ${entry.upsetPicks} upset${entry.upsetPicks === 1 ? "" : "s"}`;
-      const view = document.createElement("a");
-      view.className = "leaderboard-view";
-      view.href = publicBracketUrl(entry);
-      view.target = "_blank";
-      view.rel = "noopener";
-      view.textContent = "View bracket ↗";
-      row.append(place, bracket, completed, value, view);
-      leaderboard.append(row);
-
+    const divisionPlaces = { men: 0, women: 0 };
+    entries.forEach((entry) => {
       const card = document.createElement("article");
       card.className = "public-bracket-card";
       const cardPlace = document.createElement("span");
       cardPlace.className = "public-card-place";
-      cardPlace.textContent = String(index + 1).padStart(2, "0");
+      divisionPlaces[entry.scope] += 1;
+      cardPlace.textContent = `${entry.scope === "men" ? "M" : "W"}${String(divisionPlaces[entry.scope]).padStart(2, "0")}`;
       const cardCopy = document.createElement("div");
       const cardTitle = document.createElement("h3");
       const cardDetails = document.createElement("p");
       const champions = document.createElement("small");
       cardTitle.textContent = entry.title;
-      cardDetails.textContent = `by ${entry.displayName} · ${ordinal(index + 1)} completed`;
-      champions.textContent = [entry.menChampion && `Men: ${entry.menChampion}`, entry.womenChampion && `Women: ${entry.womenChampion}`].filter(Boolean).join(" · ") || scopeLabel(entry.scope);
+      cardDetails.textContent = `by ${entry.displayName} · ${scopeLabel(entry.scope)} · ${ordinal(divisionPlaces[entry.scope])} completed`;
+      champions.textContent = entry.champion ? `Champion: ${entry.champion}` : scopeLabel(entry.scope);
       cardCopy.append(cardTitle, cardDetails, champions);
-      const cardLink = view.cloneNode(true);
+      const cardLink = publicBracketLink(entry);
       card.append(cardPlace, cardCopy, cardLink);
       directory.append(card);
     });
   }
 
-  const status = entries.length === 1
-    ? "1 real completed bracket, ordered by first completion."
-    : `${entries.length} real completed brackets, ordered by first completion.`;
+  const status = `${menEntries.length} men's bracket${menEntries.length === 1 ? "" : "s"} · ${womenEntries.length} women's bracket${womenEntries.length === 1 ? "" : "s"}. Combined entries are split into one bracket per draw.`;
   $("#leaderboard-status").textContent = status;
   $("#directory-status").textContent = status;
 }
@@ -597,7 +642,8 @@ function renderPublicListError() {
   const message = "The shared leaderboard could not connect. Saved picks on this device were not changed.";
   $("#leaderboard-status").textContent = message;
   $("#directory-status").textContent = message;
-  $("#leaderboard-body").replaceChildren(emptyList("Leaderboard temporarily unavailable.", "Open this page again to retry."));
+  $("#leaderboard-men-body").replaceChildren(emptyList("Leaderboard temporarily unavailable.", "Open this page again to retry."));
+  $("#leaderboard-women-body").replaceChildren(emptyList("Leaderboard temporarily unavailable.", "Open this page again to retry."));
   $("#public-bracket-list").replaceChildren(emptyList("Public brackets temporarily unavailable.", "Open this page again to retry."));
 }
 
