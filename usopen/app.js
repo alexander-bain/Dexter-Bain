@@ -12,7 +12,7 @@ const ROUND_SHORT_NAMES = ["R128", "R64", "R32", "R16", "QF", "SF", "Final"];
 const ROUND_POINTS = [1, 2, 4, 8, 16, 32, 64];
 const LOCK_AT = new Date("2026-08-30T15:00:00Z");
 const STORAGE_KEY = "dexter-usopen-2026-bracket-v1";
-const CLOUD_API_URL = "https://dexter-bain.onrender.com";
+const CLOUD_API_URL = "https://open-bracket-storage.dexterhbain.chatgpt.site";
 const CLOUD_GAME_ID = "usopen-2026-brackets";
 const CLOUD_RECORD_KIND = "usopen-bracket-v2";
 const BASE_MATCH_PITCH = 104;
@@ -834,6 +834,7 @@ function showBuilder() {
   $("#builder-title").textContent = state.meta.title;
   $("#builder-byline").textContent = `By ${state.meta.displayName}`;
   $("#new-bracket").hidden = state.readOnly;
+  $("#return-to-my-bracket").hidden = !state.readOnly;
   $$(".rename-bracket").forEach((button) => { button.hidden = state.readOnly; });
   $("#save-state").lastChild.textContent = state.readOnly
     ? " Shared bracket · read only"
@@ -995,6 +996,11 @@ function resetBracket() {
   $("#bracket-setup input[value='both']").checked = true;
 }
 
+function returnToMyBracket() {
+  history.replaceState(null, "", `${location.pathname}${location.search}`);
+  location.reload();
+}
+
 function updateCountdown() {
   const countdown = $("#countdown");
   const remaining = LOCK_AT.getTime() - Date.now();
@@ -1044,6 +1050,7 @@ function bindEvents() {
   $("#submit-bracket").addEventListener("click", submitBracket);
   $("#copy-share-link").addEventListener("click", copyShareLink);
   $("#new-bracket").addEventListener("click", resetBracket);
+  $("#return-to-my-bracket").addEventListener("click", returnToMyBracket);
   $("#edit-after-submit").addEventListener("click", () => {
     history.replaceState(null, "", `${location.pathname}${location.search}`);
     state.submitted = false;
