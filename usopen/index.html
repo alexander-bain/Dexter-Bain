@@ -169,7 +169,7 @@
           <span class="success-icon" aria-hidden="true">✓</span>
           <p class="eyebrow"><span></span> Bracket complete</p>
           <h3>Your share link is ready</h3>
-          <p>The picks are encoded in the link, so anyone can open the same read-only bracket without an account.</p>
+          <p id="publish-status">Your picks are safe on this device. Connecting this completed bracket to the public leaderboard…</p>
           <div class="share-row">
             <input id="share-url" readonly aria-label="Public bracket URL" />
             <button class="button button-primary" id="copy-share-link" type="button">Copy link</button>
@@ -184,11 +184,13 @@
           <h2>Public brackets</h2>
           <p>Only real submitted brackets will appear here. We never seed fake names, entries, or activity.</p>
         </div>
-        <div class="empty-state">
-          <span aria-hidden="true">◎</span>
-          <h3>No database-backed brackets yet</h3>
-          <p>Personal share links work now. The public directory will activate after the Supabase database is connected.</p>
-          <button class="button button-primary" type="button" data-view-link="create">Create the first bracket</button>
+        <div class="shared-list-status" id="directory-status" role="status">Loading real completed brackets…</div>
+        <div class="public-bracket-list" id="public-bracket-list">
+          <div class="empty-state">
+            <span aria-hidden="true">◎</span>
+            <h3>Checking for completed brackets</h3>
+            <p>The list only shows real entries saved by bracket makers.</p>
+          </div>
         </div>
       </section>
 
@@ -196,15 +198,15 @@
         <div class="page-heading">
           <p class="eyebrow"><span></span> Standings</p>
           <h2>Leaderboard</h2>
-          <p>Scores increase each round, and correctly calling an unlikely upset earns a multiplier.</p>
+          <p>This pre-tournament board is ordered simply by who completed their bracket first. Picks and possible point values stay visible on every entry.</p>
         </div>
         <div class="leaderboard-shell">
-          <div class="leaderboard-head"><span>Rank</span><span>Bracket</span><span>Men</span><span>Women</span><span>Total</span><span>Max</span></div>
-          <div class="leaderboard-empty">
-            <strong>Standings begin when real results and public brackets are connected.</strong>
-            <span>No sample scores are shown.</span>
+          <div class="leaderboard-head"><span>Place</span><span>Bracket</span><span>Completed</span><span>Bracket value</span><span>View</span></div>
+          <div class="leaderboard-body" id="leaderboard-body">
+            <div class="leaderboard-empty"><strong>Loading real brackets…</strong><span>No sample names or scores are shown.</span></div>
           </div>
         </div>
+        <p class="shared-list-status" id="leaderboard-status" role="status"></p>
       </section>
 
       <section class="view" id="view-how" data-view="how">

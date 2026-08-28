@@ -12,6 +12,9 @@ const ROUND_SHORT_NAMES = ["R128", "R64", "R32", "R16", "QF", "SF", "Final"];
 const ROUND_POINTS = [1, 2, 4, 8, 16, 32, 64];
 const LOCK_AT = new Date("2026-08-30T15:00:00Z");
 const STORAGE_KEY = "dexter-usopen-2026-bracket-v1";
+const CLOUD_API_URL = "https://dexter-bain.onrender.com";
+const CLOUD_GAME_ID = "usopen-2026-brackets";
+const CLOUD_RECORD_KIND = "usopen-bracket-v2";
 const BASE_MATCH_PITCH = 104;
 const MATCH_CARD_HEIGHT = 96;
 
@@ -23,6 +26,8 @@ const state = {
   started: false,
   submitted: false,
   readOnly: false,
+  entryId: "",
+  completedAt: "",
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -30,6 +35,8 @@ const $$ = (selector) => [...document.querySelectorAll(selector)];
 
 let toastTimer;
 let saveTimer;
+let cloudSyncPromise;
+let publicEntriesPromise;
 
 function showToast(message) {
   const toast = $("#toast");
@@ -156,6 +163,32 @@ function selectedBracketStats() {
   return { points, upsets };
 }
 
+function stableHash(value) {
+  let hash = 2166136261;
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(36);
+}
+
+function bracketIdentitySource() {
+  return JSON.stringify({
+    n: state.meta.displayName,
+    t: state.meta.title,
+    s: state.meta.scope,
+    p: state.picks,
+  });
+}
+
+function ensureCompletionIdentity() {
+  if (!state.entryId) {
+    const source = bracketIdentitySource();
+    state.entryId = `${stableHash(source)}-${stableHash([...source].reverse().join(""))}`;
+  }
+  if (!state.completedAt) state.completedAt = new Date().toISOString();
+}
+
 function saveDraft() {
   if (state.readOnly) return;
   const saveState = $("#save-state");
@@ -166,6 +199,8 @@ function saveDraft() {
     picks: state.picks,
     activeDivision: state.activeDivision,
     started: state.started,
+    entryId: state.entryId,
+    completedAt: state.completedAt,
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
   clearTimeout(saveTimer);
@@ -187,6 +222,8 @@ function loadDraft() {
     state.activeDivision = visibleDivisions().includes(saved.activeDivision)
       ? saved.activeDivision
       : visibleDivisions()[0];
+    state.entryId = String(saved.entryId || "");
+    state.completedAt = String(saved.completedAt || "");
     state.started = true;
     return true;
   } catch {
@@ -195,7 +232,7 @@ function loadDraft() {
   }
 }
 
-function encodeSharePayload() {
+function sharePayloadObject() {
   const compactPicks = {};
   for (const division of visibleDivisions()) {
     compactPicks[division[0]] = [];
@@ -205,17 +242,34 @@ function encodeSharePayload() {
       }
     }
   }
-  const payload = JSON.stringify({
-    v: 1,
+  return {
+    v: 2,
     n: state.meta.displayName,
     t: state.meta.title,
     s: state.meta.scope,
     p: compactPicks,
-  });
-  const bytes = new TextEncoder().encode(payload);
+    i: state.entryId,
+    c: state.completedAt,
+  };
+}
+
+function encodeJsonPayload(payload) {
+  const bytes = new TextEncoder().encode(JSON.stringify(payload));
   let binary = "";
   bytes.forEach((byte) => { binary += String.fromCharCode(byte); });
   return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replaceAll("=", "");
+}
+
+function decodeJsonPayload(value) {
+  let encoded = String(value || "").replaceAll("-", "+").replaceAll("_", "/");
+  encoded += "=".repeat((4 - (encoded.length % 4)) % 4);
+  const binary = atob(encoded);
+  const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+function encodeSharePayload() {
+  return encodeJsonPayload(sharePayloadObject());
 }
 
 function expandCompactPicks(values = []) {
@@ -234,12 +288,8 @@ function expandCompactPicks(values = []) {
 function loadSharedBracket() {
   if (!location.hash.startsWith("#bracket=")) return false;
   try {
-    let encoded = location.hash.slice("#bracket=".length).replaceAll("-", "+").replaceAll("_", "/");
-    encoded += "=".repeat((4 - (encoded.length % 4)) % 4);
-    const binary = atob(encoded);
-    const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
-    const payload = JSON.parse(new TextDecoder().decode(bytes));
-    if (payload.v !== 1 || !["men", "women", "both"].includes(payload.s)) throw new Error("Invalid bracket");
+    const payload = decodeJsonPayload(location.hash.slice("#bracket=".length));
+    if (![1, 2].includes(payload.v) || !["men", "women", "both"].includes(payload.s)) throw new Error("Invalid bracket");
     state.meta = {
       displayName: String(payload.n || "Bracket creator").slice(0, 40),
       title: String(payload.t || "2026 US Open Bracket").slice(0, 80),
@@ -250,6 +300,8 @@ function loadSharedBracket() {
       women: normalizePicks("women", expandCompactPicks(payload.p?.w)),
     };
     state.activeDivision = visibleDivisions()[0];
+    state.entryId = String(payload.i || "");
+    state.completedAt = String(payload.c || "");
     state.started = true;
     state.submitted = true;
     state.readOnly = true;
@@ -261,12 +313,281 @@ function loadSharedBracket() {
   }
 }
 
+function cloudEntryKey() {
+  return `ob-${state.entryId}`.slice(0, 24);
+}
+
+function cloudEntriesUrl() {
+  return `${CLOUD_API_URL}/api/minigames/${encodeURIComponent(CLOUD_GAME_ID)}/entries`;
+}
+
+function packCloudPicks(payload) {
+  const encoded = encodeJsonPayload(payload);
+  const chunks = {};
+  for (let cursor = 0, index = 0; cursor < encoded.length; cursor += 80, index += 1) {
+    chunks[`data_${String(index).padStart(2, "0")}`] = encoded.slice(cursor, cursor + 80);
+  }
+  if (Object.keys(chunks).length > 30) throw new Error("Bracket record is too large for shared storage");
+  return chunks;
+}
+
+function unpackCloudPicks(picks) {
+  try {
+    const encoded = Object.entries(picks || {})
+      .filter(([key, value]) => /^data_\d+$/.test(key) && typeof value === "string")
+      .sort(([first], [second]) => first.localeCompare(second))
+      .map(([, value]) => value)
+      .join("");
+    return encoded ? decodeJsonPayload(encoded) : null;
+  } catch {
+    return null;
+  }
+}
+
+function cloudBracketData(savedAt) {
+  const stats = selectedBracketStats();
+  return {
+    kind: CLOUD_RECORD_KIND,
+    share: sharePayloadObject(),
+    completedAt: state.completedAt || savedAt,
+    possiblePoints: stats.points,
+    upsetPicks: stats.upsets,
+    menChampion: championFor("men")?.name || "",
+    womenChampion: championFor("women")?.name || "",
+  };
+}
+
+async function fetchCloudRows() {
+  const response = await fetch(cloudEntriesUrl(), {
+    headers: { Accept: "application/json" },
+  });
+  if (!response.ok) throw new Error(`Leaderboard request failed: ${response.status}`);
+  const payload = await response.json();
+  return Array.isArray(payload.entries) ? payload.entries : [];
+}
+
+async function fetchExistingCloudEntry() {
+  const key = cloudEntryKey().toLowerCase();
+  const rows = await fetchCloudRows();
+  const row = rows.find((entry) => String(entry.name || "").toLowerCase() === key);
+  return row ? { ...row, data: unpackCloudPicks(row.picks) } : null;
+}
+
+function setPublishStatus(message, status = "working") {
+  const element = $("#publish-status");
+  if (!element) return;
+  element.textContent = message;
+  element.dataset.status = status;
+}
+
+async function syncCompletedBracket({ announce = false } = {}) {
+  if (completedPicks() !== requiredPicks()) return false;
+  if (cloudSyncPromise) return cloudSyncPromise;
+
+  ensureCompletionIdentity();
+  if (!state.readOnly) saveDraft();
+  setPublishStatus("Your picks are safe on this device. Adding this bracket to the public leaderboard…");
+
+  cloudSyncPromise = (async () => {
+    const existing = await fetchExistingCloudEntry();
+    const savedAt = existing?.savedAt || new Date().toISOString();
+    state.completedAt = existing?.data?.completedAt || state.completedAt || savedAt;
+    const response = await fetch(cloudEntriesUrl(), {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: cloudEntryKey(),
+        picks: packCloudPicks(cloudBracketData(savedAt)),
+        notify: "none",
+      }),
+    });
+    if (!response.ok) {
+      const detail = await response.text().catch(() => "");
+      throw new Error(detail || `Leaderboard save failed: ${response.status}`);
+    }
+
+    if (!state.readOnly) saveDraft();
+    setPublishStatus("Saved publicly. Your picks are still stored on this device, and the bracket is now on the leaderboard.", "saved");
+    if (announce) showToast("Bracket added to the leaderboard.");
+    publicEntriesPromise = null;
+    refreshPublicLists(true);
+    return true;
+  })();
+
+  try {
+    return await cloudSyncPromise;
+  } catch (error) {
+    console.warn(error);
+    setPublishStatus("Your picks and share link are safe. The public leaderboard could not connect yet; it will retry when this bracket is opened again.", "offline");
+    if (announce) showToast("Picks saved locally. Leaderboard connection will retry.");
+    return false;
+  } finally {
+    cloudSyncPromise = null;
+  }
+}
+
+async function fetchPublicBracketEntries() {
+  return (await fetchCloudRows())
+    .map((row) => ({ row, data: unpackCloudPicks(row.picks) }))
+    .filter(({ data }) => data?.kind === CLOUD_RECORD_KIND && data?.share)
+    .map(({ row, data }) => ({
+      displayName: String(data.share.n || "Bracket maker").slice(0, 40),
+      title: String(data.share.t || "2026 US Open Bracket").slice(0, 80),
+      scope: ["men", "women", "both"].includes(data.share.s) ? data.share.s : "both",
+      shareHash: `#bracket=${encodeJsonPayload(data.share)}`,
+      completedAt: data.completedAt || data.share.c || row.savedAt,
+      possiblePoints: Number(data.possiblePoints) || 0,
+      upsetPicks: Number(data.upsetPicks) || 0,
+      menChampion: String(data.menChampion || ""),
+      womenChampion: String(data.womenChampion || ""),
+    }))
+    .sort((first, second) => new Date(first.completedAt).getTime() - new Date(second.completedAt).getTime());
+}
+
+function ordinal(number) {
+  const tens = number % 100;
+  if (tens >= 11 && tens <= 13) return `${number}th`;
+  return `${number}${({ 1: "st", 2: "nd", 3: "rd" })[number % 10] || "th"}`;
+}
+
+function completionLabel(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Completion time unavailable";
+  return date.toLocaleString([], {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+function scopeLabel(scope) {
+  if (scope === "men") return "Men's draw";
+  if (scope === "women") return "Women's draw";
+  return "Both draws";
+}
+
+function publicBracketUrl(entry) {
+  return `${location.origin}${location.pathname}${entry.shareHash}`;
+}
+
+function emptyList(title, copy) {
+  const empty = document.createElement("div");
+  empty.className = "leaderboard-empty";
+  const strong = document.createElement("strong");
+  const span = document.createElement("span");
+  strong.textContent = title;
+  span.textContent = copy;
+  empty.append(strong, span);
+  return empty;
+}
+
+function renderPublicLists(entries) {
+  const leaderboard = $("#leaderboard-body");
+  const directory = $("#public-bracket-list");
+  leaderboard.replaceChildren();
+  directory.replaceChildren();
+
+  if (!entries.length) {
+    leaderboard.append(emptyList("No completed brackets yet.", "The first real completed bracket will take first place."));
+    const empty = document.createElement("div");
+    empty.className = "empty-state";
+    const icon = document.createElement("span");
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = "◎";
+    const heading = document.createElement("h3");
+    heading.textContent = "No completed brackets yet";
+    const copy = document.createElement("p");
+    copy.textContent = "The first real completed bracket will appear here automatically.";
+    empty.append(icon, heading, copy);
+    directory.append(empty);
+  } else {
+    entries.forEach((entry, index) => {
+      const row = document.createElement("article");
+      row.className = "leaderboard-row";
+      const place = document.createElement("strong");
+      place.className = "leaderboard-place";
+      place.textContent = `#${index + 1}`;
+      const bracket = document.createElement("div");
+      bracket.className = "leaderboard-bracket";
+      const name = document.createElement("strong");
+      const details = document.createElement("span");
+      name.textContent = entry.displayName;
+      details.textContent = `${entry.title} · ${scopeLabel(entry.scope)}`;
+      bracket.append(name, details);
+      const completed = document.createElement("span");
+      completed.className = "leaderboard-completed";
+      completed.textContent = `${ordinal(index + 1)} to finish · ${completionLabel(entry.completedAt)}`;
+      const value = document.createElement("span");
+      value.className = "leaderboard-value";
+      value.textContent = `${entry.possiblePoints.toLocaleString()} pts · ${entry.upsetPicks} upset${entry.upsetPicks === 1 ? "" : "s"}`;
+      const view = document.createElement("a");
+      view.className = "leaderboard-view";
+      view.href = publicBracketUrl(entry);
+      view.target = "_blank";
+      view.rel = "noopener";
+      view.textContent = "View bracket ↗";
+      row.append(place, bracket, completed, value, view);
+      leaderboard.append(row);
+
+      const card = document.createElement("article");
+      card.className = "public-bracket-card";
+      const cardPlace = document.createElement("span");
+      cardPlace.className = "public-card-place";
+      cardPlace.textContent = String(index + 1).padStart(2, "0");
+      const cardCopy = document.createElement("div");
+      const cardTitle = document.createElement("h3");
+      const cardDetails = document.createElement("p");
+      const champions = document.createElement("small");
+      cardTitle.textContent = entry.title;
+      cardDetails.textContent = `by ${entry.displayName} · ${ordinal(index + 1)} completed`;
+      champions.textContent = [entry.menChampion && `Men: ${entry.menChampion}`, entry.womenChampion && `Women: ${entry.womenChampion}`].filter(Boolean).join(" · ") || scopeLabel(entry.scope);
+      cardCopy.append(cardTitle, cardDetails, champions);
+      const cardLink = view.cloneNode(true);
+      card.append(cardPlace, cardCopy, cardLink);
+      directory.append(card);
+    });
+  }
+
+  const status = entries.length === 1
+    ? "1 real completed bracket, ordered by first completion."
+    : `${entries.length} real completed brackets, ordered by first completion.`;
+  $("#leaderboard-status").textContent = status;
+  $("#directory-status").textContent = status;
+}
+
+function renderPublicListError() {
+  const message = "The shared leaderboard could not connect. Saved picks on this device were not changed.";
+  $("#leaderboard-status").textContent = message;
+  $("#directory-status").textContent = message;
+  $("#leaderboard-body").replaceChildren(emptyList("Leaderboard temporarily unavailable.", "Open this page again to retry."));
+  $("#public-bracket-list").replaceChildren(emptyList("Public brackets temporarily unavailable.", "Open this page again to retry."));
+}
+
+async function refreshPublicLists(force = false) {
+  $("#leaderboard-status").textContent = "Loading real completed brackets…";
+  $("#directory-status").textContent = "Loading real completed brackets…";
+  if (force) publicEntriesPromise = null;
+  if (!publicEntriesPromise) publicEntriesPromise = fetchPublicBracketEntries();
+  try {
+    renderPublicLists(await publicEntriesPromise);
+  } catch (error) {
+    console.warn(error);
+    publicEntriesPromise = null;
+    renderPublicListError();
+  }
+}
+
 function showView(name) {
   $$(".view").forEach((view) => view.classList.toggle("is-active", view.dataset.view === name));
   $$("[data-view-link]").forEach((button) => button.classList.toggle("is-active", button.dataset.viewLink === name));
   $("#site-nav").classList.remove("is-open");
   $("#menu-button").setAttribute("aria-expanded", "false");
   if (name === "create" && state.started) showBuilder();
+  if (name === "browse" || name === "leaderboard") refreshPublicLists();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -518,6 +839,12 @@ function selectPlayer(division, round, matchIndex, position) {
   renderBracket();
   saveDraft();
 
+  if (completedPicks() === requiredPicks()) {
+    ensureCompletionIdentity();
+    saveDraft();
+    syncCompletedBracket({ announce: true });
+  }
+
   const currentRoundComplete = Array.from({ length: matchCount(round) }, (_, index) => pickKey(round, index + 1))
     .every((roundKey) => state.picks[division][roundKey]);
   if (currentRoundComplete && round < 7) showToast(`${ROUND_NAMES[round - 1]} complete. The next round is ready.`);
@@ -560,6 +887,7 @@ function showReview() {
 
 function submitBracket() {
   if (completedPicks() !== requiredPicks()) return;
+  ensureCompletionIdentity();
   const encoded = encodeSharePayload();
   const url = `${location.origin}${location.pathname}#bracket=${encoded}`;
   state.submitted = true;
@@ -569,6 +897,7 @@ function submitBracket() {
   $("#share-url").value = url;
   saveDraft();
   history.replaceState(null, "", `#bracket=${encoded}`);
+  syncCompletedBracket({ announce: true });
 }
 
 async function copyShareLink() {
@@ -593,6 +922,8 @@ function resetBracket() {
   state.started = false;
   state.submitted = false;
   state.readOnly = false;
+  state.entryId = "";
+  state.completedAt = "";
   history.replaceState(null, "", `${location.pathname}${location.search}`);
   $("#builder").hidden = true;
   $("#submission-card").hidden = true;
@@ -678,6 +1009,7 @@ async function initialize() {
       showView("create");
       showBuilder();
       showToast("Opened a shared read-only bracket.");
+      syncCompletedBracket();
       return;
     }
 
@@ -690,6 +1022,11 @@ async function initialize() {
       showView("create");
       showBuilder();
       showToast("Your saved bracket is ready to continue.");
+      if (completedPicks() === requiredPicks()) {
+        ensureCompletionIdentity();
+        saveDraft();
+        syncCompletedBracket();
+      }
     }
   } catch (error) {
     console.error(error);
