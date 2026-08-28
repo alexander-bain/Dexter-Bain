@@ -380,6 +380,26 @@ function setPublishStatus(message, status = "working") {
   element.dataset.status = status;
 }
 
+async function postCloudBracket(savedAt) {
+  const response = await fetch(cloudEntriesUrl(), {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: cloudEntryKey(),
+      picks: packCloudPicks(cloudBracketData(savedAt)),
+      notify: "none",
+    }),
+  });
+  if (!response.ok) {
+    const detail = await response.text().catch(() => "");
+    throw new Error(detail || `Leaderboard save failed: ${response.status}`);
+  }
+  return response.json();
+}
+
 async function syncCompletedBracket({ announce = false } = {}) {
   if (completedPicks() !== requiredPicks()) return false;
   if (cloudSyncPromise) return cloudSyncPromise;
@@ -392,21 +412,16 @@ async function syncCompletedBracket({ announce = false } = {}) {
     const existing = await fetchExistingCloudEntry();
     const savedAt = existing?.savedAt || new Date().toISOString();
     state.completedAt = existing?.data?.completedAt || state.completedAt || savedAt;
-    const response = await fetch(cloudEntriesUrl(), {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: cloudEntryKey(),
-        picks: packCloudPicks(cloudBracketData(savedAt)),
-        notify: "none",
-      }),
-    });
-    if (!response.ok) {
-      const detail = await response.text().catch(() => "");
-      throw new Error(detail || `Leaderboard save failed: ${response.status}`);
+    const result = await postCloudBracket(savedAt);
+
+    if (!existing) {
+      const savedRow = (result.entries || []).find(
+        (entry) => String(entry.name || "").toLowerCase() === cloudEntryKey().toLowerCase(),
+      );
+      if (savedRow?.savedAt) {
+        state.completedAt = savedRow.savedAt;
+        await postCloudBracket(savedRow.savedAt);
+      }
     }
 
     if (!state.readOnly) saveDraft();
