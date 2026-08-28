@@ -9,7 +9,7 @@
       content="Pick every winner in the verified 2026 US Open men's and women's singles draws."
     />
     <title>2026 US Open Prediction Bracket | DexterBain.com</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260827-rename" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -115,6 +115,7 @@
               <p id="builder-byline"></p>
             </div>
             <div class="builder-actions">
+              <button class="button button-quiet rename-bracket" type="button">Rename bracket</button>
               <button class="button button-quiet" id="new-bracket" type="button">New bracket</button>
               <button class="button button-secondary" id="review-bracket" type="button">Review</button>
             </div>
@@ -174,7 +175,10 @@
             <input id="share-url" readonly aria-label="Public bracket URL" />
             <button class="button button-primary" id="copy-share-link" type="button">Copy link</button>
           </div>
-          <button class="button button-secondary" id="edit-after-submit" type="button">Edit my bracket</button>
+          <div class="success-actions">
+            <button class="button button-quiet rename-bracket" type="button">Rename bracket</button>
+            <button class="button button-secondary" id="edit-after-submit" type="button">Edit my bracket</button>
+          </div>
         </div>
       </section>
 
@@ -245,8 +249,22 @@
       <a href="https://dexterbain.com">DexterBain.com</a>
     </footer>
 
+    <dialog class="rename-dialog" id="rename-dialog">
+      <form id="rename-bracket-form">
+        <p class="eyebrow"><span></span> Bracket settings</p>
+        <h3>Rename your bracket</h3>
+        <p>The new name will appear on the leaderboard. Your picks, points, and place will stay exactly the same.</p>
+        <label for="rename-bracket-input">Bracket name</label>
+        <input id="rename-bracket-input" name="bracketName" maxlength="80" required autocomplete="off" />
+        <div class="dialog-actions">
+          <button class="button button-quiet" id="cancel-rename" type="button">Cancel</button>
+          <button class="button button-primary" type="submit">Save name</button>
+        </div>
+      </form>
+    </dialog>
+
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <noscript>This bracket requires JavaScript to load the verified draw and record your picks.</noscript>
-    <script src="./app.js" defer></script>
+    <script src="./app.js?v=20260827-rename" defer></script>
   </body>
 </html>

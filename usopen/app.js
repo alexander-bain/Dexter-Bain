@@ -412,6 +412,11 @@ async function syncCompletedBracket({ announce = false } = {}) {
     const existing = await fetchExistingCloudEntry();
     const savedAt = existing?.savedAt || new Date().toISOString();
     state.completedAt = existing?.data?.completedAt || state.completedAt || savedAt;
+
+    // Shared links are snapshots. Once the owner updates a bracket, opening an
+    // older read-only link must not overwrite the owner's current public name.
+    if (state.readOnly && existing) return true;
+
     const result = await postCloudBracket(savedAt);
 
     if (!existing) {
@@ -530,8 +535,8 @@ function renderPublicLists(entries) {
       bracket.className = "leaderboard-bracket";
       const name = document.createElement("strong");
       const details = document.createElement("span");
-      name.textContent = entry.displayName;
-      details.textContent = `${entry.title} · ${scopeLabel(entry.scope)}`;
+      name.textContent = entry.title;
+      details.textContent = `by ${entry.displayName} · ${scopeLabel(entry.scope)}`;
       bracket.append(name, details);
       const completed = document.createElement("span");
       completed.className = "leaderboard-completed";
@@ -829,6 +834,7 @@ function showBuilder() {
   $("#builder-title").textContent = state.meta.title;
   $("#builder-byline").textContent = `By ${state.meta.displayName}`;
   $("#new-bracket").hidden = state.readOnly;
+  $$(".rename-bracket").forEach((button) => { button.hidden = state.readOnly; });
   $("#save-state").lastChild.textContent = state.readOnly
     ? " Shared bracket · read only"
     : isLocked()
@@ -928,6 +934,47 @@ async function copyShareLink() {
   setTimeout(() => { $("#copy-share-link").textContent = "Copy link"; }, 1800);
 }
 
+function openRenameDialog() {
+  if (state.readOnly) return;
+  const dialog = $("#rename-dialog");
+  const input = $("#rename-bracket-input");
+  input.value = state.meta.title;
+  dialog.showModal();
+  input.focus();
+  input.select();
+}
+
+async function renameBracket(event) {
+  event.preventDefault();
+  const title = String(new FormData(event.currentTarget).get("bracketName") || "").trim();
+  if (!title || state.readOnly) return;
+
+  const changed = title !== state.meta.title;
+  state.meta.title = title;
+  $("#builder-title").textContent = title;
+  $("#bracket-title").value = title;
+  $("#rename-dialog").close();
+  if (!changed) return;
+
+  saveDraft();
+
+  if (state.submitted) {
+    const encoded = encodeSharePayload();
+    const url = `${location.origin}${location.pathname}#bracket=${encoded}`;
+    $("#share-url").value = url;
+    history.replaceState(null, "", `#bracket=${encoded}`);
+  }
+
+  if (completedPicks() === requiredPicks()) {
+    if (cloudSyncPromise) await cloudSyncPromise.catch(() => false);
+    const synced = await syncCompletedBracket();
+    showToast(synced ? "Bracket name updated everywhere." : "Name saved here. The leaderboard will retry shortly.");
+    return;
+  }
+
+  showToast("Bracket name updated. Your picks did not change.");
+}
+
 function resetBracket() {
   if (state.started && completedPicks() > 0 && !window.confirm("Start a new bracket and remove this saved draft from this device?")) return;
   localStorage.removeItem(STORAGE_KEY);
@@ -990,6 +1037,9 @@ function bindEvents() {
   });
 
   $("#review-bracket").addEventListener("click", showReview);
+  $$(".rename-bracket").forEach((button) => button.addEventListener("click", openRenameDialog));
+  $("#rename-bracket-form").addEventListener("submit", renameBracket);
+  $("#cancel-rename").addEventListener("click", () => $("#rename-dialog").close());
   $("#keep-editing").addEventListener("click", showBuilder);
   $("#submit-bracket").addEventListener("click", submitBracket);
   $("#copy-share-link").addEventListener("click", copyShareLink);

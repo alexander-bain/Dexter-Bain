@@ -358,6 +358,24 @@ fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .success-card .eyebrow { justify-content: center; }
 .success-icon { display: grid; width: 70px; height: 70px; place-items: center; margin: 0 auto 1rem; border-radius: 50%; color: var(--navy-950); background: var(--tennis); font-size: 2rem; font-weight: 900; }
 .share-row { display: grid; grid-template-columns: 1fr auto; gap: .7rem; margin: 1.5rem 0 1rem; }
+.success-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .7rem; }
+
+.rename-dialog {
+  width: min(520px, calc(100% - 2rem));
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 18px;
+  color: var(--white);
+  background: linear-gradient(155deg, #14335c, #07162d);
+  box-shadow: var(--shadow);
+}
+.rename-dialog::backdrop { background: rgba(2,8,18,.76); backdrop-filter: blur(6px); }
+.rename-dialog form { display: grid; gap: 1rem; padding: clamp(1.4rem, 5vw, 2.2rem); }
+.rename-dialog h3 { margin: 0; font-size: 1.7rem; }
+.rename-dialog p { margin: 0; color: var(--muted); line-height: 1.55; }
+.rename-dialog .eyebrow { color: var(--tennis); font-size: .68rem; }
+.rename-dialog label { margin-top: .35rem; font-size: .8rem; font-weight: 850; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: .65rem; margin-top: .35rem; }
 
 .empty-state { display: grid; min-height: 380px; place-items: center; align-content: center; max-width: 900px; padding: 3rem; border: 1px dashed rgba(255,255,255,.24); border-radius: 20px; text-align: center; }
 .empty-state > span { color: var(--tennis); font-size: 3rem; }
@@ -455,6 +473,8 @@ noscript { display: block; padding: 1rem; color: #271800; background: #ffd87d; t
   .connector-branch { left: calc(100% + 16px); width: 16px; }
   .player-button { grid-template-columns: minmax(0, 1fr) 34px 30px; }
   .share-row { grid-template-columns: 1fr; }
+  .dialog-actions { align-items: stretch; flex-direction: column-reverse; }
+  .dialog-actions .button { width: 100%; }
   .empty-state { padding: 2rem 1.2rem; }
   .leaderboard-head { display: none; }
   .leaderboard-body { min-width: 0; }
