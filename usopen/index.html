@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07162d" />
+    <meta
+      name="description"
+      content="Pick every winner in the verified 2026 US Open men's and women's singles draws."
+    />
+    <title>2026 US Open Prediction Bracket | DexterBain.com</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="court-lines" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#home" data-view-link="home" aria-label="Open Bracket home">
+        <span class="brand-mark" aria-hidden="true">OB</span>
+        <span><strong>OPEN BRACKET</strong><small>NEW YORK 2026</small></span>
+      </a>
+      <button class="menu-button" id="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
+        Menu
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+        <button type="button" data-view-link="home">Home</button>
+        <button type="button" data-view-link="create">Create</button>
+        <button type="button" data-view-link="browse">Browse</button>
+        <button type="button" data-view-link="leaderboard">Leaderboard</button>
+        <button type="button" data-view-link="how">How it works</button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="view home-view is-active" id="view-home" data-view="home">
+        <div class="hero-shell">
+          <div class="hero-copy">
+            <p class="eyebrow"><span></span> The complete 2026 singles draws</p>
+            <h1>2026 US Open<br /><em>Prediction Bracket</em></h1>
+            <p class="hero-subtitle">
+              Pick every winner in the men's and women's singles draws. Share your bracket and see how far your champions can go.
+            </p>
+            <div class="hero-actions">
+              <button class="button button-primary button-large" type="button" data-view-link="create">
+                Create a bracket <span aria-hidden="true">→</span>
+              </button>
+              <button class="button button-secondary button-large" type="button" data-view-link="how">How it works</button>
+            </div>
+            <p class="truth-note"><span aria-hidden="true">✓</span> No money, odds, prizes, or invented players.</p>
+          </div>
+
+          <aside class="tournament-card" aria-label="Tournament status">
+            <div class="status-row"><span class="live-dot"></span><strong>Draw published</strong><span>2026</span></div>
+            <div class="ball" aria-hidden="true"><span></span></div>
+            <p class="card-kicker">Brackets lock in</p>
+            <p class="countdown" id="countdown">Calculating…</p>
+            <p class="lock-time">August 30 · 11:00 AM ET</p>
+            <div class="draw-counts">
+              <span><strong>128</strong> Men</span>
+              <span><strong>128</strong> Women</span>
+              <span><strong>254</strong> Picks</span>
+            </div>
+          </aside>
+        </div>
+
+        <div class="quick-links" aria-label="Explore the bracket game">
+          <button type="button" data-view-link="create"><span>01</span><strong>Build your picks</strong><small>Men, women, or both</small></button>
+          <button type="button" data-view-link="browse"><span>02</span><strong>Public brackets</strong><small>Real entries only</small></button>
+          <button type="button" data-view-link="leaderboard"><span>03</span><strong>Leaderboard</strong><small>Round-by-round scoring</small></button>
+        </div>
+
+        <div class="data-strip">
+          <p><strong id="verified-count">256</strong><span>official draw positions loaded</span></p>
+          <p><strong id="placeholder-count">—</strong><span>unresolved qualifier slots labeled honestly</span></p>
+          <p><strong>896</strong><span>maximum points for a perfect combined bracket</span></p>
+        </div>
+      </section>
+
+      <section class="view" id="view-create" data-view="create">
+        <div class="page-heading">
+          <p class="eyebrow"><span></span> Your predictions</p>
+          <h2>Create your bracket</h2>
+          <p>Start immediately. Your draft autosaves on this device, and a completed bracket can be shared with a real read-only link.</p>
+        </div>
+
+        <div class="setup-card" id="setup-card">
+          <form id="bracket-setup">
+            <label>
+              <span>Public display name</span>
+              <input id="display-name" name="displayName" maxlength="40" minlength="2" required placeholder="Your name" autocomplete="nickname" />
+            </label>
+            <label>
+              <span>Bracket title <small>optional</small></span>
+              <input id="bracket-title" name="bracketTitle" maxlength="80" placeholder="My 2026 US Open Bracket" />
+            </label>
+            <fieldset>
+              <legend>Which draws?</legend>
+              <div class="scope-options">
+                <label><input type="radio" name="scope" value="men" /><span>Men's only</span></label>
+                <label><input type="radio" name="scope" value="women" /><span>Women's only</span></label>
+                <label><input type="radio" name="scope" value="both" checked /><span>Both draws</span></label>
+              </div>
+            </fieldset>
+            <button class="button button-primary button-large" type="submit">Start picks <span aria-hidden="true">→</span></button>
+            <p class="form-note">Drafts are stored in this browser. No email or password required.</p>
+          </form>
+        </div>
+
+        <div class="builder" id="builder" hidden>
+          <div class="builder-toolbar">
+            <div>
+              <p class="save-state" id="save-state"><span></span> Saved on this device</p>
+              <h3 id="builder-title">My 2026 US Open Bracket</h3>
+              <p id="builder-byline"></p>
+            </div>
+            <div class="builder-actions">
+              <button class="button button-quiet" id="new-bracket" type="button">New bracket</button>
+              <button class="button button-secondary" id="review-bracket" type="button">Review</button>
+            </div>
+          </div>
+
+          <div class="division-tabs" id="division-tabs" role="tablist" aria-label="Draw division"></div>
+
+          <div class="round-header">
+            <button class="round-arrow" id="previous-round" type="button" aria-label="Previous round">←</button>
+            <div>
+              <p id="round-label">Round 1 of 7</p>
+              <h3 id="round-name">Round of 128</h3>
+            </div>
+            <button class="round-arrow" id="next-round" type="button" aria-label="Next round">→</button>
+          </div>
+
+          <div class="progress-block">
+            <div><span id="progress-copy">0 of 254 picks complete</span><strong id="progress-percent">0%</strong></div>
+            <div class="progress-track"><span id="progress-bar"></span></div>
+          </div>
+
+          <div class="round-grid" id="round-grid" aria-live="polite"></div>
+
+          <div class="round-footer">
+            <button class="button button-secondary" id="previous-round-bottom" type="button">← Previous round</button>
+            <button class="button button-primary" id="next-round-bottom" type="button">Next round →</button>
+          </div>
+        </div>
+
+        <div class="submission-card" id="submission-card" hidden>
+          <p class="eyebrow"><span></span> Bracket review</p>
+          <h3 id="submission-title">Ready to finish?</h3>
+          <div class="summary-grid" id="summary-grid"></div>
+          <p class="submission-note" id="submission-note"></p>
+          <div class="submission-actions">
+            <button class="button button-primary button-large" id="submit-bracket" type="button">Create share link</button>
+            <button class="button button-secondary button-large" id="keep-editing" type="button">Keep editing</button>
+          </div>
+        </div>
+
+        <div class="success-card" id="success-card" hidden>
+          <span class="success-icon" aria-hidden="true">✓</span>
+          <p class="eyebrow"><span></span> Bracket complete</p>
+          <h3>Your share link is ready</h3>
+          <p>The picks are encoded in the link, so anyone can open the same read-only bracket without an account.</p>
+          <div class="share-row">
+            <input id="share-url" readonly aria-label="Public bracket URL" />
+            <button class="button button-primary" id="copy-share-link" type="button">Copy link</button>
+          </div>
+          <button class="button button-secondary" id="edit-after-submit" type="button">Edit my bracket</button>
+        </div>
+      </section>
+
+      <section class="view" id="view-browse" data-view="browse">
+        <div class="page-heading">
+          <p class="eyebrow"><span></span> Community</p>
+          <h2>Public brackets</h2>
+          <p>Only real submitted brackets will appear here. We never seed fake names, entries, or activity.</p>
+        </div>
+        <div class="empty-state">
+          <span aria-hidden="true">◎</span>
+          <h3>No database-backed brackets yet</h3>
+          <p>Personal share links work now. The public directory will activate after the Supabase database is connected.</p>
+          <button class="button button-primary" type="button" data-view-link="create">Create the first bracket</button>
+        </div>
+      </section>
+
+      <section class="view" id="view-leaderboard" data-view="leaderboard">
+        <div class="page-heading">
+          <p class="eyebrow"><span></span> Standings</p>
+          <h2>Leaderboard</h2>
+          <p>Scores increase each round, with correct final picks worth 64 points.</p>
+        </div>
+        <div class="leaderboard-shell">
+          <div class="leaderboard-head"><span>Rank</span><span>Bracket</span><span>Men</span><span>Women</span><span>Total</span><span>Max</span></div>
+          <div class="leaderboard-empty">
+            <strong>Standings begin when real results and public brackets are connected.</strong>
+            <span>No sample scores are shown.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="view-how" data-view="how">
+        <div class="page-heading">
+          <p class="eyebrow"><span></span> Simple by design</p>
+          <h2>How it works</h2>
+          <p>Choose every winner, share your finished bracket, and earn more points as the rounds get harder.</p>
+        </div>
+        <div class="steps-grid">
+          <article><span>01</span><h3>Pick</h3><p>Choose the winner of every match. Winners automatically advance into the next round.</p></article>
+          <article><span>02</span><h3>Share</h3><p>Finish every required pick to create a read-only link containing your exact bracket.</p></article>
+          <article><span>03</span><h3>Score</h3><p>Correct picks are worth more each round, from one point in Round 1 to 64 in the final.</p></article>
+        </div>
+        <div class="scoring-card">
+          <div><h3>Scoring</h3><p>Applied separately to the men's and women's draws.</p></div>
+          <ol>
+            <li><span>Round of 128</span><strong>1 pt</strong></li>
+            <li><span>Round of 64</span><strong>2 pts</strong></li>
+            <li><span>Round of 32</span><strong>4 pts</strong></li>
+            <li><span>Round of 16</span><strong>8 pts</strong></li>
+            <li><span>Quarterfinals</span><strong>16 pts</strong></li>
+            <li><span>Semifinals</span><strong>32 pts</strong></li>
+            <li><span>Final</span><strong>64 pts</strong></li>
+          </ol>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <strong>OPEN BRACKET · 2026</strong>
+      <p>This independent fan prediction game is not affiliated with or endorsed by the USTA or US Open. No money or prizes are involved.</p>
+      <a href="https://dexterbain.com">DexterBain.com</a>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <noscript>This bracket requires JavaScript to load the verified draw and record your picks.</noscript>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
