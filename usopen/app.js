@@ -285,11 +285,25 @@ function expandCompactPicks(values = []) {
   return picks;
 }
 
+function savedDraftEntryId() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    return saved?.started ? String(saved.entryId || "") : "";
+  } catch {
+    return "";
+  }
+}
+
 function loadSharedBracket() {
   if (!location.hash.startsWith("#bracket=")) return false;
   try {
     const payload = decodeJsonPayload(location.hash.slice("#bracket=".length));
     if (![1, 2].includes(payload.v) || !["men", "women", "both"].includes(payload.s)) throw new Error("Invalid bracket");
+    const sharedEntryId = String(payload.i || "");
+    if (sharedEntryId && sharedEntryId === savedDraftEntryId()) {
+      history.replaceState(null, "", `${location.pathname}${location.search}`);
+      return false;
+    }
     state.meta = {
       displayName: String(payload.n || "Bracket creator").slice(0, 40),
       title: String(payload.t || "2026 US Open Bracket").slice(0, 80),
@@ -300,7 +314,7 @@ function loadSharedBracket() {
       women: normalizePicks("women", expandCompactPicks(payload.p?.w)),
     };
     state.activeDivision = visibleDivisions()[0];
-    state.entryId = String(payload.i || "");
+    state.entryId = sharedEntryId;
     state.completedAt = String(payload.c || "");
     state.started = true;
     state.submitted = true;
@@ -998,7 +1012,42 @@ function resetBracket() {
 
 function returnToMyBracket() {
   history.replaceState(null, "", `${location.pathname}${location.search}`);
-  location.reload();
+  state.meta = { displayName: "", title: "My 2026 US Open Bracket", scope: "both" };
+  state.picks = { men: {}, women: {} };
+  state.activeDivision = "men";
+  state.started = false;
+  state.submitted = false;
+  state.readOnly = false;
+  state.entryId = "";
+  state.completedAt = "";
+
+  if (loadDraft()) {
+    showLoadedDraft();
+    return;
+  }
+
+  $("#builder").hidden = true;
+  $("#submission-card").hidden = true;
+  $("#success-card").hidden = true;
+  $("#setup-card").hidden = false;
+  showView("create");
+  showToast("Your shared view is closed. Start or resume your bracket here.");
+}
+
+function showLoadedDraft() {
+  $("#display-name").value = state.meta.displayName;
+  $("#bracket-title").value = state.meta.title;
+  const savedScope = $(`#bracket-setup input[value="${state.meta.scope}"]`);
+  if (savedScope) savedScope.checked = true;
+  $("#bracket-setup button[type='submit']").firstChild.textContent = "Resume saved bracket ";
+  showView("create");
+  showBuilder();
+  showToast("Your saved bracket is ready to continue.");
+  if (completedPicks() === requiredPicks()) {
+    ensureCompletionIdentity();
+    saveDraft();
+    syncCompletedBracket();
+  }
 }
 
 function updateCountdown() {
@@ -1018,7 +1067,12 @@ function bindEvents() {
   $$("[data-view-link]").forEach((button) => {
     button.addEventListener("click", (event) => {
       event.preventDefault();
-      showView(button.dataset.viewLink);
+      const view = button.dataset.viewLink;
+      if (view === "create" && state.readOnly) {
+        returnToMyBracket();
+        return;
+      }
+      showView(view);
     });
   });
 
@@ -1085,21 +1139,7 @@ async function initialize() {
       return;
     }
 
-    if (loadDraft()) {
-      $("#display-name").value = state.meta.displayName;
-      $("#bracket-title").value = state.meta.title;
-      const savedScope = $(`#bracket-setup input[value="${state.meta.scope}"]`);
-      if (savedScope) savedScope.checked = true;
-      $("#bracket-setup button[type='submit']").firstChild.textContent = "Resume saved bracket ";
-      showView("create");
-      showBuilder();
-      showToast("Your saved bracket is ready to continue.");
-      if (completedPicks() === requiredPicks()) {
-        ensureCompletionIdentity();
-        saveDraft();
-        syncCompletedBracket();
-      }
-    }
+    if (loadDraft()) showLoadedDraft();
   } catch (error) {
     console.error(error);
     $("#setup-card").innerHTML = `<div class="empty-state"><span aria-hidden="true">!</span><h3>The verified draw could not load</h3><p>Please refresh the page. No replacement players or invented matchups will be shown.</p></div>`;
