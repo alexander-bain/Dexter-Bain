@@ -148,12 +148,20 @@
             <span><strong>+pts</strong> value if correct</span>
           </div>
 
-          <div class="round-jumps" id="round-jumps" aria-label="Jump to a bracket round"></div>
+          <div class="bracket-tools">
+            <div class="round-jumps" id="round-jumps" aria-label="Jump to a bracket round"></div>
+            <div class="zoom-controls" role="group" aria-label="Bracket zoom controls">
+              <button id="zoom-out" type="button" aria-label="Zoom out" title="Zoom out">−</button>
+              <output id="zoom-level" aria-live="polite">100%</output>
+              <button id="zoom-in" type="button" aria-label="Zoom in" title="Zoom in">+</button>
+              <button id="zoom-fit" type="button">Fit all</button>
+            </div>
+          </div>
 
           <div class="bracket-scroller" id="bracket-scroller" tabindex="0" aria-label="Full seven-round tournament bracket. Scroll horizontally to view later rounds.">
             <div class="bracket-board" id="bracket-board" aria-live="polite"></div>
           </div>
-          <p class="scroll-hint"><span aria-hidden="true">↔</span> Scroll sideways to follow your winners all the way to the championship.</p>
+          <p class="scroll-hint"><span aria-hidden="true">↔</span> Zoom out for the full bracket or scroll sideways to inspect every matchup.</p>
         </div>
 
         <div class="submission-card" id="submission-card" hidden>
@@ -286,6 +294,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <noscript>This bracket requires JavaScript to load the verified draw and record your picks.</noscript>
-    <script src="./app.js?v=20260828-split" defer></script>
+    <script src="./app.js?v=20260828-zoom" defer></script>
   </body>
 </html>

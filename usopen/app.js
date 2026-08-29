@@ -17,6 +17,9 @@ const CLOUD_GAME_ID = "usopen-2026-brackets";
 const CLOUD_RECORD_KIND = "usopen-bracket-v2";
 const BASE_MATCH_PITCH = 104;
 const MATCH_CARD_HEIGHT = 96;
+const MIN_BRACKET_ZOOM = 0.15;
+const MAX_BRACKET_ZOOM = 1.5;
+const BRACKET_ZOOM_STEP = 0.1;
 
 const state = {
   data: { men: null, women: null },
@@ -37,6 +40,7 @@ let toastTimer;
 let saveTimer;
 let cloudSyncPromise;
 let publicEntriesPromise;
+let bracketZoom = 1;
 
 function showToast(message) {
   const toast = $("#toast");
@@ -880,10 +884,40 @@ function renderRoundJumps() {
     button.textContent = name;
     button.addEventListener("click", () => {
       const column = $(`.round-column[data-round="${index + 1}"]`);
-      $("#bracket-scroller").scrollTo({ left: Math.max(0, column.offsetLeft - 16), behavior: "smooth" });
+      const scroller = $("#bracket-scroller");
+      const left = scroller.scrollLeft + column.getBoundingClientRect().left - scroller.getBoundingClientRect().left;
+      scroller.scrollTo({ left: Math.max(0, left - 16), behavior: "smooth" });
     });
     jumps.append(button);
   });
+}
+
+function updateBracketZoomControls() {
+  $("#bracket-board").style.zoom = String(bracketZoom);
+  $("#zoom-level").textContent = `${Math.round(bracketZoom * 100)}%`;
+  $("#zoom-out").disabled = bracketZoom <= MIN_BRACKET_ZOOM;
+  $("#zoom-in").disabled = bracketZoom >= MAX_BRACKET_ZOOM;
+}
+
+function setBracketZoom(value, preservePosition = true) {
+  const scroller = $("#bracket-scroller");
+  const oldMaximum = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+  const progress = preservePosition && oldMaximum > 0 ? scroller.scrollLeft / oldMaximum : 0;
+  bracketZoom = Math.min(MAX_BRACKET_ZOOM, Math.max(MIN_BRACKET_ZOOM, Math.round(value * 100) / 100));
+  updateBracketZoomControls();
+  requestAnimationFrame(() => {
+    const newMaximum = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+    scroller.scrollLeft = progress * newMaximum;
+  });
+}
+
+function fitEntireBracket() {
+  const scroller = $("#bracket-scroller");
+  const board = $("#bracket-board");
+  const fullWidth = board.getBoundingClientRect().width / bracketZoom;
+  const fitZoom = (scroller.clientWidth - 4) / fullWidth;
+  setBracketZoom(fitZoom, false);
+  scroller.scrollTo({ left: 0, behavior: "smooth" });
 }
 
 function showBuilder() {
@@ -901,6 +935,7 @@ function showBuilder() {
     : isLocked()
       ? " Brackets are locked"
       : " Saved on this device";
+  updateBracketZoomControls();
   renderDivisionTabs();
   renderBracket();
 }
@@ -1151,6 +1186,9 @@ function bindEvents() {
   $("#copy-share-link").addEventListener("click", copyShareLink);
   $("#new-bracket").addEventListener("click", resetBracket);
   $("#return-to-my-bracket").addEventListener("click", returnToMyBracket);
+  $("#zoom-out").addEventListener("click", () => setBracketZoom(bracketZoom - BRACKET_ZOOM_STEP));
+  $("#zoom-in").addEventListener("click", () => setBracketZoom(bracketZoom + BRACKET_ZOOM_STEP));
+  $("#zoom-fit").addEventListener("click", fitEntireBracket);
   $("#edit-after-submit").addEventListener("click", () => {
     history.replaceState(null, "", `${location.pathname}${location.search}`);
     state.submitted = false;
