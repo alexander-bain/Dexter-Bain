@@ -31,6 +31,7 @@ const state = {
   readOnly: false,
   entryId: "",
   completedAt: "",
+  divisionCompletedAt: { men: "", women: "" },
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -142,6 +143,14 @@ function completedPicks() {
   return visibleDivisions().reduce((total, division) => total + numberOfPicks(division), 0);
 }
 
+function isDivisionComplete(division) {
+  return numberOfPicks(division) === 127;
+}
+
+function completedDivisions() {
+  return visibleDivisions().filter(isDivisionComplete);
+}
+
 function championFor(division) {
   return playerByPosition(division, state.picks[division][pickKey(7, 1)]);
 }
@@ -191,11 +200,19 @@ function bracketIdentitySource() {
 }
 
 function ensureCompletionIdentity() {
+  const priorCompletedAt = state.completedAt;
+  const hadDivisionCompletion = Object.values(state.divisionCompletedAt).some(Boolean);
+  const now = new Date().toISOString();
   if (!state.entryId) {
     const source = bracketIdentitySource();
     state.entryId = `${stableHash(source)}-${stableHash([...source].reverse().join(""))}`;
   }
-  if (!state.completedAt) state.completedAt = new Date().toISOString();
+  if (!state.completedAt) state.completedAt = now;
+
+  const divisionFallback = !hadDivisionCompletion && priorCompletedAt ? priorCompletedAt : now;
+  for (const division of completedDivisions()) {
+    if (!state.divisionCompletedAt[division]) state.divisionCompletedAt[division] = divisionFallback;
+  }
 }
 
 function saveDraft() {
@@ -210,6 +227,7 @@ function saveDraft() {
     started: state.started,
     entryId: state.entryId,
     completedAt: state.completedAt,
+    divisionCompletedAt: state.divisionCompletedAt,
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
   clearTimeout(saveTimer);
@@ -233,6 +251,10 @@ function loadDraft() {
       : visibleDivisions()[0];
     state.entryId = String(saved.entryId || "");
     state.completedAt = String(saved.completedAt || "");
+    state.divisionCompletedAt = {
+      men: String(saved.divisionCompletedAt?.men || ""),
+      women: String(saved.divisionCompletedAt?.women || ""),
+    };
     state.started = true;
     return true;
   } catch {
@@ -259,6 +281,10 @@ function sharePayloadObject() {
     p: compactPicks,
     i: state.entryId,
     c: state.completedAt,
+    d: {
+      m: state.divisionCompletedAt.men,
+      w: state.divisionCompletedAt.women,
+    },
   };
 }
 
@@ -325,6 +351,10 @@ function loadSharedBracket() {
     state.activeDivision = visibleDivisions()[0];
     state.entryId = sharedEntryId;
     state.completedAt = String(payload.c || "");
+    state.divisionCompletedAt = {
+      men: String(payload.d?.m || payload.c || ""),
+      women: String(payload.d?.w || payload.c || ""),
+    };
     state.started = true;
     state.submitted = true;
     state.readOnly = true;
@@ -373,6 +403,7 @@ function cloudBracketData(savedAt) {
     kind: CLOUD_RECORD_KIND,
     share: sharePayloadObject(),
     completedAt: state.completedAt || savedAt,
+    divisionCompletedAt: state.divisionCompletedAt,
     possiblePoints: stats.points,
     upsetPicks: stats.upsets,
     menChampion: championFor("men")?.name || "",
@@ -424,12 +455,12 @@ async function postCloudBracket(savedAt) {
 }
 
 async function syncCompletedBracket({ announce = false } = {}) {
-  if (completedPicks() !== requiredPicks()) return false;
+  if (!completedDivisions().length) return false;
   if (cloudSyncPromise) return cloudSyncPromise;
 
   ensureCompletionIdentity();
   if (!state.readOnly) saveDraft();
-  setPublishStatus("Your picks are safe on this device. Adding this bracket to the public leaderboard…");
+  setPublishStatus("Your picks are safe on this device. Adding each completed draw to its leaderboard…");
 
   cloudSyncPromise = (async () => {
     const existing = await fetchExistingCloudEntry();
@@ -453,8 +484,8 @@ async function syncCompletedBracket({ announce = false } = {}) {
     }
 
     if (!state.readOnly) saveDraft();
-    setPublishStatus("Saved publicly. Your picks are still stored on this device, and the bracket is now on the leaderboard.", "saved");
-    if (announce) showToast("Bracket added to the leaderboard.");
+    setPublishStatus("Saved publicly. Each completed draw is now on its leaderboard, and unfinished picks remain editable.", "saved");
+    if (announce) showToast("Completed draw added to the leaderboard.");
     publicEntriesPromise = null;
     refreshPublicLists(true);
     return true;
@@ -484,13 +515,14 @@ function splitCloudBracket(row, data) {
       ...data.share,
       s: division,
       p: { [division[0]]: compactPicks },
+      d: { [division[0]]: data.share.d?.[division[0]] || "" },
     };
     return {
       displayName: String(data.share.n || "Bracket maker").slice(0, 40),
       title: String(data.share.t || "2026 US Open Bracket").slice(0, 80),
       scope: division,
       shareHash: `#bracket=${encodeJsonPayload(divisionShare)}`,
-      completedAt: data.completedAt || data.share.c || row.savedAt,
+      completedAt: data.share.d?.[division[0]] || data.divisionCompletedAt?.[division] || data.completedAt || data.share.c || row.savedAt,
       possiblePoints: stats.points,
       upsetPicks: stats.upsets,
       champion,
@@ -609,9 +641,9 @@ function renderPublicLists(entries) {
     icon.setAttribute("aria-hidden", "true");
     icon.textContent = "◎";
     const heading = document.createElement("h3");
-    heading.textContent = "No completed brackets yet";
+    heading.textContent = "No completed draws yet";
     const copy = document.createElement("p");
-    copy.textContent = "The first real completed bracket will appear here automatically.";
+    copy.textContent = "The first real completed draw will appear here automatically.";
     empty.append(icon, heading, copy);
     directory.append(empty);
   } else {
@@ -652,8 +684,8 @@ function renderPublicListError() {
 }
 
 async function refreshPublicLists(force = false) {
-  $("#leaderboard-status").textContent = "Loading real completed brackets…";
-  $("#directory-status").textContent = "Loading real completed brackets…";
+  $("#leaderboard-status").textContent = "Loading real completed draws…";
+  $("#directory-status").textContent = "Loading real completed draws…";
   if (force) publicEntriesPromise = null;
   if (!publicEntriesPromise) publicEntriesPromise = fetchPublicBracketEntries();
   try {
@@ -956,7 +988,7 @@ function selectPlayer(division, round, matchIndex, position) {
   renderBracket();
   saveDraft();
 
-  if (completedPicks() === requiredPicks()) {
+  if (isDivisionComplete(division)) {
     ensureCompletionIdentity();
     saveDraft();
     syncCompletedBracket({ announce: true });
@@ -1061,7 +1093,7 @@ async function renameBracket(event) {
     history.replaceState(null, "", `#bracket=${encoded}`);
   }
 
-  if (completedPicks() === requiredPicks()) {
+  if (completedDivisions().length) {
     if (cloudSyncPromise) await cloudSyncPromise.catch(() => false);
     const synced = await syncCompletedBracket();
     showToast(synced ? "Bracket name updated everywhere." : "Name saved here. The leaderboard will retry shortly.");
@@ -1082,6 +1114,7 @@ function resetBracket() {
   state.readOnly = false;
   state.entryId = "";
   state.completedAt = "";
+  state.divisionCompletedAt = { men: "", women: "" };
   history.replaceState(null, "", `${location.pathname}${location.search}`);
   $("#builder").hidden = true;
   $("#submission-card").hidden = true;
@@ -1101,6 +1134,7 @@ function returnToMyBracket() {
   state.readOnly = false;
   state.entryId = "";
   state.completedAt = "";
+  state.divisionCompletedAt = { men: "", women: "" };
 
   if (loadDraft()) {
     showLoadedDraft();
@@ -1124,7 +1158,7 @@ function showLoadedDraft() {
   showView("create");
   showBuilder();
   showToast("Your saved bracket is ready to continue.");
-  if (completedPicks() === requiredPicks()) {
+  if (completedDivisions().length) {
     ensureCompletionIdentity();
     saveDraft();
     syncCompletedBracket();
