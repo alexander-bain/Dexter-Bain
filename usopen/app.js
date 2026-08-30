@@ -46,6 +46,7 @@ const state = {
   results: { men: {}, women: {} },
   resultsUpdatedAt: "",
   liveFeedConnected: false,
+  liveFeedChecked: false,
   meta: { displayName: "", title: "My 2026 US Open Bracket", scope: "both" },
   picks: { men: {}, women: {} },
   activeDivision: "men",
@@ -151,9 +152,10 @@ function renderLiveResultsStatus() {
   const men = completedResultCount("men");
   const women = completedResultCount("women");
   if (!state.liveFeedConnected) {
+    const connectionLabel = state.liveFeedChecked ? "reconnecting" : "connecting";
     status.textContent = men || women
-      ? `Live results are reconnecting. Showing ${men + women} saved final result${men + women === 1 ? "" : "s"}.`
-      : "Live results are reconnecting. Saved picks were not changed.";
+      ? `Live results are ${connectionLabel}. Showing ${men + women} saved final result${men + women === 1 ? "" : "s"}.`
+      : `Live results are ${connectionLabel}. Saved picks were not changed.`;
     return;
   }
   if (!men && !women) {
@@ -167,18 +169,22 @@ function renderLiveResultsStatus() {
   status.textContent = `Live scoring: ${men} men's and ${women} women's final result${men + women === 1 ? "" : "s"}. Checked automatically at ${updatedLabel}.`;
 }
 
-async function refreshLiveResults({ repaint = false, includeFallback = false } = {}) {
-  let changed = false;
-  if (includeFallback) {
-    try {
-      const response = await fetch(`./data/results.json?v=${Date.now()}`, { cache: "no-store" });
-      if (!response.ok) throw new Error(`Saved result request failed: ${response.status}`);
-      changed = installResultsDocument(await response.json()) || changed;
-    } catch (error) {
-      console.warn(error);
-    }
+async function loadSavedResults() {
+  try {
+    const response = await fetch(`./data/results.json?v=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) throw new Error(`Saved result request failed: ${response.status}`);
+    const changed = installResultsDocument(await response.json());
+    renderLiveResultsStatus();
+    return changed;
+  } catch (error) {
+    console.warn(error);
+    renderLiveResultsStatus();
+    return false;
   }
+}
 
+async function refreshLiveResults({ repaint = false } = {}) {
+  let changed = false;
   try {
     changed = installResultsDocument(await fetchDirectLiveResults()) || changed;
     state.liveFeedConnected = true;
@@ -186,6 +192,7 @@ async function refreshLiveResults({ repaint = false, includeFallback = false } =
     console.warn(error);
     state.liveFeedConnected = false;
   }
+  state.liveFeedChecked = true;
 
   renderLiveResultsStatus();
   if (changed && repaint) {
@@ -1602,7 +1609,8 @@ async function initialize() {
     if (men.players?.length !== 128 || women.players?.length !== 128) throw new Error("Draw validation failed");
     state.data.men = men;
     state.data.women = women;
-    await refreshLiveResults({ includeFallback: true });
+    await loadSavedResults();
+    refreshLiveResults({ repaint: true });
     populatePickFinderPlayers();
     const placeholders = [...men.players, ...women.players].filter((player) => player.entryType === "tbd").length;
     $("#verified-count").textContent = men.players.length + women.players.length;

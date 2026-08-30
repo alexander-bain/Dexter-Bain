@@ -1,6 +1,6 @@
 {
   "tournament": "2026 US Open",
-  "updatedAt": "2026-08-30T18:48:53.962Z",
+  "updatedAt": "2026-08-30T19:12:42.173Z",
   "source": "ESPN public tennis feed (unofficial)",
   "note": "Completed main-draw singles matches only. Existing results are preserved if the live feed temporarily omits them.",
   "results": [
@@ -49,7 +49,7 @@
         }
       ],
       "sourceMatchId": "182778",
-      "observedAt": "2026-08-30T18:48:53.962Z"
+      "observedAt": "2026-08-30T19:12:42.173Z"
     },
     {
       "division": "men",
@@ -88,7 +88,7 @@
         }
       ],
       "sourceMatchId": "182758",
-      "observedAt": "2026-08-30T18:48:53.962Z"
+      "observedAt": "2026-08-30T19:12:42.173Z"
     },
     {
       "division": "men",
@@ -127,7 +127,7 @@
         }
       ],
       "sourceMatchId": "182672",
-      "observedAt": "2026-08-30T18:48:53.962Z"
+      "observedAt": "2026-08-30T19:12:42.173Z"
     },
     {
       "division": "men",
@@ -174,7 +174,7 @@
         }
       ],
       "sourceMatchId": "182656",
-      "observedAt": "2026-08-30T18:48:53.962Z"
+      "observedAt": "2026-08-30T19:12:42.173Z"
     },
     {
       "division": "men",
@@ -213,7 +213,62 @@
         }
       ],
       "sourceMatchId": "182654",
-      "observedAt": "2026-08-30T18:48:53.962Z"
+      "observedAt": "2026-08-30T19:12:42.173Z"
+    },
+    {
+      "division": "men",
+      "round": 1,
+      "matchIndex": 59,
+      "winnerDrawPosition": 117,
+      "loserDrawPosition": 118,
+      "winnerName": "Dino Prizmic",
+      "loserName": "Aleksandr Shevchenko",
+      "winnerScore": [
+        {
+          "games": 2,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 5,
+          "tiebreak": null
+        },
+        {
+          "games": 7,
+          "tiebreak": null
+        }
+      ],
+      "loserScore": [
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 3,
+          "tiebreak": null
+        },
+        {
+          "games": 3,
+          "tiebreak": null
+        },
+        {
+          "games": 7,
+          "tiebreak": null
+        },
+        {
+          "games": 5,
+          "tiebreak": null
+        }
+      ],
+      "sourceMatchId": "182661",
+      "observedAt": "2026-08-30T19:12:42.173Z"
     },
     {
       "division": "men",
@@ -252,7 +307,7 @@
         }
       ],
       "sourceMatchId": "182663",
-      "observedAt": "2026-08-30T18:48:53.962Z"
+      "observedAt": "2026-08-30T19:12:42.173Z"
     },
     {
       "division": "women",
@@ -291,7 +346,7 @@
         }
       ],
       "sourceMatchId": "182593",
-      "observedAt": "2026-08-30T18:48:53.962Z"
+      "observedAt": "2026-08-30T19:12:42.173Z"
     },
     {
       "division": "women",
@@ -322,7 +377,7 @@
         }
       ],
       "sourceMatchId": "182591",
-      "observedAt": "2026-08-30T18:48:53.962Z"
+      "observedAt": "2026-08-30T19:12:42.173Z"
     },
     {
       "division": "women",
@@ -361,7 +416,7 @@
         }
       ],
       "sourceMatchId": "182624",
-      "observedAt": "2026-08-30T18:48:53.962Z"
+      "observedAt": "2026-08-30T19:12:42.173Z"
     },
     {
       "division": "women",
@@ -392,7 +447,7 @@
         }
       ],
       "sourceMatchId": "182616",
-      "observedAt": "2026-08-30T18:48:53.962Z"
+      "observedAt": "2026-08-30T19:12:42.173Z"
     },
     {
       "division": "women",
@@ -423,7 +478,7 @@
         }
       ],
       "sourceMatchId": "182633",
-      "observedAt": "2026-08-30T18:48:53.962Z"
+      "observedAt": "2026-08-30T19:12:42.173Z"
     },
     {
       "division": "women",
@@ -462,7 +517,7 @@
         }
       ],
       "sourceMatchId": "182632",
-      "observedAt": "2026-08-30T18:48:53.962Z"
+      "observedAt": "2026-08-30T19:12:42.173Z"
     }
   ]
 }
