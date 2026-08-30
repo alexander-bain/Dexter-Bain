@@ -1,0 +1,265 @@
+{
+  "tournament": "2026 US Open",
+  "updatedAt": "2026-08-30T17:48:01.830Z",
+  "source": "ESPN public tennis feed (unofficial)",
+  "note": "Completed main-draw singles matches only. Existing results are preserved if the live feed temporarily omits them.",
+  "results": [
+    {
+      "division": "men",
+      "round": 1,
+      "matchIndex": 38,
+      "winnerDrawPosition": 75,
+      "loserDrawPosition": 76,
+      "winnerName": "Kamil Majchrzak",
+      "loserName": "Hamad Medjedovic",
+      "winnerScore": [
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        }
+      ],
+      "loserScore": [
+        {
+          "games": 3,
+          "tiebreak": null
+        },
+        {
+          "games": 3,
+          "tiebreak": null
+        },
+        {
+          "games": 3,
+          "tiebreak": null
+        }
+      ],
+      "sourceMatchId": "182758",
+      "observedAt": "2026-08-30T17:48:01.830Z"
+    },
+    {
+      "division": "men",
+      "round": 1,
+      "matchIndex": 43,
+      "winnerDrawPosition": 85,
+      "loserDrawPosition": 86,
+      "winnerName": "Daniel Merida",
+      "loserName": "Marton Fucsovics",
+      "winnerScore": [
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        }
+      ],
+      "loserScore": [
+        {
+          "games": 4,
+          "tiebreak": null
+        },
+        {
+          "games": 4,
+          "tiebreak": null
+        },
+        {
+          "games": 2,
+          "tiebreak": null
+        }
+      ],
+      "sourceMatchId": "182672",
+      "observedAt": "2026-08-30T17:48:01.830Z"
+    },
+    {
+      "division": "men",
+      "round": 1,
+      "matchIndex": 62,
+      "winnerDrawPosition": 123,
+      "loserDrawPosition": 124,
+      "winnerName": "Yibing Wu",
+      "loserName": "Adam Walton",
+      "winnerScore": [
+        {
+          "games": 7,
+          "tiebreak": 7
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 7,
+          "tiebreak": null
+        }
+      ],
+      "loserScore": [
+        {
+          "games": 6,
+          "tiebreak": 2
+        },
+        {
+          "games": 2,
+          "tiebreak": null
+        },
+        {
+          "games": 5,
+          "tiebreak": null
+        }
+      ],
+      "sourceMatchId": "182663",
+      "observedAt": "2026-08-30T17:48:01.830Z"
+    },
+    {
+      "division": "women",
+      "round": 1,
+      "matchIndex": 4,
+      "winnerDrawPosition": 7,
+      "loserDrawPosition": 8,
+      "winnerName": "Kamilla Rakhimova",
+      "loserName": "Barbora Krejcikova",
+      "winnerScore": [
+        {
+          "games": 7,
+          "tiebreak": 7
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        }
+      ],
+      "loserScore": [
+        {
+          "games": 6,
+          "tiebreak": 4
+        },
+        {
+          "games": 2,
+          "tiebreak": null
+        }
+      ],
+      "sourceMatchId": "182591",
+      "observedAt": "2026-08-30T17:48:01.830Z"
+    },
+    {
+      "division": "women",
+      "round": 1,
+      "matchIndex": 14,
+      "winnerDrawPosition": 28,
+      "loserDrawPosition": 27,
+      "winnerName": "Donna Vekic",
+      "loserName": "Talia Gibson",
+      "winnerScore": [
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 4,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        }
+      ],
+      "loserScore": [
+        {
+          "games": 2,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 3,
+          "tiebreak": null
+        }
+      ],
+      "sourceMatchId": "182624",
+      "observedAt": "2026-08-30T17:48:01.830Z"
+    },
+    {
+      "division": "women",
+      "round": 1,
+      "matchIndex": 17,
+      "winnerDrawPosition": 33,
+      "loserDrawPosition": 34,
+      "winnerName": "Jessica Pegula",
+      "loserName": "Elena-Gabriela Ruse",
+      "winnerScore": [
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        }
+      ],
+      "loserScore": [
+        {
+          "games": 3,
+          "tiebreak": null
+        },
+        {
+          "games": 2,
+          "tiebreak": null
+        }
+      ],
+      "sourceMatchId": "182616",
+      "observedAt": "2026-08-30T17:48:01.830Z"
+    },
+    {
+      "division": "women",
+      "round": 1,
+      "matchIndex": 21,
+      "winnerDrawPosition": 41,
+      "loserDrawPosition": 42,
+      "winnerName": "Jasmine Paolini",
+      "loserName": "Veronika Erjavec",
+      "winnerScore": [
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 3,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        }
+      ],
+      "loserScore": [
+        {
+          "games": 3,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 4,
+          "tiebreak": null
+        }
+      ],
+      "sourceMatchId": "182632",
+      "observedAt": "2026-08-30T17:48:01.830Z"
+    }
+  ]
+}

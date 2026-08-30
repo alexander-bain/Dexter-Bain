@@ -9,7 +9,7 @@
       content="Pick every winner in the verified 2026 US Open men's and women's singles draws."
     />
     <title>2026 US Open Prediction Bracket | DexterBain.com</title>
-    <link rel="stylesheet" href="./styles.css?v=20260827-rename" />
+    <link rel="stylesheet" href="./styles.css?v=20260830-live-results" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -213,6 +213,7 @@
           <h2>Leaderboard</h2>
           <p>Men's and women's brackets have separate standings. If you chose both draws, each finished draw appears as soon as it is complete.</p>
         </div>
+        <p class="live-results-status" id="live-results-status" role="status">Checking completed matches…</p>
         <section class="pick-finder" aria-labelledby="pick-finder-title">
           <div class="pick-finder-heading">
             <div>
@@ -250,7 +251,7 @@
               <p>Only men's picks and points count here.</p>
             </div>
             <div class="leaderboard-shell">
-              <div class="leaderboard-head"><span>Place</span><span>Bracket</span><span>Completed</span><span>Bracket value</span><span>View</span></div>
+              <div class="leaderboard-head"><span>Place</span><span>Bracket</span><span>Result</span><span data-leaderboard-value-heading="men">Bracket value</span><span>View</span></div>
               <div class="leaderboard-body" id="leaderboard-men-body">
                 <div class="leaderboard-empty"><strong>Loading men's brackets…</strong><span>No sample names or scores are shown.</span></div>
               </div>
@@ -262,7 +263,7 @@
               <p>Only women's picks and points count here.</p>
             </div>
             <div class="leaderboard-shell">
-              <div class="leaderboard-head"><span>Place</span><span>Bracket</span><span>Completed</span><span>Bracket value</span><span>View</span></div>
+              <div class="leaderboard-head"><span>Place</span><span>Bracket</span><span>Result</span><span data-leaderboard-value-heading="women">Bracket value</span><span>View</span></div>
               <div class="leaderboard-body" id="leaderboard-women-body">
                 <div class="leaderboard-empty"><strong>Loading women's brackets…</strong><span>No sample names or scores are shown.</span></div>
               </div>
@@ -324,6 +325,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <noscript>This bracket requires JavaScript to load the verified draw and record your picks.</noscript>
-    <script src="./app.js?v=20260830-pick-finder" defer></script>
+    <script src="./app.js?v=20260830-live-results" defer></script>
   </body>
 </html>

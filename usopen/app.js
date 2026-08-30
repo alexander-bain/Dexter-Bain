@@ -23,6 +23,8 @@ const BRACKET_ZOOM_STEP = 0.1;
 
 const state = {
   data: { men: null, women: null },
+  results: { men: {}, women: {} },
+  resultsUpdatedAt: "",
   meta: { displayName: "", title: "My 2026 US Open Bracket", scope: "both" },
   picks: { men: {}, women: {} },
   activeDivision: "men",
@@ -44,6 +46,68 @@ let publicEntriesPromise;
 let publicBracketEntries = [];
 let publicEntriesLoaded = false;
 let bracketZoom = 1;
+
+function officialResult(division, round, matchIndex) {
+  return state.results[division]?.[pickKey(round, matchIndex)] || null;
+}
+
+function completedResultCount(division) {
+  return Object.keys(state.results[division] || {}).length;
+}
+
+function hasCompletedResults() {
+  return completedResultCount("men") + completedResultCount("women") > 0;
+}
+
+function installResultsDocument(document) {
+  const next = { men: {}, women: {} };
+  for (const result of document?.results || []) {
+    if (!["men", "women"].includes(result.division)) continue;
+    if (!Number.isInteger(result.round) || result.round < 1 || result.round > 7) continue;
+    if (!Number.isInteger(result.matchIndex) || result.matchIndex < 1 || result.matchIndex > matchCount(result.round)) continue;
+    if (!Number.isInteger(result.winnerDrawPosition) || result.winnerDrawPosition < 1 || result.winnerDrawPosition > 128) continue;
+    next[result.division][pickKey(result.round, result.matchIndex)] = result;
+  }
+  const prior = JSON.stringify(state.results);
+  state.results = next;
+  state.resultsUpdatedAt = String(document?.updatedAt || "");
+  return prior !== JSON.stringify(next);
+}
+
+function renderLiveResultsStatus() {
+  const status = $("#live-results-status");
+  if (!status) return;
+  const men = completedResultCount("men");
+  const women = completedResultCount("women");
+  if (!men && !women) {
+    status.textContent = "Waiting for the first completed main-draw match. Until then, each leaderboard stays ordered by who finished first.";
+    return;
+  }
+  const updated = new Date(state.resultsUpdatedAt);
+  const updatedLabel = Number.isNaN(updated.getTime())
+    ? "recently"
+    : updated.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  status.textContent = `Live scoring: ${men} men's and ${women} women's final result${men + women === 1 ? "" : "s"}. Last result update ${updatedLabel}.`;
+}
+
+async function refreshLiveResults({ repaint = false } = {}) {
+  try {
+    const response = await fetch(`./data/results.json?v=${Math.floor(Date.now() / 60000)}`, { cache: "no-store" });
+    if (!response.ok) throw new Error(`Result request failed: ${response.status}`);
+    const changed = installResultsDocument(await response.json());
+    renderLiveResultsStatus();
+    if (changed && repaint) {
+      if (state.started) renderBracket();
+      if (publicEntriesLoaded) renderPublicLists(publicBracketEntries);
+    }
+    return true;
+  } catch (error) {
+    console.warn(error);
+    const status = $("#live-results-status");
+    if (status) status.textContent = "Live results are reconnecting. Saved picks were not changed.";
+    return false;
+  }
+}
 
 function showToast(message) {
   const toast = $("#toast");
@@ -181,6 +245,40 @@ function selectedBracketStats() {
     const stats = bracketStatsForDivision(division);
     return { points: total.points + stats.points, upsets: total.upsets + stats.upsets };
   }, { points: 0, upsets: 0 });
+}
+
+function liveScoreForEntry(entry) {
+  let points = 0;
+  let correct = 0;
+  let decided = 0;
+  for (const result of Object.values(state.results[entry.scope] || {})) {
+    const key = pickKey(result.round, result.matchIndex);
+    const selectedPosition = Number(entry.picks[key]);
+    if (!selectedPosition) continue;
+    decided += 1;
+    if (selectedPosition !== Number(result.winnerDrawPosition)) continue;
+
+    correct += 1;
+    const players = participantsFor(entry.scope, result.round, result.matchIndex, entry.picks);
+    const projection = projectionFor(players);
+    const selectedIndex = players.findIndex((player) => player?.drawPosition === selectedPosition);
+    const probability = projection?.[selectedIndex];
+    points += probability == null ? ROUND_POINTS[result.round - 1] : potentialPoints(result.round, probability);
+  }
+  return { points, correct, decided };
+}
+
+function rankedEntries(entries) {
+  const scored = entries.map((entry) => ({ ...entry, liveScore: liveScoreForEntry(entry) }));
+  if (!entries.length || completedResultCount(entries[0].scope) === 0) {
+    return scored.sort((first, second) => new Date(first.completedAt).getTime() - new Date(second.completedAt).getTime());
+  }
+  return scored.sort((first, second) => (
+    second.liveScore.points - first.liveScore.points
+      || second.liveScore.correct - first.liveScore.correct
+      || second.possiblePoints - first.possiblePoints
+      || new Date(first.completedAt).getTime() - new Date(second.completedAt).getTime()
+  ));
 }
 
 function stableHash(value) {
@@ -606,10 +704,14 @@ function leaderboardRow(entry, index) {
   bracket.append(name, details);
   const completed = document.createElement("span");
   completed.className = "leaderboard-completed";
-  completed.textContent = `${ordinal(index + 1)} to finish · ${completionLabel(entry.completedAt)}`;
+  completed.textContent = completedResultCount(entry.scope) > 0
+    ? `${entry.liveScore.correct} correct of ${entry.liveScore.decided} final`
+    : `${ordinal(index + 1)} to finish · ${completionLabel(entry.completedAt)}`;
   const value = document.createElement("span");
   value.className = "leaderboard-value";
-  value.textContent = `${entry.possiblePoints.toLocaleString()} pts · ${entry.upsetPicks} upset${entry.upsetPicks === 1 ? "" : "s"}`;
+  value.textContent = completedResultCount(entry.scope) > 0
+    ? `${entry.liveScore.points.toLocaleString()} pts`
+    : `${entry.possiblePoints.toLocaleString()} pts · ${entry.upsetPicks} upset${entry.upsetPicks === 1 ? "" : "s"}`;
   const view = publicBracketLink(entry);
   row.append(place, bracket, completed, value, view);
   return row;
@@ -746,8 +848,12 @@ function renderPublicLists(entries) {
   womenLeaderboard.replaceChildren();
   directory.replaceChildren();
 
-  const menEntries = entries.filter((entry) => entry.scope === "men");
-  const womenEntries = entries.filter((entry) => entry.scope === "women");
+  const menEntries = rankedEntries(entries.filter((entry) => entry.scope === "men"));
+  const womenEntries = rankedEntries(entries.filter((entry) => entry.scope === "women"));
+
+  $$("[data-leaderboard-value-heading]").forEach((heading) => {
+    heading.textContent = completedResultCount(heading.dataset.leaderboardValueHeading) > 0 ? "Score" : "Bracket value";
+  });
 
   for (const [divisionEntries, leaderboard, label] of [
     [menEntries, menLeaderboard, "men's"],
@@ -795,7 +901,8 @@ function renderPublicLists(entries) {
     });
   }
 
-  const status = `${menEntries.length} men's bracket${menEntries.length === 1 ? "" : "s"} · ${womenEntries.length} women's bracket${womenEntries.length === 1 ? "" : "s"}. Combined entries are split into one bracket per draw.`;
+  const rankingCopy = hasCompletedResults() ? "Ranked by live points." : "Ranked by who finished first.";
+  const status = `${menEntries.length} men's bracket${menEntries.length === 1 ? "" : "s"} · ${womenEntries.length} women's bracket${womenEntries.length === 1 ? "" : "s"}. ${rankingCopy} Combined entries are split into one bracket per draw.`;
   $("#leaderboard-status").textContent = status;
   $("#directory-status").textContent = status;
   renderPickFinder();
@@ -853,6 +960,7 @@ function makePlayerButton({
   slot,
   players,
   projection,
+  result,
 }) {
   const button = document.createElement("button");
   button.type = "button";
@@ -870,6 +978,8 @@ function makePlayerButton({
   const points = probability == null ? null : potentialPoints(round, probability);
   const isModelPick = probability != null && probability > projection[1 - slot];
   const isUpset = probability != null && probability < 45;
+  const isOfficialWinner = Number(result?.winnerDrawPosition) === player.drawPosition;
+  const isOfficialLoser = Number(result?.loserDrawPosition) === player.drawPosition;
 
   const copy = document.createElement("span");
   copy.className = "player-copy";
@@ -888,9 +998,19 @@ function makePlayerButton({
     model.textContent = "MODEL";
     name.append(model);
   }
+  if (isOfficialWinner) {
+    const winner = document.createElement("span");
+    winner.className = "result-label";
+    winner.textContent = "WINNER";
+    name.append(winner);
+  }
   const entry = document.createElement("span");
   entry.className = "entry-note";
-  entry.textContent = player.countryCode || (player.entryType === "tbd" ? "QUALIFIER TBD" : "ENTRY");
+  entry.textContent = isOfficialWinner
+    ? "FINAL · ADVANCES"
+    : isOfficialLoser
+      ? "FINAL · ELIMINATED"
+      : player.countryCode || (player.entryType === "tbd" ? "QUALIFIER TBD" : "ENTRY");
   copy.append(name, entry);
 
   const chance = document.createElement("span");
@@ -905,6 +1025,8 @@ function makePlayerButton({
   button.classList.toggle("is-selected", Number(selectedPosition) === player.drawPosition);
   button.classList.toggle("is-model-pick", isModelPick);
   button.classList.toggle("is-upset", isUpset);
+  button.classList.toggle("is-official-winner", isOfficialWinner);
+  button.classList.toggle("is-official-loser", isOfficialLoser);
   button.setAttribute(
     "aria-label",
     `${Number(selectedPosition) === player.drawPosition ? "Selected: " : "Pick "}${player.seed ? `seed ${player.seed} ` : ""}${player.name}${probability == null ? "" : `, ${probability} percent projected win chance, worth ${points} ${points === 1 ? "point" : "points"} if correct`}`,
@@ -920,6 +1042,7 @@ function makePlayerButton({
 function makeMatchCard(division, round, matchIndex) {
   const players = participantsFor(division, round, matchIndex);
   const projection = projectionFor(players);
+  const result = officialResult(division, round, matchIndex);
   const selectedPosition = state.picks[division][pickKey(round, matchIndex)];
   const card = document.createElement("article");
   card.className = `match-card ${matchIndex % 2 === 1 ? "is-upper" : "is-lower"}`;
@@ -938,7 +1061,10 @@ function makeMatchCard(division, round, matchIndex) {
   const number = document.createElement("span");
   number.textContent = `M${String(matchIndex).padStart(2, "0")}`;
   const call = document.createElement("strong");
-  if (!projection) {
+  if (result) {
+    call.textContent = `Final: ${shortPlayerName(playerByPosition(division, result.winnerDrawPosition))}`;
+    card.classList.add("is-final");
+  } else if (!projection) {
     call.textContent = round === 1 ? "Projection unavailable" : "Awaiting earlier picks";
   } else if (projection[0] === projection[1]) {
     call.textContent = "Model: toss-up · 50–50";
@@ -960,6 +1086,7 @@ function makeMatchCard(division, round, matchIndex) {
       slot,
       players,
       projection,
+      result,
     }));
   });
   shell.append(header, options);
@@ -1369,6 +1496,7 @@ async function initialize() {
   bindEvents();
   updateCountdown();
   setInterval(updateCountdown, 60000);
+  setInterval(() => refreshLiveResults({ repaint: true }), 60000);
 
   try {
     const [menResponse, womenResponse] = await Promise.all([
@@ -1380,6 +1508,7 @@ async function initialize() {
     if (men.players?.length !== 128 || women.players?.length !== 128) throw new Error("Draw validation failed");
     state.data.men = men;
     state.data.women = women;
+    await refreshLiveResults();
     populatePickFinderPlayers();
     const placeholders = [...men.players, ...women.players].filter((player) => player.entryType === "tbd").length;
     $("#verified-count").textContent = men.players.length + women.players.length;

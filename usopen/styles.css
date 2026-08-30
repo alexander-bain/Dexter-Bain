@@ -324,6 +324,8 @@ fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 
 .match-card { position: absolute; left: 0; width: 100%; height: 96px; min-width: 0; }
 .match-card-shell { position: relative; z-index: 2; height: 96px; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: #0d2342; box-shadow: 0 5px 16px rgba(0,0,0,.22); }
+.match-card.is-final .match-card-shell { border-color: rgba(146,242,189,.58); }
+.match-card.is-final .match-card-header strong { color: #92f2bd; }
 .match-card::after { content: ""; position: absolute; top: 50%; left: 100%; width: 20px; border-top: 1px solid rgba(128,181,255,.46); }
 .round-column:last-child .match-card::after { display: none; }
 .connector-branch { position: absolute; left: calc(100% + 20px); z-index: 1; width: 20px; pointer-events: none; }
@@ -349,6 +351,17 @@ fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .pick-points.has-upset-bonus { color: #ffb454; }
 .is-selected .entry-note, .is-selected .probability, .is-selected .pick-points { color: rgba(4,16,34,.68); }
 .is-selected .model-label { color: var(--tennis); background: var(--navy-900); }
+.result-label { display: inline-block; margin-left: .3rem; padding: .08rem .2rem; border-radius: 3px; color: #071b16; background: #92f2bd; font-size: .38rem; font-weight: 950; letter-spacing: .04em; vertical-align: .08rem; }
+.player-button.is-official-winner { box-shadow: inset 3px 0 #92f2bd; }
+.player-button.is-official-loser { opacity: .62; }
+.player-button.is-selected.is-official-winner { color: #071b16; background: #92f2bd; opacity: 1; }
+.player-button.is-selected.is-official-loser { color: #2b0c11; background: #ff9da9; opacity: 1; }
+.player-button.is-selected.is-official-winner .entry-note,
+.player-button.is-selected.is-official-winner .probability,
+.player-button.is-selected.is-official-winner .pick-points,
+.player-button.is-selected.is-official-loser .entry-note,
+.player-button.is-selected.is-official-loser .probability,
+.player-button.is-selected.is-official-loser .pick-points { color: rgba(4,16,34,.68); }
 .tbd-label { color: #ffca72; font-style: italic; }
 .is-selected .tbd-label { color: var(--navy-950); }
 .scroll-hint { display: flex; align-items: center; gap: .5rem; margin: .65rem 0 0; color: var(--muted); font-size: .7rem; }
@@ -412,6 +425,7 @@ fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .pick-finder-pick span { color: #d7e2f2; font-size: .7rem; line-height: 1.45; }
 
 .leaderboard-divisions { display: grid; gap: 2rem; }
+.live-results-status { margin: -1rem 0 1.25rem; padding: .85rem 1rem; border: 1px solid rgba(146,242,189,.32); border-radius: 12px; color: #d7e2f2; background: rgba(10,42,47,.45); font-size: .72rem; line-height: 1.5; }
 .leaderboard-division { display: grid; gap: .75rem; }
 .leaderboard-division-heading { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; }
 .leaderboard-division-heading span { color: var(--tennis); font-size: .66rem; font-weight: 900; letter-spacing: .09em; text-transform: uppercase; }
