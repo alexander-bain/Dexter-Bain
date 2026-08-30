@@ -1,9 +1,56 @@
 {
   "tournament": "2026 US Open",
-  "updatedAt": "2026-08-30T17:48:01.830Z",
+  "updatedAt": "2026-08-30T18:48:53.962Z",
   "source": "ESPN public tennis feed (unofficial)",
   "note": "Completed main-draw singles matches only. Existing results are preserved if the live feed temporarily omits them.",
   "results": [
+    {
+      "division": "men",
+      "round": 1,
+      "matchIndex": 36,
+      "winnerDrawPosition": 72,
+      "loserDrawPosition": 71,
+      "winnerName": "Arthur Rinderknech",
+      "loserName": "Sho Shimabukuro",
+      "winnerScore": [
+        {
+          "games": 6,
+          "tiebreak": 4
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 7,
+          "tiebreak": 7
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        }
+      ],
+      "loserScore": [
+        {
+          "games": 7,
+          "tiebreak": 7
+        },
+        {
+          "games": 2,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": 4
+        },
+        {
+          "games": 2,
+          "tiebreak": null
+        }
+      ],
+      "sourceMatchId": "182778",
+      "observedAt": "2026-08-30T18:48:53.962Z"
+    },
     {
       "division": "men",
       "round": 1,
@@ -41,7 +88,7 @@
         }
       ],
       "sourceMatchId": "182758",
-      "observedAt": "2026-08-30T17:48:01.830Z"
+      "observedAt": "2026-08-30T18:48:53.962Z"
     },
     {
       "division": "men",
@@ -80,7 +127,93 @@
         }
       ],
       "sourceMatchId": "182672",
-      "observedAt": "2026-08-30T17:48:01.830Z"
+      "observedAt": "2026-08-30T18:48:53.962Z"
+    },
+    {
+      "division": "men",
+      "round": 1,
+      "matchIndex": 53,
+      "winnerDrawPosition": 105,
+      "loserDrawPosition": 106,
+      "winnerName": "Jiri Lehecka",
+      "loserName": "Pablo Carreno Busta",
+      "winnerScore": [
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 7,
+          "tiebreak": 7
+        },
+        {
+          "games": 4,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        }
+      ],
+      "loserScore": [
+        {
+          "games": 1,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": 5
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 2,
+          "tiebreak": null
+        }
+      ],
+      "sourceMatchId": "182656",
+      "observedAt": "2026-08-30T18:48:53.962Z"
+    },
+    {
+      "division": "men",
+      "round": 1,
+      "matchIndex": 55,
+      "winnerDrawPosition": 109,
+      "loserDrawPosition": 110,
+      "winnerName": "Lloyd Harris",
+      "loserName": "Jack Kennedy",
+      "winnerScore": [
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        }
+      ],
+      "loserScore": [
+        {
+          "games": 4,
+          "tiebreak": null
+        },
+        {
+          "games": 2,
+          "tiebreak": null
+        },
+        {
+          "games": 2,
+          "tiebreak": null
+        }
+      ],
+      "sourceMatchId": "182654",
+      "observedAt": "2026-08-30T18:48:53.962Z"
     },
     {
       "division": "men",
@@ -119,7 +252,46 @@
         }
       ],
       "sourceMatchId": "182663",
-      "observedAt": "2026-08-30T17:48:01.830Z"
+      "observedAt": "2026-08-30T18:48:53.962Z"
+    },
+    {
+      "division": "women",
+      "round": 1,
+      "matchIndex": 2,
+      "winnerDrawPosition": 4,
+      "loserDrawPosition": 3,
+      "winnerName": "Polina Iatcenko",
+      "loserName": "Renata Zarazua",
+      "winnerScore": [
+        {
+          "games": 4,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 7,
+          "tiebreak": 10
+        }
+      ],
+      "loserScore": [
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 4,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": 7
+        }
+      ],
+      "sourceMatchId": "182593",
+      "observedAt": "2026-08-30T18:48:53.962Z"
     },
     {
       "division": "women",
@@ -150,7 +322,7 @@
         }
       ],
       "sourceMatchId": "182591",
-      "observedAt": "2026-08-30T17:48:01.830Z"
+      "observedAt": "2026-08-30T18:48:53.962Z"
     },
     {
       "division": "women",
@@ -189,7 +361,7 @@
         }
       ],
       "sourceMatchId": "182624",
-      "observedAt": "2026-08-30T17:48:01.830Z"
+      "observedAt": "2026-08-30T18:48:53.962Z"
     },
     {
       "division": "women",
@@ -220,7 +392,38 @@
         }
       ],
       "sourceMatchId": "182616",
-      "observedAt": "2026-08-30T17:48:01.830Z"
+      "observedAt": "2026-08-30T18:48:53.962Z"
+    },
+    {
+      "division": "women",
+      "round": 1,
+      "matchIndex": 20,
+      "winnerDrawPosition": 40,
+      "loserDrawPosition": 39,
+      "winnerName": "Leylah Fernandez",
+      "loserName": "Shuai Zhang",
+      "winnerScore": [
+        {
+          "games": 6,
+          "tiebreak": null
+        },
+        {
+          "games": 6,
+          "tiebreak": null
+        }
+      ],
+      "loserScore": [
+        {
+          "games": 3,
+          "tiebreak": null
+        },
+        {
+          "games": 2,
+          "tiebreak": null
+        }
+      ],
+      "sourceMatchId": "182633",
+      "observedAt": "2026-08-30T18:48:53.962Z"
     },
     {
       "division": "women",
@@ -259,7 +462,7 @@
         }
       ],
       "sourceMatchId": "182632",
-      "observedAt": "2026-08-30T17:48:01.830Z"
+      "observedAt": "2026-08-30T18:48:53.962Z"
     }
   ]
 }

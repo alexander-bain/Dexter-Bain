@@ -1,3 +1,10 @@
+import {
+  buildPlayerIndex,
+  mergeResults,
+  parseCompletedResults,
+  resolveRoundOnePlaceholders,
+} from "./live-results-core.js";
+
 const ROUND_NAMES = [
   "Round of 128",
   "Round of 64",
@@ -20,11 +27,25 @@ const MATCH_CARD_HEIGHT = 96;
 const MIN_BRACKET_ZOOM = 0.15;
 const MAX_BRACKET_ZOOM = 1.5;
 const BRACKET_ZOOM_STEP = 0.1;
+const LIVE_RESULTS_REFRESH_MS = 30000;
+const LIVE_RESULT_FEEDS = [
+  {
+    division: "men",
+    groupingSlug: "mens-singles",
+    url: "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard",
+  },
+  {
+    division: "women",
+    groupingSlug: "womens-singles",
+    url: "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard",
+  },
+];
 
 const state = {
   data: { men: null, women: null },
   results: { men: {}, women: {} },
   resultsUpdatedAt: "",
+  liveFeedConnected: false,
   meta: { displayName: "", title: "My 2026 US Open Bracket", scope: "both" },
   picks: { men: {}, women: {} },
   activeDivision: "men",
@@ -59,9 +80,19 @@ function hasCompletedResults() {
   return completedResultCount("men") + completedResultCount("women") > 0;
 }
 
-function installResultsDocument(document) {
+function installedResults() {
+  return [
+    ...Object.values(state.results.men || {}),
+    ...Object.values(state.results.women || {}),
+  ];
+}
+
+function installResultsDocument(document, { merge = true } = {}) {
   const next = { men: {}, women: {} };
-  for (const result of document?.results || []) {
+  const results = merge
+    ? mergeResults(installedResults(), document?.results || [])
+    : document?.results || [];
+  for (const result of results) {
     if (!["men", "women"].includes(result.division)) continue;
     if (!Number.isInteger(result.round) || result.round < 1 || result.round > 7) continue;
     if (!Number.isInteger(result.matchIndex) || result.matchIndex < 1 || result.matchIndex > matchCount(result.round)) continue;
@@ -74,11 +105,57 @@ function installResultsDocument(document) {
   return prior !== JSON.stringify(next);
 }
 
+async function fetchDirectLiveResults() {
+  const observedAt = new Date().toISOString();
+  const responses = await Promise.allSettled(LIVE_RESULT_FEEDS.map(async (feed) => {
+    const response = await fetch(`${feed.url}?v=${Date.now()}`, {
+      cache: "no-store",
+      headers: { Accept: "application/json" },
+    });
+    if (!response.ok) throw new Error(`${feed.division} live feed returned ${response.status}`);
+    return { ...feed, payload: await response.json() };
+  }));
+
+  const liveResults = [];
+  let connectedFeeds = 0;
+  for (const response of responses) {
+    if (response.status !== "fulfilled") {
+      console.warn(response.reason);
+      continue;
+    }
+    connectedFeeds += 1;
+    const { division, groupingSlug, payload } = response.value;
+    const resolved = resolveRoundOnePlaceholders(state.data[division], payload, { groupingSlug });
+    state.data[division] = resolved.draw;
+    const parsed = parseCompletedResults(payload, {
+      division,
+      groupingSlug,
+      playerIndex: buildPlayerIndex(resolved.draw),
+      observedAt,
+    });
+    liveResults.push(...parsed.results);
+    if (parsed.skipped.length) console.warn(`Skipped ${parsed.skipped.length} unmapped ${division} result(s).`);
+  }
+
+  if (!connectedFeeds) throw new Error("All live result feeds are unavailable");
+  return {
+    tournament: "2026 US Open",
+    updatedAt: observedAt,
+    results: mergeResults(installedResults(), liveResults),
+  };
+}
+
 function renderLiveResultsStatus() {
   const status = $("#live-results-status");
   if (!status) return;
   const men = completedResultCount("men");
   const women = completedResultCount("women");
+  if (!state.liveFeedConnected) {
+    status.textContent = men || women
+      ? `Live results are reconnecting. Showing ${men + women} saved final result${men + women === 1 ? "" : "s"}.`
+      : "Live results are reconnecting. Saved picks were not changed.";
+    return;
+  }
   if (!men && !women) {
     status.textContent = "Waiting for the first completed main-draw match. Until then, each leaderboard stays ordered by who finished first.";
     return;
@@ -86,27 +163,36 @@ function renderLiveResultsStatus() {
   const updated = new Date(state.resultsUpdatedAt);
   const updatedLabel = Number.isNaN(updated.getTime())
     ? "recently"
-    : updated.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-  status.textContent = `Live scoring: ${men} men's and ${women} women's final result${men + women === 1 ? "" : "s"}. Last result update ${updatedLabel}.`;
+    : updated.toLocaleTimeString([], { hour: "numeric", minute: "2-digit", second: "2-digit" });
+  status.textContent = `Live scoring: ${men} men's and ${women} women's final result${men + women === 1 ? "" : "s"}. Checked automatically at ${updatedLabel}.`;
 }
 
-async function refreshLiveResults({ repaint = false } = {}) {
-  try {
-    const response = await fetch(`./data/results.json?v=${Math.floor(Date.now() / 60000)}`, { cache: "no-store" });
-    if (!response.ok) throw new Error(`Result request failed: ${response.status}`);
-    const changed = installResultsDocument(await response.json());
-    renderLiveResultsStatus();
-    if (changed && repaint) {
-      if (state.started) renderBracket();
-      if (publicEntriesLoaded) renderPublicLists(publicBracketEntries);
+async function refreshLiveResults({ repaint = false, includeFallback = false } = {}) {
+  let changed = false;
+  if (includeFallback) {
+    try {
+      const response = await fetch(`./data/results.json?v=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) throw new Error(`Saved result request failed: ${response.status}`);
+      changed = installResultsDocument(await response.json()) || changed;
+    } catch (error) {
+      console.warn(error);
     }
-    return true;
+  }
+
+  try {
+    changed = installResultsDocument(await fetchDirectLiveResults()) || changed;
+    state.liveFeedConnected = true;
   } catch (error) {
     console.warn(error);
-    const status = $("#live-results-status");
-    if (status) status.textContent = "Live results are reconnecting. Saved picks were not changed.";
-    return false;
+    state.liveFeedConnected = false;
   }
+
+  renderLiveResultsStatus();
+  if (changed && repaint) {
+    if (state.started) renderBracket();
+    if (publicEntriesLoaded) renderPublicLists(publicBracketEntries);
+  }
+  return state.liveFeedConnected;
 }
 
 function showToast(message) {
@@ -1496,7 +1582,15 @@ async function initialize() {
   bindEvents();
   updateCountdown();
   setInterval(updateCountdown, 60000);
-  setInterval(() => refreshLiveResults({ repaint: true }), 60000);
+  setInterval(() => refreshLiveResults({ repaint: true }), LIVE_RESULTS_REFRESH_MS);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible" && state.data.men && state.data.women) {
+      refreshLiveResults({ repaint: true });
+    }
+  });
+  window.addEventListener("online", () => {
+    if (state.data.men && state.data.women) refreshLiveResults({ repaint: true });
+  });
 
   try {
     const [menResponse, womenResponse] = await Promise.all([
@@ -1508,7 +1602,7 @@ async function initialize() {
     if (men.players?.length !== 128 || women.players?.length !== 128) throw new Error("Draw validation failed");
     state.data.men = men;
     state.data.women = women;
-    await refreshLiveResults();
+    await refreshLiveResults({ includeFallback: true });
     populatePickFinderPlayers();
     const placeholders = [...men.players, ...women.players].filter((player) => player.entryType === "tbd").length;
     $("#verified-count").textContent = men.players.length + women.players.length;
