@@ -41,6 +41,8 @@ let toastTimer;
 let saveTimer;
 let cloudSyncPromise;
 let publicEntriesPromise;
+let publicBracketEntries = [];
+let publicEntriesLoaded = false;
 let bracketZoom = 1;
 
 function showToast(message) {
@@ -527,6 +529,7 @@ function splitCloudBracket(row, data) {
       upsetPicks: stats.upsets,
       champion,
       pickCount: Object.keys(picks).length,
+      picks,
     };
   });
 }
@@ -612,7 +615,130 @@ function leaderboardRow(entry, index) {
   return row;
 }
 
+function pickFinderPlayers() {
+  return ["men", "women"].flatMap((division) => (
+    (state.data[division]?.players || []).map((player) => ({ ...player, division }))
+  ));
+}
+
+function populatePickFinderPlayers() {
+  const options = $("#pick-player-options");
+  options.replaceChildren();
+  for (const player of pickFinderPlayers().sort((first, second) => first.name.localeCompare(second.name))) {
+    const option = document.createElement("option");
+    option.value = player.name;
+    option.label = scopeLabel(player.division);
+    options.append(option);
+  }
+}
+
+function matchingPickFinderPlayer(query) {
+  const normalized = query.trim().toLowerCase();
+  if (!normalized) return { matches: [] };
+  const players = pickFinderPlayers();
+  const exact = players.filter((player) => player.name.toLowerCase() === normalized);
+  if (exact.length === 1) return { player: exact[0], matches: exact };
+  const matches = players.filter((player) => player.name.toLowerCase().includes(normalized));
+  if (matches.length === 1) return { player: matches[0], matches };
+  return { matches };
+}
+
+function pickFinderDecision(entry, player, round) {
+  const position = Number(player.drawPosition);
+  const roundName = ROUND_NAMES[round - 1];
+  if (round > 1) {
+    const priorMatch = Math.ceil(position / (2 ** (round - 1)));
+    if (Number(entry.picks[pickKey(round - 1, priorMatch)]) !== position) {
+      return {
+        outcome: "LOSE",
+        detail: `Picked ${player.name} to lose before ${roundName}.`,
+      };
+    }
+  }
+
+  const matchIndex = Math.ceil(position / (2 ** round));
+  const selectedPosition = Number(entry.picks[pickKey(round, matchIndex)]);
+  if (selectedPosition === position) {
+    return {
+      outcome: "WIN",
+      detail: `Picked ${player.name} to win in ${roundName}.`,
+    };
+  }
+
+  const selectedPlayer = playerByPosition(entry.scope, selectedPosition);
+  return {
+    outcome: "LOSE",
+    detail: selectedPlayer
+      ? `Picked ${selectedPlayer.name} over ${player.name} in ${roundName}.`
+      : `Picked ${player.name} to lose in ${roundName}.`,
+  };
+}
+
+function pickFinderResult(entry, player, round) {
+  const decision = pickFinderDecision(entry, player, round);
+  const article = document.createElement("article");
+  article.className = "pick-finder-result";
+
+  const bracket = document.createElement("div");
+  const title = document.createElement("strong");
+  const maker = document.createElement("span");
+  title.textContent = entry.title;
+  maker.textContent = `by ${entry.displayName}`;
+  bracket.append(title, maker);
+
+  const pick = document.createElement("div");
+  pick.className = "pick-finder-pick";
+  const outcome = document.createElement("strong");
+  const detail = document.createElement("span");
+  outcome.className = decision.outcome === "WIN" ? "is-win" : "is-loss";
+  outcome.textContent = decision.outcome;
+  detail.textContent = decision.detail;
+  pick.append(outcome, detail);
+
+  article.append(bracket, pick, publicBracketLink(entry));
+  return article;
+}
+
+function renderPickFinder() {
+  const input = $("#pick-player-search");
+  const results = $("#pick-finder-results");
+  const status = $("#pick-finder-status");
+  const round = Number($("#pick-round-select").value || 1);
+  const query = input.value.trim();
+  results.replaceChildren();
+
+  if (!query) {
+    status.textContent = "Start typing a player’s name.";
+    return;
+  }
+
+  const { player, matches } = matchingPickFinderPlayer(query);
+  if (!player) {
+    status.textContent = matches.length
+      ? `${matches.length} players match. Choose a full name from the list.`
+      : "No player matches that search.";
+    return;
+  }
+
+  input.value = player.name;
+  if (!publicEntriesLoaded) {
+    status.textContent = "Loading everyone’s picks…";
+    return;
+  }
+
+  const entries = publicBracketEntries.filter((entry) => entry.scope === player.division);
+  if (!entries.length) {
+    status.textContent = `No completed ${scopeLabel(player.division).toLowerCase()} brackets are available yet.`;
+    return;
+  }
+
+  for (const entry of entries) results.append(pickFinderResult(entry, player, round));
+  status.textContent = `${entries.length} bracket pick${entries.length === 1 ? "" : "s"} for ${player.name} in ${ROUND_NAMES[round - 1]}.`;
+}
+
 function renderPublicLists(entries) {
+  publicBracketEntries = entries;
+  publicEntriesLoaded = true;
   const menLeaderboard = $("#leaderboard-men-body");
   const womenLeaderboard = $("#leaderboard-women-body");
   const directory = $("#public-bracket-list");
@@ -672,20 +798,26 @@ function renderPublicLists(entries) {
   const status = `${menEntries.length} men's bracket${menEntries.length === 1 ? "" : "s"} · ${womenEntries.length} women's bracket${womenEntries.length === 1 ? "" : "s"}. Combined entries are split into one bracket per draw.`;
   $("#leaderboard-status").textContent = status;
   $("#directory-status").textContent = status;
+  renderPickFinder();
 }
 
 function renderPublicListError() {
+  publicBracketEntries = [];
+  publicEntriesLoaded = false;
   const message = "The shared leaderboard could not connect. Saved picks on this device were not changed.";
   $("#leaderboard-status").textContent = message;
   $("#directory-status").textContent = message;
   $("#leaderboard-men-body").replaceChildren(emptyList("Leaderboard temporarily unavailable.", "Open this page again to retry."));
   $("#leaderboard-women-body").replaceChildren(emptyList("Leaderboard temporarily unavailable.", "Open this page again to retry."));
   $("#public-bracket-list").replaceChildren(emptyList("Public brackets temporarily unavailable.", "Open this page again to retry."));
+  renderPickFinder();
 }
 
 async function refreshPublicLists(force = false) {
   $("#leaderboard-status").textContent = "Loading real completed draws…";
   $("#directory-status").textContent = "Loading real completed draws…";
+  publicEntriesLoaded = false;
+  renderPickFinder();
   if (force) publicEntriesPromise = null;
   if (!publicEntriesPromise) publicEntriesPromise = fetchPublicBracketEntries();
   try {
@@ -1223,6 +1355,9 @@ function bindEvents() {
   $("#zoom-out").addEventListener("click", () => setBracketZoom(bracketZoom - BRACKET_ZOOM_STEP));
   $("#zoom-in").addEventListener("click", () => setBracketZoom(bracketZoom + BRACKET_ZOOM_STEP));
   $("#zoom-fit").addEventListener("click", fitEntireBracket);
+  $("#pick-player-search").addEventListener("input", renderPickFinder);
+  $("#pick-player-search").addEventListener("change", renderPickFinder);
+  $("#pick-round-select").addEventListener("change", renderPickFinder);
   $("#edit-after-submit").addEventListener("click", () => {
     history.replaceState(null, "", `${location.pathname}${location.search}`);
     state.submitted = false;
@@ -1245,6 +1380,7 @@ async function initialize() {
     if (men.players?.length !== 128 || women.players?.length !== 128) throw new Error("Draw validation failed");
     state.data.men = men;
     state.data.women = women;
+    populatePickFinderPlayers();
     const placeholders = [...men.players, ...women.players].filter((player) => player.entryType === "tbd").length;
     $("#verified-count").textContent = men.players.length + women.players.length;
     $("#placeholder-count").textContent = placeholders;

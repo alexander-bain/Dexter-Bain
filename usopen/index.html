@@ -213,6 +213,36 @@
           <h2>Leaderboard</h2>
           <p>Men's and women's brackets have separate standings. If you chose both draws, each finished draw appears as soon as it is complete.</p>
         </div>
+        <section class="pick-finder" aria-labelledby="pick-finder-title">
+          <div class="pick-finder-heading">
+            <div>
+              <span>Compare everyone</span>
+              <h3 id="pick-finder-title">Player Pick Finder</h3>
+            </div>
+            <p>Search a player and choose a round to see who picked that player to win or lose.</p>
+          </div>
+          <div class="pick-finder-controls">
+            <label>
+              <span>Player</span>
+              <input id="pick-player-search" type="search" list="pick-player-options" placeholder="Search any player" autocomplete="off" />
+              <datalist id="pick-player-options"></datalist>
+            </label>
+            <label>
+              <span>Round</span>
+              <select id="pick-round-select">
+                <option value="1">Round of 128</option>
+                <option value="2">Round of 64</option>
+                <option value="3">Round of 32</option>
+                <option value="4">Round of 16</option>
+                <option value="5">Quarterfinals</option>
+                <option value="6">Semifinals</option>
+                <option value="7">Final</option>
+              </select>
+            </label>
+          </div>
+          <p class="pick-finder-status" id="pick-finder-status" role="status">Start typing a player’s name.</p>
+          <div class="pick-finder-results" id="pick-finder-results"></div>
+        </section>
         <div class="leaderboard-divisions">
           <section class="leaderboard-division" aria-labelledby="men-leaderboard-title">
             <div class="leaderboard-division-heading">
@@ -294,6 +324,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <noscript>This bracket requires JavaScript to load the verified draw and record your picks.</noscript>
-    <script src="./app.js?v=20260828-partial-draws" defer></script>
+    <script src="./app.js?v=20260830-pick-finder" defer></script>
   </body>
 </html>

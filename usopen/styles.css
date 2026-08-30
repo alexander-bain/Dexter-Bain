@@ -388,6 +388,29 @@ fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .empty-state h3 { margin: 1rem 0 .4rem; font-size: 1.5rem; }
 .empty-state p { max-width: 570px; color: var(--muted); line-height: 1.6; }
 
+.pick-finder { margin-bottom: 2rem; padding: 1.25rem; border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(135deg, rgba(63,140,255,.13), rgba(217,255,71,.055)); }
+.pick-finder-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
+.pick-finder-heading > div > span { color: var(--tennis); font-size: .65rem; font-weight: 900; letter-spacing: .09em; text-transform: uppercase; }
+.pick-finder-heading h3 { margin: .22rem 0 0; font-size: 1.55rem; }
+.pick-finder-heading p { max-width: 560px; margin: 0; color: var(--muted); font-size: .76rem; line-height: 1.55; }
+.pick-finder-controls { display: grid; grid-template-columns: minmax(220px, 1fr) minmax(180px, .35fr); gap: .8rem; margin-top: 1.1rem; }
+.pick-finder-controls label { display: grid; gap: .35rem; }
+.pick-finder-controls label > span { color: var(--muted); font-size: .62rem; font-weight: 850; letter-spacing: .07em; text-transform: uppercase; }
+.pick-finder-controls input, .pick-finder-controls select { width: 100%; min-height: 46px; padding: .7rem .85rem; border: 1px solid var(--line); border-radius: 9px; color: var(--white); background: #071a34; font: inherit; font-size: .82rem; }
+.pick-finder-controls input:focus, .pick-finder-controls select:focus { border-color: var(--tennis); outline: 2px solid rgba(217,255,71,.12); }
+.pick-finder-status { margin: .85rem 0 0; color: var(--muted); font-size: .72rem; }
+.pick-finder-results { display: grid; gap: .55rem; margin-top: .85rem; }
+.pick-finder-results:empty { margin-top: 0; }
+.pick-finder-result { display: grid; grid-template-columns: minmax(180px, .65fr) minmax(260px, 1.35fr) 120px; align-items: center; gap: 1rem; padding: .85rem; border: 1px solid var(--line); border-radius: 11px; background: rgba(4,16,34,.66); }
+.pick-finder-result > div:first-child strong, .pick-finder-result > div:first-child span { display: block; }
+.pick-finder-result > div:first-child strong { font-size: .85rem; }
+.pick-finder-result > div:first-child span { margin-top: .18rem; color: var(--muted); font-size: .66rem; }
+.pick-finder-pick { display: grid; grid-template-columns: 54px minmax(0, 1fr); align-items: center; gap: .7rem; }
+.pick-finder-pick strong { display: inline-grid; min-height: 28px; place-items: center; border-radius: 999px; font-size: .61rem; letter-spacing: .06em; }
+.pick-finder-pick strong.is-win { color: #071b16; background: #92f2bd; }
+.pick-finder-pick strong.is-loss { color: #2b0c11; background: #ff9da9; }
+.pick-finder-pick span { color: #d7e2f2; font-size: .7rem; line-height: 1.45; }
+
 .leaderboard-divisions { display: grid; gap: 2rem; }
 .leaderboard-division { display: grid; gap: .75rem; }
 .leaderboard-division-heading { display: flex; align-items: end; justify-content: space-between; gap: 1.5rem; }
@@ -457,6 +480,7 @@ noscript { display: block; padding: 1rem; color: #271800; background: #ffd87d; t
   .leaderboard-head, .leaderboard-row { grid-template-columns: 56px minmax(190px, 1fr) minmax(165px, .85fr) 125px 105px; gap: .7rem; }
   .leaderboard-shell { overflow-x: auto; }
   .leaderboard-head, .leaderboard-body { min-width: 760px; }
+  .pick-finder-result { grid-template-columns: minmax(170px, .65fr) minmax(250px, 1.35fr) 110px; }
   .scoring-card { grid-template-columns: 1fr; gap: 1rem; }
   .projection-panel { grid-template-columns: 1fr; gap: 1rem; }
   .bracket-totals { width: 100%; }
@@ -491,6 +515,10 @@ noscript { display: block; padding: 1rem; color: #271800; background: #ffd87d; t
   .dialog-actions { align-items: stretch; flex-direction: column-reverse; }
   .dialog-actions .button { width: 100%; }
   .empty-state { padding: 2rem 1.2rem; }
+  .pick-finder-heading { align-items: flex-start; flex-direction: column; gap: .5rem; }
+  .pick-finder-controls { grid-template-columns: 1fr; }
+  .pick-finder-result { grid-template-columns: 1fr; gap: .7rem; }
+  .pick-finder-result .leaderboard-view { width: fit-content; }
   .leaderboard-division-heading { align-items: flex-start; flex-direction: column; gap: .35rem; }
   .leaderboard-head { display: none; }
   .leaderboard-body { min-width: 0; }
