@@ -1817,7 +1817,7 @@
     </div>
   </div>
   <div class="signin-anchor" id="signInAnchor">
-    <button class="signin-launch" id="openSignInBtn" type="button">Sign in</button>
+    <button class="signin-launch" id="openSignInBtn" type="button" aria-expanded="false" aria-controls="signInPanel">Sign in</button>
     <section class="panel signin-panel is-hidden" id="signInPanel" aria-labelledby="signInTitle">
       <h3 class="section-title" id="signInTitle">Player sign in</h3>
       <p class="signin-status" id="signInStatus">Type your email first.</p>
@@ -3247,6 +3247,7 @@
     function renderSignInPanel() {
       const name = signedInPlayerName();
       const hasPanelOpen = !signInPanelEl.classList.contains("is-hidden");
+      openSignInBtn.setAttribute("aria-expanded", String(hasPanelOpen));
       if (name) {
         const email = signedInEmail();
         signInStatusEl.innerHTML = `Verified as <strong>${escapeHtml(name)}</strong>${email ? ` with ${escapeHtml(email)}` : ""}. Your picks use this name.`;
