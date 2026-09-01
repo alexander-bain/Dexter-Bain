@@ -2036,7 +2036,10 @@ app.post("/api/notifications/subscribe", async (req, res) => {
   try {
     await updateNotificationsData((data) => {
       const withoutCurrent = data.subscriptions.filter(
-        (item) => item.subscription?.endpoint !== subscription.endpoint
+        (item) =>
+          item.subscription?.endpoint !== subscription.endpoint ||
+          item.gameId !== gameId ||
+          (item.roomCode || "") !== (roomCode || "")
       );
 
       withoutCurrent.push({
