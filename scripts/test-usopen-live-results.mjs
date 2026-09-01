@@ -8,6 +8,8 @@ const players = [
   { drawPosition: 2, name: "Lorenzo Sonego", entryType: "direct" },
   { drawPosition: 3, name: "Félix Auger-Aliassime", entryType: "seed" },
   { drawPosition: 4, name: "Qualifier/Lucky Loser TBD 1", entryType: "tbd" },
+  { drawPosition: 5, name: "Caty McNally", entryType: "direct" },
+  { drawPosition: 6, name: "Anouk Koevermans", entryType: "direct" },
 ];
 
 const competition = ({ id, round, winner, loser, completed = true, startAt = "2026-08-30T18:00:00.000Z", timeValid = true, state = completed ? "post" : "pre" }) => ({
@@ -37,6 +39,7 @@ const payload = {
         competition({ id: 104, round: "Round 1", winner: "Unknown Player", loser: "Lorenzo Sonego" }),
         competition({ id: 105, round: "Round 1", winner: "Felix Auger-Aliassime", loser: "Qualifier Name", completed: false, startAt: "2026-09-01T16:30:00.000Z" }),
         competition({ id: 106, round: "Round 2", winner: "Alexander Zverev", loser: "TBD", completed: false, startAt: "2026-09-02T04:00:00.000Z", timeValid: false }),
+        competition({ id: 107, round: "Round 1", winner: "Catherine McNally", loser: "Anouk Koevermans" }),
       ],
     }],
   }],
@@ -50,10 +53,11 @@ const parsed = parseCompletedResults(payload, {
   observedAt: "2026-08-30T18:00:00.000Z",
 });
 
-assert.equal(parsed.results.length, 2);
+assert.equal(parsed.results.length, 3);
 assert.deepEqual(parsed.results.map((result) => [result.round, result.matchIndex, result.winnerDrawPosition]), [
   [1, 1, 1],
   [2, 1, 1],
+  [1, 3, 5],
 ]);
 assert.equal(parsed.skipped.length, 1);
 
@@ -79,7 +83,7 @@ assert.equal(schedules.matches[1].timeValid, false);
 
 const prior = [{ ...parsed.results[0], winnerDrawPosition: 2, loserDrawPosition: 1 }];
 const merged = mergeResults(prior, parsed.results);
-assert.equal(merged.length, 2);
+assert.equal(merged.length, 3);
 assert.equal(merged[0].winnerDrawPosition, 1);
 
 console.log("US Open live-result mapping tests passed.");

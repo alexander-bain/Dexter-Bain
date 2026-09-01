@@ -25,7 +25,11 @@ export function normalizePlayerName(value) {
 function playerNameKeys(value) {
   const normalized = normalizePlayerName(value);
   if (!normalized) return [];
-  return [normalized, `tokens:${normalized.split(" ").sort().join(" ")}`];
+  const tokens = normalized.split(" ");
+  const keys = [normalized, `tokens:${[...tokens].sort().join(" ")}`];
+  // ESPN occasionally expands a nickname; onePlayer only accepts this key when it is unique.
+  if (tokens.length > 1) keys.push(`initial-last:${tokens[0][0]}:${tokens.at(-1)}`);
+  return keys;
 }
 
 export function buildPlayerIndex(draw) {
