@@ -5240,7 +5240,12 @@
       }
     });
 
-    formEl.addEventListener("change", () => {
+    formEl.addEventListener("change", (event) => {
+      const notifyInput = event.target.closest("input[name='notify']");
+      if (notifyInput?.checked) {
+        state.notify = notifyInput.value;
+        saveState();
+      }
       saveActivePlayerName(playerNameEl.value);
       captureVisibleDraftPicks();
     });
