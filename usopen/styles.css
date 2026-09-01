@@ -459,7 +459,7 @@ fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .pool-forecast-chance strong, .pool-forecast-chance span { display: block; }
 .pool-forecast-chance strong { color: var(--tennis); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
 .pool-forecast-chance span { margin-top: .1rem; color: var(--muted); font-size: .55rem; text-transform: uppercase; }
-.pool-forecast-numbers { display: grid; grid-template-columns: repeat(3, minmax(90px, 1fr)); gap: .55rem; }
+.pool-forecast-numbers { display: grid; grid-template-columns: repeat(5, minmax(72px, 1fr)); gap: .55rem; }
 .pool-forecast-numbers span { color: var(--muted); font-size: .58rem; line-height: 1.35; }
 .pool-forecast-numbers strong { display: block; color: #d7e2f2; font-size: .77rem; font-variant-numeric: tabular-nums; }
 .pool-forecast-path { grid-column: 2 / -1; margin: -.25rem 0 0; color: #9fb7d8; font-size: .63rem; line-height: 1.45; }
@@ -586,7 +586,7 @@ noscript { display: block; padding: 1rem; color: #271800; background: #ffd87d; t
   .pool-forecast-row { grid-template-columns: 34px minmax(0, 1fr) auto; gap: .5rem .7rem; }
   .pool-forecast-chance { text-align: right; }
   .pool-forecast-numbers, .pool-forecast-path { grid-column: 2 / -1; }
-  .pool-forecast-numbers { grid-template-columns: repeat(3, 1fr); }
+  .pool-forecast-numbers { grid-template-columns: repeat(2, 1fr); }
   .leaderboard-division-heading { align-items: flex-start; flex-direction: column; gap: .35rem; }
   .leaderboard-head { display: none; }
   .leaderboard-body { min-width: 0; }

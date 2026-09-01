@@ -54,7 +54,11 @@ assert.deepEqual(
 const favorite = first.forecasts.find((forecast) => forecast.entry.title === "Favorites");
 const underdog = first.forecasts.find((forecast) => forecast.entry.title === "Underdogs");
 assert.equal(favorite.currentPoints, 1);
+assert.equal(favorite.currentCorrect, 1);
+assert.equal(favorite.currentDecided, 1);
 assert.equal(underdog.currentPoints, 0);
+assert.equal(underdog.currentCorrect, 0);
+assert.equal(underdog.currentDecided, 1);
 assert.ok(favorite.maxPossiblePoints >= favorite.currentPoints);
 assert.ok(favorite.bestPath);
 

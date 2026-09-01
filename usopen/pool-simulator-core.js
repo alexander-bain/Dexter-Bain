@@ -227,11 +227,17 @@ export function simulateDivisionPool({ entries, players, results, iterations = 4
 
   const forecasts = entries.map((entry, entryIndex) => {
     let currentPoints = 0;
+    let currentCorrect = 0;
+    let currentDecided = 0;
     let maxPossiblePoints = 0;
     for (const [key, pick] of pickValues[entryIndex]) {
       const official = resultsByKey.get(key);
       if (official) {
-        if (Number(official.winnerDrawPosition) === pick.selectedPosition) currentPoints += pick.points;
+        currentDecided += 1;
+        if (Number(official.winnerDrawPosition) === pick.selectedPosition) {
+          currentCorrect += 1;
+          currentPoints += pick.points;
+        }
       } else if (!eliminated.has(pick.selectedPosition)) {
         maxPossiblePoints += pick.points;
       }
@@ -244,6 +250,8 @@ export function simulateDivisionPool({ entries, players, results, iterations = 4
       projectedPoints: pointTotals[entryIndex] / safeIterations,
       bestSimulatedPoints: bestPoints[entryIndex],
       currentPoints,
+      currentCorrect,
+      currentDecided,
       maxPossiblePoints,
       bestPath: bestPathForEntry(entryIndex, entries, pickValues, resultsByKey, eliminated, playerByPosition),
     };

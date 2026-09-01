@@ -844,13 +844,17 @@ function forecastEntryRow(forecast, index, totalEntries) {
 
   const numbers = document.createElement("div");
   numbers.className = "pool-forecast-numbers";
+  const current = document.createElement("span");
+  const record = document.createElement("span");
   const finish = document.createElement("span");
   const projected = document.createElement("span");
   const maximum = document.createElement("span");
+  current.innerHTML = `<strong>${forecast.currentPoints.toLocaleString()}</strong> current pts`;
+  record.innerHTML = `<strong>${forecast.currentCorrect}/${forecast.currentDecided}</strong> matches correct`;
   finish.innerHTML = `<strong>#${forecast.averageFinish.toFixed(1)}</strong> average finish`;
   projected.innerHTML = `<strong>${Math.round(forecast.projectedPoints).toLocaleString()}</strong> projected pts`;
   maximum.innerHTML = `<strong>${forecast.maxPossiblePoints.toLocaleString()}</strong> maximum pts`;
-  numbers.append(finish, projected, maximum);
+  numbers.append(current, record, finish, projected, maximum);
 
   const path = document.createElement("p");
   path.className = "pool-forecast-path";
