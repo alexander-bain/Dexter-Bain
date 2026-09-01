@@ -778,7 +778,7 @@ function publicBracketLink(entry) {
   link.href = publicBracketUrl(entry);
   link.target = "_blank";
   link.rel = "noopener";
-  link.textContent = "View bracket ↗";
+  link.textContent = completedResultCount(entry.scope) > 0 ? "See picks ✓✕" : "View bracket ↗";
   return link;
 }
 
@@ -788,8 +788,12 @@ function leaderboardRow(entry, index) {
   const place = document.createElement("strong");
   place.className = "leaderboard-place";
   place.textContent = `#${index + 1}`;
-  const bracket = document.createElement("div");
-  bracket.className = "leaderboard-bracket";
+  const bracket = document.createElement("a");
+  bracket.className = "leaderboard-bracket leaderboard-bracket-link";
+  bracket.href = publicBracketUrl(entry);
+  bracket.target = "_blank";
+  bracket.rel = "noopener";
+  bracket.setAttribute("aria-label", `View ${entry.title} by ${entry.displayName}`);
   const name = document.createElement("strong");
   const details = document.createElement("span");
   name.textContent = entry.title;
@@ -1071,8 +1075,11 @@ function makePlayerButton({
   const points = probability == null ? null : potentialPoints(round, probability);
   const isModelPick = probability != null && probability > projection[1 - slot];
   const isUpset = probability != null && probability < 45;
+  const isSelected = Number(selectedPosition) === player.drawPosition;
   const isOfficialWinner = Number(result?.winnerDrawPosition) === player.drawPosition;
   const isOfficialLoser = Number(result?.loserDrawPosition) === player.drawPosition;
+  const isSelectedCorrect = Boolean(result) && isSelected && isOfficialWinner;
+  const isSelectedWrong = Boolean(result) && isSelected && !isOfficialWinner;
 
   const copy = document.createElement("span");
   copy.className = "player-copy";
@@ -1091,19 +1098,23 @@ function makePlayerButton({
     model.textContent = "MODEL";
     name.append(model);
   }
-  if (isOfficialWinner) {
-    const winner = document.createElement("span");
-    winner.className = "result-label";
-    winner.textContent = "WINNER";
-    name.append(winner);
+  if (isOfficialWinner || isSelectedWrong) {
+    const resultStatus = document.createElement("span");
+    resultStatus.className = `result-label${isSelectedWrong ? " is-wrong" : ""}`;
+    resultStatus.textContent = isSelectedCorrect ? "CORRECT" : isSelectedWrong ? "WRONG" : "WINNER";
+    name.append(resultStatus);
   }
   const entry = document.createElement("span");
   entry.className = "entry-note";
-  entry.textContent = isOfficialWinner
-    ? "FINAL · ADVANCES"
-    : isOfficialLoser
-      ? "FINAL · ELIMINATED"
-      : player.countryCode || (player.entryType === "tbd" ? "QUALIFIER TBD" : "ENTRY");
+  entry.textContent = isSelectedCorrect
+    ? "YOUR PICK · CORRECT"
+    : isSelectedWrong
+      ? "YOUR PICK · WRONG"
+      : isOfficialWinner
+        ? "FINAL · ADVANCES"
+        : isOfficialLoser
+          ? "FINAL · ELIMINATED"
+          : player.countryCode || (player.entryType === "tbd" ? "QUALIFIER TBD" : "ENTRY");
   copy.append(name, entry);
 
   const chance = document.createElement("span");
@@ -1115,14 +1126,16 @@ function makePlayerButton({
   value.textContent = points == null ? "—" : `+${points}`;
 
   button.append(copy, chance, value);
-  button.classList.toggle("is-selected", Number(selectedPosition) === player.drawPosition);
+  button.classList.toggle("is-selected", isSelected);
   button.classList.toggle("is-model-pick", isModelPick);
   button.classList.toggle("is-upset", isUpset);
   button.classList.toggle("is-official-winner", isOfficialWinner);
   button.classList.toggle("is-official-loser", isOfficialLoser);
+  button.classList.toggle("is-pick-correct", isSelectedCorrect);
+  button.classList.toggle("is-pick-wrong", isSelectedWrong);
   button.setAttribute(
     "aria-label",
-    `${Number(selectedPosition) === player.drawPosition ? "Selected: " : "Pick "}${player.seed ? `seed ${player.seed} ` : ""}${player.name}${probability == null ? "" : `, ${probability} percent projected win chance, worth ${points} ${points === 1 ? "point" : "points"} if correct`}`,
+    `${isSelected ? "Selected: " : "Pick "}${player.seed ? `seed ${player.seed} ` : ""}${player.name}${isSelectedCorrect ? ", correct pick" : isSelectedWrong ? ", wrong pick" : ""}${probability == null ? "" : `, ${probability} percent projected win chance, worth ${points} ${points === 1 ? "point" : "points"} if correct`}`,
   );
   button.title = probability == null
     ? "Complete both sides of this matchup first"
@@ -1137,6 +1150,8 @@ function makeMatchCard(division, round, matchIndex) {
   const projection = projectionFor(players);
   const result = officialResult(division, round, matchIndex);
   const selectedPosition = state.picks[division][pickKey(round, matchIndex)];
+  const selectedCorrect = Boolean(result) && Number(selectedPosition) === Number(result.winnerDrawPosition);
+  const selectedWrong = Boolean(result) && Boolean(selectedPosition) && !selectedCorrect;
   const card = document.createElement("article");
   card.className = `match-card ${matchIndex % 2 === 1 ? "is-upper" : "is-lower"}`;
   card.setAttribute("aria-label", `${ROUND_NAMES[round - 1]} match ${matchIndex}`);
@@ -1155,8 +1170,15 @@ function makeMatchCard(division, round, matchIndex) {
   number.textContent = `M${String(matchIndex).padStart(2, "0")}`;
   const call = document.createElement("strong");
   if (result) {
-    call.textContent = `Final: ${shortPlayerName(playerByPosition(division, result.winnerDrawPosition))}`;
+    const winnerName = shortPlayerName(playerByPosition(division, result.winnerDrawPosition));
+    call.textContent = selectedCorrect
+      ? `Correct: ${winnerName}`
+      : selectedWrong
+        ? `Wrong: ${winnerName} won`
+        : `Final: ${winnerName}`;
     card.classList.add("is-final");
+    card.classList.toggle("is-pick-correct", selectedCorrect);
+    card.classList.toggle("is-pick-wrong", selectedWrong);
   } else if (!projection) {
     call.textContent = round === 1 ? "Projection unavailable" : "Awaiting earlier picks";
   } else if (projection[0] === projection[1]) {
@@ -1228,6 +1250,22 @@ function renderBracket() {
 }
 
 function renderProgress() {
+  if (state.readOnly && completedResultCount(state.activeDivision) > 0) {
+    const score = liveScoreForEntry({
+      scope: state.activeDivision,
+      picks: state.picks[state.activeDivision],
+    });
+    const wrong = score.decided - score.correct;
+    const waiting = 127 - score.decided;
+    const accuracy = score.decided ? Math.round((score.correct / score.decided) * 100) : 0;
+    $("#progress-copy").textContent = `${score.correct} right · ${wrong} wrong · ${waiting} waiting`;
+    $("#progress-percent").textContent = `${score.points.toLocaleString()} pts`;
+    $("#progress-bar").style.width = `${accuracy}%`;
+    const stats = selectedBracketStats();
+    $("#potential-points").textContent = `${stats.points.toLocaleString()} pts`;
+    $("#upset-picks").textContent = String(stats.upsets);
+    return;
+  }
   const completed = completedPicks();
   const required = requiredPicks();
   const percentage = Math.round((completed / required) * 100);
