@@ -2328,6 +2328,10 @@ app.post("/api/minigames/:gameId/results/check", async (req, res) => {
         const previousResult = game.results[questionId];
         const result = await automaticResultForQuestion(question, questionIndex);
         if (result) {
+          const cleanPreviousResult = cleanResult(previousResult);
+          if (cleanPreviousResult?.status === "resolved" && result.status !== "resolved") {
+            return;
+          }
           game.results[questionId] = result;
           const previousKey = JSON.stringify(previousResult || null);
           const nextKey = JSON.stringify(result || null);
