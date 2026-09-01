@@ -62,4 +62,30 @@ assert.equal(underdog.currentDecided, 1);
 assert.ok(favorite.maxPossiblePoints >= favorite.currentPoints);
 assert.ok(favorite.bestPath);
 
+for (const division of ["men", "women"]) {
+  const scoredEntries = [
+    { displayName: "Later", title: "Tied later", completedAt: "2026-08-30T12:02:00.000Z", picks: completePicks(false) },
+    { displayName: "Behind", title: "Lower current score", completedAt: "2026-08-30T12:00:00.000Z", picks: completePicks(true) },
+    { displayName: "Earlier", title: "Tied earlier", completedAt: "2026-08-30T12:01:00.000Z", picks: completePicks(false) },
+  ];
+  const divisionResults = [{ ...results[0], division }];
+  const sorted = simulateDivisionPool({
+    entries: scoredEntries,
+    players,
+    results: divisionResults,
+    iterations: 250,
+    seed: `${division}-score-order`,
+  });
+  assert.deepEqual(
+    sorted.forecasts.map((forecast) => [forecast.entry.title, forecast.currentPoints]),
+    [["Tied earlier", 1], ["Tied later", 1], ["Lower current score", 0]],
+    `${division} forecast should sort by current points and then completion time`,
+  );
+  sorted.forecasts.forEach((forecast) => {
+    assert.ok(Number.isFinite(forecast.winChance));
+    assert.ok(Number.isFinite(forecast.projectedPoints));
+    assert.ok(forecast.maxPossiblePoints >= forecast.currentPoints);
+  });
+}
+
 console.log("US Open pool-simulator tests passed.");

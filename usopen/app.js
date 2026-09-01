@@ -11,7 +11,7 @@ import {
   potentialPointsForPick as potentialPoints,
   projectionForPlayers as projectionFor,
   simulateDivisionPool,
-} from "./pool-simulator-core.js";
+} from "./pool-simulator-core.js?v=20260831-score-order";
 
 const ROUND_SHORT_NAMES = ["R128", "R64", "R32", "R16", "QF", "SF", "Final"];
 const LOCK_AT = new Date("2026-08-30T15:00:00Z");

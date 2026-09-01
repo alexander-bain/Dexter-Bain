@@ -256,9 +256,12 @@ export function simulateDivisionPool({ entries, players, results, iterations = 4
       bestPath: bestPathForEntry(entryIndex, entries, pickValues, resultsByKey, eliminated, playerByPosition),
     };
   }).sort((first, second) => (
-    second.winChance - first.winChance
-      || first.averageFinish - second.averageFinish
-      || second.projectedPoints - first.projectedPoints
+    second.currentPoints - first.currentPoints
+      || second.currentCorrect - first.currentCorrect
+      || String(first.entry.completedAt || "").localeCompare(String(second.entry.completedAt || ""))
+      || String(first.entry.shareHash || "").localeCompare(String(second.entry.shareHash || ""))
+      || String(first.entry.displayName || "").localeCompare(String(second.entry.displayName || ""))
+      || String(first.entry.title || "").localeCompare(String(second.entry.title || ""))
   ));
 
   return {
