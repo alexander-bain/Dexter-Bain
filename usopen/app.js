@@ -790,7 +790,7 @@ function leaderboardRow(entry, index) {
   const value = document.createElement("span");
   value.className = "leaderboard-value";
   value.textContent = completedResultCount(entry.scope) > 0
-    ? `${entry.liveScore.points.toLocaleString()} pts`
+    ? `${entry.liveScore.points.toLocaleString()} pts · ${entry.liveScore.correct}/${entry.liveScore.decided} correct`
     : `${entry.possiblePoints.toLocaleString()} pts · ${entry.upsetPicks} upset${entry.upsetPicks === 1 ? "" : "s"}`;
   const view = publicBracketLink(entry);
   row.append(place, bracket, completed, value, view);
@@ -1072,7 +1072,7 @@ function renderPublicLists(entries) {
   const womenEntries = rankedEntries(entries.filter((entry) => entry.scope === "women"));
 
   $$("[data-leaderboard-value-heading]").forEach((heading) => {
-    heading.textContent = completedResultCount(heading.dataset.leaderboardValueHeading) > 0 ? "Score" : "Bracket value";
+    heading.textContent = completedResultCount(heading.dataset.leaderboardValueHeading) > 0 ? "Score · Record" : "Bracket value";
   });
 
   for (const [divisionEntries, leaderboard, label] of [
