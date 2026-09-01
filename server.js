@@ -328,7 +328,17 @@ async function readMinigamesData() {
   }
 
   if (minigamesDataUrl) {
-    const remoteData = await readRemoteMinigamesData();
+    let remoteData;
+    try {
+      remoteData = await readRemoteMinigamesData();
+    } catch (err) {
+      const backupData = await readLocalMinigamesData().catch(() => null);
+      if (!isEmptyMinigamesData(backupData)) {
+        console.warn("Minigames remote store read failed; using local backup:", err);
+        return backupData;
+      }
+      throw err;
+    }
     const localData = await readLocalMinigamesData().catch(() => null);
 
     if (isEmptyMinigamesData(remoteData) && !isEmptyMinigamesData(localData)) {
