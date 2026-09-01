@@ -160,6 +160,66 @@ export function parseCompletedResults(payload, { division, groupingSlug, playerI
   return { results, skipped };
 }
 
+function schedulePriority(match) {
+  if (match.statusState === "in") return 0;
+  if (match.timeValid) return 1;
+  return 2;
+}
+
+function earlierSchedule(first, second) {
+  const priorityDifference = schedulePriority(first) - schedulePriority(second);
+  if (priorityDifference !== 0) return priorityDifference < 0 ? first : second;
+
+  const firstTime = Date.parse(first.startAt);
+  const secondTime = Date.parse(second.startAt);
+  if (Number.isNaN(firstTime)) return second;
+  if (Number.isNaN(secondTime)) return first;
+  return firstTime <= secondTime ? first : second;
+}
+
+export function parsePlayerNextMatches(payload, { division, groupingSlug, playerIndex, observedAt }) {
+  const grouping = tournamentGrouping(payload, groupingSlug);
+  if (!grouping) return { matches: {}, skipped: [] };
+
+  const matches = new Map();
+  const skipped = [];
+  for (const competition of grouping.competitions || []) {
+    const roundLabel = String(competition?.round?.displayName || "").toLowerCase();
+    const round = ROUND_BY_LABEL.get(roundLabel);
+    const statusState = String(competition?.status?.type?.state || "").toLowerCase();
+    if (!round || competition?.status?.type?.completed === true || statusState === "post") continue;
+
+    const startAt = String(competition?.startDate || competition?.date || "");
+    if (statusState !== "in" && Number.isNaN(Date.parse(startAt))) continue;
+
+    for (const competitor of competition.competitors || []) {
+      const name = competitorName(competitor);
+      if (!name || normalizePlayerName(name) === "tbd") continue;
+      const player = onePlayer(playerIndex, name);
+      if (!player) {
+        skipped.push({ sourceMatchId: String(competition.id || ""), round, playerName: name });
+        continue;
+      }
+
+      const match = {
+        division,
+        round,
+        sourceMatchId: String(competition.id || ""),
+        startAt,
+        timeValid: competition?.timeValid === true,
+        statusState,
+        statusDetail: String(competition?.status?.type?.shortDetail || competition?.status?.type?.detail || ""),
+        venue: String(competition?.venue?.court || competition?.venue?.fullName || ""),
+        observedAt,
+      };
+      const existing = matches.get(player.drawPosition);
+      matches.set(player.drawPosition, existing ? earlierSchedule(existing, match) : match);
+    }
+  }
+
+  return { matches: Object.fromEntries(matches), skipped };
+}
+
 function resultKey(result) {
   return `${result.division}-${result.round}-${result.matchIndex}`;
 }

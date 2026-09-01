@@ -344,6 +344,9 @@ fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .player-copy, .player-name, .entry-note { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .player-name { font-size: .65rem; font-weight: 800; }
 .entry-note { margin-top: .05rem; color: #788aa6; font-size: .48rem; font-weight: 800; letter-spacing: .07em; }
+.player-countdown { color: var(--blue-soft); font-variant-numeric: tabular-nums; }
+.player-countdown.is-live { color: #92f2bd; }
+.player-countdown.is-tbd { color: #ffca72; }
 .seed { display: inline-grid; width: 17px; height: 17px; place-items: center; margin-right: .3rem; border-radius: 4px; color: var(--navy-950); background: var(--blue-soft); font-size: .51rem; font-weight: 900; }
 .is-selected .seed { background: var(--navy-900); color: var(--tennis); }
 .model-label { display: inline-block; margin-left: .3rem; padding: .08rem .2rem; border-radius: 3px; color: #061124; background: var(--tennis); font-size: .38rem; font-weight: 950; letter-spacing: .04em; vertical-align: .08rem; }
@@ -352,6 +355,7 @@ fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .pick-points { color: var(--muted); }
 .pick-points.has-upset-bonus { color: #ffb454; }
 .is-selected .entry-note, .is-selected .probability, .is-selected .pick-points { color: rgba(4,16,34,.68); }
+.is-selected .player-countdown { color: rgba(4,16,34,.72); }
 .is-selected .model-label { color: var(--tennis); background: var(--navy-900); }
 .result-label { display: inline-block; margin-left: .3rem; padding: .08rem .2rem; border-radius: 3px; color: #071b16; background: #92f2bd; font-size: .38rem; font-weight: 950; letter-spacing: .04em; vertical-align: .08rem; }
 .result-label.is-wrong { color: #2b0c11; background: #ff9da9; }

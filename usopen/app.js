@@ -2,6 +2,7 @@ import {
   buildPlayerIndex,
   mergeResults,
   parseCompletedResults,
+  parsePlayerNextMatches,
   resolveRoundOnePlaceholders,
 } from "./live-results-core.js";
 
@@ -28,6 +29,7 @@ const MIN_BRACKET_ZOOM = 0.15;
 const MAX_BRACKET_ZOOM = 1.5;
 const BRACKET_ZOOM_STEP = 0.1;
 const LIVE_RESULTS_REFRESH_MS = 30000;
+const PLAYER_COUNTDOWN_REFRESH_MS = 1000;
 const LIVE_RESULT_FEEDS = [
   {
     division: "men",
@@ -44,6 +46,7 @@ const LIVE_RESULT_FEEDS = [
 const state = {
   data: { men: null, women: null },
   results: { men: {}, women: {} },
+  nextMatches: { men: {}, women: {} },
   resultsUpdatedAt: "",
   liveFeedConnected: false,
   liveFeedChecked: false,
@@ -118,6 +121,7 @@ async function fetchDirectLiveResults() {
   }));
 
   const liveResults = [];
+  const nextMatches = { men: state.nextMatches.men, women: state.nextMatches.women };
   let connectedFeeds = 0;
   for (const response of responses) {
     if (response.status !== "fulfilled") {
@@ -128,21 +132,34 @@ async function fetchDirectLiveResults() {
     const { division, groupingSlug, payload } = response.value;
     const resolved = resolveRoundOnePlaceholders(state.data[division], payload, { groupingSlug });
     state.data[division] = resolved.draw;
+    const playerIndex = buildPlayerIndex(resolved.draw);
     const parsed = parseCompletedResults(payload, {
       division,
       groupingSlug,
-      playerIndex: buildPlayerIndex(resolved.draw),
+      playerIndex,
       observedAt,
     });
+    const schedules = parsePlayerNextMatches(payload, {
+      division,
+      groupingSlug,
+      playerIndex,
+      observedAt,
+    });
+    nextMatches[division] = schedules.matches;
     liveResults.push(...parsed.results);
     if (parsed.skipped.length) console.warn(`Skipped ${parsed.skipped.length} unmapped ${division} result(s).`);
+    if (schedules.skipped.length) console.warn(`Skipped ${schedules.skipped.length} unmapped ${division} schedule entry(s).`);
   }
 
   if (!connectedFeeds) throw new Error("All live result feeds are unavailable");
+  const stableSchedule = (key, value) => key === "observedAt" ? undefined : value;
+  const scheduleChanged = JSON.stringify(state.nextMatches, stableSchedule) !== JSON.stringify(nextMatches, stableSchedule);
+  state.nextMatches = nextMatches;
   return {
     tournament: "2026 US Open",
     updatedAt: observedAt,
     results: mergeResults(installedResults(), liveResults),
+    scheduleChanged,
   };
 }
 
@@ -186,7 +203,8 @@ async function loadSavedResults() {
 async function refreshLiveResults({ repaint = false } = {}) {
   let changed = false;
   try {
-    changed = installResultsDocument(await fetchDirectLiveResults()) || changed;
+    const liveDocument = await fetchDirectLiveResults();
+    changed = installResultsDocument(liveDocument) || liveDocument.scheduleChanged || changed;
     state.liveFeedConnected = true;
   } catch (error) {
     console.warn(error);
@@ -1048,6 +1066,48 @@ function shortPlayerName(player) {
   return pieces.length > 1 ? pieces.at(-1) : player.name;
 }
 
+function nextMatchForPlayer(division, drawPosition) {
+  return state.nextMatches[division]?.[drawPosition] || null;
+}
+
+function playerIsEliminated(division, drawPosition) {
+  return Object.values(state.results[division] || {}).some((result) => (
+    Number(result.loserDrawPosition) === Number(drawPosition)
+  ));
+}
+
+function playerCountdownText(match, now = Date.now()) {
+  if (!match) return "NEXT · TIME TBD";
+  if (match.statusState === "in") return "LIVE NOW";
+  if (!match.timeValid) return "NEXT · TIME TBD";
+
+  const remaining = Date.parse(match.startAt) - now;
+  if (!Number.isFinite(remaining) || remaining <= 0) return "STARTING SOON";
+  const totalSeconds = Math.floor(remaining / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  const clock = [hours, minutes, seconds].map((value) => String(value).padStart(2, "0")).join(":");
+  return days > 0 ? `NEXT · ${days}D ${clock}` : `NEXT · ${clock}`;
+}
+
+function updatePlayerCountdowns() {
+  const now = Date.now();
+  $$(".player-countdown").forEach((countdown) => {
+    const match = countdown.dataset.hasSchedule === "true"
+      ? {
+          startAt: countdown.dataset.startAt,
+          timeValid: countdown.dataset.timeValid === "true",
+          statusState: countdown.dataset.statusState,
+        }
+      : null;
+    countdown.textContent = playerCountdownText(match, now);
+    countdown.classList.toggle("is-live", match?.statusState === "in");
+    countdown.classList.toggle("is-tbd", !match || !match.timeValid);
+  });
+}
+
 function makePlayerButton({
   player,
   selectedPosition,
@@ -1080,6 +1140,8 @@ function makePlayerButton({
   const isOfficialLoser = Number(result?.loserDrawPosition) === player.drawPosition;
   const isSelectedCorrect = Boolean(result) && isSelected && isOfficialWinner;
   const isSelectedWrong = Boolean(result) && isSelected && !isOfficialWinner;
+  const nextMatch = nextMatchForPlayer(division, player.drawPosition);
+  const isEliminated = playerIsEliminated(division, player.drawPosition);
 
   const copy = document.createElement("span");
   copy.className = "player-copy";
@@ -1106,15 +1168,18 @@ function makePlayerButton({
   }
   const entry = document.createElement("span");
   entry.className = "entry-note";
-  entry.textContent = isSelectedCorrect
-    ? "YOUR PICK · CORRECT"
-    : isSelectedWrong
-      ? "YOUR PICK · WRONG"
-      : isOfficialWinner
-        ? "FINAL · ADVANCES"
-        : isOfficialLoser
-          ? "FINAL · ELIMINATED"
-          : player.countryCode || (player.entryType === "tbd" ? "QUALIFIER TBD" : "ENTRY");
+  if (isEliminated) {
+    entry.textContent = "ELIMINATED";
+  } else {
+    entry.classList.add("player-countdown");
+    entry.dataset.hasSchedule = String(Boolean(nextMatch));
+    entry.dataset.startAt = nextMatch?.startAt || "";
+    entry.dataset.timeValid = String(nextMatch?.timeValid === true);
+    entry.dataset.statusState = nextMatch?.statusState || "";
+    entry.textContent = playerCountdownText(nextMatch);
+    const scheduledTime = nextMatch?.timeValid ? new Date(nextMatch.startAt).toLocaleString() : "Time to be announced";
+    entry.title = nextMatch?.venue ? `${scheduledTime} · ${nextMatch.venue}` : scheduledTime;
+  }
   copy.append(name, entry);
 
   const chance = document.createElement("span");
@@ -1135,7 +1200,7 @@ function makePlayerButton({
   button.classList.toggle("is-pick-wrong", isSelectedWrong);
   button.setAttribute(
     "aria-label",
-    `${isSelected ? "Selected: " : "Pick "}${player.seed ? `seed ${player.seed} ` : ""}${player.name}${isSelectedCorrect ? ", correct pick" : isSelectedWrong ? ", wrong pick" : ""}${probability == null ? "" : `, ${probability} percent projected win chance, worth ${points} ${points === 1 ? "point" : "points"} if correct`}`,
+    `${isSelected ? "Selected: " : "Pick "}${player.seed ? `seed ${player.seed} ` : ""}${player.name}${isSelectedCorrect ? ", correct pick" : isSelectedWrong ? ", wrong pick" : ""}, ${isEliminated ? "eliminated" : playerCountdownText(nextMatch).toLowerCase()}${probability == null ? "" : `, ${probability} percent projected win chance, worth ${points} ${points === 1 ? "point" : "points"} if correct`}`,
   );
   button.title = probability == null
     ? "Complete both sides of this matchup first"
@@ -1247,6 +1312,7 @@ function renderBracket() {
 
   renderProgress();
   renderRoundJumps();
+  updatePlayerCountdowns();
 }
 
 function renderProgress() {
@@ -1627,6 +1693,7 @@ async function initialize() {
   bindEvents();
   updateCountdown();
   setInterval(updateCountdown, 60000);
+  setInterval(updatePlayerCountdowns, PLAYER_COUNTDOWN_REFRESH_MS);
   setInterval(() => refreshLiveResults({ repaint: true }), LIVE_RESULTS_REFRESH_MS);
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState === "visible" && state.data.men && state.data.women) {

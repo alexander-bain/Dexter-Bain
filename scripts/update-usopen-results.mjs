@@ -8,6 +8,7 @@ import {
   mergeResults,
   normalizePlayerName,
   parseCompletedResults,
+  parsePlayerNextMatches,
   resolveRoundOnePlaceholders,
 } from "../usopen/live-results-core.js";
 
@@ -16,6 +17,7 @@ export {
   mergeResults,
   normalizePlayerName,
   parseCompletedResults,
+  parsePlayerNextMatches,
   resolveRoundOnePlaceholders,
 };
 
