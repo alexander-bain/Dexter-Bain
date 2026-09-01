@@ -9,7 +9,7 @@
       content="Pick every winner in the verified 2026 US Open men's and women's singles draws."
     />
     <title>2026 US Open Prediction Bracket | DexterBain.com</title>
-    <link rel="stylesheet" href="./styles.css?v=20260830-live-results" />
+    <link rel="stylesheet" href="./styles.css?v=20260831-pool-simulator" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -214,6 +214,20 @@
           <p>Men's and women's brackets have separate standings. If you chose both draws, each finished draw appears as soon as it is complete.</p>
         </div>
         <p class="live-results-status" id="live-results-status" role="status">Checking completed matches…</p>
+        <section class="pool-forecast" aria-labelledby="pool-forecast-title">
+          <div class="pool-forecast-heading">
+            <div>
+              <span>Live simulation lab</span>
+              <h3 id="pool-forecast-title">Who will win the pool?</h3>
+            </div>
+            <p>Thousands of possible tournament finishes estimate every bracket's chance to take first.</p>
+          </div>
+          <div class="pool-forecast-grid" id="pool-forecast-grid">
+            <div class="leaderboard-empty"><strong>Running pool simulations…</strong><span>Using real brackets and completed matches.</span></div>
+          </div>
+          <p class="pool-forecast-status" id="pool-forecast-status" role="status">Preparing live forecasts…</p>
+          <p class="pool-forecast-note">Model estimates only—not betting odds or a guarantee.</p>
+        </section>
         <section class="pick-finder" aria-labelledby="pick-finder-title">
           <div class="pick-finder-heading">
             <div>
@@ -325,6 +339,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <noscript>This bracket requires JavaScript to load the verified draw and record your picks.</noscript>
-    <script type="module" src="./app.js?v=20260831-player-countdowns"></script>
+    <script type="module" src="./app.js?v=20260831-pool-simulator"></script>
   </body>
 </html>

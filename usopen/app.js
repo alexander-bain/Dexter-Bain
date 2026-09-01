@@ -5,19 +5,15 @@ import {
   parsePlayerNextMatches,
   resolveRoundOnePlaceholders,
 } from "./live-results-core.js";
-
-const ROUND_NAMES = [
-  "Round of 128",
-  "Round of 64",
-  "Round of 32",
-  "Round of 16",
-  "Quarterfinals",
-  "Semifinals",
-  "Final",
-];
+import {
+  ROUND_NAMES,
+  ROUND_POINTS,
+  potentialPointsForPick as potentialPoints,
+  projectionForPlayers as projectionFor,
+  simulateDivisionPool,
+} from "./pool-simulator-core.js";
 
 const ROUND_SHORT_NAMES = ["R128", "R64", "R32", "R16", "QF", "SF", "Final"];
-const ROUND_POINTS = [1, 2, 4, 8, 16, 32, 64];
 const LOCK_AT = new Date("2026-08-30T15:00:00Z");
 const STORAGE_KEY = "dexter-usopen-2026-bracket-v1";
 const CLOUD_API_URL = "https://open-bracket-storage.dexterhbain.chatgpt.site";
@@ -30,6 +26,7 @@ const MAX_BRACKET_ZOOM = 1.5;
 const BRACKET_ZOOM_STEP = 0.1;
 const LIVE_RESULTS_REFRESH_MS = 30000;
 const PLAYER_COUNTDOWN_REFRESH_MS = 1000;
+const POOL_SIMULATION_ITERATIONS = 4000;
 const LIVE_RESULT_FEEDS = [
   {
     division: "men",
@@ -274,38 +271,6 @@ function normalizePicks(division, picks) {
     }
   }
   return picks;
-}
-
-function ratingForPlayer(player) {
-  if (!player) return null;
-  if (player.seed) return 1900 - 55 * Math.log2(Number(player.seed));
-  const entryRatings = {
-    direct: 1500,
-    wildcard: 1475,
-    tbd: 1450,
-  };
-  return entryRatings[player.entryType] || 1500;
-}
-
-function projectionFor(players) {
-  if (!players[0] || !players[1]) return null;
-  const firstRating = ratingForPlayer(players[0]);
-  const secondRating = ratingForPlayer(players[1]);
-  const rawFirst = 100 / (1 + 10 ** ((secondRating - firstRating) / 400));
-  const first = Math.round(Math.min(95, Math.max(5, rawFirst)));
-  return [first, 100 - first];
-}
-
-function upsetMultiplier(probability) {
-  if (probability >= 45) return 1;
-  if (probability >= 35) return 1.5;
-  if (probability >= 25) return 2;
-  if (probability >= 15) return 3;
-  return 4;
-}
-
-function potentialPoints(round, probability) {
-  return Math.round(ROUND_POINTS[round - 1] * upsetMultiplier(probability));
 }
 
 function numberOfPicks(division) {
@@ -832,6 +797,142 @@ function leaderboardRow(entry, index) {
   return row;
 }
 
+function poolForecastSeed(scope, entries) {
+  const winners = Object.values(state.results[scope] || {}).map((result) => [
+    result.round,
+    result.matchIndex,
+    result.winnerDrawPosition,
+  ]);
+  return JSON.stringify({
+    scope,
+    winners,
+    entries: entries.map((entry) => [entry.shareHash, entry.completedAt]),
+  });
+}
+
+function forecastChanceLabel(chance) {
+  if (chance > 0 && chance < 0.1) return "<0.1%";
+  return `${chance >= 10 ? chance.toFixed(0) : chance.toFixed(1)}%`;
+}
+
+function forecastEntryRow(forecast, index, totalEntries) {
+  const row = document.createElement("article");
+  row.className = "pool-forecast-row";
+
+  const place = document.createElement("span");
+  place.className = "pool-forecast-place";
+  place.textContent = `#${index + 1}`;
+
+  const identity = document.createElement("div");
+  identity.className = "pool-forecast-identity";
+  const title = document.createElement("a");
+  title.href = publicBracketUrl(forecast.entry);
+  title.target = "_blank";
+  title.rel = "noopener";
+  title.textContent = forecast.entry.title;
+  const maker = document.createElement("span");
+  maker.textContent = `by ${forecast.entry.displayName}`;
+  identity.append(title, maker);
+
+  const chance = document.createElement("div");
+  chance.className = "pool-forecast-chance";
+  const chanceValue = document.createElement("strong");
+  const chanceLabel = document.createElement("span");
+  chanceValue.textContent = forecastChanceLabel(forecast.winChance);
+  chanceLabel.textContent = "chance to win";
+  chance.append(chanceValue, chanceLabel);
+
+  const numbers = document.createElement("div");
+  numbers.className = "pool-forecast-numbers";
+  const finish = document.createElement("span");
+  const projected = document.createElement("span");
+  const maximum = document.createElement("span");
+  finish.innerHTML = `<strong>#${forecast.averageFinish.toFixed(1)}</strong> average finish`;
+  projected.innerHTML = `<strong>${Math.round(forecast.projectedPoints).toLocaleString()}</strong> projected pts`;
+  maximum.innerHTML = `<strong>${forecast.maxPossiblePoints.toLocaleString()}</strong> maximum pts`;
+  numbers.append(finish, projected, maximum);
+
+  const path = document.createElement("p");
+  path.className = "pool-forecast-path";
+  if (forecast.maxPossiblePoints <= forecast.currentPoints) {
+    path.textContent = "No remaining picks can add points.";
+  } else if (forecast.bestPath) {
+    path.textContent = `Best path: ${forecast.bestPath.playerName} wins ${forecast.bestPath.roundName} · ${forecast.bestPath.support}/${totalEntries} picked it.`;
+  } else {
+    path.textContent = "Best path depends on shared remaining picks.";
+  }
+
+  row.append(place, identity, chance, numbers, path);
+  return row;
+}
+
+function poolForecastCard(scope, entries) {
+  const card = document.createElement("article");
+  card.className = "pool-forecast-card";
+
+  const heading = document.createElement("div");
+  heading.className = "pool-forecast-card-heading";
+  const headingCopy = document.createElement("div");
+  const kicker = document.createElement("span");
+  const title = document.createElement("h4");
+  kicker.textContent = scopeLabel(scope);
+  title.textContent = `${scope === "men" ? "Men's" : "Women's"} pool forecast`;
+  headingCopy.append(kicker, title);
+  const badge = document.createElement("strong");
+  badge.textContent = `${POOL_SIMULATION_ITERATIONS.toLocaleString()} simulations`;
+  heading.append(headingCopy, badge);
+  card.append(heading);
+
+  if (!entries.length) {
+    const empty = document.createElement("p");
+    empty.className = "pool-forecast-empty";
+    empty.textContent = `No completed ${scopeLabel(scope).toLowerCase()} brackets to simulate yet.`;
+    card.append(empty);
+    return card;
+  }
+
+  const simulation = simulateDivisionPool({
+    entries,
+    players: state.data[scope]?.players || [],
+    results: Object.values(state.results[scope] || {}),
+    iterations: POOL_SIMULATION_ITERATIONS,
+    seed: poolForecastSeed(scope, entries),
+  });
+
+  if (simulation.importantMatch) {
+    const swing = document.createElement("div");
+    swing.className = "pool-swing-match";
+    const label = document.createElement("span");
+    const matchup = document.createElement("strong");
+    const detail = document.createElement("small");
+    const [first, second] = simulation.importantMatch.players;
+    const schedule = nextMatchForPlayer(scope, first.drawPosition) || nextMatchForPlayer(scope, second.drawPosition);
+    label.textContent = "Biggest swing match";
+    matchup.textContent = `${first.name} vs ${second.name}`;
+    detail.textContent = `${first.support} need ${first.name} · ${second.support} need ${second.name} · ${simulation.importantMatch.roundName}${schedule ? ` · ${playerCountdownText(schedule)}` : ""}`;
+    swing.append(label, matchup, detail);
+    card.append(swing);
+  }
+
+  const list = document.createElement("div");
+  list.className = "pool-forecast-list";
+  simulation.forecasts.forEach((forecast, index) => {
+    list.append(forecastEntryRow(forecast, index, entries.length));
+  });
+  card.append(list);
+  return card;
+}
+
+function renderPoolForecast(entries) {
+  const grid = $("#pool-forecast-grid");
+  if (!grid) return;
+  grid.replaceChildren(
+    poolForecastCard("men", entries.filter((entry) => entry.scope === "men")),
+    poolForecastCard("women", entries.filter((entry) => entry.scope === "women")),
+  );
+  $("#pool-forecast-status").textContent = "Forecasts recalculate after every live results check. Tied first-place simulations are split evenly.";
+}
+
 function pickFinderPlayers() {
   return ["men", "women"].flatMap((division) => (
     (state.data[division]?.players || []).map((player) => ({ ...player, division }))
@@ -1020,6 +1121,7 @@ function renderPublicLists(entries) {
   const status = `${menEntries.length} men's bracket${menEntries.length === 1 ? "" : "s"} · ${womenEntries.length} women's bracket${womenEntries.length === 1 ? "" : "s"}. ${rankingCopy} Combined entries are split into one bracket per draw.`;
   $("#leaderboard-status").textContent = status;
   $("#directory-status").textContent = status;
+  renderPoolForecast(entries);
   renderPickFinder();
 }
 
@@ -1031,6 +1133,7 @@ function renderPublicListError() {
   $("#directory-status").textContent = message;
   $("#leaderboard-men-body").replaceChildren(emptyList("Leaderboard temporarily unavailable.", "Open this page again to retry."));
   $("#leaderboard-women-body").replaceChildren(emptyList("Leaderboard temporarily unavailable.", "Open this page again to retry."));
+  $("#pool-forecast-grid")?.replaceChildren(emptyList("Pool forecast temporarily unavailable.", "Open this page again to retry."));
   $("#public-bracket-list").replaceChildren(emptyList("Public brackets temporarily unavailable.", "Open this page again to retry."));
   renderPickFinder();
 }

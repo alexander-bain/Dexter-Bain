@@ -432,6 +432,41 @@ fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .pick-finder-pick strong.is-loss { color: #2b0c11; background: #ff9da9; }
 .pick-finder-pick span { color: #d7e2f2; font-size: .7rem; line-height: 1.45; }
 
+.pool-forecast { margin-bottom: 2rem; padding: clamp(1.1rem, 3vw, 1.6rem); border: 1px solid rgba(128,181,255,.28); border-radius: 18px; background: linear-gradient(145deg, rgba(13,35,66,.9), rgba(8,25,48,.78)); }
+.pool-forecast-heading, .pool-forecast-card-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; }
+.pool-forecast-heading { margin-bottom: 1.1rem; }
+.pool-forecast-heading span, .pool-forecast-card-heading span { color: var(--tennis); font-size: .63rem; font-weight: 900; letter-spacing: .09em; text-transform: uppercase; }
+.pool-forecast-heading h3, .pool-forecast-card-heading h4 { margin: .25rem 0 0; }
+.pool-forecast-heading h3 { font-size: 1.65rem; }
+.pool-forecast-heading p { max-width: 520px; margin: 0; color: var(--muted); font-size: .73rem; line-height: 1.5; text-align: right; }
+.pool-forecast-grid { display: grid; gap: 1rem; }
+.pool-forecast-card { overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: rgba(4,16,34,.68); }
+.pool-forecast-card-heading { padding: 1rem 1.1rem; border-bottom: 1px solid var(--line); background: rgba(17,45,82,.55); }
+.pool-forecast-card-heading h4 { font-size: 1.15rem; }
+.pool-forecast-card-heading > strong { padding: .4rem .65rem; border: 1px solid rgba(217,255,71,.25); border-radius: 999px; color: var(--tennis); background: rgba(217,255,71,.06); font-size: .63rem; }
+.pool-swing-match { display: grid; grid-template-columns: 150px minmax(180px, .7fr) minmax(280px, 1.3fr); align-items: center; gap: 1rem; padding: .85rem 1.1rem; border-bottom: 1px solid var(--line); background: rgba(255,180,84,.06); }
+.pool-swing-match span { color: #ffb454; font-size: .6rem; font-weight: 900; letter-spacing: .07em; text-transform: uppercase; }
+.pool-swing-match strong { font-size: .82rem; }
+.pool-swing-match small { color: #d7e2f2; font-size: .67rem; line-height: 1.45; }
+.pool-forecast-list { display: grid; }
+.pool-forecast-row { display: grid; grid-template-columns: 42px minmax(170px, .75fr) 100px minmax(330px, 1.25fr); align-items: center; gap: .85rem; padding: .85rem 1.1rem; border-bottom: 1px solid var(--line); }
+.pool-forecast-row:last-child { border-bottom: 0; }
+.pool-forecast-place { color: var(--tennis); font-family: Georgia, serif; font-size: 1.2rem; }
+.pool-forecast-identity a, .pool-forecast-identity span { display: block; }
+.pool-forecast-identity a { color: var(--white); font-size: .78rem; font-weight: 850; text-decoration: none; }
+.pool-forecast-identity a:hover { color: var(--tennis); text-decoration: underline; text-underline-offset: .18em; }
+.pool-forecast-identity span { margin-top: .18rem; color: var(--muted); font-size: .62rem; }
+.pool-forecast-chance strong, .pool-forecast-chance span { display: block; }
+.pool-forecast-chance strong { color: var(--tennis); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.pool-forecast-chance span { margin-top: .1rem; color: var(--muted); font-size: .55rem; text-transform: uppercase; }
+.pool-forecast-numbers { display: grid; grid-template-columns: repeat(3, minmax(90px, 1fr)); gap: .55rem; }
+.pool-forecast-numbers span { color: var(--muted); font-size: .58rem; line-height: 1.35; }
+.pool-forecast-numbers strong { display: block; color: #d7e2f2; font-size: .77rem; font-variant-numeric: tabular-nums; }
+.pool-forecast-path { grid-column: 2 / -1; margin: -.25rem 0 0; color: #9fb7d8; font-size: .63rem; line-height: 1.45; }
+.pool-forecast-empty { margin: 0; padding: 1.5rem 1.1rem; color: var(--muted); font-size: .72rem; }
+.pool-forecast-status, .pool-forecast-note { margin: .75rem 0 0; color: var(--muted); font-size: .64rem; line-height: 1.45; }
+.pool-forecast-note { margin-top: .2rem; color: #8195b1; }
+
 .leaderboard-divisions { display: grid; gap: 2rem; }
 .live-results-status { margin: -1rem 0 1.25rem; padding: .85rem 1rem; border: 1px solid rgba(146,242,189,.32); border-radius: 12px; color: #d7e2f2; background: rgba(10,42,47,.45); font-size: .72rem; line-height: 1.5; }
 .leaderboard-division { display: grid; gap: .75rem; }
@@ -505,6 +540,8 @@ noscript { display: block; padding: 1rem; color: #271800; background: #ffd87d; t
   .leaderboard-shell { overflow-x: auto; }
   .leaderboard-head, .leaderboard-body { min-width: 760px; }
   .pick-finder-result { grid-template-columns: minmax(170px, .65fr) minmax(250px, 1.35fr) 110px; }
+  .pool-forecast-row { grid-template-columns: 38px minmax(150px, .75fr) 90px minmax(280px, 1.25fr); gap: .65rem; }
+  .pool-swing-match { grid-template-columns: 125px minmax(160px, .75fr) minmax(240px, 1.25fr); gap: .7rem; }
   .scoring-card { grid-template-columns: 1fr; gap: 1rem; }
   .projection-panel { grid-template-columns: 1fr; gap: 1rem; }
   .bracket-totals { width: 100%; }
@@ -543,6 +580,13 @@ noscript { display: block; padding: 1rem; color: #271800; background: #ffd87d; t
   .pick-finder-controls { grid-template-columns: 1fr; }
   .pick-finder-result { grid-template-columns: 1fr; gap: .7rem; }
   .pick-finder-result .leaderboard-view { width: fit-content; }
+  .pool-forecast-heading, .pool-forecast-card-heading { align-items: flex-start; flex-direction: column; }
+  .pool-forecast-heading p { text-align: left; }
+  .pool-swing-match { grid-template-columns: 1fr; gap: .3rem; }
+  .pool-forecast-row { grid-template-columns: 34px minmax(0, 1fr) auto; gap: .5rem .7rem; }
+  .pool-forecast-chance { text-align: right; }
+  .pool-forecast-numbers, .pool-forecast-path { grid-column: 2 / -1; }
+  .pool-forecast-numbers { grid-template-columns: repeat(3, 1fr); }
   .leaderboard-division-heading { align-items: flex-start; flex-direction: column; gap: .35rem; }
   .leaderboard-head { display: none; }
   .leaderboard-body { min-width: 0; }
