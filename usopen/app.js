@@ -1149,12 +1149,16 @@ async function refreshPublicLists(force = false) {
   renderPickFinder();
   if (force) publicEntriesPromise = null;
   if (!publicEntriesPromise) publicEntriesPromise = fetchPublicBracketEntries();
+  const request = publicEntriesPromise;
   try {
-    renderPublicLists(await publicEntriesPromise);
+    const entries = await request;
+    if (publicEntriesPromise !== request) return;
+    renderPublicLists(entries);
   } catch (error) {
     console.warn(error);
-    publicEntriesPromise = null;
-    renderPublicListError();
+    if (publicEntriesPromise === request) renderPublicListError();
+  } finally {
+    if (publicEntriesPromise === request) publicEntriesPromise = null;
   }
 }
 
