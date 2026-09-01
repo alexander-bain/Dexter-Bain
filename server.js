@@ -2164,9 +2164,15 @@ app.get("/api/minigames/custom", async (req, res) => {
 
 app.post("/api/minigames/custom", async (req, res) => {
   const payload = cleanCustomGamePayload(req.body);
+  const questionIds = payload.questions.map((question) => question.id);
 
   if (!payload.name || payload.questions.length < 5) {
     res.status(400).json({ error: "Custom games need a name and at least 5 complete questions" });
+    return;
+  }
+
+  if (new Set(questionIds).size !== questionIds.length) {
+    res.status(400).json({ error: "Custom game questions need unique ids" });
     return;
   }
 
