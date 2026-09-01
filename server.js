@@ -367,14 +367,19 @@ async function writeMinigamesData(data) {
   }
 
   if (minigamesDataUrl) {
+    let remoteWriteError = null;
     try {
       await writeRemoteMinigamesData(data);
     } catch (err) {
-      console.warn("Minigames remote store write failed; using local backup:", err);
+      remoteWriteError = err;
+      console.warn("Minigames remote store write failed; preserving local backup:", err);
     }
     await writeLocalMinigamesData(data).catch((err) => {
       console.warn("Minigames local backup write failed:", err);
     });
+    if (remoteWriteError) {
+      throw remoteWriteError;
+    }
     return;
   }
 
