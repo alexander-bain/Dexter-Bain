@@ -5415,6 +5415,7 @@
         if (input) input.checked = true;
       });
       captureDraftPicks(game);
+      formEl.scrollIntoView({ block: "start" });
       showToast("Random picks filled in. Change any you disagree with, then lock them.");
     });
 
