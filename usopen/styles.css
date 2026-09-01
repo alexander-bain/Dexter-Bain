@@ -287,6 +287,8 @@ fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .projection-panel { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 2rem; margin: 1rem 0; padding: 1.1rem 1.25rem; border: 1px solid var(--line); border-radius: 14px; background: linear-gradient(115deg, rgba(63,140,255,.12), rgba(217,255,71,.05)); }
 .projection-panel h4 { margin: .2rem 0 .3rem; font-size: 1.1rem; }
 .projection-panel p { max-width: 700px; margin: 0; color: var(--muted); font-size: .78rem; line-height: 1.5; }
+.projection-panel .importance-explainer { margin-top: .45rem; color: #c4d2e6; }
+.projection-panel .importance-explainer strong { color: var(--tennis); }
 .projection-panel .projection-kicker { color: var(--tennis); font-size: .65rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
 .bracket-totals { display: grid; grid-template-columns: repeat(2, minmax(110px, 1fr)); gap: .55rem; }
 .bracket-totals span { padding: .65rem .8rem; border: 1px solid var(--line); border-radius: 10px; color: var(--muted); background: rgba(4,16,34,.55); font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
@@ -333,8 +335,12 @@ fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .connector-branch { position: absolute; left: calc(100% + 20px); z-index: 1; width: 20px; pointer-events: none; }
 .match-card.is-upper .connector-branch { top: 50%; height: var(--half-step); border-bottom: 1px solid rgba(128,181,255,.46); border-left: 1px solid rgba(128,181,255,.46); }
 .match-card.is-lower .connector-branch { bottom: 50%; height: var(--half-step); border-left: 1px solid rgba(128,181,255,.46); }
-.match-card-header { display: flex; height: 22px; align-items: center; justify-content: space-between; gap: .5rem; padding: 0 .55rem; border-bottom: 1px solid var(--line); color: #7387a6; background: rgba(255,255,255,.025); font-size: .53rem; letter-spacing: .04em; text-transform: uppercase; }
-.match-card-header strong { min-width: 0; overflow: hidden; color: #9fb0c8; font-size: .52rem; text-overflow: ellipsis; white-space: nowrap; }
+.match-card-header { display: grid; height: 22px; grid-template-columns: auto auto minmax(0, 1fr); align-items: center; gap: .34rem; padding: 0 .45rem; border-bottom: 1px solid var(--line); color: #7387a6; background: rgba(255,255,255,.025); font-size: .53rem; letter-spacing: .04em; text-transform: uppercase; }
+.match-card-header strong { min-width: 0; overflow: hidden; color: #9fb0c8; font-size: .52rem; text-align: right; text-overflow: ellipsis; white-space: nowrap; }
+.match-card-number { white-space: nowrap; }
+.match-importance { display: inline-grid; min-width: 31px; height: 16px; place-items: center; padding: 0 .22rem; border: 1px solid rgba(128,181,255,.4); border-radius: 999px; color: #b9cae2; background: rgba(128,181,255,.1); font-size: .45rem; font-weight: 950; letter-spacing: 0; line-height: 1; white-space: nowrap; }
+.match-importance.is-medium { border-color: rgba(255,202,114,.6); color: #ffca72; background: rgba(255,180,84,.1); }
+.match-importance.is-high { border-color: rgba(217,255,71,.7); color: var(--tennis); background: rgba(217,255,71,.12); box-shadow: 0 0 0 2px rgba(217,255,71,.05); }
 .player-options { min-width: 0; }
 .player-button { display: grid; width: 100%; height: 36px; grid-template-columns: minmax(0, 1fr) 38px 34px; align-items: center; gap: .3rem; padding: .18rem .38rem .18rem .5rem; border: 0; color: var(--white); background: transparent; text-align: left; cursor: pointer; }
 .player-button + .player-button { border-top: 1px solid var(--line); }

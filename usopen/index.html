@@ -9,7 +9,7 @@
       content="Pick every winner in the verified 2026 US Open men's and women's singles draws."
     />
     <title>2026 US Open Prediction Bracket | DexterBain.com</title>
-    <link rel="stylesheet" href="./styles.css?v=20260831-live-totals" />
+    <link rel="stylesheet" href="./styles.css?v=20260901-match-importance" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -134,6 +134,7 @@
               <p class="projection-kicker">Open Bracket projection model</p>
               <h4>Seed strength predicts each matchup</h4>
               <p>Percentages use tournament seed and entry status. They are a transparent game projection—not betting odds or a guarantee.</p>
+              <p class="importance-explainer"><strong>Importance 1–10:</strong> compares your place, picks ahead of you, score gaps, and points at stake. A 1 cannot move you past the leaders; a 10 can reshape the pool.</p>
             </div>
             <div class="bracket-totals" aria-label="Bracket totals">
               <span>Current bracket value<strong id="potential-points">0 pts</strong></span>
@@ -146,6 +147,7 @@
             <span><i class="key-dot upset-dot"></i> Upset bonus</span>
             <span><strong>%</strong> projected win chance</span>
             <span><strong>+pts</strong> value if correct</span>
+            <span><strong>1–10</strong> pool importance</span>
           </div>
 
           <div class="bracket-tools">
@@ -339,6 +341,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <noscript>This bracket requires JavaScript to load the verified draw and record your picks.</noscript>
-    <script type="module" src="./app.js?v=20260901-fresh-leaderboard"></script>
+    <script type="module" src="./app.js?v=20260901-match-importance"></script>
   </body>
 </html>

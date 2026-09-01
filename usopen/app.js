@@ -12,6 +12,7 @@ import {
   projectionForPlayers as projectionFor,
   simulateDivisionPool,
 } from "./pool-simulator-core.js?v=20260831-score-order";
+import { rateMatchImportance } from "./match-importance-core.js?v=20260901-pool-leverage";
 
 const ROUND_SHORT_NAMES = ["R128", "R64", "R32", "R16", "QF", "SF", "Final"];
 const LOCK_AT = new Date("2026-08-30T15:00:00Z");
@@ -67,6 +68,9 @@ let cloudSyncPromise;
 let publicEntriesPromise;
 let publicBracketEntries = [];
 let publicEntriesLoaded = false;
+let matchImportanceEntries = [];
+let matchImportanceEntriesLoaded = false;
+let matchImportanceEntriesPromise;
 let bracketZoom = 1;
 
 function officialResult(division, round, matchIndex) {
@@ -355,6 +359,83 @@ function rankedEntries(entries) {
       || second.possiblePoints - first.possiblePoints
       || new Date(first.completedAt).getTime() - new Date(second.completedAt).getTime()
   ));
+}
+
+function sameBracketPicks(first = {}, second = {}) {
+  for (let round = 1; round <= 7; round += 1) {
+    for (let matchIndex = 1; matchIndex <= matchCount(round); matchIndex += 1) {
+      const key = pickKey(round, matchIndex);
+      if (Number(first[key]) !== Number(second[key])) return false;
+    }
+  }
+  return true;
+}
+
+function matchImportanceContext(division) {
+  const currentPicks = state.picks[division] || {};
+  const otherEntries = matchImportanceEntries.filter((entry) => {
+    if (entry.scope !== division) return false;
+    if (state.entryId && entry.entryId === state.entryId) return false;
+    return !(
+      entry.displayName === state.meta.displayName
+      && entry.title === state.meta.title
+      && sameBracketPicks(entry.picks, currentPicks)
+    );
+  });
+  const stats = bracketStatsForDivision(division, currentPicks);
+  const current = {
+    importanceId: "current-bracket",
+    displayName: state.meta.displayName,
+    title: state.meta.title,
+    scope: division,
+    picks: currentPicks,
+    possiblePoints: stats.points,
+    upsetPicks: stats.upsets,
+    completedAt: state.divisionCompletedAt[division] || state.completedAt || new Date().toISOString(),
+  };
+  return {
+    currentEntryId: current.importanceId,
+    entries: rankedEntries([...otherEntries, current]).map((entry, index) => ({
+      ...entry,
+      importanceId: entry.importanceId || entry.entryId || entry.shareHash || `pool-entry-${index}`,
+    })),
+  };
+}
+
+function pointsForEntryMatch(entry, division, round, matchIndex) {
+  const key = pickKey(round, matchIndex);
+  const selectedPosition = Number(entry.picks?.[key]);
+  if (!selectedPosition) return 0;
+  const players = participantsFor(division, round, matchIndex, entry.picks);
+  const projection = projectionFor(players);
+  const selectedIndex = players.findIndex((player) => player?.drawPosition === selectedPosition);
+  const probability = projection?.[selectedIndex];
+  return probability == null ? ROUND_POINTS[round - 1] : potentialPoints(round, probability);
+}
+
+function matchImportanceFor(division, round, matchIndex, context) {
+  if (!matchImportanceEntriesLoaded) {
+    return {
+      rating: 1,
+      reason: "Loading the other completed brackets for this pool comparison.",
+    };
+  }
+  const key = pickKey(round, matchIndex);
+  const selectedPosition = Number(state.picks[division]?.[key]);
+  const entries = context.entries.map((entry) => ({
+    id: entry.importanceId,
+    points: entry.liveScore.points,
+    pick: Number(entry.picks?.[key]),
+    pickPoints: pointsForEntryMatch(entry, division, round, matchIndex),
+  }));
+  return rateMatchImportance({
+    entries,
+    currentEntryId: context.currentEntryId,
+    selectedPosition,
+    selectedPoints: pointsForEntryMatch({ picks: state.picks[division] }, division, round, matchIndex),
+    round,
+    resolved: Boolean(officialResult(division, round, matchIndex)),
+  });
 }
 
 function stableHash(value) {
@@ -694,6 +775,7 @@ function splitCloudBracket(row, data) {
       d: { [division[0]]: data.share.d?.[division[0]] || "" },
     };
     return {
+      entryId: String(data.share.i || ""),
       displayName: String(data.share.n || "Bracket maker").slice(0, 40),
       title: String(data.share.t || "2026 US Open Bracket").slice(0, 80),
       scope: division,
@@ -715,6 +797,27 @@ async function fetchPublicBracketEntries() {
     .flatMap(({ row, data }) => splitCloudBracket(row, data))
     .filter((entry) => entry.pickCount === 127)
     .sort((first, second) => new Date(first.completedAt).getTime() - new Date(second.completedAt).getTime());
+}
+
+async function loadMatchImportanceEntries({ force = false } = {}) {
+  if (force) {
+    matchImportanceEntriesPromise = null;
+    matchImportanceEntriesLoaded = false;
+  }
+  if (matchImportanceEntriesLoaded || matchImportanceEntriesPromise) return matchImportanceEntriesPromise;
+
+  matchImportanceEntriesPromise = fetchPublicBracketEntries();
+  try {
+    matchImportanceEntries = await matchImportanceEntriesPromise;
+    matchImportanceEntriesLoaded = true;
+    if (state.started) renderBracket();
+    return matchImportanceEntries;
+  } catch (error) {
+    console.warn("Match importance comparison is temporarily unavailable:", error);
+    return [];
+  } finally {
+    matchImportanceEntriesPromise = null;
+  }
 }
 
 function ordinal(number) {
@@ -1061,6 +1164,11 @@ function renderPickFinder() {
 function renderPublicLists(entries) {
   publicBracketEntries = entries;
   publicEntriesLoaded = true;
+  matchImportanceEntries = entries;
+  matchImportanceEntriesLoaded = true;
+  if (state.started && $("#view-create").classList.contains("is-active") && !$("#builder").hidden) {
+    renderBracket();
+  }
   const menLeaderboard = $("#leaderboard-men-body");
   const womenLeaderboard = $("#leaderboard-women-body");
   const directory = $("#public-bracket-list");
@@ -1321,16 +1429,17 @@ function makePlayerButton({
   return button;
 }
 
-function makeMatchCard(division, round, matchIndex) {
+function makeMatchCard(division, round, matchIndex, importanceContext) {
   const players = participantsFor(division, round, matchIndex);
   const projection = projectionFor(players);
   const result = officialResult(division, round, matchIndex);
   const selectedPosition = state.picks[division][pickKey(round, matchIndex)];
   const selectedCorrect = Boolean(result) && Number(selectedPosition) === Number(result.winnerDrawPosition);
   const selectedWrong = Boolean(result) && Boolean(selectedPosition) && !selectedCorrect;
+  const importance = matchImportanceFor(division, round, matchIndex, importanceContext);
   const card = document.createElement("article");
   card.className = `match-card ${matchIndex % 2 === 1 ? "is-upper" : "is-lower"}`;
-  card.setAttribute("aria-label", `${ROUND_NAMES[round - 1]} match ${matchIndex}`);
+  card.setAttribute("aria-label", `${ROUND_NAMES[round - 1]} match ${matchIndex}. Importance ${importance.rating} out of 10.`);
 
   const roundStride = BASE_MATCH_PITCH * 2 ** (round - 1);
   const top = roundStride / 2 - MATCH_CARD_HEIGHT / 2 + (matchIndex - 1) * roundStride;
@@ -1343,7 +1452,13 @@ function makeMatchCard(division, round, matchIndex) {
   const header = document.createElement("div");
   header.className = "match-card-header";
   const number = document.createElement("span");
+  number.className = "match-card-number";
   number.textContent = `M${String(matchIndex).padStart(2, "0")}`;
+  const importanceBadge = document.createElement("span");
+  importanceBadge.className = `match-importance ${importance.rating >= 8 ? "is-high" : importance.rating >= 5 ? "is-medium" : "is-low"}`;
+  importanceBadge.textContent = `${importance.rating}/10`;
+  importanceBadge.title = importance.reason;
+  importanceBadge.setAttribute("aria-label", `Match importance ${importance.rating} out of 10. ${importance.reason}`);
   const call = document.createElement("strong");
   if (result) {
     const winnerName = shortPlayerName(playerByPosition(division, result.winnerDrawPosition));
@@ -1363,7 +1478,7 @@ function makeMatchCard(division, round, matchIndex) {
     const modelIndex = projection[0] > projection[1] ? 0 : 1;
     call.textContent = `Model: ${shortPlayerName(players[modelIndex])} · ${projection[modelIndex]}%`;
   }
-  header.append(number, call);
+  header.append(number, importanceBadge, call);
 
   const options = document.createElement("div");
   options.className = "player-options";
@@ -1396,6 +1511,7 @@ function renderBracket() {
   const division = state.activeDivision;
   const board = $("#bracket-board");
   board.replaceChildren();
+  const importanceContext = matchImportanceContext(division);
 
   for (let round = 1; round <= 7; round += 1) {
     const column = document.createElement("section");
@@ -1415,7 +1531,7 @@ function renderBracket() {
     const matches = document.createElement("div");
     matches.className = "bracket-matches";
     for (let matchIndex = 1; matchIndex <= matchCount(round); matchIndex += 1) {
-      matches.append(makeMatchCard(division, round, matchIndex));
+      matches.append(makeMatchCard(division, round, matchIndex, importanceContext));
     }
     column.append(header, matches);
     board.append(column);
@@ -1537,6 +1653,7 @@ function showBuilder() {
   updateBracketZoomControls();
   renderDivisionTabs();
   renderBracket();
+  loadMatchImportanceEntries();
 }
 
 function selectPlayer(division, round, matchIndex, position) {
