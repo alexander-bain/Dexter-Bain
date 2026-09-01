@@ -10,6 +10,8 @@ const players = [
   { drawPosition: 4, name: "Qualifier/Lucky Loser TBD 1", entryType: "tbd" },
   { drawPosition: 5, name: "Caty McNally", entryType: "direct" },
   { drawPosition: 6, name: "Anouk Koevermans", entryType: "direct" },
+  { drawPosition: 7, name: "Andrey Rublev", entryType: "seed" },
+  { drawPosition: 8, name: "Marin Cilic", entryType: "direct" },
 ];
 
 const competition = ({ id, round, winner, loser, completed = true, startAt = "2026-08-30T18:00:00.000Z", timeValid = true, state = completed ? "post" : "pre" }) => ({
@@ -36,10 +38,11 @@ const payload = {
         competition({ id: 101, round: "Round 1", winner: "Alexander Zverev", loser: "Lorenzo Sonego" }),
         competition({ id: 102, round: "Round 2", winner: "Alexander Zverev", loser: "Felix Auger-Aliassime" }),
         competition({ id: 103, round: "Qualifying Final", winner: "Alexander Zverev", loser: "Lorenzo Sonego" }),
-        competition({ id: 104, round: "Round 1", winner: "Unknown Player", loser: "Lorenzo Sonego" }),
+        competition({ id: 104, round: "Round 2", winner: "Unknown Player", loser: "Lorenzo Sonego" }),
         competition({ id: 105, round: "Round 1", winner: "Felix Auger-Aliassime", loser: "Qualifier Name", completed: false, startAt: "2026-09-01T16:30:00.000Z" }),
         competition({ id: 106, round: "Round 2", winner: "Alexander Zverev", loser: "TBD", completed: false, startAt: "2026-09-02T04:00:00.000Z", timeValid: false }),
         competition({ id: 107, round: "Round 1", winner: "Catherine McNally", loser: "Anouk Koevermans" }),
+        competition({ id: 108, round: "Round 1", winner: "Andrey Rublev", loser: "Otto Virtanen" }),
       ],
     }],
   }],
@@ -53,13 +56,16 @@ const parsed = parseCompletedResults(payload, {
   observedAt: "2026-08-30T18:00:00.000Z",
 });
 
-assert.equal(parsed.results.length, 3);
+assert.equal(parsed.results.length, 4);
 assert.deepEqual(parsed.results.map((result) => [result.round, result.matchIndex, result.winnerDrawPosition]), [
   [1, 1, 1],
   [2, 1, 1],
   [1, 3, 5],
+  [1, 4, 7],
 ]);
 assert.equal(parsed.skipped.length, 1);
+assert.equal(parsed.results[3].loserDrawPosition, 8);
+assert.equal(parsed.results[3].loserName, "Otto Virtanen");
 
 const resolved = resolveRoundOnePlaceholders({ players, sourceMetadata: [] }, payload, {
   groupingSlug: "mens-singles",
@@ -83,7 +89,7 @@ assert.equal(schedules.matches[1].timeValid, false);
 
 const prior = [{ ...parsed.results[0], winnerDrawPosition: 2, loserDrawPosition: 1 }];
 const merged = mergeResults(prior, parsed.results);
-assert.equal(merged.length, 3);
+assert.equal(merged.length, 4);
 assert.equal(merged[0].winnerDrawPosition, 1);
 
 console.log("US Open live-result mapping tests passed.");

@@ -133,14 +133,22 @@ export function parseCompletedResults(payload, { division, groupingSlug, playerI
     const loserName = competitorName(loser);
     const winnerPlayer = onePlayer(playerIndex, winnerName);
     const loserPlayer = onePlayer(playerIndex, loserName);
-    if (!winnerPlayer || !loserPlayer) {
+    let winnerDrawPosition = winnerPlayer?.drawPosition;
+    let loserDrawPosition = loserPlayer?.drawPosition;
+    if (round === 1 && Boolean(winnerPlayer) !== Boolean(loserPlayer)) {
+      const knownPosition = Number((winnerPlayer || loserPlayer).drawPosition);
+      const replacementPosition = knownPosition % 2 === 1 ? knownPosition + 1 : knownPosition - 1;
+      if (winnerPlayer) loserDrawPosition = replacementPosition;
+      else winnerDrawPosition = replacementPosition;
+    }
+    if (!winnerDrawPosition || !loserDrawPosition) {
       skipped.push({ sourceMatchId: String(competition.id || ""), round, winnerName, loserName });
       continue;
     }
 
     const bracketSize = 2 ** round;
-    const winnerMatchIndex = Math.ceil(winnerPlayer.drawPosition / bracketSize);
-    const loserMatchIndex = Math.ceil(loserPlayer.drawPosition / bracketSize);
+    const winnerMatchIndex = Math.ceil(winnerDrawPosition / bracketSize);
+    const loserMatchIndex = Math.ceil(loserDrawPosition / bracketSize);
     if (winnerMatchIndex !== loserMatchIndex) {
       skipped.push({ sourceMatchId: String(competition.id || ""), round, winnerName, loserName });
       continue;
@@ -150,10 +158,10 @@ export function parseCompletedResults(payload, { division, groupingSlug, playerI
       division,
       round,
       matchIndex: winnerMatchIndex,
-      winnerDrawPosition: winnerPlayer.drawPosition,
-      loserDrawPosition: loserPlayer.drawPosition,
-      winnerName: winnerPlayer.name,
-      loserName: loserPlayer.name,
+      winnerDrawPosition,
+      loserDrawPosition,
+      winnerName: winnerPlayer?.name || winnerName,
+      loserName: loserPlayer?.name || loserName,
       winnerScore: scoreLine(winner),
       loserScore: scoreLine(loser),
       sourceMatchId: String(competition.id || ""),
