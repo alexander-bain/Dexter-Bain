@@ -4,7 +4,7 @@ import {
   parseCompletedResults,
   parsePlayerNextMatches,
   resolveRoundOnePlaceholders,
-} from "./live-results-core.js";
+} from "./live-results-core.js?v=20260901-replacements";
 import {
   ROUND_NAMES,
   ROUND_POINTS,
