@@ -163,7 +163,7 @@
     gate.innerHTML = `
       <div class="personal-access-card">
         <div class="personal-access-icon" aria-hidden="true">🔒</div>
-        <h1>Personal page</h1>
+        <h1>Part 2</h1>
         <p>Enter the password to continue.</p>
         <form class="personal-access-form" id="personalAccessForm">
           <label for="personalAccessPassword" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Password</label>

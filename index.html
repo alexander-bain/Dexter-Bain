@@ -390,7 +390,7 @@
 <body>
   <main class="container">
     <h1>DexterBain.com</h1>
-    <p class="subtitle">Play a game, or unlock Dexter's personal pages.</p>
+    <p class="subtitle">Play a game, or unlock Part 2.</p>
 
     <nav class="part-switcher" aria-label="Choose a section">
       <button class="part-choice is-active" id="gamesTab" type="button" aria-controls="gamesArea" aria-pressed="true">
@@ -398,7 +398,7 @@
         <span class="part-description">Highway Rush, Ball Guys Drop, and more</span>
       </button>
       <button class="part-choice" id="personalTab" type="button" aria-controls="personalGate personalArea" aria-pressed="false">
-        <span class="part-label">Part 2 · Personal 🔒</span>
+        <span class="part-label">Part 2 🔒</span>
         <span class="part-description" id="personalTabStatus">Password required</span>
       </button>
     </nav>
@@ -850,7 +850,7 @@
     <section class="personal-gate" id="personalGate" hidden>
       <div class="gate-icon" aria-hidden="true">🔒</div>
       <h2>Part 2 is private</h2>
-      <p>Enter the password to open Dexter's personal pages.</p>
+      <p>Enter the password to open Part 2.</p>
       <form class="password-form" id="passwordForm">
         <label class="sr-only" for="personalPassword">Password</label>
         <input
@@ -870,7 +870,7 @@
     <section id="personalArea" hidden>
       <div class="section-heading-row">
         <div>
-          <h2 class="section-title">Personal</h2>
+          <h2 class="section-title">Part 2</h2>
           <p class="section-note">Dexter's private links.</p>
         </div>
         <button class="lock-button" id="lockPersonal" type="button">Lock again 🔒</button>
