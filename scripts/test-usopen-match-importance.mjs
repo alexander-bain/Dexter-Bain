@@ -29,7 +29,7 @@ const differentLatePick = rateMatchImportance({
   round: 6,
 });
 assert.ok(differentLatePick.rating >= 8);
-assert.match(differentLatePick.reason, /help you move up/);
+assert.match(differentLatePick.reason, /only bracket|help you move up/);
 
 const protectedLead = rateMatchImportance({
   entries: [
@@ -45,19 +45,36 @@ const protectedLead = rateMatchImportance({
 assert.equal(protectedLead.rating, 1);
 assert.match(protectedLead.reason, /cannot change your lead/);
 
-const resolved = rateMatchImportance({
+const resolvedUniquePick = rateMatchImportance({
   entries: [
-    { id: "current", points: 40, pick: 12, pickPoints: 16 },
-    { id: "second", points: 39, pick: 11, pickPoints: 16 },
+    { id: "first", points: 27, pick: 7, pickPoints: 1 },
+    { id: "second", points: 27, pick: 7, pickPoints: 1 },
+    { id: "third", points: 25, pick: 7, pickPoints: 1 },
+    { id: "current", points: 26, pick: 8, pickPoints: 3 },
   ],
   currentEntryId: "current",
-  selectedPosition: 12,
-  selectedPoints: 16,
-  round: 5,
+  selectedPosition: 8,
+  selectedPoints: 3,
+  round: 1,
   resolved: true,
 });
-assert.equal(resolved.rating, 1);
-assert.match(resolved.reason, /final/);
+assert.ok(resolvedUniquePick.rating >= 8);
+assert.match(resolvedUniquePick.reason, /only bracket/);
+
+const resolvedConsensusPick = rateMatchImportance({
+  entries: [
+    { id: "first", points: 27, pick: 7, pickPoints: 1 },
+    { id: "second", points: 26, pick: 7, pickPoints: 1 },
+    { id: "current", points: 25, pick: 7, pickPoints: 1 },
+  ],
+  currentEntryId: "current",
+  selectedPosition: 7,
+  selectedPoints: 1,
+  round: 1,
+  resolved: true,
+});
+assert.equal(resolvedConsensusPick.rating, 1);
+assert.match(resolvedConsensusPick.reason, /did not move you past/);
 
 const earlyLowLeverage = rateMatchImportance({
   entries: [

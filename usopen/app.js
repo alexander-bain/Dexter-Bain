@@ -12,7 +12,7 @@ import {
   projectionForPlayers as projectionFor,
   simulateDivisionPool,
 } from "./pool-simulator-core.js?v=20260831-score-order";
-import { rateMatchImportance } from "./match-importance-core.js?v=20260901-pool-leverage";
+import { rateMatchImportance } from "./match-importance-core.js?v=20260901-historical-leverage";
 
 const ROUND_SHORT_NAMES = ["R128", "R64", "R32", "R16", "QF", "SF", "Final"];
 const LOCK_AT = new Date("2026-08-30T15:00:00Z");
