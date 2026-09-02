@@ -31,6 +31,18 @@ No current items.
 
 If Dexter asks to push and the first push attempt fails, keep trying safe approved push paths until it is pushed or there is a true blocker that needs Dexter. Do not stop just to report that the push was unsuccessful.
 
+## Command Preference
+
+Never ask Dexter to type or run Bash commands. Run routine, in-scope project commands directly whenever the available tools allow it.
+
+Do not ask Dexter for command permission when a safe, approved, and non-destructive route exists. Treat his request as approval for routine commands needed to complete that request, choose the safe route, and keep working.
+
+Never bypass a required safety check or expand the requested scope. If a command would be unsafe or unavailable without extra approval, work around it with a safe, non-destructive approach. Only report a blocker when no safe approach can complete the request.
+
+## Response Format
+
+Every response must include exactly five checkboxes and check them off as work is completed. Each checkbox label must contain fewer than ten words. Outside the checklist, the only allowed word is `done`.
+
 ## Database
 
 The minigames backend can use a real Postgres database when the server has `DATABASE_URL` or `POSTGRES_URL` set. Picks, rooms, custom games, results, notification subscriptions, and generated notification keys move into the database automatically. If no database URL is set yet, the site falls back to the old JSON storage so it can keep running.

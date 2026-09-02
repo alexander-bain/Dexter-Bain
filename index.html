@@ -23,6 +23,10 @@
       box-sizing: border-box;
     }
 
+    [hidden] {
+      display: none !important;
+    }
+
     .sr-only {
       position: absolute;
       width: 1px;
@@ -69,6 +73,153 @@
       margin: 0 0 24px;
       color: #c9d1d9;
       font-size: 0.98rem;
+    }
+
+    .part-switcher {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .part-choice {
+      min-height: 84px;
+      padding: 14px 16px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.82);
+      color: #f8fafc;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+    }
+
+    .part-choice:hover {
+      transform: translateY(-1px);
+      border-color: rgba(148, 163, 184, 0.75);
+    }
+
+    .part-choice.is-active {
+      border-color: rgba(74, 222, 128, 0.95);
+      background: linear-gradient(135deg, rgba(22, 101, 52, 0.42), rgba(15, 23, 42, 0.92));
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
+    }
+
+    .part-label,
+    .part-description {
+      display: block;
+    }
+
+    .part-label {
+      margin-bottom: 4px;
+      font-size: 1rem;
+      font-weight: 750;
+    }
+
+    .part-description {
+      color: #cbd5e1;
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+
+    .section-heading-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 1.35rem;
+    }
+
+    .section-note {
+      margin: 3px 0 0;
+      color: #94a3b8;
+      font-size: 0.82rem;
+    }
+
+    .lock-button {
+      flex: 0 0 auto;
+      padding: 7px 12px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      color: #e2e8f0;
+      font: inherit;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+
+    .personal-gate {
+      max-width: 520px;
+      margin: 10px auto 4px;
+      padding: 26px;
+      border: 1px solid rgba(96, 165, 250, 0.4);
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.2), rgba(15, 23, 42, 0.92));
+      text-align: center;
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.35);
+    }
+
+    .gate-icon {
+      margin-bottom: 8px;
+      font-size: 2rem;
+    }
+
+    .personal-gate h2 {
+      margin: 0 0 6px;
+      font-size: 1.35rem;
+    }
+
+    .personal-gate p {
+      margin: 0 0 18px;
+      color: #cbd5e1;
+      font-size: 0.9rem;
+    }
+
+    .password-form {
+      display: flex;
+      gap: 9px;
+    }
+
+    .password-input {
+      min-width: 0;
+      flex: 1 1 auto;
+      min-height: 46px;
+      padding: 0 14px;
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      border-radius: 12px;
+      background: rgba(2, 6, 23, 0.8);
+      color: #f8fafc;
+      font: inherit;
+      outline: none;
+    }
+
+    .password-input:focus {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+    }
+
+    .unlock-button {
+      min-height: 46px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #60a5fa, #2563eb);
+      color: #fff;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .password-message {
+      min-height: 20px;
+      margin: 10px 0 0 !important;
+      color: #fca5a5 !important;
+      font-size: 0.8rem !important;
     }
 
     .search-wrap {
@@ -217,35 +368,54 @@
       h1 {
         font-size: 1.7rem;
       }
+
+      .part-switcher {
+        grid-template-columns: 1fr;
+      }
+
+      .part-choice {
+        min-height: 72px;
+      }
+
+      .password-form {
+        flex-direction: column;
+      }
+
+      .unlock-button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
   <main class="container">
-    <h1>DexterBain.com Arcade</h1>
-    <p class="subtitle">Choose your adventure: outsmart your friends or survive a year at Hillview.</p>
-    <div class="search-wrap">
-      <label class="sr-only" for="gameSearch">Search games</label>
-      <input class="game-search" id="gameSearch" type="search" placeholder="Search games..." autocomplete="off" />
-    </div>
+    <h1>DexterBain.com</h1>
+    <p class="subtitle">Play a game, or unlock Dexter's personal pages.</p>
 
-    <section class="games-grid">
-      <!-- Make a Wish -->
-      <article class="game-card">
-        <div class="game-tag">Fundraiser</div>
-        <h2 class="game-title">Make a Wish</h2>
-        <p class="game-subtitle">
-          A Make-A-Wish fundraiser with an automatic goal tracker and official campaign donation link.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Fundraiser</span>
-          <span class="pill">Make-A-Wish</span>
-          <span class="pill">Goal Tracker</span>
+    <nav class="part-switcher" aria-label="Choose a section">
+      <button class="part-choice is-active" id="gamesTab" type="button" aria-controls="gamesArea" aria-pressed="true">
+        <span class="part-label">Part 1 · Games</span>
+        <span class="part-description">Highway Rush, Ball Guys Drop, and more</span>
+      </button>
+      <button class="part-choice" id="personalTab" type="button" aria-controls="personalGate personalArea" aria-pressed="false">
+        <span class="part-label">Part 2 · Personal 🔒</span>
+        <span class="part-description" id="personalTabStatus">Password required</span>
+      </button>
+    </nav>
+
+    <section id="gamesArea">
+      <div class="section-heading-row">
+        <div>
+          <h2 class="section-title">Games</h2>
+          <p class="section-note">Pick one and start playing.</p>
         </div>
-        <a class="play-button" href="skip-for-wishes/index.html" style="background:linear-gradient(135deg,#2563eb,#0ea5e9);box-shadow:0 10px 18px rgba(37,99,235,0.35);color:#fff;">
-          Visit Fundraiser <span>▶</span>
-        </a>
-      </article>
+      </div>
+      <div class="search-wrap">
+        <label class="sr-only" for="gameSearch">Search games</label>
+        <input class="game-search" id="gameSearch" type="search" placeholder="Search games..." autocomplete="off" />
+      </div>
+
+      <div class="games-grid" id="gamesGrid">
 
       <!-- Lucky Felt Casino -->
       <article class="game-card">
@@ -295,23 +465,6 @@
         </div>
         <a class="play-button" href="vibe-lab/">
           Open Lab <span>▶</span>
-        </a>
-      </article>
-
-      <!-- Memories -->
-      <article class="game-card">
-        <div class="game-tag">Life Archive</div>
-        <h2 class="game-title">Memories</h2>
-        <p class="game-subtitle">
-          Save important days, photos, videos, audio, and notes into organized memory documents you can open later.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Archive</span>
-          <span class="pill">Photos</span>
-          <span class="pill">Private-first</span>
-        </div>
-        <a class="play-button" href="memories/" style="background:linear-gradient(135deg,#14b8a6,#0f766e);box-shadow:0 10px 18px rgba(20,184,166,0.32);color:#fff;">
-          Open Memories <span>▶</span>
         </a>
       </article>
 
@@ -572,24 +725,6 @@
         </a>
       </article>
 
-      <!-- Daphne's Dinner Question -->
-      <article class="game-card">
-        <div class="game-tag">Daily Math</div>
-        <h2 class="game-title">Daphne's Dinner Question</h2>
-        <p class="game-subtitle">
-          Spin the dinner wheel for a daily number problem, rare word problem, skip, or pushups twist.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Math</span>
-          <span class="pill">Wheel</span>
-          <span class="pill">Daily</span>
-        </div>
-        <a class="play-button" href="dinner-question/">
-          Spin for Daphne <span>▶</span>
-        </a>
-      </article>
-
-
       <!-- Earthquakes & Volcanoes -->
       <article class="game-card">
         <div class="game-tag">Map</div>
@@ -691,10 +826,7 @@
           Guess Word <span>▶</span>
         </a>
       </article>
-    </section>
 
-
-      
       <!-- AI Adventure Game -->
       <article class="game-card">
         <div class="game-tag">Game 03</div>
@@ -711,32 +843,135 @@
           Start Quest ⚔️
         </a>
       </article>
+      </div>
+      <p class="empty-search" id="emptySearch">No games found.</p>
+    </section>
 
-      <!-- Hillview ASB -->
-      <article class="game-card">
-        <div class="game-tag">School</div>
-        <h2 class="game-title">Hillview ASB</h2>
-        <p class="game-subtitle">
-          News, events, and updates from Hillview Middle School student government. Ask the AI about upcoming events.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Events</span>
-          <span class="pill">School News</span>
-          <span class="pill">Hillview</span>
+    <section class="personal-gate" id="personalGate" hidden>
+      <div class="gate-icon" aria-hidden="true">🔒</div>
+      <h2>Part 2 is private</h2>
+      <p>Enter the password to open Dexter's personal pages.</p>
+      <form class="password-form" id="passwordForm">
+        <label class="sr-only" for="personalPassword">Password</label>
+        <input
+          class="password-input"
+          id="personalPassword"
+          type="password"
+          placeholder="Password"
+          autocomplete="current-password"
+          autocapitalize="none"
+          spellcheck="false"
+        />
+        <button class="unlock-button" type="submit">Unlock</button>
+      </form>
+      <p class="password-message" id="passwordMessage" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="personalArea" hidden>
+      <div class="section-heading-row">
+        <div>
+          <h2 class="section-title">Personal</h2>
+          <p class="section-note">Dexter's private links.</p>
         </div>
-        <a class="play-button" href="ASB/" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);box-shadow:0 10px 18px rgba(59,130,246,0.35);color:#fff;">
-          View Events 📋
-        </a>
-      </article>
-    <p class="empty-search" id="emptySearch">No games found.</p>
+        <button class="lock-button" id="lockPersonal" type="button">Lock again 🔒</button>
+      </div>
+
+      <div class="games-grid">
+        <!-- Make a Wish -->
+        <article class="game-card">
+          <div class="game-tag">Fundraiser</div>
+          <h2 class="game-title">Make a Wish</h2>
+          <p class="game-subtitle">
+            A Make-A-Wish fundraiser with an automatic goal tracker and official campaign donation link.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Fundraiser</span>
+            <span class="pill">Make-A-Wish</span>
+            <span class="pill">Goal Tracker</span>
+          </div>
+          <a class="play-button" href="skip-for-wishes/index.html" style="background:linear-gradient(135deg,#2563eb,#0ea5e9);box-shadow:0 10px 18px rgba(37,99,235,0.35);color:#fff;">
+            Visit Fundraiser <span>▶</span>
+          </a>
+        </article>
+
+        <!-- Memories -->
+        <article class="game-card">
+          <div class="game-tag">Life Archive</div>
+          <h2 class="game-title">Memories</h2>
+          <p class="game-subtitle">
+            Save important days, photos, videos, audio, and notes into organized memory documents you can open later.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Archive</span>
+            <span class="pill">Photos</span>
+            <span class="pill">Private-first</span>
+          </div>
+          <a class="play-button" href="memories/" style="background:linear-gradient(135deg,#14b8a6,#0f766e);box-shadow:0 10px 18px rgba(20,184,166,0.32);color:#fff;">
+            Open Memories <span>▶</span>
+          </a>
+        </article>
+
+        <!-- Daphne's Dinner Question -->
+        <article class="game-card">
+          <div class="game-tag">Daily Math</div>
+          <h2 class="game-title">Daphne's Dinner Question</h2>
+          <p class="game-subtitle">
+            Spin the dinner wheel for a daily number problem, rare word problem, skip, or pushups twist.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Math</span>
+            <span class="pill">Wheel</span>
+            <span class="pill">Daily</span>
+          </div>
+          <a class="play-button" href="dinner-question/">
+            Spin for Daphne <span>▶</span>
+          </a>
+        </article>
+
+        <!-- Hillview ASB -->
+        <article class="game-card">
+          <div class="game-tag">School</div>
+          <h2 class="game-title">Hillview ASB</h2>
+          <p class="game-subtitle">
+            News, events, and updates from Hillview Middle School student government. Ask the AI about upcoming events.
+          </p>
+          <div class="pill-row">
+            <span class="pill">Events</span>
+            <span class="pill">School News</span>
+            <span class="pill">Hillview</span>
+          </div>
+          <a class="play-button" href="ASB/" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);box-shadow:0 10px 18px rgba(59,130,246,0.35);color:#fff;">
+            View Events 📋
+          </a>
+        </article>
+      </div>
+    </section>
+
     <div class="footer-note">
-      Built for Dexter & friends.
+      Built for Dexter &amp; friends.
     </div>
   </main>
   <script>
     const gameSearch = document.querySelector("#gameSearch");
     const emptySearch = document.querySelector("#emptySearch");
-    const gameCards = [...document.querySelectorAll(".game-card")];
+    const gameCards = [...document.querySelectorAll("#gamesGrid .game-card")];
+    const gamesTab = document.querySelector("#gamesTab");
+    const personalTab = document.querySelector("#personalTab");
+    const personalTabStatus = document.querySelector("#personalTabStatus");
+    const gamesArea = document.querySelector("#gamesArea");
+    const personalGate = document.querySelector("#personalGate");
+    const personalArea = document.querySelector("#personalArea");
+    const passwordForm = document.querySelector("#passwordForm");
+    const passwordInput = document.querySelector("#personalPassword");
+    const passwordMessage = document.querySelector("#passwordMessage");
+    const lockPersonal = document.querySelector("#lockPersonal");
+    let personalUnlocked = false;
+
+    try {
+      personalUnlocked = sessionStorage.getItem("dexter-personal-unlocked") === "yes";
+    } catch (error) {
+      personalUnlocked = false;
+    }
 
     gameCards.forEach((card) => {
       card.dataset.searchText = card.textContent.toLowerCase();
@@ -758,6 +993,69 @@
     gameSearch?.addEventListener("input", filterGames);
     gameSearch?.addEventListener("search", filterGames);
     gameSearch?.addEventListener("change", filterGames);
+
+    function rememberPersonalAccess(isUnlocked) {
+      try {
+        if (isUnlocked) {
+          sessionStorage.setItem("dexter-personal-unlocked", "yes");
+        } else {
+          sessionStorage.removeItem("dexter-personal-unlocked");
+        }
+      } catch (error) {
+        // The section still works if this browser blocks session storage.
+      }
+    }
+
+    function showPart(part) {
+      const showPersonal = part === "personal";
+      gamesArea.hidden = showPersonal;
+      personalGate.hidden = !showPersonal || personalUnlocked;
+      personalArea.hidden = !showPersonal || !personalUnlocked;
+
+      gamesTab.classList.toggle("is-active", !showPersonal);
+      personalTab.classList.toggle("is-active", showPersonal);
+      gamesTab.setAttribute("aria-pressed", String(!showPersonal));
+      personalTab.setAttribute("aria-pressed", String(showPersonal));
+      personalTabStatus.textContent = personalUnlocked ? "Unlocked for this visit" : "Password required";
+
+      if (showPersonal && !personalUnlocked) {
+        window.setTimeout(() => passwordInput.focus(), 0);
+      }
+    }
+
+    gamesTab?.addEventListener("click", () => showPart("games"));
+    personalTab?.addEventListener("click", () => showPart("personal"));
+
+    passwordForm?.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (passwordInput.value === "Cena") {
+        personalUnlocked = true;
+        rememberPersonalAccess(true);
+        passwordInput.value = "";
+        passwordInput.removeAttribute("aria-invalid");
+        passwordMessage.textContent = "";
+        showPart("personal");
+        return;
+      }
+
+      passwordInput.setAttribute("aria-invalid", "true");
+      passwordMessage.textContent = "That password is not correct. Try again.";
+      passwordInput.select();
+    });
+
+    passwordInput?.addEventListener("input", () => {
+      passwordInput.removeAttribute("aria-invalid");
+      passwordMessage.textContent = "";
+    });
+
+    lockPersonal?.addEventListener("click", () => {
+      personalUnlocked = false;
+      rememberPersonalAccess(false);
+      showPart("personal");
+    });
+
+    showPart("games");
   </script>
 </body>
 </html>
