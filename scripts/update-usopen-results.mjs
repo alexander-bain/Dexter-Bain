@@ -5,6 +5,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import path from "node:path";
 import {
   buildPlayerIndex,
+  isEliminatedFuturePick,
   mergeResults,
   normalizePlayerName,
   parseCompletedResults,
@@ -14,6 +15,7 @@ import {
 
 export {
   buildPlayerIndex,
+  isEliminatedFuturePick,
   mergeResults,
   normalizePlayerName,
   parseCompletedResults,

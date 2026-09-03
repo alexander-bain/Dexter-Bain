@@ -22,6 +22,14 @@ export function normalizePlayerName(value) {
     .trim();
 }
 
+export function isEliminatedFuturePick(results, selectedPosition, matchResolved = false) {
+  if (matchResolved || !Number(selectedPosition)) return false;
+  const completedResults = Array.isArray(results) ? results : Object.values(results || {});
+  return completedResults.some((result) => (
+    Number(result?.loserDrawPosition) === Number(selectedPosition)
+  ));
+}
+
 function playerNameKeys(value) {
   const normalized = normalizePlayerName(value);
   if (!normalized) return [];

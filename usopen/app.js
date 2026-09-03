@@ -1,10 +1,11 @@
 import {
   buildPlayerIndex,
+  isEliminatedFuturePick,
   mergeResults,
   parseCompletedResults,
   parsePlayerNextMatches,
   resolveRoundOnePlaceholders,
-} from "./live-results-core.js?v=20260901-replacements";
+} from "./live-results-core.js?v=20260902-cascade-wrong";
 import {
   ROUND_NAMES,
   ROUND_POINTS,
@@ -1358,7 +1359,12 @@ function makePlayerButton({
   const isOfficialWinner = Number(result?.winnerDrawPosition) === player.drawPosition;
   const isOfficialLoser = Number(result?.loserDrawPosition) === player.drawPosition;
   const isSelectedCorrect = Boolean(result) && isSelected && isOfficialWinner;
-  const isSelectedWrong = Boolean(result) && isSelected && !isOfficialWinner;
+  const isEliminatedFutureSelection = isSelected && isEliminatedFuturePick(
+    state.results[division],
+    player.drawPosition,
+    Boolean(result),
+  );
+  const isSelectedWrong = (Boolean(result) && isSelected && !isOfficialWinner) || isEliminatedFutureSelection;
   const nextMatch = nextMatchForPlayer(division, player.drawPosition);
   const isEliminated = playerIsEliminated(division, player.drawPosition);
 
@@ -1436,9 +1442,15 @@ function makeMatchCard(division, round, matchIndex, importanceContext) {
   const selectedPosition = state.picks[division][pickKey(round, matchIndex)];
   const selectedCorrect = Boolean(result) && Number(selectedPosition) === Number(result.winnerDrawPosition);
   const selectedWrong = Boolean(result) && Boolean(selectedPosition) && !selectedCorrect;
+  const selectedEliminated = isEliminatedFuturePick(
+    state.results[division],
+    selectedPosition,
+    Boolean(result),
+  );
   const importance = matchImportanceFor(division, round, matchIndex, importanceContext);
   const card = document.createElement("article");
   card.className = `match-card ${matchIndex % 2 === 1 ? "is-upper" : "is-lower"}`;
+  card.classList.toggle("is-pick-wrong", selectedWrong || selectedEliminated);
   card.setAttribute("aria-label", `${ROUND_NAMES[round - 1]} match ${matchIndex}. Importance ${importance.rating} out of 10.`);
 
   const roundStride = BASE_MATCH_PITCH * 2 ** (round - 1);
@@ -1469,7 +1481,8 @@ function makeMatchCard(division, round, matchIndex, importanceContext) {
         : `Final: ${winnerName}`;
     card.classList.add("is-final");
     card.classList.toggle("is-pick-correct", selectedCorrect);
-    card.classList.toggle("is-pick-wrong", selectedWrong);
+  } else if (selectedEliminated) {
+    call.textContent = `Eliminated pick: ${shortPlayerName(playerByPosition(division, selectedPosition))}`;
   } else if (!projection) {
     call.textContent = round === 1 ? "Projection unavailable" : "Awaiting earlier picks";
   } else if (projection[0] === projection[1]) {

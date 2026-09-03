@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import assert from "node:assert/strict";
-import { buildPlayerIndex, mergeResults, normalizePlayerName, parseCompletedResults, parsePlayerNextMatches, resolveRoundOnePlaceholders } from "./update-usopen-results.mjs";
+import { buildPlayerIndex, isEliminatedFuturePick, mergeResults, normalizePlayerName, parseCompletedResults, parsePlayerNextMatches, resolveRoundOnePlaceholders } from "./update-usopen-results.mjs";
 
 const players = [
   { drawPosition: 1, name: "Alexander Zverev", entryType: "seed" },
@@ -91,5 +91,13 @@ const prior = [{ ...parsed.results[0], winnerDrawPosition: 2, loserDrawPosition:
 const merged = mergeResults(prior, parsed.results);
 assert.equal(merged.length, 4);
 assert.equal(merged[0].winnerDrawPosition, 1);
+
+const earlyDjokovicLoss = [{ round: 1, matchIndex: 48, winnerDrawPosition: 95, loserDrawPosition: 96 }];
+const laterDjokovicPicks = [96, 96, 95];
+assert.deepEqual(
+  laterDjokovicPicks.map((pick) => isEliminatedFuturePick(earlyDjokovicLoss, pick)),
+  [true, true, false],
+);
+assert.equal(isEliminatedFuturePick(earlyDjokovicLoss, 96, true), false);
 
 console.log("US Open live-result mapping tests passed.");
