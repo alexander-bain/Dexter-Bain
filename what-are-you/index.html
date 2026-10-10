@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#10111a" />
+    <meta
+      name="description"
+      content="Pick a favorite TV show, answer ten personality questions, and discover which character you are — with a reason that actually fits."
+    />
+    <link rel="canonical" href="https://dexterbain.com/what-are-you/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Character Check" />
+    <meta property="og:title" content="Character Check — Which TV Character Are You?" />
+    <meta
+      property="og:description"
+      content="56 shows. 10 questions each. Find your TV character twin."
+    />
+    <meta property="og:url" content="https://dexterbain.com/what-are-you/" />
+    <meta property="og:image" content="https://dexterbain.com/what-are-you/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Character Check — Which TV Character Are You?" />
+    <meta
+      name="twitter:description"
+      content="56 shows. 10 questions each. Find your TV character twin."
+    />
+    <meta name="twitter:image" content="https://dexterbain.com/what-are-you/og.png" />
+    <link rel="preconnect" href="https://static.tvmaze.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=League+Spartan:wght@600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Character Check — Which TV Character Are You?</title>
+    <script defer src="data/questions.js"></script>
+    <script defer src="data/outcomes.js"></script>
+    <script defer src="data/media.js"></script>
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to the game</a>
+
+    <header class="site-header">
+      <button class="brand" id="home-button" type="button" aria-label="Character Check home">
+        <span class="brand-mark" aria-hidden="true"><i>?</i><b>!</b></span>
+        <span>
+          <strong>CHARACTER</strong>
+          <small>CHECK</small>
+        </span>
+      </button>
+      <div class="header-note">
+        <span class="pulse-dot" aria-hidden="true"></span>
+        56 shows ready
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="home-view" id="home-view" aria-labelledby="home-title">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow"><span>NEW</span> Your next personality rabbit hole</p>
+            <h1 id="home-title">Which TV character are <em>you?</em></h1>
+            <p class="hero-lede">
+              Pick a show you know, answer ten fun personality questions, and meet your
+              character twin — plus the reason the match makes sense.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-button" id="browse-button" type="button">
+                Browse all shows <span aria-hidden="true">↓</span>
+              </button>
+              <button class="ghost-button" id="surprise-button" type="button">
+                <span aria-hidden="true">✦</span> Surprise me
+              </button>
+            </div>
+            <ul class="hero-facts" aria-label="Game facts">
+              <li><strong>56</strong><span>shows</span></li>
+              <li><strong>10</strong><span>questions each</span></li>
+              <li><strong>1</strong><span>show photo per question</span></li>
+            </ul>
+          </div>
+          <div class="hero-collage" id="hero-collage" role="group" aria-label="Featured television shows"></div>
+        </div>
+
+        <section class="show-library" id="show-library" aria-labelledby="library-title">
+          <div class="library-heading">
+            <div>
+              <p class="section-kicker">Choose your universe</p>
+              <h2 id="library-title" tabindex="-1">Find your show</h2>
+            </div>
+            <label class="search-box" for="show-search">
+              <span aria-hidden="true">⌕</span>
+              <span class="visually-hidden">Search shows</span>
+              <input
+                id="show-search"
+                type="search"
+                placeholder="Search 56 shows…"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <kbd>⌘/Ctrl K</kbd>
+            </label>
+          </div>
+          <div class="library-meta">
+            <p id="show-count" aria-live="polite">Loading the show wall…</p>
+            <div class="quick-picks" role="group" aria-label="Quick filters">
+              <button class="filter-chip active" type="button" data-filter="all" aria-pressed="true">All</button>
+              <button class="filter-chip" type="button" data-filter="Comedy" aria-pressed="false">Comedy</button>
+              <button class="filter-chip" type="button" data-filter="Drama" aria-pressed="false">Drama</button>
+              <button class="filter-chip" type="button" data-filter="animated" aria-pressed="false">Animated</button>
+            </div>
+          </div>
+          <div class="show-grid" id="show-grid"></div>
+          <div class="empty-search" id="empty-search" hidden>
+            <span aria-hidden="true">📺</span>
+            <h3>No show found</h3>
+            <p>Try a shorter search, or let us choose one for you.</p>
+            <button class="primary-button" id="empty-surprise-button" type="button">Surprise me</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="quiz-view" id="quiz-view" hidden aria-labelledby="question-title">
+        <div class="quiz-topbar">
+          <button class="round-button" id="quiz-exit-button" type="button" aria-label="Exit quiz and choose another show">←</button>
+          <div class="quiz-progress-copy">
+            <strong id="quiz-show-name">Show name</strong>
+            <span id="question-count">Question 1 of 10</span>
+          </div>
+          <button class="text-button" id="quiz-restart-button" type="button">Restart</button>
+        </div>
+        <div
+          class="progress-track"
+          role="progressbar"
+          aria-label="Quiz progress"
+          aria-valuemin="1"
+          aria-valuemax="10"
+          aria-valuenow="1"
+        >
+          <span id="progress-fill"></span>
+        </div>
+
+        <div class="quiz-stage">
+          <figure class="question-photo-wrap">
+            <img id="question-photo" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" />
+            <figcaption>
+              <span id="photo-label">Question 1</span>
+              <a id="show-source-link" href="https://www.tvmaze.com" target="_blank" rel="noreferrer">Image via TVmaze ↗</a>
+            </figcaption>
+          </figure>
+
+          <div class="question-panel">
+            <p class="question-kicker" id="question-kicker">Set the scene</p>
+            <h2 id="question-title" tabindex="-1">Your question appears here.</h2>
+            <div class="answer-list" id="answer-list" role="group" aria-labelledby="question-title"></div>
+            <div class="question-footer">
+              <button class="back-answer" id="previous-question-button" type="button" disabled>← Previous</button>
+              <span>Tip: press 1–4 to answer</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="result-view" id="result-view" hidden aria-labelledby="result-character">
+        <div class="result-backdrop" id="result-backdrop"></div>
+        <div class="result-card">
+          <div class="result-art">
+            <img id="result-photo" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" />
+            <div class="result-show-tag" id="result-show-name">Show name</div>
+          </div>
+          <div class="result-copy">
+            <p class="result-kicker">Your character match is</p>
+            <h2 id="result-character" tabindex="-1">Character</h2>
+            <p class="result-actor" id="result-actor">Played by Actor</p>
+            <div class="result-label" id="result-label">The heart of the group</div>
+            <p class="result-why" id="result-why">Your explanation appears here.</p>
+
+            <div class="personality-mix" id="personality-mix">
+              <div class="mix-heading">
+                <strong>Your personality mix</strong>
+                <span id="mix-note">based on 10 answers</span>
+              </div>
+              <div id="mix-bars"></div>
+            </div>
+
+            <div class="result-actions">
+              <button class="primary-button" id="share-result-button" type="button">Share my result</button>
+              <button class="ghost-button dark" id="retake-button" type="button">Retake quiz</button>
+              <button class="text-button dark" id="another-show-button" type="button">Choose another show →</button>
+            </div>
+          </div>
+        </div>
+        <p class="result-disclaimer">Just for fun — but possibly uncomfortably accurate.</p>
+      </section>
+
+      <section class="load-error" id="load-error" hidden>
+        <span aria-hidden="true">!</span>
+        <h1>The show wall did not load.</h1>
+        <p>Please refresh the page and try again.</p>
+        <button class="primary-button" type="button" onclick="window.location.reload()">Refresh</button>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>CHARACTER CHECK</strong>
+        <p>A fan-made personality game. Not affiliated with or endorsed by any featured show.</p>
+      </div>
+      <p>
+        Show information and imagery supplied by
+        <a href="https://www.tvmaze.com/api" target="_blank" rel="noreferrer">TVmaze</a>
+        under CC BY-SA.
+      </p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="visually-hidden" id="live-region" aria-live="polite" aria-atomic="true"></div>
+  </body>
+</html>
