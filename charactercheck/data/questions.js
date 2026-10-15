@@ -1,4 +1,6 @@
-const QUESTIONS = [
+// These questions are an emergency-only fallback for a partial or stale data
+// load. Every normal quiz reads its own ten questions from MEDIA[id].questions.
+const FALLBACK_QUESTIONS = [
   {
     prompt: "A friend has a rough day. What do you do first?",
     kicker: "Friendship check",
@@ -101,13 +103,13 @@ const QUESTIONS = [
   }
 ];
 
-(function validateQuestions(questions) {
+(function validateFallbackQuestions(questions) {
   const expectedRoles = ["heart", "mind", "spark", "wildcard"];
   const isNonemptyString = (value) =>
     typeof value === "string" && value.trim().length > 0;
 
   if (!Array.isArray(questions) || questions.length !== 10) {
-    throw new Error("QUESTIONS must contain exactly 10 questions.");
+    throw new Error("FALLBACK_QUESTIONS must contain exactly 10 questions.");
   }
 
   questions.forEach((question, questionIndex) => {
@@ -129,6 +131,8 @@ const QUESTIONS = [
       );
     }
   });
-})(QUESTIONS);
+})(FALLBACK_QUESTIONS);
 
-window.QUESTIONS = QUESTIONS;
+window.FALLBACK_QUESTIONS = FALLBACK_QUESTIONS;
+// Preserve the original global for a cached copy of the first-release app.
+window.QUESTIONS = FALLBACK_QUESTIONS;

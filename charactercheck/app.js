@@ -8,6 +8,11 @@
     spark: { label: "Spark", color: "#b9a7ff" },
     wildcard: { label: "Wildcard", color: "#d7ff5b" },
   };
+  const MIN_TITLE_COUNT = 56;
+  const MAX_TITLE_COUNT = 156;
+  const FINAL_SHOW_COUNT = 106;
+  const FINAL_MOVIE_COUNT = 50;
+  const QUESTIONS_PER_TITLE = 10;
   // If two roles receive the same number of answers, use the most revealing
   // question first instead of favoring a fixed role or a button position.
   const TIE_BREAK_QUESTION_ORDER = [9, 8, 7, 5, 0, 2, 3, 1, 6, 4];
@@ -19,7 +24,9 @@
     "brooklyn-nine-nine",
     "stranger-things",
   ];
-  const ANIMATED_IDS = new Set([
+  // TVmaze does not consistently include "Animation" as a genre, so keep
+  // these original animated titles recognizable while newer data uses genres.
+  const LEGACY_ANIMATED_IDS = new Set([
     "the-simpsons",
     "avatar-the-last-airbender",
     "gravity-falls",
@@ -38,14 +45,19 @@
     result: document.querySelector("#result-view"),
     error: document.querySelector("#load-error"),
     homeButton: document.querySelector("#home-button"),
+    headerCount: document.querySelector("#header-count"),
     browseButton: document.querySelector("#browse-button"),
     surpriseButton: document.querySelector("#surprise-button"),
     emptySurpriseButton: document.querySelector("#empty-surprise-button"),
     heroCollage: document.querySelector("#hero-collage"),
+    heroLede: document.querySelector("#hero-lede"),
     showLibrary: document.querySelector("#show-library"),
     showGrid: document.querySelector("#show-grid"),
     showSearch: document.querySelector("#show-search"),
     showCount: document.querySelector("#show-count"),
+    titleTotal: document.querySelector("#title-total"),
+    titleKinds: document.querySelector("#title-kinds"),
+    typeFilterGroup: document.querySelector("#type-filter-group"),
     libraryTitle: document.querySelector("#library-title"),
     emptySearch: document.querySelector("#empty-search"),
     filterChips: [...document.querySelectorAll(".filter-chip")],
@@ -80,13 +92,14 @@
   };
 
   const state = {
-    shows: [],
-    showId: null,
+    titles: [],
+    titleId: null,
     questionIndex: 0,
     answers: [],
     answerLocked: false,
     search: "",
-    filter: "all",
+    typeFilter: "all",
+    genreFilter: "all",
     resultRole: null,
     toastTimer: null,
     advanceTimer: null,
@@ -104,8 +117,8 @@
       .trim();
   }
 
-  function getShow(id = state.showId) {
-    return state.shows.find((show) => show.id === id) || null;
+  function getTitle(id = state.titleId) {
+    return state.titles.find((title) => title.id === id) || null;
   }
 
   function setView(view) {
@@ -164,15 +177,15 @@
     return image;
   }
 
-  function wireFallback(image, show, fallbackAlt) {
+  function wireFallback(image, title, fallbackAlt) {
     image.dataset.fallbackAttempted = "false";
     image.onerror = () => {
       const canUsePoster =
-        show.poster && image.dataset.fallbackAttempted !== "true" && image.src !== show.poster;
+        title.poster && image.dataset.fallbackAttempted !== "true" && image.src !== title.poster;
       if (canUsePoster) {
         image.dataset.fallbackAttempted = "true";
-        image.alt = fallbackAlt || `${show.title} promotional artwork`;
-        image.src = show.poster;
+        image.alt = fallbackAlt || `${title.title} promotional artwork`;
+        image.src = title.poster;
         return;
       }
       image.hidden = true;
@@ -183,74 +196,125 @@
   function renderHeroCollage() {
     refs.heroCollage.replaceChildren();
     for (const id of FEATURED_IDS) {
-      const show = getShow(id);
-      if (!show) continue;
+      const titleData = getTitle(id);
+      if (!titleData) continue;
       const card = document.createElement("div");
       card.className = "collage-card";
-      const image = makeImage(show.poster, `${show.title} poster`);
+      const image = makeImage(titleData.poster, `${titleData.title} poster`);
       image.loading = "eager";
-      wireFallback(image, show);
+      wireFallback(image, titleData);
       const title = document.createElement("span");
-      title.textContent = show.title;
+      title.textContent = titleData.title;
       card.append(image, title);
       refs.heroCollage.append(card);
     }
   }
 
-  function showMatchesFilter(show) {
+  function isAnimatedTitle(title) {
+    return (
+      LEGACY_ANIMATED_IDS.has(title.id) ||
+      title.genres.some((genre) => normalizeText(genre).includes("animat"))
+    );
+  }
+
+  function titleMatchesFilter(title) {
     const query = normalizeText(state.search);
-    const matchesSearch = !query || normalizeText(show.title).includes(query);
-    let matchesCategory = true;
-    if (state.filter === "animated") matchesCategory = ANIMATED_IDS.has(show.id);
-    else if (state.filter !== "all") matchesCategory = show.genres.includes(state.filter);
-    return matchesSearch && matchesCategory;
+    const matchesSearch = !query || normalizeText(title.title).includes(query);
+    const matchesType = state.typeFilter === "all" || title.type === state.typeFilter;
+    let matchesGenre = true;
+    if (state.genreFilter === "animated") matchesGenre = isAnimatedTitle(title);
+    else if (state.genreFilter !== "all") {
+      const selectedGenre = normalizeText(state.genreFilter);
+      matchesGenre = title.genres.some((genre) => normalizeText(genre) === selectedGenre);
+    }
+    return matchesSearch && matchesType && matchesGenre;
   }
 
   function renderCatalog() {
-    const visibleShows = state.shows.filter(showMatchesFilter);
+    const visibleTitles = state.titles.filter(titleMatchesFilter);
     const fragment = document.createDocumentFragment();
 
-    for (const show of visibleShows) {
+    for (const titleData of visibleTitles) {
+      const typeLabel = titleData.type === "movie" ? "Movie" : "Show";
       const card = document.createElement("button");
       card.type = "button";
       card.className = "show-card";
-      card.setAttribute("aria-label", `Start a character quiz for ${show.title}`);
-      card.addEventListener("click", () => startQuiz(show.id));
+      card.setAttribute(
+        "aria-label",
+        `Start the ${titleData.title} ${typeLabel.toLowerCase()} character quiz`,
+      );
+      card.addEventListener("click", () => startQuiz(titleData.id));
 
       const imageWrap = document.createElement("span");
       imageWrap.className = "show-card-image";
-      const image = makeImage(show.poster, `${show.title} poster`);
+      const image = makeImage(titleData.poster, `${titleData.title} poster`);
       image.loading = "lazy";
-      wireFallback(image, show);
+      wireFallback(image, titleData);
+      const typeBadge = document.createElement("span");
+      typeBadge.className = `show-card-type ${titleData.type}`;
+      typeBadge.textContent = typeLabel;
       const badge = document.createElement("span");
       badge.className = "show-card-badge";
       badge.textContent = "10 questions";
-      imageWrap.append(image, badge);
+      imageWrap.append(image, typeBadge, badge);
 
       const title = document.createElement("strong");
-      title.textContent = show.title;
+      title.textContent = titleData.title;
       const meta = document.createElement("small");
-      const year = show.premiered ? show.premiered.slice(0, 4) : "TV series";
-      meta.textContent = `${year} · ${show.genres.slice(0, 2).join(" / ") || "Character quiz"}`;
+      const year = isNonemptyString(titleData.premiered)
+        ? titleData.premiered.slice(0, 4)
+        : typeLabel;
+      meta.textContent = `${year} · ${titleData.genres.slice(0, 2).join(" / ") || `${typeLabel} quiz`}`;
       card.append(imageWrap, title, meta);
       fragment.append(card);
     }
 
     refs.showGrid.replaceChildren(fragment);
-    refs.showGrid.hidden = visibleShows.length === 0;
-    refs.emptySearch.hidden = visibleShows.length !== 0;
-    refs.showCount.textContent = `${visibleShows.length} ${visibleShows.length === 1 ? "show" : "shows"} ready to play`;
+    refs.showGrid.hidden = visibleTitles.length === 0;
+    refs.emptySearch.hidden = visibleTitles.length !== 0;
+    const showCount = visibleTitles.filter((title) => title.type === "show").length;
+    const movieCount = visibleTitles.length - showCount;
+    const titleWord = visibleTitles.length === 1 ? "title" : "titles";
+    refs.showCount.textContent = `${visibleTitles.length} ${titleWord} ready · ${showCount} ${showCount === 1 ? "show" : "shows"} · ${movieCount} ${movieCount === 1 ? "movie" : "movies"}`;
+  }
+
+  function updateCatalogCopy() {
+    const total = state.titles.length;
+    const shows = state.titles.filter((title) => title.type === "show").length;
+    const movies = total - shows;
+    const hasMovies = movies > 0;
+    refs.headerCount.textContent = `${total} ${total === 1 ? "title" : "titles"} ready`;
+    refs.titleTotal.textContent = String(total);
+    refs.titleKinds.textContent = hasMovies ? "shows + movies" : "shows";
+    refs.heroLede.textContent = hasMovies
+      ? "Pick a show or movie you know, answer ten questions made just for that story, and meet your character twin — plus why the match makes sense."
+      : "Pick a show you know, answer ten questions made just for that series, and meet your character twin — plus why the match makes sense.";
+    refs.heroCollage.setAttribute(
+      "aria-label",
+      hasMovies ? "Featured shows and movies" : "Featured television shows",
+    );
+    refs.showSearch.placeholder = hasMovies
+      ? `Search ${total} shows and movies…`
+      : `Search ${total} shows…`;
+    refs.typeFilterGroup.hidden = !hasMovies;
+
+    const description = hasMovies
+      ? `${total} shows and movies. Ten unique questions each. Find your character twin.`
+      : `${total} shows. Ten unique questions each. Find your TV character twin.`;
+    document
+      .querySelectorAll('meta[property="og:description"], meta[name="twitter:description"]')
+      .forEach((meta) => meta.setAttribute("content", description));
   }
 
   function showHome({ push = true, focusLibrary = false } = {}) {
     clearAdvanceTimer();
     clearFocusTimer();
-    state.showId = null;
+    state.titleId = null;
     state.questionIndex = 0;
     state.answers = [];
     state.resultRole = null;
     setView("home");
-    document.title = "Character Check — Which TV Character Are You?";
+    document.title = "Character Check — Which Character Are You?";
     if (push) setUrl({}, true);
     if (focusLibrary) {
       refs.showLibrary.scrollIntoView({ behavior: prefersReducedMotion.matches ? "auto" : "smooth" });
@@ -266,62 +330,63 @@
     }
   }
 
-  function chooseRandomShow() {
-    const candidates = state.shows.filter(showMatchesFilter);
-    const pool = candidates.length ? candidates : state.shows;
-    const show = pool[Math.floor(Math.random() * pool.length)];
-    if (show) startQuiz(show.id);
+  function chooseRandomTitle() {
+    const candidates = state.titles.filter(titleMatchesFilter);
+    const pool = candidates.length ? candidates : state.titles;
+    const title = pool[Math.floor(Math.random() * pool.length)];
+    if (title) startQuiz(title.id);
   }
 
   function startQuiz(id, { push = true } = {}) {
-    const show = getShow(id);
-    if (!show) return showHome({ push });
+    const title = getTitle(id);
+    if (!title) return showHome({ push });
     clearAdvanceTimer();
     clearFocusTimer();
-    state.showId = id;
+    state.titleId = id;
     state.questionIndex = 0;
     state.answers = [];
     state.answerLocked = false;
     state.resultRole = null;
     setView("quiz");
     if (push) setUrl({ show: id }, true);
-    document.title = `${show.title} Character Quiz — Character Check`;
+    document.title = `${title.title} Character Quiz — Character Check`;
     renderQuestion();
     scrollToTop();
-    announce(`${show.title} quiz started. Ten questions.`);
+    announce(`${title.title} quiz started. Ten questions.`);
   }
 
   function restartQuiz() {
-    const id = state.showId;
+    const id = state.titleId;
     if (!id) return;
     startQuiz(id, { push: false });
     setUrl({ show: id }, false);
     showToast("Quiz restarted");
   }
 
-  function preloadNextPhoto(show) {
-    const nextImage = show.questionImages[state.questionIndex + 1];
+  function preloadNextPhoto(title) {
+    const nextImage = title.questions[state.questionIndex + 1]?.image;
     if (!nextImage) return;
     const preloader = new Image();
     preloader.src = nextImage.url;
   }
 
   function renderQuestion() {
-    const show = getShow();
-    const question = window.QUESTIONS[state.questionIndex];
-    if (!show || !question) return;
+    const title = getTitle();
+    const question = title?.questions?.[state.questionIndex];
+    if (!title || !question) return;
 
     const number = state.questionIndex + 1;
-    const photo = show.questionImages[state.questionIndex];
-    refs.quizShowName.textContent = show.title;
-    refs.questionCount.textContent = `Question ${number} of ${window.QUESTIONS.length}`;
+    const photo = question.image;
+    refs.quizShowName.textContent = title.title;
+    refs.questionCount.textContent = `Question ${number} of ${title.questions.length}`;
     refs.progressTrack.setAttribute("aria-valuenow", String(number));
-    refs.progressTrack.setAttribute("aria-valuemax", String(window.QUESTIONS.length));
-    refs.progressFill.style.width = `${(number / window.QUESTIONS.length) * 100}%`;
+    refs.progressTrack.setAttribute("aria-valuemax", String(title.questions.length));
+    refs.progressFill.style.width = `${(number / title.questions.length) * 100}%`;
     refs.questionKicker.textContent = question.kicker;
     refs.questionTitle.textContent = question.prompt;
-    refs.photoLabel.textContent = `Question ${number}`;
-    refs.showSourceLink.href = show.tvmazeUrl;
+    refs.photoLabel.textContent = `${title.type === "movie" ? "Movie" : "Show"} · Question ${number}`;
+    refs.showSourceLink.href = photo.sourceUrl || title.sourceUrl;
+    refs.showSourceLink.textContent = `Image via ${photo.sourceName || title.sourceName} ↗`;
 
     refs.questionPhoto.hidden = false;
     refs.questionPhoto.alt = photo.alt;
@@ -329,7 +394,7 @@
     refs.questionPhoto.style.animation = "none";
     void refs.questionPhoto.offsetWidth;
     refs.questionPhoto.style.animation = "";
-    wireFallback(refs.questionPhoto, show, `${show.title} promotional artwork`);
+    wireFallback(refs.questionPhoto, title, `${title.title} promotional artwork`);
 
     state.answerLocked = false;
     const chosenRole = state.answers[state.questionIndex] || null;
@@ -351,7 +416,7 @@
     });
     refs.answerList.replaceChildren(fragment);
     refs.previousQuestionButton.disabled = state.questionIndex === 0;
-    preloadNextPhoto(show);
+    preloadNextPhoto(title);
 
     state.focusTimer = window.setTimeout(() => {
       state.focusTimer = null;
@@ -372,7 +437,7 @@
     });
     announce(`${ROLE_META[role].label} answer selected.`);
 
-    const answeredShowId = state.showId;
+    const answeredTitleId = state.titleId;
     const answeredQuestionIndex = state.questionIndex;
     clearAdvanceTimer();
     state.advanceTimer = window.setTimeout(
@@ -380,12 +445,12 @@
         state.advanceTimer = null;
         if (
           refs.quiz.hidden ||
-          state.showId !== answeredShowId ||
+          state.titleId !== answeredTitleId ||
           state.questionIndex !== answeredQuestionIndex
         ) {
           return;
         }
-        if (state.questionIndex >= window.QUESTIONS.length - 1) finishQuiz();
+        if (state.questionIndex >= getTitle().questions.length - 1) finishQuiz();
         else {
           state.questionIndex += 1;
           renderQuestion();
@@ -437,10 +502,11 @@
     refs.mixNote.textContent = tieResolved
       ? "close tie · your strongest answer decided it"
       : "based on 10 answers";
+    const questionCount = getTitle()?.questions.length || QUESTIONS_PER_TITLE;
     const fragment = document.createDocumentFragment();
     for (const role of ROLE_ORDER) {
       const count = counts[role] || 0;
-      const percent = Math.round((count / window.QUESTIONS.length) * 100);
+      const percent = Math.round((count / questionCount) * 100);
       const row = document.createElement("div");
       row.className = "mix-row";
       row.innerHTML = `
@@ -457,30 +523,30 @@
   }
 
   function renderResult(role, counts = null, { push = true, tieResolved = false } = {}) {
-    const show = getShow();
-    const outcome = show?.outcomes?.[role];
-    if (!show || !outcome) return showHome({ push });
+    const title = getTitle();
+    const outcome = title?.outcomes?.[role];
+    if (!title || !outcome) return showHome({ push });
     clearAdvanceTimer();
     clearFocusTimer();
     state.resultRole = role;
     state.answerLocked = false;
     setView("result");
-    if (push) setUrl({ show: show.id, result: role }, true);
-    document.title = `You are ${outcome.character} — ${show.title} Character Quiz`;
+    if (push) setUrl({ show: title.id, result: role }, true);
+    document.title = `You are ${outcome.character} — ${title.title} Character Quiz`;
 
-    refs.resultBackdrop.style.backgroundImage = `url("${show.hero || show.poster}")`;
+    refs.resultBackdrop.style.backgroundImage = `url("${title.hero || title.poster}")`;
     refs.resultPhoto.hidden = false;
-    refs.resultPhoto.src = show.poster || show.hero;
-    refs.resultPhoto.alt = `${show.title} promotional artwork`;
-    wireFallback(refs.resultPhoto, show);
-    refs.resultShowName.textContent = show.title;
+    refs.resultPhoto.src = title.poster || title.hero;
+    refs.resultPhoto.alt = `${title.title} promotional artwork`;
+    wireFallback(refs.resultPhoto, title);
+    refs.resultShowName.textContent = `${title.type === "movie" ? "MOVIE" : "SHOW"} · ${title.title}`;
     refs.resultCharacter.textContent = outcome.character;
-    refs.resultActor.textContent = outcome.actor ? `Played by ${outcome.actor}` : show.title;
+    refs.resultActor.textContent = outcome.actor ? `Played by ${outcome.actor}` : title.title;
     refs.resultLabel.textContent = outcome.label;
     refs.resultWhy.textContent = outcome.why;
     renderMix(counts, tieResolved);
     scrollToTop();
-    announce(`Your ${show.title} character match is ${outcome.character}. ${outcome.why}`);
+    announce(`Your ${title.title} character match is ${outcome.character}. ${outcome.why}`);
     state.focusTimer = window.setTimeout(
       () => {
         state.focusTimer = null;
@@ -491,16 +557,18 @@
   }
 
   async function shareResult() {
-    const show = getShow();
-    const outcome = show?.outcomes?.[state.resultRole];
-    if (!show || !outcome) return;
+    const title = getTitle();
+    const outcome = title?.outcomes?.[state.resultRole];
+    if (!title || !outcome) return;
+    const typeLabel = title.type === "movie" ? "movie" : "show";
     const shareUrl = new URL(window.location.href);
     shareUrl.search = "";
-    shareUrl.searchParams.set("show", show.id);
+    // Keep `show` so links shared by the original release remain compatible.
+    shareUrl.searchParams.set("show", title.id);
     shareUrl.searchParams.set("result", state.resultRole);
     const data = {
-      title: `I’m ${outcome.character} from ${show.title}!`,
-      text: `Character Check says I’m ${outcome.character} from ${show.title}. Which character are you?`,
+      title: `I’m ${outcome.character} in the ${title.title} character quiz!`,
+      text: `I got ${outcome.character} in the ${title.title} ${typeLabel} quiz. Which character are you?`,
       url: shareUrl.toString(),
     };
     try {
@@ -536,22 +604,22 @@
 
   function routeFromUrl() {
     const params = new URLSearchParams(window.location.search);
-    const showId = params.get("show");
+    const titleId = params.get("show");
     const resultRole = params.get("result");
-    if (!showId || !getShow(showId)) return showHome({ push: false });
-    state.showId = showId;
+    if (!titleId || !getTitle(titleId)) return showHome({ push: false });
+    state.titleId = titleId;
     if (resultRole && ROLE_ORDER.includes(resultRole)) {
       renderResult(resultRole, null, { push: false });
       return;
     }
-    startQuiz(showId, { push: false });
+    startQuiz(titleId, { push: false });
   }
 
   function bindEvents() {
     refs.homeButton.addEventListener("click", () => showHome());
     refs.browseButton.addEventListener("click", () => showHome({ push: false, focusLibrary: true }));
-    refs.surpriseButton.addEventListener("click", chooseRandomShow);
-    refs.emptySurpriseButton.addEventListener("click", chooseRandomShow);
+    refs.surpriseButton.addEventListener("click", chooseRandomTitle);
+    refs.emptySurpriseButton.addEventListener("click", chooseRandomTitle);
     refs.quizExitButton.addEventListener("click", () => showHome());
     refs.quizRestartButton.addEventListener("click", restartQuiz);
     refs.previousQuestionButton.addEventListener("click", previousQuestion);
@@ -564,12 +632,17 @@
     });
     refs.filterChips.forEach((chip) => {
       chip.addEventListener("click", () => {
-        state.filter = chip.dataset.filter || "all";
-        refs.filterChips.forEach((item) => {
-          const active = item === chip;
-          item.classList.toggle("active", active);
-          item.setAttribute("aria-pressed", String(active));
-        });
+        const filterKind = chip.dataset.filterKind;
+        const filterValue = chip.dataset.filter || "all";
+        if (filterKind === "type") state.typeFilter = filterValue;
+        else state.genreFilter = filterValue;
+        refs.filterChips
+          .filter((item) => item.dataset.filterKind === filterKind)
+          .forEach((item) => {
+            const active = item === chip;
+            item.classList.toggle("active", active);
+            item.setAttribute("aria-pressed", String(active));
+          });
         renderCatalog();
       });
     });
@@ -577,20 +650,136 @@
     window.addEventListener("popstate", routeFromUrl);
   }
 
+  function isNonemptyString(value) {
+    return typeof value === "string" && value.trim().length > 0;
+  }
+
+  function resolveTitleQuestions(media, id) {
+    if (Array.isArray(media.questions)) return media.questions;
+
+    // This path exists only for a mismatched/cached legacy data load. Normal
+    // operation always uses the ten title-specific questions in MEDIA.
+    if (
+      typeof media.questions === "undefined" &&
+      Array.isArray(window.FALLBACK_QUESTIONS) &&
+      Array.isArray(media.questionImages) &&
+      media.questionImages.length === QUESTIONS_PER_TITLE
+    ) {
+      console.warn(`Title-specific questions did not load for ${id}; using emergency fallback.`);
+      return window.FALLBACK_QUESTIONS.map((question, index) => ({
+        ...question,
+        options: question.options.map((option) => ({ ...option })),
+        image: { ...media.questionImages[index] },
+      }));
+    }
+
+    throw new Error(`Title-specific questions are unavailable for ${id}`);
+  }
+
+  function validateTitleQuestions(questions, id) {
+    if (!Array.isArray(questions) || questions.length !== QUESTIONS_PER_TITLE) {
+      throw new Error(`${id} must have exactly ${QUESTIONS_PER_TITLE} questions`);
+    }
+
+    questions.forEach((question, questionIndex) => {
+      if (!isNonemptyString(question.prompt) || !isNonemptyString(question.kicker)) {
+        throw new Error(`${id} question ${questionIndex + 1} needs a prompt and kicker`);
+      }
+      if (!Array.isArray(question.options) || question.options.length !== ROLE_ORDER.length) {
+        throw new Error(`${id} question ${questionIndex + 1} must have four answers`);
+      }
+      const roles = question.options.map((option) => option.role).sort();
+      const expectedRoles = [...ROLE_ORDER].sort();
+      if (
+        !expectedRoles.every((role, index) => roles[index] === role) ||
+        !question.options.every((option) => isNonemptyString(option.text))
+      ) {
+        throw new Error(`${id} question ${questionIndex + 1} needs one answer for each role`);
+      }
+      if (!isNonemptyString(question.image?.url) || !isNonemptyString(question.image?.alt)) {
+        throw new Error(`${id} question ${questionIndex + 1} needs a paired image and alt text`);
+      }
+    });
+  }
+
+  function validateOutcomes(outcomes, id) {
+    if (!outcomes || typeof outcomes !== "object") {
+      throw new Error(`Character outcomes are unavailable for ${id}`);
+    }
+    for (const role of ROLE_ORDER) {
+      const outcome = outcomes[role];
+      if (
+        !outcome ||
+        !isNonemptyString(outcome.character) ||
+        !isNonemptyString(outcome.label) ||
+        !isNonemptyString(outcome.why)
+      ) {
+        throw new Error(`${id} has an incomplete ${role} character outcome`);
+      }
+    }
+  }
+
   function validateAndInitialize() {
     try {
-      if (!window.MEDIA || !window.OUTCOMES || !Array.isArray(window.QUESTIONS)) {
+      if (!window.MEDIA || !window.OUTCOMES || !Array.isArray(window.FALLBACK_QUESTIONS)) {
         throw new Error("Quiz data is unavailable");
       }
-      if (window.QUESTIONS.length !== 10) throw new Error("Expected ten questions");
-      state.shows = Object.entries(window.MEDIA).map(([id, media]) => {
+      if (window.FALLBACK_QUESTIONS.length !== QUESTIONS_PER_TITLE) {
+        throw new Error("Emergency questions are unavailable");
+      }
+
+      state.titles = Object.entries(window.MEDIA).map(([id, media]) => {
         const outcomes = window.OUTCOMES[id];
-        if (!outcomes || media.questionImages.length !== window.QUESTIONS.length) {
-          throw new Error(`Incomplete show data: ${id}`);
+        if (!isNonemptyString(media.officialTitle)) {
+          throw new Error(`Missing title name: ${id}`);
         }
-        return { id, title: media.officialTitle, outcomes, ...media };
+        // A cached first-release TVmaze entry has no `type`; it is always a show.
+        const type = media.type || (media.tvmazeUrl ? "show" : "");
+        if (type !== "show" && type !== "movie") {
+          throw new Error(`${id} must be labeled as a show or movie`);
+        }
+        if (!Array.isArray(media.genres)) {
+          throw new Error(`${id} must include genres`);
+        }
+        if (!isNonemptyString(media.poster)) {
+          throw new Error(`${id} must include poster artwork`);
+        }
+        const sourceName = media.sourceName || (media.tvmazeUrl ? "TVmaze" : "");
+        const sourceUrl = media.sourceUrl || media.tvmazeUrl || "";
+        if (!isNonemptyString(sourceName) || !isNonemptyString(sourceUrl)) {
+          throw new Error(`${id} must include its image source`);
+        }
+        const questions = resolveTitleQuestions(media, id);
+        validateTitleQuestions(questions, id);
+        validateOutcomes(outcomes, id);
+        return {
+          ...media,
+          id,
+          type,
+          title: media.officialTitle,
+          sourceName,
+          sourceUrl,
+          outcomes,
+          questions,
+        };
       });
-      if (state.shows.length !== 56) throw new Error("Expected 56 shows");
+      if (state.titles.length < MIN_TITLE_COUNT || state.titles.length > MAX_TITLE_COUNT) {
+        throw new Error(`Expected between ${MIN_TITLE_COUNT} and ${MAX_TITLE_COUNT} titles`);
+      }
+      const showCount = state.titles.filter((title) => title.type === "show").length;
+      const movieCount = state.titles.filter((title) => title.type === "movie").length;
+      if (showCount > FINAL_SHOW_COUNT || movieCount > FINAL_MOVIE_COUNT) {
+        throw new Error(
+          `Catalog exceeds ${FINAL_SHOW_COUNT} shows or ${FINAL_MOVIE_COUNT} movies`,
+        );
+      }
+      if (
+        state.titles.length === MAX_TITLE_COUNT &&
+        (showCount !== FINAL_SHOW_COUNT || movieCount !== FINAL_MOVIE_COUNT)
+      ) {
+        throw new Error(`The full catalog needs ${FINAL_SHOW_COUNT} shows and ${FINAL_MOVIE_COUNT} movies`);
+      }
+      updateCatalogCopy();
       renderHeroCollage();
       renderCatalog();
       bindEvents();

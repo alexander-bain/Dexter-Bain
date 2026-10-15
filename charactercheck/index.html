@@ -6,23 +6,23 @@
     <meta name="theme-color" content="#10111a" />
     <meta
       name="description"
-      content="Pick a favorite TV show, answer ten personality questions, and discover which character you are — with a reason that actually fits."
+      content="Pick a favorite show or movie, answer ten title-specific personality questions, and discover which character you are — with a reason that fits."
     />
     <link rel="canonical" href="https://dexterbain.com/charactercheck/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Character Check" />
-    <meta property="og:title" content="Character Check — Which TV Character Are You?" />
+    <meta property="og:title" content="Character Check — Which Character Are You?" />
     <meta
       property="og:description"
-      content="56 shows. 10 questions each. Find your TV character twin."
+      content="Shows and movies with 10 unique questions each. Find your character twin."
     />
     <meta property="og:url" content="https://dexterbain.com/charactercheck/" />
     <meta property="og:image" content="https://dexterbain.com/charactercheck/og.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Character Check — Which TV Character Are You?" />
+    <meta name="twitter:title" content="Character Check — Which Character Are You?" />
     <meta
       name="twitter:description"
-      content="56 shows. 10 questions each. Find your TV character twin."
+      content="Shows and movies with 10 unique questions each. Find your character twin."
     />
     <meta name="twitter:image" content="https://dexterbain.com/charactercheck/og.png" />
     <link rel="preconnect" href="https://static.tvmaze.com" crossorigin />
@@ -33,7 +33,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <title>Character Check — Which TV Character Are You?</title>
+    <title>Character Check — Which Character Are You?</title>
     <script defer src="data/questions.js"></script>
     <script defer src="data/outcomes.js"></script>
     <script defer src="data/media.js"></script>
@@ -52,7 +52,7 @@
       </button>
       <div class="header-note">
         <span class="pulse-dot" aria-hidden="true"></span>
-        56 shows ready
+        <span id="header-count">Titles loading</span>
       </div>
     </header>
 
@@ -61,41 +61,41 @@
         <div class="hero">
           <div class="hero-copy">
             <p class="eyebrow"><span>NEW</span> Your next personality rabbit hole</p>
-            <h1 id="home-title">Which TV character are <em>you?</em></h1>
-            <p class="hero-lede">
-              Pick a show you know, answer ten fun personality questions, and meet your
-              character twin — plus the reason the match makes sense.
+            <h1 id="home-title">Which character are <em>you?</em></h1>
+            <p class="hero-lede" id="hero-lede">
+              Pick a show or movie you know, answer ten questions made just for that
+              story, and meet your character twin — plus why the match makes sense.
             </p>
             <div class="hero-actions">
               <button class="primary-button" id="browse-button" type="button">
-                Browse all shows <span aria-hidden="true">↓</span>
+                Browse all titles <span aria-hidden="true">↓</span>
               </button>
               <button class="ghost-button" id="surprise-button" type="button">
                 <span aria-hidden="true">✦</span> Surprise me
               </button>
             </div>
             <ul class="hero-facts" aria-label="Game facts">
-              <li><strong>56</strong><span>shows</span></li>
+              <li><strong id="title-total">—</strong><span id="title-kinds">titles</span></li>
               <li><strong>10</strong><span>questions each</span></li>
-              <li><strong>1</strong><span>show photo per question</span></li>
+              <li><strong>1</strong><span>matching image each</span></li>
             </ul>
           </div>
-          <div class="hero-collage" id="hero-collage" role="group" aria-label="Featured television shows"></div>
+          <div class="hero-collage" id="hero-collage" role="group" aria-label="Featured shows and movies"></div>
         </div>
 
         <section class="show-library" id="show-library" aria-labelledby="library-title">
           <div class="library-heading">
             <div>
               <p class="section-kicker">Choose your universe</p>
-              <h2 id="library-title" tabindex="-1">Find your show</h2>
+              <h2 id="library-title" tabindex="-1">Find your title</h2>
             </div>
             <label class="search-box" for="show-search">
               <span aria-hidden="true">⌕</span>
-              <span class="visually-hidden">Search shows</span>
+              <span class="visually-hidden">Search shows and movies</span>
               <input
                 id="show-search"
                 type="search"
-                placeholder="Search 56 shows…"
+                placeholder="Search shows and movies…"
                 autocomplete="off"
                 spellcheck="false"
               />
@@ -103,18 +103,31 @@
             </label>
           </div>
           <div class="library-meta">
-            <p id="show-count" aria-live="polite">Loading the show wall…</p>
-            <div class="quick-picks" role="group" aria-label="Quick filters">
-              <button class="filter-chip active" type="button" data-filter="all" aria-pressed="true">All</button>
-              <button class="filter-chip" type="button" data-filter="Comedy" aria-pressed="false">Comedy</button>
-              <button class="filter-chip" type="button" data-filter="Drama" aria-pressed="false">Drama</button>
-              <button class="filter-chip" type="button" data-filter="animated" aria-pressed="false">Animated</button>
+            <p id="show-count" aria-live="polite">Loading the title wall…</p>
+            <div class="filter-groups" role="group" aria-label="Title filters">
+              <div class="filter-group" id="type-filter-group">
+                <span class="filter-label">Type</span>
+                <div class="quick-picks" role="group" aria-label="Filter by type">
+                  <button class="filter-chip active" type="button" data-filter-kind="type" data-filter="all" aria-pressed="true">All</button>
+                  <button class="filter-chip" type="button" data-filter-kind="type" data-filter="show" aria-pressed="false">Shows</button>
+                  <button class="filter-chip" type="button" data-filter-kind="type" data-filter="movie" aria-pressed="false">Movies</button>
+                </div>
+              </div>
+              <div class="filter-group">
+                <span class="filter-label">Genre</span>
+                <div class="quick-picks" role="group" aria-label="Filter by genre">
+                  <button class="filter-chip active" type="button" data-filter-kind="genre" data-filter="all" aria-pressed="true">All genres</button>
+                  <button class="filter-chip" type="button" data-filter-kind="genre" data-filter="Comedy" aria-pressed="false">Comedy</button>
+                  <button class="filter-chip" type="button" data-filter-kind="genre" data-filter="Drama" aria-pressed="false">Drama</button>
+                  <button class="filter-chip" type="button" data-filter-kind="genre" data-filter="animated" aria-pressed="false">Animated</button>
+                </div>
+              </div>
             </div>
           </div>
           <div class="show-grid" id="show-grid"></div>
           <div class="empty-search" id="empty-search" hidden>
             <span aria-hidden="true">📺</span>
-            <h3>No show found</h3>
+            <h3>No title found</h3>
             <p>Try a shorter search, or let us choose one for you.</p>
             <button class="primary-button" id="empty-surprise-button" type="button">Surprise me</button>
           </div>
@@ -123,7 +136,7 @@
 
       <section class="quiz-view" id="quiz-view" hidden aria-labelledby="question-title">
         <div class="quiz-topbar">
-          <button class="round-button" id="quiz-exit-button" type="button" aria-label="Exit quiz and choose another show">←</button>
+          <button class="round-button" id="quiz-exit-button" type="button" aria-label="Exit quiz and choose another title">←</button>
           <div class="quiz-progress-copy">
             <strong id="quiz-show-name">Show name</strong>
             <span id="question-count">Question 1 of 10</span>
@@ -146,7 +159,7 @@
             <img id="question-photo" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" />
             <figcaption>
               <span id="photo-label">Question 1</span>
-              <a id="show-source-link" href="https://www.tvmaze.com" target="_blank" rel="noreferrer">Image via TVmaze ↗</a>
+              <a id="show-source-link" href="#" target="_blank" rel="noreferrer">View image source ↗</a>
             </figcaption>
           </figure>
 
@@ -187,7 +200,7 @@
             <div class="result-actions">
               <button class="primary-button" id="share-result-button" type="button">Share my result</button>
               <button class="ghost-button dark" id="retake-button" type="button">Retake quiz</button>
-              <button class="text-button dark" id="another-show-button" type="button">Choose another show →</button>
+              <button class="text-button dark" id="another-show-button" type="button">Choose another title →</button>
             </div>
           </div>
         </div>
@@ -196,7 +209,7 @@
 
       <section class="load-error" id="load-error" hidden>
         <span aria-hidden="true">!</span>
-        <h1>The show wall did not load.</h1>
+        <h1>The title wall did not load.</h1>
         <p>Please refresh the page and try again.</p>
         <button class="primary-button" type="button" onclick="window.location.reload()">Refresh</button>
       </section>
@@ -205,10 +218,10 @@
     <footer class="site-footer">
       <div>
         <strong>CHARACTER CHECK</strong>
-        <p>A fan-made personality game. Not affiliated with or endorsed by any featured show.</p>
+        <p>A fan-made personality game. Not affiliated with or endorsed by any featured title.</p>
       </div>
       <p>
-        Show information and imagery supplied by
+        Each image is credited to its source beside the question. Show data includes
         <a href="https://www.tvmaze.com/api" target="_blank" rel="noreferrer">TVmaze</a>
         under CC BY-SA.
       </p>
