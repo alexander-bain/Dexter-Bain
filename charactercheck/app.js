@@ -13,6 +13,98 @@
   const FINAL_SHOW_COUNT = 106;
   const FINAL_MOVIE_COUNT = 50;
   const QUESTIONS_PER_TITLE = 10;
+  const QUICK_QUESTION_BANK = [
+    "A plan changes at the last second. What do you do?",
+    "The group is running out of time. What’s your move?",
+    "Someone feels left out. How do you help?",
+    "Two people disagree. Where do you step in?",
+    "A simple task turns messy. How do you react?",
+    "Everyone is looking to you. What do you do first?",
+    "A secret changes the mood. How do you respond?",
+    "The safe choice feels wrong. What guides you?",
+    "The team needs a fresh idea. What do you suggest?",
+    "A friend makes a mistake. How do you handle it?",
+    "Plans fall apart in public. What’s your instinct?",
+    "A new person joins the group. How do you welcome them?",
+    "The group has one chance left. What role do you take?",
+    "Someone challenges the plan. What do you do?",
+    "A fun night gets tense. How do you reset it?",
+    "A tough truth needs saying. How do you say it?",
+    "Nobody agrees on the next move. How do you help?",
+    "You notice a problem first. What happens next?",
+    "A bold idea could work. Do you go for it?",
+    "The rules get in the way. How do you respond?",
+    "A friend asks for honest advice. What do you say?",
+    "The group needs to stay calm. What do you do?",
+    "A surprise changes everything. What’s your first move?",
+    "Someone takes a big risk. How do you react?",
+    "A challenge becomes a competition. How do you play it?",
+    "The team has to improvise. What do you bring?",
+    "A choice affects everyone. How do you decide?",
+    "One person needs backup. How do you show up?",
+    "The room feels awkward. How do you break the tension?",
+    "A mistake can still be fixed. Where do you start?",
+    "Everyone has a different idea. What role feels natural?",
+    "A big moment is coming. How do you prepare?",
+    "Someone doubts the group. How do you respond?",
+    "A quiet problem keeps growing. What do you do?",
+    "The group needs courage. How do you give it?",
+    "A shortcut appears. Do you take it?",
+    "A celebration needs saving. What’s your move?",
+    "A friendship is being tested. What matters most?",
+    "You have to choose quickly. What leads you?",
+    "Things are getting chaotic. How do you help?",
+  ];
+  const QUICK_ANSWER_BANKS = {
+    heart: [
+      "Check on everyone first.",
+      "Keep the group together.",
+      "Listen before making a move.",
+      "Protect the friendship.",
+      "Help the person who needs it.",
+      "Make sure no one feels alone.",
+      "Say the kind, honest thing.",
+      "Put trust first.",
+      "Offer steady support.",
+      "Find a fair compromise.",
+    ],
+    mind: [
+      "Pause and make a plan.",
+      "Look for the missing detail.",
+      "Ask a few clear questions.",
+      "Think two steps ahead.",
+      "Choose the safest solution.",
+      "Sort out the facts.",
+      "Break it into smaller steps.",
+      "Weigh the risks first.",
+      "Find what caused the problem.",
+      "Give everyone a clear job.",
+    ],
+    spark: [
+      "Take the lead.",
+      "Raise everyone’s energy.",
+      "Say what needs to be said.",
+      "Make the bold move.",
+      "Use humor to reset things.",
+      "Get everyone moving.",
+      "Trust your confidence.",
+      "Turn pressure into momentum.",
+      "Bring the group together.",
+      "Go for the exciting choice.",
+    ],
+    wildcard: [
+      "Try the unexpected idea.",
+      "Improvise a new route.",
+      "Follow your strange hunch.",
+      "Create a clever distraction.",
+      "Flip the problem around.",
+      "Take the adventurous option.",
+      "Break the usual pattern.",
+      "Change the game.",
+      "Use whatever is nearby.",
+      "Take the side door.",
+    ],
+  };
   // If two roles receive the same number of answers, use the most revealing
   // question first instead of favoring a fixed role or a button position.
   const TIE_BREAK_QUESTION_ORDER = [9, 8, 7, 5, 0, 2, 3, 1, 6, 4];
@@ -115,6 +207,48 @@
       .replace(/[’']/g, "")
       .toLowerCase()
       .trim();
+  }
+
+  function stableHash(value) {
+    let hash = 2166136261;
+    for (const character of String(value)) {
+      hash ^= character.charCodeAt(0);
+      hash = Math.imul(hash, 16777619);
+    }
+    return hash >>> 0;
+  }
+
+  function shuffledForTitle(items, titleId) {
+    const copy = items.slice();
+    let seed = stableHash(titleId) || 1;
+    for (let index = copy.length - 1; index > 0; index -= 1) {
+      seed ^= seed << 13;
+      seed ^= seed >>> 17;
+      seed ^= seed << 5;
+      const target = (seed >>> 0) % (index + 1);
+      [copy[index], copy[target]] = [copy[target], copy[index]];
+    }
+    return copy;
+  }
+
+  function compactQuestions(questions, titleId) {
+    const prompts = shuffledForTitle(QUICK_QUESTION_BANK, titleId).slice(
+      0,
+      QUESTIONS_PER_TITLE,
+    );
+    return questions.map((question, questionIndex) => ({
+      ...question,
+      prompt: prompts[questionIndex],
+      kicker: `Quick choice · ${questionIndex + 1} of ${QUESTIONS_PER_TITLE}`,
+      options: question.options.map((option) => {
+        const bank = QUICK_ANSWER_BANKS[option.role];
+        const start = stableHash(`${titleId}:${option.role}`) % bank.length;
+        return {
+          ...option,
+          text: bank[(start + questionIndex * 3) % bank.length],
+        };
+      }),
+    }));
   }
 
   function getTitle(id = state.titleId) {
@@ -287,8 +421,8 @@
     refs.titleTotal.textContent = String(total);
     refs.titleKinds.textContent = hasMovies ? "shows + movies" : "shows";
     refs.heroLede.textContent = hasMovies
-      ? "Pick a show or movie you know, answer ten questions made just for that story, and meet your character twin — plus why the match makes sense."
-      : "Pick a show you know, answer ten questions made just for that series, and meet your character twin — plus why the match makes sense.";
+      ? "Pick a show or movie you know, answer ten quick questions, and meet your character twin — plus why the match makes sense."
+      : "Pick a show you know, answer ten quick questions, and meet your character twin — plus why the match makes sense.";
     refs.heroCollage.setAttribute(
       "aria-label",
       hasMovies ? "Featured shows and movies" : "Featured television shows",
@@ -655,7 +789,7 @@
   }
 
   function resolveTitleQuestions(media, id) {
-    if (Array.isArray(media.questions)) return media.questions;
+    if (Array.isArray(media.questions)) return compactQuestions(media.questions, id);
 
     // This path exists only for a mismatched/cached legacy data load. Normal
     // operation always uses the ten title-specific questions in MEDIA.
@@ -666,11 +800,12 @@
       media.questionImages.length === QUESTIONS_PER_TITLE
     ) {
       console.warn(`Title-specific questions did not load for ${id}; using emergency fallback.`);
-      return window.FALLBACK_QUESTIONS.map((question, index) => ({
+      const fallbackQuestions = window.FALLBACK_QUESTIONS.map((question, index) => ({
         ...question,
         options: question.options.map((option) => ({ ...option })),
         image: { ...media.questionImages[index] },
       }));
+      return compactQuestions(fallbackQuestions, id);
     }
 
     throw new Error(`Title-specific questions are unavailable for ${id}`);
