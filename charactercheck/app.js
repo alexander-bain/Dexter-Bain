@@ -13,495 +13,6 @@
   const FINAL_SHOW_COUNT = 106;
   const FINAL_MOVIE_COUNT = 50;
   const QUESTIONS_PER_TITLE = 10;
-  const QUICK_QUESTION_BANK = [
-    {
-      topic: "friendship",
-      prompt: "In this scene, how would you connect first?",
-      options: {
-        heart: "Start with a warm personal hello.",
-        mind: "Ask about a shared interest.",
-        spark: "Bring lively energy to the chat.",
-        wildcard: "Open with a creative question.",
-      },
-    },
-    {
-      topic: "friendship",
-      prompt: "If friendship shaped this photo, what would stand out?",
-      options: {
-        heart: "Closeness between two people.",
-        mind: "How people are arranged.",
-        spark: "The liveliest facial expression.",
-        wildcard: "The most surprising pairing.",
-      },
-    },
-    {
-      topic: "friendship",
-      prompt: "If you joined this moment, where would you fit?",
-      options: {
-        heart: "Beside an inviting face.",
-        mind: "Near the most orderly area.",
-        spark: "At the liveliest gathering spot.",
-        wildcard: "Near a creative activity.",
-      },
-    },
-    {
-      topic: "friendship",
-      prompt: "If people gathered here, what would you add?",
-      options: {
-        heart: "Add a thoughtful personal touch.",
-        mind: "Suggest a well-planned activity.",
-        spark: "Share contagious enthusiasm.",
-        wildcard: "Introduce a fresh group ritual.",
-      },
-    },
-    {
-      topic: "conflict",
-      prompt: "If tension entered this scene, what would you do?",
-      options: {
-        heart: "Create space for every viewpoint.",
-        mind: "Map the source of disagreement.",
-        spark: "State a clear path forward.",
-        wildcard: "Reframe the issue creatively.",
-      },
-    },
-    {
-      topic: "conflict",
-      prompt: "If this scene grew tense, which role fits you?",
-      options: {
-        heart: "A calm, people-focused mediator.",
-        mind: "A clear, fact-focused analyst.",
-        spark: "A confident, direct motivator.",
-        wildcard: "A creative solution designer.",
-      },
-    },
-    {
-      topic: "conflict",
-      prompt: "If tension rose in this scene, what would you notice?",
-      options: {
-        heart: "Changes in people's expressions.",
-        mind: "Facts visible in the situation.",
-        spark: "Shifts in body language.",
-        wildcard: "A clue suggesting another angle.",
-      },
-    },
-    {
-      topic: "conflict",
-      prompt: "If the mood shifted here, how would you reset?",
-      options: {
-        heart: "Invite a calm personal check-in.",
-        mind: "Name a simple shared goal.",
-        spark: "Bring in confident new energy.",
-        wildcard: "Switch to a playful format.",
-      },
-    },
-    {
-      topic: "planning",
-      prompt: "If this group needed a plan, where would you start?",
-      options: {
-        heart: "Gather everyone's priorities.",
-        mind: "Set the order and timing.",
-        spark: "Choose an exciting main goal.",
-        wildcard: "Add room for flexible choices.",
-      },
-    },
-    {
-      topic: "planning",
-      prompt: "How would you organize the moment pictured here?",
-      options: {
-        heart: "Pair people by shared interests.",
-        mind: "Build a clear step-by-step plan.",
-        spark: "Create a strong starting signal.",
-        wildcard: "Sketch two possible routes.",
-      },
-    },
-    {
-      topic: "planning",
-      prompt: "Which planning role fits you in this scene?",
-      options: {
-        heart: "The people-focused listener.",
-        mind: "The detail coordinator.",
-        spark: "The goal motivator.",
-        wildcard: "The creative options planner.",
-      },
-    },
-    {
-      topic: "planning",
-      prompt: "If this group planned, what could make the plan better?",
-      options: {
-        heart: "More input from each person.",
-        mind: "A sharper timeline and sequence.",
-        spark: "A memorable shared target.",
-        wildcard: "Several paths toward the goal.",
-      },
-    },
-    {
-      topic: "risk",
-      prompt: "If this scene involved a big choice, what guides you?",
-      options: {
-        heart: "Potential for shared connection.",
-        mind: "A clear view of tradeoffs.",
-        spark: "A goal with real excitement.",
-        wildcard: "A route with fresh possibility.",
-      },
-    },
-    {
-      topic: "risk",
-      prompt: "If this moment changed course, what would you choose?",
-      options: {
-        heart: "A route keeping people connected.",
-        mind: "A route backed by clear facts.",
-        spark: "A route with strong momentum.",
-        wildcard: "A route with fresh possibilities.",
-      },
-    },
-    {
-      topic: "risk",
-      prompt: "What kind of challenge fits the scene shown?",
-      options: {
-        heart: "A bond-building group challenge.",
-        mind: "A strategy-rich challenge.",
-        spark: "A high-energy team challenge.",
-        wildcard: "A creative discovery challenge.",
-      },
-    },
-    {
-      topic: "risk",
-      prompt: "If uncertainty arose here, how would you respond?",
-      options: {
-        heart: "Check how the group feels.",
-        mind: "Review the available clues.",
-        spark: "Move with focused confidence.",
-        wildcard: "Explore an original route.",
-      },
-    },
-    {
-      topic: "creativity",
-      prompt: "What creative detail would you add to this scene?",
-      options: {
-        heart: "A personal symbol of connection.",
-        mind: "A design with a clever pattern.",
-        spark: "A vivid burst of color.",
-        wildcard: "A surprising visual twist.",
-      },
-    },
-    {
-      topic: "creativity",
-      prompt: "If this picture inspired an idea, where would you look?",
-      options: {
-        heart: "A meaningful shared memory.",
-        mind: "A useful structure or theme.",
-        spark: "A striking image or feeling.",
-        wildcard: "A playful mix of inspirations.",
-      },
-    },
-    {
-      topic: "creativity",
-      prompt: "If this scene became a story, what would lead?",
-      options: {
-        heart: "The relationships among people.",
-        mind: "The mystery behind the setting.",
-        spark: "The most dramatic turning point.",
-        wildcard: "A detail opening a new world.",
-      },
-    },
-    {
-      topic: "creativity",
-      prompt: "How would you make this moment more creative?",
-      options: {
-        heart: "Add a collaborative activity.",
-        mind: "Give the scene a clear concept.",
-        spark: "Heighten the color and movement.",
-        wildcard: "Blend two distinct styles.",
-      },
-    },
-    {
-      topic: "leadership",
-      prompt: "If this scene needed direction, how would you lead?",
-      options: {
-        heart: "Build agreement around a goal.",
-        mind: "Define clear roles and steps.",
-        spark: "Set an energetic example.",
-        wildcard: "Offer a fresh way forward.",
-      },
-    },
-    {
-      topic: "leadership",
-      prompt: "Which leadership style would fit this moment?",
-      options: {
-        heart: "Connection-focused guidance.",
-        mind: "Strategy-focused coordination.",
-        spark: "Energy-focused motivation.",
-        wildcard: "Creative, open-ended guidance.",
-      },
-    },
-    {
-      topic: "leadership",
-      prompt: "If people joined this scene, what would you create?",
-      options: {
-        heart: "A stronger sense of teamwork.",
-        mind: "A smooth and organized result.",
-        spark: "An ambitious shared milestone.",
-        wildcard: "A creative new possibility.",
-      },
-    },
-    {
-      topic: "leadership",
-      prompt: "If a group formed here, how would you build momentum?",
-      options: {
-        heart: "Link every role to shared purpose.",
-        mind: "Set visible steps and checkpoints.",
-        spark: "Lead with focused enthusiasm.",
-        wildcard: "Offer two new ways forward.",
-      },
-    },
-    {
-      topic: "stress",
-      prompt: "If pressure rose here, what would you do first?",
-      options: {
-        heart: "Check in with the nearest person.",
-        mind: "Identify the most urgent task.",
-        spark: "Take one clear action at once.",
-        wildcard: "Change one part of the setup.",
-      },
-    },
-    {
-      topic: "stress",
-      prompt: "If this moment became hectic, how would you respond?",
-      options: {
-        heart: "Reconnect through a calm check-in.",
-        mind: "Sort every task by priority.",
-        spark: "Use movement to regain focus.",
-        wildcard: "Change the setting or format.",
-      },
-    },
-    {
-      topic: "stress",
-      prompt: "If this scene grew tense, what strength would help?",
-      options: {
-        heart: "Reading how people feel.",
-        mind: "Clear analysis under pressure.",
-        spark: "Focused energy and resolve.",
-        wildcard: "Inventive thinking under pressure.",
-      },
-    },
-    {
-      topic: "stress",
-      prompt: "If this pictured moment felt overwhelming, what helps?",
-      options: {
-        heart: "A quiet pause with another person.",
-        mind: "A short list in priority order.",
-        spark: "One energizing action step.",
-        wildcard: "A quick change of setting.",
-      },
-    },
-    {
-      topic: "fun",
-      prompt: "How would you add fun to this scene?",
-      options: {
-        heart: "Create a shared favorite activity.",
-        mind: "Set up a clever team puzzle.",
-        spark: "Start music and movement.",
-        wildcard: "Invent a themed mini-game.",
-      },
-    },
-    {
-      topic: "fun",
-      prompt: "Which fun detail belongs in this picture?",
-      options: {
-        heart: "A relaxed circle of friends.",
-        mind: "A satisfying game challenge.",
-        spark: "A lively performance moment.",
-        wildcard: "A creative hands-on surprise.",
-      },
-    },
-    {
-      topic: "fun",
-      prompt: "If this group celebrated, what would you plan?",
-      options: {
-        heart: "A gathering with personal touches.",
-        mind: "A well-designed team tournament.",
-        spark: "A high-energy group showcase.",
-        wildcard: "A playful themed adventure.",
-      },
-    },
-    {
-      topic: "fun",
-      prompt: "What would make this scene feel more playful?",
-      options: {
-        heart: "A friendly shared tradition.",
-        mind: "A game with clever strategy.",
-        spark: "A soundtrack full of energy.",
-        wildcard: "A playful clue-finding trail.",
-      },
-    },
-    {
-      topic: "values",
-      prompt: "What matters most to you in this pictured moment?",
-      options: {
-        heart: "Meaningful time with people.",
-        mind: "A choice matching clear goals.",
-        spark: "A chance for full expression.",
-        wildcard: "Freedom to explore new ideas.",
-      },
-    },
-    {
-      topic: "values",
-      prompt: "Which priority would shape your role in this scene?",
-      options: {
-        heart: "Building lasting relationships.",
-        mind: "Making thoughtful progress.",
-        spark: "Turning ideas into action.",
-        wildcard: "Keeping possibilities open.",
-      },
-    },
-    {
-      topic: "values",
-      prompt: "If people gathered here, what would feel worthwhile?",
-      options: {
-        heart: "A deeper personal connection.",
-        mind: "A useful shared result.",
-        spark: "An inspiring group achievement.",
-        wildcard: "A fresh idea for the next step.",
-      },
-    },
-    {
-      topic: "values",
-      prompt: "If this scene mattered, what would you protect?",
-      options: {
-        heart: "A sense of personal connection.",
-        mind: "The reason for being there.",
-        spark: "The chance to express something.",
-        wildcard: "The freedom to change direction.",
-      },
-    },
-    {
-      topic: "social energy",
-      prompt: "You enter this scene. Where does your energy go?",
-      options: {
-        heart: "Toward a warm one-on-one chat.",
-        mind: "Toward seeing how the group works.",
-        spark: "Toward the liveliest conversation.",
-        wildcard: "Toward a creative activity.",
-      },
-    },
-    {
-      topic: "social energy",
-      prompt: "If others were here, how would you join in?",
-      options: {
-        heart: "Connect through a shared interest.",
-        mind: "Learn the group's rhythm first.",
-        spark: "Begin an upbeat conversation.",
-        wildcard: "Offer an imaginative icebreaker.",
-      },
-    },
-    {
-      topic: "social energy",
-      prompt: "If conversation paused here, what would you add?",
-      options: {
-        heart: "A question about personal stories.",
-        mind: "A thoughtful idea to discuss.",
-        spark: "An upbeat, animated story.",
-        wildcard: "A creative conversation prompt.",
-      },
-    },
-    {
-      topic: "social energy",
-      prompt: "If you hosted here, what would you prepare first?",
-      options: {
-        heart: "Set up a cozy welcome area.",
-        mind: "Post a simple activity schedule.",
-        spark: "Plan a lively group activity.",
-        wildcard: "Set out a surprise activity.",
-      },
-    },
-  ];
-  const REQUIRED_QUICK_TOPICS = [
-    "friendship",
-    "conflict",
-    "planning",
-    "risk",
-    "creativity",
-    "leadership",
-    "stress",
-    "fun",
-    "values",
-    "social energy",
-  ];
-  const PHOTO_PROMPT_TERMS = [
-    "scene",
-    "photo",
-    "picture",
-    "moment",
-    "group",
-    "room",
-    "people",
-    "here",
-    "shown",
-    "pictured",
-  ];
-
-  function assertQuickQuestionBank(bank) {
-    if (!Array.isArray(bank) || bank.length < 40) {
-      throw new Error("Quick question bank must contain at least 40 complete questions.");
-    }
-
-    const expectedRoles = [...ROLE_ORDER].sort();
-    const seenPrompts = new Set();
-    const seenAnswers = new Set();
-    const seenTopics = new Set();
-    const unclearPronoun = /\b(?:this|that|these|those|they|them|their|he|him|his|she|her|hers)\b/i;
-
-    bank.forEach((question, questionIndex) => {
-      const label = `Quick question ${questionIndex + 1}`;
-      if (typeof question.topic !== "string" || !question.topic.trim()) {
-        throw new Error(`${label} needs a topic.`);
-      }
-      seenTopics.add(question.topic);
-      if (
-        typeof question.prompt !== "string" ||
-        !question.prompt.trim() ||
-        question.prompt.length > 55
-      ) {
-        throw new Error(`${label} needs a prompt of 55 characters or fewer.`);
-      }
-      const promptKey = normalizeText(question.prompt);
-      if (seenPrompts.has(promptKey)) throw new Error(`${label} repeats another prompt.`);
-      seenPrompts.add(promptKey);
-      const promptWords = new Set(promptKey.match(/[a-z]+/g) || []);
-      if (!PHOTO_PROMPT_TERMS.some((term) => promptWords.has(term))) {
-        throw new Error(`${label} must connect directly to the displayed photo.`);
-      }
-
-      const roles = Object.keys(question.options || {}).sort();
-      if (!expectedRoles.every((role, index) => roles[index] === role)) {
-        throw new Error(`${label} needs one tailored answer for every role.`);
-      }
-
-      for (const role of ROLE_ORDER) {
-        const answer = question.options[role];
-        if (typeof answer !== "string" || !answer.trim() || answer.length > 34) {
-          throw new Error(`${label}/${role} must be 34 characters or fewer.`);
-        }
-        if (/\bit\b/i.test(answer)) {
-          throw new Error(`${label}/${role} cannot use the ambiguous word “it.”`);
-        }
-        if (unclearPronoun.test(answer)) {
-          throw new Error(`${label}/${role} uses an unclear pronoun.`);
-        }
-        const answerKey = normalizeText(answer);
-        if (seenAnswers.has(answerKey)) {
-          throw new Error(`${label}/${role} repeats another answer.`);
-        }
-        seenAnswers.add(answerKey);
-      }
-    });
-
-    for (const topic of REQUIRED_QUICK_TOPICS) {
-      if (!seenTopics.has(topic)) throw new Error(`Quick question bank is missing ${topic}.`);
-    }
-  }
-
-  assertQuickQuestionBank(QUICK_QUESTION_BANK);
   // If two roles receive the same number of answers, use the most revealing
   // question first instead of favoring a fixed role or a button position.
   const TIE_BREAK_QUESTION_ORDER = [9, 8, 7, 5, 0, 2, 3, 1, 6, 4];
@@ -606,33 +117,11 @@
       .trim();
   }
 
-  function stableHash(value) {
-    let hash = 2166136261;
-    for (const character of String(value)) {
-      hash ^= character.charCodeAt(0);
-      hash = Math.imul(hash, 16777619);
-    }
-    return hash >>> 0;
-  }
-
-  function shuffledForTitle(items, titleId) {
-    const copy = items.slice();
-    let seed = stableHash(titleId) || 1;
-    for (let index = copy.length - 1; index > 0; index -= 1) {
-      seed ^= seed << 13;
-      seed ^= seed >>> 17;
-      seed ^= seed << 5;
-      const target = (seed >>> 0) % (index + 1);
-      [copy[index], copy[target]] = [copy[target], copy[index]];
-    }
-    return copy;
-  }
-
   function compactQuestions(questions, titleId) {
-    const quickQuestions = shuffledForTitle(QUICK_QUESTION_BANK, titleId).slice(
-      0,
-      QUESTIONS_PER_TITLE,
-    );
+    const quickQuestions = window.TITLE_QUESTIONS?.[titleId];
+    if (!Array.isArray(quickQuestions) || quickQuestions.length !== QUESTIONS_PER_TITLE) {
+      throw new Error(`Tailored questions are unavailable for ${titleId}`);
+    }
     return questions.map((question, questionIndex) => {
       const quickQuestion = quickQuestions[questionIndex];
       return {
@@ -916,7 +405,7 @@
     refs.progressFill.style.width = `${(number / title.questions.length) * 100}%`;
     refs.questionKicker.textContent = question.kicker;
     refs.questionTitle.textContent = question.prompt;
-    refs.photoLabel.textContent = `${title.type === "movie" ? "Movie" : "Show"} · Question ${number}`;
+    refs.photoLabel.textContent = `${title.type === "movie" ? "Movie" : "Show"} image · ${number}/${title.questions.length}`;
     refs.showSourceLink.href = photo.sourceUrl || title.sourceUrl;
     refs.showSourceLink.textContent = `Image via ${photo.sourceName || title.sourceName} ↗`;
 
@@ -967,7 +456,7 @@
       item.setAttribute("aria-pressed", String(selected));
       item.disabled = true;
     });
-    announce(`${ROLE_META[role].label} answer selected.`);
+    announce("Answer selected.");
 
     const answeredTitleId = state.titleId;
     const answeredQuestionIndex = state.questionIndex;
@@ -1035,6 +524,7 @@
       ? "close tie · your strongest answer decided it"
       : "based on 10 answers";
     const questionCount = getTitle()?.questions.length || QUESTIONS_PER_TITLE;
+    const outcomes = getTitle()?.outcomes || {};
     const fragment = document.createDocumentFragment();
     for (const role of ROLE_ORDER) {
       const count = counts[role] || 0;
@@ -1042,10 +532,11 @@
       const row = document.createElement("div");
       row.className = "mix-row";
       row.innerHTML = `
-        <span>${ROLE_META[role].label}</span>
+        <span></span>
         <span class="mix-track"><i></i></span>
         <span>${percent}%</span>
       `;
+      row.firstElementChild.textContent = outcomes[role]?.character || ROLE_META[role].label;
       const fill = row.querySelector("i");
       fill.style.setProperty("--mix-width", `${percent}%`);
       fill.style.setProperty("--mix-color", ROLE_META[role].color);
@@ -1254,7 +745,12 @@
 
   function validateAndInitialize() {
     try {
-      if (!window.MEDIA || !window.OUTCOMES || !Array.isArray(window.FALLBACK_QUESTIONS)) {
+      if (
+        !window.MEDIA ||
+        !window.OUTCOMES ||
+        !window.TITLE_QUESTIONS ||
+        !Array.isArray(window.FALLBACK_QUESTIONS)
+      ) {
         throw new Error("Quiz data is unavailable");
       }
       if (window.FALLBACK_QUESTIONS.length !== QUESTIONS_PER_TITLE) {

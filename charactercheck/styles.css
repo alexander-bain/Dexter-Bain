@@ -1198,13 +1198,12 @@ main {
 
 .mix-row {
   display: grid;
-  grid-template-columns: 74px 1fr 34px;
+  grid-template-columns: minmax(108px, 148px) 1fr 34px;
   gap: 8px;
   align-items: center;
   color: var(--muted);
   font-size: 10px;
   font-weight: 800;
-  text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
