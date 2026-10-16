@@ -15,7 +15,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/229/572688.jpg",
     "questions": [
       {
-        "prompt": "In the Friends episode “The One Where Monica Gets a Roommate,” the situation is this: Monica's old friend Rachel moves in with her after leaving her fiancé. What would you do first?",
+        "prompt": "In “The One Where Monica Gets a Roommate,” an episode of Friends, the situation is this: Monica's old friend Rachel moves in with her after leaving her fiancé. What would you do first?",
         "kicker": "Season 1 · Episode 1 · The One Where Monica Gets a Roommate",
         "options": [
           {
@@ -311,7 +311,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/551/1379679.jpg",
     "questions": [
       {
-        "prompt": "In the Modern Family episode “Pilot,” the situation is this: A new half-hour comedy that takes an honest and often hilarious look at the complexities of modern day families. What would you do first?",
+        "prompt": "In “Pilot,” an episode of Modern Family, the situation is this: A new half-hour comedy that takes an honest and often hilarious look at the complexities of modern day families. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -607,7 +607,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/187/469975.jpg",
     "questions": [
       {
-        "prompt": "In the Arrested Development episode “Pilot,” the situation is this: Meet the Bluths. In the pilot, Michael decides to take a job in Arizona after being passed over by George Sr. What would you do first?",
+        "prompt": "In “Pilot,” an episode of Arrested Development, the situation is this: Meet the Bluths. In the pilot, Michael decides to take a job in Arizona after being passed over by George Sr. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -904,7 +904,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/565/1413776.jpg",
     "questions": [
       {
-        "prompt": "In the The Good Place episode “Everything Is Fine,” the situation is this: Thanks to some kind of error, Eleanor Shellstrop, an ordinary woman, enters the afterlife and is sent to the Good Place -- which is definitely not where… What would you do first?",
+        "prompt": "In “Everything Is Fine,” an episode of The Good Place, the situation is this: Thanks to some kind of error, Eleanor Shellstrop, an ordinary woman, enters the afterlife and is sent to the Good Place -- which is definitely not where… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Everything Is Fine",
         "options": [
           {
@@ -1201,7 +1201,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/346/865704.jpg",
     "questions": [
       {
-        "prompt": "In the How I Met Your Mother episode “Pilot,” the situation is this: Ted meets Robin in a neighborhood bar, immediately becomes smitten and even scores a first date. What would you do first?",
+        "prompt": "In “Pilot,” an episode of How I Met Your Mother, the situation is this: Ted meets Robin in a neighborhood bar, immediately becomes smitten and even scores a first date. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -1497,7 +1497,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/489/1223249.jpg",
     "questions": [
       {
-        "prompt": "In the The Simpsons episode “Simpsons Roasting on an Open Fire,” the situation is this: Homer's Christmas bonus is canceled and the rainy-day funds are needed to pay for Bart's tattoo removal in the first full-length episode of the… What would you do first?",
+        "prompt": "In “Simpsons Roasting on an Open Fire,” an episode of The Simpsons, the situation is this: Homer's Christmas bonus is canceled and the rainy-day funds are needed to pay for Bart's tattoo removal in the first full-length episode of the… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Simpsons Roasting on an Open Fire",
         "options": [
           {
@@ -1792,7 +1792,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/49/124795.jpg",
     "questions": [
       {
-        "prompt": "In the The Office episode “Pilot,” the situation is this: A documentary crew arrives at Dundler Mifflin to observe the workplace. Michael Scott tries to paint a happy picture while facing potential downsizing. What would you do first?",
+        "prompt": "In “Pilot,” an episode of The Office, the situation is this: A documentary crew arrives at Dundler Mifflin to observe the workplace. Michael Scott tries to paint a happy picture while facing potential downsizing. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -2087,7 +2087,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/8/20333.jpg",
     "questions": [
       {
-        "prompt": "In the Parks and Recreation episode “Make My Pit a Park,” the situation is this: From Emmy Award-winning executive producers of \"The Office\" comes a new mockumentary that looks at the exciting world of local government. What would you do first?",
+        "prompt": "In “Make My Pit a Park,” an episode of Parks and Recreation, the situation is this: From Emmy Award-winning executive producers of \"The Office\" comes a new mockumentary that looks at the exciting world of local government. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Make My Pit a Park",
         "options": [
           {
@@ -2384,7 +2384,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/406/1015857.jpg",
     "questions": [
       {
-        "prompt": "In the Brooklyn Nine-Nine episode “Pilot,” the situation is this: Detective Jake Peralta is a talented, but carefree police detective at Brooklyn's 99th precinct who, along with his eclectic group of colleagues, are… What would you do first?",
+        "prompt": "In “Pilot,” an episode of Brooklyn Nine-Nine, the situation is this: Detective Jake Peralta is a talented, but carefree police detective at Brooklyn's 99th precinct who, along with his eclectic group of colleagues, are… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -2680,7 +2680,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/565/1412735.jpg",
     "questions": [
       {
-        "prompt": "In the New Girl episode “Pilot,” the situation is this: Zooey Deschanel stars as Jess Day, a young woman who, after discovering her long-term boyfriend is cheating on her, moves into a loft apartment with… What would you do first?",
+        "prompt": "In “Pilot,” an episode of New Girl, the situation is this: Zooey Deschanel stars as Jess Day, a young woman who, after discovering her long-term boyfriend is cheating on her, moves into a loft apartment with… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -2975,7 +2975,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/197/494736.jpg",
     "questions": [
       {
-        "prompt": "In the Community episode “Pilot,” the situation is this: Community\" is a new NBC comedy series about a band of misfits who attend Greendale Community College. What would you do first?",
+        "prompt": "In “Pilot,” an episode of Community, the situation is this: Community\" is a new NBC comedy series about a band of misfits who attend Greendale Community College. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -3270,7 +3270,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/164/410335.jpg",
     "questions": [
       {
-        "prompt": "In the Schitt's Creek episode “Our Cup Runneth Over,” the situation is this: After losing their fortune, the Rose family must relocate to their last remaining asset - a small town Johnny once bought as a joke. What would you do first?",
+        "prompt": "In “Our Cup Runneth Over,” an episode of Schitt's Creek, the situation is this: After losing their fortune, the Rose family must relocate to their last remaining asset - a small town Johnny once bought as a joke. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Our Cup Runneth Over",
         "options": [
           {
@@ -3567,7 +3567,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/342/856397.jpg",
     "questions": [
       {
-        "prompt": "In the Ted Lasso episode “Pilot,” the situation is this: American football coach Ted Lasso is hired by a wealthy divorcée to coach the English soccer team AFC Richmond. What would you do first?",
+        "prompt": "In “Pilot,” an episode of Ted Lasso, the situation is this: American football coach Ted Lasso is hired by a wealthy divorcée to coach the English soccer team AFC Richmond. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -3862,7 +3862,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/388/970302.jpg",
     "questions": [
       {
-        "prompt": "In the Abbott Elementary episode “Pilot,” the situation is this: Passionate teachers -- and a slightly tone-deaf principal -- are determined to help their students succeed. What would you do first?",
+        "prompt": "In “Pilot,” an episode of Abbott Elementary, the situation is this: Passionate teachers -- and a slightly tone-deaf principal -- are determined to help their students succeed. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -4157,7 +4157,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/425/1062832.jpg",
     "questions": [
       {
-        "prompt": "In the Superstore episode “Pilot,” the situation is this: Jonah repeatedly fails to make a good impression on his first day of work at a Cloud 9 superstore. What would you do first?",
+        "prompt": "In “Pilot,” an episode of Superstore, the situation is this: Jonah repeatedly fails to make a good impression on his first day of work at a Cloud 9 superstore. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -4452,7 +4452,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/203/507618.jpg",
     "questions": [
       {
-        "prompt": "In the 30 Rock episode “Pilot,” the situation is this: Liz Lemon is called upstairs to meet the new network exec, Jack Donaghy, who instructs her to hire movie star Tracy Jordan to draw a young male audience… What would you do first?",
+        "prompt": "In “Pilot,” an episode of 30 Rock, the situation is this: Liz Lemon is called upstairs to meet the new network exec, Jack Donaghy, who instructs her to hire movie star Tracy Jordan to draw a young male audience… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -4747,7 +4747,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/310/776821.jpg",
     "questions": [
       {
-        "prompt": "In the Seinfeld episode “Good News, Bad News,” the situation is this: Jerry is excited that a woman he met on the road is coming to visit him in New York. However, he has a tough time discerning whether her intentions are… What would you do first?",
+        "prompt": "In “Good News, Bad News,” an episode of Seinfeld, the situation is this: Jerry is excited that a woman he met on the road is coming to visit him in New York. However, he has a tough time discerning whether her intentions are… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Good News, Bad News",
         "options": [
           {
@@ -5042,7 +5042,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/4/12368.jpg",
     "questions": [
       {
-        "prompt": "In the The Big Bang Theory episode “Pilot,” the situation is this: Is a comedy about brilliant physicists, Leonard and Sheldon, who are the kind of \"beautiful minds\" that understand how the universe works. What would you do first?",
+        "prompt": "In “Pilot,” an episode of The Big Bang Theory, the situation is this: Is a comedy about brilliant physicists, Leonard and Sheldon, who are the kind of \"beautiful minds\" that understand how the universe works. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -5338,7 +5338,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/129/322555.jpg",
     "questions": [
       {
-        "prompt": "In the Young Sheldon episode “Pilot,” the situation is this: Sheldon learns that his high intelligence isn't always helpful growing up in East Texas, where church and football are king. What would you do first?",
+        "prompt": "In “Pilot,” an episode of Young Sheldon, the situation is this: Sheldon learns that his high intelligence isn't always helpful growing up in East Texas, where church and football are king. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -5635,7 +5635,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/87/217554.jpg",
     "questions": [
       {
-        "prompt": "In the Gilmore Girls episode “Pilot,” the situation is this: After Rory is accepted at Chilton, an extremely prestigious and expensive prep school, Lorelai's difficulty in raising the tuition money forces her to… What would you do first?",
+        "prompt": "In “Pilot,” an episode of Gilmore Girls, the situation is this: After Rory is accepted at Chilton, an extremely prestigious and expensive prep school, Lorelai's difficulty in raising the tuition money forces her to… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -5931,7 +5931,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/180/451825.jpg",
     "questions": [
       {
-        "prompt": "In the Gossip Girl episode “Pilot,” the situation is this: The privileged prep school teens on Manhattan's Upper East Side learn that Serena van der Woodsen is back. What would you do first?",
+        "prompt": "In “Pilot,” an episode of Gossip Girl, the situation is this: The privileged prep school teens on Manhattan's Upper East Side learn that Serena van der Woodsen is back. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -6228,7 +6228,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/122/306547.jpg",
     "questions": [
       {
-        "prompt": "In the Sex and the City episode “Sex and the City,” the situation is this: At a birthday party for thirtysomething Miranda, Carrie and her friends vow to stop worrying about finding the perfect male and start having sex like men. What would you do first?",
+        "prompt": "In “Sex and the City,” an episode of Sex and the City, the situation is this: At a birthday party for thirtysomething Miranda, Carrie and her friends vow to stop worrying about finding the perfect male and start having sex like men. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Sex and the City",
         "options": [
           {
@@ -6524,7 +6524,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/34/86531.jpg",
     "questions": [
       {
-        "prompt": "In the The Golden Girls episode “The Engagement,” the situation is this: Senior Miami roommates Dorothy Zbornak (Beatrice Arthur), Rose Nylund (Betty White) and Blanche Devereaux (Rue McClanahan) are in for a shock when… What would you do first?",
+        "prompt": "In “The Engagement,” an episode of The Golden Girls, the situation is this: Senior Miami roommates Dorothy Zbornak (Beatrice Arthur), Rose Nylund (Betty White) and Blanche Devereaux (Rue McClanahan) are in for a shock when… What would you do first?",
         "kicker": "Season 1 · Episode 1 · The Engagement",
         "options": [
           {
@@ -6820,7 +6820,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/495/1239306.jpg",
     "questions": [
       {
-        "prompt": "In the Freaks and Geeks episode “Pilot,” the situation is this: A group of high school students in 1980 faces various social struggles. Wealthy \"brain\" Lindsay wants to rebel. What would you do first?",
+        "prompt": "In “Pilot,” an episode of Freaks and Geeks, the situation is this: A group of high school students in 1980 faces various social struggles. Wealthy \"brain\" Lindsay wants to rebel. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -7116,7 +7116,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/523/1307812.jpg",
     "questions": [
       {
-        "prompt": "In the The Fresh Prince of Bel-Air episode “The Fresh Prince Project,” the situation is this: Aunt Vivian tries to mediate between her husband Philip and the newly arrived Will. What would you do first?",
+        "prompt": "In “The Fresh Prince Project,” an episode of The Fresh Prince of Bel-Air, the situation is this: Aunt Vivian tries to mediate between her husband Philip and the newly arrived Will. What would you do first?",
         "kicker": "Season 1 · Episode 1 · The Fresh Prince Project",
         "options": [
           {
@@ -7413,7 +7413,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/308/770415.jpg",
     "questions": [
       {
-        "prompt": "In the Boy Meets World episode “Pilot,” the situation is this: Cory Matthews gets detention after school for trying to listen to a Philadelphia Phillies baseball game in class while his teacher—Mr. What would you do first?",
+        "prompt": "In “Pilot,” an episode of Boy Meets World, the situation is this: Cory Matthews gets detention after school for trying to listen to a Philadelphia Phillies baseball game in class while his teacher—Mr. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -7708,7 +7708,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/343/857655.jpg",
     "questions": [
       {
-        "prompt": "In the That '70s Show episode “That '70s Pilot,” the situation is this: Point Place, Wisconsin, May 17, 1976. Nerdy teenager Eric, who smokes weed with some classmates in the basement, is in heaven when his dad Red decides to… What would you do first?",
+        "prompt": "In “That '70s Pilot,” an episode of That '70s Show, the situation is this: Point Place, Wisconsin, May 17, 1976. Nerdy teenager Eric, who smokes weed with some classmates in the basement, is in heaven when his dad Red decides to… What would you do first?",
         "kicker": "Season 1 · Episode 1 · That '70s Pilot",
         "options": [
           {
@@ -8003,7 +8003,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/197/493034.jpg",
     "questions": [
       {
-        "prompt": "In the Malcolm in the Middle episode “Pilot,” the situation is this: Malcolm finds his life as the middle brother in an eccentric family made even more difficult by his being placed in a class for \"gifted\" students at… What would you do first?",
+        "prompt": "In “Pilot,” an episode of Malcolm in the Middle, the situation is this: Malcolm finds his life as the middle brother in an eccentric family made even more difficult by his being placed in a class for \"gifted\" students at… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -8299,7 +8299,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/495/1238230.jpg",
     "questions": [
       {
-        "prompt": "In the Everybody Loves Raymond episode “Pilot,” the situation is this: Tired of their interference, Debra tries to prevent Ray's parents and brother from coming over on her birthday. What would you do first?",
+        "prompt": "In “Pilot,” an episode of Everybody Loves Raymond, the situation is this: Tired of their interference, Debra tries to prevent Ray's parents and brother from coming over on her birthday. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -8594,7 +8594,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/495/1239042.jpg",
     "questions": [
       {
-        "prompt": "In the Frasier episode “The Good Son,” the situation is this: Frasier moves to Seattle, and his irascible father moves in with him. What would you do first?",
+        "prompt": "In “The Good Son,” an episode of Frasier, the situation is this: Frasier moves to Seattle, and his irascible father moves in with him. What would you do first?",
         "kicker": "Season 1 · Episode 1 · The Good Son",
         "options": [
           {
@@ -8889,7 +8889,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/495/1237793.jpg",
     "questions": [
       {
-        "prompt": "In the Cheers episode “Give Me a Ring Sometime,” the situation is this: Stuffy & sophisticated Diane Chambers is dumped by her fiance in a blue collar Boston bar where she meets baseball star-turned-bar owner Sam Malone. What would you do first?",
+        "prompt": "In “Give Me a Ring Sometime,” an episode of Cheers, the situation is this: Stuffy & sophisticated Diane Chambers is dumped by her fiance in a blue collar Boston bar where she meets baseball star-turned-bar owner Sam Malone. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Give Me a Ring Sometime",
         "options": [
           {
@@ -9186,7 +9186,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/193/483595.jpg",
     "questions": [
       {
-        "prompt": "In the Scrubs episode “My First Day,” the situation is this: Three interns - two medical and one surgical - kick off their first day at Sacred Heart teaching hospital. What would you do first?",
+        "prompt": "In “My First Day,” an episode of Scrubs, the situation is this: Three interns - two medical and one surgical - kick off their first day at Sacred Heart teaching hospital. What would you do first?",
         "kicker": "Season 1 · Episode 1 · My First Day",
         "options": [
           {
@@ -9483,7 +9483,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/128/321823.jpg",
     "questions": [
       {
-        "prompt": "In the Psych episode “Pilot,” the situation is this: Shawn Spencer is always moving on to the next fun thing and has never held a job for more than six months. What would you do first?",
+        "prompt": "In “Pilot,” an episode of Psych, the situation is this: Shawn Spencer is always moving on to the next fun thing and has never held a job for more than six months. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -9780,7 +9780,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/419/1048721.jpg",
     "questions": [
       {
-        "prompt": "In the Monk episode “Mr. Monk and the Candidate,” the situation is this: A former San Francisco police detective suffering from an extreme case of obsessive-compulsive disorder is called in to investigate an apparent… What would you do first?",
+        "prompt": "In “Mr. Monk and the Candidate,” an episode of Monk, the situation is this: A former San Francisco police detective suffering from an extreme case of obsessive-compulsive disorder is called in to investigate an apparent… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Mr. Monk and the Candidate",
         "options": [
           {
@@ -10077,7 +10077,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/351/878435.jpg",
     "questions": [
       {
-        "prompt": "In the Only Murders in the Building episode “True Crime,” the situation is this: Upper West Side neighbors Charles, Oliver & Mabel bond over a shared love of true crime. When a fellow resident dies in their building, the trio… What would you do first?",
+        "prompt": "In “True Crime,” an episode of Only Murders in the Building, the situation is this: Upper West Side neighbors Charles, Oliver & Mabel bond over a shared love of true crime. When a fellow resident dies in their building, the trio… What would you do first?",
         "kicker": "Season 1 · Episode 1 · True Crime",
         "options": [
           {
@@ -10374,7 +10374,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/342/855786.jpg",
     "questions": [
       {
-        "prompt": "In the Stranger Things episode “Chapter One: The Vanishing of Will Byers,” the situation is this: On his way home from a friend's house, young Will sees something terrifying. Nearby, a sinister secret lurks in the depths of a government lab. What would you do first?",
+        "prompt": "In “Chapter One: The Vanishing of Will Byers,” an episode of Stranger Things, the situation is this: On his way home from a friend's house, young Will sees something terrifying. Nearby, a sinister secret lurks in the depths of a government lab. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Chapter One: The Vanishing of Will Byers",
         "options": [
           {
@@ -10671,7 +10671,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/433/1082584.jpg",
     "questions": [
       {
-        "prompt": "In the Wednesday episode “Chapter I: Wednesday's Child Is Full of Woe,” the situation is this: When a deliciously wicked prank gets Wednesday expelled, her parents ship her off to Nevermore Academy, the boarding school where they fell in love. What would you do first?",
+        "prompt": "In “Chapter I: Wednesday's Child Is Full of Woe,” an episode of Wednesday, the situation is this: When a deliciously wicked prank gets Wednesday expelled, her parents ship her off to Nevermore Academy, the boarding school where they fell in love. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Chapter I: Wednesday's Child Is Full of Woe",
         "options": [
           {
@@ -10968,7 +10968,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/570/1427274.jpg",
     "questions": [
       {
-        "prompt": "In the Avatar: The Last Airbender episode “Book One: Water - Chapter One: The Boy in the Iceberg,” the situation is this: When a young waterbender, named Katara, and her brother, Sokka, discover a giant iceberg while fishing for food around their homestead at the South Pole… What would you do first?",
+        "prompt": "In “Book One: Water - Chapter One: The Boy in the Iceberg,” an episode of Avatar: The Last Airbender, the situation is this: When a young waterbender, named Katara, and her brother, Sokka, discover a giant iceberg while fishing for food around their homestead at the South Pole… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Book One: Water - Chapter One: The Boy in the Iceberg",
         "options": [
           {
@@ -11265,7 +11265,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/15/37873.jpg",
     "questions": [
       {
-        "prompt": "In the Gravity Falls episode “Tourist Trapped,” the situation is this: When Dipper and Mabel Pines arrive to spend their summer break in the remote town of Gravity Falls, Mabel's suspiciously weird new boyfriend causes the… What would you do first?",
+        "prompt": "In “Tourist Trapped,” an episode of Gravity Falls, the situation is this: When Dipper and Mabel Pines arrive to spend their summer break in the remote town of Gravity Falls, Mabel's suspiciously weird new boyfriend causes the… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Tourist Trapped",
         "options": [
           {
@@ -11561,7 +11561,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/556/1390640.jpg",
     "questions": [
       {
-        "prompt": "In the Bob's Burgers episode “Human Flesh,” the situation is this: In the series premiere episode, Bob rallies the team to cook up some business, so he sends middle child Gene to push samples in the streets, eldest… What would you do first?",
+        "prompt": "In “Human Flesh,” an episode of Bob's Burgers, the situation is this: In the series premiere episode, Bob rallies the team to cook up some business, so he sends middle child Gene to push samples in the streets, eldest… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Human Flesh",
         "options": [
           {
@@ -11858,7 +11858,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/478/1195016.jpg",
     "questions": [
       {
-        "prompt": "In the Futurama episode “Space Pilot 3000,” the situation is this: A delivery boy frozen in the year 1999 awakens in the year 3000. Phillip J. Fry delivers a pizza to a Cryogenics lab on New Years eve, only to discover… What would you do first?",
+        "prompt": "In “Space Pilot 3000,” an episode of Futurama, the situation is this: A delivery boy frozen in the year 1999 awakens in the year 3000. Phillip J. Fry delivers a pizza to a Cryogenics lab on New Years eve, only to discover… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Space Pilot 3000",
         "options": [
           {
@@ -12155,7 +12155,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/292/730352.jpg",
     "questions": [
       {
-        "prompt": "In the Rick and Morty episode “Pilot,” the situation is this: Rick takes Morty to another dimension to get some seeds for him but Morty's parents are considering to put Rick in a retirement home for keeping Morty… What would you do first?",
+        "prompt": "In “Pilot,” an episode of Rick and Morty, the situation is this: Rick takes Morty to another dimension to get some seeds for him but Morty's parents are considering to put Rick in a retirement home for keeping Morty… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -12451,7 +12451,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/284/711564.jpg",
     "questions": [
       {
-        "prompt": "In the BoJack Horseman episode “The BoJack Horseman Story, Chapter One,” the situation is this: To help with the memoir he hopes will put him back in the spotllight, BoJack hires a ghostwriter. What would you do first?",
+        "prompt": "In “The BoJack Horseman Story, Chapter One,” an episode of BoJack Horseman, the situation is this: To help with the memoir he hopes will put him back in the spotllight, BoJack hires a ghostwriter. What would you do first?",
         "kicker": "Season 1 · Episode 1 · The BoJack Horseman Story, Chapter One",
         "options": [
           {
@@ -12748,7 +12748,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/578/1445844.jpg",
     "questions": [
       {
-        "prompt": "In the SpongeBob SquarePants episode “Tea at the Treedome,” the situation is this: When SpongeBob meets Sandy Cheeks for the first time, she invites him over to her glass enclosed home. What would you do first?",
+        "prompt": "In “Tea at the Treedome,” an episode of SpongeBob SquarePants, the situation is this: When SpongeBob meets Sandy Cheeks for the first time, she invites him over to her glass enclosed home. What would you do first?",
         "kicker": "Season 1 · Episode 3 · Tea at the Treedome",
         "options": [
           {
@@ -13045,7 +13045,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/539/1348781.jpg",
     "questions": [
       {
-        "prompt": "In the Adventure Time episode “Slumber Party Panic,” the situation is this: Princess Bumblegum's latest experiment accidentally unleashes an undead horde upon the Candy Kingdom. What would you do first?",
+        "prompt": "In “Slumber Party Panic,” an episode of Adventure Time, the situation is this: Princess Bumblegum's latest experiment accidentally unleashes an undead horde upon the Candy Kingdom. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Slumber Party Panic",
         "options": [
           {
@@ -13341,7 +13341,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/307/769870.jpg",
     "questions": [
       {
-        "prompt": "In the Phineas and Ferb episode “Rollercoaster,” the situation is this: While their mother is out shopping, the boy build a roller coaster. Dr. Doofenshmirtz and Perry battle due to the doctor's evil plan of throwing the… What would you do first?",
+        "prompt": "In “Rollercoaster,” an episode of Phineas and Ferb, the situation is this: While their mother is out shopping, the boy build a roller coaster. Dr. Doofenshmirtz and Perry battle due to the doctor's evil plan of throwing the… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Rollercoaster",
         "options": [
           {
@@ -13638,7 +13638,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/413/1034362.jpg",
     "questions": [
       {
-        "prompt": "In the The Bear episode “System,” the situation is this: Carmy attempts to retrain the employees of The Original Beef of Chicagoland, but is faced with resistance. What would you do first?",
+        "prompt": "In “System,” an episode of The Bear, the situation is this: Carmy attempts to retrain the employees of The Original Beef of Chicagoland, but is faced with resistance. What would you do first?",
         "kicker": "Season 1 · Episode 1 · System",
         "options": [
           {
@@ -13934,7 +13934,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/157/394168.jpg",
     "questions": [
       {
-        "prompt": "In the Succession episode “Celebration,” the situation is this: On his 80th birthday, media magnate Logan Roy, whose imminent retirement was thought to be a given, shocks his family by announcing he's staying on… What would you do first?",
+        "prompt": "In “Celebration,” an episode of Succession, the situation is this: On his 80th birthday, media magnate Logan Roy, whose imminent retirement was thought to be a given, shocks his family by announcing he's staying on… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Celebration",
         "options": [
           {
@@ -14230,7 +14230,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/504/1260883.jpg",
     "questions": [
       {
-        "prompt": "In the The White Lotus episode “Arrivals,” the situation is this: As the White Lotus welcomes their newest guests, tensions quickly arise between the hotel staff and the volatile vacationers. What would you do first?",
+        "prompt": "In “Arrivals,” an episode of The White Lotus, the situation is this: As the White Lotus welcomes their newest guests, tensions quickly arise between the hotel staff and the volatile vacationers. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Arrivals",
         "options": [
           {
@@ -14526,7 +14526,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/290/726546.jpg",
     "questions": [
       {
-        "prompt": "In the Bridgerton episode “Diamond of the First Water,” the situation is this: Daphne debuts on London's marriage market as a new gossip sheet sets high society atwitter and Simon, the eligible Duke of Hastings, returns to town. What would you do first?",
+        "prompt": "In “Diamond of the First Water,” an episode of Bridgerton, the situation is this: Daphne debuts on London's marriage market as a new gossip sheet sets high society atwitter and Simon, the eligible Duke of Hastings, returns to town. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Diamond of the First Water",
         "options": [
           {
@@ -14823,7 +14823,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/15/39271.jpg",
     "questions": [
       {
-        "prompt": "In the Grey's Anatomy episode “A Hard Day's Night,” the situation is this: Meet Meredith Grey, a woman trying to lead a real life while doing a job that makes having a real life impossible. What would you do first?",
+        "prompt": "In “A Hard Day's Night,” an episode of Grey's Anatomy, the situation is this: Meet Meredith Grey, a woman trying to lead a real life while doing a job that makes having a real life impossible. What would you do first?",
         "kicker": "Season 1 · Episode 1 · A Hard Day's Night",
         "options": [
           {
@@ -15120,7 +15120,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/67/168634.jpg",
     "questions": [
       {
-        "prompt": "In the Lost episode “Pilot,” the situation is this: Out of the blackness, the first thing Jack senses is pain. Then burning sun. A Bamboo forest. What would you do first?",
+        "prompt": "In “Pilot,” an episode of Lost, the situation is this: Out of the blackness, the first thing Jack senses is pain. Then burning sun. A Bamboo forest. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -15417,7 +15417,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/0/2104.jpg",
     "questions": [
       {
-        "prompt": "In the The Walking Dead episode “Days Gone Bye,” the situation is this: Rick searches for his family after emerging from a coma into a world terrorized by the walking dead. What would you do first?",
+        "prompt": "In “Days Gone Bye,” an episode of The Walking Dead, the situation is this: Rick searches for his family after emerging from a coma into a world terrorized by the walking dead. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Days Gone Bye",
         "options": [
           {
@@ -15714,7 +15714,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/478/1195111.jpg",
     "questions": [
       {
-        "prompt": "In the Game of Thrones episode “Winter is Coming,” the situation is this: Lord Eddard Stark, ruler of the North, is summoned to court by his old friend, King Robert Baratheon, to serve as the King's Hand. What would you do first?",
+        "prompt": "In “Winter is Coming,” an episode of Game of Thrones, the situation is this: Lord Eddard Stark, ruler of the North, is summoned to court by his old friend, King Robert Baratheon, to serve as the King's Hand. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Winter is Coming",
         "options": [
           {
@@ -16011,7 +16011,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/405/1012681.jpg",
     "questions": [
       {
-        "prompt": "In the Breaking Bad episode “Pilot,” the situation is this: A high-school chemistry teacher (Bryan Cranston) is diagnosed with a deadly cancer, so he puts his expertise to use and teams with an ex-student (Aaron… What would you do first?",
+        "prompt": "In “Pilot,” an episode of Breaking Bad, the situation is this: A high-school chemistry teacher (Bryan Cranston) is diagnosed with a deadly cancer, so he puts his expertise to use and teams with an ex-student (Aaron… What would you do first?",
         "kicker": "Season 1 · Episode 1 · Pilot",
         "options": [
           {
@@ -16308,7 +16308,7 @@ const MEDIA = {
     "hero": "https://static.tvmaze.com/uploads/images/original_untouched/399/998482.jpg",
     "questions": [
       {
-        "prompt": "In the Better Call Saul episode “Uno,” the situation is this: Jimmy works his magic in the courtroom. Unexpected inspiration leads him to an unconventional pursuit of potential clients. What would you do first?",
+        "prompt": "In “Uno,” an episode of Better Call Saul, the situation is this: Jimmy works his magic in the courtroom. Unexpected inspiration leads him to an unconventional pursuit of potential clients. What would you do first?",
         "kicker": "Season 1 · Episode 1 · Uno",
         "options": [
           {
@@ -16588,11 +16588,14843 @@ const MEDIA = {
         }
       }
     ]
+  },
+  "the-marvelous-mrs-maisel": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/19807/the-marvelous-mrs-maisel",
+    "tvmazeId": 19807,
+    "officialTitle": "The Marvelous Mrs. Maisel",
+    "premiered": "2017-03-17",
+    "genres": [
+      "Drama",
+      "Comedy"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/456/1141825.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/106/266079.jpg",
+    "questions": [
+      {
+        "prompt": "In “Pilot,” an episode of The Marvelous Mrs. Maisel, the situation is this: In 1958 New York, Midge Maisel's life is on track- husband, kids, and elegant Yom Kippur dinners in their Upper West Side apartment. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Pilot",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/106/266079.jpg",
+          "alt": "The Marvelous Mrs. Maisel season 1, episode 1: Pilot",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1093356/the-marvelous-mrs-maisel-1x01-pilot"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Ya Shivu v Bolshom Dome na Kholme” from The Marvelous Mrs. Maisel: Midge's life is in a tailspin in the wake of Joel leaving. Midge and Joel's parents butt heads while trying to keep their family together. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Ya Shivu v Bolshom Dome na Kholme",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/139/348415.jpg",
+          "alt": "The Marvelous Mrs. Maisel season 1, episode 2: Ya Shivu v Bolshom Dome na Kholme",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1328878/the-marvelous-mrs-maisel-1x02-ya-shivu-v-bolshom-dome-na-kholme"
+        }
+      },
+      {
+        "prompt": "This is happening in The Marvelous Mrs. Maisel's “Because You Left”: After another arrest, Midge finds herself in legal trouble, forcing her to rely on Susie's street smarts. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Because You Left",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/139/348416.jpg",
+          "alt": "The Marvelous Mrs. Maisel season 1, episode 3: Because You Left",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1333212/the-marvelous-mrs-maisel-1x03-because-you-left"
+        }
+      },
+      {
+        "prompt": "You enter “The Disappointment of the Dionne Quintuplets” from The Marvelous Mrs. Maisel just as this unfolds: Midge begins to move on from her once perfect life. Susie shows Midge the ropes while going on a tour of New York comedy clubs. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · The Disappointment of the Dionne Quintuplets",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/139/348437.jpg",
+          "alt": "The Marvelous Mrs. Maisel season 1, episode 4: The Disappointment of the Dionne Quintuplets",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1333213/the-marvelous-mrs-maisel-1x04-the-disappointment-of-the-dionne-quintuplets"
+        }
+      },
+      {
+        "prompt": "In The Marvelous Mrs. Maisel's “Doink,” the group faces this: Midge dives into a new line of work and makes some quirky friends along the way. Susie continues her emphatic quest to keep Midge's career moving… What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Doink",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/139/348671.jpg",
+          "alt": "The Marvelous Mrs. Maisel season 1, episode 5: Doink",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1333214/the-marvelous-mrs-maisel-1x05-doink"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during The Marvelous Mrs. Maisel's “Mrs. X at the Gaslight”: Midge finds a different kind of audience to perform for, much to Susie's chagrin. Abe gets offered the experience of a lifetime. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Mrs. X at the Gaslight",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/139/348675.jpg",
+          "alt": "The Marvelous Mrs. Maisel season 1, episode 6: Mrs. X at the Gaslight",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1333215/the-marvelous-mrs-maisel-1x06-mrs-x-at-the-gaslight"
+        }
+      },
+      {
+        "prompt": "The story in The Marvelous Mrs. Maisel's “Put That on Your Plate!” turns to this moment: With Susie's help, Midge hones her act at the Gaslight. Abe surprises the women with a dinner guest, sending Rose into an emotional spiral. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Put That on Your Plate!",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/139/348683.jpg",
+          "alt": "The Marvelous Mrs. Maisel season 1, episode 7: Put That on Your Plate!",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1333216/the-marvelous-mrs-maisel-1x07-put-that-on-your-plate"
+        }
+      },
+      {
+        "prompt": "You are dropped into The Marvelous Mrs. Maisel's “Thank You and Good Night” when this happens: In the Season One finale, Midge and Susie deal with the repercussions of Midge's off-script takedown of a famous comedian. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Thank You and Good Night",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/139/348697.jpg",
+          "alt": "The Marvelous Mrs. Maisel season 1, episode 8: Thank You and Good Night",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1333217/the-marvelous-mrs-maisel-1x08-thank-you-and-good-night"
+        }
+      },
+      {
+        "prompt": "The pressure rises in The Marvelous Mrs. Maisel's “Simone”: In the Season Two premiere, Midge takes the stage for a foreign audience, while Abe and Rose find themselves in a new world. Which response fits you best?",
+        "kicker": "Season 2 · Episode 1 · Simone",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/176/441290.jpg",
+          "alt": "The Marvelous Mrs. Maisel season 2, episode 1: Simone",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1552522/the-marvelous-mrs-maisel-2x01-simone"
+        }
+      },
+      {
+        "prompt": "During The Marvelous Mrs. Maisel's “Mid-way to Mid-town,” this problem appears: Midge and Susie continue building Midge's standup career despite Midge's reluctance to tell her family and friends. How would you step in?",
+        "kicker": "Season 2 · Episode 2 · Mid-way to Mid-town",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/176/441291.jpg",
+          "alt": "The Marvelous Mrs. Maisel season 2, episode 2: Mid-way to Mid-town",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1561561/the-marvelous-mrs-maisel-2x02-mid-way-to-mid-town"
+        }
+      }
+    ]
+  },
+  "black-ish": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/57/black-ish",
+    "tvmazeId": 57,
+    "officialTitle": "black-ish",
+    "premiered": "2014-09-24",
+    "genres": [
+      "Comedy",
+      "Family"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/388/970329.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/13/33557.jpg",
+    "questions": [
+      {
+        "prompt": "In “Pilot,” an episode of black-ish, the situation is this: In \"Pilot,\" Dre, an advertising exec, is happily anticipating a promotion at work, which would make him the firm's first African American senior vice… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Pilot",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/33557.jpg",
+          "alt": "black-ish season 1, episode 1: Pilot",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2143/black-ish-1x01-pilot"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “The Talk” from black-ish: Dre, disappointed that Bow has already given Andre Jr. \"the talk\" because she thinks he's too big of a prude to do it, decides to rectify matters by… How would you respond?",
+        "kicker": "Season 1 · Episode 2 · The Talk",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/33556.jpg",
+          "alt": "black-ish season 1, episode 2: The Talk",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2144/black-ish-1x02-the-talk"
+        }
+      },
+      {
+        "prompt": "This is happening in black-ish's “The Nod”: Dre sets out to expand Andre Jr's social circle to include more black kids after he discovers Andre Jr. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · The Nod",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/33555.jpg",
+          "alt": "black-ish season 1, episode 3: The Nod",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2145/black-ish-1x03-the-nod"
+        }
+      },
+      {
+        "prompt": "You enter “Crazy Mom” from black-ish just as this unfolds: When Dre agrees to take over Rainbow's \"mom\" duties for a week, the overwhelming praise he gets from everyone at his kids' school goes to his head. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Crazy Mom",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/33554.jpg",
+          "alt": "black-ish season 1, episode 4: Crazy Mom",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2146/black-ish-1x04-crazy-mom"
+        }
+      },
+      {
+        "prompt": "In black-ish's “Crime and Punishment,” the group faces this: Although Dre and Rainbow agreed they would no longer spank their kids, all bets might be off when Jack disobeys. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Crime and Punishment",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/2/5264.jpg",
+          "alt": "black-ish season 1, episode 5: Crime and Punishment",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2147/black-ish-1x05-crime-and-punishment"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during black-ish's “The Prank King”: Dre fears his holiday fun will be ruined when the older kids balk at the glorious Johnson Halloween tradition of seeing who can pull the most outlandish… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · The Prank King",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/2/6392.jpg",
+          "alt": "black-ish season 1, episode 6: The Prank King",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/14020/black-ish-1x06-the-prank-king"
+        }
+      },
+      {
+        "prompt": "The story in black-ish's “The Gift of Hunger” turns to this moment: After the kids turn their collective noses up at Dre's favorite cheap restaurant in his old 'hood, he decides it's time to give them a reality check. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · The Gift of Hunger",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/4/10512.jpg",
+          "alt": "black-ish season 1, episode 7: The Gift of Hunger",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/39550/black-ish-1x07-the-gift-of-hunger"
+        }
+      },
+      {
+        "prompt": "You are dropped into black-ish's “Oedipal Triangle” when this happens: \"Oedipal Triangle\"- Dre's mother, Ruby, comes for a visit, and she smothers her pork chops with gravy, Dre with love, and would like to flat out smother… What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Oedipal Triangle",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/4/11478.jpg",
+          "alt": "black-ish season 1, episode 8: Oedipal Triangle",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/39551/black-ish-1x08-oedipal-triangle"
+        }
+      },
+      {
+        "prompt": "The pressure rises in black-ish's “Colored Commentary”: Dre wants the family to feel more connected so he encourages \"Team Johnson\" to embrace what it means to have each other's backs. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Colored Commentary",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/33553.jpg",
+          "alt": "black-ish season 1, episode 9: Colored Commentary",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/44339/black-ish-1x09-colored-commentary"
+        }
+      },
+      {
+        "prompt": "During black-ish's “Black Santa / White Christmas,” this problem appears: Dre campaigns to be the new Santa at the annual office Christmas party, but when that honor goes to Angelica, the lovely head of HR, he goes to great… How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Black Santa / White Christmas",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/5/14906.jpg",
+          "alt": "black-ish season 1, episode 10: Black Santa / White Christmas",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/44340/black-ish-1x10-black-santa-white-christmas"
+        }
+      }
+    ]
+  },
+  "full-house": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1251/full-house",
+    "tvmazeId": 1251,
+    "officialTitle": "Full House",
+    "premiered": "1987-09-18",
+    "genres": [
+      "Comedy",
+      "Family"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/7/17933.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/188/470763.jpg",
+    "questions": [
+      {
+        "prompt": "In “Our Very First Show,” an episode of Full House, the situation is this: Joey and Jesse move in to help Danny raise his three daughters. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Our Very First Show",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/188/470763.jpg",
+          "alt": "Full House season 1, episode 1: Our Very First Show",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109017/full-house-1x01-our-very-first-show"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Our Very First Night” from Full House: Jesse throws a big party with his band. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Our Very First Night",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/188/470764.jpg",
+          "alt": "Full House season 1, episode 2: Our Very First Night",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109018/full-house-1x02-our-very-first-night"
+        }
+      },
+      {
+        "prompt": "This is happening in Full House's “The First Day of School”: D.J. and Stephanie struggle on their first day at school. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · The First Day of School",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/188/470767.jpg",
+          "alt": "Full House season 1, episode 3: The First Day of School",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109019/full-house-1x03-the-first-day-of-school"
+        }
+      },
+      {
+        "prompt": "You enter “The Return of Grandma” from Full House just as this unfolds: Danny, Jesse and Joey's mothers want to move in and help out. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · The Return of Grandma",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/188/470768.jpg",
+          "alt": "Full House season 1, episode 4: The Return of Grandma",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109020/full-house-1x04-the-return-of-grandma"
+        }
+      },
+      {
+        "prompt": "In Full House's “Sea Cruise,” the group faces this: Danny, Jesse, and Joey go fishing. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Sea Cruise",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/188/470769.jpg",
+          "alt": "Full House season 1, episode 5: Sea Cruise",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109021/full-house-1x05-sea-cruise"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Full House's “Daddy's Home”: Danny feels guilty of not spending more time with his children. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Daddy's Home",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/188/470771.jpg",
+          "alt": "Full House season 1, episode 6: Daddy's Home",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109022/full-house-1x06-daddys-home"
+        }
+      },
+      {
+        "prompt": "The story in Full House's “Jesse's Girl” turns to this moment: Jesse tells a flashback story of a girl he was teaching music to. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 8 · Jesse's Girl",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/188/470774.jpg",
+          "alt": "Full House season 1, episode 8: Jesse's Girl",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109024/full-house-1x08-jesses-girl"
+        }
+      },
+      {
+        "prompt": "You are dropped into Full House's “The Miracle of Thanksgiving” when this happens: It's the girls first Thanksgiving without their mom and the boys do everything they can to make it easier for them. What do you do next?",
+        "kicker": "Season 1 · Episode 9 · The Miracle of Thanksgiving",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/188/470775.jpg",
+          "alt": "Full House season 1, episode 9: The Miracle of Thanksgiving",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109025/full-house-1x09-the-miracle-of-thanksgiving"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Full House's “Joey's Place”: Joey gets his own room in the garage. Which response fits you best?",
+        "kicker": "Season 1 · Episode 10 · Joey's Place",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/188/470777.jpg",
+          "alt": "Full House season 1, episode 10: Joey's Place",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109026/full-house-1x10-joeys-place"
+        }
+      },
+      {
+        "prompt": "During Full House's “The Big Three-O,” this problem appears: Danny has a hard time accepting the fact that he's turning thirty. He then has to deal with Jesse feeling bad about accidentally totaling his beloved… How would you step in?",
+        "kicker": "Season 1 · Episode 11 · The Big Three-O",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/188/470782.jpg",
+          "alt": "Full House season 1, episode 11: The Big Three-O",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109027/full-house-1x11-the-big-three-o"
+        }
+      }
+    ]
+  },
+  "family-matters": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1250/family-matters",
+    "tvmazeId": 1250,
+    "officialTitle": "Family Matters",
+    "premiered": "1989-09-22",
+    "genres": [
+      "Comedy",
+      "Family"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/7/17918.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/311/779752.jpg",
+    "questions": [
+      {
+        "prompt": "In “The Mama Who Came to Dinner,” an episode of Family Matters, the situation is this: Carl is not happy about his mother coming to live in his already crowded household. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · The Mama Who Came to Dinner",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779752.jpg",
+          "alt": "Family Matters season 1, episode 1: The Mama Who Came to Dinner",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/108802/family-matters-1x01-the-mama-who-came-to-dinner"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Two-Income Family” from Family Matters: The Winslows must cut costs when Harriette loses her job. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Two-Income Family",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779753.jpg",
+          "alt": "Family Matters season 1, episode 2: Two-Income Family",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/108803/family-matters-1x02-two-income-family"
+        }
+      },
+      {
+        "prompt": "This is happening in Family Matters' “Short Story”: Rachel's first published short story hits too close to home for certain members of the family. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Short Story",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779754.jpg",
+          "alt": "Family Matters season 1, episode 3: Short Story",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/108804/family-matters-1x03-short-story"
+        }
+      },
+      {
+        "prompt": "You enter “Rachel's First Date” from Family Matters just as this unfolds: Desperate for some time alone with Harriette, Carl encourages Rachel to start dating again, What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Rachel's First Date",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779755.jpg",
+          "alt": "Family Matters season 1, episode 4: Rachel's First Date",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/108805/family-matters-1x04-rachels-first-date"
+        }
+      },
+      {
+        "prompt": "In Family Matters' “Straight A's,” the group faces this: Carl and Harriette are thrilled when Eddie brings home an unexpected straight-A report card. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Straight A's",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779756.jpg",
+          "alt": "Family Matters season 1, episode 5: Straight A's",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/108806/family-matters-1x05-straight-as"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Family Matters' “Mr. Badwrench”: Carl and Eddie attempt to install a new shower for Grandma Winslow. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Mr. Badwrench",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779757.jpg",
+          "alt": "Family Matters season 1, episode 6: Mr. Badwrench",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/108807/family-matters-1x06-mr-badwrench"
+        }
+      },
+      {
+        "prompt": "The story in Family Matters' “Body Damage” turns to this moment: Rachel and Harriette wreck Carl's vintage patrol car. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Body Damage",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779758.jpg",
+          "alt": "Family Matters season 1, episode 7: Body Damage",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/108808/family-matters-1x07-body-damage"
+        }
+      },
+      {
+        "prompt": "You are dropped into Family Matters' “Stake-Out” when this happens: Harriette gets jealous when Carl goes on a lengthy stakeout with a policewoman. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Stake-Out",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779759.jpg",
+          "alt": "Family Matters season 1, episode 8: Stake-Out",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/108809/family-matters-1x08-stake-out"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Family Matters' “False Arrest”: Carl charges an egotistical celebrity with assault after being pushed to the limit. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · False Arrest",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779760.jpg",
+          "alt": "Family Matters season 1, episode 9: False Arrest",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/108810/family-matters-1x09-false-arrest"
+        }
+      },
+      {
+        "prompt": "During Family Matters' “Basketball Blues,” this problem appears: Carl pushes Eddie to try out for the high school basketball team despite the boy's reluctance. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Basketball Blues",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779761.jpg",
+          "alt": "Family Matters season 1, episode 10: Basketball Blues",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/108811/family-matters-1x10-basketball-blues"
+        }
+      }
+    ]
+  },
+  "saved-by-the-bell": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1252/saved-by-the-bell",
+    "tvmazeId": 1252,
+    "officialTitle": "Saved by the Bell",
+    "premiered": "1989-08-20",
+    "genres": [
+      "Comedy"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/7/17943.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/311/779022.jpg",
+    "questions": [
+      {
+        "prompt": "In “Dancing to the Max,” an episode of Saved by the Bell, the situation is this: When the students of Bayside High learn that famed Casey Kasem will be hosting a dance contest at The Maxx, both Zack and Slater vie to ask Kelly for the… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Dancing to the Max",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779022.jpg",
+          "alt": "Saved by the Bell season 1, episode 1: Dancing to the Max",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109209/saved-by-the-bell-1x01-dancing-to-the-max"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “The Lisa Card” from Saved by the Bell: Zack and his friends have gotten their quarterly report cards and their respective parents have gotten everyone presents for a job well done. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · The Lisa Card",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779023.jpg",
+          "alt": "Saved by the Bell season 1, episode 2: The Lisa Card",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109210/saved-by-the-bell-1x02-the-lisa-card"
+        }
+      },
+      {
+        "prompt": "This is happening in Saved by the Bell's “The Gift”: After helping Zack unhook his ham radio, Screech accidently gets struck by lightning. As a result, Screech can now see into the future, resulting in Zack… Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · The Gift",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779024.jpg",
+          "alt": "Saved by the Bell season 1, episode 3: The Gift",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109211/saved-by-the-bell-1x03-the-gift"
+        }
+      },
+      {
+        "prompt": "You enter “Fatal Distraction” from Saved by the Bell just as this unfolds: Zack enlists the help of Screech in the bugging of Jessie's room when she invites Lisa, Kelly, and some friends over for a slumber party, with the hopes… What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Fatal Distraction",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779025.jpg",
+          "alt": "Saved by the Bell season 1, episode 4: Fatal Distraction",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109212/saved-by-the-bell-1x04-fatal-distraction"
+        }
+      },
+      {
+        "prompt": "In Saved by the Bell's “Screech's Woman,” the group faces this: Zack gets teamed up with Screech to work on a science project at school. However, he soon discovers that Screech is rather depressed about not having a… What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Screech's Woman",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779026.jpg",
+          "alt": "Saved by the Bell season 1, episode 5: Screech's Woman",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109213/saved-by-the-bell-1x05-screechs-woman"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Saved by the Bell's “Aloha Slater”: When Zack learns that Slater's father has the opportunity to get stationed to a base in Hawaii, he begins to plot a way to get Slater to agree to move to… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Aloha Slater",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779027.jpg",
+          "alt": "Saved by the Bell season 1, episode 6: Aloha Slater",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109214/saved-by-the-bell-1x06-aloha-slater"
+        }
+      },
+      {
+        "prompt": "The story in Saved by the Bell's “The Substitute” turns to this moment: Mrs. Simpson accidentally throws her back out in class one day, resulting in Mr. Belding bringing in a substitute English teacher. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · The Substitute",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779028.jpg",
+          "alt": "Saved by the Bell season 1, episode 7: The Substitute",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109215/saved-by-the-bell-1x07-the-substitute"
+        }
+      },
+      {
+        "prompt": "You are dropped into Saved by the Bell's “Cream for a Day” when this happens: When Screech inadvertently creates a zit removal cream in chemistry class, Zack decides to team up with him in order to mass produce it and market it to… What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Cream for a Day",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779029.jpg",
+          "alt": "Saved by the Bell season 1, episode 8: Cream for a Day",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109216/saved-by-the-bell-1x08-cream-for-a-day"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Saved by the Bell's “Pinned to the Mat”: It's career week at school and Slater starts to fear that wrestling won't lead him down a successful career path. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Pinned to the Mat",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779030.jpg",
+          "alt": "Saved by the Bell season 1, episode 9: Pinned to the Mat",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109217/saved-by-the-bell-1x09-pinned-to-the-mat"
+        }
+      },
+      {
+        "prompt": "During Saved by the Bell's “Beauty and the Screech,” this problem appears: After Kelly wins a pair of tickets to see George Michael in concert, she realizes she won't be able to go unless she gets an A on her upcoming Science… How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Beauty and the Screech",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779031.jpg",
+          "alt": "Saved by the Bell season 1, episode 10: Beauty and the Screech",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/109218/saved-by-the-bell-1x10-beauty-and-the-screech"
+        }
+      }
+    ]
+  },
+  "the-nanny": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1119/the-nanny",
+    "tvmazeId": 1119,
+    "officialTitle": "The Nanny",
+    "premiered": "1993-11-03",
+    "genres": [
+      "Comedy",
+      "Family"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/17252.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/237/592592.jpg",
+    "questions": [
+      {
+        "prompt": "In “Pilot (a.k.a. The Nanny),” an episode of The Nanny, the situation is this: Door-to-door cosmetics sales lady Fran Fine inadvertently becomes the nanny to the three children of a widowed Broadway producer. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Pilot (a.k.a. The Nanny)",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/237/592592.jpg",
+          "alt": "The Nanny season 1, episode 1: Pilot (a.k.a. The Nanny)",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/103523/the-nanny-1x01-pilot-aka-the-nanny"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Smoke Gets in Your Lies” from The Nanny: As a result of Brighton getting caught smoking, Fran takes him to see her grandma Yetta who has been smoking all her life. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Smoke Gets in Your Lies",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/237/592593.jpg",
+          "alt": "The Nanny season 1, episode 2: Smoke Gets in Your Lies",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/103524/the-nanny-1x02-smoke-gets-in-your-lies"
+        }
+      },
+      {
+        "prompt": "This is happening in The Nanny's “My Fair Nanny”: Fran hosts a tea party for Maggie's friends, however Maxwell wonders if Fran has the class to pull it off. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · My Fair Nanny",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/237/592594.jpg",
+          "alt": "The Nanny season 1, episode 3: My Fair Nanny",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/103525/the-nanny-1x03-my-fair-nanny"
+        }
+      },
+      {
+        "prompt": "You enter “The Nuchslep” from The Nanny just as this unfolds: When Fran acts as a chaperon on Maggie's date, Maggie's boyfriend shows an interest in Fran. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · The Nuchslep",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/237/592595.jpg",
+          "alt": "The Nanny season 1, episode 4: The Nuchslep",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/103526/the-nanny-1x04-the-nuchslep"
+        }
+      },
+      {
+        "prompt": "In The Nanny's “Here Comes the Brood,” the group faces this: C.C.'s attempts to get closer to Maxwell's children results in Gracie running away. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Here Comes the Brood",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/237/592596.jpg",
+          "alt": "The Nanny season 1, episode 5: Here Comes the Brood",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/103527/the-nanny-1x05-here-comes-the-brood"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during The Nanny's “The Butler, the Husband, the Wife and Her Mother”: When status-conscious relatives visit from Florida, Fran pretends that Niles is Maxwell and they are married. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · The Butler, the Husband, the Wife and Her Mother",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/237/592597.jpg",
+          "alt": "The Nanny season 1, episode 6: The Butler, the Husband, the Wife and Her Mother",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/103528/the-nanny-1x06-the-butler-the-husband-the-wife-and-her-mother"
+        }
+      },
+      {
+        "prompt": "The story in The Nanny's “Imaginary Friend” turns to this moment: Gracie is traumatized when Fran \"eats\" her imaginary friend. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Imaginary Friend",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/237/592598.jpg",
+          "alt": "The Nanny season 1, episode 7: Imaginary Friend",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/103529/the-nanny-1x07-imaginary-friend"
+        }
+      },
+      {
+        "prompt": "You are dropped into The Nanny's “Christmas Episode” when this happens: Much to his children's disappointment as well as Fran's, Maxwell has to be in Washington, D.C. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Christmas Episode",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/237/592599.jpg",
+          "alt": "The Nanny season 1, episode 8: Christmas Episode",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/103530/the-nanny-1x08-christmas-episode"
+        }
+      },
+      {
+        "prompt": "The pressure rises in The Nanny's “Personal Business”: Maxwell wants to hire popular soap star Brock Storm for his latest show, but he'll only do it if he gets a date with Fran. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Personal Business",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/237/592601.jpg",
+          "alt": "The Nanny season 1, episode 9: Personal Business",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/103531/the-nanny-1x09-personal-business"
+        }
+      },
+      {
+        "prompt": "During The Nanny's “The Nanny-in-Law,” this problem appears: Maxwell's old nanny comes to visit and is unimpressed with Fran's unconventional ways and lack of formal training. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · The Nanny-in-Law",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/237/592602.jpg",
+          "alt": "The Nanny season 1, episode 10: The Nanny-in-Law",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/103532/the-nanny-1x10-the-nanny-in-law"
+        }
+      }
+    ]
+  },
+  "home-improvement": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/544/home-improvement",
+    "tvmazeId": 544,
+    "officialTitle": "Home Improvement",
+    "premiered": "1991-09-17",
+    "genres": [
+      "Comedy",
+      "Family"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/4/11457.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/532/1332450.jpg",
+    "questions": [
+      {
+        "prompt": "In “Pilot,” an episode of Home Improvement, the situation is this: Tim decides to rewire the dishwasher against Jill's wishes and ends up blowing more than her fuse. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Pilot",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/532/1332450.jpg",
+          "alt": "Home Improvement season 1, episode 1: Pilot",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/49978/home-improvement-1x01-pilot"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Mow Better Blues” from Home Improvement: Mark fears he'll be traded in when he breaks a tool after Tim makes Jill take a hand-off-my-tools oath. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Mow Better Blues",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/353/883182.jpg",
+          "alt": "Home Improvement season 1, episode 2: Mow Better Blues",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/49979/home-improvement-1x02-mow-better-blues"
+        }
+      },
+      {
+        "prompt": "This is happening in Home Improvement's “Off Sides”: Tim's football fetish interrupts a romantic evening out, made possibly by a last-minute babysitter magician. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Off Sides",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/353/883183.jpg",
+          "alt": "Home Improvement season 1, episode 3: Off Sides",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/49980/home-improvement-1x03-off-sides"
+        }
+      },
+      {
+        "prompt": "You enter “Satellite on a Hot Tim's Roof” from Home Improvement just as this unfolds: While installing a satellite dish, Tim picks up warning signals from a job interview specialist who is counseling Jill. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Satellite on a Hot Tim's Roof",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/81/202924.jpg",
+          "alt": "Home Improvement season 1, episode 4: Satellite on a Hot Tim's Roof",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/49981/home-improvement-1x04-satellite-on-a-hot-tims-roof"
+        }
+      },
+      {
+        "prompt": "In Home Improvement's “Wild Kingdom,” the group faces this: The possibility of a mouse in the basement is a minor matter to Tim, but a snake is not such a Mickey Mouse deal. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Wild Kingdom",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/81/203340.jpg",
+          "alt": "Home Improvement season 1, episode 5: Wild Kingdom",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/49982/home-improvement-1x05-wild-kingdom"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Home Improvement's “Adventures in Fine Dining”: After pandemonium erupts at a pizza parlor, Tim promises Jill that he'll teach the boys some manners. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Adventures in Fine Dining",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/81/203337.jpg",
+          "alt": "Home Improvement season 1, episode 6: Adventures in Fine Dining",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/49983/home-improvement-1x06-adventures-in-fine-dining"
+        }
+      },
+      {
+        "prompt": "The story in Home Improvement's “Nothing More Than Feelings” turns to this moment: Tim can't ignore that Jill ignored her car's oil warning light, and shares it with his audience. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Nothing More Than Feelings",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/360/901845.jpg",
+          "alt": "Home Improvement season 1, episode 7: Nothing More Than Feelings",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/49984/home-improvement-1x07-nothing-more-than-feelings"
+        }
+      },
+      {
+        "prompt": "You are dropped into Home Improvement's “Flying Sauces” when this happens: Tim cooks up a plan for Mark to get even with his borthers, and offers Tool Time viewers nutrition tips. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Flying Sauces",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/81/203469.jpg",
+          "alt": "Home Improvement season 1, episode 8: Flying Sauces",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/49985/home-improvement-1x08-flying-sauces"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Home Improvement's “Bubble, Bubble, Toil and Trouble”: The Taylors' bathroom is remodeled as a Tool Time special, but the job may take longer than expected. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Bubble, Bubble, Toil and Trouble",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/81/203470.jpg",
+          "alt": "Home Improvement season 1, episode 9: Bubble, Bubble, Toil and Trouble",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/49986/home-improvement-1x09-bubble-bubble-toil-and-trouble"
+        }
+      },
+      {
+        "prompt": "During Home Improvement's “Reach Out and Teach Someone,” this problem appears: Tim hosts an all female Tool Time audience, prompted by Jill's inability to make household repairs. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Reach Out and Teach Someone",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/546/1366847.jpg",
+          "alt": "Home Improvement season 1, episode 10: Reach Out and Teach Someone",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/49987/home-improvement-1x10-reach-out-and-teach-someone"
+        }
+      }
+    ]
+  },
+  "the-wonder-years": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1294/the-wonder-years",
+    "tvmazeId": 1294,
+    "officialTitle": "The Wonder Years",
+    "premiered": "1988-01-31",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Family"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/62/155340.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/311/779321.jpg",
+    "questions": [
+      {
+        "prompt": "In “Pilot,” an episode of The Wonder Years, the situation is this: Kevin, Winnie and Paul enter middle school. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Pilot",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779321.jpg",
+          "alt": "The Wonder Years season 1, episode 1: Pilot",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/110305/the-wonder-years-1x01-pilot"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Swingers” from The Wonder Years: At Brian's funeral, Kevin obsesses over his first kiss with Winnie; Sex education begins being taught at Kevin's schools. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Swingers",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779322.jpg",
+          "alt": "The Wonder Years season 1, episode 2: Swingers",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/110306/the-wonder-years-1x02-swingers"
+        }
+      },
+      {
+        "prompt": "This is happening in The Wonder Years' “My Father's Office”: When Kevin expresses interest in what his dad does at work, his dad takes him into work for the day. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · My Father's Office",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779323.jpg",
+          "alt": "The Wonder Years season 1, episode 3: My Father's Office",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/110307/the-wonder-years-1x03-my-fathers-office"
+        }
+      },
+      {
+        "prompt": "You enter “Angel” from The Wonder Years just as this unfolds: Karen brings home a new boyfriend's whose views upset Kevin's dad. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Angel",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779324.jpg",
+          "alt": "The Wonder Years season 1, episode 4: Angel",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/110308/the-wonder-years-1x04-angel"
+        }
+      },
+      {
+        "prompt": "In The Wonder Years' “The Phone Call,” the group faces this: Kevin frets over calling a girl from school. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · The Phone Call",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779325.jpg",
+          "alt": "The Wonder Years season 1, episode 5: The Phone Call",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/110309/the-wonder-years-1x05-the-phone-call"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during The Wonder Years' “Dance with Me”: Kevin ends up dateless for his first junior high dance as both Lisa and Winnie have dates. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Dance with Me",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779326.jpg",
+          "alt": "The Wonder Years season 1, episode 6: Dance with Me",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/110310/the-wonder-years-1x06-dance-with-me"
+        }
+      },
+      {
+        "prompt": "The story in The Wonder Years' “Heart of Darkness” turns to this moment: Kevin and Paul befriend a bad boy and lie to their parents to spend the night camping with him. What would you bring to the situation?",
+        "kicker": "Season 2 · Episode 1 · Heart of Darkness",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779328.jpg",
+          "alt": "The Wonder Years season 2, episode 1: Heart of Darkness",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/110311/the-wonder-years-2x01-heart-of-darkness"
+        }
+      },
+      {
+        "prompt": "You are dropped into The Wonder Years' “Our Miss White” when this happens: Kevin develops a crush on his teacher, Miss White while appearing in a play she wrote about the Civil Rights movement. What do you do next?",
+        "kicker": "Season 2 · Episode 2 · Our Miss White",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779329.jpg",
+          "alt": "The Wonder Years season 2, episode 2: Our Miss White",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/110312/the-wonder-years-2x02-our-miss-white"
+        }
+      },
+      {
+        "prompt": "The pressure rises in The Wonder Years' “Christmas”: Kevin and Wayne try to convince their father to buy a color TV for Christmas; Kevin tries to find the perfect gift for Winnie. Which response fits you best?",
+        "kicker": "Season 2 · Episode 3 · Christmas",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779331.jpg",
+          "alt": "The Wonder Years season 2, episode 3: Christmas",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/110313/the-wonder-years-2x03-christmas"
+        }
+      },
+      {
+        "prompt": "During The Wonder Years' “Steady as She Goes,” this problem appears: Kevin asks Becky Slater to go steady in order to get Winnie to notice him. How would you step in?",
+        "kicker": "Season 2 · Episode 4 · Steady as She Goes",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/311/779332.jpg",
+          "alt": "The Wonder Years season 2, episode 4: Steady as She Goes",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/110314/the-wonder-years-2x04-steady-as-she-goes"
+        }
+      }
+    ]
+  },
+  "derry-girls": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/33320/derry-girls",
+    "tvmazeId": 33320,
+    "officialTitle": "Derry Girls",
+    "premiered": "2018-01-04",
+    "genres": [
+      "Comedy"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/402/1007479.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/194/485797.jpg",
+    "questions": [
+      {
+        "prompt": "In “Episode 1,” an episode of Derry Girls, the situation is this: It's the early 90s and the first day of a new school term and a terrible start for 16-year-old Erin as she wakes up to find her cousin Orla reading her… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Episode 1",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/194/485797.jpg",
+          "alt": "Derry Girls season 1, episode 1: Episode 1",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1370217/derry-girls-1x01-episode-1"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Episode 2” from Derry Girls: Everyone's really excited when Sister Michael announces the school trip this year is to Paris. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Episode 2",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/194/485798.jpg",
+          "alt": "Derry Girls season 1, episode 2: Episode 2",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1370218/derry-girls-1x02-episode-2"
+        }
+      },
+      {
+        "prompt": "This is happening in Derry Girls' “Episode 3”: The girls have been up all night cramming for a big exam. Some (Michelle and Erin) haven't studied for it enough whilst Clare's over-studied, leaving… Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Episode 3",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/142/357108.jpg",
+          "alt": "Derry Girls season 1, episode 3: Episode 3",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1370219/derry-girls-1x03-episode-3"
+        }
+      },
+      {
+        "prompt": "You enter “Episode 4” from Derry Girls just as this unfolds: In episode four, Derry is welcoming the 'Children of Chernobyl' - teenagers, affected by the Chernobyl nuclear disaster, who have been sent from their… What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Episode 4",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/143/359163.jpg",
+          "alt": "Derry Girls season 1, episode 4: Episode 4",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1370220/derry-girls-1x04-episode-4"
+        }
+      },
+      {
+        "prompt": "In Derry Girls' “Episode 5,” the group faces this: In episode five, it's July 12th and the Quinn family are rushing to get out of Derry before the Orange Parades start. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Episode 5",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/183/458588.jpg",
+          "alt": "Derry Girls season 1, episode 5: Episode 5",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1370221/derry-girls-1x05-episode-5"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Derry Girls' “Episode 6”: Erin is over the moon when she becomes editor of the school magazine, Orla's obsessed by step aerobics, and Da Gerry is in trouble with Ma Mary. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Episode 6",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/183/458587.jpg",
+          "alt": "Derry Girls season 1, episode 6: Episode 6",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1370222/derry-girls-1x06-episode-6"
+        }
+      },
+      {
+        "prompt": "The story in Derry Girls' “Across the Barricade” turns to this moment: Erin and co are excited to attend an outdoor pursuits weekend as part of a peace initiative, but peace is the last thing on Michelle's mind once she… What would you bring to the situation?",
+        "kicker": "Season 2 · Episode 1 · Across the Barricade",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/186/466941.jpg",
+          "alt": "Derry Girls season 2, episode 1: Across the Barricade",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1612947/derry-girls-2x01-across-the-barricade"
+        }
+      },
+      {
+        "prompt": "You are dropped into Derry Girls' “Ms. De Brún and the Child of Prague” when this happens: New English teacher, Ms. De Brún, arrives at Our Lady Immaculate and the gang find themselves inspired. What do you do next?",
+        "kicker": "Season 2 · Episode 2 · Ms. De Brún and the Child of Prague",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/187/469017.jpg",
+          "alt": "Derry Girls season 2, episode 2: Ms. De Brún and the Child of Prague",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1617426/derry-girls-2x02-ms-de-brun-and-the-child-of-prague"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Derry Girls' “The Concert”: Erin, Clare, Michelle, Orla and James are beside themselves with excitement as they have tickets to see Take That in Belfast. Which response fits you best?",
+        "kicker": "Season 2 · Episode 3 · The Concert",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/188/472060.jpg",
+          "alt": "Derry Girls season 2, episode 3: The Concert",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1619214/derry-girls-2x03-the-concert"
+        }
+      },
+      {
+        "prompt": "During Derry Girls' “The Curse,” this problem appears: The Quinn family cause uproar at a family wedding, and when the girls, and James fail to behave themselves at the reception the consequences are very… How would you step in?",
+        "kicker": "Season 2 · Episode 4 · The Curse",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/189/474305.jpg",
+          "alt": "Derry Girls season 2, episode 4: The Curse",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1619215/derry-girls-2x04-the-curse"
+        }
+      }
+    ]
+  },
+  "never-have-i-ever": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/44592/never-have-i-ever",
+    "tvmazeId": 44592,
+    "officialTitle": "Never Have I Ever",
+    "premiered": "2020-04-27",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Romance"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/461/1152604.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/254/635252.jpg",
+    "questions": [
+      {
+        "prompt": "In “Pilot,” an episode of Never Have I Ever, the situation is this: After recent trauma, Devi starts her first day as a high school sophomore determined to shake off old labels and finally become cool. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Pilot",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/254/635252.jpg",
+          "alt": "Never Have I Ever season 1, episode 1: Pilot",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1820562/never-have-i-ever-1x01-pilot"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “...had sex with Paxton Hall-Yoshida” from Never Have I Ever: Devi hesitates to tell her friends the truth about her awkward interactions with Paxton. The prospect of an arranged marriage puts Kamala under pressure. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · ...had sex with Paxton Hall-Yoshida",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/254/635253.jpg",
+          "alt": "Never Have I Ever season 1, episode 2: ...had sex with Paxton Hall-Yoshida",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1824860/never-have-i-ever-1x02-had-sex-with-paxton-hall-yoshida"
+        }
+      },
+      {
+        "prompt": "This is happening in Never Have I Ever's “...gotten drunk with the popular kids”: Devi hopes to win cool points with Paxton at a party, until a surprising turn of events. Hidden emotions emerge for Fabiola. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · ...gotten drunk with the popular kids",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/254/635254.jpg",
+          "alt": "Never Have I Ever season 1, episode 3: ...gotten drunk with the popular kids",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1824861/never-have-i-ever-1x03-gotten-drunk-with-the-popular-kids"
+        }
+      },
+      {
+        "prompt": "You enter “...felt super Indian” from Never Have I Ever just as this unfolds: At Ganesh Puja celebrations, Devi questions how much she identifies with Indian culture, Nalini dodges acerbic aunties and Kamala frets over her future. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · ...felt super Indian",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/254/635255.jpg",
+          "alt": "Never Have I Ever season 1, episode 4: ...felt super Indian",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1824862/never-have-i-ever-1x04-felt-super-indian"
+        }
+      },
+      {
+        "prompt": "In Never Have I Ever's “...started a nuclear war,” the group faces this: Devi allows rumors about her and Paxton to swirl during an overnight school trip. Fabiola opens up to Eleanor, who gets upsetting news about her mother. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · ...started a nuclear war",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/254/635256.jpg",
+          "alt": "Never Have I Ever season 1, episode 5: ...started a nuclear war",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1824863/never-have-i-ever-1x05-started-a-nuclear-war"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Never Have I Ever's “...been the loneliest boy in the world”: With absentee parents, a shallow girlfriend and no one to hang out with, Ben Gross is lonelier than ever, until an unlikely invitation offers some hope. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · ...been the loneliest boy in the world",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/254/635257.jpg",
+          "alt": "Never Have I Ever season 1, episode 6: ...been the loneliest boy in the world",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1824864/never-have-i-ever-1x06-been-the-loneliest-boy-in-the-world"
+        }
+      },
+      {
+        "prompt": "The story in Never Have I Ever's “...been a big, fat liar” turns to this moment: Devi oversteps several boundaries in an attempt to be a better friend. Eleanor's reunion with her mother leads to multiple revelations and confessions. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · ...been a big, fat liar",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/254/635258.jpg",
+          "alt": "Never Have I Ever season 1, episode 7: ...been a big, fat liar",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1824865/never-have-i-ever-1x07-been-a-big-fat-liar"
+        }
+      },
+      {
+        "prompt": "You are dropped into Never Have I Ever's “...pissed off everyone I know” when this happens: After another fallout with her friends, Devi grapples with unresolved trauma. A party at Ben's turns out to be equal parts awkward, awful and amazing. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · ...pissed off everyone I know",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/254/635259.jpg",
+          "alt": "Never Have I Ever season 1, episode 8: ...pissed off everyone I know",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1824866/never-have-i-ever-1x08-pissed-off-everyone-i-know"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Never Have I Ever's “...had to be on my best behavior”: Flashbacks unearth painful memories and resentment for Devi. Meanwhile, Kamala is forced to get honest as the family welcomes her suitor at home. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · ...had to be on my best behavior",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/254/635260.jpg",
+          "alt": "Never Have I Ever season 1, episode 9: ...had to be on my best behavior",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1824867/never-have-i-ever-1x09-had-to-be-on-my-best-behavior"
+        }
+      },
+      {
+        "prompt": "During Never Have I Ever's “...said I'm sorry,” this problem appears: After unwelcome news sparks a fight with her mother, Devi seeks an escape. Mohan's birthday brings an opportunity for closure — and for new beginnings. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · ...said I'm sorry",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/254/635261.jpg",
+          "alt": "Never Have I Ever season 1, episode 10: ...said I'm sorry",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1824868/never-have-i-ever-1x10-said-im-sorry"
+        }
+      }
+    ]
+  },
+  "heartstopper": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/53269/heartstopper",
+    "tvmazeId": 53269,
+    "officialTitle": "Heartstopper",
+    "premiered": "2022-04-22",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Romance"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/632/1580747.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/405/1014909.jpg",
+    "questions": [
+      {
+        "prompt": "In “1. Meet,” an episode of Heartstopper, the situation is this: Stuck in a secret relationship, shy Charlie starts to crush on Nick, the school's popular rugby star, and joins the team against his friends' advice. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · 1. Meet",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/405/1014909.jpg",
+          "alt": "Heartstopper season 1, episode 1: 1. Meet",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2286863/heartstopper-1x01-1-meet"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “2. Crush” from Heartstopper: Elle struggles to settle into her new school as Charlie and Tao are convinced Nick is straight. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · 2. Crush",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/405/1014910.jpg",
+          "alt": "Heartstopper season 1, episode 2: 2. Crush",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2286864/heartstopper-1x02-2-crush"
+        }
+      },
+      {
+        "prompt": "This is happening in Heartstopper's “3. Kiss”: Sparks fly at a birthday party where Nick's friend Tara confides in him. Inspired, Nick shares his feelings with Charlie — and they grow even closer. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · 3. Kiss",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/405/1014911.jpg",
+          "alt": "Heartstopper season 1, episode 3: 3. Kiss",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2286865/heartstopper-1x03-3-kiss"
+        }
+      },
+      {
+        "prompt": "You enter “4. Secret” from Heartstopper just as this unfolds: Charlie and Nick agree to keep their relationship a secret at school while Nick figures things out. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · 4. Secret",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/405/1014912.jpg",
+          "alt": "Heartstopper season 1, episode 4: 4. Secret",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2286866/heartstopper-1x04-4-secret"
+        }
+      },
+      {
+        "prompt": "In Heartstopper's “5. Friend,” the group faces this: Nick decides whether he should skip his date with Imogen for Charlie's birthday. Tao vows to protect Charlie from Nick and his rude rugby friends. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · 5. Friend",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/405/1014913.jpg",
+          "alt": "Heartstopper season 1, episode 5: 5. Friend",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2286867/heartstopper-1x05-5-friend"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Heartstopper's “6. Girls”: Tara makes her relationship official on social media, but she isn't ready for the side effects. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · 6. Girls",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/405/1014914.jpg",
+          "alt": "Heartstopper season 1, episode 6: 6. Girls",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2286868/heartstopper-1x06-6-girls"
+        }
+      },
+      {
+        "prompt": "The story in Heartstopper's “7. Bully” turns to this moment: After both Nick and Tao get into fights with Harry, Charlie worries that he's making Nick's life too difficult and straining his friendship with Tao. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · 7. Bully",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/405/1014915.jpg",
+          "alt": "Heartstopper season 1, episode 7: 7. Bully",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2286869/heartstopper-1x07-7-bully"
+        }
+      },
+      {
+        "prompt": "You are dropped into Heartstopper's “8. Boyfriend” when this happens: As the boys and girls schools meet for a Sports Day, Charlie's on the brink of breaking it all off with Nick while Elle and Tao share a special moment. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · 8. Boyfriend",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/405/1014916.jpg",
+          "alt": "Heartstopper season 1, episode 8: 8. Boyfriend",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2286870/heartstopper-1x08-8-boyfriend"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Heartstopper's “1. Out”: As his relationship with Charlie matures, Nick considers coming out to Imogen — but it's a lot harder than he expected. Which response fits you best?",
+        "kicker": "Season 2 · Episode 1 · 1. Out",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/471/1178389.jpg",
+          "alt": "Heartstopper season 2, episode 1: 1. Out",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2532453/heartstopper-2x01-1-out"
+        }
+      },
+      {
+        "prompt": "During Heartstopper's “2. Family,” this problem appears: With Charlie's grades slipping, his parents tighten the rules. Tao's jealous when Elle makes new friends. How would you step in?",
+        "kicker": "Season 2 · Episode 2 · 2. Family",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/471/1178390.jpg",
+          "alt": "Heartstopper season 2, episode 2: 2. Family",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2533161/heartstopper-2x02-2-family"
+        }
+      }
+    ]
+  },
+  "cobra-kai": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/30960/cobra-kai",
+    "tvmazeId": 30960,
+    "officialTitle": "Cobra Kai",
+    "premiered": "2018-05-02",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Action"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/536/1340290.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/421/1053856.jpg",
+    "questions": [
+      {
+        "prompt": "In “Ace Degenerate,” an episode of Cobra Kai, the situation is this: In 2018, Johnny Lawrence lives in dreams of the past and how his life was great until Daniel LaRusso beat him in a karate tournament. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Ace Degenerate",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/421/1053856.jpg",
+          "alt": "Cobra Kai season 1, episode 1: Ace Degenerate",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1430546/cobra-kai-1x01-ace-degenerate"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Strike First” from Cobra Kai: Daniel finds out about Johnny's new dojo and realizes that he's lost the balance that he had in the past. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Strike First",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/421/1053857.jpg",
+          "alt": "Cobra Kai season 1, episode 2: Strike First",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1461988/cobra-kai-1x02-strike-first"
+        }
+      },
+      {
+        "prompt": "This is happening in Cobra Kai's “Esqueleto”: Johnny starts Miguel's training in earnest while beginning an online promotion of his dojo. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Esqueleto",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/421/1053858.jpg",
+          "alt": "Cobra Kai season 1, episode 3: Esqueleto",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1461989/cobra-kai-1x03-esqueleto"
+        }
+      },
+      {
+        "prompt": "You enter “Cobra Kai Never Dies” from Cobra Kai just as this unfolds: Someone defaces Daniel's dealership billboard, and he suspects his rival. Meanwhile, Samantha learns the truth about Kyler, and Johnny has eye-awakening… What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Cobra Kai Never Dies",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/421/1053859.jpg",
+          "alt": "Cobra Kai season 1, episode 4: Cobra Kai Never Dies",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1461990/cobra-kai-1x04-cobra-kai-never-dies"
+        }
+      },
+      {
+        "prompt": "In Cobra Kai's “Counterbalance,” the group faces this: Daniel schemes to raise the rent on Johnny's dojo, forcing him to leave. Meanwhile, Miguel puts Johnny's training to use, and Robby gets a job after… What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Counterbalance",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/421/1053860.jpg",
+          "alt": "Cobra Kai season 1, episode 5: Counterbalance",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1461991/cobra-kai-1x05-counterbalance"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Cobra Kai's “Quiver”: Robby puts up with hazing by Louie, and Daniel takes pity on him. Meanwhile, Johnny discovers that students have changed in the last 30 years and… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Quiver",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/421/1053861.jpg",
+          "alt": "Cobra Kai season 1, episode 6: Quiver",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1461992/cobra-kai-1x06-quiver"
+        }
+      },
+      {
+        "prompt": "The story in Cobra Kai's “All Valley” turns to this moment: Johnny and Miguel give each other advice, on getting the ban lifted on Cobra Kai from the All-Valley Tournament and dating Samantha. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · All Valley",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/421/1053862.jpg",
+          "alt": "Cobra Kai season 1, episode 7: All Valley",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1461993/cobra-kai-1x07-all-valley"
+        }
+      },
+      {
+        "prompt": "You are dropped into Cobra Kai's “Molting” when this happens: While training with Daniel, Robby gets closer to Samantha and Miguel notices. Meanwhile, Johnny tries to make amends for his past. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Molting",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/421/1053863.jpg",
+          "alt": "Cobra Kai season 1, episode 8: Molting",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1461994/cobra-kai-1x08-molting"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Cobra Kai's “Different But Same”: Amanda forces Daniel to give Johnny a new car to replace the one Louie burned up, and Johnny and Daniel bond over their common upbringings. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Different But Same",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/421/1053864.jpg",
+          "alt": "Cobra Kai season 1, episode 9: Different But Same",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1461995/cobra-kai-1x09-different-but-same"
+        }
+      },
+      {
+        "prompt": "During Cobra Kai's “Mercy,” this problem appears: Cobra Kai fights in the All Valley Karate Championship, and the final match comes down to Miguel and Robby. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Mercy",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/421/1053865.jpg",
+          "alt": "Cobra Kai season 1, episode 10: Mercy",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1461996/cobra-kai-1x10-mercy"
+        }
+      }
+    ]
+  },
+  "the-umbrella-academy": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/30386/the-umbrella-academy",
+    "tvmazeId": 30386,
+    "officialTitle": "The Umbrella Academy",
+    "premiered": "2019-02-15",
+    "genres": [
+      "Drama",
+      "Action",
+      "Science-Fiction"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/529/1324589.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/184/460039.jpg",
+    "questions": [
+      {
+        "prompt": "In “We Only See Each Other at Weddings and Funerals,” an episode of The Umbrella Academy, the situation is this: Years after they rose to fame as young crime-fighting superheroes, the estranged Hargreeves siblings come together to mark their father's death. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · We Only See Each Other at Weddings and Funerals",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/184/460039.jpg",
+          "alt": "The Umbrella Academy season 1, episode 1: We Only See Each Other at Weddings and Funerals",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1542077/the-umbrella-academy-1x01-we-only-see-each-other-at-weddings-and-funerals"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Run Boy Run” from The Umbrella Academy: After sharing the story of his time travel with Vanya, Five hunts for the owner of a fake eye. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Run Boy Run",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/184/460040.jpg",
+          "alt": "The Umbrella Academy season 1, episode 2: Run Boy Run",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1598556/the-umbrella-academy-1x02-run-boy-run"
+        }
+      },
+      {
+        "prompt": "This is happening in The Umbrella Academy's “Extra Ordinary”: Worried their mother is hiding something, Luther and Allison call a family meeting. Cha-Cha and Hazel catch a big break in their hunt for Five. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Extra Ordinary",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/184/460041.jpg",
+          "alt": "The Umbrella Academy season 1, episode 3: Extra Ordinary",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1598557/the-umbrella-academy-1x03-extra-ordinary"
+        }
+      },
+      {
+        "prompt": "You enter “Man on the Moon” from The Umbrella Academy just as this unfolds: The story of Luther's transformation emerges. At the motel, Klaus puts Hazel and Cha-Cha's training to the test. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Man on the Moon",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/184/460042.jpg",
+          "alt": "The Umbrella Academy season 1, episode 4: Man on the Moon",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1598558/the-umbrella-academy-1x04-man-on-the-moon"
+        }
+      },
+      {
+        "prompt": "In The Umbrella Academy's “Number Five,” the group faces this: Five lets Luther in on his secret, Klaus returns from a harrowing trip through time, and Vanya begins to feel different without her meds. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Number Five",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/184/460043.jpg",
+          "alt": "The Umbrella Academy season 1, episode 5: Number Five",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1598559/the-umbrella-academy-1x05-number-five"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during The Umbrella Academy's “The Day That Wasn't”: Sparks fly when Vanya finds her siblings holding an emergency family meeting without her. Five starts his new job at HQ. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · The Day That Wasn't",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/184/460044.jpg",
+          "alt": "The Umbrella Academy season 1, episode 6: The Day That Wasn't",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1598560/the-umbrella-academy-1x06-the-day-that-wasnt"
+        }
+      },
+      {
+        "prompt": "The story in The Umbrella Academy's “The Day That Was” turns to this moment: With a second chance at the day, the siblings team up to find the mysterious \"Harold Jenkins.\" Leonard takes Vanya into the woods to test her powers. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · The Day That Was",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/184/460045.jpg",
+          "alt": "The Umbrella Academy season 1, episode 7: The Day That Was",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1598561/the-umbrella-academy-1x07-the-day-that-was"
+        }
+      },
+      {
+        "prompt": "You are dropped into The Umbrella Academy's “I Heard a Rumor” when this happens: As Vanya practices controlling her new abilities, Allison tags along with a local cop to find out what happened outside the restaurant. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · I Heard a Rumor",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/184/460046.jpg",
+          "alt": "The Umbrella Academy season 1, episode 8: I Heard a Rumor",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1598562/the-umbrella-academy-1x08-i-heard-a-rumor"
+        }
+      },
+      {
+        "prompt": "The pressure rises in The Umbrella Academy's “Changes”: Vanya veers between shock and despair as she makes a string of unsettling discoveries. A serendipitous development leaves Five at loose ends. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Changes",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/184/460047.jpg",
+          "alt": "The Umbrella Academy season 1, episode 9: Changes",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1598563/the-umbrella-academy-1x09-changes"
+        }
+      },
+      {
+        "prompt": "During The Umbrella Academy's “The White Violin,” this problem appears: As a lifetime of secrets and resentment bring the Umbrella Academy crashing down, the Hargreeves siblings realize the worst is still to come. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · The White Violin",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/184/460048.jpg",
+          "alt": "The Umbrella Academy season 1, episode 10: The White Violin",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1598564/the-umbrella-academy-1x10-the-white-violin"
+        }
+      }
+    ]
+  },
+  "the-mandalorian": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/38963/the-mandalorian",
+    "tvmazeId": 38963,
+    "officialTitle": "The Mandalorian",
+    "premiered": "2019-11-12",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/501/1253498.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/222/556622.jpg",
+    "questions": [
+      {
+        "prompt": "In “Chapter 1: The Mandalorian,” an episode of The Mandalorian, the situation is this: A Mandalorian bounty hunter tracks a target for a well-paying client. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Chapter 1: The Mandalorian",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/222/556622.jpg",
+          "alt": "The Mandalorian season 1, episode 1: Chapter 1: The Mandalorian",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1577473/the-mandalorian-1x01-chapter-1-the-mandalorian"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Chapter 2: The Child” from The Mandalorian: Target in-hand, the Mandalorian must now contend with scavengers. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Chapter 2: The Child",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/224/560488.jpg",
+          "alt": "The Mandalorian season 1, episode 2: Chapter 2: The Child",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1740391/the-mandalorian-1x02-chapter-2-the-child"
+        }
+      },
+      {
+        "prompt": "This is happening in The Mandalorian's “Chapter 3: The Sin”: The battered Mandalorian returns to his client for reward. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Chapter 3: The Sin",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/227/567694.jpg",
+          "alt": "The Mandalorian season 1, episode 3: Chapter 3: The Sin",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1740392/the-mandalorian-1x03-chapter-3-the-sin"
+        }
+      },
+      {
+        "prompt": "You enter “Chapter 4: Sanctuary” from The Mandalorian just as this unfolds: The Mandalorian teams up with an ex-soldier to protect a village from raiders. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Chapter 4: Sanctuary",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/228/571800.jpg",
+          "alt": "The Mandalorian season 1, episode 4: Chapter 4: Sanctuary",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1740393/the-mandalorian-1x04-chapter-4-sanctuary"
+        }
+      },
+      {
+        "prompt": "In The Mandalorian's “Chapter 5: The Gunslinger,” the group faces this: The Mandalorian helps a rookie bounty hunter who is in over his head. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Chapter 5: The Gunslinger",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/230/575424.jpg",
+          "alt": "The Mandalorian season 1, episode 5: Chapter 5: The Gunslinger",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1740394/the-mandalorian-1x05-chapter-5-the-gunslinger"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during The Mandalorian's “Chapter 6: The Prisoner”: The Mandalorian joins a crew of mercenaries on a dangerous mission. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Chapter 6: The Prisoner",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/231/579134.jpg",
+          "alt": "The Mandalorian season 1, episode 6: Chapter 6: The Prisoner",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1740395/the-mandalorian-1x06-chapter-6-the-prisoner"
+        }
+      },
+      {
+        "prompt": "The story in The Mandalorian's “Chapter 7: The Reckoning” turns to this moment: An old rival extends an invitation for The Mandalorian to make peace. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Chapter 7: The Reckoning",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/232/580313.jpg",
+          "alt": "The Mandalorian season 1, episode 7: Chapter 7: The Reckoning",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1740396/the-mandalorian-1x07-chapter-7-the-reckoning"
+        }
+      },
+      {
+        "prompt": "You are dropped into The Mandalorian's “Chapter 8: Redemption” when this happens: The Mandalorian comes face-to-face with an unexpected enemy. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Chapter 8: Redemption",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/233/583218.jpg",
+          "alt": "The Mandalorian season 1, episode 8: Chapter 8: Redemption",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1740397/the-mandalorian-1x08-chapter-8-redemption"
+        }
+      },
+      {
+        "prompt": "The pressure rises in The Mandalorian's “Chapter 9: The Marshal”: The Mandalorian is drawn to the Outer Rim in search of others of his kind. Which response fits you best?",
+        "kicker": "Season 2 · Episode 1 · Chapter 9: The Marshal",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/280/701346.jpg",
+          "alt": "The Mandalorian season 2, episode 1: Chapter 9: The Marshal",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1923668/the-mandalorian-2x01-chapter-9-the-marshal"
+        }
+      },
+      {
+        "prompt": "During The Mandalorian's “Chapter 10: The Passenger,” this problem appears: The Mandalorian must ferry a passenger with precious cargo on a risky journey. How would you step in?",
+        "kicker": "Season 2 · Episode 2 · Chapter 10: The Passenger",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/281/704685.jpg",
+          "alt": "The Mandalorian season 2, episode 2: Chapter 10: The Passenger",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1949630/the-mandalorian-2x02-chapter-10-the-passenger"
+        }
+      }
+    ]
+  },
+  "loki": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/41007/loki",
+    "tvmazeId": 41007,
+    "officialTitle": "Loki",
+    "premiered": "2021-06-09",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/478/1195717.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/327/817543.jpg",
+    "questions": [
+      {
+        "prompt": "In “Glorious Purpose,” an episode of Loki, the situation is this: Loki, the God of Mischief, finds himself out of time and in an unusual place and forced — against his godly disposition — to cooperate with others. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Glorious Purpose",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/327/817543.jpg",
+          "alt": "Loki season 1, episode 1: Glorious Purpose",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1984092/loki-1x01-glorious-purpose"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “The Variant” from Loki: Mobius puts Loki to work investigating The Variant, but not everyone at the TVA is thrilled to be working alongside The God of Mischief. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · The Variant",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/329/823863.jpg",
+          "alt": "Loki season 1, episode 2: The Variant",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2095474/loki-1x02-the-variant"
+        }
+      },
+      {
+        "prompt": "This is happening in Loki's “Lamentis”: Loki finds himself trapped in an apocalypse with a dead TemPad and the last person he wants by his side: the Loki Variant, Sylvie. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Lamentis",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/332/831232.jpg",
+          "alt": "Loki season 1, episode 3: Lamentis",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2095475/loki-1x03-lamentis"
+        }
+      },
+      {
+        "prompt": "You enter “The Nexus Event” from Loki just as this unfolds: Loki and Sylvie find their way off the Lamentis-1 mere moments before complete annihilation. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · The Nexus Event",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/334/836858.jpg",
+          "alt": "Loki season 1, episode 4: The Nexus Event",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2095476/loki-1x04-the-nexus-event"
+        }
+      },
+      {
+        "prompt": "In Loki's “Journey Into Mystery,” the group faces this: Upon discovering the Time Keepers aren't real, Judge Renslayer prunes Loki with the Time Stick. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Journey Into Mystery",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/337/843491.jpg",
+          "alt": "Loki season 1, episode 5: Journey Into Mystery",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2095477/loki-1x05-journey-into-mystery"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Loki's “For All Time. Always.”: Loki and Sylvie arrive the Citadel at the End of Time. Will they finally discover who is behind the Time Variance Authority? How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · For All Time. Always.",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/339/849919.jpg",
+          "alt": "Loki season 1, episode 6: For All Time. Always.",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2095478/loki-1x06-for-all-time-always"
+        }
+      },
+      {
+        "prompt": "The story in Loki's “Ouroboros” turns to this moment: Loki finds himself lost to time and torn, quite literally, between past, present and future. What would you bring to the situation?",
+        "kicker": "Season 2 · Episode 1 · Ouroboros",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/480/1202210.jpg",
+          "alt": "Loki season 2, episode 1: Ouroboros",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2550051/loki-2x01-ouroboros"
+        }
+      },
+      {
+        "prompt": "You are dropped into Loki's “Breaking Brad” when this happens: With the TVA on the verge of a temporal meltdown, Loki & Mobius will stop at nothing to find Sylvie. What do you do next?",
+        "kicker": "Season 2 · Episode 2 · Breaking Brad",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/480/1202264.jpg",
+          "alt": "Loki season 2, episode 2: Breaking Brad",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2648012/loki-2x02-breaking-brad"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Loki's “1893”: Loki & Mobius go on the hunt to find everyone's favorite cartoon clock as they try to save the TVA. Which response fits you best?",
+        "kicker": "Season 2 · Episode 3 · 1893",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/482/1205174.jpg",
+          "alt": "Loki season 2, episode 3: 1893",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2648013/loki-2x03-1893"
+        }
+      },
+      {
+        "prompt": "During Loki's “Heart of the TVA,” this problem appears: The TVA's Loom nears catastrophic failure but Loki, Mobius and Sylvie have a He Who Remains variant. How would you step in?",
+        "kicker": "Season 2 · Episode 4 · Heart of the TVA",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/483/1208748.jpg",
+          "alt": "Loki season 2, episode 4: Heart of the TVA",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2648014/loki-2x04-heart-of-the-tva"
+        }
+      }
+    ]
+  },
+  "wandavision": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/41748/wandavision",
+    "tvmazeId": 41748,
+    "officialTitle": "WandaVision",
+    "premiered": "2021-01-15",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Science-Fiction"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/295/738028.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/293/732523.jpg",
+    "questions": [
+      {
+        "prompt": "In “Filmed Before a Live Studio Audience,” an episode of WandaVision, the situation is this: Wanda and Vision struggle to conceal their powers during dinner with Vision's boss and his wife. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Filmed Before a Live Studio Audience",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/293/732523.jpg",
+          "alt": "WandaVision season 1, episode 1: Filmed Before a Live Studio Audience",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1969172/wandavision-1x01-filmed-before-a-live-studio-audience"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Don't Touch That Dial” from WandaVision: Wanda Maximoff and Vision bring illusion and glamour to Westview's talent show fundraiser. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Don't Touch That Dial",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/293/732526.jpg",
+          "alt": "WandaVision season 1, episode 2: Don't Touch That Dial",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2001015/wandavision-1x02-dont-touch-that-dial"
+        }
+      },
+      {
+        "prompt": "This is happening in WandaVision's “Now in Color”: After Wanda's pregnancy takes an unexpected turn, new friend Geraldine steps in to assist. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Now in Color",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/293/734670.jpg",
+          "alt": "WandaVision season 1, episode 3: Now in Color",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2004701/wandavision-1x03-now-in-color"
+        }
+      },
+      {
+        "prompt": "You enter “We Interrupt This Program” from WandaVision just as this unfolds: We travel to Westview with Captain Monica Rambeau and her team of S.W.O.R.D. agents as they try to figure out what's going on. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · We Interrupt This Program",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/294/736835.jpg",
+          "alt": "WandaVision season 1, episode 4: We Interrupt This Program",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2008161/wandavision-1x04-we-interrupt-this-program"
+        }
+      },
+      {
+        "prompt": "In WandaVision's “On a Very Special Episode…,” the group faces this: On a very special episode of WandaVision, Wanda and Vision deal with their changing and expanding family — in more ways than one! What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · On a Very Special Episode…",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/295/738949.jpg",
+          "alt": "WandaVision season 1, episode 5: On a Very Special Episode…",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2008163/wandavision-1x05-on-a-very-special-episode"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during WandaVision's “All-New Halloween Spooktacular!”: Halloween has arrived in Westview! While Wanda and Uncle Pietro take Billy and Tommy trick-or-treating, Vision ventures out to the far side of town on a… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · All-New Halloween Spooktacular!",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/296/741091.jpg",
+          "alt": "WandaVision season 1, episode 6: All-New Halloween Spooktacular!",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2008164/wandavision-1x06-all-new-halloween-spooktacular"
+        }
+      },
+      {
+        "prompt": "The story in WandaVision's “Breaking the Fourth Wall” turns to this moment: Wanda decides to take some much needed \"me time,\" while Vision encounters detours along the way back home. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Breaking the Fourth Wall",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/297/743268.jpg",
+          "alt": "WandaVision season 1, episode 7: Breaking the Fourth Wall",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2008165/wandavision-1x07-breaking-the-fourth-wall"
+        }
+      },
+      {
+        "prompt": "You are dropped into WandaVision's “Previously On” when this happens: Forced by Agatha Harkness, Wanda Maximoff must relive past memories as she charts the steps that led her to Westview. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Previously On",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/298/745654.jpg",
+          "alt": "WandaVision season 1, episode 8: Previously On",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2008166/wandavision-1x08-previously-on"
+        }
+      },
+      {
+        "prompt": "The pressure rises in WandaVision's “The Series Finale”: Wanda and Vision fight to save Westview. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · The Series Finale",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/298/747449.jpg",
+          "alt": "WandaVision season 1, episode 9: The Series Finale",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2008167/wandavision-1x09-the-series-finale"
+        }
+      },
+      {
+        "prompt": "This WandaVision image spotlights Wanda Maximoff / The Scarlet Witch. Wanda and Vision must host dinner for an important guest. If you were there, how would you help?",
+        "kicker": "Character spotlight · Wanda Maximoff / The Scarlet Witch",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/292/732490.jpg",
+          "alt": "WandaVision episode: Wanda Maximoff / The Scarlet Witch",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/617739/wandavision-wanda-maximoff-the-scarlet-witch"
+        }
+      }
+    ]
+  },
+  "doctor-who": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/210/doctor-who",
+    "tvmazeId": 210,
+    "officialTitle": "Doctor Who",
+    "premiered": "2005-03-26",
+    "genres": [
+      "Drama",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/488/1220400.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/120/302096.jpg",
+    "questions": [
+      {
+        "prompt": "In “Rose,” an episode of Doctor Who, the situation is this: Rose Tyler meets a mysterious stranger called the Doctor, and realises Earth is in danger. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Rose",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/120/302096.jpg",
+          "alt": "Doctor Who season 1, episode 1: Rose",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/13857/doctor-who-1x01-rose"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “The End of the World” from Doctor Who: The Doctor takes Rose on her first voyage through time, to the year five billion and the end of planet Earth. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · The End of the World",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36862.jpg",
+          "alt": "Doctor Who season 1, episode 2: The End of the World",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/13858/doctor-who-1x02-the-end-of-the-world"
+        }
+      },
+      {
+        "prompt": "This is happening in Doctor Who's “The Unquiet Dead”: Charles Dickens and the Doctor team up as corpses stalk the streets of Victorian Cardiff. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · The Unquiet Dead",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36861.jpg",
+          "alt": "Doctor Who season 1, episode 3: The Unquiet Dead",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/13859/doctor-who-1x03-the-unquiet-dead"
+        }
+      },
+      {
+        "prompt": "You enter “Aliens of London” from Doctor Who just as this unfolds: Rose is taken home, but a spaceship crashes in the Thames and London is closed off... Enter the Slitheen! What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Aliens of London",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36860.jpg",
+          "alt": "Doctor Who season 1, episode 4: Aliens of London",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/13860/doctor-who-1x04-aliens-of-london"
+        }
+      },
+      {
+        "prompt": "In Doctor Who's “World War Three,” the group faces this: Time is running out for the Doctor as Downing Street announces mankind's first Interplanetary War. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · World War Three",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/120/302496.jpg",
+          "alt": "Doctor Who season 1, episode 5: World War Three",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/13861/doctor-who-1x05-world-war-three"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Doctor Who's “Dalek”: The Doctor is shattered and Earth is in danger as he and Rose discover the Time Lords' deadliest enemy beneath Utah. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Dalek",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36858.jpg",
+          "alt": "Doctor Who season 1, episode 6: Dalek",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/13862/doctor-who-1x06-dalek"
+        }
+      },
+      {
+        "prompt": "The story in Doctor Who's “The Long Game” turns to this moment: The Doctor investigates a strange satellite, and Adam's skills as an assistant are tested. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · The Long Game",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36857.jpg",
+          "alt": "Doctor Who season 1, episode 7: The Long Game",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/13863/doctor-who-1x07-the-long-game"
+        }
+      },
+      {
+        "prompt": "You are dropped into Doctor Who's “Father's Day” when this happens: Rose witnesses the day her father died, but interfering leads to terrible consequences... and sinister creatures! What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Father's Day",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36856.jpg",
+          "alt": "Doctor Who season 1, episode 8: Father's Day",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/13864/doctor-who-1x08-fathers-day"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Doctor Who's “The Empty Child”: Homeless children in wartime London are terrorised by an unearthly child. Plus we meet a certain Captain Jack... Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · The Empty Child",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36855.jpg",
+          "alt": "Doctor Who season 1, episode 9: The Empty Child",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/13865/doctor-who-1x09-the-empty-child"
+        }
+      },
+      {
+        "prompt": "During Doctor Who's “The Doctor Dances,” this problem appears: 'Are you my mummy?' The Child's plague is spreading throughout wartime London, and it looks like Captain Jack is doomed. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · The Doctor Dances",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36854.jpg",
+          "alt": "Doctor Who season 1, episode 10: The Doctor Dances",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/13866/doctor-who-1x10-the-doctor-dances"
+        }
+      }
+    ]
+  },
+  "sherlock": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/335/sherlock",
+    "tvmazeId": 335,
+    "officialTitle": "Sherlock",
+    "premiered": "2010-07-25",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mystery"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/171/428042.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/432/1082204.jpg",
+    "questions": [
+      {
+        "prompt": "In “A Study in Pink,” an episode of Sherlock, the situation is this: A war hero, invalided home from Afghanistan, meets a strange but charismatic genius who is looking for a flatmate - it is London in 2010, and Dr Watson… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · A Study in Pink",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/432/1082204.jpg",
+          "alt": "Sherlock season 1, episode 1: A Study in Pink",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/32178/sherlock-1x01-a-study-in-pink"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “The Blind Banker” from Sherlock: A mysterious cipher is being scrawled on the walls around London. The first person to see the cipher is dead within hours of reading it. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · The Blind Banker",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/432/1082205.jpg",
+          "alt": "Sherlock season 1, episode 2: The Blind Banker",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/32179/sherlock-1x02-the-blind-banker"
+        }
+      },
+      {
+        "prompt": "This is happening in Sherlock's “The Great Game”: A strange clue in an empty room, a blood-soaked car, a priceless Old Master, a deranged bomber. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · The Great Game",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/432/1082206.jpg",
+          "alt": "Sherlock season 1, episode 3: The Great Game",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/32180/sherlock-1x03-the-great-game"
+        }
+      },
+      {
+        "prompt": "You enter “A Scandal in Belgravia” from Sherlock just as this unfolds: Rejoin the 21st-century team of Sherlock Holmes and Dr. Watson as they battle the worst that modern criminality has to offer. What role would you take?",
+        "kicker": "Season 2 · Episode 1 · A Scandal in Belgravia",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/234/587222.jpg",
+          "alt": "Sherlock season 2, episode 1: A Scandal in Belgravia",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/32181/sherlock-2x01-a-scandal-in-belgravia"
+        }
+      },
+      {
+        "prompt": "In Sherlock's “The Hounds of Baskerville,” the group faces this: Watch Sherlock and Watson pursue information about research on genetically engineered animals for military use. What sounds most like your move?",
+        "kicker": "Season 2 · Episode 2 · The Hounds of Baskerville",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/234/587221.jpg",
+          "alt": "Sherlock season 2, episode 2: The Hounds of Baskerville",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/32182/sherlock-2x02-the-hounds-of-baskerville"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Sherlock's “The Reichenbach Fall”: Watch as Moriarty poses the \"final problem\" and a tabloid reporter reveals the \"shocking truth\" about Sherlock. How would you handle it?",
+        "kicker": "Season 2 · Episode 3 · The Reichenbach Fall",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/234/587220.jpg",
+          "alt": "Sherlock season 2, episode 3: The Reichenbach Fall",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/32183/sherlock-2x03-the-reichenbach-fall"
+        }
+      },
+      {
+        "prompt": "The story in Sherlock's “The Empty Hearse” turns to this moment: 'Just one more miracle, Sherlock. Stop being dead.' Two years after the devastating events of The Reichenbach Fall, Dr John Watson has got on with his… What would you bring to the situation?",
+        "kicker": "Season 3 · Episode 1 · The Empty Hearse",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/234/587219.jpg",
+          "alt": "Sherlock season 3, episode 1: The Empty Hearse",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/32184/sherlock-3x01-the-empty-hearse"
+        }
+      },
+      {
+        "prompt": "You are dropped into Sherlock's “The Sign of Three” when this happens: Sherlock faces his biggest challenge of all - delivering a best man's speech on John's wedding day. What do you do next?",
+        "kicker": "Season 3 · Episode 2 · The Sign of Three",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/234/587218.jpg",
+          "alt": "Sherlock season 3, episode 2: The Sign of Three",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/32185/sherlock-3x02-the-sign-of-three"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Sherlock's “His Last Vow”: Sherlock goes after publishing magnate and blackmailer Charles Magnussen, one of the most despicable criminals that he has ever encountered. Which response fits you best?",
+        "kicker": "Season 3 · Episode 3 · His Last Vow",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/234/587217.jpg",
+          "alt": "Sherlock season 3, episode 3: His Last Vow",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/32186/sherlock-3x03-his-last-vow"
+        }
+      },
+      {
+        "prompt": "During Sherlock's “The Six Thatchers,” this problem appears: While waiting for Moriarty to make good on his beyond-the-grave threat, Sherlock is intrigued by cases of vandalism where the criminal is breaking open… How would you step in?",
+        "kicker": "Season 4 · Episode 1 · The Six Thatchers",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/234/587215.jpg",
+          "alt": "Sherlock season 4, episode 1: The Six Thatchers",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/941297/sherlock-4x01-the-six-thatchers"
+        }
+      }
+    ]
+  },
+  "downton-abbey": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/251/downton-abbey",
+    "tvmazeId": 251,
+    "officialTitle": "Downton Abbey",
+    "premiered": "2010-09-26",
+    "genres": [
+      "Drama",
+      "Family",
+      "Romance"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/1/4601.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/14/36969.jpg",
+    "questions": [
+      {
+        "prompt": "In “Episode 1,” an episode of Downton Abbey, the situation is this: Costume drama set in an Edwardian country house in 1912, written by Oscar-winning writer Julian Fellowes. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Episode 1",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36969.jpg",
+          "alt": "Downton Abbey season 1, episode 1: Episode 1",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/20851/downton-abbey-1x01-episode-1"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Episode 2” from Downton Abbey: Everyone is anxious at the arrival of Matthew Crawley, the heir presumptive, but he soon encounters problems settling into his new life in Downton, and… How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Episode 2",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36970.jpg",
+          "alt": "Downton Abbey season 1, episode 2: Episode 2",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/20852/downton-abbey-1x02-episode-2"
+        }
+      },
+      {
+        "prompt": "This is happening in Downton Abbey's “Episode 3”: Cora's attempts at matchmaking are dashed when Mary is smitten not by intended target Evelyn Napier, but by his handsome friend, Turkish attache Kemal… Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Episode 3",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36971.jpg",
+          "alt": "Downton Abbey season 1, episode 3: Episode 3",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/20853/downton-abbey-1x03-episode-3"
+        }
+      },
+      {
+        "prompt": "You enter “Episode 4” from Downton Abbey just as this unfolds: The fair arrives in the village and Mrs Hughes finds herself the centre of speculation when she meets a former suitor who makes her question her position… What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Episode 4",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36972.jpg",
+          "alt": "Downton Abbey season 1, episode 4: Episode 4",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/20854/downton-abbey-1x04-episode-4"
+        }
+      },
+      {
+        "prompt": "In Downton Abbey's “Episode 5,” the group faces this: As the village prepares for the annual flower show, Isobel finds herself in conflict with Violet, and Mary is introduced to a potential suitor, but it… What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Episode 5",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36973.jpg",
+          "alt": "Downton Abbey season 1, episode 5: Episode 5",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/20855/downton-abbey-1x05-episode-5"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Downton Abbey's “Episode 6”: Sybil's determination to pursue her political leanings lands her in great danger when a fight breaks out at an election results meeting. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Episode 6",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36974.jpg",
+          "alt": "Downton Abbey season 1, episode 6: Episode 6",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/20856/downton-abbey-1x06-episode-6"
+        }
+      },
+      {
+        "prompt": "The story in Downton Abbey's “Episode 7” turns to this moment: Cora makes a discovery that throws the inheritance issue into chaos, and Mary is prompted to keep Matthew waiting for an answer to his proposal. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Episode 7",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36975.jpg",
+          "alt": "Downton Abbey season 1, episode 7: Episode 7",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/20857/downton-abbey-1x07-episode-7"
+        }
+      },
+      {
+        "prompt": "You are dropped into Downton Abbey's “Episode 1” when this happens: It is November 1916, and the family and servants are getting the house ready for a concert to raise funds to treat more casualties from the front. What do you do next?",
+        "kicker": "Season 2 · Episode 1 · Episode 1",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36976.jpg",
+          "alt": "Downton Abbey season 2, episode 1: Episode 1",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/20858/downton-abbey-2x01-episode-1"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Downton Abbey's “Episode 2”: Isobel suggests using Downton as a place of convalescence following a distressing incident at the village hospital. Which response fits you best?",
+        "kicker": "Season 2 · Episode 2 · Episode 2",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36977.jpg",
+          "alt": "Downton Abbey season 2, episode 2: Episode 2",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/20859/downton-abbey-2x02-episode-2"
+        }
+      },
+      {
+        "prompt": "During Downton Abbey's “Episode 3,” this problem appears: The wounded officers arrive at Downton and Matthew suggests he bring General Sir Herbert Strutt to inspect the new convalescent home - but Branson… How would you step in?",
+        "kicker": "Season 2 · Episode 3 · Episode 3",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36978.jpg",
+          "alt": "Downton Abbey season 2, episode 3: Episode 3",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/20860/downton-abbey-2x03-episode-3"
+        }
+      }
+    ]
+  },
+  "the-crown": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/3594/the-crown",
+    "tvmazeId": 3594,
+    "officialTitle": "The Crown",
+    "premiered": "2016-11-04",
+    "genres": [
+      "Drama",
+      "History"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/632/1580063.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/283/708010.jpg",
+    "questions": [
+      {
+        "prompt": "In “Wolferton Splash,” an episode of The Crown, the situation is this: A young Princess Elizabeth marries Prince Philip. As King George VI's health worsens, Winston Churchill is elected prime minister for the second time. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Wolferton Splash",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/283/708010.jpg",
+          "alt": "The Crown season 1, episode 1: Wolferton Splash",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/560876/the-crown-1x01-wolferton-splash"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Hyde Park Corner” from The Crown: With King George too ill to travel, Elizabeth and Philip embark on a four-continent Commonwealth tour. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Hyde Park Corner",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/283/708011.jpg",
+          "alt": "The Crown season 1, episode 2: Hyde Park Corner",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/731302/the-crown-1x02-hyde-park-corner"
+        }
+      },
+      {
+        "prompt": "This is happening in The Crown's “Windsor”: With Elizabeth in new role, Philip tries to assert some power. Churchill wants to delay the coronation. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Windsor",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/283/708012.jpg",
+          "alt": "The Crown season 1, episode 3: Windsor",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/731303/the-crown-1x03-windsor"
+        }
+      },
+      {
+        "prompt": "You enter “Act of God” from The Crown just as this unfolds: When dense smog cripples London for days and creates a serious health hazard, Churchill's inaction leaves him vulnerable to his political enemies. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Act of God",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/283/708013.jpg",
+          "alt": "The Crown season 1, episode 4: Act of God",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/731304/the-crown-1x04-act-of-god"
+        }
+      },
+      {
+        "prompt": "In The Crown's “Smoke and Mirrors,” the group faces this: Elizabeth rejects protocol by appointing Philip to coordinate her coronation, but his ideas create conflict. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Smoke and Mirrors",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/283/708014.jpg",
+          "alt": "The Crown season 1, episode 5: Smoke and Mirrors",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/731305/the-crown-1x05-smoke-and-mirrors"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during The Crown's “Gelignite”: Margaret and Peter come to Elizabeth with a request. With a royal scandal about to break in the newspapers, the Queen Mother intervenes. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Gelignite",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/283/708015.jpg",
+          "alt": "The Crown season 1, episode 6: Gelignite",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/731306/the-crown-1x06-gelignite"
+        }
+      },
+      {
+        "prompt": "The story in The Crown's “Scientia Potentia Est” turns to this moment: As the Soviets test the H-bomb, both Churchill and Eden have major health crises. Angry about her inadequate education, Elizabeth hires a tutor. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Scientia Potentia Est",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/283/708016.jpg",
+          "alt": "The Crown season 1, episode 7: Scientia Potentia Est",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/731307/the-crown-1x07-scientia-potentia-est"
+        }
+      },
+      {
+        "prompt": "You are dropped into The Crown's “Pride and Joy” when this happens: Elizabeth and Philip go on an exhausting world journey. Margaret takes over some of her sister's official duties and tries to liven things up. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Pride and Joy",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/283/708017.jpg",
+          "alt": "The Crown season 1, episode 8: Pride and Joy",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/731308/the-crown-1x08-pride-and-joy"
+        }
+      },
+      {
+        "prompt": "The pressure rises in The Crown's “Assassins”: As tensions with Philip increase, Elizabeth spends time with her old friend Porchey. Churchill's portrait is painted for his 80th birthday. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Assassins",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/283/708018.jpg",
+          "alt": "The Crown season 1, episode 9: Assassins",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/731309/the-crown-1x09-assassins"
+        }
+      },
+      {
+        "prompt": "During The Crown's “Gloriana,” this problem appears: Margaret and Peter are reunited, but another obstacle stands in their way. Elizabeth is torn between her duty as Queen and her love for her sister. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Gloriana",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/283/708019.jpg",
+          "alt": "The Crown season 1, episode 10: Gloriana",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/731310/the-crown-1x10-gloriana"
+        }
+      }
+    ]
+  },
+  "house": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/118/house",
+    "tvmazeId": 118,
+    "officialTitle": "House",
+    "premiered": "2004-11-16",
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Medical"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/357/894990.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/601/1504952.jpg",
+    "questions": [
+      {
+        "prompt": "In “Pilot,” an episode of House, the situation is this: Dr. Gregory House and his team take medical cases only after everyone else has failed to diagnose a patient. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Pilot",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/601/1504952.jpg",
+          "alt": "House season 1, episode 1: Pilot",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/9031/house-1x01-pilot"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Paternity” from House: When a teenage lacrosse player is stricken with an unidentifiable brain disease, Dr. House and the team hustle to give his parents answers. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Paternity",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/601/1504953.jpg",
+          "alt": "House season 1, episode 2: Paternity",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/9032/house-1x02-paternity"
+        }
+      },
+      {
+        "prompt": "This is happening in House's “Occam's Razor”: A college student collapses after rowdy sex with his girlfriend. While House and his team attempt to determine the cause, the student's condition… Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Occam's Razor",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/601/1504954.jpg",
+          "alt": "House season 1, episode 3: Occam's Razor",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/9033/house-1x03-occams-razor"
+        }
+      },
+      {
+        "prompt": "You enter “Maternity” from House just as this unfolds: Dr. House exasperates his boss, Dr. Lisa Cuddy, when he suggests that two sick newborn babies in one hospital add up to an epidemic from a spreading virus. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Maternity",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/601/1504955.jpg",
+          "alt": "House season 1, episode 4: Maternity",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/9034/house-1x04-maternity"
+        }
+      },
+      {
+        "prompt": "In House's “Damned If You Do,” the group faces this: When a nun comes into the clinic with swollen arms, rash, and bleeding in her palms, Dr. House's diagnosis is a bad allergy, not stigmata as she believes. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Damned If You Do",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/601/1504956.jpg",
+          "alt": "House season 1, episode 5: Damned If You Do",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/9035/house-1x05-damned-if-you-do"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during House's “The Socratic Method”: While dodging Cuddy in the emergency room, House runs into the son of a schizophrenic woman diagnosed with alcoholism. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · The Socratic Method",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/601/1504957.jpg",
+          "alt": "House season 1, episode 6: The Socratic Method",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/9036/house-1x06-the-socratic-method"
+        }
+      },
+      {
+        "prompt": "The story in House's “Fidelity” turns to this moment: After Ed Snow discovers his wife Elyse constantly sleeping for several days, she is admitted to the hospital. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Fidelity",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/601/1504958.jpg",
+          "alt": "House season 1, episode 7: Fidelity",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/9037/house-1x07-fidelity"
+        }
+      },
+      {
+        "prompt": "You are dropped into House's “Poison” when this happens: When a high school student falls victim to a mysterious but lethal poisoning, House and his team investigate what is killing the teen. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Poison",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/601/1504959.jpg",
+          "alt": "House season 1, episode 8: Poison",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/9038/house-1x08-poison"
+        }
+      },
+      {
+        "prompt": "The pressure rises in House's “DNR”: Legendary jazz musician John Henry Giles checks into Princeton Plainsboro Teaching Hospital believing he's dying from ALS and signs a DNR to avoid a slow… Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · DNR",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/601/1504960.jpg",
+          "alt": "House season 1, episode 9: DNR",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/9039/house-1x09-dnr"
+        }
+      },
+      {
+        "prompt": "During House's “Histories,” this problem appears: Dr. Foreman believes an uncooperative homeless woman is faking seizures to get a free meal ticket at the teaching hospital. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Histories",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/601/1504961.jpg",
+          "alt": "House season 1, episode 10: Histories",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/9040/house-1x10-histories"
+        }
+      }
+    ]
+  },
+  "bones": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/65/bones",
+    "tvmazeId": 65,
+    "officialTitle": "Bones",
+    "premiered": "2005-09-13",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Medical"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/80/201197.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/13/34129.jpg",
+    "questions": [
+      {
+        "prompt": "In “Pilot,” an episode of Bones, the situation is this: FBI Special Agent Seely Booth teams with Dr Temperence Brennon from the Jeffersonian Institute to solve the murder of an ex-aide of a Washington, DC… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Pilot",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/34129.jpg",
+          "alt": "Bones season 1, episode 1: Pilot",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2719/bones-1x01-pilot"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “The Man in the SUV” from Bones: Car bomb explodes in front of a busy café, killing the driver and a number of the cafés patrons, and injuring others. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · The Man in the SUV",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/34130.jpg",
+          "alt": "Bones season 1, episode 2: The Man in the SUV",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2720/bones-1x02-the-man-in-the-suv"
+        }
+      },
+      {
+        "prompt": "This is happening in Bones' “A Boy in a Tree”: When the decaying corpse of the Venezuelan ambassador's son is found hanging from a tree on the campus of an exclusive private school, Dr. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · A Boy in a Tree",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/34131.jpg",
+          "alt": "Bones season 1, episode 3: A Boy in a Tree",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2721/bones-1x03-a-boy-in-a-tree"
+        }
+      },
+      {
+        "prompt": "You enter “The Man in the Bear” from Bones just as this unfolds: When a human arm is found inside the stomach of a black bear, Brennan and Booth travel to Washington state to investigate. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · The Man in the Bear",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/34132.jpg",
+          "alt": "Bones season 1, episode 4: The Man in the Bear",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2722/bones-1x04-the-man-in-the-bear"
+        }
+      },
+      {
+        "prompt": "In Bones' “A Boy in a Bush,” the group faces this: Brennan is enlisted by Booth to help locate and identify the remains of Charlie, a 6-year-old who went missing from a local park. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · A Boy in a Bush",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/34133.jpg",
+          "alt": "Bones season 1, episode 5: A Boy in a Bush",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2723/bones-1x05-a-boy-in-a-bush"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Bones' “The Man in the Wall”: The desiccated remains of a body are found inside the wall of a popular dance club. The investigation uncovers a turf war between artists within the… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · The Man in the Wall",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/34134.jpg",
+          "alt": "Bones season 1, episode 6: The Man in the Wall",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2724/bones-1x06-the-man-in-the-wall"
+        }
+      },
+      {
+        "prompt": "The story in Bones' “The Man on Death Row” turns to this moment: Condemned man Howard Epps is scheduled to be executed by lethal injection in 32 hours for the murder of 17-year-old April Wright. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · The Man on Death Row",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/34135.jpg",
+          "alt": "Bones season 1, episode 7: The Man on Death Row",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2725/bones-1x07-the-man-on-death-row"
+        }
+      },
+      {
+        "prompt": "You are dropped into Bones' “The Girl in the Fridge” when this happens: The remains of a kidnapped woman are found in an abandoned refrigerator. When Brennan is called as an expert witness in the trail of the suspected… What do you do next?",
+        "kicker": "Season 1 · Episode 8 · The Girl in the Fridge",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/34136.jpg",
+          "alt": "Bones season 1, episode 8: The Girl in the Fridge",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2726/bones-1x08-the-girl-in-the-fridge"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Bones' “The Man in the Fallout Shelter”: The Jeffersonian Christmas party is interrupted when Booth arrives with the remains of a body from the 1950s recently discovered in an old fallout shelter. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · The Man in the Fallout Shelter",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/34138.jpg",
+          "alt": "Bones season 1, episode 9: The Man in the Fallout Shelter",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2727/bones-1x09-the-man-in-the-fallout-shelter"
+        }
+      },
+      {
+        "prompt": "During Bones' “The Woman at the Airport,” this problem appears: Booth and Brennan travel to Los Angeles to determine the identity of a woman whose body parts were found near Los Angeles International Airport. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · The Woman at the Airport",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/13/34139.jpg",
+          "alt": "Bones season 1, episode 10: The Woman at the Airport",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2728/bones-1x10-the-woman-at-the-airport"
+        }
+      }
+    ]
+  },
+  "criminal-minds": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/81/criminal-minds",
+    "tvmazeId": 81,
+    "officialTitle": "Criminal Minds",
+    "premiered": "2005-09-22",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Thriller"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/626/1567475.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/14/35564.jpg",
+    "questions": [
+      {
+        "prompt": "In “Extreme Aggressor,” an episode of Criminal Minds, the situation is this: CRIMINAL MINDS revolves around an elite team of FBI profilers who analyze the country's most twisted criminal minds, anticipating their next moves before… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Extreme Aggressor",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/35564.jpg",
+          "alt": "Criminal Minds season 1, episode 1: Extreme Aggressor",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/4740/criminal-minds-1x01-extreme-aggressor"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Compulsion” from Criminal Minds: The team investigates a series of fires set on a college campus. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Compulsion",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/35565.jpg",
+          "alt": "Criminal Minds season 1, episode 2: Compulsion",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/4741/criminal-minds-1x02-compulsion"
+        }
+      },
+      {
+        "prompt": "This is happening in Criminal Minds' “Won't Get Fooled Again”: Gideon suspects that a serial bomber attacking a small town is actually a disciple of Adrian Bale, his greatest nemesis. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Won't Get Fooled Again",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/35566.jpg",
+          "alt": "Criminal Minds season 1, episode 3: Won't Get Fooled Again",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/4742/criminal-minds-1x03-wont-get-fooled-again"
+        }
+      },
+      {
+        "prompt": "You enter “Plain Sight” from Criminal Minds just as this unfolds: The Behavioral Analysis Unit travels to San Diego to profile a rapist and murderer who commits his crimes in the middle of the day. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Plain Sight",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/35567.jpg",
+          "alt": "Criminal Minds season 1, episode 4: Plain Sight",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/4743/criminal-minds-1x04-plain-sight"
+        }
+      },
+      {
+        "prompt": "In Criminal Minds' “Broken Mirror,” the group faces this: When the daughter of a U.S. District Attorney is kidnapped, the suspect attempts to take her twin sister as well. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Broken Mirror",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/35568.jpg",
+          "alt": "Criminal Minds season 1, episode 5: Broken Mirror",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/4744/criminal-minds-1x05-broken-mirror"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Criminal Minds' “L.D.S.K.”: The Behavioral Analysis Unit is called in to identify a killer who is shooting at victims in broad daylight. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · L.D.S.K.",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/35569.jpg",
+          "alt": "Criminal Minds season 1, episode 6: L.D.S.K.",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/4745/criminal-minds-1x06-ldsk"
+        }
+      },
+      {
+        "prompt": "The story in Criminal Minds' “The Fox” turns to this moment: The FBI team attempts to catch a killer who preys on families while they are supposed to be away on vacation. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · The Fox",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/35570.jpg",
+          "alt": "Criminal Minds season 1, episode 7: The Fox",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/4746/criminal-minds-1x07-the-fox"
+        }
+      },
+      {
+        "prompt": "You are dropped into Criminal Minds' “Natural Born Killer” when this happens: When an undercover cop is taken captive, the Behavioral Analysis Unit believes a serial killer is responsible. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Natural Born Killer",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/35571.jpg",
+          "alt": "Criminal Minds season 1, episode 8: Natural Born Killer",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/4747/criminal-minds-1x08-natural-born-killer"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Criminal Minds' “Derailed”: Hotchner and Gideon must move quickly to save Elle and the other passengers taken hostage on a train by a delusional fellow passenger who threatens to… Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Derailed",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/35572.jpg",
+          "alt": "Criminal Minds season 1, episode 9: Derailed",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/4748/criminal-minds-1x09-derailed"
+        }
+      },
+      {
+        "prompt": "During Criminal Minds' “The Popular Kids,” this problem appears: Hotchner and his team investigate whether or not two high school students murdered in a small town may have been victims of a cult killing. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · The Popular Kids",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/35573.jpg",
+          "alt": "Criminal Minds season 1, episode 10: The Popular Kids",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/4749/criminal-minds-1x10-the-popular-kids"
+        }
+      }
+    ]
+  },
+  "law-and-order-svu": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/103/law-order-special-victims-unit",
+    "tvmazeId": 103,
+    "officialTitle": "Law & Order: Special Victims Unit",
+    "premiered": "1999-09-20",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Legal"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611226.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/17/44602.jpg",
+    "questions": [
+      {
+        "prompt": "In “Payback,” an episode of Law & Order: Special Victims Unit, the situation is this: The grisly murder and dismemberment of a New York cabbie draws the elite Special Victims Unit of the NYPD, including veteran Detective Elliot Stabler and… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Payback",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/17/44602.jpg",
+          "alt": "Law & Order: Special Victims Unit season 1, episode 1: Payback",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/6979/law-order-special-victims-unit-1x01-payback"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “A Single Life” from Law & Order: Special Victims Unit: When the body of Gretchen Quinn is found wearing only a red slip after having gone through an upper-story window, Benson and Stabler soon find out that… How would you respond?",
+        "kicker": "Season 1 · Episode 2 · A Single Life",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/17/44603.jpg",
+          "alt": "Law & Order: Special Victims Unit season 1, episode 2: A Single Life",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/6980/law-order-special-victims-unit-1x02-a-single-life"
+        }
+      },
+      {
+        "prompt": "This is happening in Law & Order: Special Victims Unit's “...Or Just Look Like One”: Stabler and Benson investigate the case of a beaten teen model who was dumped in front of a hospital. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · ...Or Just Look Like One",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/17/44604.jpg",
+          "alt": "Law & Order: Special Victims Unit season 1, episode 3: ...Or Just Look Like One",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/6981/law-order-special-victims-unit-1x03-or-just-look-like-one"
+        }
+      },
+      {
+        "prompt": "You enter “Hysteria” from Law & Order: Special Victims Unit just as this unfolds: Stabler and Benson investigate the murder of a young woman mistaken for a prostitute. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Hysteria",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/17/44605.jpg",
+          "alt": "Law & Order: Special Victims Unit season 1, episode 4: Hysteria",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/6982/law-order-special-victims-unit-1x04-hysteria"
+        }
+      },
+      {
+        "prompt": "In Law & Order: Special Victims Unit's “Wanderlust,” the group faces this: After a travel writer is found tied up with a woman's undergarments choking off his air supply, Benson and Stabler initially suspect his landlord's… What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Wanderlust",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/17/44606.jpg",
+          "alt": "Law & Order: Special Victims Unit season 1, episode 5: Wanderlust",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/6983/law-order-special-victims-unit-1x05-wanderlust"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Law & Order: Special Victims Unit's “Sophomore Jinx”: Benson and Stabler investigate a female student's murder at a local college. When they develop two suspects on the basketball team, they experience… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Sophomore Jinx",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/17/44607.jpg",
+          "alt": "Law & Order: Special Victims Unit season 1, episode 6: Sophomore Jinx",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/6984/law-order-special-victims-unit-1x06-sophomore-jinx"
+        }
+      },
+      {
+        "prompt": "The story in Law & Order: Special Victims Unit's “Uncivilized” turns to this moment: The murder of an 8-year-old boy leads to a case involving the rights of a convicted child molester who has served his sentence and has returned to society. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Uncivilized",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/17/44608.jpg",
+          "alt": "Law & Order: Special Victims Unit season 1, episode 7: Uncivilized",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/6985/law-order-special-victims-unit-1x07-uncivilized"
+        }
+      },
+      {
+        "prompt": "You are dropped into Law & Order: Special Victims Unit's “Stalked” when this happens: A killing leads to a case in which the murderer is someone who stalks his victims...and Benson (Mariska Hargitay) finds that she's a target. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Stalked",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/17/44609.jpg",
+          "alt": "Law & Order: Special Victims Unit season 1, episode 8: Stalked",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/6986/law-order-special-victims-unit-1x08-stalked"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Law & Order: Special Victims Unit's “Stocks & Bondage”: The investigation of the killing of a Wall Street stock analyst involves illicit financial dealings and sado-masochism. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Stocks & Bondage",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/17/44610.jpg",
+          "alt": "Law & Order: Special Victims Unit season 1, episode 9: Stocks & Bondage",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/6987/law-order-special-victims-unit-1x09-stocks-bondage"
+        }
+      },
+      {
+        "prompt": "During Law & Order: Special Victims Unit's “Closure,” this problem appears: After being raped by an intruder, a waitress (Tracy Pollan) reports the crime...and has to deal with its aftermath. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Closure",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/17/44611.jpg",
+          "alt": "Law & Order: Special Victims Unit season 1, episode 10: Closure",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/6988/law-order-special-victims-unit-1x10-closure"
+        }
+      }
+    ]
+  },
+  "ncis": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/60/ncis",
+    "tvmazeId": 60,
+    "officialTitle": "NCIS",
+    "premiered": "2003-09-23",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611234.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/608/1521309.jpg",
+    "questions": [
+      {
+        "prompt": "In “Yankee White,” an episode of NCIS, the situation is this: A Marine mysteriously drops dead aboard Air Force One and jurisdiction problems force Gibbs to share the investigation with a Secret Service agent. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Yankee White",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/608/1521309.jpg",
+          "alt": "NCIS season 1, episode 1: Yankee White",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2284/ncis-1x01-yankee-white"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Hung Out to Dry” from NCIS: A Marine dies when his parachute fails and he crashes through a car during a training exercise, and Gibbs suspects he was murdered. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Hung Out to Dry",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/75/187805.jpg",
+          "alt": "NCIS season 1, episode 2: Hung Out to Dry",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2285/ncis-1x02-hung-out-to-dry"
+        }
+      },
+      {
+        "prompt": "This is happening in NCIS' “Seadog”: When the bodies of a Navy commander and two drug dealers wash up on the beach near each other, everyone, except Gibbs, believes the commander was… Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Seadog",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/75/187804.jpg",
+          "alt": "NCIS season 1, episode 3: Seadog",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2286/ncis-1x03-seadog"
+        }
+      },
+      {
+        "prompt": "You enter “The Immortals” from NCIS just as this unfolds: A Navy seaman is found at the bottom of the ocean in his dress whites with a ceremonial sword around his waist, attached to weights. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · The Immortals",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/75/187803.jpg",
+          "alt": "NCIS season 1, episode 4: The Immortals",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2287/ncis-1x04-the-immortals"
+        }
+      },
+      {
+        "prompt": "In NCIS' “The Curse,” the group faces this: A hunter discovers a cargo pod stuffed with the mummified body of a Naval officer who vanished in 1994 and was believed to have stolen money from his ship. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · The Curse",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/75/187802.jpg",
+          "alt": "NCIS season 1, episode 5: The Curse",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2288/ncis-1x05-the-curse"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during NCIS' “High Seas”: An NCIS agent (Joel Gretsch) who worked for Gibbs asks his help in the case of a seaman (Charlie Hofheimer) who tests positive for methamphetamines, but… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · High Seas",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/75/187801.jpg",
+          "alt": "NCIS season 1, episode 6: High Seas",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2289/ncis-1x06-high-seas"
+        }
+      },
+      {
+        "prompt": "The story in NCIS' “Sub Rosa” turns to this moment: The discovery of the body of a Navy submariner whose features are all but obliterated leads Gibbs to believe a terrorist has stolen the man's identity… What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Sub Rosa",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/75/187800.jpg",
+          "alt": "NCIS season 1, episode 7: Sub Rosa",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2290/ncis-1x07-sub-rosa"
+        }
+      },
+      {
+        "prompt": "You are dropped into NCIS' “Minimum Security” when this happens: A Navy translator dies mysteriously soon after returning to the U.S. from Guantanamo Bay, and the investigation takes the team to Cuba. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Minimum Security",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/75/187799.jpg",
+          "alt": "NCIS season 1, episode 8: Minimum Security",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2291/ncis-1x08-minimum-security"
+        }
+      },
+      {
+        "prompt": "The pressure rises in NCIS' “Marine Down”: Gibbs and his team investigate when a dead Marine's wife receives a call from someone claiming to be her husband. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Marine Down",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/75/187798.jpg",
+          "alt": "NCIS season 1, episode 9: Marine Down",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2292/ncis-1x09-marine-down"
+        }
+      },
+      {
+        "prompt": "During NCIS' “Left for Dead,” this problem appears: A woman (Sherilyn Fenn) digs herself out of a shallow grave and doesn't know who she is, but is convinced that a bomb is on board a Navy ship. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Left for Dead",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/75/187797.jpg",
+          "alt": "NCIS season 1, episode 10: Left for Dead",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2293/ncis-1x10-left-for-dead"
+        }
+      }
+    ]
+  },
+  "the-x-files": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/430/the-x-files",
+    "tvmazeId": 430,
+    "officialTitle": "The X-Files",
+    "premiered": "1993-09-10",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Science-Fiction"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/501/1253511.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/38/95040.jpg",
+    "questions": [
+      {
+        "prompt": "In “Pilot,” an episode of The X-Files, the situation is this: Special Agent Dana Scully is partnered with Special Agent Fox Mulder to validate his work on a special project called The X-Files. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Pilot",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/38/95040.jpg",
+          "alt": "The X-Files season 1, episode 1: Pilot",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40420/the-x-files-1x01-pilot"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Deep Throat” from The X-Files: Mulder and Scully head to Ellens Air Force Base to investigate the mysterious case of a military test pilot who disappeared after experiencing strange… How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Deep Throat",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/38/95043.jpg",
+          "alt": "The X-Files season 1, episode 2: Deep Throat",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40421/the-x-files-1x02-deep-throat"
+        }
+      },
+      {
+        "prompt": "This is happening in The X-Files' “Squeeze”: One of Scully's friends from the FBI academy, now working in the Violent Crimes Unit, asks her to assist him on a homicide investigation involving no… Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Squeeze",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/37/94217.jpg",
+          "alt": "The X-Files season 1, episode 3: Squeeze",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40422/the-x-files-1x03-squeeze"
+        }
+      },
+      {
+        "prompt": "You enter “Conduit” from The X-Files just as this unfolds: As Section Chief Blevins expresses his concern with the direction of the X-Files department, Mulder becomes obsessed with solving a case that closely… What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Conduit",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/37/94224.jpg",
+          "alt": "The X-Files season 1, episode 4: Conduit",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40423/the-x-files-1x04-conduit"
+        }
+      },
+      {
+        "prompt": "In The X-Files' “The Jersey Devil,” the group faces this: Mulder's trip to Atlantic City doesn't take him to the glittering casinos or luxury hotels. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · The Jersey Devil",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/37/94236.jpg",
+          "alt": "The X-Files season 1, episode 5: The Jersey Devil",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40424/the-x-files-1x05-the-jersey-devil"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during The X-Files' “Shadows”: When an unseen force commits several murders where a young woman is present, Mulder suspects that it is the spirit of the woman's former boss protecting… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Shadows",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/37/94240.jpg",
+          "alt": "The X-Files season 1, episode 6: Shadows",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40425/the-x-files-1x06-shadows"
+        }
+      },
+      {
+        "prompt": "The story in The X-Files' “Ghost in the Machine” turns to this moment: A new intelligence gropes its way to life in the depths of wires and circuit boards - only to find itself perched on the edge of immediate extinction. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Ghost in the Machine",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/37/94244.jpg",
+          "alt": "The X-Files season 1, episode 7: Ghost in the Machine",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40426/the-x-files-1x07-ghost-in-the-machine"
+        }
+      },
+      {
+        "prompt": "You are dropped into The X-Files' “Ice” when this happens: When an Arctic research team mysteriously kills each other and themselves only days after drilling deeper into the ice than ever before, Mulder and… What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Ice",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/37/94259.jpg",
+          "alt": "The X-Files season 1, episode 8: Ice",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40427/the-x-files-1x08-ice"
+        }
+      },
+      {
+        "prompt": "The pressure rises in The X-Files' “Space”: Mulder and Scully are contacted by a communications specialist from NASA who shows them evidence of sabotage in the space programme. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Space",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/37/94272.jpg",
+          "alt": "The X-Files season 1, episode 9: Space",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40428/the-x-files-1x09-space"
+        }
+      },
+      {
+        "prompt": "During The X-Files' “Fallen Angel,” this problem appears: When a tract of lonely woodland is cordoned off between laser fences, and rapidly changing explanations are rampant, Mulder's curiosity carries him… How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Fallen Angel",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/37/94274.jpg",
+          "alt": "The X-Files season 1, episode 10: Fallen Angel",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40429/the-x-files-1x10-fallen-angel"
+        }
+      }
+    ]
+  },
+  "buffy-the-vampire-slayer": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/427/buffy-the-vampire-slayer",
+    "tvmazeId": 427,
+    "officialTitle": "Buffy the Vampire Slayer",
+    "premiered": "1997-03-10",
+    "genres": [
+      "Drama",
+      "Action",
+      "Supernatural"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/2/7490.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/392/981065.jpg",
+    "questions": [
+      {
+        "prompt": "In “Welcome to the Hellmouth,” an episode of Buffy the Vampire Slayer, the situation is this: Buffy Summers, a high school sophomore, faces her destiny as a slayer of the undead. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Welcome to the Hellmouth",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/392/981065.jpg",
+          "alt": "Buffy the Vampire Slayer season 1, episode 1: Welcome to the Hellmouth",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40033/buffy-the-vampire-slayer-1x01-welcome-to-the-hellmouth"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “The Harvest” from Buffy the Vampire Slayer: Buffy and her friends encounter a powerful vampire bent on opening a portal to a dimension inhabited by demons. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · The Harvest",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/392/981070.jpg",
+          "alt": "Buffy the Vampire Slayer season 1, episode 2: The Harvest",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40034/buffy-the-vampire-slayer-1x02-the-harvest"
+        }
+      },
+      {
+        "prompt": "This is happening in Buffy the Vampire Slayer's “Witch”: A witch attempts to eliminate Buffy from a cheerleading competition. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Witch",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/392/981339.jpg",
+          "alt": "Buffy the Vampire Slayer season 1, episode 3: Witch",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40035/buffy-the-vampire-slayer-1x03-witch"
+        }
+      },
+      {
+        "prompt": "You enter “Teacher's Pet” from Buffy the Vampire Slayer just as this unfolds: Buffy's biology teacher is killed by a giant praying mantis that assumes the form of a beautiful substitute teacher. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Teacher's Pet",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/392/981341.jpg",
+          "alt": "Buffy the Vampire Slayer season 1, episode 4: Teacher's Pet",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40036/buffy-the-vampire-slayer-1x04-teachers-pet"
+        }
+      },
+      {
+        "prompt": "In Buffy the Vampire Slayer's “Never Kill a Boy on the First Date,” the group faces this: While Buffy awaits the arrival of a warrior vampire, she dates a boy who is attracted to her exciting lifestyle. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Never Kill a Boy on the First Date",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/392/981343.jpg",
+          "alt": "Buffy the Vampire Slayer season 1, episode 5: Never Kill a Boy on the First Date",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40037/buffy-the-vampire-slayer-1x05-never-kill-a-boy-on-the-first-date"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Buffy the Vampire Slayer's “The Pack”: Xander and several other students are possessed by the spirit of a demonic breed of hyenas that wreak havoc at the high school. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · The Pack",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/392/981347.jpg",
+          "alt": "Buffy the Vampire Slayer season 1, episode 6: The Pack",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40038/buffy-the-vampire-slayer-1x06-the-pack"
+        }
+      },
+      {
+        "prompt": "The story in Buffy the Vampire Slayer's “Angel” turns to this moment: Buffy discovers Angel's horrifying secret. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Angel",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/392/981357.jpg",
+          "alt": "Buffy the Vampire Slayer season 1, episode 7: Angel",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40039/buffy-the-vampire-slayer-1x07-angel"
+        }
+      },
+      {
+        "prompt": "You are dropped into Buffy the Vampire Slayer's “I, Robot... You, Jane” when this happens: Willow unwittingly unleashes a powerful demon that takes refuge on the Internet. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · I, Robot... You, Jane",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/392/981358.jpg",
+          "alt": "Buffy the Vampire Slayer season 1, episode 8: I, Robot... You, Jane",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40040/buffy-the-vampire-slayer-1x08-i-robot-you-jane"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Buffy the Vampire Slayer's “The Puppet Show”: Buffy suspects that a ventriloquist's dummy may be harvesting organs from classmates performing in a talent show. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · The Puppet Show",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/14/36605.jpg",
+          "alt": "Buffy the Vampire Slayer season 1, episode 9: The Puppet Show",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40041/buffy-the-vampire-slayer-1x09-the-puppet-show"
+        }
+      },
+      {
+        "prompt": "During Buffy the Vampire Slayer's “Nightmares,” this problem appears: Buffy and her friends discover that their worst nightmares have become reality. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Nightmares",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/392/981359.jpg",
+          "alt": "Buffy the Vampire Slayer season 1, episode 10: Nightmares",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/40042/buffy-the-vampire-slayer-1x10-nightmares"
+        }
+      }
+    ]
+  },
+  "charmed": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/506/charmed",
+    "tvmazeId": 506,
+    "officialTitle": "Charmed",
+    "premiered": "1998-10-07",
+    "genres": [
+      "Drama",
+      "Mystery",
+      "Supernatural"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/90/226251.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/581/1453534.jpg",
+    "questions": [
+      {
+        "prompt": "In “Something Wicca This Way Comes,” an episode of Charmed, the situation is this: Reunited in the grand Victorian home of their childhood a trio of sisters; Prue, Piper & Phoebe discover they are gifted witches. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Something Wicca This Way Comes",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/581/1453534.jpg",
+          "alt": "Charmed season 1, episode 1: Something Wicca This Way Comes",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/46050/charmed-1x01-something-wicca-this-way-comes"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “I've Got You Under My Skin” from Charmed: Using her burgeoning powers to see into the future, Phoebe sees a handsome photographer in her future. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · I've Got You Under My Skin",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/581/1453535.jpg",
+          "alt": "Charmed season 1, episode 2: I've Got You Under My Skin",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/46051/charmed-1x02-ive-got-you-under-my-skin"
+        }
+      },
+      {
+        "prompt": "This is happening in Charmed's “Thank You for Not Morphing”: When their long-lost father drops by out of the blue following a 20 year absence; Prue starts to wonder what he's up to, while Piper and Phoebe are… Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Thank You for Not Morphing",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/581/1453536.jpg",
+          "alt": "Charmed season 1, episode 3: Thank You for Not Morphing",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/46052/charmed-1x03-thank-you-for-not-morphing"
+        }
+      },
+      {
+        "prompt": "You enter “Dead Man Dating” from Charmed just as this unfolds: When a young man is recently murdered in Chinatown by the leader of a local gang, his spirit turns to Piper and Phoebe for help in ensuring his earthly… What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Dead Man Dating",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/581/1453537.jpg",
+          "alt": "Charmed season 1, episode 4: Dead Man Dating",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/46053/charmed-1x04-dead-man-dating"
+        }
+      },
+      {
+        "prompt": "In Charmed's “Dream Sorcerer,” the group faces this: Prue's sleep is disturbed when a science experiment goes wrong that gives a wheelchair bound man the ability to invade the subconscious of others –… What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Dream Sorcerer",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/581/1453538.jpg",
+          "alt": "Charmed season 1, episode 5: Dream Sorcerer",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/46054/charmed-1x05-dream-sorcerer"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Charmed's “The Wedding from Hell”: After Piper is hired to cater an upcoming wedding, she and her sisters suspect that the bride-to-be is a demon set out to marry the groom against his… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · The Wedding from Hell",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/581/1453539.jpg",
+          "alt": "Charmed season 1, episode 6: The Wedding from Hell",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/46055/charmed-1x06-the-wedding-from-hell"
+        }
+      },
+      {
+        "prompt": "The story in Charmed's “The Fourth Sister” turns to this moment: When Piper, Prue and Phoebe are befriended by a troubled young witch, she hopes they'll take her under their wings and become her mentors. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · The Fourth Sister",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/581/1453541.jpg",
+          "alt": "Charmed season 1, episode 7: The Fourth Sister",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/46056/charmed-1x07-the-fourth-sister"
+        }
+      },
+      {
+        "prompt": "You are dropped into Charmed's “The Truth Is Out There... and It Hurts” when this happens: When a warlock from the future arrives in town to kill the people involved in developing a vaccine against evil warlocks, Phoebe has to find his next… What do you do next?",
+        "kicker": "Season 1 · Episode 8 · The Truth Is Out There... and It Hurts",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/581/1453542.jpg",
+          "alt": "Charmed season 1, episode 8: The Truth Is Out There... and It Hurts",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/46057/charmed-1x08-the-truth-is-out-there-and-it-hurts"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Charmed's “The Witch Is Back”: After Prue accidentally releases a warlock that was trapped inside an old curse, she ultimately gets attacked by him. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · The Witch Is Back",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/581/1453543.jpg",
+          "alt": "Charmed season 1, episode 9: The Witch Is Back",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/46058/charmed-1x09-the-witch-is-back"
+        }
+      },
+      {
+        "prompt": "During Charmed's “Wicca Envy,” this problem appears: After Prue is accused of stealing a priceless tiara from the Auction House, she is stunned to discover Rex and Hannah are warlocks, set to destroy the… How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Wicca Envy",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/581/1453544.jpg",
+          "alt": "Charmed season 1, episode 10: Wicca Envy",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/46059/charmed-1x10-wicca-envy"
+        }
+      }
+    ]
+  },
+  "smallville": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/435/smallville",
+    "tvmazeId": 435,
+    "officialTitle": "Smallville",
+    "premiered": "2001-10-16",
+    "genres": [
+      "Drama",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/79/199609.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/30/75670.jpg",
+    "questions": [
+      {
+        "prompt": "In “Pilot,” an episode of Smallville, the situation is this: In rural Kansas, teenage Clark Kent saves the life of Lex Luthor after a car accident. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Pilot",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/30/75670.jpg",
+          "alt": "Smallville season 1, episode 1: Pilot",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/41129/smallville-1x01-pilot"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Metamorphosis” from Smallville: A bug-loving teen is infused with superpowers after a bizarre accident, and the boy sets out to steal Lana's heart and dispose of her current boyfriend… How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Metamorphosis",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/147/367718.jpg",
+          "alt": "Smallville season 1, episode 2: Metamorphosis",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/41130/smallville-1x02-metamorphosis"
+        }
+      },
+      {
+        "prompt": "This is happening in Smallville's “Hothead”: The Smallville High School football coach asks Clark to join the squad, something Jonathan fears may jeopardize the teen's secret and the safety of the… Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Hothead",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/147/369072.jpg",
+          "alt": "Smallville season 1, episode 3: Hothead",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/41131/smallville-1x03-hothead"
+        }
+      },
+      {
+        "prompt": "You enter “X-Ray” from Smallville just as this unfolds: Clark battles intense headaches as he tries to adjust to his emerging power of X-ray vision, an ability that he cannot control. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · X-Ray",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/147/369073.jpg",
+          "alt": "Smallville season 1, episode 4: X-Ray",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/41132/smallville-1x04-x-ray"
+        }
+      },
+      {
+        "prompt": "In Smallville's “Cool,” the group faces this: After falling through the ice and nearly drowning, a teen finds that he cannot keep himself warm without extracting heat from an outside source---mainly… What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Cool",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/147/369075.jpg",
+          "alt": "Smallville season 1, episode 5: Cool",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/41133/smallville-1x05-cool"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Smallville's “Hourglass”: Clark volunteers at a nursing home, where he meets a blind woman who claims that she can see the future---and that someone close to him will die soon. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Hourglass",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/147/369076.jpg",
+          "alt": "Smallville season 1, episode 6: Hourglass",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/41134/smallville-1x06-hourglass"
+        }
+      },
+      {
+        "prompt": "The story in Smallville's “Craving” turns to this moment: An overweight teen becomes excessively thin after eating vegetables tainted with kryptonite, but she also develops a voracious appetite for… What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Craving",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/161/402616.jpg",
+          "alt": "Smallville season 1, episode 7: Craving",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/41135/smallville-1x07-craving"
+        }
+      },
+      {
+        "prompt": "You are dropped into Smallville's “Jitters” when this happens: An old Kent family friend, who suffers from uncontrollably violent convulsions after working for Luthor Corp., shows up at the farm after accidentally… What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Jitters",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/161/402618.jpg",
+          "alt": "Smallville season 1, episode 8: Jitters",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/41136/smallville-1x08-jitters"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Smallville's “Rogue”: A corrupt Metropolis police detective sees Clark stop an out-of-control bus barreling toward a homeless man, and the cop threatens to expose the teen's… Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Rogue",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/159/399546.jpg",
+          "alt": "Smallville season 1, episode 9: Rogue",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/41137/smallville-1x09-rogue"
+        }
+      },
+      {
+        "prompt": "During Smallville's “Shimmer,” this problem appears: A teen whose family lives and works in the Luthor mansion has a crush on Lex, and her jealousy of the tycoon's new girlfriend brings forth vandalism by… How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Shimmer",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/161/402619.jpg",
+          "alt": "Smallville season 1, episode 10: Shimmer",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/41138/smallville-1x10-shimmer"
+        }
+      }
+    ]
+  },
+  "once-upon-a-time": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/111/once-upon-a-time",
+    "tvmazeId": 111,
+    "officialTitle": "Once Upon a Time",
+    "premiered": "2011-10-23",
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Romance"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/127/319360.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/1/3923.jpg",
+    "questions": [
+      {
+        "prompt": "In “Pilot,” an episode of Once Upon a Time, the situation is this: Master storytellers Edward Kitsis and Adam Horowitz invite you to brace yourself for a modern fairytale with thrilling twists and hints of darkness… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Pilot",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/1/3923.jpg",
+          "alt": "Once Upon a Time season 1, episode 1: Pilot",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/7819/once-upon-a-time-1x01-pilot"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “The Thing You Love Most” from Once Upon a Time: Regina does everything in her power to force Emma out of Storybrooke and out of her and Henry's lives forever. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · The Thing You Love Most",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/1/3924.jpg",
+          "alt": "Once Upon a Time season 1, episode 2: The Thing You Love Most",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/7820/once-upon-a-time-1x02-the-thing-you-love-most"
+        }
+      },
+      {
+        "prompt": "This is happening in Once Upon a Time's “Snow Falls”: At Henry's urging, Emma convinces Mary Margaret to pay a visit to a comatose John Doe in the hospital and to read to him from the storybook. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Snow Falls",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/1/3925.jpg",
+          "alt": "Once Upon a Time season 1, episode 3: Snow Falls",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/7821/once-upon-a-time-1x03-snow-falls"
+        }
+      },
+      {
+        "prompt": "You enter “The Price of Gold” from Once Upon a Time just as this unfolds: Emma tries to help a young pregnant woman escape from the clutches of Mr. Gold. Meanwhile, back in the fairytale world that was, Cinderella makes a… What role would you take?",
+        "kicker": "Season 1 · Episode 4 · The Price of Gold",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/1/3926.jpg",
+          "alt": "Once Upon a Time season 1, episode 4: The Price of Gold",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/7822/once-upon-a-time-1x04-the-price-of-gold"
+        }
+      },
+      {
+        "prompt": "In Once Upon a Time's “That Still Small Voice,” the group faces this: As Sheriff Graham deputizes Emma, the ground shakes and a giant sinkhole mysteriously appears at the edge of town. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · That Still Small Voice",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/1/3927.jpg",
+          "alt": "Once Upon a Time season 1, episode 5: That Still Small Voice",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/7823/once-upon-a-time-1x05-that-still-small-voice"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Once Upon a Time's “The Shepherd”: David - aka John Doe - must choose between staying with Kathryn or leaving her to be with Mary Margaret, with whom he's fallen deeply, and inexplicably… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · The Shepherd",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/1/3928.jpg",
+          "alt": "Once Upon a Time season 1, episode 6: The Shepherd",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/7824/once-upon-a-time-1x06-the-shepherd"
+        }
+      },
+      {
+        "prompt": "The story in Once Upon a Time's “The Heart is a Lonely Hunter” turns to this moment: One of the town's residents begins to remember their fairytale past, and Storybrooke mourns the loss of one of their own. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · The Heart is a Lonely Hunter",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/1/3929.jpg",
+          "alt": "Once Upon a Time season 1, episode 7: The Heart is a Lonely Hunter",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/7825/once-upon-a-time-1x07-the-heart-is-a-lonely-hunter"
+        }
+      },
+      {
+        "prompt": "You are dropped into Once Upon a Time's “Desperate Souls” when this happens: Regina and Mr. Gold play dirty politics and take opposite sides when Emma runs for a coveted Storybrooke public office against Sidney. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Desperate Souls",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/1/3930.jpg",
+          "alt": "Once Upon a Time season 1, episode 8: Desperate Souls",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/7826/once-upon-a-time-1x08-desperate-souls"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Once Upon a Time's “True North”: Feeling their pain from having lived through the same experience, Emma desperately tries to help two homeless children find their birth father before… Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · True North",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/1/3931.jpg",
+          "alt": "Once Upon a Time season 1, episode 9: True North",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/7827/once-upon-a-time-1x09-true-north"
+        }
+      },
+      {
+        "prompt": "During Once Upon a Time's “7:15 A.M.,” this problem appears: Mary Margaret and David continue to grapple with their unrequited love, and Emma and Regina grow suspicious over a mysterious new stranger in town. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · 7:15 A.M.",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/1/3932.jpg",
+          "alt": "Once Upon a Time season 1, episode 10: 7:15 A.M.",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/7828/once-upon-a-time-1x10-715-am"
+        }
+      }
+    ]
+  },
+  "anne-with-an-e": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/20400/anne-with-an-e",
+    "tvmazeId": 20400,
+    "officialTitle": "Anne with an E",
+    "premiered": "2017-03-19",
+    "genres": [
+      "Drama",
+      "Family",
+      "History"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/213/533113.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/98/245161.jpg",
+    "questions": [
+      {
+        "prompt": "In “Your Will Shall Decide Your Destiny,” an episode of Anne with an E, the situation is this: When a miscommunication brings a girl to Green Gables instead of a boy, Marilla and Matthew are faced with a life-changing decision in the series… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Your Will Shall Decide Your Destiny",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/98/245161.jpg",
+          "alt": "Anne with an E season 1, episode 1: Your Will Shall Decide Your Destiny",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1066904/anne-with-an-e-1x01-your-will-shall-decide-your-destiny"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “I am No Bird, and No Net Ensnares Me” from Anne with an E: Hoping all is not lost; Matthew races to catch up with Anne while Marilla anxiously hopes and waits for their return to Green Gables. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · I am No Bird, and No Net Ensnares Me",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/401/1004640.jpg",
+          "alt": "Anne with an E season 1, episode 2: I am No Bird, and No Net Ensnares Me",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1101848/anne-with-an-e-1x02-i-am-no-bird-and-no-net-ensnares-me"
+        }
+      },
+      {
+        "prompt": "This is happening in Anne with an E's “But What is So Headstrong as Youth?”: Anne is excited to begin school and make friends, but is unprepared for the bullying that occurs when she doesn't fit in. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · But What is So Headstrong as Youth?",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/401/1004648.jpg",
+          "alt": "Anne with an E season 1, episode 3: But What is So Headstrong as Youth?",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1101849/anne-with-an-e-1x03-but-what-is-so-headstrong-as-youth"
+        }
+      },
+      {
+        "prompt": "You enter “An Inward Treasure Born” from Anne with an E just as this unfolds: Anne is faced with the decision of whether or not to return to school. But a fire at the Gillis house and Anne's generous actions help her in her choice. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · An Inward Treasure Born",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/401/1004649.jpg",
+          "alt": "Anne with an E season 1, episode 4: An Inward Treasure Born",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1101850/anne-with-an-e-1x04-an-inward-treasure-born"
+        }
+      },
+      {
+        "prompt": "In Anne with an E's “Tightly Knotted to a Similar String,” the group faces this: Anne must deal with the inevitability of womanhood when she gets her first period. At the same time, Marilla and Matthew acclimatize to parenthood and… What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Tightly Knotted to a Similar String",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/401/1004650.jpg",
+          "alt": "Anne with an E season 1, episode 5: Tightly Knotted to a Similar String",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1101851/anne-with-an-e-1x05-tightly-knotted-to-a-similar-string"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Anne with an E's “Remorse is the Poison of Life”: When her little sister becomes ill, Diana runs to Anne for help. Meanwhile, the Blythe farm sees change, as Marilla is reminded of what she gave up and… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Remorse is the Poison of Life",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/401/1004647.jpg",
+          "alt": "Anne with an E season 1, episode 6: Remorse is the Poison of Life",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1101852/anne-with-an-e-1x06-remorse-is-the-poison-of-life"
+        }
+      },
+      {
+        "prompt": "The story in Anne with an E's “Wherever You are is My Home” turns to this moment: With the future of Green Gables at stake -- and an ailing Matthew confined to bed -- Anne and Marilla move mountains to save their home. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Wherever You are is My Home",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/401/1004651.jpg",
+          "alt": "Anne with an E season 1, episode 7: Wherever You are is My Home",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1101853/anne-with-an-e-1x07-wherever-you-are-is-my-home"
+        }
+      },
+      {
+        "prompt": "You are dropped into Anne with an E's “Youth is the Season of Hope” when this happens: The Cuthberts' boarders stir excitement with a question: Could there be gold in Avonlea? Elsewhere, Gilbert makes a new friend at sea. What do you do next?",
+        "kicker": "Season 2 · Episode 1 · Youth is the Season of Hope",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/401/1004654.jpg",
+          "alt": "Anne with an E season 2, episode 1: Youth is the Season of Hope",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1477920/anne-with-an-e-2x01-youth-is-the-season-of-hope"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Anne with an E's “Signs are Small Measurable Things, But Interpretations are Illimitable”: The steamer lands in Trinidad, bringing Bash face to face with his past. The Barrys get behind the gold rush, but Matthew and Marilla aren't so sure. Which response fits you best?",
+        "kicker": "Season 2 · Episode 2 · Signs are Small Measurable Things, But Interpretations are Illimitable",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/401/1004655.jpg",
+          "alt": "Anne with an E season 2, episode 2: Signs are Small Measurable Things, But Interpretations are Illimitable",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1492036/anne-with-an-e-2x02-signs-are-small-measurable-things-but-interpretations-are-illimitable"
+        }
+      },
+      {
+        "prompt": "During Anne with an E's “The True Seeing is Within,” this problem appears: An adventure away with the Barrys teaches Anne to trust her instincts. Marilla begins to suspect that her boarders aren't as innocent as they seem. How would you step in?",
+        "kicker": "Season 2 · Episode 3 · The True Seeing is Within",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/401/1004656.jpg",
+          "alt": "Anne with an E season 2, episode 3: The True Seeing is Within",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1492037/anne-with-an-e-2x03-the-true-seeing-is-within"
+        }
+      }
+    ]
+  },
+  "a-series-of-unfortunate-events": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/3949/a-series-of-unfortunate-events",
+    "tvmazeId": 3949,
+    "officialTitle": "A Series of Unfortunate Events",
+    "premiered": "2017-01-13",
+    "genres": [
+      "Drama",
+      "Family",
+      "Horror"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/177/444262.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/93/232795.jpg",
+    "questions": [
+      {
+        "prompt": "In “The Bad Beginning: Part One,” an episode of A Series of Unfortunate Events, the situation is this: After they lose their parents and their homes in a fire, the Baudelaire children are placed with their nearest relative, Count Olaf. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · The Bad Beginning: Part One",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/93/232795.jpg",
+          "alt": "A Series of Unfortunate Events season 1, episode 1: The Bad Beginning: Part One",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/951046/a-series-of-unfortunate-events-1x01-the-bad-beginning-part-one"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “The Bad Beginning: Part Two” from A Series of Unfortunate Events: Olaf schemes to marry Violet and obtain the Baudelaire fortune under the pretense of staging a play. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · The Bad Beginning: Part Two",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/93/232867.jpg",
+          "alt": "A Series of Unfortunate Events season 1, episode 2: The Bad Beginning: Part Two",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1006756/a-series-of-unfortunate-events-1x02-the-bad-beginning-part-two"
+        }
+      },
+      {
+        "prompt": "This is happening in A Series of Unfortunate Events' “The Reptile Room: Part One”: Following the sham wedding ceremony, Olaf manages to escape while the Baudelaire siblings are sent to live with their herpetologist uncle Dr. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · The Reptile Room: Part One",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/93/232895.jpg",
+          "alt": "A Series of Unfortunate Events season 1, episode 3: The Reptile Room: Part One",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1006757/a-series-of-unfortunate-events-1x03-the-reptile-room-part-one"
+        }
+      },
+      {
+        "prompt": "You enter “The Reptile Room: Part Two” from A Series of Unfortunate Events just as this unfolds: The Baudelaires find Uncle Monty dead, apparently killed by the Incredibly Deadly Viper. However, once Poe arrives, the children try to expose the real… What role would you take?",
+        "kicker": "Season 1 · Episode 4 · The Reptile Room: Part Two",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/93/232967.jpg",
+          "alt": "A Series of Unfortunate Events season 1, episode 4: The Reptile Room: Part Two",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1006758/a-series-of-unfortunate-events-1x04-the-reptile-room-part-two"
+        }
+      },
+      {
+        "prompt": "In A Series of Unfortunate Events' “The Wide Window: Part One,” the group faces this: The orphans move in with their newest guardian, Aunt Josephine. Josephine is paranoid after the death of her husband at the snouts of leeches, and a… What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · The Wide Window: Part One",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/93/232991.jpg",
+          "alt": "A Series of Unfortunate Events season 1, episode 5: The Wide Window: Part One",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1006760/a-series-of-unfortunate-events-1x05-the-wide-window-part-one"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during A Series of Unfortunate Events' “The Wide Window: Part Two”: The Baudelaires soon realize that Josephine's suicide note contains a secret message. But to get away from Poe and a disguised Olaf, they must first take… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · The Wide Window: Part Two",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/93/233008.jpg",
+          "alt": "A Series of Unfortunate Events season 1, episode 6: The Wide Window: Part Two",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1006761/a-series-of-unfortunate-events-1x06-the-wide-window-part-two"
+        }
+      },
+      {
+        "prompt": "The story in A Series of Unfortunate Events' “The Miserable Mill: Part One” turns to this moment: The children make their way to the Lukcy Smells Lumbermills, and discover that their parents are believed to have burned down the nearby town. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · The Miserable Mill: Part One",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/93/233024.jpg",
+          "alt": "A Series of Unfortunate Events season 1, episode 7: The Miserable Mill: Part One",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1006762/a-series-of-unfortunate-events-1x07-the-miserable-mill-part-one"
+        }
+      },
+      {
+        "prompt": "You are dropped into A Series of Unfortunate Events' “The Miserable Mill: Part Two” when this happens: Violet must find the trigger word to free Klaus from Orwell's hypnotic spell before it's too late for Charles. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · The Miserable Mill: Part Two",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/93/233259.jpg",
+          "alt": "A Series of Unfortunate Events season 1, episode 8: The Miserable Mill: Part Two",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1006763/a-series-of-unfortunate-events-1x08-the-miserable-mill-part-two"
+        }
+      },
+      {
+        "prompt": "The pressure rises in A Series of Unfortunate Events' “The Austere Academy: Part One”: The Baudelaires discover that their new boarding school is unfortunate, and meet a pair of orphans whose life-story is strangely similar to their own. Which response fits you best?",
+        "kicker": "Season 2 · Episode 1 · The Austere Academy: Part One",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/152/382297.jpg",
+          "alt": "A Series of Unfortunate Events season 2, episode 1: The Austere Academy: Part One",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1283576/a-series-of-unfortunate-events-2x01-the-austere-academy-part-one"
+        }
+      },
+      {
+        "prompt": "During A Series of Unfortunate Events' “The Austere Academy: Part Two,” this problem appears: While the Quagmires keep up the search, the Baudelaires struggle to balance their studies with a punishing workout schedule courtesy of Count Olaf. How would you step in?",
+        "kicker": "Season 2 · Episode 2 · The Austere Academy: Part Two",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/152/382298.jpg",
+          "alt": "A Series of Unfortunate Events season 2, episode 2: The Austere Academy: Part Two",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1283577/a-series-of-unfortunate-events-2x02-the-austere-academy-part-two"
+        }
+      }
+    ]
+  },
+  "icarly": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/808/icarly",
+    "tvmazeId": 808,
+    "officialTitle": "iCarly",
+    "premiered": "2007-09-08",
+    "genres": [
+      "Comedy",
+      "Children",
+      "Family"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/404/1011740.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/268/670321.jpg",
+    "questions": [
+      {
+        "prompt": "In “iParty with Victorious,” an episode of iCarly, the situation is this: Carly is enjoying life with her new boyfriend Steven Carson, a home-schooled boy with divorced parents who spends part of his life in Los Angeles. What would you do first?",
+        "kicker": "Season 4 · Episode 10 · iParty with Victorious",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/268/670321.jpg",
+          "alt": "iCarly season 4, episode 10: iParty with Victorious",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/72622/icarly-4x10-iparty-with-victorious"
+        }
+      },
+      {
+        "prompt": "This iCarly image spotlights Carly Shay. Carly needs an opening idea for tonight's web show. If you were there, how would you help?",
+        "kicker": "Character spotlight · Carly Shay",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/463/1158721.jpg",
+          "alt": "iCarly episode: Carly Shay",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/88470/icarly-carly-shay"
+        }
+      },
+      {
+        "prompt": "This iCarly image spotlights Freddie Benson. Mrs. Benson adds a new safety rule for Freddie. If you were there, how would you help?",
+        "kicker": "Character spotlight · Freddie Benson",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/463/1158722.jpg",
+          "alt": "iCarly episode: Freddie Benson",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/88472/icarly-freddie-benson"
+        }
+      },
+      {
+        "prompt": "This iCarly image spotlights Spencer Shay. Spencer's newest sculpture starts doing something unexpected. If you were there, how would you help?",
+        "kicker": "Character spotlight · Spencer Shay",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/463/1158723.jpg",
+          "alt": "iCarly episode: Spencer Shay",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/88473/icarly-spencer-shay"
+        }
+      },
+      {
+        "prompt": "This iCarly image spotlights Sam Puckett. Sam suggests a stunt that may be too wild for the studio. If you were there, how would you help?",
+        "kicker": "Character spotlight · Sam Puckett",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/463/1158724.jpg",
+          "alt": "iCarly episode: Sam Puckett",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/88471/icarly-sam-puckett"
+        }
+      },
+      {
+        "prompt": "This iCarly image spotlights Gibby Gibson. Freddie discovers a technical problem seconds before streaming. If you were there, how would you help?",
+        "kicker": "Character spotlight · Gibby Gibson",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/463/1158725.jpg",
+          "alt": "iCarly episode: Gibby Gibson",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/88474/icarly-gibby-gibson"
+        }
+      },
+      {
+        "prompt": "A Ridgeway teacher sees part of the latest iCarly episode. You are stepping into iCarly as it happens. Which response fits you best?",
+        "kicker": "Show scenario · Series image 1",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/223/557969.jpg",
+          "alt": "iCarly episode: Series image 1",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/shows/808/icarly"
+        }
+      },
+      {
+        "prompt": "The team must handle a surprise guest during a live segment. You are stepping into iCarly as it happens. Which response fits you best?",
+        "kicker": "Show scenario · Series image 2",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/404/1011739.jpg",
+          "alt": "iCarly episode: Series image 2",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/shows/808/icarly"
+        }
+      },
+      {
+        "prompt": "A viewer challenge takes over the apartment. You are stepping into iCarly as it happens. Which response fits you best?",
+        "kicker": "Show scenario · Series image 3",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/6/15643.jpg",
+          "alt": "iCarly episode: Series image 3",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/shows/808/icarly"
+        }
+      },
+      {
+        "prompt": "Carly tries to repair a friendship without canceling the show. You are stepping into iCarly as it happens. Which response fits you best?",
+        "kicker": "Show scenario · Series image 4",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/43/109645.jpg",
+          "alt": "iCarly episode: Series image 4",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/shows/808/icarly"
+        }
+      }
+    ]
+  },
+  "victorious": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/2189/victorious",
+    "tvmazeId": 2189,
+    "officialTitle": "Victorious",
+    "premiered": "2010-03-27",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Family"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/441/1102783.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/112/280148.jpg",
+    "questions": [
+      {
+        "prompt": "In “Pilot,” an episode of Victorious, the situation is this: In the series premiere of this comedy, Tori Vega (Victoria Justice) is invited to attend a top-notch performing-arts high school after she steps in for… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Pilot",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/112/280148.jpg",
+          "alt": "Victorious season 1, episode 1: Pilot",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/177994/victorious-1x01-pilot"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “The Bird Scene” from Victorious: Tori works hard on preparing a monologue for her drama class. Elsewhere, André and Robbie enroll in a ballet class to meet girls, but their plan backfires. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · The Bird Scene",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/112/280149.jpg",
+          "alt": "Victorious season 1, episode 2: The Bird Scene",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/177995/victorious-1x02-the-bird-scene"
+        }
+      },
+      {
+        "prompt": "This is happening in Victorious' “Stage Fighting”: Jade accuses Tori of injuring her during an acting exercise. Elsewhere, Robbie misreads his on-stage kiss with Trina. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Stage Fighting",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/112/280191.jpg",
+          "alt": "Victorious season 1, episode 3: Stage Fighting",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/177996/victorious-1x03-stage-fighting"
+        }
+      },
+      {
+        "prompt": "You enter “The Birthweek Song” from Victorious just as this unfolds: Tori composes a song for Trina for her birthday, and then Trina angers Tori by selling the song. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · The Birthweek Song",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/112/280194.jpg",
+          "alt": "Victorious season 1, episode 4: The Birthweek Song",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/177997/victorious-1x04-the-birthweek-song"
+        }
+      },
+      {
+        "prompt": "In Victorious' “Jade Dumps Beck,” the group faces this: Jade has second thoughts about breaking up with Beck, so she asks Tori to help her win him back. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Jade Dumps Beck",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/112/280198.jpg",
+          "alt": "Victorious season 1, episode 5: Jade Dumps Beck",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/177998/victorious-1x05-jade-dumps-beck"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Victorious' “Tori the Zombie”: A bad makeup job has Tori looking like a zombie on opening night of her first lead performance. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Tori the Zombie",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/112/280193.jpg",
+          "alt": "Victorious season 1, episode 6: Tori the Zombie",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/177999/victorious-1x06-tori-the-zombie"
+        }
+      },
+      {
+        "prompt": "The story in Victorious' “Robarazzi” turns to this moment: Robbie's video news blog has grown stale, so Tori suggests he liven it up with videos of his classmates' everyday lives. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Robarazzi",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/112/280195.jpg",
+          "alt": "Victorious season 1, episode 7: Robarazzi",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/178000/victorious-1x07-robarazzi"
+        }
+      },
+      {
+        "prompt": "You are dropped into Victorious' “Wi-Fi in the Sky” when this happens: Tori and Trina's flight home gets delayed, so a stressed-out Tori attempts to work on a group project for school via video chat. What do you do next?",
+        "kicker": "Season 1 · Episode 9 · Wi-Fi in the Sky",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/112/280199.jpg",
+          "alt": "Victorious season 1, episode 9: Wi-Fi in the Sky",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/178002/victorious-1x09-wi-fi-in-the-sky"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Victorious' “Beck's Big Break”: Tori gets Beck fired from a movie after she stands up to the obnoxious star of the film. Feeling guilty, Tori then tries to fix things. Which response fits you best?",
+        "kicker": "Season 1 · Episode 10 · Beck's Big Break",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/112/280192.jpg",
+          "alt": "Victorious season 1, episode 10: Beck's Big Break",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/178003/victorious-1x10-becks-big-break"
+        }
+      },
+      {
+        "prompt": "During Victorious' “Rex Dies,” this problem appears: Robbie's puppet gets severely damaged, and his pals see this as a way for Robbie to let go of Rex. How would you step in?",
+        "kicker": "Season 1 · Episode 14 · Rex Dies",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/112/280197.jpg",
+          "alt": "Victorious season 1, episode 14: Rex Dies",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/178007/victorious-1x14-rex-dies"
+        }
+      }
+    ]
+  },
+  "hannah-montana": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/777/hannah-montana",
+    "tvmazeId": 777,
+    "officialTitle": "Hannah Montana",
+    "premiered": "2006-03-24",
+    "genres": [
+      "Comedy",
+      "Family",
+      "Music"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/15391.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/317/792714.jpg",
+    "questions": [
+      {
+        "prompt": "In “Lilly, Do You Want to Know a Secret?,” an episode of Hannah Montana, the situation is this: Lilly is ecstatic when she gets two tickets to attend a Hannah Montana concert and invites Miley to go with her. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Lilly, Do You Want to Know a Secret?",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/317/792714.jpg",
+          "alt": "Hannah Montana season 1, episode 1: Lilly, Do You Want to Know a Secret?",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/68672/hannah-montana-1x01-lilly-do-you-want-to-know-a-secret"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Miley Get Your Gum” from Hannah Montana: Oliver has a huge crush on Hannah Montana, but his feelings of love are not shared by Miley. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Miley Get Your Gum",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/317/792715.jpg",
+          "alt": "Hannah Montana season 1, episode 2: Miley Get Your Gum",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/68673/hannah-montana-1x02-miley-get-your-gum"
+        }
+      },
+      {
+        "prompt": "This is happening in Hannah Montana's “She's a Supersneak”: Miley and her friends want to meet Ashton Kutcher at his movie premiere & Jackson & Cooper want to meet the beautiful girls who want to meet Ashton… Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · She's a Supersneak",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/317/792716.jpg",
+          "alt": "Hannah Montana season 1, episode 3: She's a Supersneak",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/68674/hannah-montana-1x03-shes-a-supersneak"
+        }
+      },
+      {
+        "prompt": "You enter “I Can't Make You Love Hannah If You Don't” from Hannah Montana just as this unfolds: Miley adores her new beau, Josh, but is unsettled to learn that he despises Hannah Montana. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · I Can't Make You Love Hannah If You Don't",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/317/792717.jpg",
+          "alt": "Hannah Montana season 1, episode 4: I Can't Make You Love Hannah If You Don't",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/68675/hannah-montana-1x04-i-cant-make-you-love-hannah-if-you-dont"
+        }
+      },
+      {
+        "prompt": "In Hannah Montana's “It's My Party, and I'll Lie If I Want To,” the group faces this: After Lilly embarrasses her at a Hannah Montana concert along with added pressure from her \"Hannah Friends\", Miley decides to lie to Lilly, & tell her… What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · It's My Party, and I'll Lie If I Want To",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/317/792718.jpg",
+          "alt": "Hannah Montana season 1, episode 5: It's My Party, and I'll Lie If I Want To",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/68676/hannah-montana-1x05-its-my-party-and-ill-lie-if-i-want-to"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Hannah Montana's “Grandmas Don't Let Your Babies Grow Up to Play Favorites”: The Stewarts are having a busy week. Hannah Montana is about to perform for the Queen of England and the Queen's granddaughter; Jackson is in his… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Grandmas Don't Let Your Babies Grow Up to Play Favorites",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/317/792719.jpg",
+          "alt": "Hannah Montana season 1, episode 6: Grandmas Don't Let Your Babies Grow Up to Play Favorites",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/68677/hannah-montana-1x06-grandmas-dont-let-your-babies-grow-up-to-play-favorites"
+        }
+      },
+      {
+        "prompt": "The story in Hannah Montana's “It's a Mannequin's World” turns to this moment: It's Miley's birthday! Robbie is trying to find something special for his little girl. Miley tells Lilly to steer Robbie to the right clothes, but it… What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · It's a Mannequin's World",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/317/792720.jpg",
+          "alt": "Hannah Montana season 1, episode 7: It's a Mannequin's World",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/68678/hannah-montana-1x07-its-a-mannequins-world"
+        }
+      },
+      {
+        "prompt": "You are dropped into Hannah Montana's “Mascot Love” when this happens: Lilly decides to be a cheerleader with Miley in order to spend more time together, but they end up doing the opposite when Miley ends up being the team… What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Mascot Love",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/317/792721.jpg",
+          "alt": "Hannah Montana season 1, episode 8: Mascot Love",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/68679/hannah-montana-1x08-mascot-love"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Hannah Montana's “Ooo, Ooo, Itchy Woman”: Miley, Lilly, and Oliver are just itching to get revenge on bratty Amber & Ashley during a class camping trip, even though Robbie told Miley not sink to… Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Ooo, Ooo, Itchy Woman",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/317/792722.jpg",
+          "alt": "Hannah Montana season 1, episode 9: Ooo, Ooo, Itchy Woman",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/68680/hannah-montana-1x09-ooo-ooo-itchy-woman"
+        }
+      },
+      {
+        "prompt": "During Hannah Montana's “O Say, Can You Remember the Words?,” this problem appears: Frustrated by Oliver's stage fright, Miley vents to her dad that she doesn't want to help him with their upcoming drama class performance anymore, which… How would you step in?",
+        "kicker": "Season 1 · Episode 10 · O Say, Can You Remember the Words?",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/317/792723.jpg",
+          "alt": "Hannah Montana season 1, episode 10: O Say, Can You Remember the Words?",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/68681/hannah-montana-1x10-o-say-can-you-remember-the-words"
+        }
+      }
+    ]
+  },
+  "wizards-of-waverly-place": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/807/wizards-of-waverly-place",
+    "tvmazeId": 807,
+    "officialTitle": "Wizards of Waverly Place",
+    "premiered": "2007-10-12",
+    "genres": [
+      "Comedy",
+      "Family",
+      "Fantasy"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/15629.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/637/1592836.jpg",
+    "questions": [
+      {
+        "prompt": "In “Crazy Ten Minute Sale,” an episode of Wizards of Waverly Place, the situation is this: Alex uses a spell to duplicate herself. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Crazy Ten Minute Sale",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/637/1592836.jpg",
+          "alt": "Wizards of Waverly Place season 1, episode 1: Crazy Ten Minute Sale",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/72443/wizards-of-waverly-place-1x01-crazy-ten-minute-sale"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Curb Your Dragon” from Wizards of Waverly Place: Alex buys Justin a pet beagle that's really a magical dragon. How would you respond?",
+        "kicker": "Season 1 · Episode 8 · Curb Your Dragon",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/620/1551786.jpg",
+          "alt": "Wizards of Waverly Place season 1, episode 8: Curb Your Dragon",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/72450/wizards-of-waverly-place-1x08-curb-your-dragon"
+        }
+      },
+      {
+        "prompt": "This is happening in Wizards of Waverly Place's “Pop Me And We Both Go Down”: A spell brings Justin's pimple to life. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 10 · Pop Me And We Both Go Down",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/622/1555145.jpg",
+          "alt": "Wizards of Waverly Place season 1, episode 10: Pop Me And We Both Go Down",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/72452/wizards-of-waverly-place-1x10-pop-me-and-we-both-go-down"
+        }
+      },
+      {
+        "prompt": "You enter “Wizard School (2)” from Wizards of Waverly Place just as this unfolds: When Alex uncovers an evil plot, she must use that knowledge to save Justin. What role would you take?",
+        "kicker": "Season 1 · Episode 14 · Wizard School (2)",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/627/1567931.jpg",
+          "alt": "Wizards of Waverly Place season 1, episode 14: Wizard School (2)",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/72456/wizards-of-waverly-place-1x14-wizard-school-2"
+        }
+      },
+      {
+        "prompt": "In Wizards of Waverly Place's “Report Card,” the group faces this: Alex panics and accidentally turns her parents into guinea pigs. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 17 · Report Card",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/620/1551710.jpg",
+          "alt": "Wizards of Waverly Place season 1, episode 17: Report Card",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/72459/wizards-of-waverly-place-1x17-report-card"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Wizards of Waverly Place's “Credit Check”: Alex takes on an internship with a top fashion magazine. How would you handle it?",
+        "kicker": "Season 1 · Episode 18 · Credit Check",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/627/1569201.jpg",
+          "alt": "Wizards of Waverly Place season 1, episode 18: Credit Check",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/72460/wizards-of-waverly-place-1x18-credit-check"
+        }
+      },
+      {
+        "prompt": "The story in Wizards of Waverly Place's “Quinceanera” turns to this moment: The entire family gets ready for a Quinceanera celebration. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 20 · Quinceanera",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/620/1551468.jpg",
+          "alt": "Wizards of Waverly Place season 1, episode 20: Quinceanera",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/72462/wizards-of-waverly-place-1x20-quinceanera"
+        }
+      },
+      {
+        "prompt": "You are dropped into Wizards of Waverly Place's “Don't Rain on Justin's Parade - Earth” when this happens: Justin changes the weather to agree with the forecast, but Mother Nature has other ideas. What do you do next?",
+        "kicker": "Season 2 · Episode 19 · Don't Rain on Justin's Parade - Earth",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/627/1568923.jpg",
+          "alt": "Wizards of Waverly Place season 2, episode 19: Don't Rain on Justin's Parade - Earth",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/72482/wizards-of-waverly-place-2x19-dont-rain-on-justins-parade-earth"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Wizards of Waverly Place's “Harperella”: After Harper begins to read one of Alex's wizard story books, she is transported into a Cinderella-like world where she encounters her evil stepmother… Which response fits you best?",
+        "kicker": "Season 4 · Episode 26 · Harperella",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/631/1577746.jpg",
+          "alt": "Wizards of Waverly Place season 4, episode 26: Harperella",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/72547/wizards-of-waverly-place-4x26-harperella"
+        }
+      },
+      {
+        "prompt": "This Wizards of Waverly Place image spotlights Jerry Russo. Harper visits while the Russo family hides magical evidence. If you were there, how would you help?",
+        "kicker": "Character spotlight · Jerry Russo",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/6/15633.jpg",
+          "alt": "Wizards of Waverly Place episode: Jerry Russo",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/88464/wizards-of-waverly-place-jerry-russo"
+        }
+      }
+    ]
+  },
+  "the-suite-life-of-zack-and-cody": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/915/the-suite-life-of-zack-and-cody",
+    "tvmazeId": 915,
+    "officialTitle": "The Suite Life of Zack and Cody",
+    "premiered": "2005-03-18",
+    "genres": [
+      "Comedy",
+      "Children",
+      "Family"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/453/1132771.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/580/1450988.jpg",
+    "questions": [
+      {
+        "prompt": "In “Hotel Hangout,” an episode of The Suite Life of Zack and Cody, the situation is this: When Zack and Cody want to make friends, they meet Max and Tapeworm. After the 'Drew Crew' finds out where they live, they suddenly want to hang out with… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Hotel Hangout",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/580/1450988.jpg",
+          "alt": "The Suite Life of Zack and Cody season 1, episode 1: Hotel Hangout",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/86571/the-suite-life-of-zack-and-cody-1x01-hotel-hangout"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “A Prom Story” from The Suite Life of Zack and Cody: Maddie gets her prom to be at the Tipton after London convinces Mr. Moseby. Maddie also wants someone special to ask her to the dance. How would you respond?",
+        "kicker": "Season 1 · Episode 8 · A Prom Story",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/613/1534026.jpg",
+          "alt": "The Suite Life of Zack and Cody season 1, episode 8: A Prom Story",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/86578/the-suite-life-of-zack-and-cody-1x08-a-prom-story"
+        }
+      },
+      {
+        "prompt": "This is happening in The Suite Life of Zack and Cody's “Loosely Ballroom”: Mr Moseby organises a ballroom dancing competition to help raise money for a party for Esteban's sisters, and Esteban enters Zack and Cody in it. Which instinct would you follow?",
+        "kicker": "Season 2 · Episode 25 · Loosely Ballroom",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/256/640069.jpg",
+          "alt": "The Suite Life of Zack and Cody season 2, episode 25: Loosely Ballroom",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/86621/the-suite-life-of-zack-and-cody-2x25-loosely-ballroom"
+        }
+      },
+      {
+        "prompt": "This The Suite Life of Zack and Cody image spotlights Zack Martin. Zack turns a quiet day at the Tipton into a new scheme. If you were there, how would you help?",
+        "kicker": "Character spotlight · Zack Martin",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/227/568545.jpg",
+          "alt": "The Suite Life of Zack and Cody episode: Zack Martin",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/89077/the-suite-life-of-zack-and-cody-zack-martin"
+        }
+      },
+      {
+        "prompt": "This The Suite Life of Zack and Cody image spotlights Cody Martin. Cody studies the hotel map before attempting a plan. If you were there, how would you help?",
+        "kicker": "Character spotlight · Cody Martin",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/227/568548.jpg",
+          "alt": "The Suite Life of Zack and Cody episode: Cody Martin",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/89078/the-suite-life-of-zack-and-cody-cody-martin"
+        }
+      },
+      {
+        "prompt": "This The Suite Life of Zack and Cody image spotlights London Tipton. London prepares for an event with an enormous budget. If you were there, how would you help?",
+        "kicker": "Character spotlight · London Tipton",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/227/568550.jpg",
+          "alt": "The Suite Life of Zack and Cody episode: London Tipton",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/89079/the-suite-life-of-zack-and-cody-london-tipton"
+        }
+      },
+      {
+        "prompt": "This The Suite Life of Zack and Cody image spotlights Maddie Fitzpatrick. Maddie has to work while her friends enjoy the hotel. If you were there, how would you help?",
+        "kicker": "Character spotlight · Maddie Fitzpatrick",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/227/568552.jpg",
+          "alt": "The Suite Life of Zack and Cody episode: Maddie Fitzpatrick",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/89080/the-suite-life-of-zack-and-cody-maddie-fitzpatrick"
+        }
+      },
+      {
+        "prompt": "This The Suite Life of Zack and Cody image spotlights Mr. Marion Moseby. Mr. Moseby sets a rule the twins immediately test. If you were there, how would you help?",
+        "kicker": "Character spotlight · Mr. Marion Moseby",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/227/568553.jpg",
+          "alt": "The Suite Life of Zack and Cody episode: Mr. Marion Moseby",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/89081/the-suite-life-of-zack-and-cody-mr-marion-moseby"
+        }
+      },
+      {
+        "prompt": "This The Suite Life of Zack and Cody image spotlights Carey Martin. A famous guest checks into the Tipton unexpectedly. If you were there, how would you help?",
+        "kicker": "Character spotlight · Carey Martin",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/227/568554.jpg",
+          "alt": "The Suite Life of Zack and Cody episode: Carey Martin",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/89082/the-suite-life-of-zack-and-cody-carey-martin"
+        }
+      },
+      {
+        "prompt": "The twins need to return a borrowed hotel item. You are stepping into The Suite Life of Zack and Cody as it happens. Which response fits you best?",
+        "kicker": "Show scenario · Series image 1",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/227/568544.jpg",
+          "alt": "The Suite Life of Zack and Cody episode: Series image 1",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/shows/915/the-suite-life-of-zack-and-cody"
+        }
+      }
+    ]
+  },
+  "lizzie-mcguire": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/6019/lizzie-mcguire",
+    "tvmazeId": 6019,
+    "officialTitle": "Lizzie McGuire",
+    "premiered": "2001-01-12",
+    "genres": [
+      "Comedy",
+      "Family"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/23/58873.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/23/58874.jpg",
+    "questions": [
+      {
+        "prompt": "This Lizzie McGuire image spotlights Lizzie McGuire. Lizzie wants to make the right impression at a school event. If you were there, how would you help?",
+        "kicker": "Character spotlight · Lizzie McGuire",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/23/58874.jpg",
+          "alt": "Lizzie McGuire episode: Lizzie McGuire",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/183884/lizzie-mcguire-lizzie-mcguire"
+        }
+      },
+      {
+        "prompt": "This Lizzie McGuire image spotlights Jo McGuire. Matt starts a prank inside the McGuire house. If you were there, how would you help?",
+        "kicker": "Character spotlight · Jo McGuire",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/139/348068.jpg",
+          "alt": "Lizzie McGuire episode: Jo McGuire",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/183885/lizzie-mcguire-jo-mcguire"
+        }
+      },
+      {
+        "prompt": "This Lizzie McGuire image spotlights Matt McGuire. Gordo questions whether popularity is worth the plan. If you were there, how would you help?",
+        "kicker": "Character spotlight · Matt McGuire",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/139/348070.jpg",
+          "alt": "Lizzie McGuire episode: Matt McGuire",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/183886/lizzie-mcguire-matt-mcguire"
+        }
+      },
+      {
+        "prompt": "This Lizzie McGuire image spotlights Sam McGuire. Jo and Sam discover that Lizzie left out part of the story. If you were there, how would you help?",
+        "kicker": "Character spotlight · Sam McGuire",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/139/348069.jpg",
+          "alt": "Lizzie McGuire episode: Sam McGuire",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/183887/lizzie-mcguire-sam-mcguire"
+        }
+      },
+      {
+        "prompt": "This Lizzie McGuire image spotlights Gordo. Miranda suggests a bolder outfit or bigger response. If you were there, how would you help?",
+        "kicker": "Character spotlight · Gordo",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/23/58876.jpg",
+          "alt": "Lizzie McGuire episode: Gordo",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/183888/lizzie-mcguire-gordo"
+        }
+      },
+      {
+        "prompt": "This Lizzie McGuire image spotlights Miranda Sanchez. Animated Lizzie says what real Lizzie will not say aloud. If you were there, how would you help?",
+        "kicker": "Character spotlight · Miranda Sanchez",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/23/58875.jpg",
+          "alt": "Lizzie McGuire episode: Miranda Sanchez",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/183889/lizzie-mcguire-miranda-sanchez"
+        }
+      },
+      {
+        "prompt": "Kate turns a hallway moment into a social contest. You are stepping into Lizzie McGuire as it happens. Which response fits you best?",
+        "kicker": "Show scenario · Series image 1",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/221/553677.jpg",
+          "alt": "Lizzie McGuire episode: Series image 1",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/shows/6019/lizzie-mcguire"
+        }
+      },
+      {
+        "prompt": "A class presentation goes differently than rehearsed. You are stepping into Lizzie McGuire as it happens. Which response fits you best?",
+        "kicker": "Show scenario · Series image 2",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/118/295231.jpg",
+          "alt": "Lizzie McGuire episode: Series image 2",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/shows/6019/lizzie-mcguire"
+        }
+      },
+      {
+        "prompt": "Lizzie must choose between fitting in and helping a friend. You are stepping into Lizzie McGuire as it happens. Which response fits you best?",
+        "kicker": "Show scenario · Series image 3",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/23/58873.jpg",
+          "alt": "Lizzie McGuire episode: Series image 3",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/shows/6019/lizzie-mcguire"
+        }
+      },
+      {
+        "prompt": "The trio meets at lunch to repair a misunderstanding. You are stepping into Lizzie McGuire as it happens. Which response fits you best?",
+        "kicker": "Show scenario · Series image 4",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/46/115698.jpg",
+          "alt": "Lizzie McGuire episode: Series image 4",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/shows/6019/lizzie-mcguire"
+        }
+      }
+    ]
+  },
+  "kim-possible": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/2557/kim-possible",
+    "tvmazeId": 2557,
+    "officialTitle": "Kim Possible",
+    "premiered": "2002-06-07",
+    "genres": [
+      "Comedy",
+      "Action",
+      "Adventure"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/158/396340.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/330/826960.jpg",
+    "questions": [
+      {
+        "prompt": "In “Crush,” an episode of Kim Possible, the situation is this: Kim tries to overcome Drakken's scheme to create a giant robot AND her fear of asking her crush, Josh Mankey, to a big school dance. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Crush",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/330/826960.jpg",
+          "alt": "Kim Possible season 1, episode 1: Crush",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/199310/kim-possible-1x01-crush"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Sink or Swim” from Kim Possible: On the way to a cheerleading competitition with Kim and the squad, Ron returns to the scene of his worst summer ever-Camp Wannaweep. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Sink or Swim",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/330/826944.jpg",
+          "alt": "Kim Possible season 1, episode 2: Sink or Swim",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/199311/kim-possible-1x02-sink-or-swim"
+        }
+      },
+      {
+        "prompt": "This is happening in Kim Possible's “The New Ron”: Kim's attempt at making over Ron backfires when a new haircut turns him into a preening hottie. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · The New Ron",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/330/826945.jpg",
+          "alt": "Kim Possible season 1, episode 3: The New Ron",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/199312/kim-possible-1x03-the-new-ron"
+        }
+      },
+      {
+        "prompt": "You enter “Tick-Tick-Tick” from Kim Possible just as this unfolds: Kim faces the indignity of detention. Humiliation nearly becomes annihilation when Drakken's new pimple-like nano-explosive gets stuck on her nose. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Tick-Tick-Tick",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/330/826946.jpg",
+          "alt": "Kim Possible season 1, episode 4: Tick-Tick-Tick",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/199313/kim-possible-1x04-tick-tick-tick"
+        }
+      },
+      {
+        "prompt": "In Kim Possible's “Downhill,” the group faces this: Kim's not sure which is more heinous: mutant beasts terrorizing a ski resort, or having her parents chaperone a school trip to that same mountain. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Downhill",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/330/826947.jpg",
+          "alt": "Kim Possible season 1, episode 5: Downhill",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/199314/kim-possible-1x05-downhill"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Kim Possible's “Bueno Nacho”: Kim and Ron's new fast food job-and their friendship-is put to the test by Drakken's scheme to cover the state of Wisconsin in magma. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Bueno Nacho",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/330/826948.jpg",
+          "alt": "Kim Possible season 1, episode 6: Bueno Nacho",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/199315/kim-possible-1x06-bueno-nacho"
+        }
+      },
+      {
+        "prompt": "The story in Kim Possible's “Number One” turns to this moment: Kim teams up with Will Du, a high-strung agent of the \"Global Justice,\" on a case that leads to the discovery of Duff Killigan, the world's most… What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Number One",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/330/826949.jpg",
+          "alt": "Kim Possible season 1, episode 7: Number One",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/199316/kim-possible-1x07-number-one"
+        }
+      },
+      {
+        "prompt": "You are dropped into Kim Possible's “Mind Games” when this happens: Drakken creates a mind-switching device to control a goofy private with high security clearance. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Mind Games",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/330/826950.jpg",
+          "alt": "Kim Possible season 1, episode 8: Mind Games",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/199317/kim-possible-1x08-mind-games"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Kim Possible's “Attack of the Killer Bebes”: Kim meets Drakken's new team of robotic warrior women who threaten to kidnap the country's leading scientists, including Kim's dad. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Attack of the Killer Bebes",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/330/826951.jpg",
+          "alt": "Kim Possible season 1, episode 9: Attack of the Killer Bebes",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/199318/kim-possible-1x09-attack-of-the-killer-bebes"
+        }
+      },
+      {
+        "prompt": "During Kim Possible's “Royal Pain,” this problem appears: Kim is charged with protecting a spoiled prince from a prophecy that predicts his doom. When the prince comes to stay with her in Middleton, Kim's sense… How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Royal Pain",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/330/826952.jpg",
+          "alt": "Kim Possible season 1, episode 10: Royal Pain",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/199319/kim-possible-1x10-royal-pain"
+        }
+      }
+    ]
+  },
+  "the-owl-house": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/35073/the-owl-house",
+    "tvmazeId": 35073,
+    "officialTitle": "The Owl House",
+    "premiered": "2020-01-10",
+    "genres": [
+      "Comedy",
+      "Children",
+      "Fantasy"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/454/1137234.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/235/589148.jpg",
+    "questions": [
+      {
+        "prompt": "In “A Lying Witch and a Warden,” an episode of The Owl House, the situation is this: When Luz stumbles upon a portal to a magical realm, she befriends a rebellious witch, Eda, and a tiny warrior, King. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · A Lying Witch and a Warden",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/235/589148.jpg",
+          "alt": "The Owl House season 1, episode 1: A Lying Witch and a Warden",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1760302/the-owl-house-1x01-a-lying-witch-and-a-warden"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Witches Before Wizards” from The Owl House: An ancient wizard gives Luz a map for a mystical quest. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Witches Before Wizards",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/336/841337.jpg",
+          "alt": "The Owl House season 1, episode 2: Witches Before Wizards",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1777953/the-owl-house-1x02-witches-before-wizards"
+        }
+      },
+      {
+        "prompt": "This is happening in The Owl House's “I Was a Teenage Abomination”: Luz sneaks into the local magic school to help a friend and makes a new enemy in the process. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · I Was a Teenage Abomination",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/336/841338.jpg",
+          "alt": "The Owl House season 1, episode 3: I Was a Teenage Abomination",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1777954/the-owl-house-1x03-i-was-a-teenage-abomination"
+        }
+      },
+      {
+        "prompt": "You enter “The Intruder” from The Owl House just as this unfolds: Luz and King must defend The Owl House from a mysterious intruder. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · The Intruder",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/336/841339.jpg",
+          "alt": "The Owl House season 1, episode 4: The Intruder",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1777955/the-owl-house-1x04-the-intruder"
+        }
+      },
+      {
+        "prompt": "In The Owl House's “Covention,” the group faces this: Luz's lesson about witch covens goes awry when she finds herself thrust into a witch's duel. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Covention",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/336/841340.jpg",
+          "alt": "The Owl House season 1, episode 5: Covention",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1777956/the-owl-house-1x05-covention"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during The Owl House's “Hooty's Moving Hassle”: When Luz, Willow and Gus accidentally animate the Owl House, the house runs amok around Bonesborough. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Hooty's Moving Hassle",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/336/841341.jpg",
+          "alt": "The Owl House season 1, episode 6: Hooty's Moving Hassle",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1777957/the-owl-house-1x06-hootys-moving-hassle"
+        }
+      },
+      {
+        "prompt": "The story in The Owl House's “Lost in Language” turns to this moment: While checking out the library, Luz's pranks lead to unintended consequences. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Lost in Language",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/336/841342.jpg",
+          "alt": "The Owl House season 1, episode 7: Lost in Language",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1777958/the-owl-house-1x07-lost-in-language"
+        }
+      },
+      {
+        "prompt": "You are dropped into The Owl House's “Once Upon a Swap” when this happens: A simple disagreement leads to a complex situation when Eda, King and Luz triple-down on a wager. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Once Upon a Swap",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/336/841343.jpg",
+          "alt": "The Owl House season 1, episode 8: Once Upon a Swap",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1777959/the-owl-house-1x08-once-upon-a-swap"
+        }
+      },
+      {
+        "prompt": "The pressure rises in The Owl House's “Something Ventured, Someone Framed”: When Gus sneaks Luz into Hexside School to present at the Human Appreciation Society, Luz sees a side of the school she didn't expect. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Something Ventured, Someone Framed",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/336/841344.jpg",
+          "alt": "The Owl House season 1, episode 9: Something Ventured, Someone Framed",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1777960/the-owl-house-1x09-something-ventured-someone-framed"
+        }
+      },
+      {
+        "prompt": "During The Owl House's “Escape of the Palisman,” this problem appears: When an adventure with Eda's staff goes awry, Luz and her friends have to earn the staff back from a mysterious forest creature, or lose the staff forever. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Escape of the Palisman",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/336/841345.jpg",
+          "alt": "The Owl House season 1, episode 10: Escape of the Palisman",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1777961/the-owl-house-1x10-escape-of-the-palisman"
+        }
+      }
+    ]
+  },
+  "steven-universe": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1615/steven-universe",
+    "tvmazeId": 1615,
+    "officialTitle": "Steven Universe",
+    "premiered": "2013-11-04",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/8/22200.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/382/956272.jpg",
+    "questions": [
+      {
+        "prompt": "In “Gem Glow,” an episode of Steven Universe, the situation is this: Steven eats cookie cat's and mistakenly thinks they have activated his gem. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Gem Glow",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/382/956272.jpg",
+          "alt": "Steven Universe season 1, episode 1: Gem Glow",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/142020/steven-universe-1x01-gem-glow"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Laser Light Cannon” from Steven Universe: When a menacing red eye is about to hit Beach City, the only thing that can destroy it is a Laser Light Cannon which once belonged to Steven's mother… How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Laser Light Cannon",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/382/956273.jpg",
+          "alt": "Steven Universe season 1, episode 2: Laser Light Cannon",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/142021/steven-universe-1x02-laser-light-cannon"
+        }
+      },
+      {
+        "prompt": "This is happening in Steven Universe's “Cheeseburger Backpack”: The Crystal Gems go on a mission to place a Moon Goddess statue on top of the ruined Lunar Sea Spire, and Steven tries to prove he can be useful with the… Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Cheeseburger Backpack",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/382/956274.jpg",
+          "alt": "Steven Universe season 1, episode 3: Cheeseburger Backpack",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/142022/steven-universe-1x03-cheeseburger-backpack"
+        }
+      },
+      {
+        "prompt": "You enter “Together Breakfast” from Steven Universe just as this unfolds: Steven's attempt to get the Gems to share his special breakfast tradition lands him on a journey through their ancient Gem temple. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Together Breakfast",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/382/956275.jpg",
+          "alt": "Steven Universe season 1, episode 4: Together Breakfast",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/142023/steven-universe-1x04-together-breakfast"
+        }
+      },
+      {
+        "prompt": "In Steven Universe's “Frybo,” the group faces this: Steven brings a mascot costume to life with a magical gem shard in order help his friend Peedee, but it backfires when the mascot goes rogue. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Frybo",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/382/956276.jpg",
+          "alt": "Steven Universe season 1, episode 5: Frybo",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/142024/steven-universe-1x05-frybo"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Steven Universe's “Cat Fingers”: Steven tries to master his shapeshifting abilities with Amethyst, but turns his fingers into cats, making it harder to do things. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Cat Fingers",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/382/956277.jpg",
+          "alt": "Steven Universe season 1, episode 6: Cat Fingers",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/142025/steven-universe-1x06-cat-fingers"
+        }
+      },
+      {
+        "prompt": "The story in Steven Universe's “Bubble Buddies” turns to this moment: Steven forms a magic bubble around himself and a girl named Connie to save her from a falling rock, but he has no idea how to make it disappear. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Bubble Buddies",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/382/956278.jpg",
+          "alt": "Steven Universe season 1, episode 7: Bubble Buddies",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/142026/steven-universe-1x07-bubble-buddies"
+        }
+      },
+      {
+        "prompt": "You are dropped into Steven Universe's “Serious Steven” when this happens: While navigating out of an ancient Gem maze, Steven tries to prove himself to the Gems by being serious. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Serious Steven",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/382/956279.jpg",
+          "alt": "Steven Universe season 1, episode 8: Serious Steven",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/142027/steven-universe-1x08-serious-steven"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Steven Universe's “Tiger Millionaire”: Steven joins an underground wrestling league with Amethyst, who's tired of Garnet and Pearl bringing her down. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Tiger Millionaire",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/382/956280.jpg",
+          "alt": "Steven Universe season 1, episode 9: Tiger Millionaire",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/142028/steven-universe-1x09-tiger-millionaire"
+        }
+      },
+      {
+        "prompt": "During Steven Universe's “Steven's Lion,” this problem appears: Steven befriends a magical lion he finds in the desert during a mission. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Steven's Lion",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/382/956281.jpg",
+          "alt": "Steven Universe season 1, episode 10: Steven's Lion",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/142029/steven-universe-1x10-stevens-lion"
+        }
+      }
+    ]
+  },
+  "regular-show": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/868/regular-show",
+    "tvmazeId": 868,
+    "officialTitle": "Regular Show",
+    "premiered": "2010-09-06",
+    "genres": [
+      "Comedy",
+      "Adventure"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/599/1498208.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/596/1490626.jpg",
+    "questions": [
+      {
+        "prompt": "In “The Power,” an episode of Regular Show, the situation is this: When Mordecai and Rigby accidentally make a hole in the wall, they use a magic keyboard to make Pops and Benson give them a pay raise to pay for the… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · The Power",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/596/1490626.jpg",
+          "alt": "Regular Show season 1, episode 1: The Power",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/80586/regular-show-1x01-the-power"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Diary” from Regular Show: Mordecai and Rigby break the lock on Margaret's diary and have to fix it before she gets back from a weekend trip. How would you respond?",
+        "kicker": "Season 3 · Episode 33 · Diary",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/596/1490622.jpg",
+          "alt": "Regular Show season 3, episode 33: Diary",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/80658/regular-show-3x33-diary"
+        }
+      },
+      {
+        "prompt": "This is happening in Regular Show's “Picking Up Margaret”: Mordecai wants to give Margaret a ride to the airport. Which instinct would you follow?",
+        "kicker": "Season 4 · Episode 22 · Picking Up Margaret",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/607/1517885.jpg",
+          "alt": "Regular Show season 4, episode 22: Picking Up Margaret",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/80686/regular-show-4x22-picking-up-margaret"
+        }
+      },
+      {
+        "prompt": "This Regular Show image spotlights Mordecai. Benson gives Mordecai and Rigby one simple park task. If you were there, how would you help?",
+        "kicker": "Character spotlight · Mordecai",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/95/237939.jpg",
+          "alt": "Regular Show episode: Mordecai",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/88854/regular-show-mordecai"
+        }
+      },
+      {
+        "prompt": "This Regular Show image spotlights Skips. Skips recognizes that today's problem is not normal. If you were there, how would you help?",
+        "kicker": "Character spotlight · Skips",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/95/237948.jpg",
+          "alt": "Regular Show episode: Skips",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/88857/regular-show-skips"
+        }
+      },
+      {
+        "prompt": "This Regular Show image spotlights Rigby. Rigby finds a shortcut with a suspicious warning label. If you were there, how would you help?",
+        "kicker": "Character spotlight · Rigby",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/95/237943.jpg",
+          "alt": "Regular Show episode: Rigby",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/88861/regular-show-rigby"
+        }
+      },
+      {
+        "prompt": "This Regular Show image spotlights Margaret. Pops plans a cheerful event at the park house. If you were there, how would you help?",
+        "kicker": "Character spotlight · Margaret",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/95/237945.jpg",
+          "alt": "Regular Show episode: Margaret",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/88855/regular-show-margaret"
+        }
+      },
+      {
+        "prompt": "This Regular Show image spotlights Benson. Benson says the pair will be fired unless they fix everything. If you were there, how would you help?",
+        "kicker": "Character spotlight · Benson",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/95/237947.jpg",
+          "alt": "Regular Show episode: Benson",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/88858/regular-show-benson"
+        }
+      },
+      {
+        "prompt": "This Regular Show image spotlights Pops. Muscle Man claims he knows exactly who can help. If you were there, how would you help?",
+        "kicker": "Character spotlight · Pops",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/95/237941.jpg",
+          "alt": "Regular Show episode: Pops",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/88859/regular-show-pops"
+        }
+      },
+      {
+        "prompt": "This Regular Show image spotlights High Five Ghost. A video game challenge begins affecting the real park. If you were there, how would you help?",
+        "kicker": "Character spotlight · High Five Ghost",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/95/237942.jpg",
+          "alt": "Regular Show episode: High Five Ghost",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/88862/regular-show-high-five-ghost"
+        }
+      }
+    ]
+  },
+  "the-amazing-world-of-gumball": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/3134/the-amazing-world-of-gumball",
+    "tvmazeId": 3134,
+    "officialTitle": "The Amazing World of Gumball",
+    "premiered": "2011-05-03",
+    "genres": [
+      "Comedy",
+      "Children"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/17/43096.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/147/368615.jpg",
+    "questions": [
+      {
+        "prompt": "In “The DVD,” an episode of The Amazing World of Gumball, the situation is this: Gumball is desperate to avoid a late fee on the rented dvd he accidentally destroyed. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · The DVD",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/147/368615.jpg",
+          "alt": "The Amazing World of Gumball season 1, episode 1: The DVD",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/215218/the-amazing-world-of-gumball-1x01-the-dvd"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “The Responsible” from The Amazing World of Gumball: Gumball and Darwin get to babysit Anais whilst their parents go to a PTA meeting, but being \"responsible\" has a different meaning when you don't know… How would you respond?",
+        "kicker": "Season 1 · Episode 2 · The Responsible",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/147/368616.jpg",
+          "alt": "The Amazing World of Gumball season 1, episode 2: The Responsible",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/215219/the-amazing-world-of-gumball-1x02-the-responsible"
+        }
+      },
+      {
+        "prompt": "This is happening in The Amazing World of Gumball's “The Third”: Gumball and Darwin spice up their friendship by introducing a third best friend. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · The Third",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/147/368617.jpg",
+          "alt": "The Amazing World of Gumball season 1, episode 3: The Third",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/215220/the-amazing-world-of-gumball-1x03-the-third"
+        }
+      },
+      {
+        "prompt": "You enter “The Debt” from The Amazing World of Gumball just as this unfolds: Believing that his life had been saved, Gumball vows to repay his debt by saving Mr. Robinson's life. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · The Debt",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/147/368618.jpg",
+          "alt": "The Amazing World of Gumball season 1, episode 4: The Debt",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/246279/the-amazing-world-of-gumball-1x04-the-debt"
+        }
+      },
+      {
+        "prompt": "In The Amazing World of Gumball's “The End,” the group faces this: Gumball and Darwin, thinking that the world will end in 24 hours, decide to make the most out of their remaining time. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · The End",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/147/368619.jpg",
+          "alt": "The Amazing World of Gumball season 1, episode 5: The End",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/246280/the-amazing-world-of-gumball-1x05-the-end"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during The Amazing World of Gumball's “The Dress”: When his clothes are shrunk in the washing machine by his father, Gumball is forced to wear his mother's wedding dress to school. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · The Dress",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/147/368620.jpg",
+          "alt": "The Amazing World of Gumball season 1, episode 6: The Dress",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/246281/the-amazing-world-of-gumball-1x06-the-dress"
+        }
+      },
+      {
+        "prompt": "The story in The Amazing World of Gumball's “The Quest” turns to this moment: Gumball and Darwin help Anais get her beloved doll back after it is lost on the way to school. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · The Quest",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/147/368621.jpg",
+          "alt": "The Amazing World of Gumball season 1, episode 7: The Quest",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/215221/the-amazing-world-of-gumball-1x07-the-quest"
+        }
+      },
+      {
+        "prompt": "You are dropped into The Amazing World of Gumball's “The Spoon” when this happens: Gumball and Darwin become unwitting accomplices in a stick-up at a gas station. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · The Spoon",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/147/368622.jpg",
+          "alt": "The Amazing World of Gumball season 1, episode 8: The Spoon",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/246282/the-amazing-world-of-gumball-1x08-the-spoon"
+        }
+      },
+      {
+        "prompt": "The pressure rises in The Amazing World of Gumball's “The Vision”: Gumball and Darwin stumble upon Alan's \"Manifesto on how I will gain the power I need to purge Elmore Jr High of its greatest problem\". Which response fits you best?",
+        "kicker": "Season 5 · Episode 5 · The Vision",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/82/206506.jpg",
+          "alt": "The Amazing World of Gumball season 5, episode 5: The Vision",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/911637/the-amazing-world-of-gumball-5x05-the-vision"
+        }
+      },
+      {
+        "prompt": "During The Amazing World of Gumball's “The Rival,” this problem appears: Back in time to when Anais is a newborn baby, Gumball and Darwin are terrified of her sinister and evil nature of trying to get the boys in trouble and… How would you step in?",
+        "kicker": "Season 6 · Episode 1 · The Rival",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/143/358357.jpg",
+          "alt": "The Amazing World of Gumball season 6, episode 1: The Rival",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1381125/the-amazing-world-of-gumball-6x01-the-rival"
+        }
+      }
+    ]
+  },
+  "teen-titans": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/765/teen-titans",
+    "tvmazeId": 765,
+    "officialTitle": "Teen Titans",
+    "premiered": "2003-07-19",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/15290.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/575/1439936.jpg",
+    "questions": [
+      {
+        "prompt": "In “Final Exam,” an episode of Teen Titans, the situation is this: Slade hires the newest graduates of the H.I.V.E. to take on the Teen Titans. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Final Exam",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/575/1439936.jpg",
+          "alt": "Teen Titans season 1, episode 1: Final Exam",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/67293/teen-titans-1x01-final-exam"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Sisters” from Teen Titans: Starfire's sister, Blackfire comes to earth. Weird alien robots start attacking Starfire and it is up to the Teen Titans to protect one of their own, but… How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Sisters",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/562/1406732.jpg",
+          "alt": "Teen Titans season 1, episode 2: Sisters",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/67294/teen-titans-1x02-sisters"
+        }
+      },
+      {
+        "prompt": "This is happening in Teen Titans' “Divide and Conquer”: Cinderblock breaks Plasmus out of jail and a fight divides some members of the team. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Divide and Conquer",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/576/1440546.jpg",
+          "alt": "Teen Titans season 1, episode 3: Divide and Conquer",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/67295/teen-titans-1x03-divide-and-conquer"
+        }
+      },
+      {
+        "prompt": "You enter “Forces of Nature” from Teen Titans just as this unfolds: Slade finds a pair of super powered brothers, and convinces them to use their powers for their own amusement, no matter the cost to others. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Forces of Nature",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/576/1440549.jpg",
+          "alt": "Teen Titans season 1, episode 4: Forces of Nature",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/67296/teen-titans-1x04-forces-of-nature"
+        }
+      },
+      {
+        "prompt": "In Teen Titans' “The Sum of His Parts,” the group faces this: Cyborg is frustrated when his limited battery charge allows a villain to escape. The mysterious robot, Fixit, might have the solution - if Cyborg is… What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · The Sum of His Parts",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/576/1440554.jpg",
+          "alt": "Teen Titans season 1, episode 5: The Sum of His Parts",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/67297/teen-titans-1x05-the-sum-of-his-parts"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Teen Titans' “Nevermore”: After an encounter with Dr. Light, Raven starts acting strangely. Cyborg and Beast Boy go into Raven's room and find themselves encountering several… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Nevermore",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/576/1440557.jpg",
+          "alt": "Teen Titans season 1, episode 6: Nevermore",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/67298/teen-titans-1x06-nevermore"
+        }
+      },
+      {
+        "prompt": "The story in Teen Titans' “Switched” turns to this moment: After an encounter with the Puppet King, Raven and Starfire switch bodies. Now they have to work together to rescue the boys. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Switched",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/576/1440560.jpg",
+          "alt": "Teen Titans season 1, episode 7: Switched",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/67299/teen-titans-1x07-switched"
+        }
+      },
+      {
+        "prompt": "You are dropped into Teen Titans' “Deep Six” when this happens: The Titans go after Trident, an undersea criminal, with the assistance of Aqualad. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Deep Six",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/576/1440851.jpg",
+          "alt": "Teen Titans season 1, episode 8: Deep Six",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/67300/teen-titans-1x08-deep-six"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Teen Titans' “Masks”: Robin is obsessed with finding Slade. Then a new criminal shows up: Red X. Red X goes on missions stealing equipment for Slade. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Masks",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/576/1440860.jpg",
+          "alt": "Teen Titans season 1, episode 9: Masks",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/67301/teen-titans-1x09-masks"
+        }
+      },
+      {
+        "prompt": "During Teen Titans' “Mad Mod,” this problem appears: Mad Mod captures the Titans and tries to brain wash them. The Titans are trapped in a weird virtual world, can they find their way to the real world… How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Mad Mod",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/575/1438203.jpg",
+          "alt": "Teen Titans season 1, episode 10: Mad Mod",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/67302/teen-titans-1x10-mad-mod"
+        }
+      }
+    ]
+  },
+  "pokemon": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/590/pokemon",
+    "tvmazeId": 590,
+    "officialTitle": "Pokémon",
+    "premiered": "1997-04-01",
+    "genres": [
+      "Adventure",
+      "Anime",
+      "Fantasy"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/630/1576025.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/24/60137.jpg",
+    "questions": [
+      {
+        "prompt": "In “Pokémon - I Choose You!,” an episode of Pokémon, the situation is this: Pokemon: Ash Ketchum is finally 10 years old, old enough to become a Pokemon Trainer. He wakes up late, and arrives to Professor Oak's lab late, and all… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Pokémon - I Choose You!",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/24/60137.jpg",
+          "alt": "Pokémon season 1, episode 1: Pokémon - I Choose You!",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/55951/pokemon-1x01-pokemon-i-choose-you"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Pokémon Emergency!” from Pokémon: Pokemon: Finally arriving in Viridian City, Ash is cornered by Officer Jenny who asks why he is carrying Pikachu instead of having it in a Pokeball. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Pokémon Emergency!",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/24/60145.jpg",
+          "alt": "Pokémon season 1, episode 2: Pokémon Emergency!",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/55952/pokemon-1x02-pokemon-emergency"
+        }
+      },
+      {
+        "prompt": "This is happening in Pokémon's “Ash Catches a Pokémon”: Pokemon: Ash, Pikachu and Misty have entered the Viridian Forest. Ash has spotted a Caterpie and thrown a Pokéball at it. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Ash Catches a Pokémon",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/24/60151.jpg",
+          "alt": "Pokémon season 1, episode 3: Ash Catches a Pokémon",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/55953/pokemon-1x03-ash-catches-a-pokemon"
+        }
+      },
+      {
+        "prompt": "You enter “Challenge of the Samurai” from Pokémon just as this unfolds: Pokemon: Ash and Misty are now wandering through Viridian Forest. A Samurai challenges Ash to a battle, and it turns out to be Metapod vs. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Challenge of the Samurai",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/24/60164.jpg",
+          "alt": "Pokémon season 1, episode 4: Challenge of the Samurai",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/55954/pokemon-1x04-challenge-of-the-samurai"
+        }
+      },
+      {
+        "prompt": "In Pokémon's “Showdown in Pewter City,” the group faces this: Pokemon: Ash and Misty have arrived in Pewter City. A rock-seller name Flint approaches them and attempts to sell them some rocks. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Showdown in Pewter City",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/24/60172.jpg",
+          "alt": "Pokémon season 1, episode 5: Showdown in Pewter City",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/55955/pokemon-1x05-showdown-in-pewter-city"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Pokémon's “Clefairy and the Moon Stone”: Pokemon: Ash, Misty, and Brock have just begun their journey together, and come across Mt. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Clefairy and the Moon Stone",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/24/60421.jpg",
+          "alt": "Pokémon season 1, episode 6: Clefairy and the Moon Stone",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/55956/pokemon-1x06-clefairy-and-the-moon-stone"
+        }
+      },
+      {
+        "prompt": "The story in Pokémon's “The Water Flowers of Cerulean City” turns to this moment: Pokemon: In his search to collect Trainer Badges, Ash heads for Cerulean City, intending to confront the Cerulean Gym Leader. What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · The Water Flowers of Cerulean City",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/24/60423.jpg",
+          "alt": "Pokémon season 1, episode 7: The Water Flowers of Cerulean City",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/55957/pokemon-1x07-the-water-flowers-of-cerulean-city"
+        }
+      },
+      {
+        "prompt": "You are dropped into Pokémon's “The Path to the Pokémon League” when this happens: Pokemon: After receiving his second badge, Ash sets off triumphantly for Vermilion City. Along the way, they hear of a trainer named A.J. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · The Path to the Pokémon League",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/24/60429.jpg",
+          "alt": "Pokémon season 1, episode 8: The Path to the Pokémon League",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/55958/pokemon-1x08-the-path-to-the-pokemon-league"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Pokémon's “The School of Hard Knocks”: Pokemon: Our three heroes have lost their way in the depths of a dense wood, shrouded in thick, white mist. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · The School of Hard Knocks",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/24/60438.jpg",
+          "alt": "Pokémon season 1, episode 9: The School of Hard Knocks",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/55959/pokemon-1x09-the-school-of-hard-knocks"
+        }
+      },
+      {
+        "prompt": "During Pokémon's “Bulbasaur and the Hidden Village,” this problem appears: Pokemon: Ash and friends are still on their way to Vermilion City and still lost. They stop by a pond for a break when they see an Oddish taking a drink. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Bulbasaur and the Hidden Village",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/24/60442.jpg",
+          "alt": "Pokémon season 1, episode 10: Bulbasaur and the Hidden Village",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/55960/pokemon-1x10-bulbasaur-and-the-hidden-village"
+        }
+      }
+    ]
+  },
+  "the-west-wing": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/523/the-west-wing",
+    "tvmazeId": 523,
+    "officialTitle": "The West Wing",
+    "premiered": "1999-09-22",
+    "genres": [
+      "Drama"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/4/11284.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/143/358399.jpg",
+    "questions": [
+      {
+        "prompt": "In “Pilot,” an episode of The West Wing, the situation is this: In the series premiere, the White House staff is being called into work in the early hours of the morning to the news that the President of the United… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Pilot",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/143/358399.jpg",
+          "alt": "The West Wing season 1, episode 1: Pilot",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/47282/the-west-wing-1x01-pilot"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Post Hoc, Ergo Propter Hoc” from The West Wing: The Vice President refuses to fall in line with Bartlet; Sam discusses the problem of Laurie with Josh and Toby; the plane carrying President Bartlet's… How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Post Hoc, Ergo Propter Hoc",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/143/358418.jpg",
+          "alt": "The West Wing season 1, episode 2: Post Hoc, Ergo Propter Hoc",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/47283/the-west-wing-1x02-post-hoc-ergo-propter-hoc"
+        }
+      },
+      {
+        "prompt": "This is happening in The West Wing's “A Proportional Response”: After a passenger plane is downed by Syrian forces, the President meets with the Joint Chiefs to determine the best course of action. Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · A Proportional Response",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/143/358430.jpg",
+          "alt": "The West Wing season 1, episode 3: A Proportional Response",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/47284/the-west-wing-1x03-a-proportional-response"
+        }
+      },
+      {
+        "prompt": "You enter “Five Votes Down” from The West Wing just as this unfolds: The week of a crucial gun control vote, the staff gets word that 5 votes have flipped. All resources are used to get them back. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Five Votes Down",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/143/358439.jpg",
+          "alt": "The West Wing season 1, episode 4: Five Votes Down",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/47285/the-west-wing-1x04-five-votes-down"
+        }
+      },
+      {
+        "prompt": "In The West Wing's “The Crackpots and These Women,” the group faces this: Josh is offered a once in a lifetime opportunity, but it causes more anguish than comfort. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · The Crackpots and These Women",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/143/358790.jpg",
+          "alt": "The West Wing season 1, episode 5: The Crackpots and These Women",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/47286/the-west-wing-1x05-the-crackpots-and-these-women"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during The West Wing's “Mr. Willis of Ohio”: Toby and Mandy push for a commerce bill with a census-counting provision, with three votes as the deciding factor; Sam tutors C.J. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Mr. Willis of Ohio",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/143/359133.jpg",
+          "alt": "The West Wing season 1, episode 6: Mr. Willis of Ohio",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/47287/the-west-wing-1x06-mr-willis-of-ohio"
+        }
+      },
+      {
+        "prompt": "The story in The West Wing's “The State Dinner” turns to this moment: The president of Indonesia is honored at a state dinner; the staff deals with Hurricane Sarah, a potential teamster strike, and a raid involving children… What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · The State Dinner",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/143/359453.jpg",
+          "alt": "The West Wing season 1, episode 7: The State Dinner",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/47288/the-west-wing-1x07-the-state-dinner"
+        }
+      },
+      {
+        "prompt": "You are dropped into The West Wing's “Enemies” when this happens: Bartlet and Hoynes argue in front of the Cabinet; C.J. fends off Danny's advances when she suspects he's after a big story; Mallory asks Sam out; the… What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Enemies",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/143/359470.jpg",
+          "alt": "The West Wing season 1, episode 8: Enemies",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/47289/the-west-wing-1x08-enemies"
+        }
+      },
+      {
+        "prompt": "The pressure rises in The West Wing's “The Short List”: Bartlet struggles to name a nominee to the Supreme Court when the perfect nominee turns out to be not so perfect; A congressman attacks the staff… Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · The Short List",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/143/359500.jpg",
+          "alt": "The West Wing season 1, episode 9: The Short List",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/47290/the-west-wing-1x09-the-short-list"
+        }
+      },
+      {
+        "prompt": "During The West Wing's “In Excelsis Deo,” this problem appears: Toby tries to arrange a proper funeral for a homeless veteran; Josh and Sam try to set up a preemptive strike against Lillienfield, who is attacking Leo… How would you step in?",
+        "kicker": "Season 1 · Episode 10 · In Excelsis Deo",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/143/359754.jpg",
+          "alt": "The West Wing season 1, episode 10: In Excelsis Deo",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/47291/the-west-wing-1x10-in-excelsis-deo"
+        }
+      }
+    ]
+  },
+  "bluey": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/41821/bluey",
+    "tvmazeId": 41821,
+    "officialTitle": "Bluey",
+    "premiered": "2018-10-01",
+    "genres": [
+      "Comedy",
+      "Children"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/512/1281879.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/276/692135.jpg",
+    "questions": [
+      {
+        "prompt": "In “Magic Xylophone,” an episode of Bluey, the situation is this: As Bluey and Bingo squabble over their magic xylophone (that has the power to freeze Dad in space and time) Dad seizes control and freezes Bluey, leaving… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Magic Xylophone",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/276/692135.jpg",
+          "alt": "Bluey season 1, episode 1: Magic Xylophone",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1641147/bluey-1x01-magic-xylophone"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Hospital” from Bluey: Doctor Bluey is needed when Dad gets a very curious x-ray from Nurse Bingo. It seems he has a cat in his tummy, leaving Bluey no choice but to operate… How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Hospital",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/276/692134.jpg",
+          "alt": "Bluey season 1, episode 2: Hospital",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1641148/bluey-1x02-hospital"
+        }
+      },
+      {
+        "prompt": "This is happening in Bluey's “Keepy Uppy”: Bluey, Bingo and Mum are enjoying playing Keepy-Uppy around the house with their last balloon, when Dad joins in and the game becomes the ultimate test… Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Keepy Uppy",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/276/692133.jpg",
+          "alt": "Bluey season 1, episode 3: Keepy Uppy",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1641149/bluey-1x03-keepy-uppy"
+        }
+      },
+      {
+        "prompt": "You enter “Daddy Robot” from Bluey just as this unfolds: Bluey and Bingo don't want to tidy the playroom, so they get Daddy Robot to do it for them. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Daddy Robot",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/276/692132.jpg",
+          "alt": "Bluey season 1, episode 4: Daddy Robot",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1641150/bluey-1x04-daddy-robot"
+        }
+      },
+      {
+        "prompt": "In Bluey's “Shadowlands,” the group faces this: On a picnic in the park, Bluey and her friends play Shadowlands. But when Coco keeps taking shortcuts, Bluey has to show her that following the rules can… What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Shadowlands",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/276/692182.jpg",
+          "alt": "Bluey season 1, episode 5: Shadowlands",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1641151/bluey-1x05-shadowlands"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Bluey's “The Weekend”: At the weekend, Bluey and Bingo are playing in the garden with Dad. But Bingo gets upset when she discovers a walking leaf insect and Dad is too caught… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · The Weekend",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/276/692480.jpg",
+          "alt": "Bluey season 1, episode 6: The Weekend",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1641152/bluey-1x06-the-weekend"
+        }
+      },
+      {
+        "prompt": "The story in Bluey's “BBQ” turns to this moment: It's lunchtime on Bluey's back deck! But every BBQ needs a side salad, so Bingo's relaxing sit-down will have to wait until she finds every colour of… What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · BBQ",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/277/692792.jpg",
+          "alt": "Bluey season 1, episode 7: BBQ",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1641153/bluey-1x07-bbq"
+        }
+      },
+      {
+        "prompt": "You are dropped into Bluey's “Fruitbat” when this happens: Not wanting to go to bed, Bluey tries to dream about being a nocturnal fruit bat so she can stay up all night long and soon finds herself flying through… What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Fruitbat",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/277/693268.jpg",
+          "alt": "Bluey season 1, episode 8: Fruitbat",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1641154/bluey-1x08-fruitbat"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Bluey's “Horsey Ride”: When Bluey forgets to put her favourite toy away, cousin Socks grabs it and won't let go! The kids stage a horsey wedding to distract her, with Dad and… Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · Horsey Ride",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/277/693879.jpg",
+          "alt": "Bluey season 1, episode 9: Horsey Ride",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1641155/bluey-1x09-horsey-ride"
+        }
+      },
+      {
+        "prompt": "During Bluey's “Hotel,” this problem appears: Bluey and Bingo run a crazy \"Hotel\" with Dad as their put upon guest. But when Bingo quits over Bluey being too controlling, Dad needs to teach them the… How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Hotel",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/277/694141.jpg",
+          "alt": "Bluey season 1, episode 10: Hotel",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/1641156/bluey-1x10-hotel"
+        }
+      }
+    ]
+  },
+  "the-muppet-show": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/3288/the-muppet-show",
+    "tvmazeId": 3288,
+    "officialTitle": "The Muppet Show",
+    "premiered": "1976-09-20",
+    "genres": [
+      "Comedy",
+      "Children"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/17/43911.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/420/1050963.jpg",
+    "questions": [
+      {
+        "prompt": "This The Muppet Show image spotlights Statler. Fozzie tests a joke while Statler and Waldorf watch. If you were there, how would you help?",
+        "kicker": "Character spotlight · Statler",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/420/1050963.jpg",
+          "alt": "The Muppet Show episode: Statler",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/1023246/the-muppet-show-statler"
+        }
+      },
+      {
+        "prompt": "This The Muppet Show image spotlights Miss Piggy / Fozzie Bear / Animal / Sam the Eagle. Miss Piggy changes the program to create a bigger entrance. If you were there, how would you help?",
+        "kicker": "Character spotlight · Miss Piggy / Fozzie Bear / Animal / Sam the Eagle",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/17/43913.jpg",
+          "alt": "The Muppet Show episode: Miss Piggy / Fozzie Bear / Animal / Sam the Eagle",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/167568/the-muppet-show-miss-piggy-fozzie-bear-animal-sam-the-eagle"
+        }
+      },
+      {
+        "prompt": "This The Muppet Show image spotlights Link Hogthrob. Kermit learns that tonight's guest star has a strange request. If you were there, how would you help?",
+        "kicker": "Character spotlight · Link Hogthrob",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/421/1052549.jpg",
+          "alt": "The Muppet Show episode: Link Hogthrob",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/1025139/the-muppet-show-link-hogthrob"
+        }
+      },
+      {
+        "prompt": "This The Muppet Show image spotlights Gonzo / Dr. Bunsen Honeydew / Zoot. Gonzo prepares a stunt involving an unlikely object. If you were there, how would you help?",
+        "kicker": "Character spotlight · Gonzo / Dr. Bunsen Honeydew / Zoot",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/17/43914.jpg",
+          "alt": "The Muppet Show episode: Gonzo / Dr. Bunsen Honeydew / Zoot",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/167569/the-muppet-show-gonzo-dr-bunsen-honeydew-zoot"
+        }
+      },
+      {
+        "prompt": "This The Muppet Show image spotlights Rowlf the Dog. Scooter gives the five-minute warning during backstage chaos. If you were there, how would you help?",
+        "kicker": "Character spotlight · Rowlf the Dog",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/420/1050961.jpg",
+          "alt": "The Muppet Show episode: Rowlf the Dog",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/1023244/the-muppet-show-rowlf-the-dog"
+        }
+      },
+      {
+        "prompt": "This The Muppet Show image spotlights Floyd Pepper. The Swedish Chef loses control of a cooking segment. If you were there, how would you help?",
+        "kicker": "Character spotlight · Floyd Pepper",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/424/1062018.jpg",
+          "alt": "The Muppet Show episode: Floyd Pepper",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/167570/the-muppet-show-floyd-pepper"
+        }
+      },
+      {
+        "prompt": "This The Muppet Show image spotlights Kermit the Frog. Kermit tries to fit every act into one show. If you were there, how would you help?",
+        "kicker": "Character spotlight · Kermit the Frog",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/420/1051847.jpg",
+          "alt": "The Muppet Show episode: Kermit the Frog",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/1024210/the-muppet-show-kermit-the-frog"
+        }
+      },
+      {
+        "prompt": "This The Muppet Show image spotlights Miss Piggy. A theater prop wanders away before curtain time. If you were there, how would you help?",
+        "kicker": "Character spotlight · Miss Piggy",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/420/1051846.jpg",
+          "alt": "The Muppet Show episode: Miss Piggy",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/1024209/the-muppet-show-miss-piggy"
+        }
+      },
+      {
+        "prompt": "This The Muppet Show image spotlights The Swedish Chef. The orchestra needs a new ending for the opening number. If you were there, how would you help?",
+        "kicker": "Character spotlight · The Swedish Chef",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/421/1052545.jpg",
+          "alt": "The Muppet Show episode: The Swedish Chef",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/1025135/the-muppet-show-the-swedish-chef"
+        }
+      },
+      {
+        "prompt": "This The Muppet Show image spotlights Dr. Teeth. The finale succeeds for a reason nobody planned. If you were there, how would you help?",
+        "kicker": "Character spotlight · Dr. Teeth",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/421/1052548.jpg",
+          "alt": "The Muppet Show episode: Dr. Teeth",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/characters/1025138/the-muppet-show-dr-teeth"
+        }
+      }
+    ]
+  },
+  "star-trek-the-next-generation": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/491/star-trek-the-next-generation",
+    "tvmazeId": 491,
+    "officialTitle": "Star Trek: The Next Generation",
+    "premiered": "1987-09-28",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/496/1242352.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/496/1242168.jpg",
+    "questions": [
+      {
+        "prompt": "In “Encounter at Farpoint,” an episode of Star Trek: The Next Generation, the situation is this: Captain Picard takes command of the Galaxy Class Federation starship, the ‘Enterprise. Picard not only takes over the ‘Enterprise' but has his first… What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Encounter at Farpoint",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/496/1242168.jpg",
+          "alt": "Star Trek: The Next Generation season 1, episode 1: Encounter at Farpoint",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/44456/star-trek-the-next-generation-1x01-encounter-at-farpoint"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Encounter at Farpoint” from Star Trek: The Next Generation: At the end of the trial, Q gives Captain Picard 24 hours to solve the mystery of Farpoint station and save the human race. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Encounter at Farpoint",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/496/1242169.jpg",
+          "alt": "Star Trek: The Next Generation season 1, episode 2: Encounter at Farpoint",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/44457/star-trek-the-next-generation-1x02-encounter-at-farpoint"
+        }
+      },
+      {
+        "prompt": "This is happening in Star Trek: The Next Generation's “The Naked Now”: The Enterprise away team is investigating mysterious deaths and Geordi becomes infected with a illness that is mind-altering and starts spreading… Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · The Naked Now",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/496/1242170.jpg",
+          "alt": "Star Trek: The Next Generation season 1, episode 3: The Naked Now",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/44458/star-trek-the-next-generation-1x03-the-naked-now"
+        }
+      },
+      {
+        "prompt": "You enter “Code of Honor” from Star Trek: The Next Generation just as this unfolds: While involved in a treaty discussion with the inhabitants of Ligon II, Tasha is abducted and Picard is forced to abide by the inhabitants Code of Honor… What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Code of Honor",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/496/1242171.jpg",
+          "alt": "Star Trek: The Next Generation season 1, episode 4: Code of Honor",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/44459/star-trek-the-next-generation-1x04-code-of-honor"
+        }
+      },
+      {
+        "prompt": "In Star Trek: The Next Generation's “The Last Outpost,” the group faces this: Ferengi and Enterprise teams beam down to an unknown world to discover who or what has sapped power from both vessels. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · The Last Outpost",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/496/1242172.jpg",
+          "alt": "Star Trek: The Next Generation season 1, episode 5: The Last Outpost",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/44460/star-trek-the-next-generation-1x05-the-last-outpost"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Star Trek: The Next Generation's “Where No One Has Gone Before”: Teenager Wesley Crusher and a dying alien are the crew's only hope for escape from a bizarre galaxy where thoughts become real. How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Where No One Has Gone Before",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/496/1242173.jpg",
+          "alt": "Star Trek: The Next Generation season 1, episode 6: Where No One Has Gone Before",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/44461/star-trek-the-next-generation-1x06-where-no-one-has-gone-before"
+        }
+      },
+      {
+        "prompt": "The story in Star Trek: The Next Generation's “Lonely Among Us” turns to this moment: Passing through a series of complex energy patterns, the Enterprise crew find themselves trying to solve the mystery surrounding the death of Assistant… What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · Lonely Among Us",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/496/1242174.jpg",
+          "alt": "Star Trek: The Next Generation season 1, episode 7: Lonely Among Us",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/44462/star-trek-the-next-generation-1x07-lonely-among-us"
+        }
+      },
+      {
+        "prompt": "You are dropped into Star Trek: The Next Generation's “Justice” when this happens: To learn the origin of a mysterious ship, Picard must get help from a planet where Wesley faces a death sentence. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · Justice",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/496/1242175.jpg",
+          "alt": "Star Trek: The Next Generation season 1, episode 8: Justice",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/44463/star-trek-the-next-generation-1x08-justice"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Star Trek: The Next Generation's “The Battle”: A vengeful Ferengi captain returns Picard's long-lost ship, the Stargazer, after installing a mind-altering device. Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · The Battle",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/496/1242176.jpg",
+          "alt": "Star Trek: The Next Generation season 1, episode 9: The Battle",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/44464/star-trek-the-next-generation-1x09-the-battle"
+        }
+      },
+      {
+        "prompt": "During Star Trek: The Next Generation's “Hide and Q,” this problem appears: Q gives the powers of the Q to Riker and tells him his shipmates wishes will be granted if he joins with those of the Q Continuum. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · Hide and Q",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/496/1242177.jpg",
+          "alt": "Star Trek: The Next Generation season 1, episode 10: Hide and Q",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/44465/star-trek-the-next-generation-1x10-hide-and-q"
+        }
+      }
+    ]
+  },
+  "star-trek-strange-new-worlds": {
+    "type": "show",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/48090/star-trek-strange-new-worlds",
+    "tvmazeId": 48090,
+    "officialTitle": "Star Trek: Strange New Worlds",
+    "premiered": "2022-05-05",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/635/1589217.jpg",
+    "hero": "https://static.tvmaze.com/uploads/images/original_untouched/468/1171498.jpg",
+    "questions": [
+      {
+        "prompt": "In “Strange New Worlds,” an episode of Star Trek: Strange New Worlds, the situation is this: When one of Pike's officers goes missing while on a secret mission for Starfleet, Pike has to come out of self-imposed exile. What would you do first?",
+        "kicker": "Season 1 · Episode 1 · Strange New Worlds",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/468/1171498.jpg",
+          "alt": "Star Trek: Strange New Worlds season 1, episode 1: Strange New Worlds",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2260271/star-trek-strange-new-worlds-1x01-strange-new-worlds"
+        }
+      },
+      {
+        "prompt": "Picture yourself in “Children of the Comet” from Star Trek: Strange New Worlds: While on a survey mission, the U.S.S. Enterprise discovers a comet is going to strike an inhabited planet. How would you respond?",
+        "kicker": "Season 1 · Episode 2 · Children of the Comet",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/408/1020731.jpg",
+          "alt": "Star Trek: Strange New Worlds season 1, episode 2: Children of the Comet",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2307360/star-trek-strange-new-worlds-1x02-children-of-the-comet"
+        }
+      },
+      {
+        "prompt": "This is happening in Star Trek: Strange New Worlds' “Ghost of Illyria”: The U.S.S. Enterprise encounters a contagion that ravages the ship. One by one, the entire crew is incapacitated except for Number One, Una Chin-Riley… Which instinct would you follow?",
+        "kicker": "Season 1 · Episode 3 · Ghost of Illyria",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/409/1023529.jpg",
+          "alt": "Star Trek: Strange New Worlds season 1, episode 3: Ghost of Illyria",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2307361/star-trek-strange-new-worlds-1x03-ghost-of-illyria"
+        }
+      },
+      {
+        "prompt": "You enter “Memento Mori” from Star Trek: Strange New Worlds just as this unfolds: While on a routine supply mission to a colony planet, the U.S.S. Enterprise comes under an attack from an unknown malevolent force. What role would you take?",
+        "kicker": "Season 1 · Episode 4 · Memento Mori",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/410/1026572.jpg",
+          "alt": "Star Trek: Strange New Worlds season 1, episode 4: Memento Mori",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2307362/star-trek-strange-new-worlds-1x04-memento-mori"
+        }
+      },
+      {
+        "prompt": "In Star Trek: Strange New Worlds' “Spock Amok,” the group faces this: It's a comedy of manners when Spock has a personal visit in the middle of Spock and Captain Pike's crucial negotiations with an unusual alien species. What sounds most like your move?",
+        "kicker": "Season 1 · Episode 5 · Spock Amok",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/410/1027311.jpg",
+          "alt": "Star Trek: Strange New Worlds season 1, episode 5: Spock Amok",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2307363/star-trek-strange-new-worlds-1x05-spock-amok"
+        }
+      },
+      {
+        "prompt": "Imagine helping the characters during Star Trek: Strange New Worlds' “Lift Us Where Suffering Cannot Reach”: A threat to an idyllic planet reunites Captain Pike with the lost love of his life. To protect her and a scientific holy child from a conspiracy, Pike… How would you handle it?",
+        "kicker": "Season 1 · Episode 6 · Lift Us Where Suffering Cannot Reach",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/412/1031255.jpg",
+          "alt": "Star Trek: Strange New Worlds season 1, episode 6: Lift Us Where Suffering Cannot Reach",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2307364/star-trek-strange-new-worlds-1x06-lift-us-where-suffering-cannot-reach"
+        }
+      },
+      {
+        "prompt": "The story in Star Trek: Strange New Worlds' “The Serene Squall” turns to this moment: While on a dangerous humanitarian mission, the crew of the U.S.S. Enterprise stumbles into a harrowing game of leverage with the quadrant's deadliest… What would you bring to the situation?",
+        "kicker": "Season 1 · Episode 7 · The Serene Squall",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/413/1032789.jpg",
+          "alt": "Star Trek: Strange New Worlds season 1, episode 7: The Serene Squall",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2307365/star-trek-strange-new-worlds-1x07-the-serene-squall"
+        }
+      },
+      {
+        "prompt": "You are dropped into Star Trek: Strange New Worlds' “The Elysian Kingdom” when this happens: The U.S.S. Enterprise becomes stuck in a nebula that is home to an alien consciousness that traps the crew in a fairy tale. What do you do next?",
+        "kicker": "Season 1 · Episode 8 · The Elysian Kingdom",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/413/1034226.jpg",
+          "alt": "Star Trek: Strange New Worlds season 1, episode 8: The Elysian Kingdom",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2307366/star-trek-strange-new-worlds-1x08-the-elysian-kingdom"
+        }
+      },
+      {
+        "prompt": "The pressure rises in Star Trek: Strange New Worlds' “All Those Who Wander”: The U.S.S. Enterprise crew comes face-to-face with their demons – and scary monsters too – when their landing party is stranded on a barren planet with a… Which response fits you best?",
+        "kicker": "Season 1 · Episode 9 · All Those Who Wander",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/414/1036014.jpg",
+          "alt": "Star Trek: Strange New Worlds season 1, episode 9: All Those Who Wander",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2307367/star-trek-strange-new-worlds-1x09-all-those-who-wander"
+        }
+      },
+      {
+        "prompt": "During Star Trek: Strange New Worlds' “A Quality of Mercy,” this problem appears: Just as Captain Pike thinks he's figured out how to escape his fate, he's visited by his future self, who shows him the consequences of his actions. How would you step in?",
+        "kicker": "Season 1 · Episode 10 · A Quality of Mercy",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          }
+        ],
+        "image": {
+          "url": "https://static.tvmaze.com/uploads/images/original_untouched/415/1037658.jpg",
+          "alt": "Star Trek: Strange New Worlds season 1, episode 10: A Quality of Mercy",
+          "sourceName": "TVmaze",
+          "sourceUrl": "https://www.tvmaze.com/episodes/2307368/star-trek-strange-new-worlds-1x10-a-quality-of-mercy"
+        }
+      }
+    ]
   }
 };
 
 (() => {
-  const expectedIds = ["friends","modern-family","arrested-development","the-good-place","how-i-met-your-mother","the-simpsons","the-office","parks-and-recreation","brooklyn-nine-nine","new-girl","community","schitts-creek","ted-lasso","abbott-elementary","superstore","30-rock","seinfeld","the-big-bang-theory","young-sheldon","gilmore-girls","gossip-girl","sex-and-the-city","the-golden-girls","freaks-and-geeks","the-fresh-prince-of-bel-air","boy-meets-world","that-70s-show","malcolm-in-the-middle","everybody-loves-raymond","frasier","cheers","scrubs","psych","monk","only-murders-in-the-building","stranger-things","wednesday","avatar-the-last-airbender","gravity-falls","bobs-burgers","futurama","rick-and-morty","bojack-horseman","spongebob-squarepants","adventure-time","phineas-and-ferb","the-bear","succession","the-white-lotus","bridgerton","greys-anatomy","lost","the-walking-dead","game-of-thrones","breaking-bad","better-call-saul"];
+  const expectedIds = ["friends","modern-family","arrested-development","the-good-place","how-i-met-your-mother","the-simpsons","the-office","parks-and-recreation","brooklyn-nine-nine","new-girl","community","schitts-creek","ted-lasso","abbott-elementary","superstore","30-rock","seinfeld","the-big-bang-theory","young-sheldon","gilmore-girls","gossip-girl","sex-and-the-city","the-golden-girls","freaks-and-geeks","the-fresh-prince-of-bel-air","boy-meets-world","that-70s-show","malcolm-in-the-middle","everybody-loves-raymond","frasier","cheers","scrubs","psych","monk","only-murders-in-the-building","stranger-things","wednesday","avatar-the-last-airbender","gravity-falls","bobs-burgers","futurama","rick-and-morty","bojack-horseman","spongebob-squarepants","adventure-time","phineas-and-ferb","the-bear","succession","the-white-lotus","bridgerton","greys-anatomy","lost","the-walking-dead","game-of-thrones","breaking-bad","better-call-saul","the-marvelous-mrs-maisel","black-ish","full-house","family-matters","saved-by-the-bell","the-nanny","home-improvement","the-wonder-years","derry-girls","never-have-i-ever","heartstopper","cobra-kai","the-umbrella-academy","the-mandalorian","loki","wandavision","doctor-who","sherlock","downton-abbey","the-crown","house","bones","criminal-minds","law-and-order-svu","ncis","the-x-files","buffy-the-vampire-slayer","charmed","smallville","once-upon-a-time","anne-with-an-e","a-series-of-unfortunate-events","icarly","victorious","hannah-montana","wizards-of-waverly-place","the-suite-life-of-zack-and-cody","lizzie-mcguire","kim-possible","the-owl-house","steven-universe","regular-show","the-amazing-world-of-gumball","teen-titans","pokemon","the-west-wing","bluey","the-muppet-show","star-trek-the-next-generation","star-trek-strange-new-worlds"];
   for (const id of expectedIds) {
     const title = MEDIA[id];
     if (!title || !Array.isArray(title.questions) || title.questions.length !== 10) {
