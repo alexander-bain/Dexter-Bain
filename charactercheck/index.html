@@ -26,18 +26,19 @@
     />
     <meta name="twitter:image" content="https://dexterbain.com/charactercheck/og.png" />
     <link rel="preconnect" href="https://static.tvmaze.com" crossorigin />
+    <link rel="preconnect" href="https://m.media-amazon.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=League+Spartan:wght@600;700;800&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=compact-20261015-2" />
     <title>Character Check — Which Character Are You?</title>
-    <script defer src="data/questions.js"></script>
-    <script defer src="data/outcomes.js"></script>
-    <script defer src="data/media.js"></script>
-    <script defer src="app.js"></script>
+    <script defer src="data/questions.js?v=compact-20261015-2"></script>
+    <script defer src="data/outcomes.js?v=compact-20261015-2"></script>
+    <script defer src="data/media.js?v=compact-20261015-2"></script>
+    <script defer src="app.js?v=compact-20261015-2"></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to the game</a>
@@ -77,7 +78,7 @@
             <ul class="hero-facts" aria-label="Game facts">
               <li><strong id="title-total">—</strong><span id="title-kinds">titles</span></li>
               <li><strong>10</strong><span>questions each</span></li>
-              <li><strong>1</strong><span>show image each</span></li>
+              <li><strong>1</strong><span>title image each</span></li>
             </ul>
           </div>
           <div class="hero-collage" id="hero-collage" role="group" aria-label="Featured shows and movies"></div>
@@ -138,7 +139,7 @@
         <div class="quiz-topbar">
           <button class="round-button" id="quiz-exit-button" type="button" aria-label="Exit quiz and choose another title">←</button>
           <div class="quiz-progress-copy">
-            <strong id="quiz-show-name">Show name</strong>
+            <strong id="quiz-show-name">Title name</strong>
             <span id="question-count">Question 1 of 10</span>
           </div>
           <button class="text-button" id="quiz-restart-button" type="button">Restart</button>
@@ -180,7 +181,7 @@
         <div class="result-card">
           <div class="result-art">
             <img id="result-photo" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" />
-            <div class="result-show-tag" id="result-show-name">Show name</div>
+            <div class="result-show-tag" id="result-show-name">Title name</div>
           </div>
           <div class="result-copy">
             <p class="result-kicker">Your character match is</p>
@@ -221,9 +222,10 @@
         <p>A fan-made personality game. Not affiliated with or endorsed by any featured title.</p>
       </div>
       <p>
-        Each image is credited to its source beside the question. Show data includes
+        Each image is credited beside its question. Show information and imagery use
         <a href="https://www.tvmaze.com/api" target="_blank" rel="noreferrer">TVmaze</a>
-        under CC BY-SA.
+        under CC BY-SA; movie imagery links to
+        <a href="https://www.imdb.com/" target="_blank" rel="noreferrer">IMDb</a>.
       </p>
     </footer>
 

@@ -433,10 +433,12 @@
     refs.typeFilterGroup.hidden = !hasMovies;
 
     const description = hasMovies
-      ? `${total} shows and movies. Ten unique questions each. Find your character twin.`
+      ? `${total} titles: ${shows} shows and ${movies} movies. Ten quick questions each.`
       : `${total} shows. Ten unique questions each. Find your TV character twin.`;
     document
-      .querySelectorAll('meta[property="og:description"], meta[name="twitter:description"]')
+      .querySelectorAll(
+        'meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]',
+      )
       .forEach((meta) => meta.setAttribute("content", description));
   }
 
