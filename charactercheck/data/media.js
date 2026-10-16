@@ -31420,11 +31420,16112 @@ const MEDIA = {
         }
       }
     ]
+  },
+  "toy-story": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0114709/",
+    "imdbId": "tt0114709",
+    "officialTitle": "Toy Story",
+    "premiered": "1995-11-22",
+    "year": 1995,
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy",
+      "Family",
+      "Fantasy"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BZTA3OWVjOWItNjE1NS00NzZiLWE1MjgtZDZhMWI1ZTlkNzYwXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BNDllZjA2ODgtMzMxMi00MzM4LTg1MTQtN2RhZWYzMDNlMmZkXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2586980097",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0114709/mediaviewer/rm2586980097/",
+    "questions": [
+      {
+        "prompt": "A shiny new toy suddenly gets everyone's attention. How do you react?",
+        "kicker": "Movie moment 1 · Toy Story",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjg0OWJhMWMtOWJiMC00YjVmLTkxYjAtNzQ3ZTkyM2Y5MWRjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Tom Hanks and Tim Allen in Toy Story (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0114709/mediaviewer/rm1525890305/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1525890305"
+        }
+      },
+      {
+        "prompt": "Andy is coming upstairs and every toy must freeze. What is your move?",
+        "kicker": "Movie moment 2 · Toy Story",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYzFlNDIzOTUtNWU5YS00NzZmLTgwYjYtOTI4ZWJhODMwNWJjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Tom Hanks, Tim Allen, and John Morris in Toy Story (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0114709/mediaviewer/rm1318428161/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1318428161"
+        }
+      },
+      {
+        "prompt": "Buzz insists he is a real space ranger. What do you tell him?",
+        "kicker": "Movie moment 3 · Toy Story",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNmM2NzhkNjItZGU1MC00MTkyLThkNTEtYzI5MzlhMjIzYWE5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Tom Hanks and Tim Allen in Toy Story (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0114709/mediaviewer/rm1307786497/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1307786497"
+        }
+      },
+      {
+        "prompt": "A toy is knocked behind the desk during an argument. What do you do?",
+        "kicker": "Movie moment 4 · Toy Story",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDVmYWYyZWYtODdhYi00ZjMzLWExNWYtMzQxYjE3OWE4MjU0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Tom Hanks and Tim Allen in Toy Story (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0114709/mediaviewer/rm2619486209/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2619486209"
+        }
+      },
+      {
+        "prompt": "The toys hold a meeting about a risky rescue. What role do you take?",
+        "kicker": "Movie moment 5 · Toy Story",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMmM0ODYyNTEtOTA5ZS00MGQyLTg4YmYtNmQyMDc5ZDM1ZDk4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Tom Hanks, Tim Allen, John Ratzenberger, Wallace Shawn, Jim Varney, and Don Rickles in Toy Story (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0114709/mediaviewer/rm388150274/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm388150274"
+        }
+      },
+      {
+        "prompt": "You land in Sid's strange bedroom full of rebuilt toys. What is your first thought?",
+        "kicker": "Movie moment 6 · Toy Story",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDllZjA2ODgtMzMxMi00MzM4LTg1MTQtN2RhZWYzMDNlMmZkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Tom Hanks, R. Lee Ermey, Tim Allen, Annie Potts, John Ratzenberger, Wallace Shawn, Jim Varney, and Don Rickles in Toy Story (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0114709/mediaviewer/rm2586980097/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2586980097"
+        }
+      },
+      {
+        "prompt": "The moving truck is leaving and a friend is missing. What matters most?",
+        "kicker": "Movie moment 7 · Toy Story",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTQ2MDU0OTI0M15BMl5BanBnXkFtZTcwOTgyNDAxMw@@._V1_.jpg",
+          "alt": "Tom Hanks and Tim Allen in Toy Story (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0114709/mediaviewer/rm1477545472/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1477545472"
+        }
+      },
+      {
+        "prompt": "Rex is nervous that he is not scary enough. How do you help?",
+        "kicker": "Movie moment 8 · Toy Story",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDcyN2QyMzktMmFlZi00M2Y2LWJjY2QtMGMwNjBlNGQxNjFkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Tom Hanks, Tim Allen, John Ratzenberger, Wallace Shawn, Jim Varney, and Don Rickles in Toy Story (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0114709/mediaviewer/rm153269250/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm153269250"
+        }
+      },
+      {
+        "prompt": "A claw machine is full of aliens asking for guidance. How do you respond?",
+        "kicker": "Movie moment 9 · Toy Story",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjA4MDk4MDE0M15BMl5BanBnXkFtZTcwMTEzMzc4Mg@@._V1_.jpg",
+          "alt": "Tim Allen, Debi Derryberry, and Jeff Pidgeon in Toy Story (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0114709/mediaviewer/rm3928787200/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3928787200"
+        }
+      },
+      {
+        "prompt": "Your place in the group suddenly feels uncertain. What guides your next choice?",
+        "kicker": "Movie moment 10 · Toy Story",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODQzMWRhYjYtYTI2My00YzQzLWJjY2YtOTAwNjczYTVhMDkzXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Tom Hanks, R. Lee Ermey, Tim Allen, Annie Potts, John Ratzenberger, Wallace Shawn, Jim Varney, and Don Rickles in Toy Story (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0114709/mediaviewer/rm912604673/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm912604673"
+        }
+      }
+    ]
+  },
+  "the-lion-king": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0110357/",
+    "imdbId": "tt0110357",
+    "officialTitle": "The Lion King",
+    "premiered": "1994-06-24",
+    "year": 1994,
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Drama",
+      "Family",
+      "Musical"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BZGRiZDZhZjItM2M3ZC00Y2IyLTk3Y2MtMWY5YjliNDFkZTJlXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BZDNiMTZkNTUtNmQwYi00MDc2LWJmNmEtYjI5MTI2YmVhM2EzXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm3823943938",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0110357/mediaviewer/rm3823943938/",
+    "questions": [
+      {
+        "prompt": "You stand on Pride Rock while the whole kingdom watches. How do you handle the attention?",
+        "kicker": "Movie moment 1 · The Lion King",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNWNjZWExNzctYzg2Ni00NWI1LThlYjktODdhMjZkMTdkOTQ0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Matthew Broderick and Robert Guillaume in The Lion King (1994)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0110357/mediaviewer/rm1432276482/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1432276482"
+        }
+      },
+      {
+        "prompt": "Mufasa explains the circle of life. Which part stays with you?",
+        "kicker": "Movie moment 2 · The Lion King",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjE5NTIxMzM5N15BMl5BanBnXkFtZTcwMjY2NTI3Ng@@._V1_.jpg",
+          "alt": "James Earl Jones, Jonathan Taylor Thomas, Jason Weaver, and Evan Saucedo in The Lion King (1994)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0110357/mediaviewer/rm3568155904/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3568155904"
+        }
+      },
+      {
+        "prompt": "A friend dares you to explore the elephant graveyard. What do you do?",
+        "kicker": "Movie moment 3 · The Lion King",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTU2YzJlNzUtZTRmZS00YzcxLThlNDUtOWQ4MjI5YjAwNmE2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Matthew Broderick and Moira Kelly in The Lion King (1994)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0110357/mediaviewer/rm2964522497/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2964522497"
+        }
+      },
+      {
+        "prompt": "Hyenas block your way through a shadowy canyon. What is your instinct?",
+        "kicker": "Movie moment 4 · The Lion King",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTk3MDM5OTA3Nl5BMl5BanBnXkFtZTcwMzc2NTI3Ng@@._V1_.jpg",
+          "alt": "Rowan Atkinson, Whoopi Goldberg, Jonathan Taylor Thomas, Niketa Calame-Harris, Jason Weaver, and Laura Williams in The Lion King (1994)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0110357/mediaviewer/rm3668819200/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3668819200"
+        }
+      },
+      {
+        "prompt": "Timon and Pumbaa invite you to live by Hakuna Matata. What appeals to you?",
+        "kicker": "Movie moment 5 · The Lion King",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTQxOTkwMjUyM15BMl5BanBnXkFtZTcwNjU2NTI3Ng@@._V1_.jpg",
+          "alt": "Nathan Lane, Jonathan Taylor Thomas, Ernie Sabella, and Jason Weaver in The Lion King (1994)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0110357/mediaviewer/rm3400383744/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3400383744"
+        }
+      },
+      {
+        "prompt": "Zazu gives you a long list of royal rules. How do you respond?",
+        "kicker": "Movie moment 6 · The Lion King",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMGQyYmFjZjQtOWZmMy00NDQ4LTg3YTktYWIxZTI3NjhiY2E3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Rowan Atkinson, Whoopi Goldberg, Jeremy Irons, James Earl Jones, Nathan Lane, Cheech Marin, Jonathan Taylor Thomas, Niketa Calame-Harris, Jim Cummings, Robert Guillaume, Zoe Leader, Ernie Sabella, and Madge Sinclair in The Lion King (1994)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0110357/mediaviewer/rm1874527233/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1874527233"
+        }
+      },
+      {
+        "prompt": "Nala challenges you to face a responsibility you avoided. What happens next?",
+        "kicker": "Movie moment 7 · The Lion King",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDQzMGYwMGUtMTAxNy00YjVlLWIzZDUtOGZhNzYzZTBjMjZlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Rowan Atkinson, Matthew Broderick, Nathan Lane, Moira Kelly, and Ernie Sabella in The Lion King (1994)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0110357/mediaviewer/rm1272332289/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1272332289"
+        }
+      },
+      {
+        "prompt": "Rafiki gives advice that makes almost no sense at first. What do you do?",
+        "kicker": "Movie moment 8 · The Lion King",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODljMTE0YWEtOGQzMy00YTgwLWEzODctY2IyNzI5NjUwYmU2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Matthew Broderick and Robert Guillaume in The Lion King (1994)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0110357/mediaviewer/rm2408734209/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2408734209"
+        }
+      },
+      {
+        "prompt": "You hear a trusted voice say, 'Remember who you are.' What does that mean to you?",
+        "kicker": "Movie moment 9 · The Lion King",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTgwNDYyODg5MF5BMl5BanBnXkFtZTcwMjU2NTI3Ng@@._V1_.jpg",
+          "alt": "James Earl Jones, Jonathan Taylor Thomas, and Jason Weaver in The Lion King (1994)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0110357/mediaviewer/rm3467492608/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3467492608"
+        }
+      },
+      {
+        "prompt": "The Pride Lands need hope during a difficult season. How would you help?",
+        "kicker": "Movie moment 10 · The Lion King",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZWQ1YzE2ZTItOGNiZC00ZDEwLWEyYjctNGRhNGQ4NGJkYzcxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Matthew Broderick and Moira Kelly in The Lion King (1994)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0110357/mediaviewer/rm2223901697/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2223901697"
+        }
+      }
+    ]
+  },
+  "finding-nemo": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0266543/",
+    "imdbId": "tt0266543",
+    "officialTitle": "Finding Nemo",
+    "premiered": "2003-05-30",
+    "year": 2003,
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy",
+      "Family"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTc5NjExNTA5OV5BMl5BanBnXkFtZTYwMTQ0ODY2._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BNjA5NTk3NTI0MF5BMl5BanBnXkFtZTcwMzUzOTAyNw@@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm313765888",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0266543/mediaviewer/rm313765888/",
+    "questions": [
+      {
+        "prompt": "It is Nemo's first day of school on the reef. How do you prepare?",
+        "kicker": "Movie moment 1 · Finding Nemo",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjBlYWU4NmMtMzg5NC00ZDk4LTkwMTctN2ExZjQ5YWQ2ODJiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Albert Brooks and Alexander Gould in Finding Nemo (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0266543/mediaviewer/rm3099691521/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3099691521"
+        }
+      },
+      {
+        "prompt": "A boat disappears beyond the drop-off. What is your first move?",
+        "kicker": "Movie moment 2 · Finding Nemo",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMWY1NzBmMjMtODFkZS00ZWUyLTgwYmUtNzlhZDEyZDU3N2FjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Albert Brooks and Alexander Gould in Finding Nemo (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0266543/mediaviewer/rm3133245953/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3133245953"
+        }
+      },
+      {
+        "prompt": "Dory forgets the plan halfway through explaining it. How do you react?",
+        "kicker": "Movie moment 3 · Finding Nemo",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOWY4MzllNjItODUyZS00NGFiLWJhZTUtZjJhZGMwOTUwYTVmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Albert Brooks and Ellen DeGeneres in Finding Nemo (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0266543/mediaviewer/rm1482339841/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1482339841"
+        }
+      },
+      {
+        "prompt": "A friendly-looking shark invites you to a meeting. What do you decide?",
+        "kicker": "Movie moment 4 · Finding Nemo",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjkxZDNhMjUtZjU3Mi00N2UxLWIxZDItNWQ5Nzg0NzZmYzgwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Albert Brooks, Ellen DeGeneres, and Barry Humphries in Finding Nemo (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0266543/mediaviewer/rm442005248/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm442005248"
+        }
+      },
+      {
+        "prompt": "You must read a diver's mask while it sinks into darkness. What helps you focus?",
+        "kicker": "Movie moment 5 · Finding Nemo",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZThlYzU4NzUtOTE3My00NTlmLTkyYmEtNWViMTMyNmVmZmU4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Albert Brooks, Ellen DeGeneres, and Alexander Gould in Finding Nemo (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0266543/mediaviewer/rm2620394752/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2620394752"
+        }
+      },
+      {
+        "prompt": "The fish tank group proposes a complicated escape plan. What job fits you?",
+        "kicker": "Movie moment 6 · Finding Nemo",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTM1MDA0MTQxNV5BMl5BanBnXkFtZTcwNDUzOTAyNw@@._V1_.jpg",
+          "alt": "Willem Dafoe and Alexander Gould in Finding Nemo (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0266543/mediaviewer/rm296988672/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm296988672"
+        }
+      },
+      {
+        "prompt": "A field of jellyfish blocks the route. How would you cross it?",
+        "kicker": "Movie moment 7 · Finding Nemo",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjA5NTk3NTI0MF5BMl5BanBnXkFtZTcwMzUzOTAyNw@@._V1_.jpg",
+          "alt": "Albert Brooks, Ellen DeGeneres, and Nicholas Bird in Finding Nemo (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0266543/mediaviewer/rm313765888/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm313765888"
+        }
+      },
+      {
+        "prompt": "Crush's sea-turtle current is fast, crowded, and fun. How do you ride?",
+        "kicker": "Movie moment 8 · Finding Nemo",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTQ0NjUwNjY1OV5BMl5BanBnXkFtZTcwMzYwNTc3Mw@@._V1_.jpg",
+          "alt": "Albert Brooks and Ellen DeGeneres in Finding Nemo (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0266543/mediaviewer/rm385515776/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm385515776"
+        }
+      },
+      {
+        "prompt": "Nigel offers to carry you over Sydney. What would you ask him first?",
+        "kicker": "Movie moment 9 · Finding Nemo",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BY2E1NGRjYTAtNGYyNy00MTFiLWE3YWItOTcyYzMwNzk4NTY3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Albert Brooks, Ellen DeGeneres, and Geoffrey Rush in Finding Nemo (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0266543/mediaviewer/rm486541568/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm486541568"
+        }
+      },
+      {
+        "prompt": "Someone you love wants more independence than feels safe. How do you respond?",
+        "kicker": "Movie moment 10 · Finding Nemo",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTcwMTU0NDU5M15BMl5BanBnXkFtZTcwNzUzOTAyNw@@._V1_.jpg",
+          "alt": "Albert Brooks and Alexander Gould in Finding Nemo (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0266543/mediaviewer/rm531869696/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm531869696"
+        }
+      }
+    ]
+  },
+  "shrek": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0126029/",
+    "imdbId": "tt0126029",
+    "officialTitle": "Shrek",
+    "premiered": "2001-05-18",
+    "year": 2001,
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy",
+      "Family",
+      "Fantasy",
+      "Romance"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BN2FkMTRkNTUtYTI0NC00ZjI4LWI5MzUtMDFmOGY0NmU2OGY1XkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMjFiNTI4YzYtYzUzNC00MDIwLWFkZWEtNzQ5N2QwOGRkZDQ3XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2337771521",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0126029/mediaviewer/rm2337771521/",
+    "questions": [
+      {
+        "prompt": "Fairy-tale creatures suddenly fill your peaceful swamp. What do you do first?",
+        "kicker": "Movie moment 1 · Shrek",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTgxNTQ3MTk1Ml5BMl5BanBnXkFtZTcwMDczNDc3Mw@@._V1_.jpg",
+          "alt": "Mike Myers and Eddie Murphy in Shrek (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0126029/mediaviewer/rm1224245504/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1224245504"
+        }
+      },
+      {
+        "prompt": "Donkey decides you are best friends minutes after meeting. How do you respond?",
+        "kicker": "Movie moment 2 · Shrek",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjAwOTY3ODAzNl5BMl5BanBnXkFtZTcwNjYzNDc3Mw@@._V1_.jpg",
+          "alt": "Cameron Diaz, Mike Myers, Eddie Murphy, and John Lithgow in Shrek (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0126029/mediaviewer/rm1274577152/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1274577152"
+        }
+      },
+      {
+        "prompt": "Lord Farquaad offers a deal that could restore your home. What matters most?",
+        "kicker": "Movie moment 3 · Shrek",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTM0NDExMTk2MF5BMl5BanBnXkFtZTcwNjgwODI0Ng@@._V1_.jpg",
+          "alt": "Cameron Diaz, Mike Myers, John Lithgow, and Jim Cummings in Shrek (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0126029/mediaviewer/rm4251827200/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4251827200"
+        }
+      },
+      {
+        "prompt": "A fire-breathing dragon guards the tower. How do you approach the rescue?",
+        "kicker": "Movie moment 4 · Shrek",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjExNjI2Nzk5M15BMl5BanBnXkFtZTcwMzczNDc3Mw@@._V1_.jpg",
+          "alt": "Mike Myers and Eddie Murphy in Shrek (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0126029/mediaviewer/rm1459126528/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1459126528"
+        }
+      },
+      {
+        "prompt": "Fiona expected a perfect prince but got you. How do you introduce yourself?",
+        "kicker": "Movie moment 5 · Shrek",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODYyMjk3MTc4Nl5BMl5BanBnXkFtZTcwNzczNDc3Mw@@._V1_.jpg",
+          "alt": "Cameron Diaz and Mike Myers in Shrek (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0126029/mediaviewer/rm1425572096/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1425572096"
+        }
+      },
+      {
+        "prompt": "The journey turns into a loud argument about feelings. How do you handle it?",
+        "kicker": "Movie moment 6 · Shrek",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTUxODA5OTg1M15BMl5BanBnXkFtZTcwMjcwODI0Ng@@._V1_.jpg",
+          "alt": "Cameron Diaz, Mike Myers, Eddie Murphy, Gary A. Hecker, and Frank Welker in Shrek (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0126029/mediaviewer/rm3916282880/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3916282880"
+        }
+      },
+      {
+        "prompt": "Fiona surprises everyone with expert fighting skills. What is your reaction?",
+        "kicker": "Movie moment 7 · Shrek",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjA5MzkwMzI0N15BMl5BanBnXkFtZTcwMzcwODI0Ng@@._V1_.jpg",
+          "alt": "Cameron Diaz and Mike Myers in Shrek (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0126029/mediaviewer/rm3899505664/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3899505664"
+        }
+      },
+      {
+        "prompt": "You overhear only half of a painful conversation. What do you do next?",
+        "kicker": "Movie moment 8 · Shrek",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjMxMDQzMTg2M15BMl5BanBnXkFtZTcwNDgwODI0Ng@@._V1_.jpg",
+          "alt": "Cameron Diaz, Mike Myers, and Eddie Murphy in Shrek (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0126029/mediaviewer/rm4268604416/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4268604416"
+        }
+      },
+      {
+        "prompt": "A talking cookie refuses to reveal a secret. How would you question him?",
+        "kicker": "Movie moment 9 · Shrek",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTkzMjU4ODg4MV5BMl5BanBnXkFtZTcwNjcwODI0Ng@@._V1_.jpg",
+          "alt": "John Lithgow and Conrad Vernon in Shrek (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0126029/mediaviewer/rm4117609472/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4117609472"
+        }
+      },
+      {
+        "prompt": "A wedding is about to begin, but an important truth is unspoken. What do you do?",
+        "kicker": "Movie moment 10 · Shrek",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BN2VjNDIzOTktN2Q5ZC00OTdlLWJmZmMtOGYzYWY1NjZkNzI2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Cameron Diaz, Mike Myers, Eddie Murphy, and John Lithgow in Shrek (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0126029/mediaviewer/rm196663553/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm196663553"
+        }
+      }
+    ]
+  },
+  "frozen": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt2294629/",
+    "imdbId": "tt2294629",
+    "officialTitle": "Frozen",
+    "premiered": "2013-11-27",
+    "year": 2013,
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy",
+      "Family",
+      "Fantasy",
+      "Musical"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTQ1MjQwMTE5OF5BMl5BanBnXkFtZTgwNjk3MTcyMDE@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BOTE5NjYyMjMxMV5BMl5BanBnXkFtZTgwOTcwMDk4NTE@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm3635410176",
+    "heroSourceUrl": "https://www.imdb.com/title/tt2294629/mediaviewer/rm3635410176/",
+    "questions": [
+      {
+        "prompt": "The castle gates open for the first time in years. Where do you go first?",
+        "kicker": "Movie moment 1 · Frozen",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTc5ODQzOTk0NV5BMl5BanBnXkFtZTgwODcwMDk4NTE@._V1_.jpg",
+          "alt": "Kristen Bell, Idina Menzel, and Arwa in Frozen (2013)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2294629/mediaviewer/rm3652187392/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3652187392"
+        }
+      },
+      {
+        "prompt": "Anna announces she wants to marry someone she just met. How do you answer?",
+        "kicker": "Movie moment 2 · Frozen",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYmYwMmMwYzItODM3MS00ZDA5LWFlM2QtNDhkODRmZDhlN2I2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Kristen Bell, Idina Menzel, and Santino Fontana in Frozen (2013)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2294629/mediaviewer/rm1451333633/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1451333633"
+        }
+      },
+      {
+        "prompt": "Ice magic appears in front of the whole kingdom. What is your immediate response?",
+        "kicker": "Movie moment 3 · Frozen",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjA0OTAxMzUyOF5BMl5BanBnXkFtZTgwNzcwMDk4NTE@._V1_.jpg",
+          "alt": "Kristen Bell, Idina Menzel, and Arwa in Frozen (2013)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2294629/mediaviewer/rm3668964608/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3668964608"
+        }
+      },
+      {
+        "prompt": "Arendelle freezes in the middle of summer. How would you help?",
+        "kicker": "Movie moment 4 · Frozen",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTgwODIzNjcyOV5BMl5BanBnXkFtZTgwMzcwMDk4NTE@._V1_.jpg",
+          "alt": "Kristen Bell, Idina Menzel, and Arwa in Frozen (2013)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2294629/mediaviewer/rm3736073472/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3736073472"
+        }
+      },
+      {
+        "prompt": "Kristoff offers a rough sled ride up the mountain. What do you bring?",
+        "kicker": "Movie moment 5 · Frozen",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjEzMjljZGEtYjQ1NC00YjkzLTk3MDYtMTQxYjQ2YzFlNmE2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Kristen Bell and Jonathan Groff in Frozen (2013)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2294629/mediaviewer/rm243374081/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm243374081"
+        }
+      },
+      {
+        "prompt": "A cheerful snowman starts dreaming about summer. What do you tell him?",
+        "kicker": "Movie moment 6 · Frozen",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMmVlNGU1YjItMzRiOC00NDZjLWEwNTctZjEwNjI0OGI4OWExXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Kristen Bell, Josh Gad, and Jonathan Groff in Frozen (2013)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2294629/mediaviewer/rm3011549185/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3011549185"
+        }
+      },
+      {
+        "prompt": "Wolves chase the sled through the forest. How do you react under pressure?",
+        "kicker": "Movie moment 7 · Frozen",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTUyNDA4NTU0N15BMl5BanBnXkFtZTgwMjcwMDk4NTE@._V1_.jpg",
+          "alt": "Kristen Bell, Stephen Kearin, Frank Welker, Arwa, Josh Gad, and Jonathan Groff in Frozen (2013)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2294629/mediaviewer/rm3501192448/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3501192448"
+        }
+      },
+      {
+        "prompt": "You reach Elsa's sparkling ice palace. How do you begin the conversation?",
+        "kicker": "Movie moment 8 · Frozen",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOWE4M2Y0M2YtOWYyNS00NjA3LWE2OWMtM2I5MGExYjcwOWMxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Kristen Bell and Idina Menzel in Frozen (2013)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2294629/mediaviewer/rm1227209985/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1227209985"
+        }
+      },
+      {
+        "prompt": "A giant snow guard blocks the mountain path. What is your strategy?",
+        "kicker": "Movie moment 9 · Frozen",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjhlYTBhODQtZmQ4Yi00YzYzLWE2ZDktMDhhY2NkNDM0YzQzXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Kristen Bell, Paul Briggs, and Jonathan Groff in Frozen (2013)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2294629/mediaviewer/rm3246757889/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3246757889"
+        }
+      },
+      {
+        "prompt": "Two sisters both want to protect each other but disagree about how. What breaks the tie?",
+        "kicker": "Movie moment 10 · Frozen",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTE3ZDI0ZjItOWVkMS00NDJkLTljMzMtNWM1MTA1NDBmODk5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Kristen Bell, Idina Menzel, Josh Gad, and Jonathan Groff in Frozen (2013)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2294629/mediaviewer/rm2072090625/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2072090625"
+        }
+      }
+    ]
+  },
+  "moana": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt3521164/",
+    "imdbId": "tt3521164",
+    "officialTitle": "Moana",
+    "premiered": "2016-11-23",
+    "year": 2016,
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy",
+      "Family",
+      "Fantasy",
+      "Musical"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMjI4MzU5NTExNF5BMl5BanBnXkFtZTgwNzY1MTEwMDI@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BOTU0ZjJhZTQtNzE2Ni00NDQ4LTgwZDUtZDFiNmZjZjk4MTRhXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm676869120",
+    "heroSourceUrl": "https://www.imdb.com/title/tt3521164/mediaviewer/rm676869120/",
+    "questions": [
+      {
+        "prompt": "The ocean chooses you for a dangerous mission. What is your first feeling?",
+        "kicker": "Movie moment 1 · Moana",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYWFiN2M0MjMtYTBhYi00MjFhLTljMDAtYmMwNDFiZTJmNDc3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Louise Bush in Moana (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3521164/mediaviewer/rm3246465793/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3246465793"
+        }
+      },
+      {
+        "prompt": "Your island expects you to become its next chief. How do you prepare?",
+        "kicker": "Movie moment 2 · Moana",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZDQyMzI0ZTAtOGRlYi00YmI0LTg2YzktNGFhNWE0ZjhjMTQzXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Temuera Morrison, Chris Jackson, and Auli'i Cravalho in Moana (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3521164/mediaviewer/rm277716481/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm277716481"
+        }
+      },
+      {
+        "prompt": "Gramma Tala reveals a hidden cave of voyaging boats. What do you explore first?",
+        "kicker": "Movie moment 3 · Moana",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMGE0MmMzZmItZGU3OS00NDJhLWE0M2YtNjQ2MDIwZDhkZWVhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Rachel House and Auli'i Cravalho in Moana (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3521164/mediaviewer/rm697146881/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm697146881"
+        }
+      },
+      {
+        "prompt": "You sail beyond the reef with almost no experience. What keeps you going?",
+        "kicker": "Movie moment 4 · Moana",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjMzOGY2MWMtOWE2NS00ZTgxLWEwMzgtMmU2MzQ2YjViN2QwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Alan Tudyk in Moana (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3521164/mediaviewer/rm3641211393/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3641211393"
+        }
+      },
+      {
+        "prompt": "Maui refuses to return the heart and steals your boat. What do you try?",
+        "kicker": "Movie moment 5 · Moana",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNWViYzg4ZDUtMWY1Ny00MmFiLWJmODAtMWQ1YjA0ZjBhOWIxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dwayne Johnson and Auli'i Cravalho in Moana (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3521164/mediaviewer/rm395156993/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm395156993"
+        }
+      },
+      {
+        "prompt": "Tiny coconut pirates surround your canoe. What is the plan?",
+        "kicker": "Movie moment 6 · Moana",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZGU3ZmFjNmMtNTQ2Yi00YWQ3LTg3MjYtODgzMGE1Yzk0NzM5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dwayne Johnson and Auli'i Cravalho in Moana (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3521164/mediaviewer/rm411934209/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm411934209"
+        }
+      },
+      {
+        "prompt": "Maui teaches you to navigate by stars and waves. How do you learn best?",
+        "kicker": "Movie moment 7 · Moana",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTUxNDE3MTA1Ml5BMl5BanBnXkFtZTgwODM5MzEwMzI@._V1_.jpg",
+          "alt": "Dwayne Johnson and Auli'i Cravalho in Moana (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3521164/mediaviewer/rm621095936/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm621095936"
+        }
+      },
+      {
+        "prompt": "Tamatoa shows off a mountain of shiny treasure. How do you distract him?",
+        "kicker": "Movie moment 8 · Moana",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDJhOGQyYzctODFlMC00Y2IzLWFjN2ItMjhkNGFlNzZiNDM4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dwayne Johnson, Jemaine Clement, and Auli'i Cravalho in Moana (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3521164/mediaviewer/rm3845756929/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3845756929"
+        }
+      },
+      {
+        "prompt": "Your teammate loses confidence in the middle of the journey. What do you say?",
+        "kicker": "Movie moment 9 · Moana",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjNkMWE4M2ItZDJmNC00M2U3LWFkOTYtZTNlNzEwMTk2Y2NhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dwayne Johnson and Auli'i Cravalho in Moana (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3521164/mediaviewer/rm3843438080/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3843438080"
+        }
+      },
+      {
+        "prompt": "A fiery obstacle may be hiding pain beneath its anger. How do you approach it?",
+        "kicker": "Movie moment 10 · Moana",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODNiMTAzYTctMDA0Mi00N2VmLTliYmQtNzNkNjAyMWY0Yzk4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Louise Bush in Moana (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3521164/mediaviewer/rm3708320257/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3708320257"
+        }
+      }
+    ]
+  },
+  "encanto": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt2953050/",
+    "imdbId": "tt2953050",
+    "officialTitle": "Encanto",
+    "premiered": "2021-11-24",
+    "year": 2021,
+    "genres": [
+      "Animation",
+      "Comedy",
+      "Family",
+      "Fantasy",
+      "Musical"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BNGEyNzk2M2MtNjBhZS00MzYwLWI0Y2YtYjc5ZWE2MjM0YWE5XkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BYTFlZDI4ODYtMWQxZi00Y2I3LWI0MTktMDkyNTJkOGYxODM1XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm1235414273",
+    "heroSourceUrl": "https://www.imdb.com/title/tt2953050/mediaviewer/rm1235414273/",
+    "questions": [
+      {
+        "prompt": "A child is about to receive a magical gift. How do you calm their nerves?",
+        "kicker": "Movie moment 1 · Encanto",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMmZjZDRhOTQtMTEzMS00MWUzLWE4Y2MtNDAyZGIwM2FmMjUxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Stephanie Beatriz and Ravi Cabot-Conyers in Encanto (2021)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2953050/mediaviewer/rm304934145/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm304934145"
+        }
+      },
+      {
+        "prompt": "Everyone in the family has a power except you. Where do you find confidence?",
+        "kicker": "Movie moment 2 · Encanto",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTNkNDBkYTAtOWRiZi00ZjVmLTg3ZWEtYTljYTRkNmIxNWNiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "María Cecilia Botero and Stephanie Beatriz in Encanto (2021)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2953050/mediaviewer/rm1959125505/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1959125505"
+        }
+      },
+      {
+        "prompt": "The magical house begins cracking during a celebration. What do you do first?",
+        "kicker": "Movie moment 3 · Encanto",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzMzMTJiMmYtNzgwNS00NDk3LWI4ZDAtMTlkZjNiZDg5ZDdlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Paisley Day Herrera, Noemi Josefina Flores, Alyssa Bella Candiani, Brooklyn Skylar Rodriguez, Ezra Rudulph, and Stephanie Beatriz in Encanto (2021)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2953050/mediaviewer/rm2390030337/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2390030337"
+        }
+      },
+      {
+        "prompt": "Luisa admits that carrying every burden is exhausting. How do you help?",
+        "kicker": "Movie moment 4 · Encanto",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjQ1ZTg0NWQtNDViNC00Y2MzLWFmNjUtZTc2NTcyOTE1NzJhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Stephanie Beatriz and Jess Darrow in Encanto (2021)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2953050/mediaviewer/rm1032975873/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1032975873"
+        }
+      },
+      {
+        "prompt": "Isabela can make anything perfect but wants to try something messy. What do you suggest?",
+        "kicker": "Movie moment 5 · Encanto",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjU4NWViODMtZjliYi00M2ZlLWJmZjYtMzNlNDdhNWQ1N2NmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Stephanie Beatriz and Diane Guerrero in Encanto (2021)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2953050/mediaviewer/rm1422254593/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1422254593"
+        }
+      },
+      {
+        "prompt": "You find Bruno's hidden room inside the walls. How do you begin talking?",
+        "kicker": "Movie moment 6 · Encanto",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYWNhNzZhY2EtNDdmMy00ODhhLTlmOGYtYWNhZmQwNGU3MzVkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "John Leguizamo and Stephanie Beatriz in Encanto (2021)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2953050/mediaviewer/rm110228993/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm110228993"
+        }
+      },
+      {
+        "prompt": "Pepa's storm cloud grows during a stressful dinner. How do you steady the room?",
+        "kicker": "Movie moment 7 · Encanto",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZGMyYzdmMmEtNTY4Yi00OGVmLWFiNjQtODQyNTBkZWMzNTRhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Wilmer Valderrama, Angie Cepeda, María Cecilia Botero, Carolina Gaitan, Stephanie Beatriz, Diane Guerrero, Ravi Cabot-Conyers, Rhenzy Feliz, Jess Darrow, and Mauro Castillo in Encanto (2021)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2953050/mediaviewer/rm747763201/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm747763201"
+        }
+      },
+      {
+        "prompt": "A mysterious vision seems to point at you. How do you interpret it?",
+        "kicker": "Movie moment 8 · Encanto",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYTgwYTA3ZmItMmZmMi00MDEzLWIyMzItMTE2NzkxZDdjNzViXkEyXkFqcGc@._V1_.jpg",
+          "alt": "John Leguizamo, Wilmer Valderrama, Angie Cepeda, María Cecilia Botero, Carolina Gaitan, Stephanie Beatriz, Diane Guerrero, Ravi Cabot-Conyers, Rhenzy Feliz, Jess Darrow, and Mauro Castillo in Encanto (2021)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2953050/mediaviewer/rm1789059585/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1789059585"
+        }
+      },
+      {
+        "prompt": "Abuela insists the family must look perfect. What truth would you share?",
+        "kicker": "Movie moment 9 · Encanto",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDk0MGI3ZTEtY2IxZS00OTUxLTk0ZGMtMmUyNWNhNmNjNDMzXkEyXkFqcGc@._V1_.jpg",
+          "alt": "María Cecilia Botero and Stephanie Beatriz in Encanto (2021)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2953050/mediaviewer/rm2412110337/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2412110337"
+        }
+      },
+      {
+        "prompt": "Your home depends on family members finally listening to each other. What is your role?",
+        "kicker": "Movie moment 10 · Encanto",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYTFlZDI4ODYtMWQxZi00Y2I3LWI0MTktMDkyNTJkOGYxODM1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Wilmer Valderrama, Angie Cepeda, María Cecilia Botero, Carolina Gaitan, Stephanie Beatriz, Diane Guerrero, Adassa, Ravi Cabot-Conyers, Rhenzy Feliz, Jess Darrow, and Mauro Castillo in Encanto (2021)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2953050/mediaviewer/rm1235414273/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1235414273"
+        }
+      }
+    ]
+  },
+  "the-incredibles": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0317705/",
+    "imdbId": "tt0317705",
+    "officialTitle": "The Incredibles",
+    "premiered": "2004-11-05",
+    "year": 2004,
+    "genres": [
+      "Animation",
+      "Action",
+      "Adventure",
+      "Family"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTY5OTU0OTc2NV5BMl5BanBnXkFtZTcwMzU4MDcyMQ@@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BN2EyZGZjMzMtMWJkNi00ZDRkLWFhY2QtNWE5ZDkxMzczNjA5XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm408529921",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0317705/mediaviewer/rm408529921/",
+    "questions": [
+      {
+        "prompt": "Superheroes are forced to live like ordinary families. How do you adjust?",
+        "kicker": "Movie moment 1 · The Incredibles",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTk2MTE0MDk0NV5BMl5BanBnXkFtZTcwODMzOTEyNw@@._V1_.jpg",
+          "alt": "Holly Hunter and Craig T. Nelson in The Incredibles (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0317705/mediaviewer/rm1788391424/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1788391424"
+        }
+      },
+      {
+        "prompt": "Dash wants to use his speed at school. What rule would you make?",
+        "kicker": "Movie moment 2 · The Incredibles",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzdlNzNhY2MtZTEwMS00ZDlkLTgwMDctM2MwZDc4ZGU4OTc3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Holly Hunter, Elizabeth Peña, and Craig T. Nelson in The Incredibles (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0317705/mediaviewer/rm4239105/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4239105"
+        }
+      },
+      {
+        "prompt": "Violet wants to disappear at a crowded event. How do you support her?",
+        "kicker": "Movie moment 3 · The Incredibles",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTA2NTI3NzkxMzNeQTJeQWpwZ15BbWU3MDE0MzkxMjc@._V1_.jpg",
+          "alt": "Holly Hunter, Craig T. Nelson, Sarah Vowell, and Spencer Fox in The Incredibles (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0317705/mediaviewer/rm1754836992/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1754836992"
+        }
+      },
+      {
+        "prompt": "A secret mission finally offers exciting hero work. What do you check before accepting?",
+        "kicker": "Movie moment 4 · The Incredibles",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDRmYjI2NTYtODJjOS00YjI3LWFmNTctZDI2NjJlYzFiZjI1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Elizabeth Peña and Craig T. Nelson in The Incredibles (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0317705/mediaviewer/rm188788481/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm188788481"
+        }
+      },
+      {
+        "prompt": "Edna redesigns your superhero suit. What feature matters most?",
+        "kicker": "Movie moment 5 · The Incredibles",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjE1ODQ2Nzk3Ml5BMl5BanBnXkFtZTcwMzI2ODkyMw@@._V1_.jpg",
+          "alt": "Craig T. Nelson and Brad Bird in The Incredibles (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0317705/mediaviewer/rm1919847424/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1919847424"
+        }
+      },
+      {
+        "prompt": "A huge robot learns from every attack. How would you change tactics?",
+        "kicker": "Movie moment 6 · The Incredibles",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjFiZTRkZGUtMTVkYS00YjJmLWIxMWQtMGFkMTg1ZjJjNWFmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Craig T. Nelson in The Incredibles (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0317705/mediaviewer/rm1488367361/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1488367361"
+        }
+      },
+      {
+        "prompt": "Your family discovers you kept a major secret. How do you repair trust?",
+        "kicker": "Movie moment 7 · The Incredibles",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjM5OTUzNDUxNV5BMl5BanBnXkFtZTcwNjMzOTEyNw@@._V1_.jpg",
+          "alt": "Holly Hunter, Craig T. Nelson, Sarah Vowell, Spencer Fox, Eli Fucile, and Maeve Andrews in The Incredibles (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0317705/mediaviewer/rm1805168640/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1805168640"
+        }
+      },
+      {
+        "prompt": "The kids must use their powers together for the first time. What is your plan?",
+        "kicker": "Movie moment 8 · The Incredibles",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDg1MDY4MzI4OF5BMl5BanBnXkFtZTcwMDQ2ODkyMw@@._V1_.jpg",
+          "alt": "Holly Hunter, Craig T. Nelson, Sarah Vowell, and Spencer Fox in The Incredibles (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0317705/mediaviewer/rm1215204352/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1215204352"
+        }
+      },
+      {
+        "prompt": "Syndrome wants recognition more than responsibility. How do you challenge him?",
+        "kicker": "Movie moment 9 · The Incredibles",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTMxNTgwNzk4OV5BMl5BanBnXkFtZTcwNzI2ODkyMw@@._V1_.jpg",
+          "alt": "Jason Lee and Craig T. Nelson in The Incredibles (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0317705/mediaviewer/rm2121174016/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2121174016"
+        }
+      },
+      {
+        "prompt": "Saving the city requires every family member's different strength. Which role fits you?",
+        "kicker": "Movie moment 10 · The Incredibles",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjdiZGY1YmItMTU1YS00Njk2LWJmZjAtNGExMjdkNjUwZDNkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Holly Hunter in The Incredibles (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0317705/mediaviewer/rm54711042/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm54711042"
+        }
+      }
+    ]
+  },
+  "ratatouille": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0382932/",
+    "imdbId": "tt0382932",
+    "officialTitle": "Ratatouille",
+    "premiered": "2007-06-29",
+    "year": 2007,
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy",
+      "Family",
+      "Fantasy"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTMzODU0NTkxMF5BMl5BanBnXkFtZTcwMjQ4MzMzMw@@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BNDQwNjUzNDE3NV5BMl5BanBnXkFtZTcwMjA5MzMzMw@@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm149392640",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0382932/mediaviewer/rm149392640/",
+    "questions": [
+      {
+        "prompt": "You can smell every ingredient in a farmhouse kitchen. What would you create?",
+        "kicker": "Movie moment 1 · Ratatouille",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZGY1NWExZjEtMTQwYy00NmUyLThiMTQtZjExZDQzYTA1MjViXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Brian Dennehy, Patton Oswalt, and Peter Sohn in Ratatouille (2007)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0382932/mediaviewer/rm2211582209/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2211582209"
+        }
+      },
+      {
+        "prompt": "Chef Gusteau's motto says anyone can cook. What does it mean to you?",
+        "kicker": "Movie moment 2 · Ratatouille",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTUxODkwNjQ5M15BMl5BanBnXkFtZTcwNDE5MzMzMw@@._V1_.jpg",
+          "alt": "Brad Garrett and Patton Oswalt in Ratatouille (2007)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0382932/mediaviewer/rm501714176/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm501714176"
+        }
+      },
+      {
+        "prompt": "Linguini ruins a pot of soup on his first night. How do you save it?",
+        "kicker": "Movie moment 3 · Ratatouille",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTUyMTQ4NDMzNV5BMl5BanBnXkFtZTcwMTE5MzMzMw@@._V1_.jpg",
+          "alt": "Patton Oswalt and Lou Romano in Ratatouille (2007)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0382932/mediaviewer/rm535268608/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm535268608"
+        }
+      },
+      {
+        "prompt": "A rat and a kitchen worker must communicate without speaking. How would you build trust?",
+        "kicker": "Movie moment 4 · Ratatouille",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjZkMGNlYjMtOWE1Ny00ODIzLWJiYmMtMDcxMTQ2NmEyMzcxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Patton Oswalt and Lou Romano in Ratatouille (2007)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0382932/mediaviewer/rm2227376385/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2227376385"
+        }
+      },
+      {
+        "prompt": "Colette teaches you the rules of a professional kitchen. How do you learn?",
+        "kicker": "Movie moment 5 · Ratatouille",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTY1NjUxYzUtMTEyMC00YWYxLTk1NDctZWM5ZGNkNTY0ZTIxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Janeane Garofalo and Lou Romano in Ratatouille (2007)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0382932/mediaviewer/rm2260862209/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2260862209"
+        }
+      },
+      {
+        "prompt": "Skinner watches every move and suspects something strange. How do you stay calm?",
+        "kicker": "Movie moment 6 · Ratatouille",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTczMjMxNTUyOV5BMl5BanBnXkFtZTcwODM4MzMzMw@@._V1_.jpg",
+          "alt": "Ian Holm, Patton Oswalt, and Lou Romano in Ratatouille (2007)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0382932/mediaviewer/rm736595200/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm736595200"
+        }
+      },
+      {
+        "prompt": "Your family wants safe food, but you want to create something special. What do you choose?",
+        "kicker": "Movie moment 7 · Ratatouille",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZWVkMzAzM2UtMDAyMi00ODU1LTgxNjAtZjAwOTcwNmMyYmM4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Brian Dennehy and Patton Oswalt in Ratatouille (2007)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0382932/mediaviewer/rm1544841472/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1544841472"
+        }
+      },
+      {
+        "prompt": "The dinner rush begins and the team must work in perfect rhythm. What station do you take?",
+        "kicker": "Movie moment 8 · Ratatouille",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzZiOTlhMTktZmNlZC00ZjYwLWEwODEtYWJiOWI2ZjMwNzc4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Patton Oswalt and Lou Romano in Ratatouille (2007)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0382932/mediaviewer/rm2244153601/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2244153601"
+        }
+      },
+      {
+        "prompt": "Anton Ego enters expecting a flawless meal. How do you handle the pressure?",
+        "kicker": "Movie moment 9 · Ratatouille",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTg3Nzg5ODI3Ml5BMl5BanBnXkFtZTcwNzM4MzMzMw@@._V1_.jpg",
+          "alt": "Patton Oswalt and Lou Romano in Ratatouille (2007)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0382932/mediaviewer/rm753372416/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm753372416"
+        }
+      },
+      {
+        "prompt": "A simple childhood dish could say more than a fancy recipe. What would you serve?",
+        "kicker": "Movie moment 10 · Ratatouille",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTUzNjIxNzEyOV5BMl5BanBnXkFtZTcwMzU4MzMzMw@@._V1_.jpg",
+          "alt": "Patton Oswalt and Lou Romano in Ratatouille (2007)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0382932/mediaviewer/rm1021807872/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1021807872"
+        }
+      }
+    ]
+  },
+  "monsters-inc": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0198781/",
+    "imdbId": "tt0198781",
+    "officialTitle": "Monsters, Inc.",
+    "premiered": "2001-11-02",
+    "year": 2001,
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy",
+      "Family",
+      "Fantasy"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTY1NTI0ODUyOF5BMl5BanBnXkFtZTgwNTEyNjQ0MDE@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BYmYzZjViMmYtOTA5NC00MGMyLTgzMWMtYTcxOGZhMTU2Y2FkXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm1895471873",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0198781/mediaviewer/rm1895471873/",
+    "questions": [
+      {
+        "prompt": "It is your first scare shift on the factory floor. How do you prepare?",
+        "kicker": "Movie moment 1 · Monsters, Inc.",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYmYzZjViMmYtOTA5NC00MGMyLTgzMWMtYTcxOGZhMTU2Y2FkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Billy Crystal and John Goodman in Monsters, Inc. (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0198781/mediaviewer/rm1895471873/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1895471873"
+        }
+      },
+      {
+        "prompt": "A human child follows you into Monstropolis. What do you do first?",
+        "kicker": "Movie moment 2 · Monsters, Inc.",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTI3MTY2NTM3NV5BMl5BanBnXkFtZTgwNzg2NzgxMzE@._V1_.jpg",
+          "alt": "Steve Buscemi, Billy Crystal, John Goodman, and Mary Gibbs in Monsters, Inc. (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0198781/mediaviewer/rm4127587072/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4127587072"
+        }
+      },
+      {
+        "prompt": "Mike's dinner reservation is ruined by an emergency. How do you explain it?",
+        "kicker": "Movie moment 3 · Monsters, Inc.",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjEzODAzMjUwNV5BMl5BanBnXkFtZTgwNTg2NzgxMzE@._V1_.jpg",
+          "alt": "Jennifer Tilly and Billy Crystal in Monsters, Inc. (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0198781/mediaviewer/rm4144364288/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4144364288"
+        }
+      },
+      {
+        "prompt": "You must disguise Boo so she can cross the factory. What is your idea?",
+        "kicker": "Movie moment 4 · Monsters, Inc.",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOGI4MmIwMDYtYzJmNS00MTIxLTg4ODItNzFlNzM4YjI5ZjY2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Billy Crystal, John Goodman, and Mary Gibbs in Monsters, Inc. (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0198781/mediaviewer/rm3740900097/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3740900097"
+        }
+      },
+      {
+        "prompt": "Randall can become invisible and seems to be following you. What is your strategy?",
+        "kicker": "Movie moment 5 · Monsters, Inc.",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTMzNzY5NzQwOF5BMl5BanBnXkFtZTgwNDg2NzgxMzE@._V1_.jpg",
+          "alt": "Steve Buscemi, Billy Crystal, and John Goodman in Monsters, Inc. (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0198781/mediaviewer/rm3892706048/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3892706048"
+        }
+      },
+      {
+        "prompt": "The company says children are dangerous, but your experience says otherwise. What do you trust?",
+        "kicker": "Movie moment 6 · Monsters, Inc.",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZDRkZWE3Y2QtMDg4Ni00NTgxLWI3NDgtYmFkZTcwNThmMDAzXkEyXkFqcGc@._V1_.jpg",
+          "alt": "John Goodman and Mary Gibbs in Monsters, Inc. (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0198781/mediaviewer/rm1677368065/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1677368065"
+        }
+      },
+      {
+        "prompt": "Roz demands late paperwork while you hide a huge secret. How do you respond?",
+        "kicker": "Movie moment 7 · Monsters, Inc.",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjIzNDMxNDQyNV5BMl5BanBnXkFtZTgwMzg2NzgxMzE@._V1_.jpg",
+          "alt": "Steve Buscemi, Jennifer Tilly, James Coburn, Billy Crystal, John Goodman, Frank Oz, Daniel Gerson, and Bob Peterson in Monsters, Inc. (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0198781/mediaviewer/rm3909483264/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3909483264"
+        }
+      },
+      {
+        "prompt": "Thousands of moving doors could lead anywhere. How do you find the right one?",
+        "kicker": "Movie moment 8 · Monsters, Inc.",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTkxODc4MTcwMV5BMl5BanBnXkFtZTgwMTk2NzgxMzE@._V1_.jpg",
+          "alt": "Billy Crystal and John Goodman in Monsters, Inc. (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0198781/mediaviewer/rm4077255424/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4077255424"
+        }
+      },
+      {
+        "prompt": "Waternoose cares about the company more than one child. How do you push back?",
+        "kicker": "Movie moment 9 · Monsters, Inc.",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYTEwZWVjMGItY2MzOC00NjRkLWEzNjktNGM5NmU3NmRlNzI5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "James Coburn and John Goodman in Monsters, Inc. (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0198781/mediaviewer/rm617912577/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm617912577"
+        }
+      },
+      {
+        "prompt": "Laughter creates more energy than fear. How would that change your job?",
+        "kicker": "Movie moment 10 · Monsters, Inc.",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZmQ0NGQzOWMtZjE2My00ZGU5LWJjYTAtODg5NDdlMDdhOGNhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Steve Buscemi, Billy Crystal, John Goodman, Bob Bergen, Daniel Gerson, and Jeff Pidgeon in Monsters, Inc. (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0198781/mediaviewer/rm1039833857/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1039833857"
+        }
+      }
+    ]
+  },
+  "coco": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt2380307/",
+    "imdbId": "tt2380307",
+    "officialTitle": "Coco",
+    "premiered": "2017-11-22",
+    "year": 2017,
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Drama",
+      "Family",
+      "Fantasy",
+      "Music",
+      "Mystery"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMDIyM2E2NTAtMzlhNy00ZGUxLWI1NjgtZDY5MzhiMDc5NGU3XkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BZWM2NmFiOTQtNjRjMi00YTExLWEwZjgtMGViZWJjYTU1ZTQwXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm1114003456",
+    "heroSourceUrl": "https://www.imdb.com/title/tt2380307/mediaviewer/rm1114003456/",
+    "questions": [
+      {
+        "prompt": "Your family bans music, but playing guitar makes you feel alive. What do you do?",
+        "kicker": "Movie moment 1 · Coco",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZWM2NmFiOTQtNjRjMi00YTExLWEwZjgtMGViZWJjYTU1ZTQwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Alfonso Arau, Alanna Ubach, Selene Luna, Dyana Ortelli, Herbert Siguenza, and Anthony Gonzalez in Coco (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2380307/mediaviewer/rm1114003456/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1114003456"
+        }
+      },
+      {
+        "prompt": "The family shoemaking shop needs your help during a busy day. Which job do you take?",
+        "kicker": "Movie moment 2 · Coco",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzZlNzJmNzUtNjdiMy00OTI3LWI0N2UtMzFjZGUyZjNjMWQ0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jaime Camil, Renée Victor, Sofía Espinosa, and Anthony Gonzalez in Coco (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2380307/mediaviewer/rm2038104065/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2038104065"
+        }
+      },
+      {
+        "prompt": "A damaged family photo may hide an important story. How do you investigate?",
+        "kicker": "Movie moment 3 · Coco",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMWYxNWIzZGYtOGI1OS00NGY3LWE2YzMtNWRlNTkwNTBkMzA4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ana Ofelia Murguía, Renée Victor, and Anthony Gonzalez in Coco (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2380307/mediaviewer/rm3812774656/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3812774656"
+        }
+      },
+      {
+        "prompt": "You want to enter the plaza talent show without permission. What is your plan?",
+        "kicker": "Movie moment 4 · Coco",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOGVhYThmZWItNDg2My00MWM5LTk2OWItZGU0ZTcyZmQwYTk0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Lombardo Boyar, Renée Victor, and Anthony Gonzalez in Coco (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2380307/mediaviewer/rm1393384192/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1393384192"
+        }
+      },
+      {
+        "prompt": "You suddenly arrive in the Land of the Dead. What catches your attention first?",
+        "kicker": "Movie moment 5 · Coco",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzY5MTE1MTMyMV5BMl5BanBnXkFtZTgwNDAzMjMyNDM@._V1_.jpg",
+          "alt": "Gael García Bernal and Anthony Gonzalez in Coco (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2380307/mediaviewer/rm2223922688/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2223922688"
+        }
+      },
+      {
+        "prompt": "Héctor offers help in exchange for carrying his photo home. Do you agree?",
+        "kicker": "Movie moment 6 · Coco",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOGRkOTE0OWQtMzAzNS00MWQwLWE1ZTAtNDQzMDIxNDY5MmE3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Gael García Bernal and Anthony Gonzalez in Coco (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2380307/mediaviewer/rm2906804992/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2906804992"
+        }
+      },
+      {
+        "prompt": "A bright orange bridge links two worlds for one night. Who would you visit?",
+        "kicker": "Movie moment 7 · Coco",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDg1MTQ1MmItMDAyZS00MzI0LTkyODktZDI3YTZlMTBlYzI1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Alanna Ubach, Gael García Bernal, and Anthony Gonzalez in Coco (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2380307/mediaviewer/rm1462533376/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1462533376"
+        }
+      },
+      {
+        "prompt": "Dante starts behaving like he knows the route. Do you follow him?",
+        "kicker": "Movie moment 8 · Coco",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzc0YzNlMzgtMmE1Zi00NDJmLTkyNjAtM2Y2NzAxYWExMDkzXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Anthony Gonzalez in Coco (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2380307/mediaviewer/rm1229083392/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1229083392"
+        }
+      },
+      {
+        "prompt": "Your relatives offer a blessing with one difficult condition. How do you answer?",
+        "kicker": "Movie moment 9 · Coco",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BM2VlOGQ4MGYtM2E0YS00NzA0LWIxODYtMzkzNzcxMThmMjJkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jaime Camil, Renée Victor, Sofía Espinosa, and Anthony Gonzalez in Coco (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2380307/mediaviewer/rm1896570112/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1896570112"
+        }
+      },
+      {
+        "prompt": "Someone you love is afraid of being forgotten. How would you keep their memory alive?",
+        "kicker": "Movie moment 10 · Coco",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTcxNjg0NTg1Nl5BMl5BanBnXkFtZTgwODkyMjMyNDM@._V1_.jpg",
+          "alt": "Gael García Bernal and Anthony Gonzalez in Coco (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2380307/mediaviewer/rm3096337920/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3096337920"
+        }
+      }
+    ]
+  },
+  "up": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt1049413/",
+    "imdbId": "tt1049413",
+    "officialTitle": "Up",
+    "premiered": "2009-05-29",
+    "year": 2009,
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy",
+      "Drama",
+      "Family"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BNmI1ZTc5MWMtMDYyOS00ZDc2LTkzOTAtNjQ4NWIxNjYyNDgzXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMjIxOTI4NzkyOV5BMl5BanBnXkFtZTcwNzQ5OTIzMw@@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm3001978112",
+    "heroSourceUrl": "https://www.imdb.com/title/tt1049413/mediaviewer/rm3001978112/",
+    "questions": [
+      {
+        "prompt": "Thousands of balloons lift your house into the sky. What do you check first?",
+        "kicker": "Movie moment 1 · Up",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTMyODc0ODI2OF5BMl5BanBnXkFtZTcwODQ5OTIzMw@@._V1_.jpg",
+          "alt": "Edward Asner and Jordan Nagai in Up (2009)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1049413/mediaviewer/rm2985200896/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2985200896"
+        }
+      },
+      {
+        "prompt": "Russell knocks on your door hoping to earn a badge. How do you respond?",
+        "kicker": "Movie moment 2 · Up",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjE4MDQyNDczN15BMl5BanBnXkFtZTcwOTY5OTIzMw@@._V1_.jpg",
+          "alt": "Edward Asner, Bob Peterson, and Jordan Nagai in Up (2009)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1049413/mediaviewer/rm2196671744/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2196671744"
+        }
+      },
+      {
+        "prompt": "The flying house lands miles from Paradise Falls. What is your plan?",
+        "kicker": "Movie moment 3 · Up",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjExOTI2Mjg2N15BMl5BanBnXkFtZTcwODY5OTIzMw@@._V1_.jpg",
+          "alt": "Edward Asner, Christopher Plummer, and Jordan Nagai in Up (2009)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1049413/mediaviewer/rm2213448960/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2213448960"
+        }
+      },
+      {
+        "prompt": "A giant colorful bird follows Russell home. What should the group do?",
+        "kicker": "Movie moment 4 · Up",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTQxMjI0NjY4OF5BMl5BanBnXkFtZTcwOTQ5OTIzMw@@._V1_.jpg",
+          "alt": "Edward Asner, Bob Peterson, and Jordan Nagai in Up (2009)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1049413/mediaviewer/rm2968423680/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2968423680"
+        }
+      },
+      {
+        "prompt": "A dog wearing a talking collar calls you its master. What do you say?",
+        "kicker": "Movie moment 5 · Up",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTM4NDAwMTc1NF5BMl5BanBnXkFtZTcwMDc5OTIzMw@@._V1_.jpg",
+          "alt": "Edward Asner, Bob Peterson, and Jordan Nagai in Up (2009)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1049413/mediaviewer/rm2179894528/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2179894528"
+        }
+      },
+      {
+        "prompt": "A storm pushes the house far off course. How do you stay useful?",
+        "kicker": "Movie moment 6 · Up",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjA1MjUzMTcyOV5BMl5BanBnXkFtZTcwMjc5OTIzMw@@._V1_.jpg",
+          "alt": "Edward Asner and Jordan Nagai in Up (2009)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1049413/mediaviewer/rm2414775552/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2414775552"
+        }
+      },
+      {
+        "prompt": "Your childhood hero invites you to dinner in his airship. What do you ask?",
+        "kicker": "Movie moment 7 · Up",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjVjMDk3MWEtNjJhYi00NTgyLTljZTEtMDRjZGE0ZWQ2ZTUwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Edward Asner, Christopher Plummer, and Jordan Nagai in Up (2009)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1049413/mediaviewer/rm2543097089/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2543097089"
+        }
+      },
+      {
+        "prompt": "The group must cross a rocky canyon while pulling a house. What role do you take?",
+        "kicker": "Movie moment 8 · Up",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTU4NTY1NDc2N15BMl5BanBnXkFtZTcwMDY5OTIzMw@@._V1_.jpg",
+          "alt": "Edward Asner and Jordan Nagai in Up (2009)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1049413/mediaviewer/rm3136195840/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3136195840"
+        }
+      },
+      {
+        "prompt": "A treasured promise conflicts with helping a new friend. Which value guides you?",
+        "kicker": "Movie moment 9 · Up",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjIwNTU2NDQ4N15BMl5BanBnXkFtZTcwNTU5OTIzMw@@._V1_.jpg",
+          "alt": "Edward Asner in Up (2009)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1049413/mediaviewer/rm3186527488/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3186527488"
+        }
+      },
+      {
+        "prompt": "You add a page to an adventure book. What everyday moment belongs there?",
+        "kicker": "Movie moment 10 · Up",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjA3M2M3OGItOTIwNy00MjM3LWE4ZDEtNDNiZGUzNjBhMmRkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Edward Asner and Bob Peterson in Up (2009)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1049413/mediaviewer/rm1288322560/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1288322560"
+        }
+      }
+    ]
+  },
+  "inside-out": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt2096673/",
+    "imdbId": "tt2096673",
+    "officialTitle": "Inside Out",
+    "premiered": "2015-06-19",
+    "year": 2015,
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy",
+      "Drama",
+      "Family",
+      "Fantasy"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BOTgxMDQwMDk0OF5BMl5BanBnXkFtZTgwNjU5OTg2NDE@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BNmQwMDAxN2UtMjg2My00Yjg4LWFiMmQtODNmNmExNWVmNDg2XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2027314176",
+    "heroSourceUrl": "https://www.imdb.com/title/tt2096673/mediaviewer/rm2027314176/",
+    "questions": [
+      {
+        "prompt": "Riley arrives at an empty new house in San Francisco. Which emotion takes control?",
+        "kicker": "Movie moment 1 · Inside Out",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BY2FlZjU3MGQtNTcxYy00MDk2LTg3OWYtMWVhM2U4NGM5Y2YzXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Diane Lane, Kyle MacLachlan, Amy Poehler, and Kaitlyn Dias in Inside Out (2015)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2096673/mediaviewer/rm2549510144/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2549510144"
+        }
+      },
+      {
+        "prompt": "The family's first pizza has broccoli on it. How does headquarters react?",
+        "kicker": "Movie moment 2 · Inside Out",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjIzYTM0NjktYjZlYi00MWRjLTg4YjUtMDczMjA1NWNlZjljXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Bill Hader and Mindy Kaling in Inside Out (2015)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2096673/mediaviewer/rm1095459585/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1095459585"
+        }
+      },
+      {
+        "prompt": "A sad memory starts turning important moments blue. What do you do with it?",
+        "kicker": "Movie moment 3 · Inside Out",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjUzZmQ5ZDUtYzFhOC00Mjk4LWFkZTEtNTI3ZDEwZDZmMjNjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Amy Poehler and Phyllis Smith in Inside Out (2015)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2096673/mediaviewer/rm155878401/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm155878401"
+        }
+      },
+      {
+        "prompt": "Joy and Sadness are swept out of headquarters. Who keeps the controls steady?",
+        "kicker": "Movie moment 4 · Inside Out",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMGJmZDllNjQtMjU4OC00NjY3LWE0ZTMtOGJkYjU3MWEwOWU0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Lewis Black, Bill Hader, Amy Poehler, Phyllis Smith, and Mindy Kaling in Inside Out (2015)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2096673/mediaviewer/rm1478033409/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1478033409"
+        }
+      },
+      {
+        "prompt": "Riley has to introduce herself at a new school. What would help most?",
+        "kicker": "Movie moment 5 · Inside Out",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNmQwMDAxN2UtMjg2My00Yjg4LWFiMmQtODNmNmExNWVmNDg2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Richard Kind and Phyllis Smith in Inside Out (2015)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2096673/mediaviewer/rm2027314176/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2027314176"
+        }
+      },
+      {
+        "prompt": "You meet Bing Bong in the maze of long-term memory. Do you trust him?",
+        "kicker": "Movie moment 6 · Inside Out",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDJkYzAxN2ItYjczOC00MzE2LTgxYWEtODg0ZGFmNmYyMGQ4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Richard Kind and Amy Poehler in Inside Out (2015)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2096673/mediaviewer/rm2971205633/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2971205633"
+        }
+      },
+      {
+        "prompt": "The train of thought stops without warning. How do you find another route?",
+        "kicker": "Movie moment 7 · Inside Out",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNGY1ODg3OTQtMDEyNi00NjliLWJlODAtODljZWJlZjdkODc2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Richard Kind, Amy Poehler, and Phyllis Smith in Inside Out (2015)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2096673/mediaviewer/rm608863233/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm608863233"
+        }
+      },
+      {
+        "prompt": "Everything becomes strangely shaped in abstract thought. How do you stay calm?",
+        "kicker": "Movie moment 8 · Inside Out",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNmQ5OWM1MTMtM2FiNy00ZDc5LTk2MzQtNzU2YTg2ZDk3MzQ2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Amy Poehler and Phyllis Smith in Inside Out (2015)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2096673/mediaviewer/rm1909873664/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1909873664"
+        }
+      },
+      {
+        "prompt": "Riley wants to quit hockey after one painful tryout. What does she need?",
+        "kicker": "Movie moment 9 · Inside Out",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjViYzVkZjAtOTUxMC00Y2NmLTgyNzItYTNkYjRmZTRlNDhiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Kaitlyn Dias in Inside Out (2015)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2096673/mediaviewer/rm3302317056/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3302317056"
+        }
+      },
+      {
+        "prompt": "Joy realizes one memory can hold more than one emotion. What does that teach you?",
+        "kicker": "Movie moment 10 · Inside Out",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjJjZDJhZDUtZWQ2OS00MjhjLWE5ZGYtMjA3MGI5Y2ZmMjJkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Amy Poehler and Phyllis Smith in Inside Out (2015)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2096673/mediaviewer/rm2149122049/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2149122049"
+        }
+      }
+    ]
+  },
+  "how-to-train-your-dragon": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0892769/",
+    "imdbId": "tt0892769",
+    "officialTitle": "How to Train Your Dragon",
+    "premiered": "2010-03-26",
+    "year": 2010,
+    "genres": [
+      "Animation",
+      "Action",
+      "Adventure",
+      "Family",
+      "Fantasy"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMjA5NDQyMjc2NF5BMl5BanBnXkFtZTcwMjg5ODcyMw@@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMTMzNGNmOGYtZGJmZi00NzU3LTlhZmEtYjU4YTAzMTZkNDk4XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm3550588673",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0892769/mediaviewer/rm3550588673/",
+    "questions": [
+      {
+        "prompt": "Dragons attack Berk during the night. Where do you help?",
+        "kicker": "Movie moment 1 · How to Train Your Dragon",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjM0MGZkYzAtODFhNS00NzFlLWFiNWYtNWRkYzE4MTY2MGE5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jay Baruchel, Gerard Butler, and Craig Ferguson in How to Train Your Dragon (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0892769/mediaviewer/rm2311490049/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2311490049"
+        }
+      },
+      {
+        "prompt": "You find an injured Night Fury hidden in the woods. What do you do?",
+        "kicker": "Movie moment 2 · How to Train Your Dragon",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTMzNGNmOGYtZGJmZi00NzU3LTlhZmEtYjU4YTAzMTZkNDk4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jay Baruchel and Randy Thom in How to Train Your Dragon (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0892769/mediaviewer/rm3550588673/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3550588673"
+        }
+      },
+      {
+        "prompt": "Gobber starts dragon-training class with a warning. How do you prepare?",
+        "kicker": "Movie moment 3 · How to Train Your Dragon",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZWYwODEzYmItZTc1MS00ODI5LWExYmItZTY5ZTUxMzI1OGExXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jay Baruchel, Gerard Butler, Craig Ferguson, and America Ferrera in How to Train Your Dragon (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0892769/mediaviewer/rm1036834050/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1036834050"
+        }
+      },
+      {
+        "prompt": "Everyone expects you to fight a dragon, but you notice it is frightened. What next?",
+        "kicker": "Movie moment 4 · How to Train Your Dragon",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOWRhNjAwNTEtYTJkMi00YWNiLTg1MDItY2IxN2VkZjBkNTUzXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jay Baruchel and Randy Thom in How to Train Your Dragon (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0892769/mediaviewer/rm2428930561/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2428930561"
+        }
+      },
+      {
+        "prompt": "A homemade tail fin must work during a test flight. What would you improve?",
+        "kicker": "Movie moment 5 · How to Train Your Dragon",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjVjZDA1ZjYtZTQ4NS00MDkwLTg4NDQtYjkwOTVmMjNjYjRlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jay Baruchel and Randy Thom in How to Train Your Dragon (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0892769/mediaviewer/rm1322946305/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1322946305"
+        }
+      },
+      {
+        "prompt": "Astrid discovers your secret friendship with Toothless. How do you explain it?",
+        "kicker": "Movie moment 6 · How to Train Your Dragon",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMGZlNjJkYWUtOWUwYi00NTIzLTliYTMtYjliMmFlYTk1YjJlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jay Baruchel, Randy Thom, and America Ferrera in How to Train Your Dragon (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0892769/mediaviewer/rm3200682497/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3200682497"
+        }
+      },
+      {
+        "prompt": "Your father wants you to become a traditional Viking. How do you answer?",
+        "kicker": "Movie moment 7 · How to Train Your Dragon",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BY2EzYWFjNWYtNjI0NC00Y2U5LTg2MDItZGIyNmY0MWMxMjg4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jay Baruchel and Gerard Butler in How to Train Your Dragon (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0892769/mediaviewer/rm2982578689/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2982578689"
+        }
+      },
+      {
+        "prompt": "A dragon arena watches while you refuse to attack. What gives you courage?",
+        "kicker": "Movie moment 8 · How to Train Your Dragon",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjk1OGI3YWEtYTkzNS00YzIzLTg3MDktZThiNTEwM2JiNWI1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jay Baruchel, Randy Thom, and America Ferrera in How to Train Your Dragon (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0892769/mediaviewer/rm2009370369/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2009370369"
+        }
+      },
+      {
+        "prompt": "The village learns that its old beliefs about dragons may be wrong. How do you persuade them?",
+        "kicker": "Movie moment 9 · How to Train Your Dragon",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDU1MjVlNmEtZGRlYS00NWE1LTkyYzgtYTVmODE5ZDI0NDJmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jay Baruchel and Randy Thom in How to Train Your Dragon (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0892769/mediaviewer/rm2277935617/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2277935617"
+        }
+      },
+      {
+        "prompt": "Humans and dragons must work together against a larger danger. What role fits you?",
+        "kicker": "Movie moment 10 · How to Train Your Dragon",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjQ0ZTI2OGQtYTk3NC00OWMxLWE1MTUtNGE0OTI1MWEwYmExXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jay Baruchel, Randy Thom, and America Ferrera in How to Train Your Dragon (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0892769/mediaviewer/rm85579009/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm85579009"
+        }
+      }
+    ]
+  },
+  "kung-fu-panda": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0441773/",
+    "imdbId": "tt0441773",
+    "officialTitle": "Kung Fu Panda",
+    "premiered": "2008-06-06",
+    "year": 2008,
+    "genres": [
+      "Animation",
+      "Action",
+      "Adventure",
+      "Comedy",
+      "Family",
+      "Fantasy"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BZDU5MDNiMGItYjVmZi00NDUxLTg2OTktNGE0NzNlNzM4NzgyXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BNDcxOTM0MDU2MV5BMl5BanBnXkFtZTcwMTIzMzA3NA@@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2508569344",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0441773/mediaviewer/rm2508569344/",
+    "questions": [
+      {
+        "prompt": "You climb endless palace stairs to see the Dragon Warrior chosen. What keeps you going?",
+        "kicker": "Movie moment 1 · Kung Fu Panda",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDY5MDg5Mzc2Nl5BMl5BanBnXkFtZTcwODAzMzA3NA@@._V1_.jpg",
+          "alt": "Jack Black and Taniel in Kung Fu Panda (2008)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0441773/mediaviewer/rm2324019968/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2324019968"
+        }
+      },
+      {
+        "prompt": "Oogway points at you during the ceremony. How do you handle being chosen?",
+        "kicker": "Movie moment 2 · Kung Fu Panda",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTdmM2Y5ODYtZjVmNS00OTA1LTg4OTItZmE2ZTYwMGY5YWI5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jackie Chan, Angelina Jolie, Jack Black, David Cross, Randall Duk Kim, and Seth Rogen in Kung Fu Panda (2008)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0441773/mediaviewer/rm299208193/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm299208193"
+        }
+      },
+      {
+        "prompt": "The Furious Five doubt that you belong. How do you earn their respect?",
+        "kicker": "Movie moment 3 · Kung Fu Panda",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODE4ZTg4NGMtM2JiNC00MGE5LThkM2YtNGZjNjg1M2FhNDg5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Angelina Jolie, Lucy Liu, Jack Black, and Seth Rogen in Kung Fu Panda (2008)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0441773/mediaviewer/rm1005699841/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1005699841"
+        }
+      },
+      {
+        "prompt": "Shifu's normal training methods are not working for you. What would work better?",
+        "kicker": "Movie moment 4 · Kung Fu Panda",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYzY1NzFlZGEtYzkwOS00MDNiLWIwNTMtMmMzMmU5YmZmZTkyXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dustin Hoffman and Jack Black in Kung Fu Panda (2008)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0441773/mediaviewer/rm332762625/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm332762625"
+        }
+      },
+      {
+        "prompt": "A bowl of dumplings becomes part of the lesson. How competitive are you?",
+        "kicker": "Movie moment 5 · Kung Fu Panda",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjhiNWI5ZWItNjc5Yy00NzdjLWE1Y2MtNWJhOTk5ZGIxY2MwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dustin Hoffman and Jack Black in Kung Fu Panda (2008)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0441773/mediaviewer/rm3438330625/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3438330625"
+        }
+      },
+      {
+        "prompt": "News arrives that Tai Lung escaped. What does the village need first?",
+        "kicker": "Movie moment 6 · Kung Fu Panda",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDcxOTM0MDU2MV5BMl5BanBnXkFtZTcwMTIzMzA3NA@@._V1_.jpg",
+          "alt": "Dustin Hoffman, Jackie Chan, Angelina Jolie, Wayne Knight, Hans Zimmer, Michael Clarke Duncan, Lucy Liu, Jonathan Aibel, Glenn Berger, Jack Black, Melissa Cobb, David Cross, Clare Knight, Dan Fogler, Kyle Gass, James Hong, Stephen Kearin, Laura Kightlinger, Randall Duk Kim, Ian McShane, Kent Osborne, Mark Osborne, John Powell, JR Reed, Ethan Reiff, Seth Rogen, John Stevenson, Cyrus Voris, Sheb Wooley, Raymond Zibach, Tanya Haden, Jeremy Shipp, Yong Duk Jhun, Chris Poche, Stephanie Harvey, Riley Osborne, and Emily Burns in Kung Fu Panda (2008)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0441773/mediaviewer/rm2508569344/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2508569344"
+        }
+      },
+      {
+        "prompt": "Tigress believes training matters more than natural talent. What do you think?",
+        "kicker": "Movie moment 7 · Kung Fu Panda",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjc3ZjZiODAtMGQ3ZS00MGRlLTg2ZDItZjBkYjk0ZWYxMDIxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jackie Chan, Angelina Jolie, Lucy Liu, Jack Black, David Cross, and Seth Rogen in Kung Fu Panda (2008)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0441773/mediaviewer/rm1643234049/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1643234049"
+        }
+      },
+      {
+        "prompt": "Mr. Ping expects you to run the noodle shop. How do you discuss your dream?",
+        "kicker": "Movie moment 8 · Kung Fu Panda",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZmZmZmRjYjEtZDcxNy00MDVmLWE3ZmMtMDQ2ZTc3OTdhMGVhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jack Black and James Hong in Kung Fu Panda (2008)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0441773/mediaviewer/rm1604787713/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1604787713"
+        }
+      },
+      {
+        "prompt": "The Dragon Scroll seems to offer no secret answer. Where do you look next?",
+        "kicker": "Movie moment 9 · Kung Fu Panda",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTkzNDQxNTcxMV5BMl5BanBnXkFtZTcwNzIzMzA3NA@@._V1_.jpg",
+          "alt": "Dustin Hoffman and Jack Black in Kung Fu Panda (2008)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0441773/mediaviewer/rm2458237696/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2458237696"
+        }
+      },
+      {
+        "prompt": "A powerful opponent seems better trained in every way. What is your advantage?",
+        "kicker": "Movie moment 10 · Kung Fu Panda",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjkyNzNjNjctMWZhMi00YThlLTgyYWMtY2YxNTZlZTk0MzQyXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jackie Chan, Angelina Jolie, Lucy Liu, Jack Black, David Cross, Ian McShane, and Seth Rogen in Kung Fu Panda (2008)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0441773/mediaviewer/rm366317057/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm366317057"
+        }
+      }
+    ]
+  },
+  "spider-man-into-the-spider-verse": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt4633694/",
+    "imdbId": "tt4633694",
+    "officialTitle": "Spider-Man: Into the Spider-Verse",
+    "premiered": "2018-12-14",
+    "year": 2018,
+    "genres": [
+      "Animation",
+      "Action",
+      "Adventure",
+      "Family",
+      "Fantasy",
+      "Sci-Fi"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMjhmM2Q2ODEtOTNlMy00NzNmLTlmNzAtZjA0NWU1MTlkYmUyXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm3934875393",
+    "heroSourceUrl": "https://www.imdb.com/title/tt4633694/mediaviewer/rm3934875393/",
+    "questions": [
+      {
+        "prompt": "A strange spider bites you after school. Which new sign worries you first?",
+        "kicker": "Movie moment 1 · Spider-Man: Into the Spider-Verse",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BN2E5NDdhZjgtN2RhYy00ZmZiLTk0ZGQtMTdiNzY1NDA5M2FkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Nicolas Cage, John Mulaney, Jake Johnson, Hailee Steinfeld, Shameik Moore, and Kimiko Glenn in Spider-Man: Into the Spider-Verse (2018)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4633694/mediaviewer/rm1699651841/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1699651841"
+        }
+      },
+      {
+        "prompt": "Your hand sticks to Gwen's hair in a crowded hallway. How do you recover?",
+        "kicker": "Movie moment 2 · Spider-Man: Into the Spider-Verse",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMWQwNTI1ZjItMzNjMS00Y2VkLTk2NzUtMjVhZjYyMTNkODA0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jake Johnson, Hailee Steinfeld, and Shameik Moore in Spider-Man: Into the Spider-Verse (2018)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4633694/mediaviewer/rm1196335361/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1196335361"
+        }
+      },
+      {
+        "prompt": "Miles discovers a dangerous collider beneath the city. Who should he tell?",
+        "kicker": "Movie moment 3 · Spider-Man: Into the Spider-Verse",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzdlNWNjZDMtNmVhNy00ZTlmLWJjYmQtMzIyOGQ0ZmU0ODEwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Shameik Moore in Spider-Man: Into the Spider-Verse (2018)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4633694/mediaviewer/rm1028628737/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1028628737"
+        }
+      },
+      {
+        "prompt": "Several Spider-People appear from other dimensions. What do you ask first?",
+        "kicker": "Movie moment 4 · Spider-Man: Into the Spider-Verse",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMGVjNTgzZTMtYzAxZS00YmRmLTg0MzktODMzY2E0YjA1NThhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jake Johnson, Hailee Steinfeld, and Shameik Moore in Spider-Man: Into the Spider-Verse (2018)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4633694/mediaviewer/rm1632542977/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1632542977"
+        }
+      },
+      {
+        "prompt": "Peter B. Parker wants to teach by throwing you into danger. How do you learn?",
+        "kicker": "Movie moment 5 · Spider-Man: Into the Spider-Verse",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZDFjYTgyMzAtNDFhYS00MTk3LWE1ZjQtN2RkMzg2MGFjYzk0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jake Johnson, Hailee Steinfeld, and Shameik Moore in Spider-Man: Into the Spider-Verse (2018)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4633694/mediaviewer/rm1179558145/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1179558145"
+        }
+      },
+      {
+        "prompt": "You must hide superhero training from your family. How do you handle the pressure?",
+        "kicker": "Movie moment 6 · Spider-Man: Into the Spider-Verse",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYWQ5MWM1YTItZWRiNS00OTY4LTgyZTQtYzNlM2Y1MDBlMDNiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Brian Tyree Henry and Shameik Moore in Spider-Man: Into the Spider-Verse (2018)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4633694/mediaviewer/rm2454626561/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2454626561"
+        }
+      },
+      {
+        "prompt": "The team is glitching and needs to return home soon. What is the priority?",
+        "kicker": "Movie moment 7 · Spider-Man: Into the Spider-Verse",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTg0OGNiMzgtNTVhNi00MjA4LTk3OTItZjAzYjE5MzkxMjBlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jake Johnson and Shameik Moore in Spider-Man: Into the Spider-Verse (2018)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4633694/mediaviewer/rm1078894849/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1078894849"
+        }
+      },
+      {
+        "prompt": "A leap from a skyscraper will prove whether you trust yourself. What gets you ready?",
+        "kicker": "Movie moment 8 · Spider-Man: Into the Spider-Verse",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZDNlZTY0OGUtODJiYy00MzE0LThkNDQtNmE5NDRiNzhiNDZhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Nicolas Cage, John Mulaney, Hailee Steinfeld, Shameik Moore, and Kimiko Glenn in Spider-Man: Into the Spider-Verse (2018)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4633694/mediaviewer/rm2639175937/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2639175937"
+        }
+      },
+      {
+        "prompt": "Peni, Noir, and Spider-Ham all suggest different plans. How do you choose?",
+        "kicker": "Movie moment 9 · Spider-Man: Into the Spider-Verse",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODEyYmVlZTQtODdhZS00ZDlhLTk2M2YtNzU1NGE4YTkxZTViXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Nicolas Cage, John Mulaney, Hailee Steinfeld, and Kimiko Glenn in Spider-Man: Into the Spider-Verse (2018)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4633694/mediaviewer/rm1280221441/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1280221441"
+        }
+      },
+      {
+        "prompt": "Everyone says anyone can wear the mask. What would make the role yours?",
+        "kicker": "Movie moment 10 · Spider-Man: Into the Spider-Verse",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzU2NTY4NmEtNjU5Mi00Y2MxLWE1OTYtNjk0ZmZkMTJkM2UzXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Nicolas Cage, John Mulaney, and Shameik Moore in Spider-Man: Into the Spider-Verse (2018)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4633694/mediaviewer/rm2991497473/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2991497473"
+        }
+      }
+    ]
+  },
+  "the-super-mario-bros-movie": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt6718170/",
+    "imdbId": "tt6718170",
+    "officialTitle": "The Super Mario Bros. Movie",
+    "premiered": "2023-04-05",
+    "year": 2023,
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy",
+      "Family",
+      "Fantasy"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BOWFmNmY2YjAtZTgyNy00MjBmLWI1YWMtMjFjZjkxYjYyOTVmXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMWFlNjZiN2UtMmE4ZS00MjU2LTkwMGMtOTE1MmI4OWEwODUwXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2031745026",
+    "heroSourceUrl": "https://www.imdb.com/title/tt6718170/mediaviewer/rm2031745026/",
+    "questions": [
+      {
+        "prompt": "Your new plumbing business gets its first huge emergency. How do you respond?",
+        "kicker": "Movie moment 1 · The Super Mario Bros. Movie",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMWU5OWVjN2EtZTcyYS00Y2I1LWJmMTAtMDYzYmMwMjE5NDM0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Charlie Day, Charles Martinet, Chris Pratt, Seth Rogen, and Anya Taylor-Joy in The Super Mario Bros. Movie (2023)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt6718170/mediaviewer/rm3211534337/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3211534337"
+        }
+      },
+      {
+        "prompt": "A green pipe pulls you into another world and separates you from your brother. What first?",
+        "kicker": "Movie moment 2 · The Super Mario Bros. Movie",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODE2ZWYwODgtMjczMy00NDBlLWI2OTItMjQ2MmYyMjIwZTk1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Charlie Day, Charles Martinet, and Chris Pratt in The Super Mario Bros. Movie (2023)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt6718170/mediaviewer/rm3360825345/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3360825345"
+        }
+      },
+      {
+        "prompt": "Toad offers to guide you through the Mushroom Kingdom. What do you ask him?",
+        "kicker": "Movie moment 3 · The Super Mario Bros. Movie",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDg0MDk2NGEtYjEzZi00YzQ4LTk2N2UtZmE0NmVhMTc5YjQ4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Fred Armisen, Chris Pratt, Seth Rogen, Keegan-Michael Key, and Anya Taylor-Joy in The Super Mario Bros. Movie (2023)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt6718170/mediaviewer/rm2492932097/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2492932097"
+        }
+      },
+      {
+        "prompt": "Peach's training course knocks you down again and again. What keeps you trying?",
+        "kicker": "Movie moment 4 · The Super Mario Bros. Movie",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjgwMDU0NjEtYzUyOS00OWEwLWFmNzYtMWNjNGRjODdhYTgwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Chris Pratt and Anya Taylor-Joy in The Super Mario Bros. Movie (2023)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt6718170/mediaviewer/rm1337900546/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1337900546"
+        }
+      },
+      {
+        "prompt": "Donkey Kong challenges you in front of a cheering crowd. What is your approach?",
+        "kicker": "Movie moment 5 · The Super Mario Bros. Movie",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOGMxMmE0N2YtNmFlOC00MjE2LThiMTEtYWI5MWVkZjg1YzljXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Chris Pratt and Seth Rogen in The Super Mario Bros. Movie (2023)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt6718170/mediaviewer/rm1751654401/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1751654401"
+        }
+      },
+      {
+        "prompt": "You can choose one power-up before a dangerous trip. What matters most?",
+        "kicker": "Movie moment 6 · The Super Mario Bros. Movie",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOThhOThmNGEtMWNhZC00NDMzLTliMjEtOGY4ZTdlODdjMTJhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Chris Pratt and Anya Taylor-Joy in The Super Mario Bros. Movie (2023)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt6718170/mediaviewer/rm1519853569/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1519853569"
+        }
+      },
+      {
+        "prompt": "The team races across Rainbow Road in custom karts. What is your driving style?",
+        "kicker": "Movie moment 7 · The Super Mario Bros. Movie",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjE3NjgwMzEtOTE0Mi00MTM5LThlZTItYzBkZjU2YWU2YTlhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Charlie Day, Chris Pratt, Seth Rogen, and Anya Taylor-Joy in The Super Mario Bros. Movie (2023)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt6718170/mediaviewer/rm2439782401/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2439782401"
+        }
+      },
+      {
+        "prompt": "Luigi is trapped in Bowser's dark castle. How would you keep hope alive?",
+        "kicker": "Movie moment 8 · The Super Mario Bros. Movie",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTgyMmJiMmMtYzNmYy00NTY3LWIwOTgtMzBhNWIzNWUyMWVjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jack Black, Charlie Day, Chris Pratt, Seth Rogen, Keegan-Michael Key, and Anya Taylor-Joy in The Super Mario Bros. Movie (2023)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt6718170/mediaviewer/rm1198006273/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1198006273"
+        }
+      },
+      {
+        "prompt": "Bowser performs a passionate piano song. How do you react?",
+        "kicker": "Movie moment 9 · The Super Mario Bros. Movie",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjVlYWQ4NWEtYTdlOS00Y2Q5LTkzMjktNTFlZmI0OTliYjgxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Carlos Alazraqui, Fred Armisen, Jack Black, Cathy Cavadini, Charlie Day, Jessica DiCicco, John DiMaggio, Barbara Harris, Aaron Hendry, Andy Hirsch, Phil LaMarr, Charles Martinet, Jeremy Maxwell, Scott Menville, Eric Osmond, Chris Pratt, Noreen Reardon, Kevin Michael Richardson, Seth Rogen, Rino Romano, Cree Summer, Kazumi Totaka, Eric Bauza, Khary Payton, Will Collyer, Keegan-Michael Key, Juliet Jelenic, Django Craig, Nisa Ward, Sebastian Maniscalco, Kenny James, Willow Geer, Daniel Mora, Rachel Butera, Jason Broad, Ashly Burch, Nora Wyman, Anya Taylor-Joy, and Lee Shorten in The Super Mario Bros. Movie (2023)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt6718170/mediaviewer/rm4271316993/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4271316993"
+        }
+      },
+      {
+        "prompt": "Two brothers face a challenge much bigger than either one. How do they win together?",
+        "kicker": "Movie moment 10 · The Super Mario Bros. Movie",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDRjNGMzOTAtMzA3Mi00ZDFlLWI5M2UtYWVjM2IwYzc2ZDk1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Charlie Day and Chris Pratt in The Super Mario Bros. Movie (2023)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt6718170/mediaviewer/rm1283568898/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1283568898"
+        }
+      }
+    ]
+  },
+  "the-lego-movie": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt1490017/",
+    "imdbId": "tt1490017",
+    "officialTitle": "The Lego Movie",
+    "premiered": "2014-02-07",
+    "year": 2014,
+    "genres": [
+      "Animation",
+      "Action",
+      "Adventure",
+      "Comedy",
+      "Family",
+      "Fantasy",
+      "Sci-Fi"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTg4MDk1ODExN15BMl5BanBnXkFtZTgwNzIyNjg3MDE@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BNTNjODZiMWMtNDJjNy00MjY0LTljNTAtMmU3ZjIyOTBlNjgyXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2046554370",
+    "heroSourceUrl": "https://www.imdb.com/title/tt1490017/mediaviewer/rm2046554370/",
+    "questions": [
+      {
+        "prompt": "Everyone follows the same instruction booklet each morning. Do you follow it exactly?",
+        "kicker": "Movie moment 1 · The Lego Movie",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTY2NzEwMDkxMF5BMl5BanBnXkFtZTgwMzA3MDg3MDE@._V1_.jpg",
+          "alt": "Morgan Freeman, Will Arnett, Elizabeth Banks, Charlie Day, Chris Pratt, and Alison Brie in The Lego Movie (2014)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1490017/mediaviewer/rm1013764096/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1013764096"
+        }
+      },
+      {
+        "prompt": "The Piece of Resistance sticks to your back. What do you think it means?",
+        "kicker": "Movie moment 2 · The Lego Movie",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDk3MDU3NTU1MV5BMl5BanBnXkFtZTgwMjA3MDg3MDE@._V1_.jpg",
+          "alt": "Morgan Freeman, Elizabeth Banks, and Chris Pratt in The Lego Movie (2014)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1490017/mediaviewer/rm1030541312/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1030541312"
+        }
+      },
+      {
+        "prompt": "Wyldstyle says you may be the Special, but you cannot build freely. What next?",
+        "kicker": "Movie moment 3 · The Lego Movie",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYmNlNmE3YzQtZjk4ZS00MTliLThhYTAtMTMwYmNmNTQwMDVhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Elizabeth Banks and Chris Pratt in The Lego Movie (2014)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1490017/mediaviewer/rm1288743681/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1288743681"
+        }
+      },
+      {
+        "prompt": "A room of Master Builders wants your original idea. What do you make?",
+        "kicker": "Movie moment 4 · The Lego Movie",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDgzZmEyZDgtMWM5Ni00MjkyLTlhNGUtYTBhM2VjYTFlZWRiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Morgan Freeman, Elizabeth Banks, Chris Pratt, and Alison Brie in The Lego Movie (2014)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1490017/mediaviewer/rm1557244673/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1557244673"
+        }
+      },
+      {
+        "prompt": "Good Cop is ordered to do something he knows is wrong. What advice would you give?",
+        "kicker": "Movie moment 5 · The Lego Movie",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjc0M2I1M2QtMDEwMS00NWRlLWJhN2QtOGZkNGVhZTA5M2IzXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Liam Neeson and Will Ferrell in The Lego Movie (2014)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1490017/mediaviewer/rm1422961409/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1422961409"
+        }
+      },
+      {
+        "prompt": "Cloud Cuckoo Land has no rules and endless colors. How do you explore it?",
+        "kicker": "Movie moment 6 · The Lego Movie",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZWEyM2I3ZjAtOTYzYS00MjZkLTliMWEtYzg2YzdjYWFlZjI3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Chris Pratt and Alison Brie in The Lego Movie (2014)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1490017/mediaviewer/rm1139116290/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1139116290"
+        }
+      },
+      {
+        "prompt": "Batman's complicated vehicle breaks apart. What simple build could replace it?",
+        "kicker": "Movie moment 7 · The Lego Movie",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOWExN2MyNzEtODRkMC00M2I4LThkNWEtYTljNjBjM2I3NmVhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Morgan Freeman, Will Ferrell, Will Arnett, Elizabeth Banks, Charlie Day, Nick Offerman, Chris Pratt, and Alison Brie in The Lego Movie (2014)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1490017/mediaviewer/rm1909566209/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1909566209"
+        }
+      },
+      {
+        "prompt": "A double-decker couch seems silly until the team needs it. What does that prove?",
+        "kicker": "Movie moment 8 · The Lego Movie",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYTE5MzlmMTMtYTQ5Ny00MDQ5LTg3YTMtYTE0ZDQyNzc5OGQ5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Liam Neeson, Will Arnett, Elizabeth Banks, Charlie Day, and Chris Pratt in The Lego Movie (2014)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1490017/mediaviewer/rm1473293057/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1473293057"
+        }
+      },
+      {
+        "prompt": "Lord Business wants every piece permanently fixed in place. How do you challenge that?",
+        "kicker": "Movie moment 9 · The Lego Movie",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTcxODAyODIyN15BMl5BanBnXkFtZTgwNjA5MDQwMTE@._V1_.jpg",
+          "alt": "Morgan Freeman, Will Ferrell, Will Arnett, Elizabeth Banks, Charlie Day, Nick Offerman, Chris Pratt, and Alison Brie in The Lego Movie (2014)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1490017/mediaviewer/rm3097679616/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3097679616"
+        }
+      },
+      {
+        "prompt": "The team needs one invention built from random pieces. How do you collaborate?",
+        "kicker": "Movie moment 10 · The Lego Movie",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNWM4NGRlMjUtMzRmZi00ODEwLWFkM2EtNzU5YTBiMjM2MzlmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Morgan Freeman, Will Arnett, Elizabeth Banks, Chris Pratt, and Alison Brie in The Lego Movie (2014)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1490017/mediaviewer/rm2127670017/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2127670017"
+        }
+      }
+    ]
+  },
+  "despicable-me": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt1323594/",
+    "imdbId": "tt1323594",
+    "officialTitle": "Despicable Me",
+    "premiered": "2010-07-09",
+    "year": 2010,
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy",
+      "Crime",
+      "Family",
+      "Sci-Fi"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTY3NjY0MTQ0Nl5BMl5BanBnXkFtZTcwMzQ2MTc0Mw@@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMTc2YzA0YTMtMmY2ZS00NzBjLWIyZDMtZWQzYzk3YzE4NDM1XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2978612736",
+    "heroSourceUrl": "https://www.imdb.com/title/tt1323594/mediaviewer/rm2978612736/",
+    "questions": [
+      {
+        "prompt": "Gru announces a plan to steal the moon. What question do you ask first?",
+        "kicker": "Movie moment 1 · Despicable Me",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTU5Mzg3MDM0MV5BMl5BanBnXkFtZTcwNjU4MDczMw@@._V1_.jpg",
+          "alt": "Gru & the minions in Despicable Me ",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1323594/mediaviewer/rm2946075904/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2946075904"
+        }
+      },
+      {
+        "prompt": "The bank refuses to fund the plan without a shrink ray. How do you adapt?",
+        "kicker": "Movie moment 2 · Despicable Me",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNGJlMzg4ZjQtZmRmZC00ODRmLWEwNTAtMmVmZDAzMzAwYTU4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Will Arnett and Steve Carell in Despicable Me (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1323594/mediaviewer/rm1195158273/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1195158273"
+        }
+      },
+      {
+        "prompt": "Three sisters arrive selling cookies at the villain's house. What happens next?",
+        "kicker": "Movie moment 3 · Despicable Me",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDM5ZmIzOWEtNjc0Yi00MzZhLTk1YmYtZGQ0NDZjMDQ2NzVlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Julie Andrews, Steve Carell, Miranda Cosgrove, Elsie Fisher, and Dana Gaier Ellis in Despicable Me (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1323594/mediaviewer/rm1027386113/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1027386113"
+        }
+      },
+      {
+        "prompt": "A cookie robot must sneak into Vector's fortress. How would you test it?",
+        "kicker": "Movie moment 4 · Despicable Me",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTYxOTYyNzAyNV5BMl5BanBnXkFtZTcwODMxMjA2Mw@@._V1_.jpg",
+          "alt": "Steve Carell and Jason Segel in Despicable Me (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1323594/mediaviewer/rm2645918464/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2645918464"
+        }
+      },
+      {
+        "prompt": "The girls ask Gru to read a bedtime story. How much effort does he give?",
+        "kicker": "Movie moment 5 · Despicable Me",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BY2M3OTdjM2UtZDk3OC00Y2M0LWI0ZTEtYWZkZTc0ZDM4MTY4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Steve Carell, Russell Brand, Miranda Cosgrove, Elsie Fisher, and Dana Gaier Ellis in Despicable Me (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1323594/mediaviewer/rm1077717761/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1077717761"
+        }
+      },
+      {
+        "prompt": "A ballet recital conflicts with the biggest mission of your life. Which comes first?",
+        "kicker": "Movie moment 6 · Despicable Me",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTNhYTUzZmUtY2ZmNi00NWZhLTk1OTktMTA0Mjg2OWIxZjYwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Steve Carell, Frank Welker, Miranda Cosgrove, Elsie Fisher, and Dana Gaier Ellis in Despicable Me (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1323594/mediaviewer/rm1966910209/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1966910209"
+        }
+      },
+      {
+        "prompt": "The Minions turn a simple task into complete chaos. How do you lead them?",
+        "kicker": "Movie moment 7 · Despicable Me",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzU0NjAzNDU2M15BMl5BanBnXkFtZTcwMDMxMjA2Mw@@._V1_.jpg",
+          "alt": "Steve Carell in Despicable Me (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1323594/mediaviewer/rm2528477952/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2528477952"
+        }
+      },
+      {
+        "prompt": "Agnes wants a giant fluffy unicorn prize. How far would you go to help?",
+        "kicker": "Movie moment 8 · Despicable Me",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODQ3MjkzYTAtZjEzNC00YzkzLTk0YjQtY2NlMWY1MzRmZGY0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Steve Carell, Miranda Cosgrove, Elsie Fisher, and Dana Gaier Ellis in Despicable Me (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1323594/mediaviewer/rm1446816513/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1446816513"
+        }
+      },
+      {
+        "prompt": "Vector shows off a fortress full of high-tech traps. How do you get inside?",
+        "kicker": "Movie moment 9 · Despicable Me",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODQ4ZjdiMDktMTE4Yy00MjdiLTg3NjUtMjM3MmVkYjQ0NzgyXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Steve Carell and Jason Segel in Despicable Me (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1323594/mediaviewer/rm1178381057/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1178381057"
+        }
+      },
+      {
+        "prompt": "Your perfect plan is changing because you care about people. How do you handle that?",
+        "kicker": "Movie moment 10 · Despicable Me",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTdmYjEwMTMtZmRhNi00ZTU5LTkxNTAtYjI4ZjZjZGMwNjU2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Steve Carell, Miranda Cosgrove, Elsie Fisher, and Dana Gaier Ellis in Despicable Me (2010)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1323594/mediaviewer/rm2285677313/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2285677313"
+        }
+      }
+    ]
+  },
+  "paddington-2": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt4468740/",
+    "imdbId": "tt4468740",
+    "officialTitle": "Paddington 2",
+    "premiered": "2018-01-12",
+    "year": 2017,
+    "genres": [
+      "Adventure",
+      "Comedy",
+      "Family"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BNTk1YzlhMTUtZmU5MC00NmRmLTlkZjItYzQ0NTY4Y2NiNzc4XkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BOTM0YTA3ZjItYzcxZC00ODcwLTg3ZjItMGE2OWQ3NWMwNTQ2XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2916244480",
+    "heroSourceUrl": "https://www.imdb.com/title/tt4468740/mediaviewer/rm2916244480/",
+    "questions": [
+      {
+        "prompt": "Paddington finds the perfect pop-up book for Aunt Lucy. How would you earn it?",
+        "kicker": "Movie moment 1 · Paddington 2",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzgyNDAwODU3Ml5BMl5BanBnXkFtZTgwMDc4MTkwNDI@._V1_.jpg",
+          "alt": "Jim Broadbent, Sanjeev Bhaskar, Robbie Gee, Ben Miller, Jessica Hynes, Shola Adewusi, and Marie-France Alvarez in Paddington 2 (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4468740/mediaviewer/rm464017408/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm464017408"
+        }
+      },
+      {
+        "prompt": "Your first day washing windows becomes a soapy disaster. How do you recover?",
+        "kicker": "Movie moment 2 · Paddington 2",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNmQ2NGJmOWItY2ZjYy00MzZhLTgxYzYtNzg2YThjZTk5OWE4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Hugh Bonneville, Julie Walters, Ben Whishaw, Sally Hawkins, Madeleine Harris, and Samuel Joslin in Paddington 2 (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4468740/mediaviewer/rm1093753088/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1093753088"
+        }
+      },
+      {
+        "prompt": "A haircut goes terribly wrong at the barber shop. What do you say to the customer?",
+        "kicker": "Movie moment 3 · Paddington 2",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjVjMzFkN2MtYTViZi00MmRlLWIwMDYtOTgzZWQ2OTlhYjdhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ben Whishaw in Paddington 2 (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4468740/mediaviewer/rm3239794944/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3239794944"
+        }
+      },
+      {
+        "prompt": "A costumed thief steals the book while you are nearby. What details do you remember?",
+        "kicker": "Movie moment 4 · Paddington 2",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDk4MDg3MWMtNmQ3ZC00ZTk1LWI2YjUtNDFmNjkzYTU4MTkxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Hugh Grant and Ben Whishaw in Paddington 2 (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4468740/mediaviewer/rm2882690048/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2882690048"
+        }
+      },
+      {
+        "prompt": "No one believes your account of the theft. How do you keep hope?",
+        "kicker": "Movie moment 5 · Paddington 2",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTNhMzE2NjItYjg5Ni00MzQzLWE2NGQtOTVlYTU4ZWM0YTI4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ben Whishaw in Paddington 2 (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4468740/mediaviewer/rm3491453184/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3491453184"
+        }
+      },
+      {
+        "prompt": "Knuckles serves terrible prison food. How would you suggest adding marmalade?",
+        "kicker": "Movie moment 6 · Paddington 2",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYTc4MDJjMmQtMzJlMC00ZjZkLTg0YWItYTgyYWMzYjc1OGE5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Brendan Gleeson and Ben Whishaw in Paddington 2 (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4468740/mediaviewer/rm3575339264/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3575339264"
+        }
+      },
+      {
+        "prompt": "The Browns investigate Phoenix Buchanan's many costumes. Which clue matters?",
+        "kicker": "Movie moment 7 · Paddington 2",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYmYzMmExZmYtNDVjMy00NGE1LTg2NjEtYjI3YmQxZDFkNTA2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Sally Hawkins and Samuel Joslin in Paddington 2 (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4468740/mediaviewer/rm2748472320/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2748472320"
+        }
+      },
+      {
+        "prompt": "Paddington makes a difficult place kinder one person at a time. Where would you start?",
+        "kicker": "Movie moment 8 · Paddington 2",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTU3OTQ3OTkxOF5BMl5BanBnXkFtZTgwNzQ4MTkwNDI@._V1_.jpg",
+          "alt": "Brendan Gleeson and Ben Whishaw in Paddington 2 (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4468740/mediaviewer/rm27809792/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm27809792"
+        }
+      },
+      {
+        "prompt": "A hidden message in the pop-up book points across London. How do you solve it?",
+        "kicker": "Movie moment 9 · Paddington 2",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjI4MDA0MDYzN15BMl5BanBnXkFtZTgwOTQ4MTkwNDI@._V1_.jpg",
+          "alt": "Hugh Bonneville, Julie Walters, Ben Whishaw, Sally Hawkins, Madeleine Harris, and Samuel Joslin in Paddington 2 (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4468740/mediaviewer/rm262690816/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm262690816"
+        }
+      },
+      {
+        "prompt": "Your family must trust you even when the evidence looks bad. What builds that trust?",
+        "kicker": "Movie moment 10 · Paddington 2",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODMwZDYwNmYtNjY1ZC00M2ZiLThkNmQtYjcxNzk5MmJlZWI4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ben Whishaw and Samuel Joslin in Paddington 2 (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt4468740/mediaviewer/rm4179319040/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4179319040"
+        }
+      }
+    ]
+  },
+  "harry-potter-and-the-sorcerers-stone": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0241527/",
+    "imdbId": "tt0241527",
+    "officialTitle": "Harry Potter and the Sorcerer's Stone",
+    "premiered": "2001-11-16",
+    "year": 2001,
+    "genres": [
+      "Adventure",
+      "Family",
+      "Fantasy"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BNTU1MzgyMDMtMzBlZS00YzczLThmYWEtMjU3YmFlOWEyMjE1XkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BNDI1ZTcxNWYtODRlZC00ZjQ4LTg0NDgtMTQ4MGVmMzljZDQzXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm4214311937",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0241527/mediaviewer/rm4214311937/",
+    "questions": [
+      {
+        "prompt": "Hundreds of Hogwarts letters arrive despite your family's efforts. What do you do?",
+        "kicker": "Movie moment 1 · Harry Potter and the Sorcerer's Stone",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzFiMjdjZDItYWI4OS00MWU2LTkzNzQtMmFlZmY1NGViODQ4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Daniel Radcliffe in Harry Potter and the Sorcerer's Stone (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0241527/mediaviewer/rm510678529/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm510678529"
+        }
+      },
+      {
+        "prompt": "Hagrid tells you that you are a wizard. What is your first question?",
+        "kicker": "Movie moment 2 · Harry Potter and the Sorcerer's Stone",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTlhNmU0YmYtNDRkZi00ZDNlLWFiMWItMDQ4NjM5ODY0Yjg3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Robbie Coltrane and Daniel Radcliffe in Harry Potter and the Sorcerer's Stone (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0241527/mediaviewer/rm4134986241/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4134986241"
+        }
+      },
+      {
+        "prompt": "Diagon Alley gives you one afternoon to prepare for magic school. Where first?",
+        "kicker": "Movie moment 3 · Harry Potter and the Sorcerer's Stone",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTc1MDg0MDgzMV5BMl5BanBnXkFtZTcwOTIzNjUwNA@@._V1_.jpg",
+          "alt": "Daniel Radcliffe in Harry Potter and the Sorcerer's Stone (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0241527/mediaviewer/rm196642560/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm196642560"
+        }
+      },
+      {
+        "prompt": "The Sorting Hat considers more than one house for you. What quality matters most?",
+        "kicker": "Movie moment 4 · Harry Potter and the Sorcerer's Stone",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTkyMDM1NDA5MV5BMl5BanBnXkFtZTgwMzE0ODAxMTI@._V1_.jpg",
+          "alt": "Alan Rickman, Richard Harris, Ian Hart, Leslie Phillips, Daniel Radcliffe, and Zoë Wanamaker in Harry Potter and the Sorcerer's Stone (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0241527/mediaviewer/rm785201408/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm785201408"
+        }
+      },
+      {
+        "prompt": "A troll enters the castle while a classmate is alone. What do you do?",
+        "kicker": "Movie moment 5 · Harry Potter and the Sorcerer's Stone",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BY2VhNDVmMmUtZmZhMC00YjQ5LTgwZTItOTA4M2QzZmMwMGZjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Rupert Grint, Daniel Radcliffe, and Emma Watson in Harry Potter and the Sorcerer's Stone (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0241527/mediaviewer/rm1212998145/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1212998145"
+        }
+      },
+      {
+        "prompt": "Your first flying lesson turns into a risky chase. How do you react?",
+        "kicker": "Movie moment 6 · Harry Potter and the Sorcerer's Stone",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTMzNzY4NDgzMl5BMl5BanBnXkFtZTcwMTMzNDc3Mw@@._V1_.jpg",
+          "alt": "Rupert Grint, Daniel Radcliffe, and Emma Watson in Harry Potter and the Sorcerer's Stone (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0241527/mediaviewer/rm2063106304/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2063106304"
+        }
+      },
+      {
+        "prompt": "A three-headed dog guards a trapdoor. How would you investigate safely?",
+        "kicker": "Movie moment 7 · Harry Potter and the Sorcerer's Stone",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjA5NzU2MDYzMF5BMl5BanBnXkFtZTcwODIzNDc3Mw@@._V1_.jpg",
+          "alt": "Alfred Enoch, Rupert Grint, Matthew Lewis, Devon Murray, Daniel Radcliffe, Zoë Wanamaker, and Emma Watson in Harry Potter and the Sorcerer's Stone (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0241527/mediaviewer/rm2096660736/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2096660736"
+        }
+      },
+      {
+        "prompt": "The Mirror of Erised shows your deepest wish. How long do you stay?",
+        "kicker": "Movie moment 8 · Harry Potter and the Sorcerer's Stone",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDkxODNlZTMtMWQ5Yi00Y2RiLTkyNmUtNDI3ODk0MmMyYTA1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Daniel Radcliffe in Harry Potter and the Sorcerer's Stone (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0241527/mediaviewer/rm1162666497/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1162666497"
+        }
+      },
+      {
+        "prompt": "A giant chessboard blocks the route. What part would you play?",
+        "kicker": "Movie moment 9 · Harry Potter and the Sorcerer's Stone",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTVmYzk0MTUtY2EzNC00NDMwLWE4Y2ItOWFmMDQzZTAxMDQ0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Rupert Grint in Harry Potter and the Sorcerer's Stone (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0241527/mediaviewer/rm1685083649/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1685083649"
+        }
+      },
+      {
+        "prompt": "Your friends discover someone is after the Sorcerer's Stone. Who leads the plan?",
+        "kicker": "Movie moment 10 · Harry Potter and the Sorcerer's Stone",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNmZmNDQxOWQtNWJhNC00MGE3LThkMTEtZWJmYWU2MTJhMWMxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Rupert Grint, Daniel Radcliffe, Emma Watson, Oh Oh, Gizmo, and Ook in Harry Potter and the Sorcerer's Stone (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0241527/mediaviewer/rm2839601665/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2839601665"
+        }
+      }
+    ]
+  },
+  "the-lord-of-the-rings-the-fellowship-of-the-ring": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0120737/",
+    "imdbId": "tt0120737",
+    "officialTitle": "The Lord of the Rings: The Fellowship of the Ring",
+    "premiered": "2001-12-19",
+    "year": 2001,
+    "genres": [
+      "Adventure",
+      "Drama",
+      "Fantasy"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BNzIxMDQ2YTctNDY4MC00ZTRhLTk4ODQtMTVlOWY4NTdiYmMwXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BYjJkMTQzNDktNTFkYS00NGZjLThhMzItNzMxNTg5ZTM4NTc0XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm3866311937",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0120737/mediaviewer/rm3866311937/",
+    "questions": [
+      {
+        "prompt": "Bilbo's birthday party fills the Shire. Where would you be during the celebration?",
+        "kicker": "Movie moment 1 · The Lord of the Rings: The Fellowship of the Ring",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BY2RmZWY0MmYtNTgyMi00MjA5LThjZTgtYjU1OGU0YTU2YWU1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ian Holm and Elijah Wood in The Lord of the Rings: The Fellowship of the Ring (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120737/mediaviewer/rm1290782465/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1290782465"
+        }
+      },
+      {
+        "prompt": "Gandalf says a simple ring carries terrible power. What do you ask first?",
+        "kicker": "Movie moment 2 · The Lord of the Rings: The Fellowship of the Ring",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTY1OTE1NDY4NV5BMl5BanBnXkFtZTcwMzkwMjk2Mw@@._V1_.jpg",
+          "alt": "Elijah Wood and Ian McKellen in The Lord of the Rings: The Fellowship of the Ring (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120737/mediaviewer/rm3869868032/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3869868032"
+        }
+      },
+      {
+        "prompt": "Black Riders search the road while you leave home quietly. How do you travel?",
+        "kicker": "Movie moment 3 · The Lord of the Rings: The Fellowship of the Ring",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTYxNjY1ODQ3MF5BMl5BanBnXkFtZTcwMjgwMjk2Mw@@._V1_.jpg",
+          "alt": "Elijah Wood in The Lord of the Rings: The Fellowship of the Ring (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120737/mediaviewer/rm2645131264/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2645131264"
+        }
+      },
+      {
+        "prompt": "Strider offers to guide the hobbits from Bree. What would earn your trust?",
+        "kicker": "Movie moment 4 · The Lord of the Rings: The Fellowship of the Ring",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTU4NDQ1ODUyNl5BMl5BanBnXkFtZTcwNDExMjk2Mw@@._V1_.jpg",
+          "alt": "Liv Tyler, Elijah Wood, and Viggo Mortensen in The Lord of the Rings: The Fellowship of the Ring (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120737/mediaviewer/rm4087971840/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4087971840"
+        }
+      },
+      {
+        "prompt": "Rivendell's council cannot agree who should carry the ring. What do you contribute?",
+        "kicker": "Movie moment 5 · The Lord of the Rings: The Fellowship of the Ring",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTUzZTBmYmEtMTcxOS00N2U0LWI3OWQtYzUyZDJiYjE1N2RjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Elijah Wood, Ian McKellen, Matt Appleton, Orlando Bloom, Ray Henwood, John Rhys-Davies, Hugo Weaving, Sam Kelly, Jonathan Harding, Blair Morton, and Ralph Johnson in The Lord of the Rings: The Fellowship of the Ring (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120737/mediaviewer/rm3840919297/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3840919297"
+        }
+      },
+      {
+        "prompt": "A snowstorm blocks the mountain pass. How does the fellowship choose another route?",
+        "kicker": "Movie moment 6 · The Lord of the Rings: The Fellowship of the Ring",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZWNjNWU5MzAtMDljMy00ZjM3LTgzNGMtZWQ3YTYzMGRlZDg4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Sean Astin, Sean Bean, Elijah Wood, Viggo Mortensen, Ian McKellen, Orlando Bloom, Billy Boyd, Dominic Monaghan, and John Rhys-Davies in The Lord of the Rings: The Fellowship of the Ring (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120737/mediaviewer/rm1071695617/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1071695617"
+        }
+      },
+      {
+        "prompt": "The Mines of Moria are dark and silent. Where do you stand in the group?",
+        "kicker": "Movie moment 7 · The Lord of the Rings: The Fellowship of the Ring",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTU0NjIyNTE0Nl5BMl5BanBnXkFtZTcwNzkwMjk2Mw@@._V1_.jpg",
+          "alt": "Ian McKellen in The Lord of the Rings: The Fellowship of the Ring (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120737/mediaviewer/rm3802759168/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3802759168"
+        }
+      },
+      {
+        "prompt": "A cave troll charges into the chamber. What is your best strength?",
+        "kicker": "Movie moment 8 · The Lord of the Rings: The Fellowship of the Ring",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODkyNDM4MDA3NV5BMl5BanBnXkFtZTcwNTEzNTU0NA@@._V1_.jpg",
+          "alt": "Sean Astin, Sean Bean, Elijah Wood, Viggo Mortensen, Ian McKellen, Orlando Bloom, Billy Boyd, Dominic Monaghan, John Rhys-Davies, and Hugo Weaving in The Lord of the Rings: The Fellowship of the Ring (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120737/mediaviewer/rm3970152960/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3970152960"
+        }
+      },
+      {
+        "prompt": "Galadriel offers insight into a future you fear. How do you use it?",
+        "kicker": "Movie moment 9 · The Lord of the Rings: The Fellowship of the Ring",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTY5MDc5MjM5Ml5BMl5BanBnXkFtZTcwNTAxMjk2Mw@@._V1_.jpg",
+          "alt": "Elijah Wood and Cate Blanchett in The Lord of the Rings: The Fellowship of the Ring (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120737/mediaviewer/rm3936976896/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3936976896"
+        }
+      },
+      {
+        "prompt": "The ring tempts a respected teammate. How do you respond without giving up on them?",
+        "kicker": "Movie moment 10 · The Lord of the Rings: The Fellowship of the Ring",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODg0Nzk2MDY0OV5BMl5BanBnXkFtZTcwNDEzNTU0NA@@._V1_.jpg",
+          "alt": "Sean Astin, Sean Bean, Elijah Wood, Viggo Mortensen, Noel Appleby, Orlando Bloom, Billy Boyd, Marton Csokas, Alan Howard, Dominic Monaghan, Craig Parker, John Rhys-Davies, Andy Serkis, Sala Baker, and Megan Edwards in The Lord of the Rings: The Fellowship of the Ring (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120737/mediaviewer/rm3986930176/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3986930176"
+        }
+      }
+    ]
+  },
+  "star-wars-a-new-hope": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0076759/",
+    "imdbId": "tt0076759",
+    "officialTitle": "Star Wars: Episode IV - A New Hope",
+    "premiered": "1977-05-25",
+    "year": 1977,
+    "genres": [
+      "Action",
+      "Adventure",
+      "Fantasy",
+      "Sci-Fi"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BOGUwMDk0Y2MtNjBlNi00NmRiLTk2MWYtMGMyMDlhYmI4ZDBjXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMmUxNGNiNWUtY2I2OS00NTg4LWFlOWQtNTk3YjJiNzY3MWRmXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm1538102018",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0076759/mediaviewer/rm1538102018/",
+    "questions": [
+      {
+        "prompt": "A droid plays a secret message from a rebel princess. What do you do?",
+        "kicker": "Movie moment 1 · Star Wars: Episode IV - A New Hope",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTg4ODMyZjMtZjM1MC00ZDBiLWFhN2ItMTMwODEzMTFhYTZlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Harrison Ford, Anthony Daniels, Carrie Fisher, Mark Hamill, Kenny Baker, and Peter Mayhew in Star Wars: Episode IV - A New Hope (1977)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0076759/mediaviewer/rm3388818688/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3388818688"
+        }
+      },
+      {
+        "prompt": "Obi-Wan offers to teach you about the Force. What would you ask?",
+        "kicker": "Movie moment 2 · Star Wars: Episode IV - A New Hope",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTc4ZWIyNWUtNjZmOS00MWFhLWExNDQtNmViYjk5NTljY2M5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Alec Guinness, Mark Hamill, and Peter Mayhew in Star Wars: Episode IV - A New Hope (1977)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0076759/mediaviewer/rm150619392/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm150619392"
+        }
+      },
+      {
+        "prompt": "Han Solo names a high price for passage off Tatooine. How do you negotiate?",
+        "kicker": "Movie moment 3 · Star Wars: Episode IV - A New Hope",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODFkMzA2NTMtZTQ4MS00MDQ0LWFkMDctYzU4MTNhNmM5ZGExXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Harrison Ford, Carrie Fisher, Mark Hamill, and Peter Mayhew in Star Wars: Episode IV - A New Hope (1977)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0076759/mediaviewer/rm1476150528/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1476150528"
+        }
+      },
+      {
+        "prompt": "The Millennium Falcon is pulled into the Death Star. What is your first plan?",
+        "kicker": "Movie moment 4 · Star Wars: Episode IV - A New Hope",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODBlYzc3ZTQtNzBmNi00ZTY4LWI5NjYtZTYxNDE4MTA2OWI4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Harrison Ford, Carrie Fisher, Mark Hamill, and Peter Mayhew in Star Wars: Episode IV - A New Hope (1977)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0076759/mediaviewer/rm1190937856/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1190937856"
+        }
+      },
+      {
+        "prompt": "Leia is held in a guarded detention block. Which rescue role fits you?",
+        "kicker": "Movie moment 5 · Star Wars: Episode IV - A New Hope",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYmE0ODZjZDMtNDg4ZC00MjhiLWI4NmYtYmQxZmZiNTNhY2U4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Harrison Ford, Carrie Fisher, and Mark Hamill in Star Wars: Episode IV - A New Hope (1977)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0076759/mediaviewer/rm3455927552/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3455927552"
+        }
+      },
+      {
+        "prompt": "The group is trapped inside a trash compactor. How do you help?",
+        "kicker": "Movie moment 6 · Star Wars: Episode IV - A New Hope",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMWU3MzJkZGEtM2EwYi00NzFjLTg4OTctYjQ4NDY5NDQwNWIxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Harrison Ford, Carrie Fisher, Mark Hamill, and Peter Mayhew in Star Wars: Episode IV - A New Hope (1977)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0076759/mediaviewer/rm3472639232/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3472639232"
+        }
+      },
+      {
+        "prompt": "Obi-Wan tells you to trust the Force instead of the targeting computer. What wins?",
+        "kicker": "Movie moment 7 · Star Wars: Episode IV - A New Hope",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTI2M2RlZWMtM2M0OC00NzJmLTkxZGYtYTExNzQ2ZmIzYThkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Alec Guinness and Mark Hamill in Star Wars: Episode IV - A New Hope (1977)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0076759/mediaviewer/rm1727743232/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1727743232"
+        }
+      },
+      {
+        "prompt": "The rebels study a tiny weakness in a huge battle station. What do you notice?",
+        "kicker": "Movie moment 8 · Star Wars: Episode IV - A New Hope",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOWMwYzIxMDQtZTcwNC00MzhjLWIxMGEtYmZhMzkzNmUzNzkwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Harrison Ford, Carrie Fisher, and Mark Hamill in Star Wars: Episode IV - A New Hope (1977)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0076759/mediaviewer/rm1090274560/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1090274560"
+        }
+      },
+      {
+        "prompt": "Han could leave with his reward or stay for a dangerous fight. What would you choose?",
+        "kicker": "Movie moment 9 · Star Wars: Episode IV - A New Hope",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYzQ4NzMzNDctMDkwMC00NjkyLTg5ODgtNDgyNWUxNzhmNzRlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Alec Guinness, Harrison Ford, Mark Hamill, and Peter Mayhew in Star Wars: Episode IV - A New Hope (1977)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0076759/mediaviewer/rm1627014400/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1627014400"
+        }
+      },
+      {
+        "prompt": "Your small team faces an empire with greater power. What keeps hope alive?",
+        "kicker": "Movie moment 10 · Star Wars: Episode IV - A New Hope",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjVmOTM0MTctNTcxOS00ZmNkLTllNDUtNTMyNTgzMDFmMDg3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Harrison Ford, Carrie Fisher, and Mark Hamill in Star Wars: Episode IV - A New Hope (1977)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0076759/mediaviewer/rm2063353088/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2063353088"
+        }
+      }
+    ]
+  },
+  "raiders-of-the-lost-ark": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0082971/",
+    "imdbId": "tt0082971",
+    "officialTitle": "Raiders of the Lost Ark",
+    "premiered": "1981-06-12",
+    "year": 1981,
+    "genres": [
+      "Adventure"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BOGNhMjg2ZjgtYzk4Ni00MTViLTg1MmUtYzM2MDZiYjZlMmU3XkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BOTA4N2U1ZDktYmE4MC00NDFkLTgwM2QtN2U3M2RlODM1YTgxXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm878364674",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0082971/mediaviewer/rm878364674/",
+    "questions": [
+      {
+        "prompt": "A golden idol rests beyond a room of hidden traps. How do you approach it?",
+        "kicker": "Movie moment 1 · Raiders of the Lost Ark",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjE5NTA2YzAtMzY0OS00ODIwLWE2MTEtNDM5MDBlMWNmMTA2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Harrison Ford and Alfred Molina in Raiders of the Lost Ark (1981)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0082971/mediaviewer/rm677038082/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm677038082"
+        }
+      },
+      {
+        "prompt": "A giant boulder starts rolling toward you. What instinct takes over?",
+        "kicker": "Movie moment 2 · Raiders of the Lost Ark",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTExNDE3MTgxOTReQTJeQWpwZ15BbWU3MDI1ODM3MzM@._V1_.jpg",
+          "alt": "Harrison Ford in Raiders of the Lost Ark (1981)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0082971/mediaviewer/rm2207354112/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2207354112"
+        }
+      },
+      {
+        "prompt": "Government agents ask you to find the Ark before rival explorers. What do you verify?",
+        "kicker": "Movie moment 3 · Raiders of the Lost Ark",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzI3ZTBjYjUtMjBiYS00MWUyLWE3MmYtZTIyMmQ5NGIzZDU1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Harrison Ford and Denholm Elliott in Raiders of the Lost Ark (1981)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0082971/mediaviewer/rm2125052673/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2125052673"
+        }
+      },
+      {
+        "prompt": "Marion challenges you to a drinking contest before discussing business. How do you respond?",
+        "kicker": "Movie moment 4 · Raiders of the Lost Ark",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTU1OTQxMzQ4MF5BMl5BanBnXkFtZTcwNTM4MzczMw@@._V1_.jpg",
+          "alt": "Harrison Ford and Karen Allen in Raiders of the Lost Ark (1981)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0082971/mediaviewer/rm3012660480/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3012660480"
+        }
+      },
+      {
+        "prompt": "A snowy tavern erupts into chaos. What is your role in getting everyone out?",
+        "kicker": "Movie moment 5 · Raiders of the Lost Ark",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTczODAyMDQ4MF5BMl5BanBnXkFtZTcwNzQ4MzczMw@@._V1_.jpg",
+          "alt": "Harrison Ford and Karen Allen in Raiders of the Lost Ark (1981)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0082971/mediaviewer/rm3096546560/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3096546560"
+        }
+      },
+      {
+        "prompt": "Sallah reveals that the map-room staff may be the wrong length. What does that change?",
+        "kicker": "Movie moment 6 · Raiders of the Lost Ark",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTkwNjE1OTE1MF5BMl5BanBnXkFtZTcwMjM4MzczMw@@._V1_.jpg",
+          "alt": "Harrison Ford and John Rhys-Davies in Raiders of the Lost Ark (1981)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0082971/mediaviewer/rm3062992128/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3062992128"
+        }
+      },
+      {
+        "prompt": "The Well of Souls is filled with snakes. How do you manage your fear?",
+        "kicker": "Movie moment 7 · Raiders of the Lost Ark",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTkxMzQyMTY3Nl5BMl5BanBnXkFtZTcwMTU4MzczMw@@._V1_.jpg",
+          "alt": "Harrison Ford in Raiders of the Lost Ark (1981)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0082971/mediaviewer/rm2224131328/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2224131328"
+        }
+      },
+      {
+        "prompt": "A truck carrying the artifact speeds into the desert. How would you catch it?",
+        "kicker": "Movie moment 8 · Raiders of the Lost Ark",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTM5NzY3MDgyOF5BMl5BanBnXkFtZTcwODQ4MzczMw@@._V1_.jpg",
+          "alt": "Harrison Ford and Karen Allen in Raiders of the Lost Ark (1981)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0082971/mediaviewer/rm2274462976/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2274462976"
+        }
+      },
+      {
+        "prompt": "Belloq says you and he are not so different. How do you answer?",
+        "kicker": "Movie moment 9 · Raiders of the Lost Ark",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODViZDUzOGItN2E5MC00Zjk1LWEwMDAtMmJmOTY1ZWM0OTE2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Harrison Ford and Paul Freeman in Raiders of the Lost Ark (1981)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0082971/mediaviewer/rm2645146369/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2645146369"
+        }
+      },
+      {
+        "prompt": "History, danger, and pride all pull in different directions. Which one guides you?",
+        "kicker": "Movie moment 10 · Raiders of the Lost Ark",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTQxMzg3NDI0OV5BMl5BanBnXkFtZTcwNDQ4MzczMw@@._V1_.jpg",
+          "alt": "Harrison Ford and Karen Allen in Raiders of the Lost Ark (1981)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0082971/mediaviewer/rm3130100992/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3130100992"
+        }
+      }
+    ]
+  },
+  "back-to-the-future": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0088763/",
+    "imdbId": "tt0088763",
+    "officialTitle": "Back to the Future",
+    "premiered": "1985-07-03",
+    "year": 1985,
+    "genres": [
+      "Adventure",
+      "Comedy",
+      "Sci-Fi"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BZmM3ZjE0NzctNjBiOC00MDZmLTgzMTUtNGVlOWFlOTNiZDJiXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BYTQ0MTQ4MTYtOTliMS00YjAwLWI1MjYtOWJmMTc4Mzc2MmNlXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2081633793",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0088763/mediaviewer/rm2081633793/",
+    "questions": [
+      {
+        "prompt": "Doc reveals a time machine built from a DeLorean. What do you ask first?",
+        "kicker": "Movie moment 1 · Back to the Future",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzZiMzU3ZjEtZjYzMS00ODBlLTk0MTQtM2YxYzg4Mzc4OWU2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Michael J. Fox and Christopher Lloyd in Back to the Future (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0088763/mediaviewer/rm1526824962/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1526824962"
+        }
+      },
+      {
+        "prompt": "You arrive in 1955 with no fuel for the return trip. What do you do?",
+        "kicker": "Movie moment 2 · Back to the Future",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYTQ0MTQ4MTYtOTliMS00YjAwLWI1MjYtOWJmMTc4Mzc2MmNlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Michael J. Fox in Back to the Future (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0088763/mediaviewer/rm2081633793/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2081633793"
+        }
+      },
+      {
+        "prompt": "Your teenage father is too nervous to talk to your mother. How do you coach him?",
+        "kicker": "Movie moment 3 · Back to the Future",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjNmMjE1ODktYzBhOS00ZmVlLTg0MGUtYWM5NWVhMTRmMDdiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Crispin Glover and Lea Thompson in Back to the Future (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0088763/mediaviewer/rm1493270530/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1493270530"
+        }
+      },
+      {
+        "prompt": "Lorraine develops a crush that could disrupt the future. How do you set things right?",
+        "kicker": "Movie moment 4 · Back to the Future",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjMwNDVmZTItYmJmZC00YjYyLWJlZDAtY2E1MzAzZmZkNmJlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Michael J. Fox and Lea Thompson in Back to the Future (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0088763/mediaviewer/rm2164359170/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2164359170"
+        }
+      },
+      {
+        "prompt": "Young Doc doubts a visitor claiming to be from the future. How would you prove it?",
+        "kicker": "Movie moment 5 · Back to the Future",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZDE3ZWY4ZWItNzExZC00MTlkLTg1YmEtNjVmMjFmZWVlM2U0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Michael J. Fox and Christopher Lloyd in Back to the Future (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0088763/mediaviewer/rm2214690818/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2214690818"
+        }
+      },
+      {
+        "prompt": "A photo begins fading as the timeline changes. Which problem comes first?",
+        "kicker": "Movie moment 6 · Back to the Future",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODBhOTUyNTMtY2FhYy00NzAyLWI3MmMtYzljMmQwYjBhMjI5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Michael J. Fox in Back to the Future (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0088763/mediaviewer/rm1880307201/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1880307201"
+        }
+      },
+      {
+        "prompt": "Biff interrupts the carefully planned school dance. What is your move?",
+        "kicker": "Movie moment 7 · Back to the Future",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjQ3ZTViOTgtNzQ2OC00M2YxLWE4YmEtNTZiNWY5NzJmNjVkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Michael J. Fox, Crispin Glover, Lea Thompson, and Tom Wilson in Back to the Future (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0088763/mediaviewer/rm2231497729/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2231497729"
+        }
+      },
+      {
+        "prompt": "The band needs a guitarist to keep the dance going. Do you step in?",
+        "kicker": "Movie moment 8 · Back to the Future",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZDlmYjkzNDgtOGM4Zi00NmZmLWExOGUtNmIwYzc3ZWNjZmEyXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Michael J. Fox and Crispin Glover in Back to the Future (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0088763/mediaviewer/rm1090617346/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1090617346"
+        }
+      },
+      {
+        "prompt": "Lightning will strike the clock tower at one exact moment. How do you prepare?",
+        "kicker": "Movie moment 9 · Back to the Future",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTFlYzAwMWYtYTk3OS00YmIwLTg1NzgtODE1OWI5NDgyZjUzXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Christopher Lloyd in Back to the Future (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0088763/mediaviewer/rm1392607234/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1392607234"
+        }
+      },
+      {
+        "prompt": "Knowing the future could protect a friend but also change history. What would you share?",
+        "kicker": "Movie moment 10 · Back to the Future",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzUzZWVkYWEtMTI3MS00OTIzLWEwOWItMTRhZjYzZTQxMzViXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Michael J. Fox and Christopher Lloyd in Back to the Future (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0088763/mediaviewer/rm2768338946/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2768338946"
+        }
+      }
+    ]
+  },
+  "jurassic-park": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0107290/",
+    "imdbId": "tt0107290",
+    "officialTitle": "Jurassic Park",
+    "premiered": "1993-06-11",
+    "year": 1993,
+    "genres": [
+      "Adventure",
+      "Sci-Fi"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BYjJmMmJjOGYtZGFmMy00MDM3LThkYTYtYTUzNjQzYzk2N2FiXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm1083885058",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0107290/mediaviewer/rm1083885058/",
+    "questions": [
+      {
+        "prompt": "A living dinosaur appears during your first jeep ride. What is your reaction?",
+        "kicker": "Movie moment 1 · Jurassic Park",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTg4ODc5MDM4M15BMl5BanBnXkFtZTgwNzAzOTIwMjE@._V1_.jpg",
+          "alt": "Richard Attenborough, Laura Dern, and Sam Neill in Jurassic Park (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107290/mediaviewer/rm2217856000/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2217856000"
+        }
+      },
+      {
+        "prompt": "Hammond promises a perfectly controlled dinosaur park. What would you inspect?",
+        "kicker": "Movie moment 2 · Jurassic Park",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjIxMzg5NzcwM15BMl5BanBnXkFtZTgwMzgyOTIwMjE@._V1_.jpg",
+          "alt": "Jeff Goldblum, Richard Attenborough, Laura Dern, Sam Neill, and Martin Ferrero in Jurassic Park (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107290/mediaviewer/rm2972830720/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2972830720"
+        }
+      },
+      {
+        "prompt": "A baby raptor hatches in the laboratory. Which question matters most?",
+        "kicker": "Movie moment 3 · Jurassic Park",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjAyODUwOTYyMl5BMl5BanBnXkFtZTgwODAzOTIwMjE@._V1_.jpg",
+          "alt": "Richard Attenborough, Laura Dern, and Sam Neill in Jurassic Park (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107290/mediaviewer/rm2201078784/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2201078784"
+        }
+      },
+      {
+        "prompt": "The automated tour stops beside a damaged fence in heavy rain. What do you do?",
+        "kicker": "Movie moment 4 · Jurassic Park",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjJmMmJjOGYtZGFmMy00MDM3LThkYTYtYTUzNjQzYzk2N2FiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Sam Neill in Jurassic Park (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107290/mediaviewer/rm1083885058/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1083885058"
+        }
+      },
+      {
+        "prompt": "A T. rex approaches two children trapped in a car. How do you help?",
+        "kicker": "Movie moment 5 · Jurassic Park",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjAzMzMzMjc5NV5BMl5BanBnXkFtZTgwMzAzOTIwMjE@._V1_.jpg",
+          "alt": "Sam Neill and Ariana Richards in Jurassic Park (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107290/mediaviewer/rm2234633216/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2234633216"
+        }
+      },
+      {
+        "prompt": "The park loses power across the island. Which system should return first?",
+        "kicker": "Movie moment 6 · Jurassic Park",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTAwMDU5MTUwODNeQTJeQWpwZ15BbWU4MDg5MjkyMDIx._V1_.jpg",
+          "alt": "Richard Attenborough, Laura Dern, and Sam Neill in Jurassic Park (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107290/mediaviewer/rm2184301568/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2184301568"
+        }
+      },
+      {
+        "prompt": "Grant must guide Lex and Tim through the jungle. What rule would you set?",
+        "kicker": "Movie moment 7 · Jurassic Park",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTQ1MzM1NTEyNl5BMl5BanBnXkFtZTgwMDAzOTIwMjE@._V1_.jpg",
+          "alt": "Sam Neill, Ariana Richards, and Joseph Mazzello in Jurassic Park (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107290/mediaviewer/rm3157380096/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3157380096"
+        }
+      },
+      {
+        "prompt": "A sick Triceratops needs attention while danger grows elsewhere. Where do you focus?",
+        "kicker": "Movie moment 8 · Jurassic Park",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTczNDgyMTg5OV5BMl5BanBnXkFtZTgwOTAzOTIwMjE@._V1_.jpg",
+          "alt": "Laura Dern, Sam Neill, and Joseph Mazzello in Jurassic Park (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107290/mediaviewer/rm2167524352/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2167524352"
+        }
+      },
+      {
+        "prompt": "Two clever raptors hunt inside the visitor center. How would you stay unnoticed?",
+        "kicker": "Movie moment 9 · Jurassic Park",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjcyMDc0MTExNV5BMl5BanBnXkFtZTgwMjEzOTIwMjE@._V1_.jpg",
+          "alt": "Ariana Richards and Joseph Mazzello in Jurassic Park (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107290/mediaviewer/rm2318519296/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2318519296"
+        }
+      },
+      {
+        "prompt": "The park proves that something possible is not always wise. What should happen next?",
+        "kicker": "Movie moment 10 · Jurassic Park",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTgyMzc4MzQ2MF5BMl5BanBnXkFtZTgwODgyOTIwMjE@._V1_.jpg",
+          "alt": "Jeff Goldblum, Richard Attenborough, Laura Dern, and Sam Neill in Jurassic Park (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107290/mediaviewer/rm3023162368/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3023162368"
+        }
+      }
+    ]
+  },
+  "pirates-of-the-caribbean-the-curse-of-the-black-pearl": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0325980/",
+    "imdbId": "tt0325980",
+    "officialTitle": "Pirates of the Caribbean: The Curse of the Black Pearl",
+    "premiered": "2003-07-09",
+    "year": 2003,
+    "genres": [
+      "Action",
+      "Adventure",
+      "Fantasy"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BNDhlMzEyNzItMTA5Mi00YWRhLThlNTktYTQyMTA0MDIyNDEyXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BNzZkNWRiMmYtMTE5ZC00NTgyLTkxMDUtODE1MDRlNDFlNzRjXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm342837505",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0325980/mediaviewer/rm342837505/",
+    "questions": [
+      {
+        "prompt": "Jack Sparrow arrives at Port Royal in a sinking boat. What is your first impression?",
+        "kicker": "Movie moment 1 · Pirates of the Caribbean: The Curse of the Black Pearl",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOWIzYTkyMGQtZmM0MC00NGVmLWI3OTQtZmIyNjg3NjBhNDlkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Johnny Depp, Orlando Bloom, and Keira Knightley in Pirates of the Caribbean: The Curse of the Black Pearl (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0325980/mediaviewer/rm721081090/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm721081090"
+        }
+      },
+      {
+        "prompt": "Elizabeth falls from the fort wearing a mysterious gold medallion. How do you help?",
+        "kicker": "Movie moment 2 · Pirates of the Caribbean: The Curse of the Black Pearl",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTMzMTNiYjUtOWQ3OC00MTUyLWI1ZDgtYzEyM2QzNDQwMTcwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Johnny Depp, Jonathan Pryce, Angus Barnett, Jack Davenport, Keira Knightley, and Giles New in Pirates of the Caribbean: The Curse of the Black Pearl (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0325980/mediaviewer/rm2784606465/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2784606465"
+        }
+      },
+      {
+        "prompt": "A pirate raid throws the town into chaos. Where do you go first?",
+        "kicker": "Movie moment 3 · Pirates of the Caribbean: The Curse of the Black Pearl",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZDA1ZmQ5ZmItNjY0Zi00OTYwLTgxZjAtODNkMDE5ODVkNzdkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jonathan Pryce, Orlando Bloom, and Keira Knightley in Pirates of the Caribbean: The Curse of the Black Pearl (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0325980/mediaviewer/rm2046343425/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2046343425"
+        }
+      },
+      {
+        "prompt": "Will asks Jack to help rescue Elizabeth. What deal seems fair?",
+        "kicker": "Movie moment 4 · Pirates of the Caribbean: The Curse of the Black Pearl",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZWFkYzdjYTktNjZmNy00MWNmLWE3MGItNjQ0ZWQ0NzYyMGNkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Johnny Depp, Orlando Bloom, and Keira Knightley in Pirates of the Caribbean: The Curse of the Black Pearl (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0325980/mediaviewer/rm989516546/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm989516546"
+        }
+      },
+      {
+        "prompt": "The crew of the Black Pearl appears as skeletons in moonlight. What do you do?",
+        "kicker": "Movie moment 5 · Pirates of the Caribbean: The Curse of the Black Pearl",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNWNhZGVjODQtYTk0MC00YjNiLTllNTItMDMwYWU5MjBjZmYxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Geoffrey Rush, Jerry Gauny, Don LaDaga, Tommy Schooler, Isaac C. Singleton Jr., Michael A. Thompson, Michael W. Williams, James McAuley, Finneus Egan, José Zelaya, Tobias McKinney, David Patykewich, Maxie Santillan Jr., D.P. FitzGerald, Michael Earl Lane, and Michael Berry Jr. in Pirates of the Caribbean: The Curse of the Black Pearl (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0325980/mediaviewer/rm1459140865/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1459140865"
+        }
+      },
+      {
+        "prompt": "Elizabeth uses pirate rules to demand a meeting. How would you negotiate?",
+        "kicker": "Movie moment 6 · Pirates of the Caribbean: The Curse of the Black Pearl",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZWY2YjU5NjgtZmJlMS00MGYwLWIwOTgtZTRkNzVlOTViN2QxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Geoffrey Rush, Lee Arenberg, Mackenzie Crook, Keira Knightley, Tommy Schooler, Isaac C. Singleton Jr., and Finneus Egan in Pirates of the Caribbean: The Curse of the Black Pearl (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0325980/mediaviewer/rm1610201345/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1610201345"
+        }
+      },
+      {
+        "prompt": "You must steal a fast ship from a guarded harbor. Which part of the plan fits you?",
+        "kicker": "Movie moment 7 · Pirates of the Caribbean: The Curse of the Black Pearl",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTcyNzY2MTE4Nl5BMl5BanBnXkFtZTcwOTkyMTIyNw@@._V1_.jpg",
+          "alt": "Johnny Depp and Orlando Bloom in Pirates of the Caribbean: The Curse of the Black Pearl (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0325980/mediaviewer/rm1788653568/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1788653568"
+        }
+      },
+      {
+        "prompt": "Jack's plan sounds foolish but may hide another plan. Do you follow it?",
+        "kicker": "Movie moment 8 · Pirates of the Caribbean: The Curse of the Black Pearl",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOGJkNzhiZjEtZjIzMS00MTk3LWJlYjItOTRhNTc1MjdhYzA5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Johnny Depp and Orlando Bloom in Pirates of the Caribbean: The Curse of the Black Pearl (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0325980/mediaviewer/rm2230892801/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2230892801"
+        }
+      },
+      {
+        "prompt": "A sword fight moves through a busy workshop. What gives you the advantage?",
+        "kicker": "Movie moment 9 · Pirates of the Caribbean: The Curse of the Black Pearl",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNGFmZDk0MDktZDdmNi00ODhlLTkxOWYtYjViMWY0ODMwNGZhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Johnny Depp and Orlando Bloom in Pirates of the Caribbean: The Curse of the Black Pearl (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0325980/mediaviewer/rm2801318145/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2801318145"
+        }
+      },
+      {
+        "prompt": "Freedom, duty, and loyalty point in different directions. Which one guides you?",
+        "kicker": "Movie moment 10 · Pirates of the Caribbean: The Curse of the Black Pearl",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZGUyYzcyMjgtYTdhNy00NTNlLTljOWMtNzk3MGVkMTUwNTM5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Johnny Depp, Orlando Bloom, and Keira Knightley in Pirates of the Caribbean: The Curse of the Black Pearl (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0325980/mediaviewer/rm2163783937/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2163783937"
+        }
+      }
+    ]
+  },
+  "the-hunger-games": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt1392170/",
+    "imdbId": "tt1392170",
+    "officialTitle": "The Hunger Games",
+    "premiered": "2012-03-23",
+    "year": 2012,
+    "genres": [
+      "Action",
+      "Adventure",
+      "Sci-Fi",
+      "Thriller"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMWI1OGM4YjQtNmIxNi00YmE2LWJkNTAtY2Q0YjU4NTI5NWQyXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BNDhmMjliZjctYmM5Ny00NDM2LWI1MjctZGRmOTc2NjFjOWRiXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2072283393",
+    "heroSourceUrl": "https://www.imdb.com/title/tt1392170/mediaviewer/rm2072283393/",
+    "questions": [
+      {
+        "prompt": "Prim's name is called at the reaping. What drives your next choice?",
+        "kicker": "Movie moment 1 · The Hunger Games",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMGU1NTlmYTYtOWQ4NC00MGI5LThkNGQtZjdmZjIxY2FlOWNlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jennifer Lawrence and Willow Shields in The Hunger Games (2012)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1392170/mediaviewer/rm2583859713/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2583859713"
+        }
+      },
+      {
+        "prompt": "The train to the Capitol offers luxury you have never seen. How do you react?",
+        "kicker": "Movie moment 2 · The Hunger Games",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTU4MGM5NTMtOWJmMC00ZWVhLTk5ZWEtMGNiMDZlMzU5MDllXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Lenny Kravitz, Elizabeth Banks, Josh Hutcherson, and Jennifer Lawrence in The Hunger Games (2012)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1392170/mediaviewer/rm2348978689/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2348978689"
+        }
+      },
+      {
+        "prompt": "Haymitch says sponsors can matter as much as survival skills. What is your strategy?",
+        "kicker": "Movie moment 3 · The Hunger Games",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjE3NDkxNzIyMF5BMl5BanBnXkFtZTcwOTA4NjAzNw@@._V1_.jpg",
+          "alt": "Woody Harrelson, Elizabeth Banks, and Jennifer Lawrence in The Hunger Games (2012)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1392170/mediaviewer/rm1791406336/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1791406336"
+        }
+      },
+      {
+        "prompt": "Cinna designs an unforgettable entrance costume. How do you wear the attention?",
+        "kicker": "Movie moment 4 · The Hunger Games",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjAwOTg2Nzg3NV5BMl5BanBnXkFtZTcwOTQ5NzIzNw@@._V1_.jpg",
+          "alt": "Lenny Kravitz, Josh Hutcherson, and Jennifer Lawrence in The Hunger Games (2012)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1392170/mediaviewer/rm4038308096/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4038308096"
+        }
+      },
+      {
+        "prompt": "Training scores may shape how every rival sees you. What do you reveal?",
+        "kicker": "Movie moment 5 · The Hunger Games",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTYzNzU1NTQ4MF5BMl5BanBnXkFtZTcwNzQ1NzkyNw@@._V1_.jpg",
+          "alt": "Jennifer Lawrence stars as 'Katniss Everdeen' in THE HUNGER GAMES.",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1392170/mediaviewer/rm3639783680/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3639783680"
+        }
+      },
+      {
+        "prompt": "Peeta shares a personal truth during the interview. How do you respond backstage?",
+        "kicker": "Movie moment 6 · The Hunger Games",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjNiNDZhZGQtYWQwNy00NGM3LThjMDgtNzNiNmZkOTllMjNjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Stanley Tucci and Josh Hutcherson in The Hunger Games (2012)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1392170/mediaviewer/rm2382533121/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2382533121"
+        }
+      },
+      {
+        "prompt": "The arena begins with supplies in the open. Do you run toward them or away?",
+        "kicker": "Movie moment 7 · The Hunger Games",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOGJiYjJmYWUtNWY1My00ZDdmLWEwZDEtMDgxYzYyZDc0NDhkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Sandra Ellis Lafferty and Jennifer Lawrence in The Hunger Games (2012)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1392170/mediaviewer/rm243566849/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm243566849"
+        }
+      },
+      {
+        "prompt": "Rue offers a quiet alliance. What builds trust between you?",
+        "kicker": "Movie moment 8 · The Hunger Games",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZDkwMjRiZmYtOWJjMi00MjcxLTk4MDgtZDQzMTRmMTIzYjQ2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jennifer Lawrence and Amandla Stenberg in The Hunger Games (2012)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1392170/mediaviewer/rm3431172353/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3431172353"
+        }
+      },
+      {
+        "prompt": "The game makers ignore you until one bold action gets attention. What would you do?",
+        "kicker": "Movie moment 9 · The Hunger Games",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTAxYjNjZTctNThjMy00ZjE3LTgzODEtNGUyYzUxOWM5ZTZlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Stanley Tucci and Wes Bentley in The Hunger Games (2012)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1392170/mediaviewer/rm1703184641/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1703184641"
+        }
+      },
+      {
+        "prompt": "The rules reward suspicion, but cooperation could save someone. Which do you choose?",
+        "kicker": "Movie moment 10 · The Hunger Games",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTAyNDM1ODk2MDFeQTJeQWpwZ15BbWU3MDgzMzY4Mjc@._V1_.jpg",
+          "alt": "Josh Hutcherson and Jennifer Lawrence in The Hunger Games (2012)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1392170/mediaviewer/rm1139585280/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1139585280"
+        }
+      }
+    ]
+  },
+  "the-princess-bride": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0093779/",
+    "imdbId": "tt0093779",
+    "officialTitle": "The Princess Bride",
+    "premiered": "1987-10-09",
+    "year": 1987,
+    "genres": [
+      "Adventure",
+      "Comedy",
+      "Family",
+      "Fantasy",
+      "Romance"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMjFiOTEyNGMtN2E4MC00ZjZlLTk3ZDQtNTU1ZGNiZTA1MzJlXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BYWMxMDhlYTUtMmQ2NS00NzdkLWI4MzYtMTBmMmFjM2IwNDI3XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm218182656",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0093779/mediaviewer/rm218182656/",
+    "questions": [
+      {
+        "prompt": "Westley answers every request with 'as you wish.' What do you think he means?",
+        "kicker": "Movie moment 1 · The Princess Bride",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMWQ3NjU5NjMtY2ZhNy00ODU3LTlkNjAtMGE5ZDBkYmZlODIxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Cary Elwes and Robin Wright in The Princess Bride (1987)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0093779/mediaviewer/rm1168046593/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1168046593"
+        }
+      },
+      {
+        "prompt": "Three strangers carry Buttercup toward the Cliffs of Insanity. What is your rescue plan?",
+        "kicker": "Movie moment 2 · The Princess Bride",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzE4Mjk5OWUtODRhMC00MjAxLThhYzAtZjI5NzA3NjA1YWU4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Robin Wright, André René Roussimoff, and Wallace Shawn in The Princess Bride (1987)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0093779/mediaviewer/rm2831953664/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2831953664"
+        }
+      },
+      {
+        "prompt": "A masked challenger climbs a rope beneath you. Do you wait for a fair fight?",
+        "kicker": "Movie moment 3 · The Princess Bride",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYWMxMDhlYTUtMmQ2NS00NzdkLWI4MzYtMTBmMmFjM2IwNDI3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Cary Elwes, André René Roussimoff, and Mandy Patinkin in The Princess Bride (1987)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0093779/mediaviewer/rm218182656/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm218182656"
+        }
+      },
+      {
+        "prompt": "Inigo finally meets a swordsman who matches his skill. What matters besides winning?",
+        "kicker": "Movie moment 4 · The Princess Bride",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BM2M5NjA2ODctNzkzOS00Yjg2LWFlNzUtNTQzNTJlOWU3Y2ZmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Cary Elwes and Mandy Patinkin in The Princess Bride (1987)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0093779/mediaviewer/rm1553417984/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1553417984"
+        }
+      },
+      {
+        "prompt": "Fezzik must fight someone much smaller. How should strength be used?",
+        "kicker": "Movie moment 5 · The Princess Bride",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTY2NzhkZWUtYTIzYi00MDk4LTlmMWQtODYwNTIyNzIxNmJmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Cary Elwes, André René Roussimoff, and Mandy Patinkin in The Princess Bride (1987)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0093779/mediaviewer/rm1596362753/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1596362753"
+        }
+      },
+      {
+        "prompt": "Vizzini presents a battle of wits with two cups. How do you reason through it?",
+        "kicker": "Movie moment 6 · The Princess Bride",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMmVkMWI1MmEtNThmNC00ODRjLWI2MGYtYmRiZjNmODFhOTljXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Cary Elwes, Robin Wright, and Rob Reiner in The Princess Bride (1987)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0093779/mediaviewer/rm184628224/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm184628224"
+        }
+      },
+      {
+        "prompt": "The Fire Swamp contains flames, sinking sand, and giant rodents. Which challenge first?",
+        "kicker": "Movie moment 7 · The Princess Bride",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTcwNjFmODgtMjhlZC00ZGYzLWJkZjItZjljYTA0OGMwYTZhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Cary Elwes and Robin Wright in The Princess Bride (1987)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0093779/mediaviewer/rm1217873664/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1217873664"
+        }
+      },
+      {
+        "prompt": "Prince Humperdinck offers safety without true love. How do you answer?",
+        "kicker": "Movie moment 8 · The Princess Bride",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOGRiZDVjZjUtODY0OS00MmMyLTg3MzAtMzg5ZWZjMzk3YjQ1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Robin Wright and Chris Sarandon in The Princess Bride (1987)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0093779/mediaviewer/rm1478922241/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1478922241"
+        }
+      },
+      {
+        "prompt": "Miracle Max says a difficult rescue may still be possible. What keeps you hopeful?",
+        "kicker": "Movie moment 9 · The Princess Bride",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjQyMDUwZGEtNTE4NC00OTI4LWExY2MtZjU0Y2JjMWM1ZTZmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Cary Elwes, Billy Crystal, André René Roussimoff, and Mandy Patinkin in The Princess Bride (1987)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0093779/mediaviewer/rm2804322305/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2804322305"
+        }
+      },
+      {
+        "prompt": "A grandfather pauses the story at the most exciting moment. What do you ask next?",
+        "kicker": "Movie moment 10 · The Princess Bride",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BN2YxN2RkNzktMDQzNy00NTBkLWFmMGYtNDhhYTQ0NmRjNWUyXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Peter Falk in The Princess Bride (1987)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0093779/mediaviewer/rm1176932353/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1176932353"
+        }
+      }
+    ]
+  },
+  "the-goonies": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0089218/",
+    "imdbId": "tt0089218",
+    "officialTitle": "The Goonies",
+    "premiered": "1985-06-07",
+    "year": 1985,
+    "genres": [
+      "Adventure",
+      "Comedy",
+      "Family"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMjE1OWU4ODEtZmEzMC00NTcwLWFlMWUtYjhlNzExOTIxYzVlXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BODliYjYzZTUtNzMxYy00MjBkLThmNDQtYmQyM2IyMjA1Y2NjXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm3501486593",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0089218/mediaviewer/rm3501486593/",
+    "questions": [
+      {
+        "prompt": "Mikey finds One-Eyed Willy's treasure map in the attic. Do you believe it?",
+        "kicker": "Movie moment 1 · The Goonies",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTRmNzZmMmItN2YyYi00N2FhLTkzN2ItZmM4ZGIyNGUzNjVjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Sean Astin, Corey Feldman, and Josh Brolin in The Goonies (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0089218/mediaviewer/rm2890333441/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2890333441"
+        }
+      },
+      {
+        "prompt": "Your neighborhood may be demolished tomorrow. What makes the adventure worth trying?",
+        "kicker": "Movie moment 2 · The Goonies",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTUwOTU0MDMwNV5BMl5BanBnXkFtZTcwNjQ4NDIwNA@@._V1_.jpg",
+          "alt": "Sean Astin, Corey Feldman, Jeff Cohen, and Ke Huy Quan in The Goonies (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0089218/mediaviewer/rm1592362752/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1592362752"
+        }
+      },
+      {
+        "prompt": "The old restaurant seems empty, but the Fratellis are inside. How do you investigate?",
+        "kicker": "Movie moment 3 · The Goonies",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjE5OTM0Njk3Nl5BMl5BanBnXkFtZTcwNzY3NzMyNw@@._V1_.jpg",
+          "alt": "Sean Astin, Corey Feldman, Josh Brolin, and Kerri Green in The Goonies (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0089218/mediaviewer/rm108113920/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm108113920"
+        }
+      },
+      {
+        "prompt": "Chunk is caught and told to reveal everything. How would you handle the pressure?",
+        "kicker": "Movie moment 4 · The Goonies",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODliYjYzZTUtNzMxYy00MjBkLThmNDQtYmQyM2IyMjA1Y2NjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Sean Astin, Corey Feldman, Martha Plimpton, Josh Brolin, Jeff Cohen, Kerri Green, and Ke Huy Quan in The Goonies (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0089218/mediaviewer/rm3501486593/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3501486593"
+        }
+      },
+      {
+        "prompt": "A tunnel contains a floor full of hidden traps. Whose skill should lead?",
+        "kicker": "Movie moment 5 · The Goonies",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTU1NzA4MzUxMF5BMl5BanBnXkFtZTcwMDU4NDIwNA@@._V1_.jpg",
+          "alt": "Sean Astin, Corey Feldman, and Ke Huy Quan in The Goonies (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0089218/mediaviewer/rm1525253888/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1525253888"
+        }
+      },
+      {
+        "prompt": "A skeleton's musical puzzle must be played correctly. How do you help?",
+        "kicker": "Movie moment 6 · The Goonies",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODM0NTE2ODg1NF5BMl5BanBnXkFtZTcwNjk0NDAxMw@@._V1_.jpg",
+          "alt": "Sean Astin, Corey Feldman, Martha Plimpton, Josh Brolin, Jeff Cohen, Kerri Green, and Ke Huy Quan in The Goonies (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0089218/mediaviewer/rm1645383168/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1645383168"
+        }
+      },
+      {
+        "prompt": "The group reaches a wishing well and can climb out. Do you leave?",
+        "kicker": "Movie moment 7 · The Goonies",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjI1NTM1MDM4Nl5BMl5BanBnXkFtZTcwOTQ4NDIwNA@@._V1_.jpg",
+          "alt": "Sean Astin, Corey Feldman, Martha Plimpton, Josh Brolin, Kerri Green, and Ke Huy Quan in The Goonies (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0089218/mediaviewer/rm1542031104/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1542031104"
+        }
+      },
+      {
+        "prompt": "Sloth seems frightening but also lonely. What would make you trust him?",
+        "kicker": "Movie moment 8 · The Goonies",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYmM1Mjg3YWItMmViMy00NDFjLWFjYzktZTQ5NDlmM2UxMzI4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Sean Astin, Corey Feldman, Martha Plimpton, Josh Brolin, Jeff Cohen, Kerri Green, John Matuszak, and Ke Huy Quan in The Goonies (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0089218/mediaviewer/rm1858968321/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1858968321"
+        }
+      },
+      {
+        "prompt": "A pirate ship filled with treasure appears underground. What do you notice first?",
+        "kicker": "Movie moment 9 · The Goonies",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTBkMjExZjEtNDIxZC00ZTBlLTg5YjgtMjBkOWIyOGRkNjc4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Kerri Green in The Goonies (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0089218/mediaviewer/rm2312888321/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2312888321"
+        }
+      },
+      {
+        "prompt": "The friends disagree about whether to continue. How do you bring the Goonies together?",
+        "kicker": "Movie moment 10 · The Goonies",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTI5Njg1NDIxMF5BMl5BanBnXkFtZTcwNzQ4NDIwNA@@._V1_.jpg",
+          "alt": "Sean Astin, Corey Feldman, Jeff Cohen, and Ke Huy Quan in The Goonies (1985)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0089218/mediaviewer/rm1575585536/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1575585536"
+        }
+      }
+    ]
+  },
+  "et-the-extra-terrestrial": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0083866/",
+    "imdbId": "tt0083866",
+    "officialTitle": "E.T. the Extra-Terrestrial",
+    "premiered": "1982-06-11",
+    "year": 1982,
+    "genres": [
+      "Adventure",
+      "Family",
+      "Sci-Fi"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BYTNhNmY0YWMtMTczYi00MTA0LThhMmUtMTIxYzE0Y2QwMzRlXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMDRiNzViMjQtMTJhZS00OWVhLWFlMzgtNjZjZWY0MWMwOTYxXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm680048129",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0083866/mediaviewer/rm680048129/",
+    "questions": [
+      {
+        "prompt": "A strange figure hides in the backyard at night. How do you approach it?",
+        "kicker": "Movie moment 1 · E.T. the Extra-Terrestrial",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYzYzOGJlYTYtMzlkNy00ZjllLWIxNGYtNTkzYjEyMTYzYTZhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Henry Thomas and Pat Welsh in E.T. the Extra-Terrestrial (1982)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0083866/mediaviewer/rm100742144/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm100742144"
+        }
+      },
+      {
+        "prompt": "You lure a visitor from space with candy. What would you ask first?",
+        "kicker": "Movie moment 2 · E.T. the Extra-Terrestrial",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTgxMjQyNzExOF5BMl5BanBnXkFtZTgwODA3MTg5MTE@._V1_.jpg",
+          "alt": "Henry Thomas and Pat Welsh in E.T. the Extra-Terrestrial (1982)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0083866/mediaviewer/rm3549285376/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3549285376"
+        }
+      },
+      {
+        "prompt": "E.T. must stay hidden from your family. Where would you make space?",
+        "kicker": "Movie moment 3 · E.T. the Extra-Terrestrial",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjQ3NzgyODA1NF5BMl5BanBnXkFtZTgwNTM0NjYyMzI@._V1_.jpg",
+          "alt": "Henry Thomas and Pat Welsh in E.T. the Extra-Terrestrial (1982)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0083866/mediaviewer/rm160506624/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm160506624"
+        }
+      },
+      {
+        "prompt": "Gertie discovers the secret and screams. How do you calm everyone?",
+        "kicker": "Movie moment 4 · E.T. the Extra-Terrestrial",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjIyMjIwNzEzOV5BMl5BanBnXkFtZTgwMTc1MTAxMDI@._V1_.jpg",
+          "alt": "Drew Barrymore, Henry Thomas, and Pat Welsh in E.T. the Extra-Terrestrial (1982)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0083866/mediaviewer/rm182652160/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm182652160"
+        }
+      },
+      {
+        "prompt": "E.T. learns words by watching television. What would you teach next?",
+        "kicker": "Movie moment 5 · E.T. the Extra-Terrestrial",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDRiNzViMjQtMTJhZS00OWVhLWFlMzgtNjZjZWY0MWMwOTYxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Drew Barrymore and Pat Welsh in E.T. the Extra-Terrestrial (1982)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0083866/mediaviewer/rm680048129/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm680048129"
+        }
+      },
+      {
+        "prompt": "Your feelings seem connected to E.T.'s feelings. How would you handle that?",
+        "kicker": "Movie moment 6 · E.T. the Extra-Terrestrial",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODM0ODQyNzYzN15BMl5BanBnXkFtZTgwNTc0MDk0MDI@._V1_.jpg",
+          "alt": "Henry Thomas and Pat Welsh in E.T. the Extra-Terrestrial (1982)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0083866/mediaviewer/rm1922564352/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1922564352"
+        }
+      },
+      {
+        "prompt": "Scientists begin searching the neighborhood. Who can you trust with the truth?",
+        "kicker": "Movie moment 7 · E.T. the Extra-Terrestrial",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjU5MTg4MDUyNF5BMl5BanBnXkFtZTgwNTA3MTg5MTE@._V1_.jpg",
+          "alt": "C. Thomas Howell, Henry Thomas, Robert MacNaughton, K.C. Martel, and Pat Welsh in E.T. the Extra-Terrestrial (1982)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0083866/mediaviewer/rm3398290432/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3398290432"
+        }
+      },
+      {
+        "prompt": "E.T. builds a device from ordinary household objects. How do you help?",
+        "kicker": "Movie moment 8 · E.T. the Extra-Terrestrial",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTgzNjY3OTA2OF5BMl5BanBnXkFtZTgwNDc0MDk0MDI@._V1_.jpg",
+          "alt": "C. Thomas Howell, Henry Thomas, Sean Frye, Robert MacNaughton, K.C. Martel, and Pat Welsh in E.T. the Extra-Terrestrial (1982)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0083866/mediaviewer/rm1939341568/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1939341568"
+        }
+      },
+      {
+        "prompt": "Bikes race toward a roadblock while friends depend on you. What keeps you moving?",
+        "kicker": "Movie moment 9 · E.T. the Extra-Terrestrial",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDM1Mjk0NDIwNV5BMl5BanBnXkFtZTgwMzc0MDk0MDI@._V1_.jpg",
+          "alt": "Henry Thomas and Pat Welsh in E.T. the Extra-Terrestrial (1982)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0083866/mediaviewer/rm1956118784/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1956118784"
+        }
+      },
+      {
+        "prompt": "Helping a friend go home means saying goodbye. What would you want them to remember?",
+        "kicker": "Movie moment 10 · E.T. the Extra-Terrestrial",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTc5MDU4OTI2MV5BMl5BanBnXkFtZTgwMTc0MDk0MDI@._V1_.jpg",
+          "alt": "Henry Thomas, Robert MacNaughton, and Pat Welsh in E.T. the Extra-Terrestrial (1982)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0083866/mediaviewer/rm1972896000/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1972896000"
+        }
+      }
+    ]
+  },
+  "ghostbusters": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0087332/",
+    "imdbId": "tt0087332",
+    "officialTitle": "Ghostbusters",
+    "premiered": "1984-06-08",
+    "year": 1984,
+    "genres": [
+      "Action",
+      "Comedy",
+      "Fantasy",
+      "Sci-Fi"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BYWE0YzYxNDUtMjk2ZC00NTEyLWE1MjktNzFkMjdjOWEwNTcyXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMTgyODQ1NTEwM15BMl5BanBnXkFtZTgwNzYxODIwMjE@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2067713024",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0087332/mediaviewer/rm2067713024/",
+    "questions": [
+      {
+        "prompt": "A librarian reports a ghost among the books. How do you test the claim?",
+        "kicker": "Movie moment 1 · Ghostbusters",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYTUwZTI4ODctNmRlYS00YzI0LWE2MjQtNDdkOGJmYjdjOTc1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dan Aykroyd, Bill Murray, Harold Ramis, and Ruth Oliver in Ghostbusters (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087332/mediaviewer/rm4193990400/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4193990400"
+        }
+      },
+      {
+        "prompt": "The university ends your research funding. What would your team build next?",
+        "kicker": "Movie moment 2 · Ghostbusters",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDMyODExNTA1MV5BMl5BanBnXkFtZTgwODg3NzI2MDE@._V1_.jpg",
+          "alt": "Dan Aykroyd, Bill Murray, and Harold Ramis in Ghostbusters (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087332/mediaviewer/rm2735067648/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2735067648"
+        }
+      },
+      {
+        "prompt": "Your first hotel ghost covers Peter in slime. How do you catch it?",
+        "kicker": "Movie moment 3 · Ghostbusters",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BM2ZmN2U0MTctY2E0MC00NjVkLTg3ZTAtMTRhNDhjMWE2YjhhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Bill Murray, Ernie Hudson, William Atherton, Joe Cirillo, David Margulies, Norman Matlock, and Joe Schmieg in Ghostbusters (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087332/mediaviewer/rm2151098112/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2151098112"
+        }
+      },
+      {
+        "prompt": "A new proton pack is powerful but barely tested. Who uses it first?",
+        "kicker": "Movie moment 4 · Ghostbusters",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZGI1MDYwMzktYmZlNC00YzM4LWFkODktNTRmZWM2ODAyNTc5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dan Aykroyd, Bill Murray, Harold Ramis, and Ernie Hudson in Ghostbusters (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087332/mediaviewer/rm1875440385/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1875440385"
+        }
+      },
+      {
+        "prompt": "Dana says her refrigerator opened into another world. What do you ask?",
+        "kicker": "Movie moment 5 · Ghostbusters",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjhhNDkyYzUtMmU1Ni00NGZiLTkyMmQtMWFiZWQwYzhkNDE3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Bill Murray and Sigourney Weaver in Ghostbusters (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087332/mediaviewer/rm3758798850/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3758798850"
+        }
+      },
+      {
+        "prompt": "The containment unit fills with captured ghosts. What safety rule matters most?",
+        "kicker": "Movie moment 6 · Ghostbusters",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjcyNzQzNDY2M15BMl5BanBnXkFtZTgwNDg3NzI2MDE@._V1_.jpg",
+          "alt": "Dan Aykroyd, Bill Murray, and Harold Ramis in Ghostbusters (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087332/mediaviewer/rm1476776448/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1476776448"
+        }
+      },
+      {
+        "prompt": "A city official demands that you shut everything down. How do you respond?",
+        "kicker": "Movie moment 7 · Ghostbusters",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMmIxOWVjNjUtZGRlMC00NTQ1LTg1OWUtNmFkNDk3Njk4YzY1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Bill Murray and William Atherton in Ghostbusters (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087332/mediaviewer/rm1160979712/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1160979712"
+        }
+      },
+      {
+        "prompt": "Winston applies for the strangest job in New York. What would you tell him?",
+        "kicker": "Movie moment 8 · Ghostbusters",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTgyODQ1NTEwM15BMl5BanBnXkFtZTgwNzYxODIwMjE@._V1_.jpg",
+          "alt": "Dan Aykroyd, Bill Murray, Harold Ramis, and Ernie Hudson in Ghostbusters (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087332/mediaviewer/rm2067713024/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2067713024"
+        }
+      },
+      {
+        "prompt": "The team is told not to think of anything during a supernatural test. What enters your mind?",
+        "kicker": "Movie moment 9 · Ghostbusters",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BM2Y2NzU4MDMtOThiYi00MDA2LTlkZmYtY2VkYzllNjEyMzAzXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dan Aykroyd, Bill Murray, Harold Ramis, Ernie Hudson, and Billy Bryan in Ghostbusters (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087332/mediaviewer/rm3325240576/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3325240576"
+        }
+      },
+      {
+        "prompt": "Four streams must cross despite a serious warning. How does the team decide?",
+        "kicker": "Movie moment 10 · Ghostbusters",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTc1NzYzMTU1Ml5BMl5BanBnXkFtZTgwNTYxODIwMjE@._V1_.jpg",
+          "alt": "Sigourney Weaver and Rick Moranis in Ghostbusters (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087332/mediaviewer/rm2050935808/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2050935808"
+        }
+      }
+    ]
+  },
+  "jumanji-welcome-to-the-jungle": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt2283362/",
+    "imdbId": "tt2283362",
+    "officialTitle": "Jumanji: Welcome to the Jungle",
+    "premiered": "2017-12-20",
+    "year": 2017,
+    "genres": [
+      "Action",
+      "Adventure",
+      "Comedy",
+      "Fantasy"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BZjI5MzdmODctYjA4NS00ZmMxLWJlOWUtOGVhMjA0OGMxMWYzXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMjZlMjMwNDYtZjdkNC00NWMzLTkyNTktYmE0ZGE3NjcwYjM4XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm1711880449",
+    "heroSourceUrl": "https://www.imdb.com/title/tt2283362/mediaviewer/rm1711880449/",
+    "questions": [
+      {
+        "prompt": "Detention students discover an old game console. Which character do you select?",
+        "kicker": "Movie moment 1 · Jumanji: Welcome to the Jungle",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjA2NjMyOTMzMl5BMl5BanBnXkFtZTgwMTc5MDkzNDM@._V1_.jpg",
+          "alt": "Kevin Hart, Dwayne Johnson, and Karen Gillan in Jumanji: Welcome to the Jungle (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2283362/mediaviewer/rm1262115840/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1262115840"
+        }
+      },
+      {
+        "prompt": "You wake inside a jungle in someone else's body. What do you check first?",
+        "kicker": "Movie moment 2 · Jumanji: Welcome to the Jungle",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTc4NTEzNTc2MV5BMl5BanBnXkFtZTgwMzY5MDkzNDM@._V1_.jpg",
+          "alt": "Jack Black, Kevin Hart, Dwayne Johnson, Karen Gillan, and Nick Jonas in Jumanji: Welcome to the Jungle (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2283362/mediaviewer/rm1111120896/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1111120896"
+        }
+      },
+      {
+        "prompt": "A glowing menu lists your strengths and weaknesses. Which part do you share?",
+        "kicker": "Movie moment 3 · Jumanji: Welcome to the Jungle",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTY2ODU1MTMzMF5BMl5BanBnXkFtZTgwODY5MDkzNDM@._V1_.jpg",
+          "alt": "Jack Black, Kevin Hart, Dwayne Johnson, Karen Gillan, and Nick Jonas in Jumanji: Welcome to the Jungle (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2283362/mediaviewer/rm1312447488/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1312447488"
+        }
+      },
+      {
+        "prompt": "A stampede races toward the team. How do you use your avatar's skill?",
+        "kicker": "Movie moment 4 · Jumanji: Welcome to the Jungle",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjZlMjMwNDYtZjdkNC00NWMzLTkyNTktYmE0ZGE3NjcwYjM4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jack Black, Kevin Hart, Dwayne Johnson, and Karen Gillan in Jumanji: Welcome to the Jungle (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2283362/mediaviewer/rm1711880449/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1711880449"
+        }
+      },
+      {
+        "prompt": "The group realizes each player has only three lives. How does that change you?",
+        "kicker": "Movie moment 5 · Jumanji: Welcome to the Jungle",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODdlMmQ3MzUtYzA2OC00NzMwLWFjZjUtYjkyZWE3NzYwYzY1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jack Black, Karen Gillan, and William Tokarsky in Jumanji: Welcome to the Jungle (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2283362/mediaviewer/rm2709403905/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2709403905"
+        }
+      },
+      {
+        "prompt": "An NPC repeats the same instructions no matter what you ask. How do you get clues?",
+        "kicker": "Movie moment 6 · Jumanji: Welcome to the Jungle",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOWE2MjUzYWMtOGQ0ZC00ZmFlLTg4YzgtMGMwMmVhYTkxZGVjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dwayne Johnson and Rhys Darby in Jumanji: Welcome to the Jungle (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2283362/mediaviewer/rm3358960641/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3358960641"
+        }
+      },
+      {
+        "prompt": "Ruby must learn a dance-fighting skill. How do you practice something embarrassing?",
+        "kicker": "Movie moment 7 · Jumanji: Welcome to the Jungle",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTUyNjY0NDY5N15BMl5BanBnXkFtZTgwNjY5MDkzNDM@._V1_.jpg",
+          "alt": "Jack Black, Kevin Hart, Dwayne Johnson, and Karen Gillan in Jumanji: Welcome to the Jungle (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2283362/mediaviewer/rm1329224704/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1329224704"
+        }
+      },
+      {
+        "prompt": "A missing player has survived alone in the game for years. How do you earn trust?",
+        "kicker": "Movie moment 8 · Jumanji: Welcome to the Jungle",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTE4M2E0NmItNmUzOS00OGNhLWI1YmYtM2UwMzZjNjIwNTEwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jack Black and Nick Jonas in Jumanji: Welcome to the Jungle (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2283362/mediaviewer/rm2553654273/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2553654273"
+        }
+      },
+      {
+        "prompt": "Teammates argue about who should risk a life for the plan. How do you decide?",
+        "kicker": "Movie moment 9 · Jumanji: Welcome to the Jungle",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMWQ0MzUxNGYtN2RjMC00MGVkLTk1N2EtMGM1OTJhNWM1ZWQzXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dwayne Johnson and Karen Gillan in Jumanji: Welcome to the Jungle (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2283362/mediaviewer/rm2151001089/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2151001089"
+        }
+      },
+      {
+        "prompt": "Winning requires every strange strength on the team. Which one would surprise people?",
+        "kicker": "Movie moment 10 · Jumanji: Welcome to the Jungle",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTg0Mjc2ODI3Nl5BMl5BanBnXkFtZTgwMjY5MDkzNDM@._V1_.jpg",
+          "alt": "Jack Black, Kevin Hart, Dwayne Johnson, and Karen Gillan in Jumanji: Welcome to the Jungle (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt2283362/mediaviewer/rm1127898112/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1127898112"
+        }
+      }
+    ]
+  },
+  "the-karate-kid": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0087538/",
+    "imdbId": "tt0087538",
+    "officialTitle": "The Karate Kid",
+    "premiered": "1984-06-22",
+    "year": 1984,
+    "genres": [
+      "Action",
+      "Drama",
+      "Family",
+      "Sport"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BM2I3ZmZhNzctMzBlNC00YTc2LWE1MmEtY2ZkMzg3Y2I1ZDJhXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BNDIxOTFkNGUtYTcwMi00NDUzLWFlNDktZmNiZGM1MDZmNTYyXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm3861083905",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0087538/mediaviewer/rm3861083905/",
+    "questions": [
+      {
+        "prompt": "You arrive at a new apartment complex across the country. How do you meet people?",
+        "kicker": "Movie moment 1 · The Karate Kid",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjNiYmM4YzEtMzNiNS00MWI0LWIwN2YtMWUwZDcwOTMzYmFiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ralph Macchio and Randee Heller in The Karate Kid (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087538/mediaviewer/rm1007284225/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1007284225"
+        }
+      },
+      {
+        "prompt": "A beach party turns tense with a skilled karate student. What do you do?",
+        "kicker": "Movie moment 2 · The Karate Kid",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjA4NjM5Y2QtYzMxZi00NDQ0LTgyNzAtODE0ZGFhNGM2MWE0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Elisabeth Shue, Ralph Macchio, Israel Juarbe, Chad McQueen, Ron Thomas, and William Zabka in The Karate Kid (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087538/mediaviewer/rm2534670848/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2534670848"
+        }
+      },
+      {
+        "prompt": "Mr. Miyagi quietly fixes your damaged bicycle. How do you thank him?",
+        "kicker": "Movie moment 3 · The Karate Kid",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDIxOTFkNGUtYTcwMi00NDUzLWFlNDktZmNiZGM1MDZmNTYyXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ralph Macchio and Pat Morita in The Karate Kid (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087538/mediaviewer/rm3861083905/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3861083905"
+        }
+      },
+      {
+        "prompt": "Your teacher says waxing cars is karate training. Do you trust the process?",
+        "kicker": "Movie moment 4 · The Karate Kid",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjQzZDQ0N2MtNTEzYi00ZWQ5LTgwMmItMDk5OTdlYmUzY2YyXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ralph Macchio and Pat Morita in The Karate Kid (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087538/mediaviewer/rm144600832/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm144600832"
+        }
+      },
+      {
+        "prompt": "You practice balance on a boat while waves keep shifting. What helps you focus?",
+        "kicker": "Movie moment 5 · The Karate Kid",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDdiYmRlNGItNzExYy00N2QwLWI4NmMtMTIzYjJmNDA0ZjRjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ralph Macchio and Pat Morita in The Karate Kid (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087538/mediaviewer/rm1024061441/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1024061441"
+        }
+      },
+      {
+        "prompt": "A Halloween prank makes an old conflict much worse. How would you stop it?",
+        "kicker": "Movie moment 6 · The Karate Kid",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzJhNTY0ODYtOGQ4Ni00NmNkLWJmY2ItMTZlZGI1N2QwMGZkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ralph Macchio and William Zabka in The Karate Kid (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087538/mediaviewer/rm329478912/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm329478912"
+        }
+      },
+      {
+        "prompt": "Miyagi asks the Cobra Kai teacher to settle things through a tournament. Is that fair?",
+        "kicker": "Movie moment 7 · The Karate Kid",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDQzMDMzY2YtOWE5NC00N2MyLTkzMmMtYWYwMmVjZTQwNGNlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ralph Macchio, Pat Morita, Martin Kove, and William Zabka in The Karate Kid (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087538/mediaviewer/rm1812590593/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1812590593"
+        }
+      },
+      {
+        "prompt": "Ali wants you to feel comfortable around her wealthy friends. How do you handle it?",
+        "kicker": "Movie moment 8 · The Karate Kid",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTViMDg2ZDItMmU4ZS00YWY1LWIzMjgtNmI0NTQwYTQwY2E4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Elisabeth Shue and Ralph Macchio in The Karate Kid (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087538/mediaviewer/rm1628041217/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1628041217"
+        }
+      },
+      {
+        "prompt": "An injury makes the final rounds much harder. What should decide whether you continue?",
+        "kicker": "Movie moment 9 · The Karate Kid",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDY2NDBkNWUtZTMxYi00NDI0LWIyZDAtYWI3OTU3YWM1MDMwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ralph Macchio and Pat Morita in The Karate Kid (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087538/mediaviewer/rm1661595649/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1661595649"
+        }
+      },
+      {
+        "prompt": "You face a rival trained to show no mercy. What does real strength look like?",
+        "kicker": "Movie moment 10 · The Karate Kid",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjgwZWQzYjItYTNjMC00OWQ4LTk4MWItNzI2OWUxNjUxYzgyXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ralph Macchio, Chad McQueen, and William Zabka in The Karate Kid (1984)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0087538/mediaviewer/rm3487089665/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3487089665"
+        }
+      }
+    ]
+  },
+  "the-truman-show": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0120382/",
+    "imdbId": "tt0120382",
+    "officialTitle": "The Truman Show",
+    "premiered": "1998-06-05",
+    "year": 1998,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BNzA3ZjZlNzYtMTdjMy00NjMzLTk5ZGYtMTkyYzNiOGM1YmM3XkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMmI1NDk3NDEtZDdlYy00ZjdiLWExZmMtOWE3NDYxZTZmNDU5XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm1930031874",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0120382/mediaviewer/rm1930031874/",
+    "questions": [
+      {
+        "prompt": "A stage light falls from a clear morning sky. What explanation would satisfy you?",
+        "kicker": "Movie moment 1 · The Truman Show",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTY5ODAzOTIyMV5BMl5BanBnXkFtZTcwMzQ0ODcxNA@@._V1_.jpg",
+          "alt": "Jim Carrey in The Truman Show (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120382/mediaviewer/rm2609218560/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2609218560"
+        }
+      },
+      {
+        "prompt": "The radio seems to describe your exact movements. What do you test next?",
+        "kicker": "Movie moment 2 · The Truman Show",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZDEyNTZlZWItOTU5NS00NjViLWJiNmQtNmVmNTFmNWM3ZWJlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jim Carrey in The Truman Show (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120382/mediaviewer/rm1980363522/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1980363522"
+        }
+      },
+      {
+        "prompt": "People repeat the same routines on your street every day. How do you check the pattern?",
+        "kicker": "Movie moment 3 · The Truman Show",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTcxMjMyNDEyMF5BMl5BanBnXkFtZTcwNjM0ODcxNA@@._V1_.jpg",
+          "alt": "Jim Carrey in The Truman Show (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120382/mediaviewer/rm2441446400/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2441446400"
+        }
+      },
+      {
+        "prompt": "Sylvia tries to tell you that your world is not real. What makes a warning believable?",
+        "kicker": "Movie moment 4 · The Truman Show",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTFlMTc4NGUtYTgzZC00Y2IxLWJlZWMtNTdkNzlmNWU3ZDZlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jim Carrey and Natascha McElhone in The Truman Show (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120382/mediaviewer/rm2788783616/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2788783616"
+        }
+      },
+      {
+        "prompt": "Travel agencies invent frightening reasons not to leave town. How do you react?",
+        "kicker": "Movie moment 5 · The Truman Show",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjMwOTA4MjQwNV5BMl5BanBnXkFtZTcwMjQ0ODcxNA@@._V1_.jpg",
+          "alt": "Jim Carrey in The Truman Show (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120382/mediaviewer/rm2625995776/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2625995776"
+        }
+      },
+      {
+        "prompt": "Your best friend gives a perfect speech at exactly the right moment. Do you trust it?",
+        "kicker": "Movie moment 6 · The Truman Show",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYmExNDkwMGYtYjEwMy00ZjZmLThkNjQtMTg0MTQ4YjNkMzI3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jim Carrey and Noah Emmerich in The Truman Show (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120382/mediaviewer/rm1046198017/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1046198017"
+        }
+      },
+      {
+        "prompt": "A hidden elevator reveals workers behind an ordinary wall. What do you do?",
+        "kicker": "Movie moment 7 · The Truman Show",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjI1MjU5MDE2Nl5BMl5BanBnXkFtZTcwNTY3NDU0NQ@@._V1_.jpg",
+          "alt": "Jim Carrey and Laura Linney in The Truman Show (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120382/mediaviewer/rm2733227520/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2733227520"
+        }
+      },
+      {
+        "prompt": "You need privacy in a world that seems to watch everything. How would you create it?",
+        "kicker": "Movie moment 8 · The Truman Show",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzc2OTcwMTk0MF5BMl5BanBnXkFtZTcwMTA4NDU0NQ@@._V1_.jpg",
+          "alt": "Jim Carrey, Laura Linney, and Holland Taylor in The Truman Show (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120382/mediaviewer/rm2934554112/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2934554112"
+        }
+      },
+      {
+        "prompt": "Your deepest fear keeps you from traveling beyond the island. How do you face it?",
+        "kicker": "Movie moment 9 · The Truman Show",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTM2MDM0MzA1Ml5BMl5BanBnXkFtZTcwNzU3NDU0NQ@@._V1_.jpg",
+          "alt": "Jim Carrey in The Truman Show (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120382/mediaviewer/rm2766781952/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2766781952"
+        }
+      },
+      {
+        "prompt": "Safety and truth point in opposite directions. Which life would you choose?",
+        "kicker": "Movie moment 10 · The Truman Show",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMGQwYmMwM2UtNDM4My00ZjJhLWI3OGYtNmFlZDgwNDViMGQ0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jim Carrey and Ed Harris in The Truman Show (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120382/mediaviewer/rm812375553/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm812375553"
+        }
+      }
+    ]
+  },
+  "ferris-buellers-day-off": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0091042/",
+    "imdbId": "tt0091042",
+    "officialTitle": "Ferris Bueller's Day Off",
+    "premiered": "1986-06-11",
+    "year": 1986,
+    "genres": [
+      "Comedy"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BZWYwMjUxNjMtMzE0MC00NDM3LWIxMmQtYmEyNWVjNjdlZGZjXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMGNjOWE5M2YtZWM3ZC00OTQ5LWIzNzEtMjNmNGUyZDAxMTA5XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm3317875202",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0091042/mediaviewer/rm3317875202/",
+    "questions": [
+      {
+        "prompt": "You want one unforgettable day away from school. What is your opening move?",
+        "kicker": "Movie moment 1 · Ferris Bueller's Day Off",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjA0NzI2MDcyNl5BMl5BanBnXkFtZTcwODA0OTI2OQ@@._V1_.jpg",
+          "alt": "Matthew Broderick, Mia Sara, and Alan Ruck in Ferris Bueller's Day Off (1986)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0091042/mediaviewer/rm1138729984/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1138729984"
+        }
+      },
+      {
+        "prompt": "Cameron feels too anxious to leave home. How would you convince or support him?",
+        "kicker": "Movie moment 2 · Ferris Bueller's Day Off",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjU4MjMzMzU4OV5BMl5BanBnXkFtZTcwNzA0OTI2OQ@@._V1_.jpg",
+          "alt": "Matthew Broderick, Mia Sara, and Alan Ruck in Ferris Bueller's Day Off (1986)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0091042/mediaviewer/rm1155507200/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1155507200"
+        }
+      },
+      {
+        "prompt": "The plan requires borrowing Cameron's father's prized Ferrari. Is it worth it?",
+        "kicker": "Movie moment 3 · Ferris Bueller's Day Off",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMGNjOWE5M2YtZWM3ZC00OTQ5LWIzNzEtMjNmNGUyZDAxMTA5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Matthew Broderick, Mia Sara, and Alan Ruck in Ferris Bueller's Day Off (1986)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0091042/mediaviewer/rm3317875202/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3317875202"
+        }
+      },
+      {
+        "prompt": "You must collect Sloane while the principal watches. What cover story works?",
+        "kicker": "Movie moment 4 · Ferris Bueller's Day Off",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjg4NjY1MjM1Nl5BMl5BanBnXkFtZTcwOTE0OTI2OQ@@._V1_.jpg",
+          "alt": "Matthew Broderick, Mia Sara, and Lyman Ward in Ferris Bueller's Day Off (1986)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0091042/mediaviewer/rm1222616064/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1222616064"
+        }
+      },
+      {
+        "prompt": "A fancy restaurant refuses to seat your group. How do you talk your way in?",
+        "kicker": "Movie moment 5 · Ferris Bueller's Day Off",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTc4ODg4ODIyMV5BMl5BanBnXkFtZTcwODYxNTI5Mw@@._V1_.jpg",
+          "alt": "Matthew Broderick, Mia Sara, and Alan Ruck in Ferris Bueller's Day Off (1986)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0091042/mediaviewer/rm1240106496/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1240106496"
+        }
+      },
+      {
+        "prompt": "The art museum becomes the quietest part of the day. What holds your attention?",
+        "kicker": "Movie moment 6 · Ferris Bueller's Day Off",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTk2OTMxMTEwM15BMl5BanBnXkFtZTcwMTE0OTI2OQ@@._V1_.jpg",
+          "alt": "Matthew Broderick, Mia Sara, Alan Ruck, Lee Ann Marie, and Vlasta Krsek in Ferris Bueller's Day Off (1986)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0091042/mediaviewer/rm1088398336/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1088398336"
+        }
+      },
+      {
+        "prompt": "Ferris suddenly takes over a parade performance. Do you join, watch, or leave?",
+        "kicker": "Movie moment 7 · Ferris Bueller's Day Off",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDA2MDMyMjE1NF5BMl5BanBnXkFtZTcwNjE0OTI2OQ@@._V1_.jpg",
+          "alt": "Matthew Broderick, Lee Ann Marie, and Vlasta Krsek in Ferris Bueller's Day Off (1986)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0091042/mediaviewer/rm1272947712/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1272947712"
+        }
+      },
+      {
+        "prompt": "Principal Rooney gets closer to proving the trick. How do you protect the plan?",
+        "kicker": "Movie moment 8 · Ferris Bueller's Day Off",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTYxOTgwMzMxM15BMl5BanBnXkFtZTcwMzUzOTI2OQ@@._V1_.jpg",
+          "alt": "Matthew Broderick, Jennifer Grey, and Jeffrey Jones in Ferris Bueller's Day Off (1986)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0091042/mediaviewer/rm283091968/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm283091968"
+        }
+      },
+      {
+        "prompt": "The Ferrari's mileage reveals the whole adventure. How would you handle the truth?",
+        "kicker": "Movie moment 9 · Ferris Bueller's Day Off",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjEzMTc3Njg3NF5BMl5BanBnXkFtZTcwOTA0OTI2OQ@@._V1_.jpg",
+          "alt": "Matthew Broderick, Mia Sara, and Alan Ruck in Ferris Bueller's Day Off (1986)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0091042/mediaviewer/rm1121952768/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1121952768"
+        }
+      },
+      {
+        "prompt": "A perfect day is ending faster than expected. What moment would you slow down?",
+        "kicker": "Movie moment 10 · Ferris Bueller's Day Off",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNmYyZTA4MGItNzRhZC00MjA5LTlhZjktNjk5NzViYTEyODA4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Matthew Broderick, Mia Sara, and Alan Ruck in Ferris Bueller's Day Off (1986)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0091042/mediaviewer/rm1423360514/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1423360514"
+        }
+      }
+    ]
+  },
+  "mean-girls": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0377092/",
+    "imdbId": "tt0377092",
+    "officialTitle": "Mean Girls",
+    "premiered": "2004-04-30",
+    "year": 2004,
+    "genres": [
+      "Comedy"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMjE1MDQ4MjI1OV5BMl5BanBnXkFtZTcwNzcwODAzMw@@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BZWJlYjg4N2ItOWM2MS00YTg1LWFlNmMtODFkMDQwMWMwZTBhXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm1923424257",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0377092/mediaviewer/rm1923424257/",
+    "questions": [
+      {
+        "prompt": "It is your first day in a real high school. Where do you sit at lunch?",
+        "kicker": "Movie moment 1 · Mean Girls",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjA1NDIzNTcyOV5BMl5BanBnXkFtZTcwMzgwODAzMw@@._V1_.jpg",
+          "alt": "Lizzy Caplan, Daniel Franzese, and Lindsay Lohan in Mean Girls (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0377092/mediaviewer/rm4146170880/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4146170880"
+        }
+      },
+      {
+        "prompt": "The Plastics invite you to their table and explain strict rules. How do you respond?",
+        "kicker": "Movie moment 2 · Mean Girls",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTQyOTI0ODYzMV5BMl5BanBnXkFtZTcwMTcxODAzMw@@._V1_.jpg",
+          "alt": "Lacey Chabert, Lindsay Lohan, Rachel McAdams, and Amanda Seyfried in Mean Girls (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0377092/mediaviewer/rm706907136/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm706907136"
+        }
+      },
+      {
+        "prompt": "Janis asks you to secretly report on Regina's group. Do you agree?",
+        "kicker": "Movie moment 3 · Mean Girls",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTI5MTQxMzA4Nl5BMl5BanBnXkFtZTcwMTMxODAzMw@@._V1_.jpg",
+          "alt": "Lizzy Caplan, Daniel Franzese, Lindsay Lohan, Jonathan Malen, and Molly Shanahan in Mean Girls (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0377092/mediaviewer/rm3558968320/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3558968320"
+        }
+      },
+      {
+        "prompt": "You like Aaron, but dating him would break a social rule. What matters?",
+        "kicker": "Movie moment 4 · Mean Girls",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzM0MTQxNzM2MF5BMl5BanBnXkFtZTcwMzIxODAzMw@@._V1_.jpg",
+          "alt": "Lindsay Lohan and Jonathan Bennett in Mean Girls (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0377092/mediaviewer/rm3391196160/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3391196160"
+        }
+      },
+      {
+        "prompt": "Regina gives a compliment that sounds like an insult. How do you answer?",
+        "kicker": "Movie moment 5 · Mean Girls",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTU4MTA2MjA5NF5BMl5BanBnXkFtZTcwODgwODAzMw@@._V1_.jpg",
+          "alt": "Lacey Chabert, Lindsay Lohan, Rachel McAdams, and Amanda Seyfried in Mean Girls (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0377092/mediaviewer/rm4095839232/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4095839232"
+        }
+      },
+      {
+        "prompt": "The Burn Book contains cruel rumors about nearly everyone. What should happen to it?",
+        "kicker": "Movie moment 6 · Mean Girls",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjIyMTlkZDItOTAzMy00MjY5LWFhMTItODZiMGYyZDI2MWJjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Lacey Chabert, Lindsay Lohan, Rachel McAdams, Jonathan Bennett, and Amanda Seyfried in Mean Girls (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0377092/mediaviewer/rm3355247104/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3355247104"
+        }
+      },
+      {
+        "prompt": "A talent-show dance goes wrong in front of the school. How do you recover?",
+        "kicker": "Movie moment 7 · Mean Girls",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTY1NDExMjI0NF5BMl5BanBnXkFtZTcwMjcxODAzMw@@._V1_.jpg",
+          "alt": "Lacey Chabert, Lindsay Lohan, Rachel McAdams, and Amanda Seyfried in Mean Girls (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0377092/mediaviewer/rm690129920/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm690129920"
+        }
+      },
+      {
+        "prompt": "Your grades drop because pretending not to know math feels useful. What do you change?",
+        "kicker": "Movie moment 8 · Mean Girls",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzUyOTE4MTM3MF5BMl5BanBnXkFtZTcwMjMxODAzMw@@._V1_.jpg",
+          "alt": "Tina Fey and Lindsay Lohan in Mean Girls (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0377092/mediaviewer/rm3542191104/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3542191104"
+        }
+      },
+      {
+        "prompt": "Rumors spread through the halls and everyone starts arguing. How do you calm things?",
+        "kicker": "Movie moment 9 · Mean Girls",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjQ2ZWU3YWItNmY5MC00YTJjLTk4ZWQtZDIwNWQ3ZTMxMWU5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Tina Fey and Lindsay Lohan in Mean Girls (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0377092/mediaviewer/rm1582144001/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1582144001"
+        }
+      },
+      {
+        "prompt": "Winning the Spring Fling crown gives you one public moment. What do you say?",
+        "kicker": "Movie moment 10 · Mean Girls",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjE0OTEyMjQ4NV5BMl5BanBnXkFtZTcwNDIxODAzMw@@._V1_.jpg",
+          "alt": "Lizzy Caplan, Daniel Franzese, and Lindsay Lohan in Mean Girls (2004)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0377092/mediaviewer/rm3374418944/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3374418944"
+        }
+      }
+    ]
+  },
+  "clueless": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0112697/",
+    "imdbId": "tt0112697",
+    "officialTitle": "Clueless",
+    "premiered": "1995-07-19",
+    "year": 1995,
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMTgwYjQ1NDktOTcwNi00MWZhLTliYWQtZDg5NjZhY2U5ZTNlXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BNjM5MDRhZDktN2IwYi00M2U2LWFhNGItNGMzYTdhYmJlM2FlXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2716550145",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0112697/mediaviewer/rm2716550145/",
+    "questions": [
+      {
+        "prompt": "A computer helps choose your outfit before school. What decides the final look?",
+        "kicker": "Movie moment 1 · Clueless",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTcyMTYwMTc1M15BMl5BanBnXkFtZTcwMTAxMDExNA@@._V1_.jpg",
+          "alt": "Alicia Silverstone in Clueless (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0112697/mediaviewer/rm2167703296/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2167703296"
+        }
+      },
+      {
+        "prompt": "Cher wants to improve her grades by matching two teachers. Is the plan clever or risky?",
+        "kicker": "Movie moment 2 · Clueless",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTYzMzQ5OTc0MF5BMl5BanBnXkFtZTcwNjkwMDExNA@@._V1_.jpg",
+          "alt": "Alicia Silverstone, Stacey Dash, and Brittany Murphy in Clueless (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0112697/mediaviewer/rm2251589376/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2251589376"
+        }
+      },
+      {
+        "prompt": "A new student arrives with a completely different style. How do you welcome her?",
+        "kicker": "Movie moment 3 · Clueless",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZGU4NjYwNzEtZjViMS00MGUyLTk0NzMtODk0ZDE0NDI4MDk0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Alicia Silverstone, Stacey Dash, and Brittany Murphy in Clueless (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0112697/mediaviewer/rm2112740865/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2112740865"
+        }
+      },
+      {
+        "prompt": "Tai agrees to a makeover. Which part should still remain completely hers?",
+        "kicker": "Movie moment 4 · Clueless",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjE1NjQ1MTM5OV5BMl5BanBnXkFtZTcwMTkwMDExNA@@._V1_.jpg",
+          "alt": "Alicia Silverstone and Brittany Murphy in Clueless (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0112697/mediaviewer/rm3124004608/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3124004608"
+        }
+      },
+      {
+        "prompt": "Cher tries to arrange the perfect date for Tai. What could she be missing?",
+        "kicker": "Movie moment 5 · Clueless",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTA0OTM1OTQ4Nl5BMl5BanBnXkFtZTcwNzgwMDExNA@@._V1_.jpg",
+          "alt": "Alicia Silverstone and Brittany Murphy in Clueless (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0112697/mediaviewer/rm3174336256/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3174336256"
+        }
+      },
+      {
+        "prompt": "You fail a driving test in spectacular fashion. How do you recover?",
+        "kicker": "Movie moment 6 · Clueless",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTc5NjQwNDk2MF5BMl5BanBnXkFtZTcwMDAxMDExNA@@._V1_.jpg",
+          "alt": "Alicia Silverstone and Paul Rudd in Clueless (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0112697/mediaviewer/rm2184480512/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2184480512"
+        }
+      },
+      {
+        "prompt": "Josh challenges you to care about something beyond popularity. How do you respond?",
+        "kicker": "Movie moment 7 · Clueless",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDA4ZjhhYTAtYWMyMC00NWI0LTk3NDAtOWY2YzUwYzYzNWM0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Alicia Silverstone, Josh Lozoff, and Paul Rudd in Clueless (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0112697/mediaviewer/rm971890177/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm971890177"
+        }
+      },
+      {
+        "prompt": "A party in the Valley goes very differently than planned. Who needs your help?",
+        "kicker": "Movie moment 8 · Clueless",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOWZjZWQ4M2EtYjFiMC00Yjg4LTg0MWEtYWEyZjRhZDQ3ZTllXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Alicia Silverstone, Stacey Dash, and Brittany Murphy in Clueless (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0112697/mediaviewer/rm166583809/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm166583809"
+        }
+      },
+      {
+        "prompt": "Tai's new popularity starts changing the friendship. What would you say honestly?",
+        "kicker": "Movie moment 9 · Clueless",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzAzZTc0MDUtNzI5YS00MWUyLWI3NTMtZjdkYjAyOGExMzQ1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Alicia Silverstone, Brittany Murphy, and Jeremy Sisto in Clueless (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0112697/mediaviewer/rm2023911681/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2023911681"
+        }
+      },
+      {
+        "prompt": "You realize your good intentions have also been controlling. What is the next step?",
+        "kicker": "Movie moment 10 · Clueless",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTM0NjE4NjI2Nl5BMl5BanBnXkFtZTcwNDAxMDExNA@@._V1_.jpg",
+          "alt": "Alicia Silverstone, Stacey Dash, Breckin Meyer, Brittany Murphy, Jeremy Sisto, Elisa Donovan, Donald Faison, Paul Rudd, and Justin Walker in Clueless (1995)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0112697/mediaviewer/rm2385807104/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2385807104"
+        }
+      }
+    ]
+  },
+  "school-of-rock": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0332379/",
+    "imdbId": "tt0332379",
+    "officialTitle": "School of Rock",
+    "premiered": "2003-10-03",
+    "year": 2003,
+    "genres": [
+      "Comedy",
+      "Music"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BOTg2NDU4Mjg2NV5BMl5BanBnXkFtZTgwNjQ0MDIyMDI@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BNjIzMzE5ODM0Ml5BMl5BanBnXkFtZTgwNDQ0MDIyMDI@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm3316580864",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0332379/mediaviewer/rm3316580864/",
+    "questions": [
+      {
+        "prompt": "Dewey takes a substitute job while knowing almost nothing about teaching. What should happen first?",
+        "kicker": "Movie moment 1 · School of Rock",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTA4NzgyNDgyNjZeQTJeQWpwZ15BbWU4MDk0NDAyMjAy._V1_.jpg",
+          "alt": "Richard Linklater, Jack Black, and Scott Rudin in School of Rock (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0332379/mediaviewer/rm3232694784/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3232694784"
+        }
+      },
+      {
+        "prompt": "The students reveal serious musical talent. Which band role would you assign yourself?",
+        "kicker": "Movie moment 2 · School of Rock",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODM2MjQ3NDMzMl5BMl5BanBnXkFtZTgwNjM0MDIyMDI@._V1_.jpg",
+          "alt": "Jack Black, Kevin Alexander Clark, Joey Gaydos Jr., and Rivkah Reyes in School of Rock (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0332379/mediaviewer/rm4256104960/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4256104960"
+        }
+      },
+      {
+        "prompt": "Summer demands to know why she is not in the band. What job fits her best?",
+        "kicker": "Movie moment 3 · School of Rock",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTU0NjI0Njg3Ml5BMl5BanBnXkFtZTgwNDM0MDIyMDI@._V1_.jpg",
+          "alt": "Aleisha Allen, Jack Black, Cole Hawkins, Angelo Massagli, Kevin Alexander Clark, Miranda Cosgrove, Joey Gaydos Jr., Maryam Hassan, Rivkah Reyes, Caitlin Hale, Veronica Afflerbach, Jordan-Claire Green, Robert Tsai, Brian Falduto, Z Infante, James Hosey, and Jaclyn Neidenthal in School of Rock (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0332379/mediaviewer/rm4289659392/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4289659392"
+        }
+      },
+      {
+        "prompt": "Tomika is afraid to sing alone. How would you help her feel ready?",
+        "kicker": "Movie moment 4 · School of Rock",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjIzMzE5ODM0Ml5BMl5BanBnXkFtZTgwNDQ0MDIyMDI@._V1_.jpg",
+          "alt": "Jack Black, Maryam Hassan, and Caitlin Hale in School of Rock (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0332379/mediaviewer/rm3316580864/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3316580864"
+        }
+      },
+      {
+        "prompt": "The class needs to practice without the principal discovering the band. What is your cover?",
+        "kicker": "Movie moment 5 · School of Rock",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTA1MzM0NzIwMjReQTJeQWpwZ15BbWU4MDg0NDAyMjAy._V1_.jpg",
+          "alt": "Jack Black, Miranda Cosgrove, Veronica Afflerbach, Jordan-Claire Green, and Z Infante in School of Rock (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0332379/mediaviewer/rm3266249216/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3266249216"
+        }
+      },
+      {
+        "prompt": "Zack writes a song but doubts that it is good enough. How do you respond?",
+        "kicker": "Movie moment 6 · School of Rock",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTY1NTExMTEzMl5BMl5BanBnXkFtZTgwMjM0MDIyMDI@._V1_.jpg",
+          "alt": "Jack Black, Miranda Cosgrove, Joey Gaydos Jr., Maryam Hassan, and Robert Tsai in School of Rock (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0332379/mediaviewer/rm4038001152/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4038001152"
+        }
+      },
+      {
+        "prompt": "Strict parents have different plans for each student's future. How should the students speak up?",
+        "kicker": "Movie moment 7 · School of Rock",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTkyMzM4NjE4OF5BMl5BanBnXkFtZTgwNzQ0MDIyMDI@._V1_.jpg",
+          "alt": "Sarah Silverman and Mike White in School of Rock (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0332379/mediaviewer/rm3283026432/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3283026432"
+        }
+      },
+      {
+        "prompt": "Dewey's secret identity is revealed. What truth about the class still matters?",
+        "kicker": "Movie moment 8 · School of Rock",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTU0NzM3MDgzNV5BMl5BanBnXkFtZTgwODM0MDIyMDI@._V1_.jpg",
+          "alt": "Joan Cusack, Jack Black, Sarah Silverman, Mike White, and Barry Shurchin in School of Rock (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0332379/mediaviewer/rm4222550528/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4222550528"
+        }
+      },
+      {
+        "prompt": "The Battle of the Bands stage is ready. What makes a performance memorable?",
+        "kicker": "Movie moment 9 · School of Rock",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzcxMjMwMTI0NV5BMl5BanBnXkFtZTgwMzQ0MDIyMDI@._V1_.jpg",
+          "alt": "Jack Black, Kevin Alexander Clark, Rivkah Reyes, and Robert Tsai in School of Rock (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0332379/mediaviewer/rm3333358080/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3333358080"
+        }
+      },
+      {
+        "prompt": "A great team needs stars and behind-the-scenes people. Which contribution feels like you?",
+        "kicker": "Movie moment 10 · School of Rock",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzI2MDlhYWItNGJlZi00MDdmLWE2OWUtYTMwMzdjMDZmNDFhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Frank Whaley, Jack Black, and Miranda Cosgrove in School of Rock (2003)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0332379/mediaviewer/rm2558883329/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2558883329"
+        }
+      }
+    ]
+  },
+  "legally-blonde": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0250494/",
+    "imdbId": "tt0250494",
+    "officialTitle": "Legally Blonde",
+    "premiered": "2001-07-13",
+    "year": 2001,
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BNTEyNjUwMTkxMV5BMl5BanBnXkFtZTcwNjk0NDk0NA@@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMTk4MzYxMjMzNl5BMl5BanBnXkFtZTgwODMzMTYyMDI@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm153813504",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0250494/mediaviewer/rm153813504/",
+    "questions": [
+      {
+        "prompt": "Elle expects a proposal but receives a breakup instead. What should guide her next choice?",
+        "kicker": "Movie moment 1 · Legally Blonde",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZDhmYTNhNWItYzFlMy00OTA1LWFmOTctOGFhMGU0NDE0NDE3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Reese Witherspoon, Selma Blair, and Matthew Davis in Legally Blonde (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0250494/mediaviewer/rm3913639936/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3913639936"
+        }
+      },
+      {
+        "prompt": "Getting into Harvard requires a memorable application video. What would yours show?",
+        "kicker": "Movie moment 2 · Legally Blonde",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BN2Y5ZDYwOGQtMWFlOC00N2M2LTk1MDgtZGFmYzRiZGZhZTVkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Reese Witherspoon and Moonie in Legally Blonde (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0250494/mediaviewer/rm296101376/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm296101376"
+        }
+      },
+      {
+        "prompt": "Classmates judge your appearance before hearing your ideas. How do you respond?",
+        "kicker": "Movie moment 3 · Legally Blonde",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzUzMmE3NjMtOThlYy00MzlhLWE2OGQtYzVmOTczMjg3NGE4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Reese Witherspoon and Selma Blair in Legally Blonde (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0250494/mediaviewer/rm3059100928/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3059100928"
+        }
+      },
+      {
+        "prompt": "A professor removes you from class for being unprepared. What changes tomorrow?",
+        "kicker": "Movie moment 4 · Legally Blonde",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzYwNTUyMjk4N15BMl5BanBnXkFtZTcwMjg0NDk0NA@@._V1_.jpg",
+          "alt": "Reese Witherspoon, Victor Garber, Luke Wilson, and Shannon O'Hurley in Legally Blonde (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0250494/mediaviewer/rm3294935552/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3294935552"
+        }
+      },
+      {
+        "prompt": "Emmett tells you to stop chasing approval and take the work seriously. What clicks?",
+        "kicker": "Movie moment 5 · Legally Blonde",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDFmYzdkMDgtMzBlYi00YjBiLTk1ODUtZjRhNjkxN2UxYmFkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Reese Witherspoon and Luke Wilson in Legally Blonde (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0250494/mediaviewer/rm1621501440/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1621501440"
+        }
+      },
+      {
+        "prompt": "Paulette needs confidence to speak to someone she likes. How do you coach her?",
+        "kicker": "Movie moment 6 · Legally Blonde",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODgwNmE3ZDAtMDFiZC00NDQ4LTg1ODQtMWI3YTI0ZWQyZDlmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Reese Witherspoon and Jennifer Coolidge in Legally Blonde (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0250494/mediaviewer/rm3047564800/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3047564800"
+        }
+      },
+      {
+        "prompt": "A high-profile client trusts you with a secret alibi. How do you protect both truth and trust?",
+        "kicker": "Movie moment 7 · Legally Blonde",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODQ4MzQyNTQ5OV5BMl5BanBnXkFtZTcwMzA1NDk0NA@@._V1_.jpg",
+          "alt": "Reese Witherspoon, Jessica Cauffiel, Ali Larter, and Alanna Ubach in Legally Blonde (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0250494/mediaviewer/rm3747920384/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3747920384"
+        }
+      },
+      {
+        "prompt": "A powerful mentor crosses an important boundary. Where do you turn for support?",
+        "kicker": "Movie moment 8 · Legally Blonde",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTExNTMzMzUzMDdeQTJeQWpwZ15BbWU3MDU5NDQ5NDQ@._V1_.jpg",
+          "alt": "Reese Witherspoon, Victor Garber, Jessica Cauffiel, Ali Larter, Alanna Ubach, Luke Wilson, Matthew Davis, and Moonie in Legally Blonde (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0250494/mediaviewer/rm3613702656/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3613702656"
+        }
+      },
+      {
+        "prompt": "One small beauty detail could reveal a witness's lie. What helps you notice it?",
+        "kicker": "Movie moment 9 · Legally Blonde",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTMxNTk4OTk3NF5BMl5BanBnXkFtZTcwMTk0NDk0NA@@._V1_.jpg",
+          "alt": "Reese Witherspoon and Linda Cardellini in Legally Blonde (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0250494/mediaviewer/rm3412376064/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3412376064"
+        }
+      },
+      {
+        "prompt": "Success no longer means impressing the person who doubted you. What does it mean now?",
+        "kicker": "Movie moment 10 · Legally Blonde",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYTExZjhkMzEtMTU3ZC00OTE3LTg3ODUtMjhiZjNiMGNiZmNhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Reese Witherspoon, Selma Blair, and Matthew Davis in Legally Blonde (2001)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0250494/mediaviewer/rm3097896448/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3097896448"
+        }
+      }
+    ]
+  },
+  "the-devil-wears-prada": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0458352/",
+    "imdbId": "tt0458352",
+    "officialTitle": "The Devil Wears Prada",
+    "premiered": "2006-06-30",
+    "year": 2006,
+    "genres": [
+      "Comedy",
+      "Drama"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BOWM3NTI3YWEtYjJmMy00M2U5LWI1NzEtZWM3ZDY2ZWNjOGRiXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMTc3YzRkOWEtNDcyMy00ODlmLThmMTUtMDJjMmUzNmEzYmZiXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm1494468610",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0458352/mediaviewer/rm1494468610/",
+    "questions": [
+      {
+        "prompt": "You interview for a fashion job without knowing the magazine. How do you present yourself?",
+        "kicker": "Movie moment 1 · The Devil Wears Prada",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjc0YzY5NjktNjkxZi00NGI2LTk3YWItY2M4NTEyMzJkZmZlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Meryl Streep and Anne Hathaway in The Devil Wears Prada (2006)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0458352/mediaviewer/rm1136782337/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1136782337"
+        }
+      },
+      {
+        "prompt": "Miranda quietly gives several impossible requests at once. What do you write down first?",
+        "kicker": "Movie moment 2 · The Devil Wears Prada",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZDBlZDU1ODgtYTc0Ny00OWVkLThiMTMtNjUwMzI3MzQwZTMyXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Meryl Streep and Anne Hathaway in The Devil Wears Prada (2006)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0458352/mediaviewer/rm2126638081/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2126638081"
+        }
+      },
+      {
+        "prompt": "Emily explains that millions of people would want your job. Does that change your view?",
+        "kicker": "Movie moment 3 · The Devil Wears Prada",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZmNkZGE2YTEtN2E4Ni00YTEyLWI0NDktMGU2NzllMGYwZjFkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Anne Hathaway and Emily Blunt in The Devil Wears Prada (2006)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0458352/mediaviewer/rm3502304257/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3502304257"
+        }
+      },
+      {
+        "prompt": "Nigel offers a complete wardrobe change. What would you keep from your old style?",
+        "kicker": "Movie moment 4 · The Devil Wears Prada",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYzY2ZjIzMDktNGViMy00NTE2LTk1YTctZjM5NjlkY2JmY2JjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Stanley Tucci and Anne Hathaway in The Devil Wears Prada (2006)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0458352/mediaviewer/rm2436745218/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2436745218"
+        }
+      },
+      {
+        "prompt": "Miranda needs an unpublished book delivered tonight. How do you approach the impossible?",
+        "kicker": "Movie moment 5 · The Devil Wears Prada",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODRkYjc1MmYtYmQ0YS00ZmFmLWI2ZTAtOWEyYmJlY2FkZTkxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Meryl Streep and Anne Hathaway in The Devil Wears Prada (2006)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0458352/mediaviewer/rm2764106753/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2764106753"
+        }
+      },
+      {
+        "prompt": "Your work phone interrupts an important moment with friends. Which responsibility wins?",
+        "kicker": "Movie moment 6 · The Devil Wears Prada",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMmRmZDQ4YTYtYjk2OC00MGZjLTk5NmQtMzZlZGY1ZGJjNjVmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Anne Hathaway and Adrian Grenier in The Devil Wears Prada (2006)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0458352/mediaviewer/rm1304554497/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1304554497"
+        }
+      },
+      {
+        "prompt": "You must learn every guest's name before a major event. How do you prepare?",
+        "kicker": "Movie moment 7 · The Devil Wears Prada",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTUzNmRiMzUtOThiMy00ZmY5LWE0OGEtOGRhNDRmNDY0YjMyXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Anne Hathaway and Emily Blunt in The Devil Wears Prada (2006)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0458352/mediaviewer/rm3972066305/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3972066305"
+        }
+      },
+      {
+        "prompt": "A colleague's dream trip becomes available to you instead. What feels fair?",
+        "kicker": "Movie moment 8 · The Devil Wears Prada",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Say yes to the odd possibility and find out where it leads."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYWRhYWUxMDMtYWNmYy00YjljLThjYTItYzdkZGJiZjAwMmM1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Anne Hathaway and Emily Blunt in The Devil Wears Prada (2006)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0458352/mediaviewer/rm700574721/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm700574721"
+        }
+      },
+      {
+        "prompt": "Paris offers career access but exposes difficult office politics. What do you notice?",
+        "kicker": "Movie moment 9 · The Devil Wears Prada",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTY2MzRmYmEtZmEzZS00MDA3LWI0MmItNjkwODRhMDA0MmNlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Stanley Tucci, Anne Hathaway, and Tibor Feldman in The Devil Wears Prada (2006)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0458352/mediaviewer/rm2973616130/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2973616130"
+        }
+      },
+      {
+        "prompt": "You are becoming excellent at a job that changes your values. What do you do?",
+        "kicker": "Movie moment 10 · The Devil Wears Prada",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZWY0OWI1ZDEtMjBmMS00ZjdhLThiYzctYzJkYzZhMDkxYjI4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Meryl Streep, Stanley Tucci, Anne Hathaway, Jimena Hoyos, and Rebecca Mader in The Devil Wears Prada (2006)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0458352/mediaviewer/rm482470913/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm482470913"
+        }
+      }
+    ]
+  },
+  "knives-out": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt8946378/",
+    "imdbId": "tt8946378",
+    "officialTitle": "Knives Out",
+    "premiered": "2019-11-27",
+    "year": 2019,
+    "genres": [
+      "Comedy",
+      "Crime",
+      "Drama",
+      "Mystery",
+      "Thriller"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BZDU5ZTRkYmItZjg0Mi00ZTQwLThjMWItNWM3MTMxMzVjZmVjXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BN2MzYjcyZDQtYWZjZi00ZjQ2LWE4NGEtYjU3YzcwZTkzZDMxXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm1035242753",
+    "heroSourceUrl": "https://www.imdb.com/title/tt8946378/mediaviewer/rm1035242753/",
+    "questions": [
+      {
+        "prompt": "A famous writer gathers his difficult family for a birthday. Where do you sit?",
+        "kicker": "Movie moment 1 · Knives Out",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNmZmY2I2OTQtODI2YS00ZWM1LWFjZGEtYTliOTkzODkzMzQ3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jamie Lee Curtis, Don Johnson, Toni Collette, Christopher Plummer, K Callan, Chris Evans, Michael Shannon, Riki Lindhome, Ana de Armas, Jaeden Martell, and Katherine Langford in Knives Out (2019)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt8946378/mediaviewer/rm611032833/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm611032833"
+        }
+      },
+      {
+        "prompt": "Benoit Blanc asks simple questions while watching every reaction. How do you answer?",
+        "kicker": "Movie moment 2 · Knives Out",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTlmYjhlNDAtZTE2Ni00YTUyLWI1N2MtMjljMzdhODU1NzFiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Daniel Craig and Ana de Armas in Knives Out (2019)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt8946378/mediaviewer/rm817138945/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm817138945"
+        }
+      },
+      {
+        "prompt": "Each relative describes the same party differently. Which detail would you compare?",
+        "kicker": "Movie moment 3 · Knives Out",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTU3OWQ5YmUtMWY0Mi00ZTI3LWJmN2YtNzJlNmFlZDkxMzUyXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jamie Lee Curtis, Don Johnson, Toni Collette, Michael Shannon, Riki Lindhome, Jaeden Martell, and Katherine Langford in Knives Out (2019)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt8946378/mediaviewer/rm373656577/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm373656577"
+        }
+      },
+      {
+        "prompt": "Marta cannot lie without getting sick. How could that become a strength?",
+        "kicker": "Movie moment 4 · Knives Out",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODQ2NDg2YzAtZmJjOC00MDA1LTk4NjMtMmI5NzRmZTFiOTYxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Daniel Craig and Ana de Armas in Knives Out (2019)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt8946378/mediaviewer/rm2824308225/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2824308225"
+        }
+      },
+      {
+        "prompt": "A secret conversation in the study may change several motives. What do you verify?",
+        "kicker": "Movie moment 5 · Knives Out",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMmNhNWM4YTUtNGVkZC00YTA1LTkyN2UtNDM4MjRkYTYxYWM3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Christopher Plummer in Knives Out (2019)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt8946378/mediaviewer/rm1290147585/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1290147585"
+        }
+      },
+      {
+        "prompt": "The family treats Marta warmly until money is involved. How should she respond?",
+        "kicker": "Movie moment 6 · Knives Out",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTc2M2MzYTQtODQ0OC00NmU1LThmYTYtM2VkOGY2Y2IxMTE4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ana de Armas in Knives Out (2019)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt8946378/mediaviewer/rm1068797185/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1068797185"
+        }
+      },
+      {
+        "prompt": "Ransom offers unexpected help during a confusing day. What would earn your trust?",
+        "kicker": "Movie moment 7 · Knives Out",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjAwYWIxYzMtMzdmMi00MDZlLWI5MTUtZGFkYmRlZGYwMTI4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Jamie Lee Curtis, Don Johnson, Toni Collette, Christopher Plummer, K Callan, Chris Evans, Michael Shannon, Riki Lindhome, Ana de Armas, Jaeden Martell, and Katherine Langford in Knives Out (2019)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt8946378/mediaviewer/rm4088765697/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4088765697"
+        }
+      },
+      {
+        "prompt": "A muddy footprint conflicts with someone's timeline. Which question comes next?",
+        "kicker": "Movie moment 8 · Knives Out",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzZiMjU5ZWQtMzU3Yy00MThiLWIwNTMtNjlhMTJhZmNiYWRhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Daniel Craig, Chris Evans, Noah Segan, Ana de Armas, and LaKeith Stanfield in Knives Out (2019)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt8946378/mediaviewer/rm3160055553/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3160055553"
+        }
+      },
+      {
+        "prompt": "Blanc compares the case to a doughnut with a missing center. What pattern do you see?",
+        "kicker": "Movie moment 9 · Knives Out",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BN2MzYjcyZDQtYWZjZi00ZjQ2LWE4NGEtYjU3YzcwZTkzZDMxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Daniel Craig in Knives Out (2019)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt8946378/mediaviewer/rm1035242753/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1035242753"
+        }
+      },
+      {
+        "prompt": "Kindness and cleverness both matter in this mystery. Which guides your choices more?",
+        "kicker": "Movie moment 10 · Knives Out",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjgxOTczYmItODZjOS00ZTZiLTkwMTItMjI1NzlkNTM0N2IwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Daniel Craig, Noah Segan, and LaKeith Stanfield in Knives Out (2019)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt8946378/mediaviewer/rm543923969/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm543923969"
+        }
+      }
+    ]
+  },
+  "the-greatest-showman": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt1485796/",
+    "imdbId": "tt1485796",
+    "officialTitle": "The Greatest Showman",
+    "premiered": "2017-12-20",
+    "year": 2017,
+    "genres": [
+      "Biography",
+      "Drama",
+      "Musical",
+      "Romance"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMjI1NDYzNzY2Ml5BMl5BanBnXkFtZTgwODQwODczNTM@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BOWIxZjBlNmEtYmVjMy00NzQ4LTk0NjUtNWE4ZTg0YjIyMzY2XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm546004224",
+    "heroSourceUrl": "https://www.imdb.com/title/tt1485796/mediaviewer/rm546004224/",
+    "questions": [
+      {
+        "prompt": "A childhood dream feels impossible because of class and money. What keeps it alive?",
+        "kicker": "Movie moment 1 · The Greatest Showman",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODA4YzI3OWQtYmU5MS00ZDE2LTkzOWMtMzNhYzIyMjg1OTdmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Hugh Jackman and Michelle Williams in The Greatest Showman (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1485796/mediaviewer/rm1794071552/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1794071552"
+        }
+      },
+      {
+        "prompt": "Barnum opens a museum, but visitors find it dull. What would you add?",
+        "kicker": "Movie moment 2 · The Greatest Showman",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjkyZmU0NGItMjM3ZS00OTE4LWJhNGItYTcwMjM0NDIyOWEyXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Rebecca Ferguson, Hugh Jackman, and Michael Barra in The Greatest Showman (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1485796/mediaviewer/rm730553600/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm730553600"
+        }
+      },
+      {
+        "prompt": "A group of unusual performers is invited to create a show. How do you build trust?",
+        "kicker": "Movie moment 3 · The Greatest Showman",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjA2Mjg1MDc3MV5BMl5BanBnXkFtZTgwNzI0NDU3MjI@._V1_.jpg",
+          "alt": "Kenneth Chan, Hugh Jackman, Sunny Walters, Martha Nichols, Taylor James, Caoife Coleman, Jeremy Hudson, Shannon Holtzapffel, Khasan Brailsford, Keala Settle, Jonathan Redavid, Luciano Acuna Jr., and Mishay Petronelli in The Greatest Showman (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1485796/mediaviewer/rm2461150720/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2461150720"
+        }
+      },
+      {
+        "prompt": "Phillip risks his reputation by joining the circus. What makes a risk worthwhile?",
+        "kicker": "Movie moment 4 · The Greatest Showman",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTk2Mzk2MTgzMF5BMl5BanBnXkFtZTgwODI0NDU3MjI@._V1_.jpg",
+          "alt": "Hugh Jackman and Zac Efron in The Greatest Showman (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1485796/mediaviewer/rm2444373504/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2444373504"
+        }
+      },
+      {
+        "prompt": "Anne flies above the ring on a trapeze. What kind of courage does that take?",
+        "kicker": "Movie moment 5 · The Greatest Showman",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODMzZjg1OTItYWVmNS00OGYyLTg0NjMtNzA4Nzc4NzBlMzUxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Zac Efron and Zendaya in The Greatest Showman (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1485796/mediaviewer/rm3217448192/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3217448192"
+        }
+      },
+      {
+        "prompt": "Critics call the show fake, but audiences feel seen. Whose opinion matters?",
+        "kicker": "Movie moment 6 · The Greatest Showman",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTFlMzA2NTktZDczMC00OTMwLWJiNzUtNjljMjgwMTZlMTdjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Hugh Jackman in The Greatest Showman (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1485796/mediaviewer/rm764108032/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm764108032"
+        }
+      },
+      {
+        "prompt": "A famous singer offers Barnum a more respectable stage. What could he lose?",
+        "kicker": "Movie moment 7 · The Greatest Showman",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTM2NjQ5NWUtMGYzOC00YzY0LTkyMTctYzk3MzFjMjZkYTNjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Rebecca Ferguson and Hugh Jackman in The Greatest Showman (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1485796/mediaviewer/rm1878350080/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1878350080"
+        }
+      },
+      {
+        "prompt": "The performers face an angry crowd outside the theater. How does the group respond?",
+        "kicker": "Movie moment 8 · The Greatest Showman",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODk4ZWVmMDctN2E3Yi00YmI0LTk0ZTYtNDVhM2UxZWU1YzY1XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Radu Spinghel, Ilia Jessica Castro, Sunny Walters, Martha Nichols, Caoife Coleman, Christina Glur, Jeremy Hudson, Shannon Holtzapffel, Khasan Brailsford, Zendaya, Julius Rubio, Vincent-Oliver Noiseux, Keala Settle, Jonathan Redavid, Yahya Abdul-Mateen II, Luciano Acuna Jr., Daniel Everidge, Mishay Petronelli, Natasha Liu Bordizzo, Timothy Hughes, Sam Humphrey, Yusaku Komori, Danial Son, Chelsea Caso, and Najla Gilliam in The Greatest Showman (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1485796/mediaviewer/rm3771096320/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3771096320"
+        }
+      },
+      {
+        "prompt": "Your ambition starts pulling you away from your family and team. What warning do you notice?",
+        "kicker": "Movie moment 9 · The Greatest Showman",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTg4MjQyNjE0Ml5BMl5BanBnXkFtZTgwNjI0NDU3MjI@._V1_.jpg",
+          "alt": "Hugh Jackman and Michelle Williams in The Greatest Showman (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1485796/mediaviewer/rm2477927936/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2477927936"
+        }
+      },
+      {
+        "prompt": "The greatest show could mean applause, belonging, or family. Which meaning fits you?",
+        "kicker": "Movie moment 10 · The Greatest Showman",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTBmMGEzYWYtMGRjMS00MmI0LThhYjktZGY4NDg4ODg3NzBmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Hugh Jackman, Michael Gracey, Zac Efron, Christina Glur, Alex Wong, Julius Rubio, Yusaku Komori, and Danial Son in The Greatest Showman (2017)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt1485796/mediaviewer/rm797662464/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm797662464"
+        }
+      }
+    ]
+  },
+  "la-la-land": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt3783958/",
+    "imdbId": "tt3783958",
+    "officialTitle": "La La Land",
+    "premiered": "2016-12-25",
+    "year": 2016,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Music",
+      "Musical",
+      "Romance"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BMDllYjliOTUtMDJjZC00ODIzLWJmNGMtOWI2NzQxMjA2NzdlXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BZTM0MjIxOTItMDgxMy00MjAwLWE1NDQtYzZhNjUxMjJhYjlmXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm909193984",
+    "heroSourceUrl": "https://www.imdb.com/title/tt3783958/mediaviewer/rm909193984/",
+    "questions": [
+      {
+        "prompt": "A traffic jam turns into a full musical number. Do you join in?",
+        "kicker": "Movie moment 1 · La La Land",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "mind",
+            "text": "Work out what caused the problem before trying to solve it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTM0MjIxOTItMDgxMy00MjAwLWE1NDQtYzZhNjUxMjJhYjlmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ryan Gosling and Emma Stone in La La Land (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3783958/mediaviewer/rm909193984/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm909193984"
+        }
+      },
+      {
+        "prompt": "Mia leaves another audition feeling unseen. What would help her return tomorrow?",
+        "kicker": "Movie moment 2 · La La Land",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTJlZGQ2YTgtMmIyMi00YjlmLWJiYmItODNmOGJmYWQwMmQ0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ryan Gosling, Bijon Watson, Emma Stone, and Clarence Robinson in La La Land (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3783958/mediaviewer/rm741421824/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm741421824"
+        }
+      },
+      {
+        "prompt": "Sebastian plays forbidden jazz at a quiet restaurant. Was the risk worth it?",
+        "kicker": "Movie moment 3 · La La Land",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Offer practical help while reminding everyone they matter."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTU1OTIxODYwNV5BMl5BanBnXkFtZTgwNzg1MTc5OTE@._V1_.jpg",
+          "alt": "Ryan Gosling in La La Land (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3783958/mediaviewer/rm2340032256/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2340032256"
+        }
+      },
+      {
+        "prompt": "A first conversation becomes an argument during a beautiful sunset. What do you say honestly?",
+        "kicker": "Movie moment 4 · La La Land",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjc5Njc4NDc1MV5BMl5BanBnXkFtZTgwNzA3NzU3OTE@._V1_.jpg",
+          "alt": "Ryan Gosling and Emma Stone in La La Land (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3783958/mediaviewer/rm1388644608/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1388644608"
+        }
+      },
+      {
+        "prompt": "The planetarium becomes a place where gravity disappears. What feeling takes over?",
+        "kicker": "Movie moment 5 · La La Land",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjMzNDQ1OTI2Ml5BMl5BanBnXkFtZTgwNzM2Mzc2MDI@._V1_.jpg",
+          "alt": "Ryan Gosling and Emma Stone in La La Land (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3783958/mediaviewer/rm3329361664/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3329361664"
+        }
+      },
+      {
+        "prompt": "Mia wants to write her own one-person play. How would you encourage the first draft?",
+        "kicker": "Movie moment 6 · La La Land",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjIzNzIwMTY4M15BMl5BanBnXkFtZTgwNjI2Mzc2MDI@._V1_.jpg",
+          "alt": "Ryan Gosling, Emma Stone, and Ellie Meowery in La La Land (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3783958/mediaviewer/rm4168222464/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4168222464"
+        }
+      },
+      {
+        "prompt": "Keith offers Sebastian steady work with a different sound. What should he consider?",
+        "kicker": "Movie moment 7 · La La Land",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTUyNzg1NTM2N15BMl5BanBnXkFtZTgwMzI2Mzc2MDI@._V1_.jpg",
+          "alt": "Ryan Gosling, Emma Stone, and John Legend in La La Land (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3783958/mediaviewer/rm4218554112/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4218554112"
+        }
+      },
+      {
+        "prompt": "A demanding tour schedule leaves little time for a relationship. How do you communicate?",
+        "kicker": "Movie moment 8 · La La Land",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTkzOTE3MjUxMl5BMl5BanBnXkFtZTgwNDI2Mzc2MDI@._V1_.jpg",
+          "alt": "Ryan Gosling and Emma Stone in La La Land (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3783958/mediaviewer/rm4201776896/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4201776896"
+        }
+      },
+      {
+        "prompt": "Only a few people attend Mia's deeply personal play. How do you measure its value?",
+        "kicker": "Movie moment 9 · La La Land",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZDI0Y2FiMzgtMzkxNC00ODdmLTk0NWEtZDMwNjdmZGE2M2ZkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Ryan Gosling, David Kieran, Emma Stone, Nicole Mills, Ellie Meowery, Arnold Montey, and Reece Chadwick in La La Land (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3783958/mediaviewer/rm691090176/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm691090176"
+        }
+      },
+      {
+        "prompt": "Two important dreams may require different paths. What makes a choice loving?",
+        "kicker": "Movie moment 10 · La La Land",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTcxMzI5NTU2NV5BMl5BanBnXkFtZTgwMjI2Mzc2MDI@._V1_.jpg",
+          "alt": "Ryan Gosling and Emma Stone in La La Land (2016)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt3783958/mediaviewer/rm4235331328/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4235331328"
+        }
+      }
+    ]
+  },
+  "the-sound-of-music": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0059742/",
+    "imdbId": "tt0059742",
+    "officialTitle": "The Sound of Music",
+    "premiered": "1965-04-01",
+    "year": 1965,
+    "genres": [
+      "Biography",
+      "Drama",
+      "Family",
+      "Musical",
+      "Romance"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BYWJhYmU4MjQtZDJhYi00ZGVjLTlkNTEtNzkzNGVjOWQ3MjcwXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMDhjM2MwM2ItZWMyMC00NzZkLWFjNmItMmVlNzdjMGMxODRmXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2630887680",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0059742/mediaviewer/rm2630887680/",
+    "questions": [
+      {
+        "prompt": "Maria is late to the abbey because she was singing in the hills. How do you explain it?",
+        "kicker": "Movie moment 1 · The Sound of Music",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Test the obvious answer before trusting it."
+          },
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTgyNDAyMjkwMV5BMl5BanBnXkFtZTcwNjU0MTUzNA@@._V1_.jpg",
+          "alt": "Julie Andrews and Christopher Plummer in The Sound of Music (1965)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0059742/mediaviewer/rm3818226944/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3818226944"
+        }
+      },
+      {
+        "prompt": "Seven children test their new governess with a prank. How should she respond?",
+        "kicker": "Movie moment 2 · The Sound of Music",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzQ4OTFkM2YtMzg0Yi00ZmFjLWExMWUtZjRiNzNmYTJiY2FkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Julie Andrews in The Sound of Music (1965)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0059742/mediaviewer/rm2065885953/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2065885953"
+        }
+      },
+      {
+        "prompt": "The Captain uses a whistle to run the household. What would you change first?",
+        "kicker": "Movie moment 3 · The Sound of Music",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDhjM2MwM2ItZWMyMC00NzZkLWFjNmItMmVlNzdjMGMxODRmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Julie Andrews, Christopher Plummer, Charmian Carr, Angela Cartwright, Nicholas Hammond, Kym Karath, Heather Menzies, Eleanor Parker, and Debbie Turner in The Sound of Music (1965)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0059742/mediaviewer/rm2630887680/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2630887680"
+        }
+      },
+      {
+        "prompt": "A thunderstorm frightens the children. What would help everyone feel safe?",
+        "kicker": "Movie moment 4 · The Sound of Music",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODJhYWM2YTItMmUyNi00MTMxLWExY2MtMGY0OGFhOTkzNjA2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Julie Andrews in The Sound of Music (1965)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0059742/mediaviewer/rm1050109184/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1050109184"
+        }
+      },
+      {
+        "prompt": "Old curtains could become play clothes for seven children. How creative are you?",
+        "kicker": "Movie moment 5 · The Sound of Music",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BM2Y2YzM1M2QtMzU4Mi00NjFkLWJmNWMtOTQwYjQ5Y2VkZmFiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Julie Andrews in The Sound of Music (1965)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0059742/mediaviewer/rm1050263553/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1050263553"
+        }
+      },
+      {
+        "prompt": "The family performs a puppet show for a formal guest. Would you join backstage?",
+        "kicker": "Movie moment 6 · The Sound of Music",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMGNmNWU3OWQtZTRiYy00YjI3LWJmNjgtNGI5ODczMjEwNDNlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Julie Andrews, Anna Lee, Portia Nelson, Marni Nixon, Doreen Tryden, Peggy Wood, and Ada Beth Lee in The Sound of Music (1965)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0059742/mediaviewer/rm1088984833/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1088984833"
+        }
+      },
+      {
+        "prompt": "Liesl believes she knows exactly what adulthood will be like. What advice would you offer?",
+        "kicker": "Movie moment 7 · The Sound of Music",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "spark",
+            "text": "Raise everyone's spirits, then go straight at the challenge."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjc0MTAyNjYyMF5BMl5BanBnXkFtZTcwODU0MTUzNA@@._V1_.jpg",
+          "alt": "Julie Andrews, Christopher Plummer, Charmian Carr, Angela Cartwright, Duane Chase, Nicholas Hammond, Kym Karath, Heather Menzies, and Debbie Turner in The Sound of Music (1965)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0059742/mediaviewer/rm3784672512/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3784672512"
+        }
+      },
+      {
+        "prompt": "The Captain hears his children sing together for the first time in years. What changes?",
+        "kicker": "Movie moment 8 · The Sound of Music",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "wildcard",
+            "text": "Change the game instead of trying to win it the normal way."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZmVlYzRjODMtYzk4NC00MzRiLWJlZjItNWI3ZmFhMzYzNjcwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Julie Andrews, Christopher Plummer, Charmian Carr, Angela Cartwright, Duane Chase, Nicholas Hammond, Kym Karath, Heather Menzies, and Debbie Turner in The Sound of Music (1965)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0059742/mediaviewer/rm110585088/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm110585088"
+        }
+      },
+      {
+        "prompt": "Max enters the family in a public music festival during a tense time. Is it wise?",
+        "kicker": "Movie moment 9 · The Sound of Music",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODhiYzFmZjAtNDk2Ny00ZThlLWJiZDktYzM4N2I2NmViNmFiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Christopher Plummer, Richard Haydn, and Eleanor Parker in The Sound of Music (1965)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0059742/mediaviewer/rm2173920512/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2173920512"
+        }
+      },
+      {
+        "prompt": "Duty to authority conflicts with duty to your values. Which voice do you follow?",
+        "kicker": "Movie moment 10 · The Sound of Music",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjA4OThmNzItNTkwMC00OTJmLWIzNDgtNjA1YWY2MTBiMDRiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Julie Andrews, Christopher Plummer, Charmian Carr, Angela Cartwright, Duane Chase, Nicholas Hammond, Kym Karath, Heather Menzies, Eleanor Parker, and Debbie Turner in The Sound of Music (1965)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0059742/mediaviewer/rm1139382017/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1139382017"
+        }
+      }
+    ]
+  },
+  "home-alone": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0099785/",
+    "imdbId": "tt0099785",
+    "officialTitle": "Home Alone",
+    "premiered": "1990-11-16",
+    "year": 1990,
+    "genres": [
+      "Comedy",
+      "Family"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BNzNmNmQ2ZDEtMTc1MS00NjNiLThlMGUtZmQxNTg1Nzg5NWMzXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BNzBiNmJhNTEtZTVhOC00NDFhLTlhNGMtNTk4NWY0MmI1ZDVjXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm1758177025",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0099785/mediaviewer/rm1758177025/",
+    "questions": [
+      {
+        "prompt": "A crowded family packs for Paris while everything goes wrong. What job would you take?",
+        "kicker": "Movie moment 1 · Home Alone",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjc0NTQxMGQtODc2Yy00MTRjLWFhNWQtMGRhYjM2NzhlZGU0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Macaulay Culkin in Home Alone (1990)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0099785/mediaviewer/rm1791731457/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1791731457"
+        }
+      },
+      {
+        "prompt": "Kevin wakes up to an empty house. What would you do in the first hour?",
+        "kicker": "Movie moment 2 · Home Alone",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYTEwMWVlODgtMDcxMC00M2U1LTg3N2YtODMyZGRlYTBkNTY3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Macaulay Culkin in Home Alone (1990)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0099785/mediaviewer/rm1825285889/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1825285889"
+        }
+      },
+      {
+        "prompt": "You can eat anything and watch anything with no adults around. What do you choose?",
+        "kicker": "Movie moment 3 · Home Alone",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTZmMjk0Y2YtOTU2OC00OTFhLWI3OWEtNzE5ZmJhNjljMjM2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Macaulay Culkin and Joe Pesci in Home Alone (1990)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0099785/mediaviewer/rm1842063105/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1842063105"
+        }
+      },
+      {
+        "prompt": "Two strangers keep watching houses on the block. How do you check their story?",
+        "kicker": "Movie moment 4 · Home Alone",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzBiNmJhNTEtZTVhOC00NDFhLTlhNGMtNTk4NWY0MmI1ZDVjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Macaulay Culkin, Joe Pesci, and Daniel Stern in Home Alone (1990)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0099785/mediaviewer/rm1758177025/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1758177025"
+        }
+      },
+      {
+        "prompt": "The basement furnace seems terrifying at night. How do you face it?",
+        "kicker": "Movie moment 5 · Home Alone",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzAzNzA0NjAtYTMxZi00MWZlLTllOTctMTkwNjU4YjFiMTRhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Macaulay Culkin and Catherine O'Hara in Home Alone (1990)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0099785/mediaviewer/rm1876896001/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1876896001"
+        }
+      },
+      {
+        "prompt": "A grocery clerk asks where your parents are. How do you answer confidently?",
+        "kicker": "Movie moment 6 · Home Alone",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTg4MTUyNDMwN15BMl5BanBnXkFtZTcwOTMzMTk4NA@@._V1_.jpg",
+          "alt": "Macaulay Culkin in Home Alone (1990)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0099785/mediaviewer/rm2108798976/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2108798976"
+        }
+      },
+      {
+        "prompt": "Old Man Marley may not match the rumors about him. How do you find out?",
+        "kicker": "Movie moment 7 · Home Alone",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNWQ1MTdkYjItMWJlNi00ODExLWFmZjgtYzJhZjY5MTVhMmJjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Macaulay Culkin and Roberts Blossom in Home Alone (1990)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0099785/mediaviewer/rm1237359361/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1237359361"
+        }
+      },
+      {
+        "prompt": "You have one evening to protect the house. Which kind of trap would you design?",
+        "kicker": "Movie moment 8 · Home Alone",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take a detour that turns the whole situation on its head."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODllNTg0YmYtOWU5YS00MWQxLWI0Y2MtMGI0NjE2MDQxYTZhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Macaulay Culkin, Joe Pesci, and Daniel Stern in Home Alone (1990)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0099785/mediaviewer/rm3834088705/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3834088705"
+        }
+      },
+      {
+        "prompt": "Your trip home requires planes, vans, and help from strangers. What keeps you going?",
+        "kicker": "Movie moment 9 · Home Alone",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOWQ5ZDZmMTktODU2Yy00ZTdjLThkNjgtMDFkN2M1YmRkOTdiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "John Candy, Catherine O'Hara, and Alan Wilder in Home Alone (1990)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0099785/mediaviewer/rm1254136577/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1254136577"
+        }
+      },
+      {
+        "prompt": "Being alone sounded perfect until it actually happened. What do you miss most?",
+        "kicker": "Movie moment 10 · Home Alone",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYTJkMzJhMWItZjUwNy00YjJjLTk0ZWItYjJiNzZkZGRlYmM4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Macaulay Culkin and Catherine O'Hara in Home Alone (1990)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0099785/mediaviewer/rm1455463169/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1455463169"
+        }
+      }
+    ]
+  },
+  "the-parent-trap": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0120783/",
+    "imdbId": "tt0120783",
+    "officialTitle": "The Parent Trap",
+    "premiered": "1998-07-29",
+    "year": 1998,
+    "genres": [
+      "Adventure",
+      "Comedy",
+      "Drama",
+      "Family",
+      "Romance"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BNTRkYmY3Y2QtMGM2Ny00MTNmLTk4NjYtNjMwNTNmMGY5ZDllXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMzhjMGExNzEtYmQ0ZC00NDhiLTljYWEtZmVhYWIyZmZmYjA2XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2041580800",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0120783/mediaviewer/rm2041580800/",
+    "questions": [
+      {
+        "prompt": "Two campers look exactly alike but instantly compete. What would you notice first?",
+        "kicker": "Movie moment 1 · The Parent Trap",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzhjMGExNzEtYmQ0ZC00NDhiLTljYWEtZmVhYWIyZmZmYjA2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dennis Quaid and Lindsay Lohan in The Parent Trap (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120783/mediaviewer/rm2041580800/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2041580800"
+        }
+      },
+      {
+        "prompt": "A prank war ends with both twins in an isolation cabin. How do they make peace?",
+        "kicker": "Movie moment 2 · The Parent Trap",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Look for the detail everyone else has missed."
+          },
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjQ3YWE3NzgtMWRhOC00OTMzLTk1MTMtYmQzNzU1MDYzMzRkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Lindsay Lohan in The Parent Trap (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120783/mediaviewer/rm2068525312/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2068525312"
+        }
+      },
+      {
+        "prompt": "You discover your rival is actually your twin. Which question comes first?",
+        "kicker": "Movie moment 3 · The Parent Trap",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNmU4ZDc1ZWQtN2Q0ZS00NzRjLThiYjQtNzM4MGU4NjhlMzE4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Elaine Hendrix and Lindsay Lohan in The Parent Trap (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120783/mediaviewer/rm1085279488/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1085279488"
+        }
+      },
+      {
+        "prompt": "The twins plan to switch homes after camp. What preparation matters most?",
+        "kicker": "Movie moment 4 · The Parent Trap",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzE4NGM3ZjgtODk2MC00MTdkLWFlMjMtZjQ0MzA2OTk4YWQxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dennis Quaid, Lindsay Lohan, and Lisa Ann Walter in The Parent Trap (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120783/mediaviewer/rm1578226433/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1578226433"
+        }
+      },
+      {
+        "prompt": "Chessy notices that Hallie is acting completely different. Do you tell the truth?",
+        "kicker": "Movie moment 5 · The Parent Trap",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Separate what people know from what they are only guessing."
+          },
+          {
+            "role": "spark",
+            "text": "Make the brave move before doubt takes over."
+          },
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "heart",
+            "text": "Calm the room and give everyone space to be heard."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjJhNGY2YjYtYmZlNi00OTkzLTljOTUtNzc4MzAyNTVlNjNhXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dennis Quaid, Elaine Hendrix, Lindsay Lohan, and Lisa Ann Walter in The Parent Trap (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120783/mediaviewer/rm2075135232/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2075135232"
+        }
+      },
+      {
+        "prompt": "Meeting a parent for the first time must look completely normal. How do you manage the emotion?",
+        "kicker": "Movie moment 6 · The Parent Trap",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTJhZWU1ZDgtNTVhMS00NTZjLWJlMjktNjE2MDY4NjhhMDJiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dennis Quaid and Lindsay Lohan in The Parent Trap (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120783/mediaviewer/rm2830109952/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2830109952"
+        }
+      },
+      {
+        "prompt": "Hallie enters a London home she knows only from stories. What does she explore?",
+        "kicker": "Movie moment 7 · The Parent Trap",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BY2U1MjU0MjMtMmMwZi00ZmY1LWI1OTQtNzkyN2Y1ZGQ3NTRjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Natasha Richardson, Simon Kunz, Lindsay Lohan, and Ronnie Stevens in The Parent Trap (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120783/mediaviewer/rm1487932672/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1487932672"
+        }
+      },
+      {
+        "prompt": "A surprise engagement threatens the twins' reunion plan. What do they change?",
+        "kicker": "Movie moment 8 · The Parent Trap",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Use whatever is nearby in a way nobody planned for."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZjczNDY1M2QtMWIwYy00Y2ZiLWIxYWYtNWNjZTEzNjI0ODU0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Dennis Quaid and Elaine Hendrix in The Parent Trap (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120783/mediaviewer/rm921351681/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm921351681"
+        }
+      },
+      {
+        "prompt": "A camping trip becomes the test of everyone's real personality. What role do you take?",
+        "kicker": "Movie moment 9 · The Parent Trap",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BY2NhZTM5ZjEtZGJiMS00NzIwLTg0ZDEtMmZhZTIyZTMwOTU2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Lindsay Lohan in The Parent Trap (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120783/mediaviewer/rm2444233984/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2444233984"
+        }
+      },
+      {
+        "prompt": "Reuniting a family may not restore the past exactly. What would count as success?",
+        "kicker": "Movie moment 10 · The Parent Trap",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNTEwNWZkNzUtYzE3NC00MGRkLTlkNDctYjMzMmVjMDJjNTg0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Natasha Richardson and Lindsay Lohan in The Parent Trap (1998)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0120783/mediaviewer/rm1075252224/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1075252224"
+        }
+      }
+    ]
+  },
+  "mrs-doubtfire": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0107614/",
+    "imdbId": "tt0107614",
+    "officialTitle": "Mrs. Doubtfire",
+    "premiered": "1993-11-24",
+    "year": 1993,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Family"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BY2E2MDc5ZGEtOTNlZS00Mjg4LThlNzUtMDY2Zjc4ZTViNWY0XkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BMjRkZDJmNGYtMDYzNi00ZGI4LWEzN2YtZTVlNzEyOTgxMjY2XkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm2580764417",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0107614/mediaviewer/rm2580764417/",
+    "questions": [
+      {
+        "prompt": "Daniel quits a job because he disagrees with a cartoon's message. Was it worth it?",
+        "kicker": "Movie moment 1 · Mrs. Doubtfire",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjIzMzA2NDYyMF5BMl5BanBnXkFtZTcwMDIyNTY3Mw@@._V1_.jpg",
+          "alt": "Robin Williams, Lisa Jakub, Matthew Lawrence, and Mara Wilson in Mrs. Doubtfire (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107614/mediaviewer/rm1360035840/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1360035840"
+        }
+      },
+      {
+        "prompt": "A birthday party grows much wilder than Miranda expected. How should it end?",
+        "kicker": "Movie moment 2 · Mrs. Doubtfire",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          },
+          {
+            "role": "mind",
+            "text": "Think two moves ahead and prepare for what could go wrong."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "spark",
+            "text": "Take the lead and give everyone the courage to move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMGRkMzI5MDgtNjk0Yy00YTU5LWE0ZDMtY2Q4OThmZDUxYTMzXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Robin Williams and Sally Field in Mrs. Doubtfire (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107614/mediaviewer/rm1704581633/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1704581633"
+        }
+      },
+      {
+        "prompt": "A custody schedule leaves Daniel missing daily family life. What responsible step comes first?",
+        "kicker": "Movie moment 3 · Mrs. Doubtfire",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Bring enough enthusiasm that people want to join in."
+          },
+          {
+            "role": "heart",
+            "text": "Take care of the person carrying the heaviest part of the problem."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjEzZGQ5ZGQtMjYxNy00N2NmLWI3ODctNjU1NDJkNjgwMDk5XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Pierce Brosnan, Robin Williams, Sally Field, Lisa Jakub, and Matthew Lawrence in Mrs. Doubtfire (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107614/mediaviewer/rm2588121857/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2588121857"
+        }
+      },
+      {
+        "prompt": "Miranda advertises for a housekeeper, creating an unexpected opening. What could go wrong?",
+        "kicker": "Movie moment 4 · Mrs. Doubtfire",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTMyYTgwY2UtMzgyZi00ZGZhLWFkODQtMWI3NTMwZDA2OGQwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Robin Williams and Sally Field in Mrs. Doubtfire (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107614/mediaviewer/rm1989794305/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1989794305"
+        }
+      },
+      {
+        "prompt": "Frank creates the Mrs. Doubtfire disguise. Which detail makes it believable?",
+        "kicker": "Movie moment 5 · Mrs. Doubtfire",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BODJjMmYyMDYtODU1MS00ZTNhLWI1ZjYtYjlhYmU0YjQ1YTkxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Robin Williams, Harvey Fierstein, and Scott Capurro in Mrs. Doubtfire (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107614/mediaviewer/rm3617118721/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3617118721"
+        }
+      },
+      {
+        "prompt": "Your first day as a housekeeper includes cooking disaster. How do you recover?",
+        "kicker": "Movie moment 6 · Mrs. Doubtfire",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjRkZDJmNGYtMDYzNi00ZGI4LWEzN2YtZTVlNzEyOTgxMjY2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Robin Williams in Mrs. Doubtfire (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107614/mediaviewer/rm2580764417/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2580764417"
+        }
+      },
+      {
+        "prompt": "The children discover the disguise before Miranda does. What truth should be shared?",
+        "kicker": "Movie moment 7 · Mrs. Doubtfire",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Step into the spotlight and rally the group around one idea."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          },
+          {
+            "role": "mind",
+            "text": "Use logic to find the option with the fewest hidden problems."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNzQ5ZDkyZmQtNjQ1Yi00ZjQxLTljNGYtYzVhMDg2MjczMWQ3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Robin Williams, Lisa Jakub, Matthew Lawrence, and Mara Wilson in Mrs. Doubtfire (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107614/mediaviewer/rm4169783809/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4169783809"
+        }
+      },
+      {
+        "prompt": "A family outing includes Miranda's kind new friend. How do you manage jealousy?",
+        "kicker": "Movie moment 8 · Mrs. Doubtfire",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNjIxOWVlMTktOTM4Mi00MmI2LTliZGEtYzRlMjQ4OWY5YTZkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Pierce Brosnan, Robin Williams, Sally Field, Lisa Jakub, Matthew Lawrence, and Mara Wilson in Mrs. Doubtfire (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107614/mediaviewer/rm1872353793/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1872353793"
+        }
+      },
+      {
+        "prompt": "Two important dinners happen at the same restaurant. How long can one person juggle both?",
+        "kicker": "Movie moment 9 · Mrs. Doubtfire",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYmI1ZjIwMjgtMGFmOS00Y2YyLWE5NmEtODc5NjBmNjg1M2NjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Robin Williams in Mrs. Doubtfire (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107614/mediaviewer/rm4006827777/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm4006827777"
+        }
+      },
+      {
+        "prompt": "Loving a family does not always mean living together. What does showing up look like?",
+        "kicker": "Movie moment 10 · Mrs. Doubtfire",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Lead with patience, even when the situation gets messy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTY2ZGI0MzEtNjYzNS00MzYxLWFkNjEtNjVmNDlhNTRhMGQ4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Robin Williams and Sally Field in Mrs. Doubtfire (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0107614/mediaviewer/rm3074661121/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3074661121"
+        }
+      }
+    ]
+  },
+  "matilda": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0117008/",
+    "imdbId": "tt0117008",
+    "officialTitle": "Matilda",
+    "premiered": "1996-08-02",
+    "year": 1996,
+    "genres": [
+      "Comedy",
+      "Family",
+      "Fantasy"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BYWE3ZDMzMmEtODgwNi00NzMxLThkYWItMTAzMWUyMzI1NDQ1XkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BOTExZWRjNTktYjNkMS00NTY5LWJlYWQtZGZmYzFjMjExMWJlXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm1406643714",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0117008/mediaviewer/rm1406643714/",
+    "questions": [
+      {
+        "prompt": "Matilda discovers the library while her family ignores books. What would you read first?",
+        "kicker": "Movie moment 1 · Matilda",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTY4NzcyOTkzNV5BMl5BanBnXkFtZTcwODMzMzE0NQ@@._V1_.jpg",
+          "alt": "Danny DeVito, Brian Levinson, Rhea Perlman, and Mara Wilson in Matilda (1996)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0117008/mediaviewer/rm0047360/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm0047360"
+        }
+      },
+      {
+        "prompt": "Your parents laugh at something you care deeply about. How do you protect your confidence?",
+        "kicker": "Movie moment 2 · Matilda",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTM0MDI3ODk1NV5BMl5BanBnXkFtZTcwMDMzMzE0NQ@@._V1_.jpg",
+          "alt": "Danny DeVito, Rhea Perlman, and Mara Wilson in Matilda (1996)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0117008/mediaviewer/rm100710656/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm100710656"
+        }
+      },
+      {
+        "prompt": "A dishonest car business is praised at home. Would you challenge it?",
+        "kicker": "Movie moment 3 · Matilda",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMjI0NTM5NDM5MF5BMl5BanBnXkFtZTcwNzMzMzE0NQ@@._V1_.jpg",
+          "alt": "Danny DeVito, Rhea Perlman, and Mara Wilson in Matilda (1996)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0117008/mediaviewer/rm16824576/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm16824576"
+        }
+      },
+      {
+        "prompt": "Miss Honey notices that Matilda needs harder schoolwork. How should she speak up?",
+        "kicker": "Movie moment 4 · Matilda",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BN2E3ZWQyMzctZGY5My00ZDdiLWJjNjctMzAyZDI1MGQzNDYyXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Embeth Davidtz and Mara Wilson in Matilda (1996)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0117008/mediaviewer/rm1237886465/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1237886465"
+        }
+      },
+      {
+        "prompt": "Trunchbull throws a student by her pigtails. What can the class safely do?",
+        "kicker": "Movie moment 5 · Matilda",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Turn up the energy and make the bold choice feel possible."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Listen first, then help the person who needs support most."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BY2E0ZDE2YmItODYwNy00ZWVlLWIyMWMtNTI4NzA1NmU2NTkyXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Pam Ferris and Jacqueline Steiger in Matilda (1996)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0117008/mediaviewer/rm2815010305/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2815010305"
+        }
+      },
+      {
+        "prompt": "Bruce faces an enormous chocolate cake as punishment. How would you encourage him?",
+        "kicker": "Movie moment 6 · Matilda",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          },
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Protect the friendship, even if that means slowing everything down."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOWE2MTE2YjAtZWVkMC00ZDYyLTgwY2YtNmY1NjUyMzk5MDlkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Pam Ferris and Jimmy Karz in Matilda (1996)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0117008/mediaviewer/rm1774757377/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1774757377"
+        }
+      },
+      {
+        "prompt": "Lavender places a newt in Trunchbull's water. Is the prank helpful or too risky?",
+        "kicker": "Movie moment 7 · Matilda",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Choose the solution that will still make sense tomorrow."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMmUwNDY2MjctN2NhYi00MjJiLTlmMzQtM2YwOGY2YTVkNWM3XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Pam Ferris in Matilda (1996)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0117008/mediaviewer/rm1170843137/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1170843137"
+        }
+      },
+      {
+        "prompt": "Matilda discovers she can move objects with her mind. What should she test first?",
+        "kicker": "Movie moment 8 · Matilda",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Ignore the usual plan and invent a completely new route."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          },
+          {
+            "role": "spark",
+            "text": "Turn the setback into a reason to try something bigger."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzZlM2MyMTMtZjAwMi00ZTY0LTllY2YtMThmMGI3YjVkMzI4XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Embeth Davidtz, Pam Ferris, and Mara Wilson in Matilda (1996)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0117008/mediaviewer/rm1254729217/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1254729217"
+        }
+      },
+      {
+        "prompt": "Miss Honey shares a painful story about her childhood home. How do you listen?",
+        "kicker": "Movie moment 9 · Matilda",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Organize the chaos until the real answer becomes visible."
+          },
+          {
+            "role": "wildcard",
+            "text": "Stay flexible, move fast, and make the surprise work for you."
+          },
+          {
+            "role": "spark",
+            "text": "Trust your instincts and commit fully to the most exciting plan."
+          },
+          {
+            "role": "heart",
+            "text": "Check on everyone involved before making a move."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDMyZTUxYWUtMjBhOC00MGRhLWE3ODMtMTkyNWMzZjFhY2QwXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Embeth Davidtz and Mara Wilson in Matilda (1996)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0117008/mediaviewer/rm1372169729/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1372169729"
+        }
+      },
+      {
+        "prompt": "A classroom full of children wants to stand up to a bully in charge. What is the plan?",
+        "kicker": "Movie moment 10 · Matilda",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Challenge the group to aim higher than the safe answer."
+          },
+          {
+            "role": "heart",
+            "text": "Keep the group together and make sure nobody feels alone."
+          },
+          {
+            "role": "wildcard",
+            "text": "Keep everyone guessing while you search for a surprising answer."
+          },
+          {
+            "role": "mind",
+            "text": "Pause, gather the facts, and build the clearest plan."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMTU0ZTI4ZWEtZjI0YS00MGM0LWEyYWUtOGMxZDZlMTYzNmNjXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Pam Ferris and Mara Wilson in Matilda (1996)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0117008/mediaviewer/rm3040670977/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm3040670977"
+        }
+      }
+    ]
+  },
+  "the-sandlot": {
+    "type": "movie",
+    "sourceName": "IMDb",
+    "sourceUrl": "https://www.imdb.com/title/tt0108037/",
+    "imdbId": "tt0108037",
+    "officialTitle": "The Sandlot",
+    "premiered": "1993-04-07",
+    "year": 1993,
+    "genres": [
+      "Comedy",
+      "Drama",
+      "Family",
+      "Sport"
+    ],
+    "poster": "https://m.media-amazon.com/images/M/MV5BNTc5YzE5OTAtMmY3YS00ODk4LTgzODItZGEzNmMxMDhhNWUwXkEyXkFqcGc@._V1_.jpg",
+    "hero": "https://m.media-amazon.com/images/M/MV5BNDkxYzRiZjgtYTdmNC00ZGZkLThkYzQtY2ZhNDkzMDU5NjFiXkEyXkFqcGc@._V1_.jpg",
+    "heroImageType": "still_frame",
+    "heroImageId": "rm1853178112",
+    "heroSourceUrl": "https://www.imdb.com/title/tt0108037/mediaviewer/rm1853178112/",
+    "questions": [
+      {
+        "prompt": "Smalls arrives at the field without knowing how to catch. How do you include him?",
+        "kicker": "Movie moment 1 · The Sandlot",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Bring the group back to what they mean to one another."
+          },
+          {
+            "role": "wildcard",
+            "text": "Flip the problem around until it becomes an opportunity."
+          },
+          {
+            "role": "mind",
+            "text": "Study the situation quietly, then explain the best path forward."
+          },
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjAyNzNlNjYtNThkZi00NDU2LTgxMGMtZTZiMGI4MTg0ZWQ2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Brandon Quintin Adams, Victor DiMattia, Grant Gelt, Tom Guiry, Chauncey Leopardi, Shane Obedzinski, Patrick Renna, Mike Vitar, and Marty York in The Sandlot (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0108037/mediaviewer/rm1587270401/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1587270401"
+        }
+      },
+      {
+        "prompt": "Benny lends the new kid his best glove. What makes that gesture matter?",
+        "kicker": "Movie moment 2 · The Sandlot",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Take the side door while everyone else argues about the front."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMzk3ZDIzOTEtMTk4YS00YmY1LWI0OTAtN2JjMDMwOTc5MmJkXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Brandon Quintin Adams, Victor DiMattia, Grant Gelt, Tom Guiry, Chauncey Leopardi, Shane Obedzinski, Patrick Renna, Mike Vitar, and Marty York in The Sandlot (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0108037/mediaviewer/rm2275136257/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm2275136257"
+        }
+      },
+      {
+        "prompt": "A rival team challenges the sandlot crew. How do you handle the trash talk?",
+        "kicker": "Movie moment 3 · The Sandlot",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          },
+          {
+            "role": "spark",
+            "text": "Make a memorable entrance and take charge of the room."
+          },
+          {
+            "role": "mind",
+            "text": "Compare the risks, then choose the smartest next move."
+          },
+          {
+            "role": "wildcard",
+            "text": "Try the unexpected move that nobody else would consider."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BNDkxYzRiZjgtYTdmNC00ZGZkLThkYzQtY2ZhNDkzMDU5NjFiXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Brandon Quintin Adams, Victor DiMattia, Chauncey Leopardi, Shane Obedzinski, Patrick Renna, Mike Vitar, and Marty York in The Sandlot (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0108037/mediaviewer/rm1853178112/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1853178112"
+        }
+      },
+      {
+        "prompt": "The baseball flies over the fence into the Beast's yard. What is your first idea?",
+        "kicker": "Movie moment 4 · The Sandlot",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Stay calm and turn the confusion into a workable strategy."
+          },
+          {
+            "role": "wildcard",
+            "text": "Choose the adventurous option and adjust as you go."
+          },
+          {
+            "role": "heart",
+            "text": "Choose the response that keeps trust from breaking."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYjMyNjA5Y2YtM2Y2Ny00ZGZkLTlkNDMtYTJhNzU1YWRkYjZlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Brandon Quintin Adams, Victor DiMattia, Grant Gelt, Tom Guiry, Chauncey Leopardi, Shane Obedzinski, Patrick Renna, Mike Vitar, and Marty York in The Sandlot (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0108037/mediaviewer/rm1802846464/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1802846464"
+        }
+      },
+      {
+        "prompt": "The lost ball turns out to carry Babe Ruth's signature. How do you tell the group?",
+        "kicker": "Movie moment 5 · The Sandlot",
+        "options": [
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "heart",
+            "text": "Put loyalty first and stay beside the people you care about."
+          },
+          {
+            "role": "mind",
+            "text": "Make a careful plan and give everyone a clear job."
+          },
+          {
+            "role": "spark",
+            "text": "Say what everyone is thinking and get the moment moving."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTI5N2MyOTAtMWRhYy00MmI1LTlhYmMtZDZiZWVhYTlhNjFmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Tom Guiry in The Sandlot (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0108037/mediaviewer/rm1016910593/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1016910593"
+        }
+      },
+      {
+        "prompt": "The team invents a machine to retrieve the ball. Which part would you design?",
+        "kicker": "Movie moment 6 · The Sandlot",
+        "options": [
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          },
+          {
+            "role": "spark",
+            "text": "Lead with charm, nerve, and a little dramatic flair."
+          },
+          {
+            "role": "wildcard",
+            "text": "Follow the strange hunch that might change everything."
+          },
+          {
+            "role": "heart",
+            "text": "Show up, stay steady, and help the group through it."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BMDQyM2M0MGEtYjk4Yy00ZDI5LWE3MGMtMWZjYWRmYmNlNDVlXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Brandon Quintin Adams, Victor DiMattia, Grant Gelt, Chauncey Leopardi, Shane Obedzinski, Patrick Renna, and Marty York in The Sandlot (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0108037/mediaviewer/rm1752514816/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1752514816"
+        }
+      },
+      {
+        "prompt": "Squints has an outrageous plan at the public pool. Do you support or stop it?",
+        "kicker": "Movie moment 7 · The Sandlot",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Use humor and confidence to break the tension."
+          },
+          {
+            "role": "wildcard",
+            "text": "Break the pattern with an idea that sounds wild but could work."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          },
+          {
+            "role": "heart",
+            "text": "Say the honest, kind thing that helps people reconnect."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BYmFjNmIzNTYtMjM2ZS00NjhhLTg4NTMtNDg2Mjc3N2Y3MzA0XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Marley Shelton and Chauncey Leopardi in The Sandlot (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0108037/mediaviewer/rm1033687809/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1033687809"
+        }
+      },
+      {
+        "prompt": "A Fourth of July night game makes baseball feel magical. What do you remember most?",
+        "kicker": "Movie moment 8 · The Sandlot",
+        "options": [
+          {
+            "role": "heart",
+            "text": "Focus on repairing feelings before fixing everything else."
+          },
+          {
+            "role": "spark",
+            "text": "Push the story forward with one confident decision."
+          },
+          {
+            "role": "wildcard",
+            "text": "Create a distraction, improvise, and see what opens up."
+          },
+          {
+            "role": "mind",
+            "text": "Find the rule, clue, or pattern that makes the whole thing clearer."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BOTE1ODQ1ZTgtMDQ4Ni00NjhlLWIyMmEtY2FiNTZlZGUyYjQxXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Mike Vitar in The Sandlot (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0108037/mediaviewer/rm1234948865/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1234948865"
+        }
+      },
+      {
+        "prompt": "Babe Ruth appears in Benny's dream with advice. Would you follow it?",
+        "kicker": "Movie moment 9 · The Sandlot",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Find the fun in the pressure and help everyone loosen up."
+          },
+          {
+            "role": "heart",
+            "text": "Turn the conflict into a chance to understand each other."
+          },
+          {
+            "role": "wildcard",
+            "text": "Mix two unlikely ideas into one clever escape."
+          },
+          {
+            "role": "mind",
+            "text": "Break the situation into smaller steps and handle them in order."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BZTVhMjEyM2ItOTQ4Ni00MTA3LTljMjUtZTUzZTZhMzcyMjRmXkEyXkFqcGc@._V1_.jpg",
+          "alt": "Patrick Renna and Mike Vitar in The Sandlot (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0108037/mediaviewer/rm1786069248/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1786069248"
+        }
+      },
+      {
+        "prompt": "One friend must face the Beast while everyone else watches. What does the team do?",
+        "kicker": "Movie moment 10 · The Sandlot",
+        "options": [
+          {
+            "role": "spark",
+            "text": "Create momentum with a clear voice and fearless attitude."
+          },
+          {
+            "role": "wildcard",
+            "text": "Trust your creativity more than the obvious rules."
+          },
+          {
+            "role": "mind",
+            "text": "Ask the useful questions before the group rushes ahead."
+          },
+          {
+            "role": "heart",
+            "text": "Make the choice that leaves no one behind."
+          }
+        ],
+        "image": {
+          "url": "https://m.media-amazon.com/images/M/MV5BY2I4MTY0ZjUtOTU4Zi00YmM1LWJiMTktOWIxMGFlN2U1MTM2XkEyXkFqcGc@._V1_.jpg",
+          "alt": "Patrick Renna and Mike Vitar in The Sandlot (1993)",
+          "sourceName": "IMDb",
+          "sourceUrl": "https://www.imdb.com/title/tt0108037/mediaviewer/rm1618297088/",
+          "imageType": "still_frame",
+          "imdbImageId": "rm1618297088"
+        }
+      }
+    ]
   }
 };
 
 (() => {
-  const expectedIds = ["friends","modern-family","arrested-development","the-good-place","how-i-met-your-mother","the-simpsons","the-office","parks-and-recreation","brooklyn-nine-nine","new-girl","community","schitts-creek","ted-lasso","abbott-elementary","superstore","30-rock","seinfeld","the-big-bang-theory","young-sheldon","gilmore-girls","gossip-girl","sex-and-the-city","the-golden-girls","freaks-and-geeks","the-fresh-prince-of-bel-air","boy-meets-world","that-70s-show","malcolm-in-the-middle","everybody-loves-raymond","frasier","cheers","scrubs","psych","monk","only-murders-in-the-building","stranger-things","wednesday","avatar-the-last-airbender","gravity-falls","bobs-burgers","futurama","rick-and-morty","bojack-horseman","spongebob-squarepants","adventure-time","phineas-and-ferb","the-bear","succession","the-white-lotus","bridgerton","greys-anatomy","lost","the-walking-dead","game-of-thrones","breaking-bad","better-call-saul","the-marvelous-mrs-maisel","black-ish","full-house","family-matters","saved-by-the-bell","the-nanny","home-improvement","the-wonder-years","derry-girls","never-have-i-ever","heartstopper","cobra-kai","the-umbrella-academy","the-mandalorian","loki","wandavision","doctor-who","sherlock","downton-abbey","the-crown","house","bones","criminal-minds","law-and-order-svu","ncis","the-x-files","buffy-the-vampire-slayer","charmed","smallville","once-upon-a-time","anne-with-an-e","a-series-of-unfortunate-events","icarly","victorious","hannah-montana","wizards-of-waverly-place","the-suite-life-of-zack-and-cody","lizzie-mcguire","kim-possible","the-owl-house","steven-universe","regular-show","the-amazing-world-of-gumball","teen-titans","pokemon","the-west-wing","bluey","the-muppet-show","star-trek-the-next-generation","star-trek-strange-new-worlds"];
+  const expectedIds = ["friends","modern-family","arrested-development","the-good-place","how-i-met-your-mother","the-simpsons","the-office","parks-and-recreation","brooklyn-nine-nine","new-girl","community","schitts-creek","ted-lasso","abbott-elementary","superstore","30-rock","seinfeld","the-big-bang-theory","young-sheldon","gilmore-girls","gossip-girl","sex-and-the-city","the-golden-girls","freaks-and-geeks","the-fresh-prince-of-bel-air","boy-meets-world","that-70s-show","malcolm-in-the-middle","everybody-loves-raymond","frasier","cheers","scrubs","psych","monk","only-murders-in-the-building","stranger-things","wednesday","avatar-the-last-airbender","gravity-falls","bobs-burgers","futurama","rick-and-morty","bojack-horseman","spongebob-squarepants","adventure-time","phineas-and-ferb","the-bear","succession","the-white-lotus","bridgerton","greys-anatomy","lost","the-walking-dead","game-of-thrones","breaking-bad","better-call-saul","the-marvelous-mrs-maisel","black-ish","full-house","family-matters","saved-by-the-bell","the-nanny","home-improvement","the-wonder-years","derry-girls","never-have-i-ever","heartstopper","cobra-kai","the-umbrella-academy","the-mandalorian","loki","wandavision","doctor-who","sherlock","downton-abbey","the-crown","house","bones","criminal-minds","law-and-order-svu","ncis","the-x-files","buffy-the-vampire-slayer","charmed","smallville","once-upon-a-time","anne-with-an-e","a-series-of-unfortunate-events","icarly","victorious","hannah-montana","wizards-of-waverly-place","the-suite-life-of-zack-and-cody","lizzie-mcguire","kim-possible","the-owl-house","steven-universe","regular-show","the-amazing-world-of-gumball","teen-titans","pokemon","the-west-wing","bluey","the-muppet-show","star-trek-the-next-generation","star-trek-strange-new-worlds","toy-story","the-lion-king","finding-nemo","shrek","frozen","moana","encanto","the-incredibles","ratatouille","monsters-inc","coco","up","inside-out","how-to-train-your-dragon","kung-fu-panda","spider-man-into-the-spider-verse","the-super-mario-bros-movie","the-lego-movie","despicable-me","paddington-2","harry-potter-and-the-sorcerers-stone","the-lord-of-the-rings-the-fellowship-of-the-ring","star-wars-a-new-hope","raiders-of-the-lost-ark","back-to-the-future","jurassic-park","pirates-of-the-caribbean-the-curse-of-the-black-pearl","the-hunger-games","the-princess-bride","the-goonies","et-the-extra-terrestrial","ghostbusters","jumanji-welcome-to-the-jungle","the-karate-kid","the-truman-show","ferris-buellers-day-off","mean-girls","clueless","school-of-rock","legally-blonde","the-devil-wears-prada","knives-out","the-greatest-showman","la-la-land","the-sound-of-music","home-alone","the-parent-trap","mrs-doubtfire","matilda","the-sandlot"];
   for (const id of expectedIds) {
     const title = MEDIA[id];
     if (!title || !Array.isArray(title.questions) || title.questions.length !== 10) {

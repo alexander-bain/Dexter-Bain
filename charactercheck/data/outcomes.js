@@ -1634,6 +1634,1306 @@ const OUTCOMES = {
       "label": "The Bold Pilot",
       "why": "You stay cool at the controls, enjoy a daring route, and bring humor to tense missions. Confidence helps the ship go where few would try."
     }
+  },
+  "toy-story": {
+    "heart": {
+      "character": "Bo Peep",
+      "actor": "Annie Potts",
+      "label": "The Calm Encourager",
+      "why": "You care about your friends and help them see the sensible path without making a big show of it."
+    },
+    "mind": {
+      "character": "Woody",
+      "actor": "Tom Hanks",
+      "label": "The Responsible Leader",
+      "why": "You plan ahead, protect your group, and work hard to keep everyone together when change feels scary."
+    },
+    "spark": {
+      "character": "Buzz Lightyear",
+      "actor": "Tim Allen",
+      "label": "The Fearless Believer",
+      "why": "You jump into challenges with confidence and inspire people by believing that almost anything is possible."
+    },
+    "wildcard": {
+      "character": "Rex",
+      "actor": "Wallace Shawn",
+      "label": "The Lovable Worrier",
+      "why": "You may overthink things, but your honesty, humor, and huge heart make the group better."
+    }
+  },
+  "the-lion-king": {
+    "heart": {
+      "character": "Simba",
+      "actor": "Matthew Broderick",
+      "label": "The Growing Leader",
+      "why": "You care deeply, learn from mistakes, and become braver when the people you love need you."
+    },
+    "mind": {
+      "character": "Mufasa",
+      "actor": "James Earl Jones",
+      "label": "The Wise Protector",
+      "why": "You think beyond yourself and use steady judgment to help others understand their place in the bigger picture."
+    },
+    "spark": {
+      "character": "Timon",
+      "actor": "Nathan Lane",
+      "label": "The Quick-Witted Friend",
+      "why": "You lift the mood with jokes, bold ideas, and a talent for making hard days feel lighter."
+    },
+    "wildcard": {
+      "character": "Rafiki",
+      "actor": "Robert Guillaume",
+      "label": "The Playful Guide",
+      "why": "You see lessons other people miss and deliver your best advice in surprising, unforgettable ways."
+    }
+  },
+  "finding-nemo": {
+    "heart": {
+      "character": "Marlin",
+      "actor": "Albert Brooks",
+      "label": "The Devoted Protector",
+      "why": "You show love by staying alert, working through fear, and refusing to give up on your people."
+    },
+    "mind": {
+      "character": "Gill",
+      "actor": "Willem Dafoe",
+      "label": "The Escape Planner",
+      "why": "You stay focused under pressure and turn complicated problems into clear steps for the whole team."
+    },
+    "spark": {
+      "character": "Dory",
+      "actor": "Ellen DeGeneres",
+      "label": "The Hopeful Explorer",
+      "why": "You keep moving, trust new friends, and bring bright energy even when the route is uncertain."
+    },
+    "wildcard": {
+      "character": "Crush",
+      "actor": "Andrew Stanton",
+      "label": "The Easygoing Adventurer",
+      "why": "You trust experience, stay relaxed, and help others find courage without forcing them to follow your way."
+    }
+  },
+  "shrek": {
+    "heart": {
+      "character": "Princess Fiona",
+      "actor": "Cameron Diaz",
+      "label": "The Brave Romantic",
+      "why": "You care about real connection, handle more than people expect, and want to be accepted as your whole self."
+    },
+    "mind": {
+      "character": "Shrek",
+      "actor": "Mike Myers",
+      "label": "The Guarded Problem-Solver",
+      "why": "You value honesty and independence, and you solve problems directly even when your softer side stays hidden."
+    },
+    "spark": {
+      "character": "Donkey",
+      "actor": "Eddie Murphy",
+      "label": "The Unstoppable Friend",
+      "why": "You talk through every adventure, make friends quickly, and bring warmth to people who pretend not to need it."
+    },
+    "wildcard": {
+      "character": "Gingy",
+      "actor": "Conrad Vernon",
+      "label": "The Tiny Rebel",
+      "why": "You are dramatic, loyal, and much tougher than anyone expects from your size or sweet appearance."
+    }
+  },
+  "frozen": {
+    "heart": {
+      "character": "Anna",
+      "actor": "Kristen Bell",
+      "label": "The Openhearted Optimist",
+      "why": "You lead with love, trust people quickly, and keep reaching out even after years of distance."
+    },
+    "mind": {
+      "character": "Elsa",
+      "actor": "Idina Menzel",
+      "label": "The Careful Creator",
+      "why": "You think deeply, carry great responsibility, and do your best work once fear stops controlling your choices."
+    },
+    "spark": {
+      "character": "Olaf",
+      "actor": "Josh Gad",
+      "label": "The Sunny Dreamer",
+      "why": "You find wonder everywhere and cheer people up with innocent honesty, funny questions, and total enthusiasm."
+    },
+    "wildcard": {
+      "character": "Kristoff",
+      "actor": "Jonathan Groff",
+      "label": "The Independent Realist",
+      "why": "You trust actions more than appearances and offer practical help while keeping your own unusual style."
+    }
+  },
+  "moana": {
+    "heart": {
+      "character": "Moana",
+      "actor": "Auli'i Cravalho",
+      "label": "The Purposeful Voyager",
+      "why": "You listen to your community and your inner voice, then find the courage to serve both."
+    },
+    "mind": {
+      "character": "Gramma Tala",
+      "actor": "Rachel House",
+      "label": "The Knowing Guide",
+      "why": "You understand people deeply and share wisdom in ways that help them discover answers for themselves."
+    },
+    "spark": {
+      "character": "Maui",
+      "actor": "Dwayne Johnson",
+      "label": "The Larger-Than-Life Hero",
+      "why": "You bring confidence, talent, and huge energy, even when praise matters to you more than you admit."
+    },
+    "wildcard": {
+      "character": "Heihei",
+      "actor": "Alan Tudyk",
+      "label": "The Accidental Adventurer",
+      "why": "You may not know the plan, but you somehow stay part of the story and surprise everyone."
+    }
+  },
+  "encanto": {
+    "heart": {
+      "character": "Mirabel",
+      "actor": "Stephanie Beatriz",
+      "label": "The Family Connector",
+      "why": "You notice what people are feeling, keep asking honest questions, and remind everyone that they matter without a gift."
+    },
+    "mind": {
+      "character": "Luisa",
+      "actor": "Jessica Darrow",
+      "label": "The Dependable Powerhouse",
+      "why": "You carry heavy responsibilities with discipline, though you also need permission to rest and ask for help."
+    },
+    "spark": {
+      "character": "Isabela",
+      "actor": "Diane Guerrero",
+      "label": "The Creative Perfectionist",
+      "why": "You can create beautiful things, and you become even stronger when you trade perfection for experimentation."
+    },
+    "wildcard": {
+      "character": "Bruno",
+      "actor": "John Leguizamo",
+      "label": "The Misunderstood Observer",
+      "why": "You see patterns other people avoid and use odd habits and humor to handle being misunderstood."
+    }
+  },
+  "the-incredibles": {
+    "heart": {
+      "character": "Helen Parr",
+      "actor": "Holly Hunter",
+      "label": "The Flexible Protector",
+      "why": "You hold people together, adapt fast, and stay brave when your family needs both warmth and action."
+    },
+    "mind": {
+      "character": "Violet Parr",
+      "actor": "Sarah Vowell",
+      "label": "The Thoughtful Strategist",
+      "why": "You observe before acting and grow strongest when you stop hiding what makes you different."
+    },
+    "spark": {
+      "character": "Bob Parr",
+      "actor": "Craig T. Nelson",
+      "label": "The Action-First Hero",
+      "why": "You want meaningful challenges and come alive when your strength can make a real difference."
+    },
+    "wildcard": {
+      "character": "Edna Mode",
+      "actor": "Brad Bird",
+      "label": "The Bold Designer",
+      "why": "You know your standards, speak with total confidence, and make practical choices with unforgettable style."
+    }
+  },
+  "ratatouille": {
+    "heart": {
+      "character": "Remy",
+      "actor": "Patton Oswalt",
+      "label": "The Passionate Creator",
+      "why": "You follow your taste and curiosity, believing talent can come from places other people overlook."
+    },
+    "mind": {
+      "character": "Colette",
+      "actor": "Janeane Garofalo",
+      "label": "The Focused Professional",
+      "why": "You master the basics, work hard for respect, and teach others through clear standards and honest effort."
+    },
+    "spark": {
+      "character": "Linguini",
+      "actor": "Lou Romano",
+      "label": "The Awkward Improviser",
+      "why": "You may begin unsure, but your openness, energy, and willingness to learn help surprising partnerships work."
+    },
+    "wildcard": {
+      "character": "Anton Ego",
+      "actor": "Peter O'Toole",
+      "label": "The Exacting Critic",
+      "why": "You have strong opinions and high standards, but real creativity can still break through your defenses."
+    }
+  },
+  "monsters-inc": {
+    "heart": {
+      "character": "Sulley",
+      "actor": "John Goodman",
+      "label": "The Gentle Guardian",
+      "why": "You may look powerful, but empathy guides your choices and makes you brave enough to challenge the system."
+    },
+    "mind": {
+      "character": "Roz",
+      "actor": "Bob Peterson",
+      "label": "The Watchful Organizer",
+      "why": "You notice every missing detail, keep records straight, and reveal only what others truly need to know."
+    },
+    "spark": {
+      "character": "Mike Wazowski",
+      "actor": "Billy Crystal",
+      "label": "The Driven Showman",
+      "why": "You bring fast ideas, loud confidence, and loyal teamwork to every problem, even when plans go sideways."
+    },
+    "wildcard": {
+      "character": "Boo",
+      "actor": "Mary Gibbs",
+      "label": "The Fearless Visitor",
+      "why": "You meet a strange new world with curiosity and turn frightening strangers into friends."
+    }
+  },
+  "coco": {
+    "heart": {
+      "character": "Miguel",
+      "actor": "Anthony Gonzalez",
+      "label": "The Determined Musician",
+      "why": "You love your family and your dream, so you keep searching for a way to honor both."
+    },
+    "mind": {
+      "character": "Mamá Imelda",
+      "actor": "Alanna Ubach",
+      "label": "The Fierce Family Builder",
+      "why": "You protect the people you love with firm rules, practical skills, and strength earned through hard experience."
+    },
+    "spark": {
+      "character": "Héctor",
+      "actor": "Gael García Bernal",
+      "label": "The Charming Improviser",
+      "why": "You survive tough moments with music, quick ideas, and a deep need to stay connected to your family."
+    },
+    "wildcard": {
+      "character": "Dante",
+      "actor": "Frank Welker",
+      "label": "The Loyal Wanderer",
+      "why": "You follow your favorite person anywhere and often understand the path before anyone realizes it."
+    }
+  },
+  "up": {
+    "heart": {
+      "character": "Ellie Fredricksen",
+      "actor": "Elizabeth Docter",
+      "label": "The Joyful Dreamer",
+      "why": "You turn ordinary days into adventures and help the people you love see a bigger life ahead."
+    },
+    "mind": {
+      "character": "Carl Fredricksen",
+      "actor": "Ed Asner",
+      "label": "The Stubborn Keeper",
+      "why": "You hold tightly to promises and memories, then learn that caring for someone new can honor the past."
+    },
+    "spark": {
+      "character": "Russell",
+      "actor": "Jordan Nagai",
+      "label": "The Eager Helper",
+      "why": "You bring questions, effort, and unstoppable enthusiasm, even when you have much more to learn."
+    },
+    "wildcard": {
+      "character": "Dug",
+      "actor": "Bob Peterson",
+      "label": "The Instantly Loyal Friend",
+      "why": "You love openly, get distracted easily, and make people smile by saying exactly what is on your mind."
+    }
+  },
+  "inside-out": {
+    "heart": {
+      "character": "Sadness",
+      "actor": "Phyllis Smith",
+      "label": "The Quiet Empath",
+      "why": "You understand that hard feelings have value and help people heal by letting them feel understood."
+    },
+    "mind": {
+      "character": "Disgust",
+      "actor": "Mindy Kaling",
+      "label": "The Sharp Judge",
+      "why": "You spot what does not fit, protect your standards, and make fast choices with strong social awareness."
+    },
+    "spark": {
+      "character": "Joy",
+      "actor": "Amy Poehler",
+      "label": "The Bright Motivator",
+      "why": "You lead with hope, energy, and creative plans, especially when everyone else feels stuck."
+    },
+    "wildcard": {
+      "character": "Anger",
+      "actor": "Lewis Black",
+      "label": "The Fiery Defender",
+      "why": "You react strongly to unfairness and make sure the group's frustration cannot be ignored."
+    }
+  },
+  "how-to-train-your-dragon": {
+    "heart": {
+      "character": "Hiccup",
+      "actor": "Jay Baruchel",
+      "label": "The Curious Peacemaker",
+      "why": "You question old rules, study what others fear, and build trust through patience instead of force."
+    },
+    "mind": {
+      "character": "Astrid",
+      "actor": "America Ferrera",
+      "label": "The Focused Warrior",
+      "why": "You train hard, read situations quickly, and respect people once their actions prove their courage."
+    },
+    "spark": {
+      "character": "Stoick",
+      "actor": "Gerard Butler",
+      "label": "The Powerful Chief",
+      "why": "You lead with strength and certainty, but love can push you to reconsider long-held beliefs."
+    },
+    "wildcard": {
+      "character": "Gobber",
+      "actor": "Craig Ferguson",
+      "label": "The Battle-Tested Teacher",
+      "why": "You mix useful experience with wild stories and make difficult lessons memorable through humor."
+    }
+  },
+  "kung-fu-panda": {
+    "heart": {
+      "character": "Po",
+      "actor": "Jack Black",
+      "label": "The Enthusiastic Believer",
+      "why": "You love what you do, celebrate your heroes, and turn your unique strengths into real skill."
+    },
+    "mind": {
+      "character": "Master Shifu",
+      "actor": "Dustin Hoffman",
+      "label": "The Demanding Teacher",
+      "why": "You value discipline and precise training, then adapt when a student needs a completely different path."
+    },
+    "spark": {
+      "character": "Tigress",
+      "actor": "Angelina Jolie",
+      "label": "The Intense Achiever",
+      "why": "You train with total focus and earn trust through courage, control, and dependable action."
+    },
+    "wildcard": {
+      "character": "Master Oogway",
+      "actor": "Randall Duk Kim",
+      "label": "The Peaceful Visionary",
+      "why": "You trust timing, see potential others miss, and offer simple wisdom that changes the whole plan."
+    }
+  },
+  "spider-man-into-the-spider-verse": {
+    "heart": {
+      "character": "Miles Morales",
+      "actor": "Shameik Moore",
+      "label": "The Courageous Original",
+      "why": "You care about your family, learn from many mentors, and become strongest by being your own kind of hero."
+    },
+    "mind": {
+      "character": "Gwen Stacy",
+      "actor": "Hailee Steinfeld",
+      "label": "The Cool Specialist",
+      "why": "You stay observant and capable, protect your independence, and slowly choose to trust a team again."
+    },
+    "spark": {
+      "character": "Peter B. Parker",
+      "actor": "Jake Johnson",
+      "label": "The Reluctant Mentor",
+      "why": "You use hard-earned experience, humor, and improvisation to guide someone even while rebuilding yourself."
+    },
+    "wildcard": {
+      "character": "Spider-Ham",
+      "actor": "John Mulaney",
+      "label": "The Cartoon Chaos Agent",
+      "why": "You bring strange tools, perfect timing, and fearless comedy to problems that everyone else treats seriously."
+    }
+  },
+  "the-super-mario-bros-movie": {
+    "heart": {
+      "character": "Luigi",
+      "actor": "Charlie Day",
+      "label": "The Loyal Brother",
+      "why": "You may get scared, but love and loyalty keep you connected to the people who matter most."
+    },
+    "mind": {
+      "character": "Princess Peach",
+      "actor": "Anya Taylor-Joy",
+      "label": "The Prepared Leader",
+      "why": "You train, plan, and protect your kingdom while encouraging newcomers to rise to the challenge."
+    },
+    "spark": {
+      "character": "Mario",
+      "actor": "Chris Pratt",
+      "label": "The Determined Underdog",
+      "why": "You keep trying after every fall and prove yourself through persistence rather than perfect skill."
+    },
+    "wildcard": {
+      "character": "Bowser",
+      "actor": "Jack Black",
+      "label": "The Dramatic Powerhouse",
+      "why": "You commit completely to your goals, express feelings at full volume, and never enter a room quietly."
+    }
+  },
+  "the-lego-movie": {
+    "heart": {
+      "character": "Emmet",
+      "actor": "Chris Pratt",
+      "label": "The Ordinary Optimist",
+      "why": "You include everyone, believe in teamwork, and show that kindness can be a real creative power."
+    },
+    "mind": {
+      "character": "Wyldstyle",
+      "actor": "Elizabeth Banks",
+      "label": "The Capable Builder",
+      "why": "You think quickly, master useful skills, and learn that leadership includes making room for unexpected ideas."
+    },
+    "spark": {
+      "character": "Batman",
+      "actor": "Will Arnett",
+      "label": "The Confident Lone Wolf",
+      "why": "You bring bold style and impressive skills, though true teamwork may be your hardest challenge."
+    },
+    "wildcard": {
+      "character": "Vitruvius",
+      "actor": "Morgan Freeman",
+      "label": "The Mysterious Mentor",
+      "why": "You turn imagination into guidance and know that belief can help ordinary people discover unusual strengths."
+    }
+  },
+  "despicable-me": {
+    "heart": {
+      "character": "Agnes",
+      "actor": "Elsie Fisher",
+      "label": "The Joyful Believer",
+      "why": "You love without holding back and see the soft side in people who work hard to hide it."
+    },
+    "mind": {
+      "character": "Margo",
+      "actor": "Miranda Cosgrove",
+      "label": "The Careful Big Sister",
+      "why": "You watch for danger, question promises, and protect your group until someone proves they can be trusted."
+    },
+    "spark": {
+      "character": "Gru",
+      "actor": "Steve Carell",
+      "label": "The Ambitious Softie",
+      "why": "You plan on a huge scale and act tough, but meaningful relationships can completely change your priorities."
+    },
+    "wildcard": {
+      "character": "Vector",
+      "actor": "Jason Segel",
+      "label": "The Flashy Rival",
+      "why": "You love gadgets, attention, and over-the-top confidence, even when your style is stranger than your plan."
+    }
+  },
+  "paddington-2": {
+    "heart": {
+      "character": "Paddington Brown",
+      "actor": "Ben Whishaw",
+      "label": "The Polite Optimist",
+      "why": "You look for the good in everyone and improve difficult places through patience, manners, and marmalade."
+    },
+    "mind": {
+      "character": "Mary Brown",
+      "actor": "Sally Hawkins",
+      "label": "The Brave Believer",
+      "why": "You trust people you know well, investigate with courage, and keep a family focused on what is right."
+    },
+    "spark": {
+      "character": "Phoenix Buchanan",
+      "actor": "Hugh Grant",
+      "label": "The Theatrical Schemer",
+      "why": "You love costumes, performance, and dramatic entrances, though attention can sometimes lead you off course."
+    },
+    "wildcard": {
+      "character": "Knuckles McGinty",
+      "actor": "Brendan Gleeson",
+      "label": "The Gruff Baker",
+      "why": "You seem intimidating, but respect, good food, and honest effort quickly reveal your loyal side."
+    }
+  },
+  "harry-potter-and-the-sorcerers-stone": {
+    "heart": {
+      "character": "Harry Potter",
+      "actor": "Daniel Radcliffe",
+      "label": "The Courageous Newcomer",
+      "why": "You value true friendship, stand up to cruelty, and move toward danger when someone needs help."
+    },
+    "mind": {
+      "character": "Hermione Granger",
+      "actor": "Emma Watson",
+      "label": "The Prepared Problem-Solver",
+      "why": "You study carefully, remember key facts, and turn knowledge into action when the rules are not enough."
+    },
+    "spark": {
+      "character": "Ron Weasley",
+      "actor": "Rupert Grint",
+      "label": "The Loyal Comic",
+      "why": "You bring humor and heart to stressful moments and take big risks for your friends."
+    },
+    "wildcard": {
+      "character": "Rubeus Hagrid",
+      "actor": "Robbie Coltrane",
+      "label": "The Gentle Giant",
+      "why": "You welcome outsiders, love unusual creatures, and sometimes share secrets before thinking them through."
+    }
+  },
+  "the-lord-of-the-rings-the-fellowship-of-the-ring": {
+    "heart": {
+      "character": "Frodo Baggins",
+      "actor": "Elijah Wood",
+      "label": "The Compassionate Bearer",
+      "why": "You accept a difficult responsibility and keep seeing humanity in people others quickly judge."
+    },
+    "mind": {
+      "character": "Gandalf",
+      "actor": "Ian McKellen",
+      "label": "The Far-Seeing Guide",
+      "why": "You gather knowledge, warn against easy power, and give others courage to choose their own path."
+    },
+    "spark": {
+      "character": "Aragorn",
+      "actor": "Viggo Mortensen",
+      "label": "The Quiet Ranger",
+      "why": "You act with skill and courage, earning leadership through service rather than demanding attention."
+    },
+    "wildcard": {
+      "character": "Merry Brandybuck",
+      "actor": "Dominic Monaghan",
+      "label": "The Adventurous Friend",
+      "why": "You enjoy mischief, ask practical questions, and refuse to let your friends face danger alone."
+    }
+  },
+  "star-wars-a-new-hope": {
+    "heart": {
+      "character": "Luke Skywalker",
+      "actor": "Mark Hamill",
+      "label": "The Hopeful Hero",
+      "why": "You long for a bigger purpose, trust your inner sense, and grow quickly when others believe in you."
+    },
+    "mind": {
+      "character": "Princess Leia",
+      "actor": "Carrie Fisher",
+      "label": "The Fearless Commander",
+      "why": "You stay sharp under pressure, speak directly, and keep the mission moving when plans fall apart."
+    },
+    "spark": {
+      "character": "Han Solo",
+      "actor": "Harrison Ford",
+      "label": "The Daring Pilot",
+      "why": "You rely on nerve, skill, and quick jokes, while loyalty runs deeper than you first admit."
+    },
+    "wildcard": {
+      "character": "C-3PO",
+      "actor": "Anthony Daniels",
+      "label": "The Anxious Translator",
+      "why": "You know useful details, warn everyone about the odds, and somehow survive one impossible situation after another."
+    }
+  },
+  "raiders-of-the-lost-ark": {
+    "heart": {
+      "character": "Marion Ravenwood",
+      "actor": "Karen Allen",
+      "label": "The Unshakable Partner",
+      "why": "You match courage with honesty and refuse to be treated like someone who needs constant rescuing."
+    },
+    "mind": {
+      "character": "Marcus Brody",
+      "actor": "Denholm Elliott",
+      "label": "The Trusted Scholar",
+      "why": "You understand history, value evidence, and help bold explorers see why an artifact truly matters."
+    },
+    "spark": {
+      "character": "Indiana Jones",
+      "actor": "Harrison Ford",
+      "label": "The Resourceful Adventurer",
+      "why": "You think while moving, take daring chances, and keep going when careful plans collapse."
+    },
+    "wildcard": {
+      "character": "Sallah",
+      "actor": "John Rhys-Davies",
+      "label": "The Bighearted Connector",
+      "why": "You know the right people, bring warmth to danger, and make impossible work feel like a shared adventure."
+    }
+  },
+  "back-to-the-future": {
+    "heart": {
+      "character": "Lorraine Baines",
+      "actor": "Lea Thompson",
+      "label": "The Strong-Willed Romantic",
+      "why": "You follow your feelings, speak your mind, and surprise people whose picture of you is too simple."
+    },
+    "mind": {
+      "character": "Doc Brown",
+      "actor": "Christopher Lloyd",
+      "label": "The Wild Inventor",
+      "why": "You chase huge questions, build detailed plans, and bring thrilling energy to even the most technical problem."
+    },
+    "spark": {
+      "character": "Marty McFly",
+      "actor": "Michael J. Fox",
+      "label": "The Quick-Acting Rebel",
+      "why": "You improvise under pressure, care about your family, and hate letting anyone call you a coward."
+    },
+    "wildcard": {
+      "character": "George McFly",
+      "actor": "Crispin Glover",
+      "label": "The Imaginative Underdog",
+      "why": "You have a rich inner world and become powerful when one brave action proves you can change."
+    }
+  },
+  "jurassic-park": {
+    "heart": {
+      "character": "Ellie Sattler",
+      "actor": "Laura Dern",
+      "label": "The Brave Caregiver",
+      "why": "You combine compassion with action and run toward urgent problems when others need practical help."
+    },
+    "mind": {
+      "character": "Alan Grant",
+      "actor": "Sam Neill",
+      "label": "The Careful Expert",
+      "why": "You respect evidence, notice animal behavior, and keep people safe by applying what you know."
+    },
+    "spark": {
+      "character": "Ian Malcolm",
+      "actor": "Jeff Goldblum",
+      "label": "The Chaotic Critic",
+      "why": "You question confident plans, spot hidden risks, and deliver serious warnings with memorable style."
+    },
+    "wildcard": {
+      "character": "John Hammond",
+      "actor": "Richard Attenborough",
+      "label": "The Grand Visionary",
+      "why": "You dream on an enormous scale and believe wonder can solve problems that still require careful limits."
+    }
+  },
+  "pirates-of-the-caribbean-the-curse-of-the-black-pearl": {
+    "heart": {
+      "character": "Will Turner",
+      "actor": "Orlando Bloom",
+      "label": "The Devoted Swordsmith",
+      "why": "You work hard, love loyally, and cross any distance when someone important is in danger."
+    },
+    "mind": {
+      "character": "Elizabeth Swann",
+      "actor": "Keira Knightley",
+      "label": "The Bold Negotiator",
+      "why": "You learn quickly, challenge narrow expectations, and use courage and words to change the balance of power."
+    },
+    "spark": {
+      "character": "Jack Sparrow",
+      "actor": "Johnny Depp",
+      "label": "The Unpredictable Captain",
+      "why": "You improvise with flair, hide clever plans inside chaos, and always watch for an unexpected escape."
+    },
+    "wildcard": {
+      "character": "Hector Barbossa",
+      "actor": "Geoffrey Rush",
+      "label": "The Ruthless Storyteller",
+      "why": "You command attention, understand every rule of the curse, and pursue your goal with dramatic patience."
+    }
+  },
+  "the-hunger-games": {
+    "heart": {
+      "character": "Peeta Mellark",
+      "actor": "Josh Hutcherson",
+      "label": "The Compassionate Idealist",
+      "why": "You want to remain kind under pressure and use honesty to protect both yourself and others."
+    },
+    "mind": {
+      "character": "Haymitch Abernathy",
+      "actor": "Woody Harrelson",
+      "label": "The Hardened Strategist",
+      "why": "You read dangerous systems clearly and give practical advice shaped by experience rather than appearances."
+    },
+    "spark": {
+      "character": "Katniss Everdeen",
+      "actor": "Jennifer Lawrence",
+      "label": "The Protective Survivor",
+      "why": "You act decisively for people you love and trust skill, observation, and courage when rules turn cruel."
+    },
+    "wildcard": {
+      "character": "Effie Trinket",
+      "actor": "Elizabeth Banks",
+      "label": "The Polished Organizer",
+      "why": "You bring structure, style, and exact schedules to chaos, even while slowly noticing what the system costs."
+    }
+  },
+  "the-princess-bride": {
+    "heart": {
+      "character": "Buttercup",
+      "actor": "Robin Wright",
+      "label": "The Steadfast Romantic",
+      "why": "You hold fiercely to real love and find courage when powerful people try to decide your future."
+    },
+    "mind": {
+      "character": "Inigo Montoya",
+      "actor": "Mandy Patinkin",
+      "label": "The Focused Swordsman",
+      "why": "You train patiently, honor your promises, and stay loyal to the purpose that has shaped your life."
+    },
+    "spark": {
+      "character": "Westley",
+      "actor": "Cary Elwes",
+      "label": "The Clever Hero",
+      "why": "You combine skill, calm confidence, and playful words to overcome opponents stronger than they seem."
+    },
+    "wildcard": {
+      "character": "Vizzini",
+      "actor": "Wallace Shawn",
+      "label": "The Boastful Schemer",
+      "why": "You love verbal puzzles, assume you are the smartest person present, and turn every choice into a dramatic contest."
+    }
+  },
+  "the-goonies": {
+    "heart": {
+      "character": "Mikey Walsh",
+      "actor": "Sean Astin",
+      "label": "The Hopeful Leader",
+      "why": "You believe an adventure can change everything and keep friends moving when fear says to turn back."
+    },
+    "mind": {
+      "character": "Data Wang",
+      "actor": "Ke Huy Quan",
+      "label": "The Gadget Inventor",
+      "why": "You prepare creative tools, test wild ideas, and become essential when the path is full of traps."
+    },
+    "spark": {
+      "character": "Mouth Devereaux",
+      "actor": "Corey Feldman",
+      "label": "The Fast-Talking Translator",
+      "why": "You speak boldly, make jokes under pressure, and use surprising knowledge when the group gets stuck."
+    },
+    "wildcard": {
+      "character": "Chunk Cohen",
+      "actor": "Jeff Cohen",
+      "label": "The Honest Storyteller",
+      "why": "You feel everything openly, tell unforgettable stories, and form friendships in the least expected places."
+    }
+  },
+  "et-the-extra-terrestrial": {
+    "heart": {
+      "character": "Elliott",
+      "actor": "Henry Thomas",
+      "label": "The Deeply Loyal Friend",
+      "why": "You connect quickly with someone who feels alone and risk comfort to help them find home."
+    },
+    "mind": {
+      "character": "Michael",
+      "actor": "Robert MacNaughton",
+      "label": "The Cautious Big Brother",
+      "why": "You question strange situations at first, then become reliable when the family needs a practical teammate."
+    },
+    "spark": {
+      "character": "Gertie",
+      "actor": "Drew Barrymore",
+      "label": "The Fearless Truth-Teller",
+      "why": "You react honestly, learn quickly, and bring playful courage to something the adults would not understand."
+    },
+    "wildcard": {
+      "character": "E.T.",
+      "actor": "Pat Welsh",
+      "label": "The Gentle Visitor",
+      "why": "You explore an unfamiliar world with curiosity and build a powerful bond using very few words."
+    }
+  },
+  "ghostbusters": {
+    "heart": {
+      "character": "Ray Stantz",
+      "actor": "Dan Aykroyd",
+      "label": "The Excited Believer",
+      "why": "You meet the unknown with genuine wonder and keep the team's original purpose alive through every surprise."
+    },
+    "mind": {
+      "character": "Egon Spengler",
+      "actor": "Harold Ramis",
+      "label": "The Calm Scientist",
+      "why": "You measure strange events, build useful technology, and stay focused while everyone else reacts loudly."
+    },
+    "spark": {
+      "character": "Peter Venkman",
+      "actor": "Bill Murray",
+      "label": "The Smooth Improviser",
+      "why": "You handle chaos with jokes, social confidence, and an ability to keep talking until a plan appears."
+    },
+    "wildcard": {
+      "character": "Winston Zeddemore",
+      "actor": "Ernie Hudson",
+      "label": "The Grounded Recruit",
+      "why": "You enter a bizarre workplace with common sense and become dependable without needing every mystery explained."
+    }
+  },
+  "jumanji-welcome-to-the-jungle": {
+    "heart": {
+      "character": "Dr. Smolder Bravestone",
+      "actor": "Dwayne Johnson",
+      "label": "The Nervous Hero",
+      "why": "You may doubt yourself inside, but loyalty helps you step into courage and protect the team."
+    },
+    "mind": {
+      "character": "Ruby Roundhouse",
+      "actor": "Karen Gillan",
+      "label": "The Capable Learner",
+      "why": "You observe the game's rules, practice unfamiliar skills, and grow more confident with every challenge."
+    },
+    "spark": {
+      "character": "Franklin Finbar",
+      "actor": "Kevin Hart",
+      "label": "The Loud Teammate",
+      "why": "You speak your mind, bring huge energy, and discover that supporting someone else is also a strength."
+    },
+    "wildcard": {
+      "character": "Professor Shelly Oberon",
+      "actor": "Jack Black",
+      "label": "The Surprised Expert",
+      "why": "You adapt to a completely unexpected identity and contribute knowledge, humor, and fearless social skills."
+    }
+  },
+  "the-karate-kid": {
+    "heart": {
+      "character": "Daniel LaRusso",
+      "actor": "Ralph Macchio",
+      "label": "The Determined New Kid",
+      "why": "You feel setbacks strongly but keep returning to the work until courage becomes a skill."
+    },
+    "mind": {
+      "character": "Mr. Miyagi",
+      "actor": "Pat Morita",
+      "label": "The Patient Teacher",
+      "why": "You teach through action, value balance over aggression, and prepare people without explaining every lesson first."
+    },
+    "spark": {
+      "character": "Ali Mills",
+      "actor": "Elisabeth Shue",
+      "label": "The Independent Friend",
+      "why": "You judge people for yourself, speak honestly, and refuse to let old relationships control new choices."
+    },
+    "wildcard": {
+      "character": "Johnny Lawrence",
+      "actor": "William Zabka",
+      "label": "The Driven Rival",
+      "why": "You compete intensely and follow your team's expectations, yet part of you still recognizes fairness."
+    }
+  },
+  "the-truman-show": {
+    "heart": {
+      "character": "Sylvia",
+      "actor": "Natascha McElhone",
+      "label": "The Honest Advocate",
+      "why": "You care enough to tell a difficult truth and keep fighting for someone's freedom after others dismiss you."
+    },
+    "mind": {
+      "character": "Christof",
+      "actor": "Ed Harris",
+      "label": "The Master Controller",
+      "why": "You plan every detail and understand your creation completely, though control can make you forget another person's choice."
+    },
+    "spark": {
+      "character": "Truman Burbank",
+      "actor": "Jim Carrey",
+      "label": "The Curious Escape Artist",
+      "why": "You greet people warmly, notice patterns others overlook, and follow questions even when answers threaten your whole world."
+    },
+    "wildcard": {
+      "character": "Marlon",
+      "actor": "Noah Emmerich",
+      "label": "The Conflicted Best Friend",
+      "why": "You know how to comfort someone, but loyalty becomes complicated when your role asks you to hide the truth."
+    }
+  },
+  "ferris-buellers-day-off": {
+    "heart": {
+      "character": "Cameron Frye",
+      "actor": "Alan Ruck",
+      "label": "The Thoughtful Worrier",
+      "why": "You notice consequences, care deeply, and can make one brave choice that changes how you see yourself."
+    },
+    "mind": {
+      "character": "Sloane Peterson",
+      "actor": "Mia Sara",
+      "label": "The Cool Observer",
+      "why": "You enjoy the adventure without losing perspective and understand the people behind all the performance."
+    },
+    "spark": {
+      "character": "Ferris Bueller",
+      "actor": "Matthew Broderick",
+      "label": "The Charismatic Planner",
+      "why": "You create fun from thin air, persuade almost anyone, and believe a good day should never be wasted."
+    },
+    "wildcard": {
+      "character": "Jeanie Bueller",
+      "actor": "Jennifer Grey",
+      "label": "The Suspicious Challenger",
+      "why": "You spot unfair advantages immediately and refuse to pretend that someone else's charm makes the rules fair."
+    }
+  },
+  "mean-girls": {
+    "heart": {
+      "character": "Cady Heron",
+      "actor": "Lindsay Lohan",
+      "label": "The Adaptable Newcomer",
+      "why": "You study the group around you and want to belong, but your best self returns when you choose honesty."
+    },
+    "mind": {
+      "character": "Janis Ian",
+      "actor": "Lizzy Caplan",
+      "label": "The Sharp Strategist",
+      "why": "You read social power clearly, create detailed plans, and use bold humor to protect yourself and friends."
+    },
+    "spark": {
+      "character": "Regina George",
+      "actor": "Rachel McAdams",
+      "label": "The Magnetic Queen Bee",
+      "why": "You understand attention, set trends instantly, and have enough confidence to shape an entire room."
+    },
+    "wildcard": {
+      "character": "Damian",
+      "actor": "Daniel Franzese",
+      "label": "The Unfiltered Best Friend",
+      "why": "You deliver honest reactions, memorable jokes, and fierce support when a friend loses sight of themselves."
+    }
+  },
+  "clueless": {
+    "heart": {
+      "character": "Josh Lucas",
+      "actor": "Paul Rudd",
+      "label": "The Grounded Idealist",
+      "why": "You care about real issues, question shallow choices, and encourage people to use their influence well."
+    },
+    "mind": {
+      "character": "Dionne Davenport",
+      "actor": "Stacey Dash",
+      "label": "The Loyal Realist",
+      "why": "You understand social rules, offer honest advice, and keep your own strong point of view beside a close friend."
+    },
+    "spark": {
+      "character": "Cher Horowitz",
+      "actor": "Alicia Silverstone",
+      "label": "The Generous Matchmaker",
+      "why": "You bring style, confidence, and big plans, then grow when you look beyond your first impression."
+    },
+    "wildcard": {
+      "character": "Tai Frasier",
+      "actor": "Brittany Murphy",
+      "label": "The Transforming New Girl",
+      "why": "You adapt quickly, try on new confidence, and learn which parts of change truly feel like you."
+    }
+  },
+  "school-of-rock": {
+    "heart": {
+      "character": "Tomika",
+      "actor": "Maryam Hassan",
+      "label": "The Hidden Powerhouse",
+      "why": "You may hold back at first, but encouragement helps your true talent fill the whole room."
+    },
+    "mind": {
+      "character": "Summer Hathaway",
+      "actor": "Miranda Cosgrove",
+      "label": "The Band Manager",
+      "why": "You organize people, demand a meaningful role, and make creative chaos run on a real plan."
+    },
+    "spark": {
+      "character": "Dewey Finn",
+      "actor": "Jack Black",
+      "label": "The Wild Motivator",
+      "why": "You turn passion into contagious energy and help people discover talents they did not know they had."
+    },
+    "wildcard": {
+      "character": "Ned Schneebly",
+      "actor": "Mike White",
+      "label": "The Cautious Friend",
+      "why": "You want stability and follow rules, yet part of you still understands the joy behind a risky dream."
+    }
+  },
+  "legally-blonde": {
+    "heart": {
+      "character": "Emmett Richmond",
+      "actor": "Luke Wilson",
+      "label": "The Supportive Mentor",
+      "why": "You notice real effort, offer grounded advice, and help talented people believe in themselves without taking over."
+    },
+    "mind": {
+      "character": "Vivian Kensington",
+      "actor": "Selma Blair",
+      "label": "The Serious Competitor",
+      "why": "You work hard, value achievement, and can revise your judgment when another person's strength becomes clear."
+    },
+    "spark": {
+      "character": "Elle Woods",
+      "actor": "Reese Witherspoon",
+      "label": "The Brilliant Optimist",
+      "why": "You combine warmth, style, and determination, proving that kindness and expertise belong in the same room."
+    },
+    "wildcard": {
+      "character": "Paulette Bonafonté",
+      "actor": "Jennifer Coolidge",
+      "label": "The Lovable Confidante",
+      "why": "You listen without judging, cheer loudly for your friends, and find courage through genuine connection."
+    }
+  },
+  "the-devil-wears-prada": {
+    "heart": {
+      "character": "Andrea Sachs",
+      "actor": "Anne Hathaway",
+      "label": "The Ambitious Learner",
+      "why": "You adapt quickly and work hard, then ask whether achievement still matches the person you want to be."
+    },
+    "mind": {
+      "character": "Miranda Priestly",
+      "actor": "Meryl Streep",
+      "label": "The Exacting Editor",
+      "why": "You notice every detail, set enormous standards, and expect people to understand what excellence costs."
+    },
+    "spark": {
+      "character": "Emily Charlton",
+      "actor": "Emily Blunt",
+      "label": "The Fierce Insider",
+      "why": "You know the culture, move at top speed, and show commitment with sharp humor and total intensity."
+    },
+    "wildcard": {
+      "character": "Nigel Kipling",
+      "actor": "Stanley Tucci",
+      "label": "The Stylish Truth-Teller",
+      "why": "You understand both the art and the politics, and your blunt guidance can unlock someone's hidden potential."
+    }
+  },
+  "knives-out": {
+    "heart": {
+      "character": "Marta Cabrera",
+      "actor": "Ana de Armas",
+      "label": "The Honest Caregiver",
+      "why": "You lead with kindness and notice what people need, even when telling the truth could put you at risk."
+    },
+    "mind": {
+      "character": "Benoit Blanc",
+      "actor": "Daniel Craig",
+      "label": "The Patient Detective",
+      "why": "You listen for the strange detail, allow events to unfold, and trust that patterns will reveal the truth."
+    },
+    "spark": {
+      "character": "Linda Drysdale",
+      "actor": "Jamie Lee Curtis",
+      "label": "The Direct Executive",
+      "why": "You speak plainly, protect what you built, and refuse to shrink in a family full of loud personalities."
+    },
+    "wildcard": {
+      "character": "Ransom Drysdale",
+      "actor": "Chris Evans",
+      "label": "The Charming Disruptor",
+      "why": "You ignore family manners, enjoy shaking up the room, and know exactly how to use people's assumptions."
+    }
+  },
+  "the-greatest-showman": {
+    "heart": {
+      "character": "Charity Barnum",
+      "actor": "Michelle Williams",
+      "label": "The Steady Dreamer",
+      "why": "You value love and shared experience more than status, and you remind ambitious people what success is for."
+    },
+    "mind": {
+      "character": "Phillip Carlyle",
+      "actor": "Zac Efron",
+      "label": "The Thoughtful Partner",
+      "why": "You understand respectable society but become braver when friendship asks you to challenge its limits."
+    },
+    "spark": {
+      "character": "P.T. Barnum",
+      "actor": "Hugh Jackman",
+      "label": "The Dazzling Promoter",
+      "why": "You see possibilities everywhere, gather talent, and know how to make an audience believe in a dream."
+    },
+    "wildcard": {
+      "character": "Anne Wheeler",
+      "actor": "Zendaya",
+      "label": "The Fearless Acrobat",
+      "why": "You combine grace with strength and refuse to let other people's rules decide whom you can love or become."
+    }
+  },
+  "la-la-land": {
+    "heart": {
+      "character": "Mia Dolan",
+      "actor": "Emma Stone",
+      "label": "The Vulnerable Creator",
+      "why": "You turn rejection into stories and become strongest when you perform something honest and personal."
+    },
+    "mind": {
+      "character": "Sebastian Wilder",
+      "actor": "Ryan Gosling",
+      "label": "The Jazz Traditionalist",
+      "why": "You know exactly what your art should be and work steadily toward a place built around that vision."
+    },
+    "spark": {
+      "character": "Keith",
+      "actor": "John Legend",
+      "label": "The Modern Collaborator",
+      "why": "You challenge old definitions, build opportunities with a team, and believe an art form survives by changing."
+    },
+    "wildcard": {
+      "character": "Bill",
+      "actor": "J.K. Simmons",
+      "label": "The No-Nonsense Boss",
+      "why": "You run a tight room, know what customers expect, and have little patience for someone else's artistic detour."
+    }
+  },
+  "the-sound-of-music": {
+    "heart": {
+      "character": "Liesl von Trapp",
+      "actor": "Charmian Carr",
+      "label": "The Caring Older Sister",
+      "why": "You feel responsibility and romance deeply, and you learn to trust people who protect without controlling you."
+    },
+    "mind": {
+      "character": "Captain von Trapp",
+      "actor": "Christopher Plummer",
+      "label": "The Principled Captain",
+      "why": "You rely on order and duty, then let love and music reopen a part of life you had closed."
+    },
+    "spark": {
+      "character": "Maria",
+      "actor": "Julie Andrews",
+      "label": "The Musical Free Spirit",
+      "why": "You meet rules with imagination, help children feel heard, and bring energy wherever fear has made life quiet."
+    },
+    "wildcard": {
+      "character": "Max Detweiler",
+      "actor": "Richard Haydn",
+      "label": "The Charming Producer",
+      "why": "You spot talent, value useful connections, and keep humor nearby even when serious choices enter the room."
+    }
+  },
+  "home-alone": {
+    "heart": {
+      "character": "Old Man Marley",
+      "actor": "Roberts Blossom",
+      "label": "The Misunderstood Neighbor",
+      "why": "You carry quiet kindness beneath a serious appearance and understand how much family connection can matter."
+    },
+    "mind": {
+      "character": "Kate McCallister",
+      "actor": "Catherine O'Hara",
+      "label": "The Relentless Parent",
+      "why": "You solve problem after problem and refuse to stop moving until someone you love is safe."
+    },
+    "spark": {
+      "character": "Kevin McCallister",
+      "actor": "Macaulay Culkin",
+      "label": "The Resourceful Defender",
+      "why": "You enjoy independence, invent clever solutions, and discover bravery when your home needs protecting."
+    },
+    "wildcard": {
+      "character": "Buzz McCallister",
+      "actor": "Devin Ratray",
+      "label": "The Boastful Big Brother",
+      "why": "You collect odd treasures, tell dramatic stories, and make sure everyone knows which things are yours."
+    }
+  },
+  "the-parent-trap": {
+    "heart": {
+      "character": "Annie James",
+      "actor": "Lindsay Lohan",
+      "label": "The Thoughtful Twin",
+      "why": "You pay attention to details, care about family history, and bravely enter an unfamiliar life for someone you love."
+    },
+    "mind": {
+      "character": "Elizabeth James",
+      "actor": "Natasha Richardson",
+      "label": "The Graceful Designer",
+      "why": "You bring creativity and calm judgment, even when a surprising family truth turns your plans upside down."
+    },
+    "spark": {
+      "character": "Hallie Parker",
+      "actor": "Lindsay Lohan",
+      "label": "The Bold Twin",
+      "why": "You meet challenges with humor and confidence, then turn a wild idea into a heartfelt family mission."
+    },
+    "wildcard": {
+      "character": "Chessy",
+      "actor": "Lisa Ann Walter",
+      "label": "The Perceptive Protector",
+      "why": "You notice tiny changes, love the family fiercely, and respond to an unbelievable surprise with your whole heart."
+    }
+  },
+  "mrs-doubtfire": {
+    "heart": {
+      "character": "Lydia Hillard",
+      "actor": "Lisa Jakub",
+      "label": "The Understanding Daughter",
+      "why": "You see the pain behind family conflict and want honesty, stability, and space to love both parents."
+    },
+    "mind": {
+      "character": "Miranda Hillard",
+      "actor": "Sally Field",
+      "label": "The Responsible Parent",
+      "why": "You create structure, set necessary boundaries, and make difficult choices to give your family a steadier life."
+    },
+    "spark": {
+      "character": "Daniel Hillard",
+      "actor": "Robin Williams",
+      "label": "The Creative Dad",
+      "why": "You love through laughter and imagination, though your biggest growth comes from matching fun with responsibility."
+    },
+    "wildcard": {
+      "character": "Frank Hillard",
+      "actor": "Harvey Fierstein",
+      "label": "The Fabulous Fixer",
+      "why": "You bring creative skill, total honesty, and loyal support to a plan no one else would attempt."
+    }
+  },
+  "matilda": {
+    "heart": {
+      "character": "Miss Honey",
+      "actor": "Embeth Davidtz",
+      "label": "The Gentle Champion",
+      "why": "You notice overlooked talent, create safety through kindness, and find courage when someone else needs protection."
+    },
+    "mind": {
+      "character": "Matilda Wormwood",
+      "actor": "Mara Wilson",
+      "label": "The Brilliant Reader",
+      "why": "You teach yourself, question unfair adults, and use intelligence carefully to make life better."
+    },
+    "spark": {
+      "character": "Lavender",
+      "actor": "Kiami Davael",
+      "label": "The Loyal Co-Conspirator",
+      "why": "You welcome the new kid, enjoy a brave bit of mischief, and stand beside friends against unfair rules."
+    },
+    "wildcard": {
+      "character": "Bruce Bogtrotter",
+      "actor": "Jimmy Karz",
+      "label": "The Unexpected Champion",
+      "why": "You survive an absurd challenge through determination and turn one difficult moment into courage for everyone."
+    }
+  },
+  "the-sandlot": {
+    "heart": {
+      "character": "Scotty Smalls",
+      "actor": "Tom Guiry",
+      "label": "The Earnest New Kid",
+      "why": "You want to belong, learn from mistakes, and treasure the friend who gives you a real chance."
+    },
+    "mind": {
+      "character": "Benny Rodriguez",
+      "actor": "Mike Vitar",
+      "label": "The Natural Captain",
+      "why": "You recognize potential, teach without showing off, and take responsibility when the whole team is stuck."
+    },
+    "spark": {
+      "character": "Hamilton 'Ham' Porter",
+      "actor": "Patrick Renna",
+      "label": "The Big-Mouthed Catcher",
+      "why": "You turn competition into comedy and bring fearless confidence to every game and argument."
+    },
+    "wildcard": {
+      "character": "Michael 'Squints' Palledorous",
+      "actor": "Chauncey Leopardi",
+      "label": "The Daring Schemer",
+      "why": "You commit fully to a wild plan, surprise your friends, and create a story they will repeat for years."
+    }
   }
 };
 
@@ -1743,7 +3043,57 @@ const TITLE_IDS = [
   "bluey",
   "the-muppet-show",
   "star-trek-the-next-generation",
-  "star-trek-strange-new-worlds"
+  "star-trek-strange-new-worlds",
+  "toy-story",
+  "the-lion-king",
+  "finding-nemo",
+  "shrek",
+  "frozen",
+  "moana",
+  "encanto",
+  "the-incredibles",
+  "ratatouille",
+  "monsters-inc",
+  "coco",
+  "up",
+  "inside-out",
+  "how-to-train-your-dragon",
+  "kung-fu-panda",
+  "spider-man-into-the-spider-verse",
+  "the-super-mario-bros-movie",
+  "the-lego-movie",
+  "despicable-me",
+  "paddington-2",
+  "harry-potter-and-the-sorcerers-stone",
+  "the-lord-of-the-rings-the-fellowship-of-the-ring",
+  "star-wars-a-new-hope",
+  "raiders-of-the-lost-ark",
+  "back-to-the-future",
+  "jurassic-park",
+  "pirates-of-the-caribbean-the-curse-of-the-black-pearl",
+  "the-hunger-games",
+  "the-princess-bride",
+  "the-goonies",
+  "et-the-extra-terrestrial",
+  "ghostbusters",
+  "jumanji-welcome-to-the-jungle",
+  "the-karate-kid",
+  "the-truman-show",
+  "ferris-buellers-day-off",
+  "mean-girls",
+  "clueless",
+  "school-of-rock",
+  "legally-blonde",
+  "the-devil-wears-prada",
+  "knives-out",
+  "the-greatest-showman",
+  "la-la-land",
+  "the-sound-of-music",
+  "home-alone",
+  "the-parent-trap",
+  "mrs-doubtfire",
+  "matilda",
+  "the-sandlot"
 ];
 
 (function validateOutcomes() {
