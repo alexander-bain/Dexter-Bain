@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#08070d" />
+    <meta
+      name="description"
+      content="About the St. Elsewhere Dream Tree: its rules, methodology, and linked sources."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="About the St. Elsewhere Dream Tree" />
+    <meta
+      property="og:description"
+      content="How 717 television shows were connected to the Tommy Westphall snowglobe universe."
+    />
+    <meta property="og:url" content="https://dexterbain.com/dreamtree/about/" />
+    <meta property="og:image" content="https://dexterbain.com/dreamtree/og.png" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <title>About · St. Elsewhere Dream Tree</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --ink: #f4f0e9;
+        --muted: #aaa5b0;
+        --faint: #77727f;
+        --line: rgba(255, 255, 255, 0.14);
+        --panel: rgba(16, 15, 24, 0.88);
+        --gold: #ffd36d;
+        --blue: #55d6ff;
+        --green: #68e0ae;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 78% 12%, rgba(85, 214, 255, 0.09), transparent 27rem),
+          radial-gradient(circle at 16% 44%, rgba(169, 131, 255, 0.09), transparent 31rem),
+          #08070d;
+        font-family: var(--sans);
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        content: "";
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        background-size: 34px 34px;
+        mask-image: linear-gradient(to bottom, #000, transparent 85%);
+      }
+
+      a { color: inherit; }
+
+      .topbar {
+        position: sticky;
+        z-index: 10;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        min-height: 76px;
+        padding: 12px max(20px, calc((100vw - 1120px) / 2));
+        border-bottom: 1px solid var(--line);
+        background: rgba(8, 7, 13, 0.86);
+        backdrop-filter: blur(18px);
+      }
+
+      .brand {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+        text-decoration: none;
+      }
+
+      .brand span,
+      .eyebrow,
+      .source-type,
+      .rule-label,
+      .footer-note {
+        font-family: var(--mono);
+        font-size: 0.67rem;
+        font-weight: 750;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .brand span { color: var(--gold); }
+      .brand strong { letter-spacing: 0.05em; white-space: nowrap; }
+
+      .back-link,
+      .primary-link {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 42px;
+        padding: 0 16px;
+        border: 1px solid rgba(85, 214, 255, 0.55);
+        border-radius: 3px;
+        color: #061017;
+        background: var(--blue);
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.09em;
+        text-decoration: none;
+      }
+
+      .back-link:hover,
+      .back-link:focus-visible,
+      .primary-link:hover,
+      .primary-link:focus-visible {
+        outline: 3px solid rgba(85, 214, 255, 0.18);
+        filter: brightness(1.08);
+      }
+
+      main {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 88px 0 72px;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.7fr);
+        gap: 52px;
+        align-items: end;
+        padding: 58px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: linear-gradient(135deg, rgba(22, 20, 34, 0.96), rgba(12, 12, 19, 0.9));
+        box-shadow: 0 34px 90px rgba(0, 0, 0, 0.35);
+      }
+
+      .hero::after {
+        position: absolute;
+        top: -145px;
+        right: -110px;
+        width: 430px;
+        height: 430px;
+        border: 1px solid rgba(255, 211, 109, 0.25);
+        border-radius: 50%;
+        content: "";
+        box-shadow: inset 0 0 80px rgba(255, 211, 109, 0.05), 0 0 90px rgba(255, 211, 109, 0.04);
+      }
+
+      .eyebrow { color: var(--gold); }
+
+      h1 {
+        max-width: 760px;
+        margin: 18px 0 24px;
+        font-size: clamp(2.6rem, 6.5vw, 5.8rem);
+        line-height: 0.94;
+        letter-spacing: -0.055em;
+      }
+
+      .hero-copy {
+        max-width: 710px;
+        margin: 0;
+        color: #c7c2cc;
+        font-size: clamp(1rem, 1.8vw, 1.2rem);
+        line-height: 1.68;
+      }
+
+      .stat {
+        position: relative;
+        z-index: 1;
+        padding-left: 28px;
+        border-left: 2px solid var(--gold);
+      }
+
+      .stat strong {
+        display: block;
+        color: var(--gold);
+        font-family: var(--mono);
+        font-size: clamp(3.6rem, 8vw, 6.6rem);
+        font-weight: 600;
+        line-height: 0.9;
+      }
+
+      .stat span {
+        display: block;
+        margin-top: 14px;
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 750;
+        letter-spacing: 0.16em;
+      }
+
+      .section {
+        padding: 88px 0 0;
+      }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: 0.55fr 1.45fr;
+        gap: 42px;
+        padding-bottom: 28px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      h2 {
+        margin: 0;
+        font-size: clamp(1.8rem, 3vw, 3rem);
+        letter-spacing: -0.035em;
+      }
+
+      .section-heading p,
+      .closing p {
+        max-width: 760px;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.72;
+      }
+
+      .rules {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-top: 26px;
+      }
+
+      .rule {
+        padding: 28px;
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        background: var(--panel);
+      }
+
+      .rule.is-in { border-top-color: rgba(104, 224, 174, 0.8); }
+      .rule.is-out { border-top-color: rgba(240, 127, 115, 0.8); }
+      .rule.is-in .rule-label { color: var(--green); }
+      .rule.is-out .rule-label { color: #f07f73; }
+
+      .rule ul {
+        margin: 20px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .rule li {
+        position: relative;
+        margin-top: 13px;
+        padding-left: 22px;
+        color: #c5c0ca;
+        line-height: 1.5;
+      }
+
+      .rule li::before {
+        position: absolute;
+        left: 0;
+        content: "—";
+        color: var(--faint);
+      }
+
+      .sources {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+
+      .source-card {
+        position: relative;
+        min-height: 230px;
+        padding: 28px 30px 30px;
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        background: var(--panel);
+        text-decoration: none;
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      }
+
+      .source-card:hover,
+      .source-card:focus-visible {
+        transform: translateY(-3px);
+        border-color: rgba(85, 214, 255, 0.6);
+        outline: none;
+        background: rgba(24, 23, 35, 0.96);
+      }
+
+      .source-card::after {
+        position: absolute;
+        right: 25px;
+        bottom: 22px;
+        color: var(--blue);
+        content: "↗";
+        font-size: 1.25rem;
+      }
+
+      .source-type { color: var(--blue); }
+
+      .source-card h3 {
+        max-width: 88%;
+        margin: 20px 0 12px;
+        font-size: 1.3rem;
+        letter-spacing: -0.02em;
+      }
+
+      .source-card p {
+        max-width: 90%;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.58;
+      }
+
+      .show-sources {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .show-sources a {
+        padding: 9px 11px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: #cbc6cf;
+        font-family: var(--mono);
+        font-size: 0.68rem;
+        text-decoration: none;
+      }
+
+      .show-sources a:hover,
+      .show-sources a:focus-visible {
+        border-color: var(--blue);
+        outline: none;
+        color: var(--blue);
+      }
+
+      .closing {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 34px;
+        align-items: center;
+        margin-top: 88px;
+        padding: 34px;
+        border: 1px solid rgba(255, 211, 109, 0.28);
+        border-radius: 5px;
+        background: rgba(255, 211, 109, 0.045);
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        margin-top: 48px;
+        padding-top: 24px;
+        border-top: 1px solid var(--line);
+        color: var(--faint);
+      }
+
+      .footer-note { font-size: 0.58rem; }
+
+      @media (max-width: 760px) {
+        .topbar { min-height: 70px; padding: 10px 14px; }
+        .brand span { display: none; }
+        .brand strong { overflow: hidden; font-size: 0.78rem; text-overflow: ellipsis; }
+        .back-link { min-height: 40px; padding: 0 12px; }
+        main { width: min(100% - 28px, 1120px); padding-top: 32px; }
+        .hero { grid-template-columns: 1fr; gap: 38px; padding: 34px 24px; }
+        .hero::after { top: auto; right: -160px; bottom: -240px; }
+        h1 { font-size: clamp(2.55rem, 15vw, 4.6rem); }
+        .stat { max-width: 240px; }
+        .section { padding-top: 66px; }
+        .section-heading { grid-template-columns: 1fr; gap: 16px; }
+        .rules, .sources { grid-template-columns: 1fr; }
+        .source-card { min-height: 0; padding-bottom: 56px; }
+        .closing { grid-template-columns: 1fr; }
+        .primary-link { width: 100%; }
+        footer { flex-direction: column; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        * { transition: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/dreamtree/">
+        <span>The snowglobe universe</span>
+        <strong>ST. ELSEWHERE DREAM TREE</strong>
+      </a>
+      <a class="back-link" href="/dreamtree/">← BACK TO TREE</a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <span class="eyebrow">About the project</span>
+          <h1>One snowglobe.<br />A lot of television.</h1>
+          <p class="hero-copy">
+            The Dream Tree is an interactive map of the Tommy Westphall Universe theory. It follows
+            television crossovers, spin-offs, and recurring fictional details until every displayed
+            route reaches <em>St. Elsewhere</em>.
+          </p>
+        </div>
+        <div class="stat" aria-label="717 connected television shows">
+          <strong>717</strong>
+          <span>CONNECTED SHOWS<br />IN THIS EDITION</span>
+        </div>
+      </section>
+
+      <section class="section" id="method">
+        <div class="section-heading">
+          <h2>How the map works</h2>
+          <p>
+            A show's degree is the number of links in its shortest recorded route to
+            <em>St. Elsewhere</em>. The map preserves its original 452-show routes and adds only
+            additional series for which a usable connection could be traced back to that graph.
+          </p>
+        </div>
+
+        <div class="rules">
+          <article class="rule is-in">
+            <span class="rule-label">Included</span>
+            <ul>
+              <li>Character crossovers and shared episodes</li>
+              <li>Official spin-offs, sequels, and continuations</li>
+              <li>Recurring fictional brands, places, companies, or props</li>
+              <li>Routes that can be explained link by link</li>
+            </ul>
+          </article>
+          <article class="rule is-out">
+            <span class="rule-label">Not counted</span>
+            <ul>
+              <li>Actors appearing as unrelated characters</li>
+              <li>Real-world brands or ordinary historical references</li>
+              <li>Links labeled disputed, non-contiguous, or unsubstantiated</li>
+              <li>Dream, fantasy, parody, or behind-the-scenes appearances alone</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="sources">
+        <div class="section-heading">
+          <h2>Sources used</h2>
+          <p>
+            These are the actual references used to assemble and audit the map. The first site supplied
+            the starting graph; the fan-maintained wiki supplied the larger title audit, connection rules,
+            and show-by-show evidence.
+          </p>
+        </div>
+
+        <div class="sources">
+          <a class="source-card" href="https://tvuniverses.com/" target="_blank" rel="noreferrer">
+            <span class="source-type">Starting catalog</span>
+            <h3>TV Universes — Tommy Westphall Universe Search</h3>
+            <p>The source of the original 452-show graph and its route descriptions.</p>
+          </a>
+
+          <a class="source-card" href="https://tommywestphall.fandom.com/wiki/List_of_television_series_in_the_Tommy_Westphall_Universe" target="_blank" rel="noreferrer">
+            <span class="source-type">Expansion audit</span>
+            <h3>Tommy Westphall Wiki — Television Series List</h3>
+            <p>The master title list used to locate omissions such as <em>The Sopranos</em> and <em>The Golden Girls</em>.</p>
+          </a>
+
+          <a class="source-card" href="https://tommywestphall.fandom.com/wiki/Westphall:Manual_of_Style/Connections" target="_blank" rel="noreferrer">
+            <span class="source-type">Inclusion rules</span>
+            <h3>Connection Manual</h3>
+            <p>The wiki's distinctions among franchise, crossover, brand, disputed, and non-contiguous connections.</p>
+          </a>
+
+          <a class="source-card" href="https://en.wikipedia.org/wiki/Empty_Nest" target="_blank" rel="noreferrer">
+            <span class="source-type">Corroboration</span>
+            <h3><em>Empty Nest</em> franchise history</h3>
+            <p>A secondary check for the <em>Golden Girls</em>, <em>Empty Nest</em>, and <em>Nurses</em> crossover family.</p>
+          </a>
+        </div>
+
+        <div class="show-sources" aria-label="Show-specific source pages">
+          <a href="https://tommywestphall.fandom.com/wiki/The_Sopranos" target="_blank" rel="noreferrer">THE SOPRANOS ↗</a>
+          <a href="https://tommywestphall.fandom.com/wiki/The_Golden_Girls" target="_blank" rel="noreferrer">THE GOLDEN GIRLS ↗</a>
+          <a href="https://tommywestphall.fandom.com/wiki/Empty_Nest" target="_blank" rel="noreferrer">EMPTY NEST ↗</a>
+          <a href="https://tommywestphall.fandom.com/wiki/The_Golden_Palace" target="_blank" rel="noreferrer">THE GOLDEN PALACE ↗</a>
+          <a href="https://en.wikipedia.org/wiki/The_Golden_Girls" target="_blank" rel="noreferrer">GOLDEN GIRLS OVERVIEW ↗</a>
+        </div>
+      </section>
+
+      <section class="closing">
+        <p>
+          This is a fan-made visualization, not an official declaration of television canon. Sources can
+          disagree, and the map can change when a clearer connection or a shorter route is documented.
+        </p>
+        <a class="primary-link" href="/dreamtree/">EXPLORE THE TREE →</a>
+      </section>
+
+      <footer>
+        <span class="footer-note">Built for DexterBain.com</span>
+        <span class="footer-note">Last catalog audit: October 2026</span>
+      </footer>
+    </main>
+  </body>
+</html>
