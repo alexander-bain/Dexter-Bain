@@ -2,21 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>DexterBain Games</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#09071b" />
+  <title>DexterBain · App Library</title>
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3THX5NYY2B"></script>
   <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-3THX5NYY2B');
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3THX5NYY2B');
   </script>
 
   <style>
     :root {
       color-scheme: dark;
+      --ink: #f9f7ff;
+      --muted: #aaa4c4;
+      --panel: rgba(19, 16, 44, 0.74);
+      --line: rgba(255, 255, 255, 0.1);
+      --purple: #a78bfa;
+      --pink: #fb7185;
+      --blue: #38bdf8;
     }
 
     * {
@@ -25,6 +33,47 @@
 
     [hidden] {
       display: none !important;
+    }
+
+    html {
+      min-height: 100%;
+      background: #09071b;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--ink);
+      font-family: Inter, ui-rounded, "SF Pro Rounded", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(76, 29, 149, 0.62), transparent 29rem),
+        radial-gradient(circle at 88% 3%, rgba(14, 116, 144, 0.42), transparent 31rem),
+        radial-gradient(circle at 75% 92%, rgba(190, 24, 93, 0.25), transparent 30rem),
+        linear-gradient(145deg, #080617 0%, #0c0922 48%, #070714 100%);
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 78%);
+      content: "";
+      pointer-events: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
     }
 
     .sr-only {
@@ -39,70 +88,142 @@
       border: 0;
     }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #2c3e50, #050608);
-      color: #f7f7f7;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0 32px;
     }
 
-    .container {
-      max-width: 900px;
-      width: 100%;
-      background: rgba(5, 6, 8, 0.92);
-      border-radius: 24px;
-      padding: 32px 24px 28px;
-      box-shadow:
-        0 22px 45px rgba(0, 0, 0, 0.65),
-        0 0 0 1px rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(14px);
+    .hero {
+      position: relative;
+      padding: 38px clamp(22px, 5vw, 58px) 32px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 36px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.09), transparent 45%),
+        rgba(13, 11, 34, 0.76);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.38);
+      backdrop-filter: blur(24px);
+    }
+
+    .hero::after {
+      position: absolute;
+      top: -120px;
+      right: -85px;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.35), rgba(167, 139, 250, 0.16) 45%, transparent 70%);
+      content: "";
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 18px;
+      color: #d8d1ff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink), var(--blue));
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.75);
+      content: "";
     }
 
     h1 {
-      margin: 0 0 8px;
-      font-size: 2.1rem;
-      letter-spacing: 0.04em;
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(2.7rem, 8vw, 6rem);
+      line-height: 0.94;
+      letter-spacing: -0.065em;
+    }
+
+    h1 span {
+      color: transparent;
+      background: linear-gradient(90deg, #c4b5fd, #67e8f9 52%, #fda4af);
+      -webkit-background-clip: text;
+      background-clip: text;
     }
 
     .subtitle {
-      margin: 0 0 24px;
-      color: #c9d1d9;
-      font-size: 0.98rem;
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+      margin: 20px 0 0;
+      color: #c4bfd7;
+      font-size: clamp(1rem, 2.5vw, 1.22rem);
+      line-height: 1.55;
     }
 
     .part-switcher {
+      position: relative;
+      z-index: 2;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 24px;
+      gap: 10px;
+      max-width: 650px;
+      margin-top: 32px;
+      padding: 7px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 23px;
+      background: rgba(4, 3, 16, 0.52);
     }
 
     .part-choice {
-      min-height: 84px;
-      padding: 14px 16px;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      border-radius: 18px;
-      background: rgba(15, 23, 42, 0.82);
-      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      padding: 13px 15px;
+      border: 0;
+      border-radius: 17px;
+      background: transparent;
+      color: var(--muted);
       text-align: left;
       cursor: pointer;
-      transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+      transition: 180ms ease;
     }
 
     .part-choice:hover {
-      transform: translateY(-1px);
-      border-color: rgba(148, 163, 184, 0.75);
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.055);
     }
 
     .part-choice.is-active {
-      border-color: rgba(74, 222, 128, 0.95);
-      background: linear-gradient(135deg, rgba(22, 101, 52, 0.42), rgba(15, 23, 42, 0.92));
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
+      color: var(--ink);
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.86), rgba(37, 99, 235, 0.78));
+      box-shadow: 0 12px 26px rgba(76, 29, 149, 0.38), inset 0 1px rgba(255, 255, 255, 0.2);
+    }
+
+    .part-number {
+      display: grid;
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 11px;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .part-copy {
+      min-width: 0;
     }
 
     .part-label,
@@ -111,73 +232,213 @@
     }
 
     .part-label {
-      margin-bottom: 4px;
-      font-size: 1rem;
-      font-weight: 750;
+      font-size: 0.9rem;
+      font-weight: 800;
     }
 
     .part-description {
-      color: #cbd5e1;
-      font-size: 0.8rem;
-      line-height: 1.35;
+      margin-top: 2px;
+      overflow: hidden;
+      color: currentColor;
+      font-size: 0.72rem;
+      opacity: 0.72;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
-    .section-heading-row {
+    .library {
+      padding: 42px clamp(2px, 2vw, 18px) 24px;
+    }
+
+    .library-heading {
       display: flex;
-      align-items: center;
+      align-items: end;
       justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 16px;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .section-kicker {
+      margin: 0 0 5px;
+      color: #8f89aa;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
     }
 
     .section-title {
       margin: 0;
-      font-size: 1.35rem;
+      font-size: clamp(1.7rem, 4vw, 2.5rem);
+      letter-spacing: -0.045em;
     }
 
-    .section-note {
-      margin: 3px 0 0;
-      color: #94a3b8;
-      font-size: 0.82rem;
+    .search-wrap {
+      position: relative;
+      flex: 0 1 320px;
     }
 
-    .lock-button {
-      flex: 0 0 auto;
-      padding: 7px 12px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      color: #e2e8f0;
-      font: inherit;
-      font-size: 0.78rem;
-      cursor: pointer;
+    .search-wrap::before {
+      position: absolute;
+      top: 50%;
+      left: 16px;
+      color: #8d87a4;
+      font-size: 1rem;
+      content: "⌕";
+      transform: translateY(-52%);
+      pointer-events: none;
+    }
+
+    .game-search {
+      width: 100%;
+      min-height: 48px;
+      padding: 0 17px 0 42px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      outline: none;
+      background: rgba(17, 14, 39, 0.72);
+      color: var(--ink);
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .game-search::placeholder {
+      color: #817b98;
+    }
+
+    .game-search:focus {
+      border-color: rgba(167, 139, 250, 0.85);
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.16);
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+      gap: 30px 22px;
+    }
+
+    .app-card {
+      min-width: 0;
+    }
+
+    .app-card.is-hidden {
+      display: none;
+    }
+
+    .app-link {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      color: var(--ink);
+      text-align: center;
+      text-decoration: none;
+      outline: none;
+    }
+
+    .app-icon {
+      width: min(100%, 124px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 25%;
+      background-color: #111039;
+      background-repeat: no-repeat;
+      background-position: var(--x) var(--y);
+      box-shadow:
+        0 17px 30px rgba(0, 0, 0, 0.38),
+        inset 0 1px rgba(255, 255, 255, 0.18);
+      transform: translateZ(0);
+      transition: transform 180ms cubic-bezier(0.2, 0.85, 0.25, 1.35), box-shadow 180ms ease, filter 180ms ease;
+    }
+
+    .sheet-one {
+      background-image: url("assets/app-icons/apps-01-16.jpg");
+      background-size: 400% 400%;
+    }
+
+    .sheet-two {
+      background-image: url("assets/app-icons/apps-17-28.jpg");
+      background-size: 400% 300%;
+    }
+
+    .sheet-three {
+      background-image: url("assets/app-icons/apps-live-extras.jpg");
+      background-size: 300% 200%;
+    }
+
+    .app-name {
+      display: -webkit-box;
+      min-height: 2.45em;
+      margin-top: 12px;
+      overflow: hidden;
+      font-size: 0.86rem;
+      font-weight: 720;
+      line-height: 1.22;
+      letter-spacing: -0.015em;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .app-link:hover .app-icon,
+    .app-link:focus-visible .app-icon {
+      filter: saturate(1.12) brightness(1.07);
+      box-shadow:
+        0 23px 40px rgba(0, 0, 0, 0.48),
+        0 0 0 4px rgba(167, 139, 250, 0.25),
+        inset 0 1px rgba(255, 255, 255, 0.2);
+      transform: translateY(-7px) scale(1.045) rotate(-1deg);
+    }
+
+    .app-link:active .app-icon {
+      transform: scale(0.97);
+    }
+
+    .empty-search {
+      display: none;
+      margin: 46px 0;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .empty-search.is-visible {
+      display: block;
     }
 
     .personal-gate {
-      max-width: 520px;
-      margin: 10px auto 4px;
-      padding: 26px;
-      border: 1px solid rgba(96, 165, 250, 0.4);
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(30, 64, 175, 0.2), rgba(15, 23, 42, 0.92));
+      max-width: 570px;
+      margin: 46px auto 26px;
+      padding: 38px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at top, rgba(139, 92, 246, 0.2), transparent 56%),
+        var(--panel);
       text-align: center;
-      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.34);
+      backdrop-filter: blur(20px);
     }
 
     .gate-icon {
-      margin-bottom: 8px;
-      font-size: 2rem;
+      display: grid;
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 18px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 23px;
+      background: linear-gradient(145deg, rgba(167, 139, 250, 0.32), rgba(59, 130, 246, 0.18));
+      font-size: 1.75rem;
+      box-shadow: 0 16px 28px rgba(76, 29, 149, 0.28);
     }
 
     .personal-gate h2 {
-      margin: 0 0 6px;
-      font-size: 1.35rem;
+      margin: 0;
+      font-size: 1.65rem;
+      letter-spacing: -0.04em;
     }
 
-    .personal-gate p {
-      margin: 0 0 18px;
-      color: #cbd5e1;
-      font-size: 0.9rem;
+    .personal-gate > p {
+      margin: 8px 0 22px;
+      color: var(--muted);
+      line-height: 1.45;
     }
 
     .password-form {
@@ -187,791 +448,385 @@
 
     .password-input {
       min-width: 0;
-      flex: 1 1 auto;
-      min-height: 46px;
-      padding: 0 14px;
-      border: 1px solid rgba(148, 163, 184, 0.55);
-      border-radius: 12px;
-      background: rgba(2, 6, 23, 0.8);
-      color: #f8fafc;
-      font: inherit;
-      outline: none;
+      flex: 1;
+      min-height: 50px;
+      padding: 0 15px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 15px;
+      outline: 0;
+      background: rgba(5, 4, 17, 0.72);
+      color: var(--ink);
     }
 
     .password-input:focus {
-      border-color: #60a5fa;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+      border-color: var(--purple);
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.16);
+    }
+
+    .unlock-button,
+    .lock-button {
+      border: 0;
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
     }
 
     .unlock-button {
-      min-height: 46px;
-      padding: 0 18px;
-      border: 0;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #60a5fa, #2563eb);
-      color: #fff;
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #8b5cf6, #2563eb);
+      box-shadow: 0 12px 24px rgba(76, 29, 149, 0.35);
     }
 
     .password-message {
       min-height: 20px;
-      margin: 10px 0 0 !important;
-      color: #fca5a5 !important;
-      font-size: 0.8rem !important;
+      margin: 11px 0 0 !important;
+      color: #fda4af !important;
+      font-size: 0.8rem;
     }
 
-    .search-wrap {
-      margin: 0 0 22px;
-    }
-
-    .game-search {
-      width: 100%;
-      min-height: 48px;
-      padding: 0 16px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.92);
-      color: #f8fafc;
-      font: inherit;
-      font-size: 0.96rem;
-      outline: none;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    }
-
-    .game-search::placeholder {
-      color: #94a3b8;
-    }
-
-    .game-search:focus {
-      border-color: rgba(74, 222, 128, 0.95);
-      box-shadow:
-        0 0 0 3px rgba(34, 197, 94, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    }
-
-    .game-card.is-hidden {
-      display: none;
-    }
-
-    .empty-search {
-      display: none;
-      margin: 18px 0 0;
-      color: #c9d1d9;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    .empty-search.is-visible {
-      display: block;
-    }
-
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
-    }
-
-    .game-card {
-      position: relative;
-      border-radius: 20px;
-      padding: 18px 18px 16px;
-      background: linear-gradient(135deg, #111827, #020617);
-      box-shadow: 0 18px 30px rgba(0, 0, 0, 0.65);
-      border: 1px solid rgba(148, 163, 184, 0.3);
-      overflow: hidden;
-    }
-
-    .game-tag {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: #9ca3af;
-      margin-bottom: 6px;
-    }
-
-    .game-title {
-      font-size: 1.2rem;
-      margin: 0 0 4px;
-    }
-
-    .game-subtitle {
-      font-size: 0.85rem;
-      margin: 0 0 12px;
-      color: #d1d5db;
-    }
-
-    .pill-row {
+    .personal-heading {
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-
-    .pill {
-      font-size: 0.7rem;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.55);
-      color: #e5e7eb;
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    .play-button {
-      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 4px;
-      padding: 8px 14px;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .lock-button {
+      padding: 10px 14px;
+      border: 1px solid var(--line);
       border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: #01110a;
-      box-shadow: 0 10px 18px rgba(34, 197, 94, 0.35);
-      transition: transform 0.08s ease-out, box-shadow 0.08s ease-out, background 0.15s ease-out;
+      background: rgba(255, 255, 255, 0.07);
+      color: #d8d3e8;
+      font-size: 0.75rem;
     }
 
-    .play-button span {
-      font-size: 1.1rem;
-      margin-left: 2px;
-    }
-
-    .play-button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 14px 26px rgba(34, 197, 94, 0.45);
-      background: linear-gradient(135deg, #4ade80, #22c55e);
-    }
-
-    .play-button:active {
-      transform: translateY(0);
-      box-shadow: 0 8px 16px rgba(34, 197, 94, 0.35);
+    .personal-grid {
+      max-width: 330px;
+      margin-top: 28px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .footer-note {
-      margin-top: 22px;
-      font-size: 0.72rem;
-      color: #9ca3af;
-      text-align: right;
+      margin-top: 34px;
+      color: #726c88;
+      font-size: 0.7rem;
+      letter-spacing: 0.13em;
+      text-align: center;
+      text-transform: uppercase;
     }
 
-    @media (max-width: 600px) {
-      .container {
-        padding: 22px 16px 18px;
-        border-radius: 18px;
+    @media (max-width: 700px) {
+      .shell {
+        width: min(100% - 20px, 1180px);
+        padding-top: 10px;
       }
-      h1 {
-        font-size: 1.7rem;
+
+      .hero {
+        padding: 28px 20px 22px;
+        border-radius: 25px;
       }
 
       .part-switcher {
         grid-template-columns: 1fr;
       }
 
-      .part-choice {
-        min-height: 72px;
+      .library {
+        padding-top: 34px;
+      }
+
+      .library-heading {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .search-wrap {
+        flex-basis: auto;
+      }
+
+      .app-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px 14px;
+      }
+
+      .app-icon {
+        width: min(100%, 108px);
+      }
+
+      .personal-gate {
+        margin-top: 30px;
+        padding: 28px 20px;
+      }
+    }
+
+    @media (max-width: 370px) {
+      .app-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .password-form {
         flex-direction: column;
       }
+    }
 
-      .unlock-button {
-        width: 100%;
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
       }
     }
   </style>
 </head>
 <body>
-  <main class="container">
-    <h1>DexterBain.com</h1>
-    <p class="subtitle">Play a game, or unlock Part 2.</p>
+  <main class="shell">
+    <header class="hero">
+      <div class="eyebrow">DexterBain App Library</div>
+      <h1>Small apps.<br /><span>Big energy.</span></h1>
+      <p class="subtitle">A colorful collection of games, experiments, and personal creations—all made to be opened and played.</p>
 
-    <nav class="part-switcher" aria-label="Choose a section">
-      <button class="part-choice is-active" id="gamesTab" type="button" aria-controls="gamesArea" aria-pressed="true">
-        <span class="part-label">Part 1 · Games</span>
-        <span class="part-description">Highway Rush, Ball Guys Drop, and more</span>
-      </button>
-      <button class="part-choice" id="personalTab" type="button" aria-controls="personalGate personalArea" aria-pressed="false">
-        <span class="part-label">Part 2 🔒</span>
-        <span class="part-description" id="personalTabStatus">Password required</span>
-      </button>
-    </nav>
+      <nav class="part-switcher" aria-label="Choose a section">
+        <button class="part-choice is-active" id="gamesTab" type="button" aria-controls="gamesArea" aria-pressed="true">
+          <span class="part-number">01</span>
+          <span class="part-copy">
+            <span class="part-label">Part 1 · Games &amp; Apps</span>
+            <span class="part-description">Open to everyone</span>
+          </span>
+        </button>
+        <button class="part-choice" id="personalTab" type="button" aria-controls="personalGate personalArea" aria-pressed="false">
+          <span class="part-number">02</span>
+          <span class="part-copy">
+            <span class="part-label">Part 2 · Personal</span>
+            <span class="part-description" id="personalTabStatus">Password required</span>
+          </span>
+        </button>
+      </nav>
+    </header>
 
-    <section id="gamesArea">
-      <div class="section-heading-row">
+    <section class="library" id="gamesArea">
+      <div class="library-heading">
         <div>
-          <h2 class="section-title">Games</h2>
-          <p class="section-note">Pick one and start playing.</p>
+          <p class="section-kicker">20 apps</p>
+          <h2 class="section-title">Pick something fun.</h2>
+        </div>
+        <div class="search-wrap">
+          <label class="sr-only" for="gameSearch">Search apps</label>
+          <input class="game-search" id="gameSearch" type="search" placeholder="Search the library" autocomplete="off" />
         </div>
       </div>
-      <div class="search-wrap">
-        <label class="sr-only" for="gameSearch">Search games</label>
-        <input class="game-search" id="gameSearch" type="search" placeholder="Search games..." autocomplete="off" />
+
+      <div class="app-grid" id="gamesGrid">
+        <article class="app-card" data-search="sat wordboard vocabulary flashcards study words">
+          <a class="app-link" href="satprep/">
+            <span class="app-icon sheet-three" style="--x:0%;--y:0%" aria-hidden="true"></span>
+            <span class="app-name">SAT Wordboard</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="lucky felt casino blackjack poker slots">
+          <a class="app-link" href="casino/">
+            <span class="app-icon sheet-three" style="--x:50%;--y:0%" aria-hidden="true"></span>
+            <span class="app-name">Lucky Felt Casino</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="stone skip ocean 3d shoreline">
+          <a class="app-link" href="stoneskip/">
+            <span class="app-icon sheet-three" style="--x:100%;--y:0%" aria-hidden="true"></span>
+            <span class="app-name">Stone Skip</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="shadow boxing two player bluffing">
+          <a class="app-link" href="shadow-boxing.html">
+            <span class="app-icon sheet-one" style="--x:0%;--y:0%" aria-hidden="true"></span>
+            <span class="app-name">Shadow Boxing</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="blacktop basketball recess 1v1 sports">
+          <a class="app-link" href="recess/">
+            <span class="app-icon sheet-one" style="--x:33.333%;--y:0%" aria-hidden="true"></span>
+            <span class="app-name">Blacktop Basketball</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="meter golf 3d sport nine holes">
+          <a class="app-link" href="golf/">
+            <span class="app-icon sheet-one" style="--x:100%;--y:0%" aria-hidden="true"></span>
+            <span class="app-name">Meter Golf</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="addition blitz math speed solo">
+          <a class="app-link" href="addition.html">
+            <span class="app-icon sheet-one" style="--x:0%;--y:33.333%" aria-hidden="true"></span>
+            <span class="app-name">Addition Blitz</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="highway rush driving traffic 3d">
+          <a class="app-link" href="highway/">
+            <span class="app-icon sheet-one" style="--x:33.333%;--y:33.333%" aria-hidden="true"></span>
+            <span class="app-name">Highway Rush</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="tilt roll 3d motion ball infinite">
+          <a class="app-link" href="tilt-roll/">
+            <span class="app-icon sheet-one" style="--x:66.667%;--y:33.333%" aria-hidden="true"></span>
+            <span class="app-name">Tilt Roll 3D</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="world command map war strategy">
+          <a class="app-link" href="world-command/">
+            <span class="app-icon sheet-one" style="--x:100%;--y:33.333%" aria-hidden="true"></span>
+            <span class="app-name">World Command</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="four corners 3d bots survival">
+          <a class="app-link" href="four-corners/">
+            <span class="app-icon sheet-one" style="--x:0%;--y:66.667%" aria-hidden="true"></span>
+            <span class="app-name">Four Corners</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="rockem sockem robots boxing 3d">
+          <a class="app-link" href="rockem-sockem/">
+            <span class="app-icon sheet-one" style="--x:33.333%;--y:66.667%" aria-hidden="true"></span>
+            <span class="app-name">Rock'em Sock'em Robots</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="galactic learner space shooter ml bot">
+          <a class="app-link" href="galactic-learner/">
+            <span class="app-icon sheet-one" style="--x:66.667%;--y:66.667%" aria-hidden="true"></span>
+            <span class="app-name">Galactic Learner</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="maze muncher pac man machine learning ml">
+          <a class="app-link" href="pac-man-ml/">
+            <span class="app-icon sheet-one" style="--x:100%;--y:66.667%" aria-hidden="true"></span>
+            <span class="app-name">Maze Muncher ML</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="second chance wordle word game daily">
+          <a class="app-link" href="second-chance-wordle/?v=2026-07-14-1">
+            <span class="app-icon sheet-one" style="--x:33.333%;--y:100%" aria-hidden="true"></span>
+            <span class="app-name">Second Chance Wordle</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="last minute ladder arcade score timer">
+          <a class="app-link" href="last-minute-ladder/">
+            <span class="app-icon sheet-one" style="--x:66.667%;--y:100%" aria-hidden="true"></span>
+            <span class="app-name">Last Minute Ladder</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="ball guys merge physics jelly balls">
+          <a class="app-link" href="merge-balls/">
+            <span class="app-icon sheet-one" style="--x:100%;--y:100%" aria-hidden="true"></span>
+            <span class="app-name">Ball Guys Merge</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="market time machine stocks trading leaderboard">
+          <a class="app-link" href="stock/">
+            <span class="app-icon sheet-two" style="--x:66.667%;--y:0%" aria-hidden="true"></span>
+            <span class="app-name">Market Time Machine</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="skip for wishes fundraiser make a wish">
+          <a class="app-link" href="skipforwishes/">
+            <span class="app-icon sheet-two" style="--x:100%;--y:0%" aria-hidden="true"></span>
+            <span class="app-name">Skip for Wishes</span>
+          </a>
+        </article>
+        <article class="app-card" data-search="ai adventure fantasy story quest">
+          <a class="app-link" href="adventure.html">
+            <span class="app-icon sheet-two" style="--x:100%;--y:50%" aria-hidden="true"></span>
+            <span class="app-name">AI Adventure Game</span>
+          </a>
+        </article>
       </div>
-
-      <div class="games-grid" id="gamesGrid">
-
-      <!-- SAT Wordboard -->
-      <article class="game-card">
-        <div class="game-tag">Study Game</div>
-        <h2 class="game-title">SAT Wordboard</h2>
-        <p class="game-subtitle">
-          Build your own SAT vocabulary board, then master it with smart flashcards and quick word games.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Vocabulary</span>
-          <span class="pill">Flashcards</span>
-          <span class="pill">Word Games</span>
-        </div>
-        <a class="play-button" href="satprep/" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);box-shadow:0 10px 18px rgba(245,158,11,0.32);color:#111827;">
-          Practice SAT Words <span>▶</span>
-        </a>
-      </article>
-
-      <!-- Lucky Felt Casino -->
-      <article class="game-card">
-        <div class="game-tag">Casino</div>
-        <h2 class="game-title">Lucky Felt Casino</h2>
-        <p class="game-subtitle">
-          Start with $10,000 and move one bankroll between blackjack, Poker Ultima, and low-odds spinning slots.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Blackjack</span>
-          <span class="pill">Poker Ultima</span>
-          <span class="pill">Slots</span>
-        </div>
-        <a class="play-button" href="casino/">
-          Enter Casino <span>▶</span>
-        </a>
-      </article>
-
-      <!-- Stone Skip -->
-      <article class="game-card">
-        <div class="game-tag">Premium 3D</div>
-        <h2 class="game-title">Stone Skip</h2>
-        <p class="game-subtitle">
-          Stand on a shoreline rock and look out over a peaceful WebGL ocean built as the foundation for a premium stone-skipping game.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Three.js</span>
-          <span class="pill">Ocean</span>
-          <span class="pill">Atmosphere</span>
-        </div>
-        <a class="play-button" href="stoneskip/">
-          Skip Stones <span>▶</span>
-        </a>
-      </article>
-
-      <!-- Shadow Boxing -->
-      <article class="game-card">
-        <div class="game-tag">Game 01</div>
-        <h2 class="game-title">Shadow Boxing</h2>
-        <p class="game-subtitle">
-          Rock–paper–scissors turned into a mind game with custom names and AI opponents.
-        </p>
-        <div class="pill-row">
-          <span class="pill">2 Player</span>
-          <span class="pill">Bluffing</span>
-          <span class="pill">Fast Rounds</span>
-        </div>
-        <a class="play-button" href="shadow-boxing.html">
-          Play Shadow Boxing <span>▶</span>
-        </a>
-      </article>
-
-      <!-- Blacktop Basketball -->
-      <article class="game-card">
-        <div class="game-tag">Game 03</div>
-        <h2 class="game-title">Blacktop Basketball</h2>
-        <p class="game-subtitle">
-          1v1 arcade basketball on the Hillview blacktop. Split-screen on one iPad — grab a friend.
-        </p>
-        <div class="pill-row">
-          <span class="pill">1v1</span>
-          <span class="pill">Split-Screen</span>
-          <span class="pill">iPad</span>
-        </div>
-        <a class="play-button" href="recess/">
-          Hit the Court <span>▶</span>
-        </a>
-      </article>
-
-      <!-- Meter Golf -->
-      <article class="game-card">
-        <div class="game-tag">3D Sport</div>
-        <h2 class="game-title">Meter Golf</h2>
-        <p class="game-subtitle">
-          A realistic nine-hole 3D golf round with a visible swing, meters for distance and direction, wind, hazards, and a par scorecard.
-        </p>
-        <div class="pill-row">
-          <span class="pill">3D</span>
-          <span class="pill">Meters</span>
-          <span class="pill">Nine Holes</span>
-        </div>
-        <a class="play-button" href="golf/">
-          Tee Off <span>▶</span>
-        </a>
-      </article>
-
-      
-      
-      <!-- Addition Blitz -->
-      <article class="game-card">
-        <div class="game-tag">Game 07</div>
-        <h2 class="game-title">Addition Blitz</h2>
-        <p class="game-subtitle">
-          Race against the clock. Answer addition problems as fast as you can — streak bonuses, four difficulty levels, and high scores.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Math</span>
-          <span class="pill">Speed</span>
-          <span class="pill">Solo</span>
-        </div>
-        <a class="play-button" href="addition.html">
-          Play ⚡
-        </a>
-      </article>
-
-      <!-- Highway Rush -->
-      <article class="game-card">
-        <div class="game-tag">3D Driving</div>
-        <h2 class="game-title">Highway Rush</h2>
-        <p class="game-subtitle">
-          Weave through traffic in a 3D highway sprint, jump over danger, and keep your health alive.
-        </p>
-        <div class="pill-row">
-          <span class="pill">3D</span>
-          <span class="pill">Traffic</span>
-          <span class="pill">Dodge</span>
-        </div>
-        <a class="play-button" href="highway/">
-          Drive Now <span>▶</span>
-        </a>
-      </article>
-
-      <!-- Tilt Roll 3D -->
-      <article class="game-card">
-        <div class="game-tag">3D Tilt</div>
-        <h2 class="game-title">Tilt Roll 3D</h2>
-        <p class="game-subtitle">
-          Roll a white ball across endless motion-sensed platforms, with a new theme every ten levels.
-        </p>
-        <div class="pill-row">
-          <span class="pill">3D</span>
-          <span class="pill">Motion</span>
-          <span class="pill">Infinite</span>
-        </div>
-        <a class="play-button" href="tilt-roll/">
-          Roll Now <span>▶</span>
-        </a>
-      </article>
-
-      <!-- World Command -->
-      <article class="game-card">
-        <div class="game-tag">Strategy</div>
-        <h2 class="game-title">World Command</h2>
-        <p class="game-subtitle">
-          Pick a region, watch armies clash on the map, gamble on risky decisions, and try to unite every territory.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Map War</span>
-          <span class="pill">Risk</span>
-          <span class="pill">Strategy</span>
-        </div>
-        <a class="play-button" href="world-command/">
-          Command Map <span>▶</span>
-        </a>
-      </article>
-
-      <!-- Four Corners -->
-      <article class="game-card">
-        <div class="game-tag">3D Survival</div>
-        <h2 class="game-title">Four Corners</h2>
-        <p class="game-subtitle">
-          Run to a colored corner before a floating floor section drops and eliminates everyone standing there.
-        </p>
-        <div class="pill-row">
-          <span class="pill">3D</span>
-          <span class="pill">Bots</span>
-          <span class="pill">Survival</span>
-        </div>
-        <a class="play-button" href="four-corners/">
-          Pick a Corner <span>▶</span>
-        </a>
-      </article>
-
-      <!-- Rock'em Sock'em Robots -->
-      <article class="game-card">
-        <div class="game-tag">3D Boxing</div>
-        <h2 class="game-title">Rock'em Sock'em Robots</h2>
-        <p class="game-subtitle">
-          A realistic tabletop robot boxing match with metal fighters, punch timing, blocking, sparks, and head-pop knockouts.
-        </p>
-        <div class="pill-row">
-          <span class="pill">3D</span>
-          <span class="pill">Robot Boxing</span>
-          <span class="pill">AI Opponent</span>
-        </div>
-        <a class="play-button" href="rockem-sockem/">
-          Start Fight <span>▶</span>
-        </a>
-      </article>
-
-      <!-- Galactic Learner -->
-      <article class="game-card">
-        <div class="game-tag">ML Arcade</div>
-        <h2 class="game-title">Galactic Learner</h2>
-        <p class="game-subtitle">
-          A Galaga-style space shooter where an ML bot learns from human runs and its own self-play.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Canvas</span>
-          <span class="pill">ML Bot</span>
-          <span class="pill">High Scores</span>
-        </div>
-        <a class="play-button" href="galactic-learner/">
-          Launch Ship <span>▶</span>
-        </a>
-      </article>
-
-
-      <!-- Maze Muncher ML -->
-      <article class="game-card">
-        <div class="game-tag">ML Maze</div>
-        <h2 class="game-title">Maze Muncher ML</h2>
-        <p class="game-subtitle">
-          A Pac-Man-style maze chase where the ML bot trains itself from dots, survival, bonuses, and getting caught.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Maze Chase</span>
-          <span class="pill">Self-Training ML</span>
-          <span class="pill">Bot Turn</span>
-        </div>
-        <a class="play-button" href="pac-man-ml/">
-          Train the Bot <span>▶</span>
-        </a>
-      </article>
-
-      <!-- Second Chance Wordle -->
-      <article class="game-card">
-        <div class="game-tag">Word Game</div>
-        <h2 class="game-title">Second Chance Wordle</h2>
-        <p class="game-subtitle">
-          Type five letters and watch the boxes turn green, yellow, or gray after every guess.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Words</span>
-          <span class="pill">Keyboard</span>
-          <span class="pill">Daily</span>
-        </div>
-        <a class="play-button" href="second-chance-wordle/?v=2026-05-22-2">
-          Guess Word <span>▶</span>
-        </a>
-      </article>
-
-      <article class="game-card">
-        <div class="game-tag">Arcade</div>
-        <h2 class="game-title">Last Minute Ladder</h2>
-        <p class="game-subtitle">
-          Push your luck for 45 seconds, bank points before the run turns on you, and chase a personal best.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Fast</span>
-          <span class="pill">Risk</span>
-          <span class="pill">Score</span>
-        </div>
-        <a class="play-button" href="last-minute-ladder/">
-          Climb Now <span>▶</span>
-        </a>
-      </article>
-
-      <!-- Ball Guys Merge -->
-      <article class="game-card">
-        <div class="game-tag">Physics Puzzle</div>
-        <h2 class="game-title">Ball Guys Merge</h2>
-        <p class="game-subtitle">
-          Drop jelly-eyed balls into a straight-sided bowl, merge matching colors, and keep the stack from spilling out.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Merge</span>
-          <span class="pill">Physics</span>
-          <span class="pill">Jelly Balls</span>
-        </div>
-        <a class="play-button" href="merge-balls/">
-          Drop Balls <span>▶</span>
-        </a>
-      </article>
-
-      <!-- Market Time Machine -->
-      <article class="game-card" aria-labelledby="market-time-machine-title" aria-describedby="market-time-machine-description">
-        <div class="game-tag">Stocks</div>
-        <h2 class="game-title" id="market-time-machine-title">Market Time Machine</h2>
-        <p class="game-subtitle" id="market-time-machine-description">
-          Start with $10,000, pick a year before 2000, and build a portfolio from today's real stocks as the market year plays out.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Stocks</span>
-          <span class="pill">Strategy</span>
-          <span class="pill">Leaderboard</span>
-        </div>
-        <a class="play-button" href="stock/" aria-label="Play Market Time Machine">
-          Trade Time <span aria-hidden="true">▶</span>
-        </a>
-      </article>
-
-      <!-- Second Chance Wordle -->
-      <article class="game-card">
-        <div class="game-tag">Word Game</div>
-        <h2 class="game-title">Second Chance Wordle</h2>
-        <p class="game-subtitle">
-          Type five letters and watch the boxes turn green, yellow, or gray after every guess.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Words</span>
-          <span class="pill">Keyboard</span>
-          <span class="pill">Daily</span>
-        </div>
-        <a class="play-button" href="second-chance-wordle/?v=2026-07-14-1">
-          Guess Word <span>▶</span>
-        </a>
-      </article>
-
-      <!-- AI Adventure Game -->
-      <article class="game-card">
-        <div class="game-tag">Game 03</div>
-        <h2 class="game-title">⚔️ AI Adventure Game</h2>
-        <p class="game-subtitle">
-          Step into a randomly generated world. Every choice shapes your path — dark caves, haunted castles, dragon mountains, and more await.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Story Choices</span>
-          <span class="pill">Random World</span>
-          <span class="pill">8 Steps</span>
-        </div>
-        <a class="play-button" href="adventure.html" style="background:linear-gradient(135deg,#7c3aed,#4c1d95);box-shadow:0 10px 18px rgba(124,58,237,0.4);color:#fff;">
-          Start Quest ⚔️
-        </a>
-      </article>
-
-      <!-- Skip for Wishes -->
-      <article class="game-card">
-        <div class="game-tag">Fundraiser</div>
-        <h2 class="game-title">Skip for Wishes</h2>
-        <p class="game-subtitle">
-          A Make-A-Wish fundraiser with an automatic goal tracker and official campaign donation link.
-        </p>
-        <div class="pill-row">
-          <span class="pill">Fundraiser</span>
-          <span class="pill">Make-A-Wish</span>
-          <span class="pill">Goal Tracker</span>
-        </div>
-        <a class="play-button" href="skipforwishes/" style="background:linear-gradient(135deg,#2563eb,#0ea5e9);box-shadow:0 10px 18px rgba(37,99,235,0.35);color:#fff;">
-          Visit Fundraiser <span>▶</span>
-        </a>
-      </article>
-      </div>
-      <p class="empty-search" id="emptySearch">No games found.</p>
+      <p class="empty-search" id="emptySearch">No apps match that search.</p>
     </section>
 
     <section class="personal-gate" id="personalGate" hidden>
       <div class="gate-icon" aria-hidden="true">🔒</div>
-      <h2>Part 2 is private</h2>
-      <p>Enter the password to open Part 2.</p>
+      <h2>Part 2 is private.</h2>
+      <p>Enter the password to open Dexter's personal apps.</p>
       <form class="password-form" id="passwordForm">
         <label class="sr-only" for="personalPassword">Password</label>
-        <input
-          class="password-input"
-          id="personalPassword"
-          type="password"
-          placeholder="Password"
-          autocomplete="current-password"
-          autocapitalize="none"
-          spellcheck="false"
-        />
+        <input class="password-input" id="personalPassword" type="password" placeholder="Password" autocomplete="current-password" autocapitalize="none" spellcheck="false" />
         <button class="unlock-button" type="submit">Unlock</button>
       </form>
       <p class="password-message" id="passwordMessage" role="status" aria-live="polite"></p>
     </section>
 
-    <section id="personalArea" hidden>
-      <div class="section-heading-row">
+    <section class="library" id="personalArea" hidden>
+      <div class="personal-heading">
         <div>
-          <h2 class="section-title">Part 2</h2>
-          <p class="section-note">Dexter's private links.</p>
+          <p class="section-kicker">Private collection</p>
+          <h2 class="section-title">Part 2 · Personal</h2>
         </div>
         <button class="lock-button" id="lockPersonal" type="button">Lock again 🔒</button>
       </div>
-
-      <div class="games-grid">
-        <!-- Memories -->
-        <article class="game-card">
-          <div class="game-tag">Life Archive</div>
-          <h2 class="game-title">Memories</h2>
-          <p class="game-subtitle">
-            Save important days, photos, videos, audio, and notes into organized memory documents you can open later.
-          </p>
-          <div class="pill-row">
-            <span class="pill">Archive</span>
-            <span class="pill">Photos</span>
-            <span class="pill">Private-first</span>
-          </div>
-          <a class="play-button" href="memories/" style="background:linear-gradient(135deg,#14b8a6,#0f766e);box-shadow:0 10px 18px rgba(20,184,166,0.32);color:#fff;">
-            Open Memories <span>▶</span>
+      <div class="app-grid personal-grid">
+        <article class="app-card">
+          <a class="app-link" href="memories/">
+            <span class="app-icon sheet-three" style="--x:0%;--y:100%" aria-hidden="true"></span>
+            <span class="app-name">Memories</span>
           </a>
         </article>
-
-        <!-- Daphne's Dinner Question -->
-        <article class="game-card">
-          <div class="game-tag">Daily Math</div>
-          <h2 class="game-title">Daphne's Dinner Question</h2>
-          <p class="game-subtitle">
-            Spin the dinner wheel for a daily number problem, rare word problem, skip, or pushups twist.
-          </p>
-          <div class="pill-row">
-            <span class="pill">Math</span>
-            <span class="pill">Wheel</span>
-            <span class="pill">Daily</span>
-          </div>
-          <a class="play-button" href="dinner-question/">
-            Spin for Daphne <span>▶</span>
+        <article class="app-card">
+          <a class="app-link" href="dinner-question/">
+            <span class="app-icon sheet-two" style="--x:0%;--y:100%" aria-hidden="true"></span>
+            <span class="app-name">Daphne's Dinner Question</span>
           </a>
         </article>
-
-        <!-- Hillview ASB -->
-        <article class="game-card">
-          <div class="game-tag">School</div>
-          <h2 class="game-title">Hillview ASB</h2>
-          <p class="game-subtitle">
-            News, events, and updates from Hillview Middle School student government. Ask the AI about upcoming events.
-          </p>
-          <div class="pill-row">
-            <span class="pill">Events</span>
-            <span class="pill">School News</span>
-            <span class="pill">Hillview</span>
-          </div>
-          <a class="play-button" href="ASB/" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);box-shadow:0 10px 18px rgba(59,130,246,0.35);color:#fff;">
-            View Events 📋
+        <article class="app-card">
+          <a class="app-link" href="ASB/">
+            <span class="app-icon sheet-two" style="--x:33.333%;--y:100%" aria-hidden="true"></span>
+            <span class="app-name">Hillview ASB</span>
           </a>
         </article>
-
-        <!-- Dexter's Vibe Lab -->
-        <article class="game-card">
-          <div class="game-tag">Creator Tool</div>
-          <h2 class="game-title">Dexter's Vibe Lab</h2>
-          <p class="game-subtitle">
-            Describe a game idea, choose the vibe, and turn it into a clean Codex prompt you can copy.
-          </p>
-          <div class="pill-row">
-            <span class="pill">Prompt Builder</span>
-            <span class="pill">Local Saves</span>
-            <span class="pill">Reviewed</span>
-          </div>
-          <a class="play-button" href="vibe-lab/">
-            Open Lab <span>▶</span>
+        <article class="app-card">
+          <a class="app-link" href="vibe-lab/">
+            <span class="app-icon sheet-three" style="--x:50%;--y:100%" aria-hidden="true"></span>
+            <span class="app-name">Dexter's Vibe Lab</span>
           </a>
         </article>
-
-        <!-- Machine Mind -->
-        <article class="game-card">
-          <div class="game-tag">Simple ML</div>
-          <h2 class="game-title">Machine Mind</h2>
-          <p class="game-subtitle">
-            Pick left, middle, or right while a tiny model learns your patterns and tries to predict you.
-          </p>
-          <div class="pill-row">
-            <span class="pill">Machine Learning</span>
-            <span class="pill">Pattern Game</span>
-            <span class="pill">Local Only</span>
-          </div>
-          <a class="play-button" href="machine-mind/">
-            Outsmart It <span>▶</span>
+        <article class="app-card">
+          <a class="app-link" href="machine-mind/">
+            <span class="app-icon sheet-one" style="--x:0%;--y:100%" aria-hidden="true"></span>
+            <span class="app-name">Machine Mind</span>
           </a>
         </article>
-
-        <!-- Earthquakes & Volcanoes -->
-        <article class="game-card">
-          <div class="game-tag">Map</div>
-          <h2 class="game-title">Earthquakes &amp; Volcanoes</h2>
-          <p class="game-subtitle">
-            Real data from USGS. Every earthquake over magnitude 4 since 2021 and every known volcano, plotted on a live world map.
-          </p>
-          <div class="pill-row">
-            <span class="pill">Science</span>
-            <span class="pill">Live Data</span>
-            <span class="pill">Explore</span>
-          </div>
-          <a class="play-button" href="earthquakes.html">
-            Explore 🌍
+        <article class="app-card">
+          <a class="app-link" href="earthquakes.html">
+            <span class="app-icon sheet-two" style="--x:0%;--y:0%" aria-hidden="true"></span>
+            <span class="app-name">Earthquakes &amp; Volcanoes</span>
           </a>
         </article>
-
-        <!-- Dexter's Digital Magic -->
-        <article class="game-card">
-          <div class="game-tag">Game 06</div>
-          <h2 class="game-title">Dexter's Digital Magic</h2>
-          <p class="game-subtitle">
-            Five impossible mind tricks. The computer reads your thoughts, predicts your choices, and knows your number before you do.
-          </p>
-          <div class="pill-row">
-            <span class="pill">Mind Reading</span>
-            <span class="pill">Predictions</span>
-            <span class="pill">Solo</span>
-          </div>
-          <a class="play-button" href="magic.html">
-            Amaze Me ✦
+        <article class="app-card">
+          <a class="app-link" href="magic.html">
+            <span class="app-icon sheet-two" style="--x:33.333%;--y:0%" aria-hidden="true"></span>
+            <span class="app-name">Dexter's Digital Magic</span>
           </a>
         </article>
-
-        <!-- Hillview Teacher Simulator -->
-        <article class="game-card">
-          <div class="game-tag">Game 02</div>
-          <h2 class="game-title">Hillview Teacher Simulator</h2>
-          <p class="game-subtitle">
-            You’re a Hillview Middle School teacher. Juggle chaos, learning, and likability for a full school year.
-          </p>
-          <div class="pill-row">
-            <span class="pill">Story Choices</span>
-            <span class="pill">Trade-offs</span>
-            <span class="pill">Hillview Lore</span>
-          </div>
-          <a class="play-button" href="hillview-teacher-sim.html">
-            Start Teaching <span>▶</span>
+        <article class="app-card">
+          <a class="app-link" href="hillview-teacher-sim.html">
+            <span class="app-icon sheet-two" style="--x:66.667%;--y:50%" aria-hidden="true"></span>
+            <span class="app-name">Hillview Teacher Simulator</span>
           </a>
         </article>
-
-        <!-- Event Prediction Minigames -->
-        <article class="game-card">
-          <div class="game-tag">Live Games</div>
-          <h2 class="game-title">Event Prediction Minigames</h2>
-          <p class="game-subtitle">
-            Auto-built prediction games for big events. Make your picks, choose notifications, and climb the leaderboard.
-          </p>
-          <div class="pill-row">
-            <span class="pill">Predictions</span>
-            <span class="pill">Leaderboard</span>
-            <span class="pill">Big Events</span>
-          </div>
-          <a class="play-button" href="minigames/">
-            Make Picks <span>▶</span>
+        <article class="app-card">
+          <a class="app-link" href="minigames/">
+            <span class="app-icon sheet-two" style="--x:0%;--y:50%" aria-hidden="true"></span>
+            <span class="app-name">Event Prediction Minigames</span>
           </a>
         </article>
       </div>
     </section>
 
-    <div class="footer-note">
-      Built for Dexter &amp; friends.
-    </div>
+    <footer class="footer-note">Built for Dexter &amp; friends · Icons created with AI</footer>
   </main>
+
   <script>
     const gameSearch = document.querySelector("#gameSearch");
     const emptySearch = document.querySelector("#emptySearch");
-    const gameCards = [...document.querySelectorAll("#gamesGrid .game-card")];
+    const gameCards = [...document.querySelectorAll("#gamesGrid .app-card")];
     const gamesTab = document.querySelector("#gamesTab");
     const personalTab = document.querySelector("#personalTab");
     const personalTabStatus = document.querySelector("#personalTabStatus");
@@ -990,26 +845,19 @@
       personalUnlocked = false;
     }
 
-    gameCards.forEach((card) => {
-      card.dataset.searchText = card.textContent.toLowerCase();
-    });
-
     function filterGames() {
       const query = gameSearch.value.trim().toLowerCase();
       let visibleCount = 0;
 
       gameCards.forEach((card) => {
-        const isVisible = !query || card.dataset.searchText.includes(query);
-        card.classList.toggle("is-hidden", !isVisible);
-        if (isVisible) visibleCount += 1;
+        const searchText = `${card.dataset.search || ""} ${card.textContent}`.toLowerCase();
+        const isMatch = !query || searchText.includes(query);
+        card.classList.toggle("is-hidden", !isMatch);
+        visibleCount += isMatch ? 1 : 0;
       });
 
-      emptySearch?.classList.toggle("is-visible", visibleCount === 0);
+      emptySearch.classList.toggle("is-visible", visibleCount === 0);
     }
-
-    gameSearch?.addEventListener("input", filterGames);
-    gameSearch?.addEventListener("search", filterGames);
-    gameSearch?.addEventListener("change", filterGames);
 
     function rememberPersonalAccess(isUnlocked) {
       try {
@@ -1028,7 +876,6 @@
       gamesArea.hidden = showPersonal;
       personalGate.hidden = !showPersonal || personalUnlocked;
       personalArea.hidden = !showPersonal || !personalUnlocked;
-
       gamesTab.classList.toggle("is-active", !showPersonal);
       personalTab.classList.toggle("is-active", showPersonal);
       gamesTab.setAttribute("aria-pressed", String(!showPersonal));
@@ -1040,10 +887,12 @@
       }
     }
 
-    gamesTab?.addEventListener("click", () => showPart("games"));
-    personalTab?.addEventListener("click", () => showPart("personal"));
+    gameSearch.addEventListener("input", filterGames);
+    gameSearch.addEventListener("search", filterGames);
+    gamesTab.addEventListener("click", () => showPart("games"));
+    personalTab.addEventListener("click", () => showPart("personal"));
 
-    passwordForm?.addEventListener("submit", (event) => {
+    passwordForm.addEventListener("submit", (event) => {
       event.preventDefault();
 
       if (passwordInput.value === "Cena") {
@@ -1061,12 +910,12 @@
       passwordInput.select();
     });
 
-    passwordInput?.addEventListener("input", () => {
+    passwordInput.addEventListener("input", () => {
       passwordInput.removeAttribute("aria-invalid");
       passwordMessage.textContent = "";
     });
 
-    lockPersonal?.addEventListener("click", () => {
+    lockPersonal.addEventListener("click", () => {
       personalUnlocked = false;
       rememberPersonalAccess(false);
       showPart("personal");
