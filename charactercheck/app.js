@@ -8,10 +8,11 @@
     spark: { label: "Spark", color: "#b9a7ff" },
     wildcard: { label: "Wildcard", color: "#d7ff5b" },
   };
-  const MIN_TITLE_COUNT = 56;
-  const MAX_TITLE_COUNT = 156;
-  const FINAL_SHOW_COUNT = 106;
-  const FINAL_MOVIE_COUNT = 50;
+  const BASE_MIN_TITLE_COUNT = 56;
+  const BASE_FINAL_TITLE_COUNT = 156;
+  const EXPANDED_TITLE_COUNT = 500;
+  const MIN_TITLE_COUNT = BASE_MIN_TITLE_COUNT + EXPANDED_TITLE_COUNT;
+  const FINAL_TITLE_COUNT = BASE_FINAL_TITLE_COUNT + EXPANDED_TITLE_COUNT;
   const QUESTIONS_PER_TITLE = 10;
   // If two roles receive the same number of answers, use the most revealing
   // question first instead of favoring a fixed role or a button position.
@@ -100,6 +101,7 @@
     search: "",
     typeFilter: "all",
     genreFilter: "all",
+    collectionFilter: "all",
     resultRole: null,
     toastTimer: null,
     advanceTimer: null,
@@ -197,14 +199,16 @@
   }
 
   function wireFallback(image, title, fallbackAlt) {
-    image.dataset.fallbackAttempted = "false";
+    const candidates = [title.poster, title.artworkFallback]
+      .filter((source, index, all) => source && all.indexOf(source) === index)
+      .filter((source) => source !== image.src);
+    let fallbackIndex = 0;
     image.onerror = () => {
-      const canUsePoster =
-        title.poster && image.dataset.fallbackAttempted !== "true" && image.src !== title.poster;
-      if (canUsePoster) {
-        image.dataset.fallbackAttempted = "true";
+      const fallbackSource = candidates[fallbackIndex];
+      fallbackIndex += 1;
+      if (fallbackSource) {
         image.alt = fallbackAlt || `${title.title} promotional artwork`;
-        image.src = title.poster;
+        image.src = fallbackSource;
         return;
       }
       image.hidden = true;
@@ -246,7 +250,9 @@
       const selectedGenre = normalizeText(state.genreFilter);
       matchesGenre = title.genres.some((genre) => normalizeText(genre) === selectedGenre);
     }
-    return matchesSearch && matchesType && matchesGenre;
+    const matchesCollection =
+      state.collectionFilter === "all" || title.collection === state.collectionFilter;
+    return matchesSearch && matchesType && matchesGenre && matchesCollection;
   }
 
   function renderCatalog() {
@@ -280,7 +286,9 @@
       const title = document.createElement("strong");
       title.textContent = titleData.title;
       const meta = document.createElement("small");
-      const year = isNonemptyString(titleData.premiered)
+      const year = isNonemptyString(titleData.collectionLabel)
+        ? titleData.collectionLabel
+        : isNonemptyString(titleData.premiered)
         ? titleData.premiered.slice(0, 4)
         : typeLabel;
       meta.textContent = `${year} · ${titleData.genres.slice(0, 2).join(" / ") || `${typeLabel} quiz`}`;
@@ -658,7 +666,8 @@
         const filterKind = chip.dataset.filterKind;
         const filterValue = chip.dataset.filter || "all";
         if (filterKind === "type") state.typeFilter = filterValue;
-        else state.genreFilter = filterValue;
+        else if (filterKind === "genre") state.genreFilter = filterValue;
+        else if (filterKind === "collection") state.collectionFilter = filterValue;
         refs.filterChips
           .filter((item) => item.dataset.filterKind === filterKind)
           .forEach((item) => {
@@ -679,6 +688,20 @@
 
   function resolveTitleQuestions(media, id) {
     if (Array.isArray(media.questions)) return compactQuestions(media.questions, id);
+
+    if (
+      media.catalogGenerated === true &&
+      Array.isArray(window.FALLBACK_QUESTIONS) &&
+      Array.isArray(media.questionImages) &&
+      media.questionImages.length === QUESTIONS_PER_TITLE
+    ) {
+      return window.FALLBACK_QUESTIONS.map((question, index) => ({
+        ...question,
+        kicker: `${media.collectionLabel} · Quick choice ${index + 1} of ${QUESTIONS_PER_TITLE}`,
+        options: question.options.map((option) => ({ ...option })),
+        image: { ...media.questionImages[index] },
+      }));
+    }
 
     // This path exists only for a mismatched/cached legacy data load. Normal
     // operation always uses the ten title-specific questions in MEDIA.
@@ -792,21 +815,14 @@
           questions,
         };
       });
-      if (state.titles.length < MIN_TITLE_COUNT || state.titles.length > MAX_TITLE_COUNT) {
-        throw new Error(`Expected between ${MIN_TITLE_COUNT} and ${MAX_TITLE_COUNT} titles`);
+      if (state.titles.length < MIN_TITLE_COUNT || state.titles.length > FINAL_TITLE_COUNT) {
+        throw new Error(`Expected between ${MIN_TITLE_COUNT} and ${FINAL_TITLE_COUNT} titles`);
       }
-      const showCount = state.titles.filter((title) => title.type === "show").length;
-      const movieCount = state.titles.filter((title) => title.type === "movie").length;
-      if (showCount > FINAL_SHOW_COUNT || movieCount > FINAL_MOVIE_COUNT) {
-        throw new Error(
-          `Catalog exceeds ${FINAL_SHOW_COUNT} shows or ${FINAL_MOVIE_COUNT} movies`,
-        );
-      }
-      if (
-        state.titles.length === MAX_TITLE_COUNT &&
-        (showCount !== FINAL_SHOW_COUNT || movieCount !== FINAL_MOVIE_COUNT)
-      ) {
-        throw new Error(`The full catalog needs ${FINAL_SHOW_COUNT} shows and ${FINAL_MOVIE_COUNT} movies`);
+      if (state.titles.length === FINAL_TITLE_COUNT) {
+        const expandedCount = state.titles.filter((title) => title.catalogGenerated === true).length;
+        if (expandedCount !== EXPANDED_TITLE_COUNT) {
+          throw new Error(`The full catalog needs ${EXPANDED_TITLE_COUNT} expanded titles`);
+        }
       }
       updateCatalogCopy();
       renderHeroCollage();
