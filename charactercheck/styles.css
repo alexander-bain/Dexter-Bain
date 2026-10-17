@@ -768,6 +768,29 @@ main {
   font-size: 11px;
 }
 
+.show-more-button {
+  display: block;
+  margin: 38px auto 0;
+  padding: 13px 22px;
+  color: var(--ink);
+  background: var(--lime);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  box-shadow: 4px 4px 0 var(--ink);
+  font: 800 14px/1 var(--font-body);
+  cursor: pointer;
+}
+
+.show-more-button:hover,
+.show-more-button:focus-visible {
+  transform: translate(-1px, -1px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.show-more-button[hidden] {
+  display: none;
+}
+
 .empty-search {
   display: grid;
   min-height: 360px;

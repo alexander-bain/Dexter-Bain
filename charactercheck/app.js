@@ -10,10 +10,11 @@
   };
   const BASE_MIN_TITLE_COUNT = 56;
   const BASE_FINAL_TITLE_COUNT = 156;
-  const EXPANDED_TITLE_COUNT = 1500;
+  const EXPANDED_TITLE_COUNT = 4844;
   const MIN_TITLE_COUNT = BASE_MIN_TITLE_COUNT + EXPANDED_TITLE_COUNT;
   const FINAL_TITLE_COUNT = BASE_FINAL_TITLE_COUNT + EXPANDED_TITLE_COUNT;
   const QUESTIONS_PER_TITLE = 10;
+  const CATALOG_PAGE_SIZE = 210;
   // If two roles receive the same number of answers, use the most revealing
   // question first instead of favoring a fixed role or a button position.
   const TIE_BREAK_QUESTION_ORDER = [9, 8, 7, 5, 0, 2, 3, 1, 6, 4];
@@ -54,6 +55,7 @@
     heroLede: document.querySelector("#hero-lede"),
     showLibrary: document.querySelector("#show-library"),
     showGrid: document.querySelector("#show-grid"),
+    showMoreButton: document.querySelector("#show-more-button"),
     showSearch: document.querySelector("#show-search"),
     showCount: document.querySelector("#show-count"),
     titleTotal: document.querySelector("#title-total"),
@@ -102,6 +104,7 @@
     typeFilter: "all",
     genreFilter: "all",
     collectionFilter: "all",
+    catalogLimit: CATALOG_PAGE_SIZE,
     resultRole: null,
     toastTimer: null,
     advanceTimer: null,
@@ -256,7 +259,8 @@
   }
 
   function renderCatalog() {
-    const visibleTitles = state.titles.filter(titleMatchesFilter);
+    const matchingTitles = state.titles.filter(titleMatchesFilter);
+    const visibleTitles = matchingTitles.slice(0, state.catalogLimit);
     const fragment = document.createDocumentFragment();
 
     for (const titleData of visibleTitles) {
@@ -297,21 +301,28 @@
     }
 
     refs.showGrid.replaceChildren(fragment);
-    refs.showGrid.hidden = visibleTitles.length === 0;
-    refs.emptySearch.hidden = visibleTitles.length !== 0;
-    const showCount = visibleTitles.filter((title) => title.type === "show").length;
-    const movieCount = visibleTitles.length - showCount;
-    const titleWord = visibleTitles.length === 1 ? "title" : "titles";
-    refs.showCount.textContent = `${visibleTitles.length} ${titleWord} ready · ${showCount} ${showCount === 1 ? "show" : "shows"} · ${movieCount} ${movieCount === 1 ? "movie" : "movies"}`;
+    refs.showGrid.hidden = matchingTitles.length === 0;
+    refs.emptySearch.hidden = matchingTitles.length !== 0;
+    const remaining = matchingTitles.length - visibleTitles.length;
+    refs.showMoreButton.hidden = remaining <= 0;
+    refs.showMoreButton.textContent = remaining > 0
+      ? `Show ${Math.min(CATALOG_PAGE_SIZE, remaining)} more of ${matchingTitles.length.toLocaleString()}`
+      : "All titles shown";
+    const showCount = matchingTitles.filter((title) => title.type === "show").length;
+    const movieCount = matchingTitles.length - showCount;
+    const titleWord = matchingTitles.length === 1 ? "title" : "titles";
+    const shownCopy = remaining > 0 ? ` · Showing ${visibleTitles.length}` : "";
+    refs.showCount.textContent = `${matchingTitles.length.toLocaleString()} ${titleWord} ready · ${showCount.toLocaleString()} ${showCount === 1 ? "show" : "shows"} · ${movieCount.toLocaleString()} ${movieCount === 1 ? "movie" : "movies"}${shownCopy}`;
   }
 
   function updateCatalogCopy() {
     const total = state.titles.length;
+    const totalLabel = total.toLocaleString();
     const shows = state.titles.filter((title) => title.type === "show").length;
     const movies = total - shows;
     const hasMovies = movies > 0;
-    refs.headerCount.textContent = `${total} ${total === 1 ? "title" : "titles"} ready`;
-    refs.titleTotal.textContent = String(total);
+    refs.headerCount.textContent = `${totalLabel} ${total === 1 ? "title" : "titles"} ready`;
+    refs.titleTotal.textContent = totalLabel;
     refs.titleKinds.textContent = hasMovies ? "shows + movies" : "shows";
     refs.heroLede.textContent = hasMovies
       ? "Pick a show or movie you know, answer ten quick questions, and meet your character twin — plus why the match makes sense."
@@ -321,13 +332,13 @@
       hasMovies ? "Featured shows and movies" : "Featured television shows",
     );
     refs.showSearch.placeholder = hasMovies
-      ? `Search ${total} shows and movies…`
-      : `Search ${total} shows…`;
+      ? `Search ${totalLabel} shows and movies…`
+      : `Search ${totalLabel} shows…`;
     refs.typeFilterGroup.hidden = !hasMovies;
 
     const description = hasMovies
-      ? `${total} titles: ${shows} shows and ${movies} movies. Ten quick questions each.`
-      : `${total} shows. Ten unique questions each. Find your TV character twin.`;
+      ? `${totalLabel} titles: ${shows.toLocaleString()} shows and ${movies.toLocaleString()} movies. Ten quick questions each.`
+      : `${totalLabel} shows. Ten unique questions each. Find your TV character twin.`;
     document
       .querySelectorAll(
         'meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]',
@@ -659,6 +670,11 @@
     refs.anotherShowButton.addEventListener("click", () => showHome());
     refs.showSearch.addEventListener("input", (event) => {
       state.search = event.currentTarget.value;
+      state.catalogLimit = CATALOG_PAGE_SIZE;
+      renderCatalog();
+    });
+    refs.showMoreButton.addEventListener("click", () => {
+      state.catalogLimit += CATALOG_PAGE_SIZE;
       renderCatalog();
     });
     refs.filterChips.forEach((chip) => {
@@ -668,6 +684,7 @@
         if (filterKind === "type") state.typeFilter = filterValue;
         else if (filterKind === "genre") state.genreFilter = filterValue;
         else if (filterKind === "collection") state.collectionFilter = filterValue;
+        state.catalogLimit = CATALOG_PAGE_SIZE;
         refs.filterChips
           .filter((item) => item.dataset.filterKind === filterKind)
           .forEach((item) => {
