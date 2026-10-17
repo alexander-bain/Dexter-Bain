@@ -27,11 +27,14 @@ async function loadCatalog() {
   context.window = context;
   vm.createContext(context);
   const filenames = ["questions.js", "outcomes.js", "media.js", "title-questions.js", "expanded-catalog.js"];
-  try {
-    await fs.access(path.join(DATA_DIR, "expanded-catalog-2.js"));
-    filenames.push("expanded-catalog-2.js");
-  } catch {
-    // The second expansion is optional while rebuilding the first release.
+  for (let generation = 2; generation <= 20; generation += 1) {
+    const filename = `expanded-catalog-${generation}.js`;
+    try {
+      await fs.access(path.join(DATA_DIR, filename));
+      filenames.push(filename);
+    } catch {
+      break;
+    }
   }
   for (const filename of filenames) {
     const source = await fs.readFile(path.join(DATA_DIR, filename), "utf8");
@@ -92,8 +95,18 @@ async function fetchWithRetry(url, { json = true, attempts = 4 } = {}) {
 }
 
 async function fetchShow(entry) {
-  const url = `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(entry.title)}&embed=cast`;
-  const show = await fetchWithRetry(url);
+  const query = entry.title.replace(/\s*\(\d{4}\)\s*$/, "").trim();
+  const url = `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(query)}&embed=cast`;
+  let show;
+  try {
+    show = await fetchWithRetry(url);
+  } catch (error) {
+    if (!String(error.message).startsWith("404")) throw error;
+    const matches = await fetchWithRetry(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(query)}`);
+    const match = matches?.[0]?.show;
+    if (!match?.id) throw error;
+    show = await fetchWithRetry(`https://api.tvmaze.com/shows/${match.id}?embed=cast`);
+  }
   const cast = [];
   const seen = new Set();
   for (const credit of show?._embedded?.cast || []) {
@@ -230,11 +243,16 @@ const entries = await loadCatalog();
 const moviesOnly = process.argv.includes("--movies-only");
 const missingOnly = process.argv.includes("--missing-only");
 const newOnly = process.argv.includes("--new-only");
+const generationArgument = process.argv.find((argument) => argument.startsWith("--generation="));
+const requestedGeneration = Number(generationArgument?.split("=")[1] || 2);
+if (!Number.isInteger(requestedGeneration) || requestedGeneration < 1) {
+  throw new Error("--generation must be a positive integer.");
+}
 const existing = moviesOnly || missingOnly || newOnly ? await loadExisting() : {};
 const targets = moviesOnly
   ? entries.filter((entry) => entry.type === "movie")
   : newOnly
-    ? entries.filter((entry) => entry.catalogGeneration === 2 && !existing[entry.id])
+    ? entries.filter((entry) => entry.catalogGeneration === requestedGeneration && !existing[entry.id])
     : missingOnly
       ? entries.filter((entry) => !existing[entry.id] || existing[entry.id].cast?.length !== 4)
       : entries;

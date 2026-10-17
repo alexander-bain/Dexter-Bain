@@ -17,6 +17,7 @@ for (const filename of [
   "title-questions.js",
   "expanded-catalog.js",
   "expanded-catalog-2.js",
+  "expanded-catalog-3.js",
   "expanded-enrichment.js",
 ]) {
   vm.runInContext(await fs.readFile(path.join(dataDirectory, filename), "utf8"), context, {
@@ -33,14 +34,15 @@ const collectionCounts = Object.fromEntries(
   ]),
 );
 
-assert.equal(titles.length, 1156, "Character Check should have 1,156 total titles");
-assert.equal(expanded.length, 1000, "The expansions should add exactly 1,000 titles");
+assert.equal(titles.length, 1656, "Character Check should have 1,656 total titles");
+assert.equal(expanded.length, 1500, "The expansions should add exactly 1,500 titles");
 assert.deepEqual(collectionCounts, {
   kids: 250,
   sitcoms: 50,
   movies: 100,
   editors: 100,
   encore: 500,
+  "encore-2": 500,
 });
 assert.ok(context.MEDIA["henry-danger"], "Henry Danger should be available");
 assert.ok(context.MEDIA["bunk-d"], "Bunk'd should be available");
@@ -60,19 +62,26 @@ for (const [id, media] of expanded) {
 assert.equal(expanded.filter(([, media]) => media.catalogGeneration === 2).length, 500);
 assert.equal(expanded.filter(([, media]) => media.catalogGeneration === 2 && media.type === "show").length, 250);
 assert.equal(expanded.filter(([, media]) => media.catalogGeneration === 2 && media.type === "movie").length, 250);
-assert.ok(context.CHARACTER_CHECK_ENRICHMENT.titles >= 900, "Most titles should use sourced metadata");
-assert.ok(context.CHARACTER_CHECK_ENRICHMENT.fullCasts >= 750, "At least 750 titles should have named four-character casts");
-assert.ok(context.CHARACTER_CHECK_ENRICHMENT.images >= 900, "Most titles should use sourced artwork");
+assert.equal(expanded.filter(([, media]) => media.catalogGeneration === 3).length, 500);
+assert.equal(expanded.filter(([, media]) => media.catalogGeneration === 3 && media.type === "show").length, 250);
+assert.equal(expanded.filter(([, media]) => media.catalogGeneration === 3 && media.type === "movie").length, 250);
+const normalizedTitles = titles.map(([, media]) => media.officialTitle.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9]+/g, " ").trim().toLowerCase());
+assert.equal(new Set(normalizedTitles).size, titles.length, "Every title should be unique");
+assert.ok(context.CHARACTER_CHECK_ENRICHMENT.titles >= 1400, "Most titles should use sourced metadata");
+assert.ok(context.CHARACTER_CHECK_ENRICHMENT.fullCasts >= 1200, "At least 1,200 titles should have named four-character casts");
+assert.ok(context.CHARACTER_CHECK_ENRICHMENT.images >= 1400, "Most titles should use sourced artwork");
 
 const html = await fs.readFile(path.join(root, "charactercheck", "index.html"), "utf8");
 const catalogPosition = html.indexOf("data/expanded-catalog.js");
 const secondCatalogPosition = html.indexOf("data/expanded-catalog-2.js");
+const thirdCatalogPosition = html.indexOf("data/expanded-catalog-3.js");
 const enrichmentPosition = html.indexOf("data/expanded-enrichment.js");
-const appPosition = html.indexOf("app.js?v=catalog-1000");
+const appPosition = html.indexOf("app.js?v=catalog-1500");
 assert.ok(
   catalogPosition > 0 &&
     secondCatalogPosition > catalogPosition &&
-    enrichmentPosition > secondCatalogPosition &&
+    thirdCatalogPosition > secondCatalogPosition &&
+    enrichmentPosition > thirdCatalogPosition &&
     appPosition > enrichmentPosition,
 );
 
