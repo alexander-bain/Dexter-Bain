@@ -16,6 +16,7 @@ for (const filename of [
   "media.js",
   "title-questions.js",
   "expanded-catalog.js",
+  "expanded-catalog-2.js",
   "expanded-enrichment.js",
 ]) {
   vm.runInContext(await fs.readFile(path.join(dataDirectory, filename), "utf8"), context, {
@@ -32,13 +33,14 @@ const collectionCounts = Object.fromEntries(
   ]),
 );
 
-assert.equal(titles.length, 656, "Character Check should have 656 total titles");
-assert.equal(expanded.length, 500, "The expansion should add exactly 500 titles");
+assert.equal(titles.length, 1156, "Character Check should have 1,156 total titles");
+assert.equal(expanded.length, 1000, "The expansions should add exactly 1,000 titles");
 assert.deepEqual(collectionCounts, {
   kids: 250,
   sitcoms: 50,
   movies: 100,
   editors: 100,
+  encore: 500,
 });
 assert.ok(context.MEDIA["henry-danger"], "Henry Danger should be available");
 assert.ok(context.MEDIA["bunk-d"], "Bunk'd should be available");
@@ -55,15 +57,24 @@ for (const [id, media] of expanded) {
   assert.deepEqual(Object.keys(context.OUTCOMES[id]).sort(), ["heart", "mind", "spark", "wildcard"]);
 }
 
-assert.ok(context.CHARACTER_CHECK_ENRICHMENT.titles >= 450, "Most titles should use sourced metadata");
-assert.ok(context.CHARACTER_CHECK_ENRICHMENT.fullCasts >= 400, "At least 400 titles should have named four-character casts");
-assert.ok(context.CHARACTER_CHECK_ENRICHMENT.images >= 450, "Most titles should use sourced artwork");
+assert.equal(expanded.filter(([, media]) => media.catalogGeneration === 2).length, 500);
+assert.equal(expanded.filter(([, media]) => media.catalogGeneration === 2 && media.type === "show").length, 250);
+assert.equal(expanded.filter(([, media]) => media.catalogGeneration === 2 && media.type === "movie").length, 250);
+assert.ok(context.CHARACTER_CHECK_ENRICHMENT.titles >= 900, "Most titles should use sourced metadata");
+assert.ok(context.CHARACTER_CHECK_ENRICHMENT.fullCasts >= 750, "At least 750 titles should have named four-character casts");
+assert.ok(context.CHARACTER_CHECK_ENRICHMENT.images >= 900, "Most titles should use sourced artwork");
 
 const html = await fs.readFile(path.join(root, "charactercheck", "index.html"), "utf8");
 const catalogPosition = html.indexOf("data/expanded-catalog.js");
+const secondCatalogPosition = html.indexOf("data/expanded-catalog-2.js");
 const enrichmentPosition = html.indexOf("data/expanded-enrichment.js");
-const appPosition = html.indexOf("app.js?v=catalog-500");
-assert.ok(catalogPosition > 0 && enrichmentPosition > catalogPosition && appPosition > enrichmentPosition);
+const appPosition = html.indexOf("app.js?v=catalog-1000");
+assert.ok(
+  catalogPosition > 0 &&
+    secondCatalogPosition > catalogPosition &&
+    enrichmentPosition > secondCatalogPosition &&
+    appPosition > enrichmentPosition,
+);
 
 console.log(
   `Character Check catalog verified: ${titles.length} total, ${expanded.length} new, ` +

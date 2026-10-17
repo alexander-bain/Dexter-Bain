@@ -3,6 +3,117 @@
   "use strict";
   const ROLE_ORDER = ["heart","mind","spark","wildcard"];
   const ENRICHMENT = {
+  "24": {
+    "title": "24",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/0/2330.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/167/24",
+    "premiered": "2001-11-06",
+    "genres": [
+      "Drama",
+      "Action",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Jack Bauer",
+        "Kiefer Sutherland"
+      ],
+      [
+        "Chloe O'Brian",
+        "Mary Lynn Rajskub"
+      ],
+      [
+        "Tony Almeida",
+        "Carlos Bernard"
+      ],
+      [
+        "David Palmer",
+        "Dennis Haysbert"
+      ]
+    ]
+  },
+  "300": {
+    "title": "300 (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/5c/300poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/300_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Leonidas",
+        "Gerard Butler"
+      ],
+      [
+        "young Leonidas (15 years old)",
+        "Tyler Neitzel"
+      ],
+      [
+        "Dilios",
+        "David Wenham"
+      ],
+      [
+        "Queen Gorgo",
+        "Lena Headey"
+      ]
+    ]
+  },
+  "2012": {
+    "title": "2012 (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/dd/2012_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/2012_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Jackson Curtis",
+        "John Cusack"
+      ],
+      [
+        "geologist Adrian Helmsley",
+        "Chiwetel Ejiofor"
+      ],
+      [
+        "Kate Curtis",
+        "Amanda Peet"
+      ],
+      [
+        "Carl Anheuser",
+        "Oliver Platt"
+      ]
+    ]
+  },
+  "90210": {
+    "title": "90210",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/4/11847.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/578/90210",
+    "premiered": "2008-09-02",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Annie Wilson",
+        "Shenae Grimes-Beech"
+      ],
+      [
+        "Erin Silver",
+        "Jessica Stroup"
+      ],
+      [
+        "Naomi Clark",
+        "AnnaLynne McCord"
+      ],
+      [
+        "Adrianna Tate-Duncan",
+        "Jessica Lowndes"
+      ]
+    ]
+  },
   "henry-danger": {
     "title": "Henry Danger",
     "poster": "https://static.tvmaze.com/uploads/images/original_untouched/430/1075931.jpg",
@@ -13320,6 +13431,13029 @@
         "Craig Parkinson"
       ]
     ]
+  },
+  "squid-game": {
+    "title": "Squid Game",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/576/1440521.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/43687/squid-game",
+    "premiered": "2021-09-17",
+    "genres": [
+      "Drama",
+      "Thriller",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Sung Gi Hun",
+        "Lee Jung Jae"
+      ],
+      [
+        "Hwang Joon Ho",
+        "Wi Ha Joon"
+      ],
+      [
+        "Front Man",
+        "Lee Byung Hun"
+      ],
+      [
+        "Jo Sang Woo",
+        "Park Hae Soo"
+      ]
+    ]
+  },
+  "teletubbies": {
+    "title": "Teletubbies",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/30/75923.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/8401/teletubbies",
+    "premiered": "2015-11-09",
+    "genres": [
+      "Children"
+    ],
+    "cast": [
+      [
+        "Tinky Winky",
+        "Jeremiah Krage"
+      ],
+      [
+        "Dipsy",
+        "Nick Kellington"
+      ],
+      [
+        "Laa-Laa",
+        "Rebecca Hyland"
+      ],
+      [
+        "Po",
+        "Rachelle Beinart"
+      ]
+    ]
+  },
+  "sesame-street": {
+    "title": "Sesame Street",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/597/1494633.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/6544/sesame-street",
+    "premiered": "1970-02-06",
+    "genres": [
+      "Children"
+    ],
+    "cast": [
+      [
+        "Aloysius Snuffleupagus",
+        "Jerry Nelson"
+      ],
+      [
+        "Nina",
+        "Suki Lopez"
+      ],
+      [
+        "Gordon Robinson",
+        "Roscoe Orman"
+      ],
+      [
+        "Alan",
+        "Alan Muraoka"
+      ]
+    ]
+  },
+  "prison-break": {
+    "title": "Prison Break",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/104/261034.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/541/prison-break",
+    "premiered": "2005-08-29",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Lincoln \"Linc\" Burrows",
+        "Dominic Purcell"
+      ],
+      [
+        "Michael Scofield",
+        "Wentworth Miller"
+      ],
+      [
+        "Theodore \"T-Bag\" Bagwell",
+        "Robert Knepper"
+      ],
+      [
+        "Fernando Sucre",
+        "Amaury Nolasco"
+      ]
+    ]
+  },
+  "mr-bean": {
+    "title": "Mr. Bean",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/45/113952.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1719/mr-bean",
+    "premiered": "1990-01-01",
+    "genres": [
+      "Comedy",
+      "Family"
+    ],
+    "cast": [
+      [
+        "Mr. Bean",
+        "Rowan Atkinson"
+      ]
+    ]
+  },
+  "xena-warrior-princess": {
+    "title": "Xena: Warrior Princess",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/3/9021.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/437/xena-warrior-princess",
+    "premiered": "1995-09-04",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Fantasy"
+    ],
+    "cast": [
+      [
+        "Xena",
+        "Lucy Lawless"
+      ],
+      [
+        "Gabrielle",
+        "Renee O'Connor"
+      ]
+    ]
+  },
+  "supernatural": {
+    "title": "Supernatural",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/445/1114097.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/19/supernatural",
+    "premiered": "2005-09-13",
+    "genres": [
+      "Drama",
+      "Action",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Sam Winchester",
+        "Jared Padalecki"
+      ],
+      [
+        "Dean Winchester",
+        "Jensen Ackles"
+      ],
+      [
+        "Castiel",
+        "Misha Collins"
+      ],
+      [
+        "Crowley",
+        "Mark Sheppard"
+      ]
+    ]
+  },
+  "desperate-housewives": {
+    "title": "Desperate Housewives",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/4/11549.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/550/desperate-housewives",
+    "premiered": "2004-10-03",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Susan Mayer",
+        "Teri Hatcher"
+      ],
+      [
+        "Lynette Scavo",
+        "Felicity Huffman"
+      ],
+      [
+        "Bree Van de Kamp",
+        "Marcia Cross"
+      ],
+      [
+        "Gabrielle Solis",
+        "Eva Longoria"
+      ]
+    ]
+  },
+  "money-heist": {
+    "title": "Money Heist: Korea - Joint Economic Area",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/430/1076004.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/59307/money-heist-korea-joint-economic-area",
+    "premiered": "2022-06-24",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Berlin",
+        "Park Hae Soo"
+      ],
+      [
+        "The Professor",
+        "Yoo Ji Tae"
+      ],
+      [
+        "Tokyo",
+        "Jun Jong Seo"
+      ],
+      [
+        "Moscow",
+        "Lee Won Jong"
+      ]
+    ]
+  },
+  "the-vampire-diaries": {
+    "title": "The Vampire Diaries",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/271/677698.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/63/the-vampire-diaries",
+    "premiered": "2009-09-10",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Stefan Salvatore",
+        "Paul Wesley"
+      ],
+      [
+        "Damon Salvatore",
+        "Ian Somerhalder"
+      ],
+      [
+        "Caroline Forbes",
+        "Candice King"
+      ],
+      [
+        "Bonnie Bennett",
+        "Kat Graham"
+      ]
+    ]
+  },
+  "heroes": {
+    "title": "Heroes",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/0/1904.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/134/heroes",
+    "premiered": "2006-09-25",
+    "genres": [
+      "Drama",
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Noah Bennet",
+        "Jack Coleman"
+      ],
+      [
+        "Claire Bennet",
+        "Hayden Panettiere"
+      ],
+      [
+        "Peter Petrelli",
+        "Milo Ventimiglia"
+      ],
+      [
+        "Hiro Nakamura",
+        "Masi Oka"
+      ]
+    ]
+  },
+  "dexter": {
+    "title": "Dexter",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/498/1246067.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/161/dexter",
+    "premiered": "2006-10-01",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Dexter Morgan",
+        "Michael C. Hall"
+      ],
+      [
+        "Debra Morgan",
+        "Jennifer Carpenter"
+      ],
+      [
+        "Angel Batista",
+        "David Zayas"
+      ],
+      [
+        "Maria LaGuerta",
+        "Lauren Vélez"
+      ]
+    ]
+  },
+  "two-and-a-half-men": {
+    "title": "Two and a Half Men",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/118/296850.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/130/two-and-a-half-men",
+    "premiered": "2003-09-22",
+    "genres": [
+      "Comedy",
+      "Family"
+    ],
+    "cast": [
+      [
+        "Alan Harper",
+        "Jon Cryer"
+      ],
+      [
+        "Jake Harper",
+        "Angus T. Jones"
+      ],
+      [
+        "Berta",
+        "Conchata Ferrell"
+      ],
+      [
+        "Charlie Harper",
+        "Charlie Sheen"
+      ]
+    ]
+  },
+  "black-mirror": {
+    "title": "Black Mirror",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/564/1411764.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/305/black-mirror",
+    "premiered": "2011-12-04",
+    "genres": [
+      "Drama",
+      "Science-Fiction",
+      "Thriller"
+    ],
+    "cast": []
+  },
+  "american-horror-story": {
+    "title": "American Horror Story",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/642/1607475.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/30/american-horror-story",
+    "premiered": "2011-10-05",
+    "genres": [
+      "Drama",
+      "Horror",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Cordelia Foxx",
+        "Sarah Paulson"
+      ],
+      [
+        "Madison Montgomery",
+        "Emma Roberts"
+      ],
+      [
+        "Queenie",
+        "Gabourey Sidibe"
+      ],
+      [
+        "Constance Langdon",
+        "Jessica Lange"
+      ]
+    ]
+  },
+  "twin-peaks": {
+    "title": "Twin Peaks",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/397/992910.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/156/twin-peaks",
+    "premiered": "1990-04-08",
+    "genres": [
+      "Crime",
+      "Mystery",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Special Agent Dale Cooper",
+        "Kyle MacLachlan"
+      ],
+      [
+        "Deputy Tommy \"Hawk\" Hill",
+        "Michael Horse"
+      ],
+      [
+        "Benjamin Horne",
+        "Richard Beymer"
+      ],
+      [
+        "Lucy Moran",
+        "Kimmy Robertson"
+      ]
+    ]
+  },
+  "csi-crime-scene-investigation": {
+    "title": "CSI: Crime Scene Investigation",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/501/1254955.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/109/csi-crime-scene-investigation",
+    "premiered": "2000-10-06",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Gregory \"Greg\" Sanders",
+        "Eric Szmanda"
+      ],
+      [
+        "Nicholas \"Nick\" Stokes",
+        "George Eads"
+      ],
+      [
+        "Dr. Albert \"Al\" Robbins",
+        "Robert David Hall"
+      ],
+      [
+        "Captain James \"Jim\" Brass",
+        "Paul Guilfoyle"
+      ]
+    ]
+  },
+  "house-of-the-dragon": {
+    "title": "House of the Dragon",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/627/1568449.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/44778/house-of-the-dragon",
+    "premiered": "2022-08-21",
+    "genres": [
+      "Drama",
+      "Action",
+      "Fantasy"
+    ],
+    "cast": [
+      [
+        "Prince Daemon Targaryen",
+        "Matt Smith"
+      ],
+      [
+        "Princess Rhaenyra Targaryen",
+        "Emma D'Arcy"
+      ],
+      [
+        "Lord Corlys Velaryon",
+        "Steve Toussaint"
+      ],
+      [
+        "Mysaria",
+        "Sonoya Mizuno"
+      ]
+    ]
+  },
+  "the-mentalist": {
+    "title": "The Mentalist",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/0/1239.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/116/the-mentalist",
+    "premiered": "2008-09-23",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Patrick Jane",
+        "Simon Baker"
+      ],
+      [
+        "Teresa Lisbon",
+        "Robin Tunney"
+      ],
+      [
+        "Kimball Cho",
+        "Tim Kang"
+      ],
+      [
+        "Wayne Rigsby",
+        "Owain Yeoman"
+      ]
+    ]
+  },
+  "saturday-night-live": {
+    "title": "Saturday Night Live",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/589/1474771.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/361/saturday-night-live",
+    "premiered": "1975-10-11",
+    "genres": [
+      "Comedy",
+      "Music"
+    ],
+    "cast": [
+      [
+        "Colin Jost",
+        "Colin Jost"
+      ],
+      [
+        "Michael Che",
+        "Michael Che"
+      ],
+      [
+        "Kenan Thompson",
+        "Kenan Thompson"
+      ],
+      [
+        "Seth Meyers",
+        "Seth Meyers"
+      ]
+    ]
+  },
+  "crash-landing-on-you": {
+    "title": "Crash Landing on You",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/235/588087.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/42756/crash-landing-on-you",
+    "premiered": "2019-12-14",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Ri Jung Hyuk",
+        "Hyun Bin"
+      ],
+      [
+        "Yoon Se Ri",
+        "Son Ye Jin"
+      ],
+      [
+        "Goo Seung Joon",
+        "Kim Jung Hyun"
+      ],
+      [
+        "Seo Dan",
+        "Seo Ji Hye"
+      ]
+    ]
+  },
+  "er": {
+    "title": "ER",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/4/11490.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/547/er",
+    "premiered": "1994-09-19",
+    "genres": [
+      "Drama",
+      "Medical"
+    ],
+    "cast": [
+      [
+        "Dr. John Carter",
+        "Noah Wyle"
+      ],
+      [
+        "Dr. Kerry Weaver",
+        "Laura Innes"
+      ],
+      [
+        "Dr. Abby Lockhart",
+        "Maura Tierney"
+      ],
+      [
+        "Dr. Luka Kovač",
+        "Goran Višnjić"
+      ]
+    ]
+  },
+  "arrow": {
+    "title": "Arrow",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/143/358967.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/4/arrow",
+    "premiered": "2012-10-10",
+    "genres": [
+      "Drama",
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Oliver Queen / The Arrow",
+        "Stephen Amell"
+      ],
+      [
+        "John Diggle",
+        "David Ramsey"
+      ],
+      [
+        "Felicity Smoak",
+        "Emily Bett Rickards"
+      ],
+      [
+        "Thea Queen",
+        "Willa Holland"
+      ]
+    ]
+  },
+  "house-of-cards": {
+    "title": "House of Cards",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/169/424482.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/175/house-of-cards",
+    "premiered": "2013-02-01",
+    "genres": [
+      "Drama",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Claire Underwood",
+        "Robin Wright"
+      ],
+      [
+        "Doug Stamper",
+        "Michael Kelly"
+      ],
+      [
+        "Frank Underwood",
+        "Kevin Spacey"
+      ],
+      [
+        "Seth Grayson",
+        "Derek Cecil"
+      ]
+    ]
+  },
+  "sex-education": {
+    "title": "Sex Education",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/483/1209495.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/36795/sex-education",
+    "premiered": "2019-01-11",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Otis Milburn",
+        "Asa Butterfield"
+      ],
+      [
+        "Dr. Jean Milburn",
+        "Gillian Anderson"
+      ]
+    ]
+  },
+  "true-beauty": {
+    "title": "True Beauty",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/282/706693.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/51480/true-beauty",
+    "premiered": "2020-12-09",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Im Joo Kyung",
+        "Moon Ga Young"
+      ],
+      [
+        "Lee Su Ho",
+        "Cha Eun U"
+      ],
+      [
+        "Han Seo Joon",
+        "Hwang In Yub"
+      ],
+      [
+        "Kang Soo Jin",
+        "Park Yoo Na"
+      ]
+    ]
+  },
+  "star-trek-the-original-series": {
+    "title": "Star Trek",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/496/1242166.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/490/star-trek",
+    "premiered": "1966-09-08",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Mr. Spock",
+        "Leonard Nimoy"
+      ],
+      [
+        "Captain James Tiberius Kirk",
+        "William Shatner"
+      ],
+      [
+        "Dr. Leonard Horatio \"Bones\" McCoy",
+        "DeForest Kelley"
+      ],
+      [
+        "Captain Christopher Pike",
+        "Jeffrey Hunter"
+      ]
+    ]
+  },
+  "suits": {
+    "title": "Suits",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/393/983536.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/172/suits",
+    "premiered": "2011-06-23",
+    "genres": [
+      "Drama",
+      "Legal"
+    ],
+    "cast": [
+      [
+        "Harvey Specter",
+        "Gabriel Macht"
+      ],
+      [
+        "Louis Litt",
+        "Rick Hoffman"
+      ],
+      [
+        "Donna Paulsen",
+        "Sarah Rafferty"
+      ],
+      [
+        "Mike Ross",
+        "Patrick J. Adams"
+      ]
+    ]
+  },
+  "westworld": {
+    "title": "Westworld",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/445/1113927.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1371/westworld",
+    "premiered": "2016-10-02",
+    "genres": [
+      "Drama",
+      "Science-Fiction",
+      "Western"
+    ],
+    "cast": [
+      [
+        "Maeve Millay",
+        "Thandiwe Newton"
+      ],
+      [
+        "Bernard Lowe",
+        "Jeffrey Wright"
+      ],
+      [
+        "The Man in Black",
+        "Ed Harris"
+      ],
+      [
+        "Dolores Abernathy",
+        "Evan Rachel Wood"
+      ]
+    ]
+  },
+  "magnificent-century": {
+    "title": "Muhteşem Yüzyıl",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/23/58121.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/5858/muhtesem-yuzyil",
+    "premiered": "2011-01-05",
+    "genres": [
+      "Drama",
+      "Action",
+      "History"
+    ],
+    "cast": [
+      [
+        "Elkaz Mirza",
+        "Pamir Pekin"
+      ],
+      [
+        "Ayşe Hatun",
+        "Serenay Aktaş"
+      ],
+      [
+        "İran Safeviler",
+        "Sermet Yeşil"
+      ],
+      [
+        "Huricihan Sultan",
+        "Burcu Özberk"
+      ]
+    ]
+  },
+  "guardian-the-lonely-and-great-god": {
+    "title": "Guardian: The Lonely and Great God",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/532/1330901.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/16150/guardian-the-lonely-and-great-god",
+    "premiered": "2016-12-02",
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Kim Shin",
+        "Gong Yoo"
+      ],
+      [
+        "Ji Eun Tak",
+        "Kim Go Eun"
+      ],
+      [
+        "Wang Yeo",
+        "Lee Dong Wook"
+      ],
+      [
+        "Yoo Duk Hwa",
+        "Yook Sung Jae"
+      ]
+    ]
+  },
+  "terra-e-paixao": {
+    "title": "Terra e Paixão",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/483/1207649.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/72152/terra-e-paixao",
+    "premiered": "2023-05-08",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Ademir La Selva",
+        "Charles Fricks"
+      ],
+      [
+        "Agatha",
+        "Eliane Giardini"
+      ],
+      [
+        "Aline",
+        "Barbara Reis"
+      ],
+      [
+        "Andrade Amorim",
+        "Ângelo Antônio"
+      ]
+    ]
+  },
+  "castle": {
+    "title": "Castle",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/13/34761.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/68/castle",
+    "premiered": "2009-03-09",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Richard Castle",
+        "Nathan Fillion"
+      ],
+      [
+        "Detective Javier Esposito",
+        "Jon Huertas"
+      ],
+      [
+        "Detective Kevin Ryan",
+        "Seamus Dever"
+      ],
+      [
+        "Detective Kate Beckett",
+        "Stana Katic"
+      ]
+    ]
+  },
+  "the-flash": {
+    "title": "The Flash",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/448/1121792.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/13/the-flash",
+    "premiered": "2014-10-07",
+    "genres": [
+      "Drama",
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Bartholomew Henry \"Barry\" Allen",
+        "Grant Gustin"
+      ],
+      [
+        "Iris Ann West-Allen",
+        "Candice Patton"
+      ],
+      [
+        "Caitlin Snow",
+        "Danielle Panabaker"
+      ],
+      [
+        "Joe West",
+        "Jesse L. Martin"
+      ]
+    ]
+  },
+  "servant-of-the-people": {
+    "title": "Слуга народа",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/609/1522706.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/6732/sluga-naroda",
+    "premiered": "2015-11-16",
+    "genres": [
+      "Comedy"
+    ],
+    "cast": [
+      [
+        "Юрий Иванович Чуйко, премьер-министр",
+        "Станислав Боклан"
+      ]
+    ]
+  },
+  "pretty-little-liars": {
+    "title": "Pretty Little Liars",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/125/314775.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/177/pretty-little-liars",
+    "premiered": "2010-06-08",
+    "genres": [
+      "Romance",
+      "Thriller",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Spencer Hastings",
+        "Troian Bellisario"
+      ],
+      [
+        "Aria Montgomery",
+        "Lucy Hale"
+      ],
+      [
+        "Emily Fields",
+        "Shay Mitchell"
+      ],
+      [
+        "Hanna Marin",
+        "Ashley Benson"
+      ]
+    ]
+  },
+  "merlin": {
+    "title": "Merlin",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/444/1110069.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/789/merlin",
+    "premiered": "2008-09-20",
+    "genres": [
+      "Adventure",
+      "Fantasy",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Merlin",
+        "Colin Morgan"
+      ],
+      [
+        "Arthur",
+        "Bradley James"
+      ],
+      [
+        "Gaius",
+        "Richard Wilson"
+      ],
+      [
+        "Guinevere \"Gwen\"",
+        "Angel Coulby"
+      ]
+    ]
+  },
+  "mythbusters": {
+    "title": "Mythbusters",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/544/1362285.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/379/mythbusters",
+    "premiered": "2003-01-23",
+    "genres": [
+      "Adventure",
+      "Nature",
+      "DIY"
+    ],
+    "cast": [
+      [
+        "Narrator",
+        "Robert Lee"
+      ],
+      [
+        "Adam Savage",
+        "Adam Savage"
+      ],
+      [
+        "Jamie Hyneman",
+        "Jamie Hyneman"
+      ],
+      [
+        "Folklorist",
+        "Heather Joseph-Witham"
+      ]
+    ]
+  },
+  "riverdale": {
+    "title": "Riverdale",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/455/1138820.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/5262/riverdale",
+    "premiered": "2017-01-26",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Elizabeth \"Betty\" Cooper",
+        "Lili Reinhart"
+      ],
+      [
+        "Veronica Lodge",
+        "Camila Mendes"
+      ],
+      [
+        "Jughead Jones",
+        "Cole Sprouse"
+      ],
+      [
+        "Archibald \"Archie\" Andrews",
+        "KJ Apa"
+      ]
+    ]
+  },
+  "narcos": {
+    "title": "Narcos",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/498/1246087.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/2705/narcos",
+    "premiered": "2015-08-28",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Javier Peña",
+        "Pedro Pascal"
+      ],
+      [
+        "Steve Murphy",
+        "Boyd Holbrook"
+      ],
+      [
+        "Pablo Escobar",
+        "Wagner Moura"
+      ],
+      [
+        "Hélmer \"Pacho\" Herrera",
+        "Alberto Ammann"
+      ]
+    ]
+  },
+  "true-blood": {
+    "title": "True Blood",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/410/1026956.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/22/true-blood",
+    "premiered": "2008-09-07",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Sookie Stackhouse",
+        "Anna Paquin"
+      ],
+      [
+        "Lafayette Reynolds",
+        "Nelsan Ellis"
+      ],
+      [
+        "Jason Stackhouse",
+        "Ryan Kwanten"
+      ],
+      [
+        "Bill Compton",
+        "Stephen Moyer"
+      ]
+    ]
+  },
+  "barney-and-friends": {
+    "title": "Barney & Friends",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/52/131291.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/15482/barney-friends",
+    "premiered": "1992-04-06",
+    "genres": [
+      "Comedy",
+      "Children"
+    ],
+    "cast": [
+      [
+        "Barney",
+        "David Joyner"
+      ]
+    ]
+  },
+  "totally-spies": {
+    "title": "Totally Spies!",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/638/1596958.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/6459/totally-spies",
+    "premiered": "2001-11-03",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Espionage"
+    ],
+    "cast": [
+      [
+        "Sam",
+        "Claire Guyot"
+      ],
+      [
+        "Clover",
+        "Fily Keita"
+      ],
+      [
+        "Alex",
+        "Céline Mauge"
+      ],
+      [
+        "Jerry",
+        "Jean-Claude Donda"
+      ]
+    ]
+  },
+  "american-idol": {
+    "title": "American Idol",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/607/1518246.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/288/american-idol",
+    "premiered": "2002-06-11",
+    "genres": [
+      "Music"
+    ],
+    "cast": [
+      [
+        "Host",
+        "Ryan Seacrest"
+      ],
+      [
+        "Judge",
+        "Randy Jackson"
+      ],
+      [
+        "Mentor",
+        "Bobby Bones"
+      ],
+      [
+        "Co-Host",
+        "Brian Dunkleman"
+      ]
+    ]
+  },
+  "boys-over-flowers": {
+    "title": "Boys over Flowers",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/581/1454035.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/3637/boys-over-flowers",
+    "premiered": "2009-01-05",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Geum Jan Di",
+        "Koo Hye Sun"
+      ],
+      [
+        "Gu Jun Pyo",
+        "Lee Min Ho"
+      ],
+      [
+        "Yoon Ji Hoo",
+        "Kim Hyun Joong"
+      ],
+      [
+        "So Yi Jung",
+        "Kim Bum"
+      ]
+    ]
+  },
+  "carrossel": {
+    "title": "Carrossel",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/640/1601852.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/94320/carrossel",
+    "premiered": "2012-05-21",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Children"
+    ],
+    "cast": []
+  },
+  "daredevil": {
+    "title": "Marvel's Daredevil",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/171/429391.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1369/marvels-daredevil",
+    "premiered": "2015-04-10",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Matt Murdock / Daredevil",
+        "Charlie Cox"
+      ],
+      [
+        "Karen Page",
+        "Deborah Ann Woll"
+      ],
+      [
+        "Franklin \"Foggy\" Nelson",
+        "Elden Henson"
+      ],
+      [
+        "Wilson Fisk / The Kingpin",
+        "Vincent D'Onofrio"
+      ]
+    ]
+  },
+  "the-witcher": {
+    "title": "The Witcher",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/594/1486674.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/28276/the-witcher",
+    "premiered": "2019-12-20",
+    "genres": [
+      "Drama",
+      "Action",
+      "Fantasy"
+    ],
+    "cast": [
+      [
+        "Princess Cirilla of Cintra",
+        "Freya Allan"
+      ],
+      [
+        "Geralt of Rivia",
+        "Henry Cavill"
+      ],
+      [
+        "Yennefer of Vengerberg",
+        "Anya Chalotra"
+      ],
+      [
+        "Fringilla Vigo",
+        "Mimî M. Khayisa"
+      ]
+    ]
+  },
+  "the-boys": {
+    "title": "The Boys",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/619/1547768.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/15299/the-boys",
+    "premiered": "2019-07-26",
+    "genres": [
+      "Action",
+      "Fantasy",
+      "Adult"
+    ],
+    "cast": [
+      [
+        "William \"Billy\" Butcher",
+        "Karl Urban"
+      ],
+      [
+        "Annie January / Starlight",
+        "Erin Moriarty"
+      ],
+      [
+        "John / Homelander",
+        "Antony Starr"
+      ],
+      [
+        "Kevin Moskowitz / The Deep",
+        "Chace Crawford"
+      ]
+    ]
+  },
+  "csi-ny": {
+    "title": "CSI: NY",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/501/1253796.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/749/csi-ny",
+    "premiered": "2004-09-22",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Mac Taylor",
+        "Gary Sinise"
+      ],
+      [
+        "Danny Messer",
+        "Carmine Giovinazzo"
+      ],
+      [
+        "Dr. Sheldon Hawkes",
+        "Hill Harper"
+      ],
+      [
+        "Don Flack",
+        "Eddie Cahill"
+      ]
+    ]
+  },
+  "babylon-5": {
+    "title": "Babylon 5",
+    "poster": "",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/57926/babylon-5",
+    "premiered": "",
+    "genres": [
+      "Drama",
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": []
+  },
+  "teen-wolf": {
+    "title": "Teen Wolf",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/30/75365.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/176/teen-wolf",
+    "premiered": "2011-06-05",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Scott McCall",
+        "Tyler Posey"
+      ],
+      [
+        "Lydia Martin",
+        "Holland Roden"
+      ],
+      [
+        "Sheriff Noah Stilinski",
+        "Linden Ashby"
+      ],
+      [
+        "Mieczyslaw \"Stiles\" Stilinski",
+        "Dylan O'Brien"
+      ]
+    ]
+  },
+  "beverly-hills-90210": {
+    "title": "Beverly Hills, 90210",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/495/1237709.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/818/beverly-hills-90210",
+    "premiered": "1990-10-04",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "David Silver",
+        "Brian Austin Green"
+      ],
+      [
+        "Donna Martin",
+        "Tori Spelling"
+      ],
+      [
+        "Steve Sanders",
+        "Ian Ziering"
+      ],
+      [
+        "Kelly Taylor",
+        "Jennie Garth"
+      ]
+    ]
+  },
+  "13-reasons-why": {
+    "title": "13 Reasons Why",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/258/646815.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/7194/13-reasons-why",
+    "premiered": "2017-03-31",
+    "genres": [
+      "Drama",
+      "Thriller",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Clay Jensen",
+        "Dylan Minnette"
+      ],
+      [
+        "Zach Dempsey",
+        "Ross Butler"
+      ],
+      [
+        "Justin Foley",
+        "Brandon Flynn"
+      ],
+      [
+        "Tony Padilla",
+        "Christian Navarro"
+      ]
+    ]
+  },
+  "enfermeras": {
+    "title": "Enfermeras",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/542/1355448.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/80597/enfermeras",
+    "premiered": "2019-10-23",
+    "genres": [
+      "Drama",
+      "Medical"
+    ],
+    "cast": []
+  },
+  "vincenzo": {
+    "title": "Vincenzo",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/481/1202670.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/52656/vincenzo",
+    "premiered": "2021-02-20",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Vincenzo Cassano",
+        "Song Jung Gi"
+      ],
+      [
+        "Hong Cha Yeong",
+        "Jeon Yeo Bin"
+      ],
+      [
+        "Jang Jun Woo",
+        "Taecyeon"
+      ]
+    ]
+  },
+  "shameless": {
+    "title": "Shameless",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/486/1215661.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/150/shameless",
+    "premiered": "2011-01-09",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Family"
+    ],
+    "cast": [
+      [
+        "Frank Gallagher",
+        "William H. Macy"
+      ],
+      [
+        "Kevin Ball",
+        "Steve Howey"
+      ],
+      [
+        "Debbie Gallagher",
+        "Emma Kenney"
+      ],
+      [
+        "Phillip \"Lip\" Gallagher",
+        "Jeremy Allen White"
+      ]
+    ]
+  },
+  "wwe-smackdown": {
+    "title": "WWE SmackDown Pre-Show",
+    "poster": "",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/19313/wwe-smackdown-pre-show",
+    "premiered": "2016-07-19",
+    "genres": [],
+    "cast": []
+  },
+  "csi-miami": {
+    "title": "CSI: Miami",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/501/1254953.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/576/csi-miami",
+    "premiered": "2002-09-23",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Lieutenant Horatio Caine",
+        "David Caruso"
+      ],
+      [
+        "Calleigh Duquesne",
+        "Emily Procter"
+      ],
+      [
+        "Eric 'Delko' Delektorsky",
+        "Adam Rodriguez"
+      ],
+      [
+        "Detective Frank Tripp",
+        "Rex Linn"
+      ]
+    ]
+  },
+  "married-with-children": {
+    "title": "Married... with Children",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/4/10311.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/499/married-with-children",
+    "premiered": "1987-04-05",
+    "genres": [
+      "Comedy",
+      "Family"
+    ],
+    "cast": [
+      [
+        "Al Bundy",
+        "Ed O'Neill"
+      ],
+      [
+        "Bud Bundy",
+        "David Faustino"
+      ],
+      [
+        "Kelly Bundy",
+        "Christina Applegate"
+      ],
+      [
+        "Peg Bundy",
+        "Katey Sagal"
+      ]
+    ]
+  },
+  "columbo": {
+    "title": "Columbo",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/3/9270.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/466/columbo",
+    "premiered": "1968-02-20",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Lieutenant Columbo",
+        "Peter Falk"
+      ]
+    ]
+  },
+  "snowdrop": {
+    "title": "Snowdrop",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/373/934763.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/58188/snowdrop",
+    "premiered": "2021-12-18",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Im Soo Ho",
+        "Jung Hae In"
+      ],
+      [
+        "Eun Young Ro",
+        "Kim Ji Soo"
+      ]
+    ]
+  },
+  "mr-queen": {
+    "title": "Mr. Queen",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/284/711854.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/51568/mr-queen",
+    "premiered": "2020-12-12",
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "History"
+    ],
+    "cast": [
+      [
+        "Kim So Yong",
+        "Shin Hye Sun"
+      ],
+      [
+        "King Chul Jong",
+        "Kim Jung Hyun"
+      ],
+      [
+        "Queen Seon Won",
+        "Bae Jong Ok"
+      ],
+      [
+        "Kim Jwa Geun",
+        "Kim Tae U"
+      ]
+    ]
+  },
+  "top-gear": {
+    "title": "Top Gear",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/243/608020.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/522/top-gear",
+    "premiered": "2002-10-20",
+    "genres": [],
+    "cast": [
+      [
+        "Jeremy Clarkson",
+        "Jeremy Clarkson"
+      ],
+      [
+        "Richard Hammond",
+        "Richard Hammond"
+      ],
+      [
+        "James May",
+        "James May"
+      ],
+      [
+        "Chris Harris",
+        "Chris Harris"
+      ]
+    ]
+  },
+  "macgyver": {
+    "title": "MacGyver",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/282/705919.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/5511/macgyver",
+    "premiered": "2016-09-23",
+    "genres": [
+      "Drama",
+      "Action",
+      "Adventure"
+    ],
+    "cast": [
+      [
+        "Angus \"Mac\" MacGyver",
+        "Lucas Till"
+      ],
+      [
+        "Wilt Bozer",
+        "Justin Hires"
+      ],
+      [
+        "Riley Davis",
+        "Tristin Mays"
+      ],
+      [
+        "Matilda \"Matty\" Webber",
+        "Meredith Eaton"
+      ]
+    ]
+  },
+  "agents-of-s-h-i-e-l-d": {
+    "title": "Marvel's Agents of S.H.I.E.L.D.",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/486/1215694.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/31/marvels-agents-of-shield",
+    "premiered": "2013-09-24",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Jemma Simmons",
+        "Elizabeth Henstridge"
+      ],
+      [
+        "Daisy \"Skye\" Johnson / Quake",
+        "Chloe Bennet"
+      ],
+      [
+        "Melinda May",
+        "Ming-Na Wen"
+      ],
+      [
+        "Phil Coulson",
+        "Clark Gregg"
+      ]
+    ]
+  },
+  "sons-of-anarchy": {
+    "title": "Sons of Anarchy",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/495/1239905.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/76/sons-of-anarchy",
+    "premiered": "2008-09-03",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Jackson 'Jax' Teller",
+        "Charlie Hunnam"
+      ],
+      [
+        "Gemma Teller Morrow",
+        "Katey Sagal"
+      ],
+      [
+        "Filip 'Chibs' Telford",
+        "Tommy Flanagan"
+      ],
+      [
+        "Robert 'Bobby' Munson",
+        "Mark Boone Junior"
+      ]
+    ]
+  },
+  "orange-is-the-new-black": {
+    "title": "Orange Is the New Black",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/203/508250.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/170/orange-is-the-new-black",
+    "premiered": "2013-07-11",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Piper Chapman",
+        "Taylor Schilling"
+      ],
+      [
+        "Tasha \"Taystee\" Jefferson",
+        "Danielle Brooks"
+      ],
+      [
+        "Galina \"Red\" Reznikov",
+        "Kate Mulgrew"
+      ],
+      [
+        "Gloria Mendoza",
+        "Selenis Leyva"
+      ]
+    ]
+  },
+  "the-blacklist": {
+    "title": "The Blacklist",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/445/1113538.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/69/the-blacklist",
+    "premiered": "2013-09-23",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Raymond \"Red\" Reddington",
+        "James Spader"
+      ],
+      [
+        "Donald Ressler",
+        "Diego Klattenhoff"
+      ],
+      [
+        "Harold Cooper",
+        "Harry Lennix"
+      ],
+      [
+        "Dembe Zuma",
+        "Hisham Tawfiq"
+      ]
+    ]
+  },
+  "gotham": {
+    "title": "Gotham",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/189/474715.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/11/gotham",
+    "premiered": "2014-09-22",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "James Gordon",
+        "Ben McKenzie"
+      ],
+      [
+        "Detective Harvey Bullock",
+        "Donal Logue"
+      ],
+      [
+        "Bruce Wayne",
+        "David Mazouz"
+      ],
+      [
+        "Oswald \"Penguin\" Cobblepot",
+        "Robin Lord Taylor"
+      ]
+    ]
+  },
+  "euphoria": {
+    "title": "Euphoria",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/621/1552657.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/28826/euphoria",
+    "premiered": "2019-06-16",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Ruby \"Rue\" Bennett",
+        "Zendaya"
+      ],
+      [
+        "Lexi Howard",
+        "Maude Apatow"
+      ],
+      [
+        "Maddy Perez",
+        "Alexa Demie"
+      ],
+      [
+        "Jules Vaughn",
+        "Hunter Schafer"
+      ]
+    ]
+  },
+  "papas-por-conveniencia": {
+    "title": "Papás por Conveniencia",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/589/1473783.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/80272/papas-por-conveniencia",
+    "premiered": "2024-10-21",
+    "genres": [
+      "Drama",
+      "Comedy"
+    ],
+    "cast": []
+  },
+  "stargate-atlantis": {
+    "title": "Stargate Atlantis",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/498/1245482.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/206/stargate-atlantis",
+    "premiered": "2004-07-16",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Lt. Colonel John Sheppard",
+        "Joe Flanigan"
+      ],
+      [
+        "Dr. Rodney McKay",
+        "David Hewlett"
+      ],
+      [
+        "Teyla Emmagan",
+        "Rachel Luttrell"
+      ],
+      [
+        "Ronon Dex",
+        "Jason Momoa"
+      ]
+    ]
+  },
+  "star-trek-enterprise": {
+    "title": "Star Trek: Enterprise",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/458/1145937.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/714/star-trek-enterprise",
+    "premiered": "2001-09-26",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Captain Jonathan Archer",
+        "Scott Bakula"
+      ],
+      [
+        "Dr. Phlox",
+        "John Billingsley"
+      ],
+      [
+        "Commander T'Pol",
+        "Jolene Blalock"
+      ],
+      [
+        "Lieutenant Malcolm Reed",
+        "Dominic Keating"
+      ]
+    ]
+  },
+  "baywatch": {
+    "title": "Baywatch",
+    "poster": "",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/75144/baywatch",
+    "premiered": "",
+    "genres": [
+      "Drama",
+      "Action"
+    ],
+    "cast": [
+      [
+        "Hobie Buchannon",
+        "Stephen Amell"
+      ],
+      [
+        "Cody Madison",
+        "David Chokachi"
+      ],
+      [
+        "Charlie Vale",
+        "Jessica Belkin"
+      ],
+      [
+        "Brad",
+        "Thaddeus LaGrone"
+      ]
+    ]
+  },
+  "the-falcon-and-the-winter-soldier": {
+    "title": "The Falcon and The Winter Soldier",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/295/739854.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/41749/the-falcon-and-the-winter-soldier",
+    "premiered": "2021-03-19",
+    "genres": [
+      "Drama",
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Bucky Barnes / Winter Soldier",
+        "Sebastian Stan"
+      ],
+      [
+        "Sam Wilson / Falcon",
+        "Anthony Mackie"
+      ],
+      [
+        "John Walker",
+        "Wyatt Russell"
+      ],
+      [
+        "Karli Morgenthau",
+        "Erin Kellyman"
+      ]
+    ]
+  },
+  "wwe-raw": {
+    "title": "WWE Raw Highlights",
+    "poster": "",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/47553/wwe-raw-highlights",
+    "premiered": "2020-02-02",
+    "genres": [],
+    "cast": [
+      [
+        "Presenter",
+        "Vic Joseph"
+      ]
+    ]
+  },
+  "californication": {
+    "title": "Californication",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/38/95017.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/28/californication",
+    "premiered": "2007-08-13",
+    "genres": [
+      "Drama",
+      "Comedy"
+    ],
+    "cast": [
+      [
+        "Hank Moody",
+        "David Duchovny"
+      ],
+      [
+        "Charlie Runkle",
+        "Evan Handler"
+      ],
+      [
+        "Karen Van Der Beek",
+        "Natascha McElhone"
+      ],
+      [
+        "Becca Moody",
+        "Madeleine Martin"
+      ]
+    ]
+  },
+  "the-handmaid-s-tale": {
+    "title": "The Handmaid's Tale",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/562/1406667.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/16579/the-handmaids-tale",
+    "premiered": "2017-04-26",
+    "genres": [
+      "Drama",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "June Osborne / Offred",
+        "Elisabeth Moss"
+      ],
+      [
+        "Serena Joy Waterford",
+        "Yvonne Strahovski"
+      ],
+      [
+        "Aunt Lydia",
+        "Ann Dowd"
+      ],
+      [
+        "Nick Blaine",
+        "Max Minghella"
+      ]
+    ]
+  },
+  "the-lord-of-the-rings-the-rings-of-power": {
+    "title": "The Lord of the Rings: The Rings of Power",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/633/1584401.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/33352/the-lord-of-the-rings-the-rings-of-power",
+    "premiered": "2022-09-02",
+    "genres": [
+      "Drama",
+      "Adventure",
+      "Fantasy"
+    ],
+    "cast": [
+      [
+        "Galadriel",
+        "Morfydd Clark"
+      ],
+      [
+        "Halbrand",
+        "Charlie Vickers"
+      ],
+      [
+        "Lord Celebrimbor",
+        "Charles Edwards"
+      ],
+      [
+        "Adar",
+        "Sam Hazeldine"
+      ]
+    ]
+  },
+  "you": {
+    "title": "You",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/564/1412472.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/26856/you",
+    "premiered": "2018-09-09",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Joe Goldberg",
+        "Penn Badgley"
+      ],
+      [
+        "Love Quinn",
+        "Victoria Pedretti"
+      ],
+      [
+        "Kate Galvin",
+        "Charlotte Ritchie"
+      ],
+      [
+        "Marienne Bellamy",
+        "Tati Gabrielle"
+      ]
+    ]
+  },
+  "chuck": {
+    "title": "Chuck",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/0/2385.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/168/chuck",
+    "premiered": "2007-09-24",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Action"
+    ],
+    "cast": [
+      [
+        "Charles \"Chuck\" Bartowski",
+        "Zachary Levi"
+      ],
+      [
+        "Sarah Walker",
+        "Yvonne Strahovski"
+      ],
+      [
+        "Colonel John Casey",
+        "Adam Baldwin"
+      ],
+      [
+        "Morgan Grimes",
+        "Joshua Gomez"
+      ]
+    ]
+  },
+  "ncis-los-angeles": {
+    "title": "NCIS: Los Angeles",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/444/1110924.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/72/ncis-los-angeles",
+    "premiered": "2009-09-22",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Special Agent Sam Hanna",
+        "LL Cool J"
+      ],
+      [
+        "Special Agent Grisha Aleksandrovich Nikolaev \"G\" Callen",
+        "Chris O'Donnell"
+      ],
+      [
+        "Special Agent Kensi Marie Blye",
+        "Daniela Ruah"
+      ],
+      [
+        "Investigator Martin A. \"Marty\" Deeks",
+        "Eric Christian Olsen"
+      ]
+    ]
+  },
+  "lazytown": {
+    "title": "LazyTown",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/24/61862.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/6483/lazytown",
+    "premiered": "2004-08-16",
+    "genres": [
+      "Comedy",
+      "Adventure",
+      "Family"
+    ],
+    "cast": [
+      [
+        "Sportacus",
+        "Magnús Scheving"
+      ],
+      [
+        "Robbie Rotten",
+        "Stefán Karl Stefánsson"
+      ],
+      [
+        "Ziggy",
+        "Gudmundur Thor"
+      ],
+      [
+        "Stingy",
+        "Jodi Eichelberger"
+      ]
+    ]
+  },
+  "skins": {
+    "title": "Skins",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/4/11516.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/548/skins",
+    "premiered": "2007-01-25",
+    "genres": [
+      "Drama",
+      "Comedy"
+    ],
+    "cast": [
+      [
+        "Effy Stonem",
+        "Kaya Scodelario"
+      ],
+      [
+        "Cassie Ainsworth",
+        "Hannah Murray"
+      ],
+      [
+        "Sid Jenkins",
+        "Mike Bailey"
+      ],
+      [
+        "Michelle Richardson",
+        "April Pearson"
+      ]
+    ]
+  },
+  "marimar": {
+    "title": "Marimar",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/111/277900.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/28088/marimar",
+    "premiered": "2007-08-13",
+    "genres": [
+      "Drama",
+      "Action",
+      "Adventure"
+    ],
+    "cast": []
+  },
+  "hotel-del-luna": {
+    "title": "Hotel del Luna",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/204/510214.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/42529/hotel-del-luna",
+    "premiered": "2019-07-13",
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Jang Man Wol",
+        "IU"
+      ],
+      [
+        "Goo Chan Sung",
+        "Yeo Jin Goo"
+      ]
+    ]
+  },
+  "ghost-whisperer": {
+    "title": "Ghost Whisperer",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/4/11745.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/566/ghost-whisperer",
+    "premiered": "2005-09-23",
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Melinda Gordon",
+        "Jennifer Love Hewitt"
+      ],
+      [
+        "Jim Clancy",
+        "David Conrad"
+      ],
+      [
+        "Delia Banks",
+        "Camryn Manheim"
+      ],
+      [
+        "Eli James",
+        "Jamie Kennedy"
+      ]
+    ]
+  },
+  "law-and-order": {
+    "title": "Law & Order",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611219.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/562/law-order",
+    "premiered": "1990-09-13",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Legal"
+    ],
+    "cast": [
+      [
+        "District Attorney Jack McCoy",
+        "Sam Waterston"
+      ],
+      [
+        "Lieutenant Anita Van Buren",
+        "S. Epatha Merkerson"
+      ],
+      [
+        "Detective Leonard W. \"Lennie\" Briscoe",
+        "Jerry Orbach"
+      ],
+      [
+        "District Attorney Adam Schiff",
+        "Steven Hill"
+      ]
+    ]
+  },
+  "agatha-christie-s-poirot": {
+    "title": "Agatha Christie Poirot",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/17471.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1166/agatha-christie-poirot",
+    "premiered": "1989-01-08",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Hercule Poirot",
+        "David Suchet"
+      ],
+      [
+        "Captain Arthur Hastings",
+        "Hugh Fraser"
+      ],
+      [
+        "Chief Inspector James Japp",
+        "Philip Jackson"
+      ],
+      [
+        "Miss Felicity Lemon",
+        "Pauline Moran"
+      ]
+    ]
+  },
+  "rubi": {
+    "title": "Rubí",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/605/1514689.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/16276/rubi",
+    "premiered": "2004-05-17",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Ignacio Cárdenas",
+        "Antonio Medellín"
+      ],
+      [
+        "Lilia",
+        "Arlette Pacheco"
+      ],
+      [
+        "Rubi",
+        "Bárbara Mori"
+      ],
+      [
+        "Alejandro",
+        "Eduardo Santamarina"
+      ]
+    ]
+  },
+  "person-of-interest": {
+    "title": "Person of Interest",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/163/407679.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/2/person-of-interest",
+    "premiered": "2011-09-22",
+    "genres": [
+      "Action",
+      "Crime",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "John Reese",
+        "Jim Caviezel"
+      ],
+      [
+        "Harold Finch",
+        "Michael Emerson"
+      ],
+      [
+        "Lionel Fusco",
+        "Kevin Chapman"
+      ],
+      [
+        "Jocelyn \"Joss\" Carter",
+        "Taraji P. Henson"
+      ]
+    ]
+  },
+  "dallas": {
+    "title": "Dallas",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/15927.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/863/dallas",
+    "premiered": "1978-04-02",
+    "genres": [
+      "Drama",
+      "Family"
+    ],
+    "cast": [
+      [
+        "J.R. Ewing",
+        "Larry Hagman"
+      ],
+      [
+        "Cliff Barnes",
+        "Ken Kercheval"
+      ],
+      [
+        "Bobby Ewing",
+        "Patrick Duffy"
+      ],
+      [
+        "Miss Ellie Ewing",
+        "Barbara Bel Geddes"
+      ]
+    ]
+  },
+  "zoboomafoo": {
+    "title": "Zoboomafoo",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/264/660937.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/12440/zoboomafoo",
+    "premiered": "1999-01-25",
+    "genres": [
+      "Comedy",
+      "Children"
+    ],
+    "cast": []
+  },
+  "the-heirs": {
+    "title": "The Heirs",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/52/131713.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/15525/the-heirs",
+    "premiered": "2013-10-09",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Cha Eun Sang",
+        "Park Shin Hye"
+      ],
+      [
+        "Choi Young Do",
+        "Kim Woo Bin"
+      ],
+      [
+        "Kim Tan",
+        "Lee Min Ho"
+      ],
+      [
+        "Kim Won",
+        "Choi Jin Hyeok"
+      ]
+    ]
+  },
+  "lucifer": {
+    "title": "Lucifer",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/346/865655.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1859/lucifer",
+    "premiered": "2016-01-25",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Lucifer Morningstar",
+        "Tom Ellis"
+      ],
+      [
+        "Chloe Decker",
+        "Lauren German"
+      ],
+      [
+        "Dan Espinoza",
+        "Kevin Alejandro"
+      ],
+      [
+        "Mazikeen",
+        "Lesley-Ann Brandt"
+      ]
+    ]
+  },
+  "the-world-of-the-married": {
+    "title": "The World of the Married",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/460/1151178.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/46245/the-world-of-the-married",
+    "premiered": "2020-03-27",
+    "genres": [
+      "Drama"
+    ],
+    "cast": [
+      [
+        "Ji Sun Woo",
+        "Kim Hee Ae"
+      ],
+      [
+        "Lee Tae Oh",
+        "Park Hae Joon"
+      ]
+    ]
+  },
+  "start-up": {
+    "title": "Start-Up",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/274/685409.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/49929/start-up",
+    "premiered": "2020-10-17",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Seo Dal Mi",
+        "Suzy"
+      ],
+      [
+        "Nam Do San",
+        "Nam Joo Hyuk"
+      ],
+      [
+        "Han Ji Pyeong",
+        "Kim Seon Ho"
+      ],
+      [
+        "Won In Jae",
+        "Kang Han Na"
+      ]
+    ]
+  },
+  "moon-knight": {
+    "title": "Moon Knight",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/407/1019370.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/43518/moon-knight",
+    "premiered": "2022-03-30",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Fantasy"
+    ],
+    "cast": [
+      [
+        "Khonshu",
+        "F. Murray Abraham"
+      ],
+      [
+        "Marc Spector / Steven Grant / Moon Knight",
+        "Oscar Isaac"
+      ],
+      [
+        "Arthur Harrow",
+        "Ethan Hawke"
+      ],
+      [
+        "Layla El-Faouly",
+        "May Calamawy"
+      ]
+    ]
+  },
+  "she-hulk-attorney-at-law": {
+    "title": "She-Hulk: Attorney at Law",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/486/1215646.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/43517/she-hulk-attorney-at-law",
+    "premiered": "2022-08-18",
+    "genres": [
+      "Comedy",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Jennifer Walters / She-Hulk",
+        "Tatiana Maslany"
+      ],
+      [
+        "Nikki Ramos",
+        "Ginger Gonzaga"
+      ],
+      [
+        "Mallory Book",
+        "Renée Elise Goldsberry"
+      ],
+      [
+        "Titania",
+        "Jameela Jamil"
+      ]
+    ]
+  },
+  "all-of-us-are-dead": {
+    "title": "All of Us Are Dead",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/394/985544.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/47199/all-of-us-are-dead",
+    "premiered": "2022-01-28",
+    "genres": [
+      "Drama",
+      "Horror"
+    ],
+    "cast": [
+      [
+        "Nam On Zo",
+        "Park Ji Hoo"
+      ],
+      [
+        "Lee Chung San",
+        "Yoon Chan Young"
+      ],
+      [
+        "Choi Nam Ra",
+        "Jo Yi Hyun"
+      ],
+      [
+        "Lee Su Hyeok",
+        "Park Solomon"
+      ]
+    ]
+  },
+  "the-good-wife": {
+    "title": "The Good Wife",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/59/148162.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/101/the-good-wife",
+    "premiered": "2009-09-22",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Legal"
+    ],
+    "cast": [
+      [
+        "Alicia Florrick",
+        "Julianna Margulies"
+      ],
+      [
+        "Diane Lockhart",
+        "Christine Baranski"
+      ],
+      [
+        "Cary Agos",
+        "Matt Czuchry"
+      ],
+      [
+        "Kalinda Sharma",
+        "Archie Panjabi"
+      ]
+    ]
+  },
+  "lie-to-me": {
+    "title": "Lie to Me*",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/4/11275.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/520/lie-to-me",
+    "premiered": "2009-01-21",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Dr. Cal Lightman",
+        "Tim Roth"
+      ],
+      [
+        "Dr. Gillian Foster",
+        "Kelli Williams"
+      ],
+      [
+        "Ria Torres",
+        "Monica Raymund"
+      ],
+      [
+        "Eli Loker",
+        "Brendan Hines"
+      ]
+    ]
+  },
+  "angel": {
+    "title": "Angel",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/3/7507.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/428/angel",
+    "premiered": "1999-10-05",
+    "genres": [
+      "Drama",
+      "Action",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Angel",
+        "David Boreanaz"
+      ],
+      [
+        "Wesley Wyndam-Pryce",
+        "Alexis Denisof"
+      ],
+      [
+        "Charles Gunn",
+        "J. August Richards"
+      ],
+      [
+        "Cordelia Chase",
+        "Charisma Carpenter"
+      ]
+    ]
+  },
+  "alias": {
+    "title": "Alias",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/4/11627.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/557/alias",
+    "premiered": "2001-09-30",
+    "genres": [
+      "Drama",
+      "Action",
+      "Espionage"
+    ],
+    "cast": [
+      [
+        "Sydney Bristow",
+        "Jennifer Garner"
+      ],
+      [
+        "Arvin Sloane",
+        "Ron Rifkin"
+      ],
+      [
+        "Jack Bristow",
+        "Victor Garber"
+      ],
+      [
+        "Marcus Dixon",
+        "Carl Lumbly"
+      ]
+    ]
+  },
+  "the-pacific": {
+    "title": "The Pacific",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/444/1111650.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/464/the-pacific",
+    "premiered": "2010-03-14",
+    "genres": [
+      "Drama",
+      "Action",
+      "War"
+    ],
+    "cast": [
+      [
+        "Pfc. Robert Leckie",
+        "James Badge Dale"
+      ],
+      [
+        "Sgt. John Basilone",
+        "Jon Seda"
+      ],
+      [
+        "Pfc. Eugene Sledge",
+        "Joseph Mazzello"
+      ],
+      [
+        "Pfc. Sidney Phillips",
+        "Ashton Holmes"
+      ]
+    ]
+  },
+  "the-tudors": {
+    "title": "The Tudors",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/15022.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/712/the-tudors",
+    "premiered": "2007-04-01",
+    "genres": [
+      "Drama",
+      "History"
+    ],
+    "cast": [
+      [
+        "King Henry VIII",
+        "Jonathan Rhys Meyers"
+      ],
+      [
+        "Charles Brandon",
+        "Henry Cavill"
+      ],
+      [
+        "Princess Mary Tudor",
+        "Sarah Bolger"
+      ],
+      [
+        "Thomas Cromwell",
+        "James Frain"
+      ]
+    ]
+  },
+  "the-a-team": {
+    "title": "The A-Team",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/17013.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1058/the-a-team",
+    "premiered": "1983-01-23",
+    "genres": [
+      "Action",
+      "Adventure"
+    ],
+    "cast": [
+      [
+        "Col. John \"Hannibal\" Smith",
+        "George Peppard"
+      ],
+      [
+        "Lt. Templeton \"Faceman\" Peck",
+        "Dirk Benedict"
+      ],
+      [
+        "Capt. H.M. \"Howling Mad\" Murdock",
+        "Dwight Schultz"
+      ],
+      [
+        "Bosco Albert \"B.A.\" Baracus",
+        "Mr. T"
+      ]
+    ]
+  },
+  "hawaii-five-0": {
+    "title": "Hawaii Five-0",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/213/532575.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/24/hawaii-five-0",
+    "premiered": "2010-09-20",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Steven McGarrett",
+        "Alex O'Loughlin"
+      ],
+      [
+        "Danny \"Danno\" Williams",
+        "Scott Caan"
+      ],
+      [
+        "Chin Ho Kelly",
+        "Daniel Dae Kim"
+      ],
+      [
+        "Kono Kalakaua",
+        "Grace Park"
+      ]
+    ]
+  },
+  "six-feet-under": {
+    "title": "Six Feet Under",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/2/5480.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/367/six-feet-under",
+    "premiered": "2001-06-03",
+    "genres": [
+      "Drama",
+      "Comedy"
+    ],
+    "cast": [
+      [
+        "Nate Fisher",
+        "Peter Krause"
+      ],
+      [
+        "David Fisher",
+        "Michael C. Hall"
+      ],
+      [
+        "Ruth Fisher",
+        "Frances Conroy"
+      ],
+      [
+        "Claire Fisher",
+        "Lauren Ambrose"
+      ]
+    ]
+  },
+  "nip-tuck": {
+    "title": "Nip/Tuck",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/4/11715.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/564/niptuck",
+    "premiered": "2003-07-22",
+    "genres": [
+      "Drama",
+      "Medical"
+    ],
+    "cast": [
+      [
+        "Sean McNamara",
+        "Dylan Walsh"
+      ],
+      [
+        "Christian Troy",
+        "Julian McMahon"
+      ],
+      [
+        "Matt McNamara",
+        "John Hensley"
+      ],
+      [
+        "Julia McNamara",
+        "Joely Richardson"
+      ]
+    ]
+  },
+  "the-suite-life-on-deck": {
+    "title": "The Suite Life on Deck",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/453/1132773.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/2195/the-suite-life-on-deck",
+    "premiered": "2008-09-26",
+    "genres": [
+      "Comedy",
+      "Children",
+      "Family"
+    ],
+    "cast": [
+      [
+        "Zack Martin",
+        "Dylan Sprouse"
+      ],
+      [
+        "Cody Martin",
+        "Cole Sprouse"
+      ],
+      [
+        "London Tipton",
+        "Brenda Song"
+      ],
+      [
+        "Bailey Pickett",
+        "Debby Ryan"
+      ]
+    ]
+  },
+  "my-love-from-the-star": {
+    "title": "My Love from the Star",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/18/47470.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/3704/my-love-from-the-star",
+    "premiered": "2013-12-18",
+    "genres": [
+      "Romance",
+      "Science-Fiction",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Do Min Joon",
+        "Kim Soo Hyun"
+      ],
+      [
+        "Chun Song Yi",
+        "Jun Ji Hyun"
+      ],
+      [
+        "Lee Hwi Kyung",
+        "Park Hae Jin"
+      ],
+      [
+        "Yoo Se Mi",
+        "Yoo In Na"
+      ]
+    ]
+  },
+  "the-good-doctor": {
+    "title": "The Good Doctor",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/507/1269854.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/21845/the-good-doctor",
+    "premiered": "2017-09-25",
+    "genres": [
+      "Drama",
+      "Medical"
+    ],
+    "cast": [
+      [
+        "Dr. Shaun Murphy",
+        "Freddie Highmore"
+      ],
+      [
+        "Dr. Aaron Glassman",
+        "Richard Schiff"
+      ],
+      [
+        "Dr. Audrey Lim",
+        "Christina Chang"
+      ],
+      [
+        "Dr. Morgan Reznick",
+        "Fiona Gubelmann"
+      ]
+    ]
+  },
+  "hawkeye": {
+    "title": "Hawkeye",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/383/959105.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/43102/hawkeye",
+    "premiered": "2021-11-24",
+    "genres": [
+      "Drama",
+      "Action",
+      "Adventure"
+    ],
+    "cast": [
+      [
+        "Clint Barton / Hawkeye",
+        "Jeremy Renner"
+      ],
+      [
+        "Kate Bishop",
+        "Hailee Steinfeld"
+      ],
+      [
+        "Kazi Kazimierczak",
+        "Fra Fee"
+      ],
+      [
+        "Jack Duquesne",
+        "Tony Dalton"
+      ]
+    ]
+  },
+  "heated-rivalry": {
+    "title": "Heated Rivalry",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/598/1495771.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/85269/heated-rivalry",
+    "premiered": "2025-11-28",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Sports"
+    ],
+    "cast": [
+      [
+        "Shane Hollander",
+        "Hudson Williams"
+      ],
+      [
+        "Ilya Rozanov",
+        "Connor Storrie"
+      ],
+      [
+        "Cliff Marleau",
+        "Franco Lo Presti"
+      ],
+      [
+        "Scott Hunter",
+        "François Arnaud"
+      ]
+    ]
+  },
+  "torchwood": {
+    "title": "Torchwood",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/356/890285.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/659/torchwood",
+    "premiered": "2006-10-22",
+    "genres": [
+      "Drama",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Captain Jack Harkness",
+        "John Barrowman"
+      ],
+      [
+        "Gwen Cooper",
+        "Eve Myles"
+      ],
+      [
+        "Rhys Williams",
+        "Kai Owen"
+      ],
+      [
+        "Ianto Jones",
+        "Gareth David-Lloyd"
+      ]
+    ]
+  },
+  "elementary": {
+    "title": "Elementary",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/195/488201.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/133/elementary",
+    "premiered": "2012-09-27",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Sherlock Holmes",
+        "Jonny Lee Miller"
+      ],
+      [
+        "Dr. Joan Watson",
+        "Lucy Liu"
+      ],
+      [
+        "Detective Marcus Bell",
+        "Jon Michael Hill"
+      ],
+      [
+        "Capt. Thomas \"Tommy\" Gregson",
+        "Aidan Quinn"
+      ]
+    ]
+  },
+  "the-originals": {
+    "title": "The Originals",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/271/678632.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/62/the-originals",
+    "premiered": "2013-10-03",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Niklaus \"Klaus\" Mikaelson",
+        "Joseph Morgan"
+      ],
+      [
+        "Marcel Gerard",
+        "Charles Michael Davis"
+      ],
+      [
+        "Elijah Mikaelson",
+        "Daniel Gillies"
+      ],
+      [
+        "Hayley Marshall",
+        "Phoebe Tonkin"
+      ]
+    ]
+  },
+  "how-to-get-away-with-murder": {
+    "title": "How to Get Away with Murder",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/212/531512.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/52/how-to-get-away-with-murder",
+    "premiered": "2014-09-25",
+    "genres": [
+      "Drama",
+      "Thriller",
+      "Legal"
+    ],
+    "cast": [
+      [
+        "Annalise Keating",
+        "Viola Davis"
+      ],
+      [
+        "Nate Lahey",
+        "Billy Brown"
+      ],
+      [
+        "Connor Walsh",
+        "Jack Falahee"
+      ],
+      [
+        "Michaela Pratt",
+        "Aja Naomi King"
+      ]
+    ]
+  },
+  "star-trek-discovery": {
+    "title": "Star Trek: Discovery",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/504/1260637.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/7480/star-trek-discovery",
+    "premiered": "2017-09-24",
+    "genres": [
+      "Drama",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Commander Michael Burnham",
+        "Sonequa Martin-Green"
+      ],
+      [
+        "Lieutenant Commander Paul Stamets",
+        "Anthony Rapp"
+      ],
+      [
+        "Commander Saru",
+        "Doug Jones"
+      ],
+      [
+        "Ensign Sylvia Tilly",
+        "Mary Wiseman"
+      ]
+    ]
+  },
+  "moon-lovers-scarlet-heart-ryeo": {
+    "title": "Moon Lovers: Scarlet Heart Ryeo",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/71/179341.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/18630/moon-lovers-scarlet-heart-ryeo",
+    "premiered": "2016-08-29",
+    "genres": [
+      "Fantasy",
+      "Romance",
+      "History"
+    ],
+    "cast": [
+      [
+        "Wang So",
+        "Lee Joon Ki"
+      ],
+      [
+        "Hae Soo",
+        "IU"
+      ],
+      [
+        "Wang Wook",
+        "Kang Ha Neul"
+      ],
+      [
+        "Wang Yo",
+        "Hong Jong Hyeon"
+      ]
+    ]
+  },
+  "skam": {
+    "title": "SKAM",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/391/978360.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/14866/skam",
+    "premiered": "2015-09-25",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Noora",
+        "Josefine Frida Pettersen"
+      ],
+      [
+        "Sana",
+        "Iman Meskini"
+      ],
+      [
+        "Vilde",
+        "Ulrikke Falch"
+      ],
+      [
+        "Eva",
+        "Lisa Teige"
+      ]
+    ]
+  },
+  "emily-in-paris": {
+    "title": "Emily in Paris",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/604/1510920.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/41632/emily-in-paris",
+    "premiered": "2020-10-02",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Emily Cooper",
+        "Lily Collins"
+      ],
+      [
+        "Mindy Chen",
+        "Ashley Park"
+      ],
+      [
+        "Sylvie Grateau",
+        "Philippine Leroy-Baulieu"
+      ],
+      [
+        "Julien",
+        "Samuel Arnold"
+      ]
+    ]
+  },
+  "queer-as-folk": {
+    "title": "Queer As Folk",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/16017.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/908/queer-as-folk",
+    "premiered": "2000-12-03",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Brian Kinney",
+        "Gale Harold"
+      ],
+      [
+        "Justin Taylor",
+        "Randy C. Harrison"
+      ],
+      [
+        "Michael Novotny",
+        "Hal Sparks"
+      ],
+      [
+        "Emmett Honeycutt",
+        "Peter Paige"
+      ]
+    ]
+  },
+  "the-bold-and-the-beautiful": {
+    "title": "The Bold and the Beautiful",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/593/1482536.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/806/the-bold-and-the-beautiful",
+    "premiered": "1987-03-23",
+    "genres": [
+      "Drama",
+      "Family",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Brooke Logan",
+        "Katherine Kelly Lang"
+      ],
+      [
+        "Ridge Forrester",
+        "Thorsten Kaye"
+      ],
+      [
+        "Steffy Forrester",
+        "Jacqueline MacInnes Wood"
+      ],
+      [
+        "Hope Logan",
+        "Kim Matula"
+      ]
+    ]
+  },
+  "charlie-s-angels": {
+    "title": "Charlie's Angels",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/3/9311.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/474/charlies-angels",
+    "premiered": "1976-09-22",
+    "genres": [
+      "Action",
+      "Adventure"
+    ],
+    "cast": [
+      [
+        "Kelly Garrett",
+        "Jaclyn Smith"
+      ],
+      [
+        "John Bosley",
+        "David Doyle"
+      ],
+      [
+        "Charlie Townsend",
+        "John Forsythe"
+      ],
+      [
+        "Kris Munroe",
+        "Cheryl Ladd"
+      ]
+    ]
+  },
+  "mi-corazon-es-tuyo": {
+    "title": "Mi corazón es tuyo",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/605/1514878.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/20001/mi-corazon-es-tuyo",
+    "premiered": "2014-06-30",
+    "genres": [
+      "Drama",
+      "Comedy"
+    ],
+    "cast": [
+      [
+        "Ana Leal",
+        "Silvia Navarro"
+      ],
+      [
+        "Fernando Lascurain",
+        "Jorge Salinas"
+      ],
+      [
+        "Isabela Vázquez",
+        "Mayrín Villanueva"
+      ],
+      [
+        "León González",
+        "Juan Pablo Gil"
+      ]
+    ]
+  },
+  "jessica-jones": {
+    "title": "Marvel's Jessica Jones",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/200/502332.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1370/marvels-jessica-jones",
+    "premiered": "2015-11-20",
+    "genres": [
+      "Action",
+      "Crime",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Jessica Campbell Jones",
+        "Krysten Ritter"
+      ],
+      [
+        "Patricia \"Trish\" Walker",
+        "Rachael Taylor"
+      ],
+      [
+        "Malcolm Ducasse",
+        "Eka Darville"
+      ],
+      [
+        "Jeri Hogarth",
+        "Carrie-Anne Moss"
+      ]
+    ]
+  },
+  "secret-invasion": {
+    "title": "Secret Invasion",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/465/1163819.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/52352/secret-invasion",
+    "premiered": "2023-06-21",
+    "genres": [
+      "Action",
+      "Science-Fiction",
+      "Espionage"
+    ],
+    "cast": [
+      [
+        "Nick Fury",
+        "Samuel L. Jackson"
+      ],
+      [
+        "Gravik",
+        "Kingsley Ben-Adir"
+      ],
+      [
+        "G'iah",
+        "Emilia Clarke"
+      ],
+      [
+        "Pagon",
+        "Killian Scott"
+      ]
+    ]
+  },
+  "dawson-s-creek": {
+    "title": "Dawson's Creek",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/81/204413.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/845/dawsons-creek",
+    "premiered": "1998-01-20",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Dawson Leery",
+        "James Van Der Beek"
+      ],
+      [
+        "Josephine \"Joey\" Potter",
+        "Katie Holmes"
+      ],
+      [
+        "Pacey Witter",
+        "Joshua Jackson"
+      ],
+      [
+        "Evelyn \"Grams\" Ryan",
+        "Mary Beth Peil"
+      ]
+    ]
+  },
+  "the-twilight-zone": {
+    "title": "The Twilight Zone",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/256/641058.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/33153/the-twilight-zone",
+    "premiered": "2019-04-01",
+    "genres": [
+      "Drama",
+      "Horror",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Narrator",
+        "Jordan Peele"
+      ]
+    ]
+  },
+  "inspector-rex": {
+    "title": "Kommissar Rex",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/24/62355.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/6561/kommissar-rex",
+    "premiered": "1994-11-10",
+    "genres": [
+      "Action",
+      "Crime",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Richard Moser (s.1-4)",
+        "Tobias Moretti"
+      ],
+      [
+        "Peter Höllerer (s. 1-5)",
+        "Wolf Bachofner"
+      ],
+      [
+        "Max Koch (s. 1-4)",
+        "Fritz Muliar"
+      ],
+      [
+        "Ernst Stockinger (s.1-2)",
+        "Karl Markovics"
+      ]
+    ]
+  },
+  "the-l-word": {
+    "title": "The L Word",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/440/1102025.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/823/the-l-word",
+    "premiered": "2004-01-15",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Bette Porter",
+        "Jennifer Beals"
+      ],
+      [
+        "Alice Pieszecki",
+        "Leisha Hailey"
+      ],
+      [
+        "Tina Kennard",
+        "Laurel Holloman"
+      ],
+      [
+        "Jenny Schecter",
+        "Mia Kirshner"
+      ]
+    ]
+  },
+  "60-minutes": {
+    "title": "60 Minutes",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/642/1605873.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/4022/60-minutes",
+    "premiered": "1968-09-24",
+    "genres": [],
+    "cast": [
+      [
+        "Co-Host",
+        "Scott Pelley"
+      ],
+      [
+        "Correspondent",
+        "Jon Wertheim"
+      ]
+    ]
+  },
+  "h2o-just-add-water": {
+    "title": "H2O: Just Add Water",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/43/107555.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/2523/h2o-just-add-water",
+    "premiered": "2006-07-07",
+    "genres": [
+      "Drama",
+      "Family",
+      "Fantasy"
+    ],
+    "cast": [
+      [
+        "Rikki Chadwick",
+        "Cariba Heine"
+      ],
+      [
+        "Cleo Setori",
+        "Phoebe Tonkin"
+      ],
+      [
+        "Lewis McCartney",
+        "Angus McLaren"
+      ],
+      [
+        "Emma Gilbert",
+        "Claire Holt"
+      ]
+    ]
+  },
+  "keeping-up-with-the-kardashians": {
+    "title": "Keeping Up with the Kardashians",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/328/820507.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/575/keeping-up-with-the-kardashians",
+    "premiered": "2007-10-14",
+    "genres": [
+      "Drama"
+    ],
+    "cast": [
+      [
+        "Khloé Kardashian",
+        "Khloé Kardashian"
+      ],
+      [
+        "Kris Jenner",
+        "Kris Jenner"
+      ],
+      [
+        "Kim Kardashian West",
+        "Kim Kardashian"
+      ],
+      [
+        "Kourtney Kardashian",
+        "Kourtney Kardashian"
+      ]
+    ]
+  },
+  "agent-carter": {
+    "title": "Marvel's Agent Carter",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/143/357815.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/336/marvels-agent-carter",
+    "premiered": "2015-01-06",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Agent Peggy Carter",
+        "Hayley Atwell"
+      ],
+      [
+        "Daniel Sousa",
+        "Enver Gjokaj"
+      ],
+      [
+        "Edwin Jarvis",
+        "James D'Arcy"
+      ],
+      [
+        "Agent Jack Thompson",
+        "Chad Michael Murray"
+      ]
+    ]
+  },
+  "dirilis-ertugrul": {
+    "title": "Diriliş Ertuğrul",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/404/1010852.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/11834/dirilis-ertugrul",
+    "premiered": "2014-12-10",
+    "genres": [
+      "Action",
+      "War",
+      "History"
+    ],
+    "cast": [
+      [
+        "Ertugrul",
+        "Engin Altan Düzyatan"
+      ],
+      [
+        "Ibni Arabi",
+        "Ozman Sirgood"
+      ],
+      [
+        "Halime Hatun",
+        "Esra Bilgiç"
+      ],
+      [
+        "Hayme Ana",
+        "Hülya Darcan"
+      ]
+    ]
+  },
+  "iron-fist": {
+    "title": "Marvel's Iron Fist",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/164/412207.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/2175/marvels-iron-fist",
+    "premiered": "2017-03-17",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Daniel Rand / Iron Fist",
+        "Finn Jones"
+      ],
+      [
+        "Colleen Wing",
+        "Jessica Henwick"
+      ],
+      [
+        "Joy Meachum",
+        "Jessica Stroup"
+      ],
+      [
+        "Ward Meachum",
+        "Tom Pelphrey"
+      ]
+    ]
+  },
+  "the-end-of-the-f-ing-world": {
+    "title": "The End of the F***ing World",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/348/870850.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/28866/the-end-of-the-fing-world",
+    "premiered": "2017-10-24",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Adventure"
+    ],
+    "cast": [
+      [
+        "Alyssa",
+        "Jessica Barden"
+      ],
+      [
+        "James",
+        "Alex Lawther"
+      ]
+    ]
+  },
+  "ms-marvel": {
+    "title": "Ms. Marvel",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/405/1013952.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/43519/ms-marvel",
+    "premiered": "2022-06-08",
+    "genres": [
+      "Comedy",
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Kamala Khan / Ms. Marvel",
+        "Iman Vellani"
+      ],
+      [
+        "Bruno Carrelli",
+        "Matt Lintz"
+      ],
+      [
+        "Muneeba Khan",
+        "Zenobia Shroff"
+      ],
+      [
+        "Nakia Bahadir",
+        "Yasmeen Fletcher"
+      ]
+    ]
+  },
+  "peacemaker": {
+    "title": "Peacemaker",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/586/1466413.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/50603/peacemaker",
+    "premiered": "2022-01-13",
+    "genres": [
+      "Comedy",
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Christopher \"Chris\" Smith / Peacemaker",
+        "John Cena"
+      ],
+      [
+        "John Economos",
+        "Steve Agee"
+      ],
+      [
+        "Adrian Chase / Vigilante",
+        "Freddie Stroma"
+      ],
+      [
+        "Emilia Harcourt",
+        "Jennifer Holland"
+      ]
+    ]
+  },
+  "white-collar": {
+    "title": "White Collar",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/2/5238.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/323/white-collar",
+    "premiered": "2009-10-23",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Neal George Caffrey",
+        "Matt Bomer"
+      ],
+      [
+        "FBI Special Agent Peter Burke",
+        "Tim DeKay"
+      ],
+      [
+        "FBI Agent Clinton Jones",
+        "Sharif Atkins"
+      ],
+      [
+        "Mozzie",
+        "Willie Garson"
+      ]
+    ]
+  },
+  "my-name-is-earl": {
+    "title": "My Name Is Earl",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/5/14824.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/678/my-name-is-earl",
+    "premiered": "2005-09-20",
+    "genres": [
+      "Comedy"
+    ],
+    "cast": [
+      [
+        "Earl Hickey",
+        "Jason Lee"
+      ],
+      [
+        "Randy Hickey",
+        "Ethan Suplee"
+      ],
+      [
+        "Joy Turner",
+        "Jaime Pressly"
+      ],
+      [
+        "Darnell \"Crab Man\" Turner",
+        "Eddie Steeples"
+      ]
+    ]
+  },
+  "terminator-the-sarah-connor-chronicles": {
+    "title": "Terminator: The Sarah Connor Chronicles",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/3/9347.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/478/terminator-the-sarah-connor-chronicles",
+    "premiered": "2008-01-13",
+    "genres": [
+      "Drama",
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Sarah Connor",
+        "Lena Headey"
+      ],
+      [
+        "John Connor",
+        "Thomas Dekker"
+      ],
+      [
+        "Cameron Phillips",
+        "Summer Glau"
+      ],
+      [
+        "James Ellison",
+        "Richard T. Jones"
+      ]
+    ]
+  },
+  "o-clone": {
+    "title": "O Clone",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/88/222285.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/23671/o-clone",
+    "premiered": "2001-10-01",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Lucas Ferraz",
+        "Murilo Benício"
+      ],
+      [
+        "Jade Rachid",
+        "Giovanna Antonelli"
+      ],
+      [
+        "Deusa da Silva",
+        "Adriana Lessa"
+      ],
+      [
+        "Diogo Ferraz",
+        "Murilo Benício"
+      ]
+    ]
+  },
+  "the-cosby-show": {
+    "title": "The Cosby Show",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/313/782979.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/2084/the-cosby-show",
+    "premiered": "1984-09-20",
+    "genres": [
+      "Comedy",
+      "Family"
+    ],
+    "cast": [
+      [
+        "Clair Olivia Hanks Huxtable",
+        "Phylicia Rashad"
+      ],
+      [
+        "Dr. Heathcliff \"Cliff\" Huxtable",
+        "Bill Cosby"
+      ],
+      [
+        "Theodore Aloysius \"Theo\" Huxtable",
+        "Malcolm-Jamal Warner"
+      ],
+      [
+        "Vanessa Huxtable",
+        "Tempestt Bledsoe"
+      ]
+    ]
+  },
+  "seventeen-moments-of-spring": {
+    "title": "Семнадцать мгновений весны",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/29/73905.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/8139/semnadcat-mgnovenij-vesny",
+    "premiered": "1973-08-11",
+    "genres": [
+      "Drama",
+      "War",
+      "Espionage"
+    ],
+    "cast": [
+      [
+        "Фридрих Крюгер",
+        "Евгений Кузнецов"
+      ]
+    ]
+  },
+  "cold-case": {
+    "title": "Cold Case",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/15363.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/772/cold-case",
+    "premiered": "2003-09-28",
+    "genres": [
+      "Drama",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Det. Lilly Rush",
+        "Kathryn Morris"
+      ],
+      [
+        "Lt. John Stillman",
+        "John Finn"
+      ],
+      [
+        "Det. Nick Vera",
+        "Jeremy Ratchford"
+      ],
+      [
+        "Det. Will Jeffries",
+        "Thom Barry"
+      ]
+    ]
+  },
+  "7th-heaven": {
+    "title": "7th Heaven",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/494/1237230.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/799/7th-heaven",
+    "premiered": "1996-08-26",
+    "genres": [
+      "Drama",
+      "Family"
+    ],
+    "cast": [
+      [
+        "Rev. Eric Camden",
+        "Stephen Collins"
+      ],
+      [
+        "Lucy Camden",
+        "Beverley Mitchell"
+      ],
+      [
+        "Annie Camden",
+        "Catherine Hicks"
+      ],
+      [
+        "Ruthie Camden",
+        "Mackenzie Rosman"
+      ]
+    ]
+  },
+  "without-a-trace": {
+    "title": "Without a Trace",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/15665.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/813/without-a-trace",
+    "premiered": "2002-09-26",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Jack Malone",
+        "Anthony LaPaglia"
+      ],
+      [
+        "Samantha Spade",
+        "Poppy Montgomery"
+      ],
+      [
+        "Martin Fitzgerald",
+        "Eric Close"
+      ],
+      [
+        "Vivian Johnson",
+        "Marianne Jean-Baptiste"
+      ]
+    ]
+  },
+  "roseanne": {
+    "title": "Roseanne",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/146/365953.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/690/roseanne",
+    "premiered": "1988-10-18",
+    "genres": [
+      "Comedy",
+      "Family"
+    ],
+    "cast": [
+      [
+        "Roseanne Conner",
+        "Roseanne Barr"
+      ],
+      [
+        "Dan Conner",
+        "John Goodman"
+      ],
+      [
+        "Jackie Harris",
+        "Laurie Metcalf"
+      ],
+      [
+        "Darlene Conner",
+        "Sara Gilbert"
+      ]
+    ]
+  },
+  "cosmos-a-personal-voyage": {
+    "title": "Cosmos",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/402/1006408.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1128/cosmos",
+    "premiered": "1980-09-28",
+    "genres": [
+      "Mystery",
+      "Nature",
+      "History"
+    ],
+    "cast": [
+      [
+        "Host",
+        "Neil deGrasse Tyson"
+      ],
+      [
+        "Malala Yousefzai",
+        "Nadia Rochelle Pfarr"
+      ],
+      [
+        "George Tilton",
+        "Stoney Emshwiller"
+      ]
+    ]
+  },
+  "big-little-lies": {
+    "title": "Big Little Lies",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/196/490640.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/3080/big-little-lies",
+    "premiered": "2017-02-19",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Nathan Carlson",
+        "James Tupper"
+      ],
+      [
+        "Jane Chapman",
+        "Shailene Woodley"
+      ],
+      [
+        "Madeline Mackenzie",
+        "Reese Witherspoon"
+      ],
+      [
+        "Celeste Wright",
+        "Nicole Kidman"
+      ]
+    ]
+  },
+  "andor": {
+    "title": "Andor",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/564/1411766.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/52341/andor",
+    "premiered": "2022-09-21",
+    "genres": [
+      "Science-Fiction",
+      "Thriller",
+      "Espionage"
+    ],
+    "cast": [
+      [
+        "Cassian Andor",
+        "Diego Luna"
+      ],
+      [
+        "Dedra Meero",
+        "Denise Gough"
+      ],
+      [
+        "Luthen Rael",
+        "Stellan Skarsgård"
+      ],
+      [
+        "Mon Mothma",
+        "Genevieve O'Reilly"
+      ]
+    ]
+  },
+  "helga-y-flora": {
+    "title": "Helga y Flora",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/257/642997.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/48113/helga-y-flora",
+    "premiered": "2020-04-25",
+    "genres": [
+      "Drama",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Helga",
+        "Amalia Kassai"
+      ],
+      [
+        "Raymond",
+        "Alejandro Sieveking"
+      ],
+      [
+        "Flora",
+        "Catalina Saavedra"
+      ],
+      [
+        "Llancaqueo",
+        "Tiago Correa"
+      ]
+    ]
+  },
+  "obi-wan-kenobi": {
+    "title": "Obi-Wan Kenobi",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/498/1246074.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/52260/obi-wan-kenobi",
+    "premiered": "2022-05-27",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Obi-Wan Kenobi",
+        "Ewan McGregor"
+      ]
+    ]
+  },
+  "fallout": {
+    "title": "Fallout",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/599/1499142.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/49041/fallout",
+    "premiered": "2024-04-10",
+    "genres": [
+      "Drama",
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "The Ghoul / Cooper Howard",
+        "Walton Goggins"
+      ],
+      [
+        "Lucy MacLean",
+        "Ella Purnell"
+      ],
+      [
+        "Maximus",
+        "Aaron Moten"
+      ],
+      [
+        "Norm MacLean",
+        "Moises Arias"
+      ]
+    ]
+  },
+  "weeds": {
+    "title": "Weeds",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/545/1362942.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/160/weeds",
+    "premiered": "2005-08-07",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Nancy Botwin",
+        "Mary-Louise Parker"
+      ],
+      [
+        "Silas Botwin",
+        "Hunter Parrish"
+      ],
+      [
+        "Shane Botwin",
+        "Alexander Gould"
+      ],
+      [
+        "Doug Wilson",
+        "Kevin Nealon"
+      ]
+    ]
+  },
+  "ugly-betty": {
+    "title": "Ugly Betty",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/15559.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/796/ugly-betty",
+    "premiered": "2006-09-28",
+    "genres": [
+      "Drama",
+      "Comedy"
+    ],
+    "cast": [
+      [
+        "Betty Suarez",
+        "America Ferrera"
+      ],
+      [
+        "Daniel Meade",
+        "Eric Mabius"
+      ],
+      [
+        "Amanda",
+        "Becki Newton"
+      ],
+      [
+        "Ignacio Suarez",
+        "Tony Plana"
+      ]
+    ]
+  },
+  "sabrina-the-teenage-witch": {
+    "title": "Sabrina the Teenage Witch",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/214/536178.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/976/sabrina-the-teenage-witch",
+    "premiered": "1996-09-27",
+    "genres": [
+      "Comedy",
+      "Family",
+      "Fantasy"
+    ],
+    "cast": [
+      [
+        "Sabrina J. Spellman",
+        "Melissa Joan Hart"
+      ],
+      [
+        "Salem Saberhagen",
+        "Nick Bakay"
+      ],
+      [
+        "Zelda Spellman",
+        "Beth Broderick"
+      ],
+      [
+        "Hilda Antoinette Spellman",
+        "Caroline Rhea"
+      ]
+    ]
+  },
+  "kyle-xy": {
+    "title": "Kyle XY",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/15591.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/800/kyle-xy",
+    "premiered": "2006-06-26",
+    "genres": [
+      "Drama",
+      "Science-Fiction",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Kyle",
+        "Matt Dallas"
+      ],
+      [
+        "Lori Trager",
+        "April Matson"
+      ],
+      [
+        "Josh Trager",
+        "Jean-Luc Bilodeau"
+      ],
+      [
+        "Nicole Trager",
+        "Marguerite MacIntyre"
+      ]
+    ]
+  },
+  "the-little-mole": {
+    "title": "Little Mole and Panda",
+    "poster": "",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/52299/little-mole-and-panda",
+    "premiered": "2016-03-28",
+    "genres": [],
+    "cast": []
+  },
+  "yo-soy-betty-la-fea": {
+    "title": "Yo soy Betty, la fea",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/179/448655.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/40334/yo-soy-betty-la-fea",
+    "premiered": "1999-10-25",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Beatriz \"Betty\" Aurora Pinzón Solano",
+        "Ana María Orozco"
+      ],
+      [
+        "Armando Mendoza Sáenz",
+        "Jorge Enrique Abello"
+      ],
+      [
+        "Marcela Valencia",
+        "Natalia Ramírez"
+      ],
+      [
+        "Patricia Fernández",
+        "Lorna Paz"
+      ]
+    ]
+  },
+  "murder-she-wrote": {
+    "title": "Murder, She Wrote",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/11/28859.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/2083/murder-she-wrote",
+    "premiered": "1984-09-30",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Jessica Beatrice \"J.B.\" Fletcher",
+        "Angela Lansbury"
+      ],
+      [
+        "Dennis Stanton",
+        "Keith Michell"
+      ]
+    ]
+  },
+  "little-house-on-the-prairie": {
+    "title": "Little House on the Prairie",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/621/1553667.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/82345/little-house-on-the-prairie",
+    "premiered": "2026-07-09",
+    "genres": [
+      "Drama",
+      "Family",
+      "Western"
+    ],
+    "cast": [
+      [
+        "Laura Ingalls",
+        "Alice Halsey"
+      ],
+      [
+        "Mary Ingalls",
+        "Skywalker Hughes"
+      ],
+      [
+        "Charles Ingalls",
+        "Luke Bracey"
+      ],
+      [
+        "Caroline Ingalls",
+        "Crosby Fitzgerald"
+      ]
+    ]
+  },
+  "mi-camino-es-amarte": {
+    "title": "Mi Camino es Amarte",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/605/1514468.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/89377/mi-camino-es-amarte",
+    "premiered": "2022-11-07",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "cast": []
+  },
+  "grimm": {
+    "title": "Grimm",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/69/174906.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/10/grimm",
+    "premiered": "2011-10-28",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Det. Nick Burkhardt",
+        "David Giuntoli"
+      ],
+      [
+        "Monroe",
+        "Silas Weir Mitchell"
+      ],
+      [
+        "Captain Sean Renard",
+        "Sasha Roiz"
+      ],
+      [
+        "Lt. Hank Griffin",
+        "Russell Hornsby"
+      ]
+    ]
+  },
+  "boston-legal": {
+    "title": "Boston Legal",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/4/12026.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/598/boston-legal",
+    "premiered": "2004-10-03",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Legal"
+    ],
+    "cast": [
+      [
+        "Alan Shore",
+        "James Spader"
+      ],
+      [
+        "Denny Crane",
+        "William Shatner"
+      ],
+      [
+        "Shirley Schmidt",
+        "Candice Bergen"
+      ],
+      [
+        "Paul Lewiston",
+        "René Auberjonois"
+      ]
+    ]
+  },
+  "joey": {
+    "title": "Joey",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/5/13685.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/660/joey",
+    "premiered": "2004-09-09",
+    "genres": [
+      "Comedy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Joey Tribbiani",
+        "Matt LeBlanc"
+      ],
+      [
+        "Alex Garrett",
+        "Andrea Anders"
+      ],
+      [
+        "Gina Tribbiani",
+        "Drea de Matteo"
+      ],
+      [
+        "Michael Tribbiani",
+        "Paulo Costanzo"
+      ]
+    ]
+  },
+  "walker-texas-ranger": {
+    "title": "Walker, Texas Ranger",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/70/176011.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/468/walker-texas-ranger",
+    "premiered": "1993-04-21",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Ranger Cordell Walker",
+        "Chuck Norris"
+      ],
+      [
+        "Ranger Jimmy Trivette",
+        "Clarence Gilyard, Jr."
+      ],
+      [
+        "A.D.A. Alex Cahill",
+        "Sheree J. Wilson"
+      ],
+      [
+        "C.D. Parker",
+        "Noble Willingham"
+      ]
+    ]
+  },
+  "yes-minister": {
+    "title": "Yes Minister",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/206/517241.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1606/yes-minister",
+    "premiered": "1980-02-25",
+    "genres": [
+      "Comedy"
+    ],
+    "cast": [
+      [
+        "Rt Hon James Hacker",
+        "Paul Eddington"
+      ],
+      [
+        "Sir Humphrey Appleby",
+        "Nigel Hawthorne"
+      ],
+      [
+        "Bernard Wooley",
+        "Derek Fowlds"
+      ],
+      [
+        "Annie Hacker",
+        "Diana Hoddinott"
+      ]
+    ]
+  },
+  "chicago-fire": {
+    "title": "Chicago Fire",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/644/1611896.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/59/chicago-fire",
+    "premiered": "2012-10-10",
+    "genres": [
+      "Drama",
+      "Action"
+    ],
+    "cast": [
+      [
+        "Firefighter Christopher Herrmann",
+        "David Eigenberg"
+      ],
+      [
+        "Firefighter Joe Cruz",
+        "Joe Miñoso"
+      ],
+      [
+        "Lieutenant Randy \"Mouch\" McHolland",
+        "Christian Stolte"
+      ],
+      [
+        "Captain Kelly Severide",
+        "Taylor Kinney"
+      ]
+    ]
+  },
+  "jag": {
+    "title": "JAG",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/292/730789.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/581/jag",
+    "premiered": "1995-09-23",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Legal"
+    ],
+    "cast": [
+      [
+        "Captain Harmon \"Harm\" Rabb Jr., USN",
+        "David James Elliott"
+      ],
+      [
+        "Captain Bud J. Roberts Jr., USN",
+        "Patrick Labyorteaux"
+      ],
+      [
+        "Lieutenant Colonel Sarah \"Mac\" MacKenzie, USMC",
+        "Catherine Bell"
+      ],
+      [
+        "Rear Admiral A.J. Chegwidden, USN",
+        "John M. Jackson"
+      ]
+    ]
+  },
+  "dynasty": {
+    "title": "Dynasty",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/401/1003369.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/21656/dynasty",
+    "premiered": "2017-10-11",
+    "genres": [
+      "Drama",
+      "Family",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Fallon Morell Carrington",
+        "Elizabeth Gillies"
+      ],
+      [
+        "Blake Carrington",
+        "Grant Show"
+      ],
+      [
+        "Michael Culhane",
+        "Robert Christopher Riley"
+      ],
+      [
+        "Samuel Josiah \"Sammy Jo\" Jones",
+        "Rafael de la Fuente"
+      ]
+    ]
+  },
+  "v": {
+    "title": "V",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/91/227932.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/494/v",
+    "premiered": "2009-11-03",
+    "genres": [
+      "Drama",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Erica Evans",
+        "Elizabeth Mitchell"
+      ],
+      [
+        "Ryan Nichols",
+        "Morris Chestnut"
+      ],
+      [
+        "Father Jack Lowery",
+        "Joel Gretsch"
+      ],
+      [
+        "Lisa",
+        "Laura Vandervoort"
+      ]
+    ]
+  },
+  "maria-la-del-barrio": {
+    "title": "María la del Barrio",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/605/1514684.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/27965/maria-la-del-barrio",
+    "premiered": "1995-08-14",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "cast": []
+  },
+  "dae-jang-geum": {
+    "title": "Dae Jang Geum Is Watching",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/168/421429.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/38831/dae-jang-geum-is-watching",
+    "premiered": "2018-10-11",
+    "genres": [
+      "Comedy",
+      "Food",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Han San Hae",
+        "Shin Dong Wook"
+      ],
+      [
+        "Bok Sung Ah",
+        "Kwon Yoo Ri"
+      ],
+      [
+        "Han Jin Mi",
+        "Lee Yul Eum"
+      ],
+      [
+        "Han Jung Shik",
+        "Kim Hyun Joon"
+      ]
+    ]
+  },
+  "sense8": {
+    "title": "Sense8",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/154/387311.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1367/sense8",
+    "premiered": "2015-06-05",
+    "genres": [
+      "Drama",
+      "Science-Fiction",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Nomi Marks",
+        "Jamie Clayton"
+      ],
+      [
+        "Wolfgang Bogdanow",
+        "Max Riemelt"
+      ],
+      [
+        "Will Gorski",
+        "Brian J. Smith"
+      ],
+      [
+        "Riley Blue",
+        "Tuppence Middleton"
+      ]
+    ]
+  },
+  "quantico": {
+    "title": "Quantico",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/14/35887.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/2114/quantico",
+    "premiered": "2015-09-27",
+    "genres": [
+      "Crime",
+      "Mystery",
+      "Espionage"
+    ],
+    "cast": [
+      [
+        "Ryan Booth",
+        "Jake McLaughlin"
+      ],
+      [
+        "Shelby Wyatt",
+        "Johanna Braddy"
+      ],
+      [
+        "Alex Parrish",
+        "Priyanka Chopra Jonas"
+      ],
+      [
+        "Miranda Shaw",
+        "Aunjanue Ellis"
+      ]
+    ]
+  },
+  "altered-carbon": {
+    "title": "Altered Carbon",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/240/602152.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/12036/altered-carbon",
+    "premiered": "2018-02-02",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Quellcrist Falconer",
+        "Renée Elise Goldsberry"
+      ],
+      [
+        "Poe",
+        "Chris Conner"
+      ],
+      [
+        "Takeshi Kovacs",
+        "Joel Kinnaman"
+      ],
+      [
+        "Kristin Ortega",
+        "Martha Higareda"
+      ]
+    ]
+  },
+  "carinha-de-anjo": {
+    "title": "Carinha de Anjo",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/641/1602732.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/94403/carinha-de-anjo",
+    "premiered": "2016-11-21",
+    "genres": [],
+    "cast": []
+  },
+  "luke-cage": {
+    "title": "Marvel's Luke Cage",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/155/389198.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/2174/marvels-luke-cage",
+    "premiered": "2016-09-30",
+    "genres": [
+      "Action",
+      "Crime",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Luke Cage",
+        "Mike Colter"
+      ],
+      [
+        "Mercedes \"Misty\" Knight",
+        "Simone Missick"
+      ],
+      [
+        "Mariah Dillard",
+        "Alfre Woodard"
+      ],
+      [
+        "Hernán \"Shades\" Álvarez",
+        "Theo Rossi"
+      ]
+    ]
+  },
+  "the-legend-of-the-blue-sea": {
+    "title": "The Legend of the Blue Sea",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/532/1330925.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/18628/the-legend-of-the-blue-sea",
+    "premiered": "2016-11-16",
+    "genres": [
+      "Comedy",
+      "Fantasy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Heo Joon Jae",
+        "Lee Min Ho"
+      ],
+      [
+        "Shim Chung",
+        "Jun Ji Hyun"
+      ]
+    ]
+  },
+  "shogun": {
+    "title": "Shōgun",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/506/1265637.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/37336/shogun",
+    "premiered": "2024-02-27",
+    "genres": [
+      "Drama",
+      "Adventure",
+      "History"
+    ],
+    "cast": [
+      [
+        "John Blackthorne",
+        "Cosmo Jarvis"
+      ],
+      [
+        "Toda Mariko",
+        "Anna Sawai"
+      ],
+      [
+        "Kashigi Yabushige",
+        "Tadanobu Asano"
+      ],
+      [
+        "Yoshii Toranaga",
+        "Hiroyuki Sanada"
+      ]
+    ]
+  },
+  "the-book-of-boba-fett": {
+    "title": "The Book of Boba Fett",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/501/1253027.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/52523/the-book-of-boba-fett",
+    "premiered": "2021-12-29",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Fennec Shand",
+        "Ming-Na Wen"
+      ],
+      [
+        "Boba Fett",
+        "Temuera Morrison"
+      ],
+      [
+        "Mandalorian",
+        "Pedro Pascal"
+      ]
+    ]
+  },
+  "pluribus": {
+    "title": "Pluribus",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/592/1481086.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/86175/pluribus",
+    "premiered": "2025-11-07",
+    "genres": [
+      "Drama",
+      "Science-Fiction",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Carol Sturka",
+        "Rhea Seehorn"
+      ],
+      [
+        "Zosia",
+        "Karolina Wydra"
+      ],
+      [
+        "Manousos Oviedo",
+        "Carlos Manuel Vesga"
+      ]
+    ]
+  },
+  "numbers": {
+    "title": "Murder by Numbers",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/367/919428.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/30402/murder-by-numbers",
+    "premiered": "2017-07-12",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Thriller"
+    ],
+    "cast": []
+  },
+  "stargate-universe": {
+    "title": "Stargate Universe",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/81/204195.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/207/stargate-universe",
+    "premiered": "2009-10-02",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Dr. Nicholas Rush",
+        "Robert Carlyle"
+      ],
+      [
+        "Everett Young",
+        "Louis Ferreira"
+      ],
+      [
+        "Matthew Scott",
+        "Brian J. Smith"
+      ],
+      [
+        "Chloe Armstrong",
+        "Elyse Levesque"
+      ]
+    ]
+  },
+  "eastenders": {
+    "title": "EastEnders",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/15519.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/793/eastenders",
+    "premiered": "1985-02-19",
+    "genres": [
+      "Drama"
+    ],
+    "cast": [
+      [
+        "Ian Beale",
+        "Adam Woodyatt"
+      ],
+      [
+        "Phil Mitchell",
+        "Steve McFadden"
+      ],
+      [
+        "Sharon Watts",
+        "Letitia Dean"
+      ],
+      [
+        "Kathy Beale",
+        "Gillian Taylforth"
+      ]
+    ]
+  },
+  "revenge": {
+    "title": "Revenge",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/82/206879.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/9/revenge",
+    "premiered": "2011-09-21",
+    "genres": [
+      "Drama",
+      "Thriller",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Emily Rebecca Thorne",
+        "Emily VanCamp"
+      ],
+      [
+        "Nolan Ross",
+        "Gabriel Mann"
+      ],
+      [
+        "Jack Porter",
+        "Nick Wechsler"
+      ],
+      [
+        "Victoria Grayson",
+        "Madeleine Stowe"
+      ]
+    ]
+  },
+  "scandal": {
+    "title": "Scandal",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/303/758518.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/98/scandal",
+    "premiered": "2012-04-05",
+    "genres": [
+      "Drama",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Olivia Pope",
+        "Kerry Washington"
+      ],
+      [
+        "Abby Whelan",
+        "Darby Stanchfield"
+      ],
+      [
+        "Quinn Perkins",
+        "Katie Lowes"
+      ],
+      [
+        "Huck",
+        "Guillermo Diaz"
+      ]
+    ]
+  },
+  "midsomer-murders": {
+    "title": "Midsomer Murders",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/603/1508988.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/328/midsomer-murders",
+    "premiered": "1998-03-22",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "DCI Tom Barnaby",
+        "John Nettles"
+      ],
+      [
+        "DCI John Barnaby",
+        "Neil Dudgeon"
+      ],
+      [
+        "DS Ben Jones",
+        "Jason Hughes"
+      ],
+      [
+        "DS Jamie Winter",
+        "Nick Hendrix"
+      ]
+    ]
+  },
+  "jericho": {
+    "title": "Jericho",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/495/1239461.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/795/jericho",
+    "premiered": "2006-09-20",
+    "genres": [
+      "Drama",
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Jake Green",
+        "Skeet Ulrich"
+      ],
+      [
+        "Robert Hawkins",
+        "Lennie James"
+      ],
+      [
+        "Emily Sullivan",
+        "Ashley Scott"
+      ],
+      [
+        "Eric Green",
+        "Kenneth Mitchell"
+      ]
+    ]
+  },
+  "alarm-for-cobra-11-the-highway-police": {
+    "title": "Alarm für Cobra 11",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/21/53585.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/4903/alarm-fur-cobra-11",
+    "premiered": "1996-03-12",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Semir Gerkhan",
+        "Erdogan Atalay"
+      ],
+      [
+        "Dieter Bonrath",
+        "Gottfried Vollmer"
+      ],
+      [
+        "Susanne König",
+        "Daniela Wutte"
+      ],
+      [
+        "Hartmut Freund",
+        "Niels Kurvin"
+      ]
+    ]
+  },
+  "jane-the-virgin": {
+    "title": "Jane the Virgin",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/591/1478947.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/128/jane-the-virgin",
+    "premiered": "2014-10-13",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Rafael Solano",
+        "Justin Baldoni"
+      ],
+      [
+        "Jane Villanueva",
+        "Gina Rodriguez"
+      ],
+      [
+        "Xiomara Villanueva",
+        "Andrea Navedo"
+      ],
+      [
+        "Petra Solano",
+        "Yael Grobglas"
+      ]
+    ]
+  },
+  "blindspot": {
+    "title": "Blindspot",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/486/1215674.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1855/blindspot",
+    "premiered": "2015-09-21",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Kurt Weller",
+        "Sullivan Stapleton"
+      ],
+      [
+        "Jane Doe",
+        "Jaimie Alexander"
+      ],
+      [
+        "Patterson",
+        "Ashley Johnson"
+      ],
+      [
+        "Tasha Zapata",
+        "Audrey Esparza"
+      ]
+    ]
+  },
+  "sol-nascente": {
+    "title": "Sol Nascente",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/80/201933.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/22134/sol-nascente",
+    "premiered": "2016-08-29",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Alice Tanaka",
+        "Giovanna Antonelli"
+      ],
+      [
+        "Mário De Angeli",
+        "Bruno Gagliasso"
+      ],
+      [
+        "Lenita Hernández",
+        "Letícia Spiller"
+      ],
+      [
+        "Vittorio De Angeli",
+        "Marcello Novaes"
+      ]
+    ]
+  },
+  "dr-romantic": {
+    "title": "Romantic Doctor, Teacher Kim",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/458/1146656.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/19333/romantic-doctor-teacher-kim",
+    "premiered": "2016-11-07",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Medical"
+    ],
+    "cast": [
+      [
+        "Kim Sa Bu",
+        "Han Suk Kyu"
+      ],
+      [
+        "Kang Dong Joo",
+        "Yoo Yun Suk"
+      ],
+      [
+        "Yoon Seo Jung",
+        "Seo Hyun Jin"
+      ],
+      [
+        "Cha Eun Jae",
+        "Lee Sung Kyung"
+      ]
+    ]
+  },
+  "yellowstone": {
+    "title": "Yellowstone",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/545/1362616.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/27848/yellowstone",
+    "premiered": "2018-06-20",
+    "genres": [
+      "Drama",
+      "Western"
+    ],
+    "cast": [
+      [
+        "Rip Wheeler",
+        "Cole Hauser"
+      ],
+      [
+        "Kayce Dutton",
+        "Luke Grimes"
+      ],
+      [
+        "Beth Dutton",
+        "Kelly Reilly"
+      ],
+      [
+        "Monica Long",
+        "Kelsey Chow"
+      ]
+    ]
+  },
+  "what-s-wrong-with-secretary-kim": {
+    "title": "What's Wrong with Secretary Kim",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/579/1449676.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/36183/whats-wrong-with-secretary-kim",
+    "premiered": "2018-06-06",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Lee Young Joon",
+        "Park Seo Jun"
+      ],
+      [
+        "Kim Mi So",
+        "Park Min Young"
+      ],
+      [
+        "Park Yoo Shik",
+        "Kang Ki Young"
+      ],
+      [
+        "Kim Ji Ah",
+        "Pyo Ye Jin"
+      ]
+    ]
+  },
+  "legacies": {
+    "title": "Legacies",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/364/911065.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/36708/legacies",
+    "premiered": "2018-10-25",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Alaric Saltzman",
+        "Matthew Davis"
+      ],
+      [
+        "Hope Mikaelson",
+        "Danielle Rose Russell"
+      ],
+      [
+        "Lizzie Saltzman",
+        "Jenny Boyd"
+      ],
+      [
+        "Milton \"MG\" Greasley",
+        "Quincy Fouse"
+      ]
+    ]
+  },
+  "the-king-eternal-monarch": {
+    "title": "The King: Eternal Monarch",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/255/637568.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/46631/the-king-eternal-monarch",
+    "premiered": "2020-04-17",
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Lee Gon",
+        "Lee Min Ho"
+      ],
+      [
+        "Jung Tae Eul",
+        "Kim Go Eun"
+      ],
+      [
+        "Jo Young",
+        "Woo Do Hwan"
+      ],
+      [
+        "Kang Shin Jae",
+        "Kim Kyung Nam"
+      ]
+    ]
+  },
+  "the-sandman": {
+    "title": "The Sandman",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/423/1059631.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/42827/the-sandman",
+    "premiered": "2022-08-05",
+    "genres": [
+      "Drama",
+      "Fantasy"
+    ],
+    "cast": [
+      [
+        "Dream",
+        "Tom Sturridge"
+      ],
+      [
+        "Lucienne",
+        "Vivienne Acheampong"
+      ],
+      [
+        "Matthew the Raven",
+        "Patton Oswalt"
+      ],
+      [
+        "The Corinthian",
+        "Boyd Holbrook"
+      ]
+    ]
+  },
+  "harry-potter": {
+    "title": "Harry Potter",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/620/1550781.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/68803/harry-potter",
+    "premiered": "2026-12-25",
+    "genres": [
+      "Fantasy",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Albus Dumbledore",
+        "John Lithgow"
+      ],
+      [
+        "Minerva McGonagall",
+        "Janet McTeer"
+      ],
+      [
+        "Severus Snape",
+        "Paapa Essiedu"
+      ],
+      [
+        "Rubeus Hagrid",
+        "Nick Frost"
+      ]
+    ]
+  },
+  "a-knight-of-the-seven-kingdoms": {
+    "title": "A Knight of the Seven Kingdoms",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/608/1521912.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/53063/a-knight-of-the-seven-kingdoms",
+    "premiered": "2026-01-18",
+    "genres": [
+      "Drama",
+      "Action",
+      "Fantasy"
+    ],
+    "cast": [
+      [
+        "Ser Duncan 'Dunk' the Tall",
+        "Peter Claffey"
+      ],
+      [
+        "Egg",
+        "Dexter Sol Ansell"
+      ]
+    ]
+  },
+  "the-tonight-show": {
+    "title": "The Tonight Show",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/532/1331211.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/47333/the-tonight-show",
+    "premiered": "2017-09-19",
+    "genres": [],
+    "cast": [
+      [
+        "Host",
+        "Matt Cooper"
+      ]
+    ]
+  },
+  "violetta": {
+    "title": "Violetta",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/24/62335.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/6558/violetta",
+    "premiered": "2012-05-14",
+    "genres": [
+      "Drama",
+      "Children",
+      "Music"
+    ],
+    "cast": [
+      [
+        "Violetta",
+        "Martina Stoessel"
+      ],
+      [
+        "Ludmilla",
+        "Mercedes Lambre"
+      ],
+      [
+        "León",
+        "Jorge Blanco"
+      ],
+      [
+        "Herman Castillo",
+        "Diego Ramos"
+      ]
+    ]
+  },
+  "the-borgias": {
+    "title": "The Borgias",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/306/765764.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/515/the-borgias",
+    "premiered": "2011-04-03",
+    "genres": [
+      "Drama",
+      "Romance",
+      "History"
+    ],
+    "cast": [
+      [
+        "Rodrigo Borgia",
+        "Jeremy Irons"
+      ],
+      [
+        "Cesare Borgia",
+        "François Arnaud"
+      ],
+      [
+        "Lucrezia Borgia",
+        "Holliday Grainger"
+      ],
+      [
+        "Micheletto",
+        "Sean Harris"
+      ]
+    ]
+  },
+  "bonanza": {
+    "title": "Bonanza",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/20/51664.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/4378/bonanza",
+    "premiered": "1959-09-12",
+    "genres": [
+      "Drama",
+      "Action",
+      "Western"
+    ],
+    "cast": [
+      [
+        "Ben Cartwright",
+        "Lorne Greene"
+      ],
+      [
+        "Little Joe Cartwright",
+        "Michael Landon"
+      ],
+      [
+        "Hoss Cartwright",
+        "Dan Blocker"
+      ],
+      [
+        "Adam Cartwright",
+        "Pernell Roberts"
+      ]
+    ]
+  },
+  "andromeda": {
+    "title": "Gene Roddenberry's Andromeda",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/3/9402.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/486/gene-roddenberrys-andromeda",
+    "premiered": "2000-10-02",
+    "genres": [
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Captain Dylan Hunt",
+        "Kevin Sorbo"
+      ],
+      [
+        "Beka Valentine",
+        "Lisa Ryder"
+      ],
+      [
+        "Andromeda",
+        "Lexa Doig"
+      ],
+      [
+        "Seamus Harper",
+        "Gordon Michael Woolvett"
+      ]
+    ]
+  },
+  "dark-angel": {
+    "title": "Dark Angel",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/4/11610.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/554/dark-angel",
+    "premiered": "2000-10-03",
+    "genres": [
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Max Guevara / X5-452",
+        "Jessica Alba"
+      ],
+      [
+        "Logan Cale / Eyes Only",
+        "Michael Weatherly"
+      ],
+      [
+        "Cynthia \"Original Cindy\" McEachin",
+        "Valarie Rae Miller"
+      ],
+      [
+        "Calvin \"Sketchy\" Theodore",
+        "Richard Gunn"
+      ]
+    ]
+  },
+  "ncis-new-orleans": {
+    "title": "NCIS: New Orleans",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/280/701985.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/45/ncis-new-orleans",
+    "premiered": "2014-09-23",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Special Agent Dwayne Cassius \"King\" Pride",
+        "Scott Bakula"
+      ],
+      [
+        "Forensic Agent Sebastian Lund",
+        "Rob Kerkovich"
+      ],
+      [
+        "Jefferson Parish Coroner Dr. Loretta Wade",
+        "CCH Pounder"
+      ],
+      [
+        "Special Agent Christopher Lasalle",
+        "Lucas Black"
+      ]
+    ]
+  },
+  "american-crime-story": {
+    "title": "American Crime Story",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/401/1004505.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/2029/american-crime-story",
+    "premiered": "2016-02-02",
+    "genres": [
+      "Drama",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Johnnie Cochran",
+        "Courtney B. Vance"
+      ],
+      [
+        "O.J. Simpson",
+        "Cuba Gooding, Jr."
+      ],
+      [
+        "Robert Kardashian",
+        "David Schwimmer"
+      ],
+      [
+        "Robert Shapiro",
+        "John Travolta"
+      ]
+    ]
+  },
+  "shadowhunters": {
+    "title": "Shadowhunters: The Mortal Instruments",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/181/454353.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/2158/shadowhunters-the-mortal-instruments",
+    "premiered": "2016-01-12",
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Clarissa \"Clary\" Fray",
+        "Katherine McNamara"
+      ],
+      [
+        "Isabelle Lightwood",
+        "Emeraude Toubia"
+      ],
+      [
+        "Simon Lewis",
+        "Alberto Rosende"
+      ],
+      [
+        "Jonathan Christopher \"Jace\" Wayland",
+        "Dominic Sherwood"
+      ]
+    ]
+  },
+  "the-punisher": {
+    "title": "Marvel's The Punisher",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/500/1250736.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/16544/marvels-the-punisher",
+    "premiered": "2017-11-17",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Frank Castle / The Punisher",
+        "Jon Bernthal"
+      ],
+      [
+        "Dinah Madani",
+        "Amber Rose Revah"
+      ],
+      [
+        "Billy Russo",
+        "Ben Barnes"
+      ],
+      [
+        "Curtis Hoyle",
+        "Jason R. Moore"
+      ]
+    ]
+  },
+  "chilling-adventures-of-sabrina": {
+    "title": "Chilling Adventures of Sabrina",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/291/728576.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/32649/chilling-adventures-of-sabrina",
+    "premiered": "2018-10-26",
+    "genres": [
+      "Horror",
+      "Romance",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Hilda Spellman",
+        "Lucy Davis"
+      ],
+      [
+        "Prudence Night",
+        "Tati Gabrielle"
+      ],
+      [
+        "Ambrose Spellman",
+        "Chance Perdomo"
+      ],
+      [
+        "Sabrina Spellman",
+        "Kiernan Shipka"
+      ]
+    ]
+  },
+  "titanic": {
+    "title": "Titanic (1997 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/1/18/Titanic_%281997_film%29_poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Titanic_(1997_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": []
+  },
+  "avatar": {
+    "title": "Avatar (2009 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/d6/Avatar_%282009_film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Avatar_(2009_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Jake Sully",
+        "Sam Worthington"
+      ],
+      [
+        "Neytiri",
+        "Zoe Saldaña"
+      ],
+      [
+        "Colonel Miles Quaritch",
+        "Stephen Lang"
+      ],
+      [
+        "Captain Trudy Chacón",
+        "Michelle Rodriguez"
+      ]
+    ]
+  },
+  "fight-club": {
+    "title": "Fight Club",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/f/fc/Fight_Club_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Fight_Club",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Tyler Durden",
+        "Brad Pitt"
+      ],
+      [
+        "the unnamed narrator",
+        "Edward Norton"
+      ],
+      [
+        "Marla Singer",
+        "Helena Bonham Carter"
+      ],
+      [
+        "Robert \"Bob\" Paulsen",
+        "Meat Loaf Aday"
+      ]
+    ]
+  },
+  "schindler-s-list": {
+    "title": "Schindler's List",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/38/Schindler%27s_List_movie.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Schindler's_List",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Oskar Schindler",
+        "Liam Neeson"
+      ],
+      [
+        "Itzhak Stern",
+        "Ben Kingsley"
+      ],
+      [
+        "Amon Göth",
+        "Ralph Fiennes"
+      ],
+      [
+        "Emilie Schindler",
+        "Caroline Goodall"
+      ]
+    ]
+  },
+  "the-terminator": {
+    "title": "The Terminator",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/6/6d/The_Terminator.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Terminator",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "The Terminator",
+        "Arnold Schwarzenegger"
+      ],
+      [
+        "Kyle Reese",
+        "Michael Biehn"
+      ],
+      [
+        "Sarah Connor",
+        "Linda Hamilton"
+      ],
+      [
+        "Ed Traxler",
+        "Paul Winfield"
+      ]
+    ]
+  },
+  "v-for-vendetta": {
+    "title": "V for Vendetta (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/9f/Vforvendettamov.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/V_for_Vendetta_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Evey Hammond",
+        "Natalie Portman"
+      ],
+      [
+        "Chief Inspector Eric Finch of New Scotland Yard and Minister of Investigations (the \"Nose\")",
+        "Stephen Rea"
+      ],
+      [
+        "Gordon Deitrich",
+        "Stephen Fry"
+      ],
+      [
+        "Adam Sutler",
+        "John Hurt"
+      ]
+    ]
+  },
+  "gone-with-the-wind": {
+    "title": "Gone with the Wind (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/2/27/Poster_-_Gone_With_the_Wind_01.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Gone_with_the_Wind_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Gerald O'Hara",
+        "Thomas Mitchell"
+      ],
+      [
+        "Ellen Robillard (his wife)",
+        "Barbara O'Neil"
+      ],
+      [
+        "Scarlett O'Hara",
+        "Vivien Leigh"
+      ],
+      [
+        "Suellen O'Hara",
+        "Evelyn Keyes"
+      ]
+    ]
+  },
+  "the-avengers": {
+    "title": "The Avengers (2012 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Avengers_(2012_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Tony Stark / Iron Man",
+        "Robert Downey Jr."
+      ],
+      [
+        "Steve Rogers / Captain America",
+        "Chris Evans"
+      ],
+      [
+        "Bruce Banner / Hulk",
+        "Mark Ruffalo"
+      ],
+      [
+        "Thor",
+        "Chris Hemsworth"
+      ]
+    ]
+  },
+  "the-good-the-bad-and-the-ugly": {
+    "title": "The Good, the Bad and the Ugly",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/45/Good_the_bad_and_the_ugly_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Good%2C_the_Bad_and_the_Ugly",
+    "premiered": "",
+    "genres": [],
+    "cast": []
+  },
+  "harry-potter-and-the-chamber-of-secrets": {
+    "title": "Harry Potter and the Chamber of Secrets (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/c/c0/Harry_Potter_and_the_Chamber_of_Secrets_movie.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Harry_Potter_and_the_Chamber_of_Secrets_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Harry Potter",
+        "Daniel Radcliffe"
+      ],
+      [
+        "Ron Weasley",
+        "Rupert Grint"
+      ],
+      [
+        "Hermione Granger",
+        "Emma Watson"
+      ],
+      [
+        "Gilderoy Lockhart",
+        "Kenneth Branagh"
+      ]
+    ]
+  },
+  "star-wars-episode-i-the-phantom-menace": {
+    "title": "Star Wars: Episode I – The Phantom Menace",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/40/Star_Wars_Phantom_Menace_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Star_Wars%3A_Episode_I_%E2%80%93_The_Phantom_Menace",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Qui-Gon Jinn",
+        "Liam Neeson"
+      ],
+      [
+        "Obi-Wan Kenobi",
+        "Ewan McGregor"
+      ],
+      [
+        "Padmé Amidala",
+        "Natalie Portman"
+      ],
+      [
+        "Anakin \"Ani\" Skywalker",
+        "Jake Lloyd"
+      ]
+    ]
+  },
+  "harry-potter-and-the-goblet-of-fire": {
+    "title": "Harry Potter and the Goblet of Fire (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/c/c9/Harry_Potter_and_the_Goblet_of_Fire_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Harry_Potter_and_the_Goblet_of_Fire_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Harry Potter",
+        "Daniel Radcliffe"
+      ],
+      [
+        "Ron Weasley",
+        "Rupert Grint"
+      ],
+      [
+        "Hermione Granger",
+        "Emma Watson"
+      ],
+      [
+        "Rubeus Hagrid",
+        "Robbie Coltrane"
+      ]
+    ]
+  },
+  "slumdog-millionaire": {
+    "title": "Slumdog Millionaire",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/92/Slumdog_Millionaire_poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Slumdog_Millionaire",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Jamal Malik",
+        "Dev Patel"
+      ],
+      [
+        "younger Jamal",
+        "Ayush Mahesh Khedekar"
+      ],
+      [
+        "Latika",
+        "Freida Pinto"
+      ],
+      [
+        "younger Latika",
+        "Rubina Ali"
+      ]
+    ]
+  },
+  "harry-potter-and-the-half-blood-prince": {
+    "title": "Harry Potter and the Half-Blood Prince (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/3f/Harry_Potter_and_the_Half-Blood_Prince_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Harry_Potter_and_the_Half-Blood_Prince_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Harry Potter",
+        "Daniel Radcliffe"
+      ],
+      [
+        "Ron Weasley",
+        "Rupert Grint"
+      ],
+      [
+        "Hermione Granger",
+        "Emma Watson"
+      ],
+      [
+        "Bellatrix Lestrange",
+        "Helena Bonham Carter"
+      ]
+    ]
+  },
+  "harry-potter-and-the-order-of-the-phoenix": {
+    "title": "Harry Potter and the Order of the Phoenix (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/e7/Harry_Potter_and_the_Order_of_the_Phoenix_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Harry_Potter_and_the_Order_of_the_Phoenix_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Harry Potter",
+        "Daniel Radcliffe"
+      ],
+      [
+        "Ron Weasley",
+        "Rupert Grint"
+      ],
+      [
+        "Hermione Granger",
+        "Emma Watson"
+      ],
+      [
+        "Bellatrix Lestrange",
+        "Helena Bonham Carter"
+      ]
+    ]
+  },
+  "star-wars-episode-iii-revenge-of-the-sith": {
+    "title": "Star Wars: Episode III – Revenge of the Sith",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/93/Star_Wars_Episode_III_Revenge_of_the_Sith_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Star_Wars%3A_Episode_III_%E2%80%93_Revenge_of_the_Sith",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Obi-Wan Kenobi",
+        "Ewan McGregor"
+      ],
+      [
+        "Anakin Skywalker / Darth Vader",
+        "Hayden Christensen"
+      ],
+      [
+        "Padmé Amidala",
+        "Natalie Portman"
+      ],
+      [
+        "Palpatine / Darth Sidious",
+        "Ian McDiarmid"
+      ]
+    ]
+  },
+  "dead-poets-society": {
+    "title": "Dead Poets Society",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/8/86/Dead_poets_society.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Dead_Poets_Society",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "John Keating",
+        "Robin Williams"
+      ],
+      [
+        "Neil Perry",
+        "Robert Sean Leonard"
+      ],
+      [
+        "Todd Anderson",
+        "Ethan Hawke"
+      ],
+      [
+        "Knox Overstreet",
+        "Josh Charles"
+      ]
+    ]
+  },
+  "a-beautiful-mind": {
+    "title": "A Beautiful Mind",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/b8/A_Beautiful_Mind_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/A_Beautiful_Mind",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "John Nash",
+        "Russell Crowe"
+      ],
+      [
+        "Alicia Nash",
+        "Jennifer Connelly"
+      ],
+      [
+        "William Parcher",
+        "Ed Harris"
+      ],
+      [
+        "Dr. Rosen",
+        "Christopher Plummer"
+      ]
+    ]
+  },
+  "saving-private-ryan": {
+    "title": "Saving Private Ryan",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/ac/Saving_Private_Ryan_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Saving_Private_Ryan",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "John H. Miller",
+        "Tom Hanks"
+      ],
+      [
+        "Richard Reiben",
+        "Edward Burns"
+      ],
+      [
+        "Mike Horvath",
+        "Tom Sizemore"
+      ],
+      [
+        "Timothy Upham",
+        "Jeremy Davies"
+      ]
+    ]
+  },
+  "pirates-of-the-caribbean-at-world-s-end": {
+    "title": "Pirates of the Caribbean: At World's End",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/5a/Pirates_AWE_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Pirates_of_the_Caribbean%3A_At_World's_End",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Captain Jack Sparrow",
+        "Johnny Depp"
+      ],
+      [
+        "Elizabeth Swann",
+        "Keira Knightley"
+      ],
+      [
+        "Will Turner",
+        "Orlando Bloom"
+      ],
+      [
+        "Bootstrap Bill Turner",
+        "Stellan Skarsgård"
+      ]
+    ]
+  },
+  "brokeback-mountain": {
+    "title": "Brokeback Mountain",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/a1/Brokeback_mountain.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Brokeback_Mountain",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Ennis Del Mar",
+        "Heath Ledger"
+      ],
+      [
+        "Jack Twist",
+        "Jake Gyllenhaal"
+      ],
+      [
+        "Joe Aguirre",
+        "Randy Quaid"
+      ],
+      [
+        "Alma Beers Del Mar",
+        "Michelle Williams"
+      ]
+    ]
+  },
+  "batman-begins": {
+    "title": "Batman Begins",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/af/Batman_Begins_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Batman_Begins",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Bruce Wayne / Batman",
+        "Christian Bale"
+      ],
+      [
+        "Alfred Pennyworth",
+        "Michael Caine"
+      ],
+      [
+        "Henri Ducard / Ra's al Ghul",
+        "Liam Neeson"
+      ],
+      [
+        "Rachel Dawes",
+        "Katie Holmes"
+      ]
+    ]
+  },
+  "apocalypse-now": {
+    "title": "Apocalypse Now",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/c/c2/Apocalypse_Now_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Apocalypse_Now",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Colonel Walter Kurtz",
+        "Marlon Brando"
+      ],
+      [
+        "Lieutenant Colonel William \"Bill\" Kilgore",
+        "Robert Duvall"
+      ],
+      [
+        "U.S. Army Captain Benjamin L. Willard",
+        "Martin Sheen"
+      ],
+      [
+        "Engineman 3rd Class Jay \"Chef\" Hicks",
+        "Frederic Forrest"
+      ]
+    ]
+  },
+  "blade-runner": {
+    "title": "Blade Runner",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/9f/Blade_Runner_%281982_poster%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Blade_Runner",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Rick Deckard",
+        "Harrison Ford"
+      ],
+      [
+        "Roy Batty",
+        "Rutger Hauer"
+      ],
+      [
+        "Rachael",
+        "Sean Young"
+      ],
+      [
+        "Gaff",
+        "Edward James Olmos"
+      ]
+    ]
+  },
+  "citizen-kane": {
+    "title": "Citizen Kane",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Citizen_Kane_poster%2C_1941_%28Style_B%2C_unrestored%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Citizen_Kane",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Jedediah Leland",
+        "Joseph Cotten"
+      ],
+      [
+        "Susan Alexander Kane",
+        "Dorothy Comingore"
+      ],
+      [
+        "Mary Kane",
+        "Agnes Moorehead"
+      ],
+      [
+        "Emily Monroe Norton Kane",
+        "Ruth Warrick"
+      ]
+    ]
+  },
+  "spider-man": {
+    "title": "Spider-Man (2002 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/6/6c/Spider-Man_%282002_film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Spider-Man_(2002_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Peter Parker / Spider-Man",
+        "Tobey Maguire"
+      ],
+      [
+        "Norman Osborn / Green Goblin",
+        "Willem Dafoe"
+      ],
+      [
+        "Mary Jane Watson",
+        "Kirsten Dunst"
+      ],
+      [
+        "Harry Osborn",
+        "James Franco"
+      ]
+    ]
+  },
+  "cars": {
+    "title": "Cars (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/34/Cars_2006.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Cars_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Lightning McQueen",
+        "Owen Wilson"
+      ],
+      [
+        "Doc Hudson",
+        "Paul Newman"
+      ],
+      [
+        "Sally Carrera",
+        "Bonnie Hunt"
+      ],
+      [
+        "Chick Hicks",
+        "Michael Keaton"
+      ]
+    ]
+  },
+  "alien": {
+    "title": "Alien (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/c/c3/Alien_movie_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Alien_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Dallas",
+        "Tom Skerritt"
+      ],
+      [
+        "Ripley",
+        "Sigourney Weaver"
+      ],
+      [
+        "Lambert",
+        "Veronica Cartwright"
+      ],
+      [
+        "Brett",
+        "Harry Dean Stanton"
+      ]
+    ]
+  },
+  "harry-potter-and-the-deathly-hallows-part-1": {
+    "title": "Harry Potter and the Deathly Hallows – Part 1",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/2/2d/Harry_Potter_and_the_Deathly_Hallows_%E2%80%93_Part_1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Harry_Potter_and_the_Deathly_Hallows_%E2%80%93_Part_1",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Harry Potter",
+        "Daniel Radcliffe"
+      ],
+      [
+        "Ron Weasley",
+        "Rupert Grint"
+      ],
+      [
+        "Hermione Granger",
+        "Emma Watson"
+      ],
+      [
+        "Bellatrix Lestrange",
+        "Helena Bonham Carter"
+      ]
+    ]
+  },
+  "star-wars-episode-ii-attack-of-the-clones": {
+    "title": "Star Wars: Episode II – Attack of the Clones",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/32/Star_Wars_-_Episode_II_Attack_of_the_Clones_%28movie_poster%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Star_Wars%3A_Episode_II_%E2%80%93_Attack_of_the_Clones",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Obi-Wan Kenobi",
+        "Ewan McGregor"
+      ],
+      [
+        "Anakin Skywalker",
+        "Hayden Christensen"
+      ],
+      [
+        "Padmé Amidala",
+        "Natalie Portman"
+      ],
+      [
+        "Palpatine / Darth Sidious",
+        "Ian McDiarmid"
+      ]
+    ]
+  },
+  "avengers-age-of-ultron": {
+    "title": "Avengers: Age of Ultron",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/f/ff/Avengers_Age_of_Ultron_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Avengers%3A_Age_of_Ultron",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Tony Stark / Iron Man",
+        "Robert Downey Jr."
+      ],
+      [
+        "Thor",
+        "Chris Hemsworth"
+      ],
+      [
+        "Bruce Banner / Hulk",
+        "Mark Ruffalo"
+      ],
+      [
+        "Steve Rogers / Captain America",
+        "Chris Evans"
+      ]
+    ]
+  },
+  "the-great-dictator": {
+    "title": "The Great Dictator",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/9/9d/The_Great_Dictator_%281940%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Great_Dictator",
+    "premiered": "",
+    "genres": [],
+    "cast": []
+  },
+  "harry-potter-and-the-deathly-hallows-part-2": {
+    "title": "Harry Potter and the Deathly Hallows – Part 2",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/df/Harry_Potter_and_the_Deathly_Hallows_%E2%80%93_Part_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Harry_Potter_and_the_Deathly_Hallows_%E2%80%93_Part_2",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Harry Potter",
+        "Daniel Radcliffe"
+      ],
+      [
+        "Ron Weasley",
+        "Rupert Grint"
+      ],
+      [
+        "Hermione Granger",
+        "Emma Watson"
+      ],
+      [
+        "Bellatrix Lestrange",
+        "Helena Bonham Carter"
+      ]
+    ]
+  },
+  "life-is-beautiful": {
+    "title": "Life Is Beautiful",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/7c/Vitaebella.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Life_Is_Beautiful",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Guido Orefice",
+        "Roberto Benigni"
+      ],
+      [
+        "Dora",
+        "Nicoletta Braschi"
+      ],
+      [
+        "Giosuè Orefice",
+        "Giorgio Cantarini"
+      ],
+      [
+        "Uncle Eliseo",
+        "Giustino Durano"
+      ]
+    ]
+  },
+  "inglourious-basterds": {
+    "title": "Inglourious Basterds",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/c/c3/Inglourious_Basterds_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Inglourious_Basterds",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Lieutenant Aldo Raine",
+        "Brad Pitt"
+      ],
+      [
+        "Shosanna Dreyfus",
+        "Mélanie Laurent"
+      ],
+      [
+        "Standartenführer Hans Landa",
+        "Christoph Waltz"
+      ],
+      [
+        "Sergeant Donny Donowitz",
+        "Eli Roth"
+      ]
+    ]
+  },
+  "taxi-driver": {
+    "title": "Taxi Driver",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/33/Taxi_Driver_%281976_film_poster%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Taxi_Driver",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Travis Bickle",
+        "Robert De Niro"
+      ],
+      [
+        "Iris Steensma",
+        "Jodie Foster"
+      ],
+      [
+        "Betsy",
+        "Cybill Shepherd"
+      ],
+      [
+        "Matthew \"Sport\" Higgins",
+        "Harvey Keitel"
+      ]
+    ]
+  },
+  "american-beauty": {
+    "title": "American Beauty (1999 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/9a/American_Beauty_1999_film_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/American_Beauty_(1999_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Lester Burnham",
+        "Kevin Spacey"
+      ],
+      [
+        "Carolyn Burnham",
+        "Annette Bening"
+      ],
+      [
+        "Jane Burnham",
+        "Thora Birch"
+      ],
+      [
+        "Ricky Fitts",
+        "Wes Bentley"
+      ]
+    ]
+  },
+  "captain-america-the-first-avenger": {
+    "title": "Captain America: The First Avenger",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/37/Captain_America_The_First_Avenger_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Captain_America%3A_The_First_Avenger",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Steve Rogers / Captain America",
+        "Chris Evans"
+      ],
+      [
+        "Chester Phillips",
+        "Tommy Lee Jones"
+      ],
+      [
+        "Johann Schmidt / Red Skull",
+        "Hugo Weaving"
+      ],
+      [
+        "Margaret \"Peggy\" Carter",
+        "Hayley Atwell"
+      ]
+    ]
+  },
+  "thor": {
+    "title": "Thor (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/95/Thor_%28film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Thor_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Thor",
+        "Chris Hemsworth"
+      ],
+      [
+        "Jane Foster",
+        "Natalie Portman"
+      ],
+      [
+        "Loki",
+        "Tom Hiddleston"
+      ],
+      [
+        "Erik Selvig",
+        "Stellan Skarsgård"
+      ]
+    ]
+  },
+  "amelie": {
+    "title": "Amélie",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/53/Amelie_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Am%C3%A9lie",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Amélie Poulain Flora Guiet as young Amélie",
+        "Audrey Tautou"
+      ],
+      [
+        "Nino Quincampoix Amaury Babault as young Nino",
+        "Mathieu Kassovitz"
+      ],
+      [
+        "Raphaël Poulain",
+        "Rufus"
+      ],
+      [
+        "Amandine Poulain",
+        "Lorella Cravotta"
+      ]
+    ]
+  },
+  "the-pianist": {
+    "title": "The Pianist (2002 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/a6/The_Pianist_movie.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Pianist_(2002_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Władysław Szpilman",
+        "Adrien Brody"
+      ],
+      [
+        "Captain Wilm Hosenfeld",
+        "Thomas Kretschmann"
+      ],
+      [
+        "Samuel Szpilman",
+        "Frank Finlay"
+      ],
+      [
+        "Edwarda Szpilman",
+        "Maureen Lipman"
+      ]
+    ]
+  },
+  "the-king-s-speech": {
+    "title": "The King's Speech",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/4a/The_King%27s_Speech_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_King's_Speech",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "King George VI",
+        "Colin Firth"
+      ],
+      [
+        "Lionel Logue",
+        "Geoffrey Rush"
+      ],
+      [
+        "Queen Elizabeth",
+        "Helena Bonham Carter"
+      ],
+      [
+        "King Edward VIII",
+        "Guy Pearce"
+      ]
+    ]
+  },
+  "psycho": {
+    "title": "Psycho (1960 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/7/76/Psycho_%281960%29_theatrical_poster_%28retouched%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Psycho_(1960_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Norman Bates",
+        "Anthony Perkins"
+      ],
+      [
+        "Lila Crane",
+        "Vera Miles"
+      ],
+      [
+        "Sam Loomis",
+        "John Gavin"
+      ],
+      [
+        "Private Investigator Milton Arbogast",
+        "Martin Balsam"
+      ]
+    ]
+  },
+  "ben-hur": {
+    "title": "Ben-Hur (1959 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/2/27/Ben_Hur_1959_film_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Ben-Hur_(1959_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Judah Ben-Hur",
+        "Charlton Heston"
+      ],
+      [
+        "Quintus Arrius",
+        "Jack Hawkins"
+      ],
+      [
+        "Esther",
+        "Haya Harareet"
+      ],
+      [
+        "Messala",
+        "Stephen Boyd"
+      ]
+    ]
+  },
+  "12-years-a-slave": {
+    "title": "12 Years a Slave (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/5c/12_Years_a_Slave_film_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/12_Years_a_Slave_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Solomon Northup / Platt",
+        "Chiwetel Ejiofor"
+      ],
+      [
+        "Anne Northup",
+        "Kelsey Scott"
+      ],
+      [
+        "Edwin Epps",
+        "Michael Fassbender"
+      ],
+      [
+        "William Ford",
+        "Benedict Cumberbatch"
+      ]
+    ]
+  },
+  "the-green-mile": {
+    "title": "The Green Mile (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/e2/The_Green_Mile_%28movie_poster%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Green_Mile_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Paul Edgecomb Dabbs Greer as old Paul Edgecomb",
+        "Tom Hanks"
+      ],
+      [
+        "Brutus \"Brutal\" Howell",
+        "David Morse"
+      ],
+      [
+        "Jan Edgecomb",
+        "Bonnie Hunt"
+      ],
+      [
+        "John Coffey",
+        "Michael Clarke Duncan"
+      ]
+    ]
+  },
+  "joker": {
+    "title": "Joker (2019 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/e1/Joker_%282019_film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Joker_(2019_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Arthur Fleck / Joker",
+        "Joaquin Phoenix"
+      ],
+      [
+        "Maurice \"Murray\" Franklin",
+        "Robert De Niro"
+      ],
+      [
+        "Sophie Dumond",
+        "Zazie Beetz"
+      ],
+      [
+        "Penny Fleck",
+        "Frances Conroy"
+      ]
+    ]
+  },
+  "dr-no": {
+    "title": "Dr. No (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/43/Dr._No_-_UK_cinema_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Dr._No_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "James Bond",
+        "Sean Connery"
+      ],
+      [
+        "Honey Ryder",
+        "Ursula Andress"
+      ],
+      [
+        "Dr. No",
+        "Joseph Wiseman"
+      ],
+      [
+        "Felix Leiter",
+        "Jack Lord"
+      ]
+    ]
+  },
+  "the-godfather-part-iii": {
+    "title": "The Godfather Part III",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/55/GodfatherIII2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Godfather_Part_III",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Michael Corleone",
+        "Al Pacino"
+      ],
+      [
+        "Kay Adams",
+        "Diane Keaton"
+      ],
+      [
+        "Connie Corleone",
+        "Talia Shire"
+      ],
+      [
+        "Vincent Corleone",
+        "Andy Garcia"
+      ]
+    ]
+  },
+  "the-shining": {
+    "title": "The Shining (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/1/1d/The_Shining_%281980%29_U.K._release_poster_-_The_tide_of_terror_that_swept_America_IS_HERE.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Shining_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Jack Torrance",
+        "Jack Nicholson"
+      ],
+      [
+        "Wendy Torrance",
+        "Shelley Duvall"
+      ],
+      [
+        "Danny \"Doc\" Torrance",
+        "Danny Lloyd"
+      ],
+      [
+        "Dick Hallorann",
+        "Scatman Crothers"
+      ]
+    ]
+  },
+  "troy": {
+    "title": "Troy (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/9f/Troy_03500296.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Troy_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Achilles",
+        "Brad Pitt"
+      ],
+      [
+        "Hector",
+        "Eric Bana"
+      ],
+      [
+        "Paris",
+        "Orlando Bloom"
+      ],
+      [
+        "Helen",
+        "Diane Kruger"
+      ]
+    ]
+  },
+  "star-wars-episode-vii-the-force-awakens": {
+    "title": "Star Wars: The Force Awakens",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/a2/Star_Wars_The_Force_Awakens_Theatrical_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Star_Wars%3A_The_Force_Awakens",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Han Solo",
+        "Harrison Ford"
+      ],
+      [
+        "Luke Skywalker",
+        "Mark Hamill"
+      ],
+      [
+        "General Leia Organa",
+        "Carrie Fisher"
+      ],
+      [
+        "Kylo Ren",
+        "Adam Driver"
+      ]
+    ]
+  },
+  "peter-pan": {
+    "title": "Peter Pan (1953 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Peter_Pan_%281953_poster%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Peter_Pan_(1953_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Peter Pan",
+        "Bobby Driscoll"
+      ],
+      [
+        "Wendy Darling",
+        "Kathryn Beaumont"
+      ],
+      [
+        "Captain Hook",
+        "Hans Conried"
+      ],
+      [
+        "Mr. Smee",
+        "Bill Thompson"
+      ]
+    ]
+  },
+  "the-wolf-of-wall-street": {
+    "title": "The Wolf of Wall Street (2013 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/d8/The_Wolf_of_Wall_Street_%282013%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Wolf_of_Wall_Street_(2013_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Jordan Belfort",
+        "Leonardo DiCaprio"
+      ],
+      [
+        "Donnie Azoff",
+        "Jonah Hill"
+      ],
+      [
+        "Naomi Lapaglia",
+        "Margot Robbie"
+      ],
+      [
+        "Mark Hanna",
+        "Matthew McConaughey"
+      ]
+    ]
+  },
+  "spider-man-homecoming": {
+    "title": "Spider-Man: Homecoming",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/f/f9/Spider-Man_Homecoming_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Spider-Man%3A_Homecoming",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Peter Parker / Spider-Man",
+        "Tom Holland"
+      ],
+      [
+        "Adrian Toomes / Vulture",
+        "Michael Keaton"
+      ],
+      [
+        "Happy Hogan",
+        "Jon Favreau"
+      ],
+      [
+        "Pepper Potts",
+        "Gwyneth Paltrow"
+      ]
+    ]
+  },
+  "birdman": {
+    "title": "Birdman (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/6/63/Birdman_poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Birdman_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Riggan Benjamin Kanes as young Riggan / Birdman",
+        "Michael Keaton"
+      ],
+      [
+        "Jake",
+        "Zach Galifianakis"
+      ],
+      [
+        "Mike",
+        "Edward Norton"
+      ],
+      [
+        "Laura",
+        "Andrea Riseborough"
+      ]
+    ]
+  },
+  "seven-samurai": {
+    "title": "Seven Samurai",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/c/c8/Seven_Samurai_Poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Seven_Samurai",
+    "premiered": "",
+    "genres": [],
+    "cast": []
+  },
+  "seven": {
+    "title": "Seven (1995 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/6/68/Seven_%28movie%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Seven_(1995_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "David Mills",
+        "Brad Pitt"
+      ],
+      [
+        "William Somerset",
+        "Morgan Freeman"
+      ],
+      [
+        "Tracy Mills",
+        "Gwyneth Paltrow"
+      ],
+      [
+        "Martin Talbot",
+        "Richard Roundtree"
+      ]
+    ]
+  },
+  "leon-the-professional": {
+    "title": "Léon: The Professional",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/0/03/Leon-poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/L%C3%A9on%3A_The_Professional",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Léon",
+        "Jean Reno"
+      ],
+      [
+        "Mathilda Lando",
+        "Natalie Portman"
+      ],
+      [
+        "Norman Stansfield",
+        "Gary Oldman"
+      ],
+      [
+        "Tony",
+        "Danny Aiello"
+      ]
+    ]
+  },
+  "life-of-pi": {
+    "title": "Life of Pi (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/57/Life_of_Pi_2012_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Life_of_Pi_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Piscine Molitor \"Pi\" Patel",
+        "Suraj Sharma"
+      ],
+      [
+        "Pi Patel",
+        "Gautam Belur"
+      ],
+      [
+        "Gita Patel",
+        "Tabu"
+      ],
+      [
+        "The Writer",
+        "Rafe Spall"
+      ]
+    ]
+  },
+  "the-artist": {
+    "title": "The Artist (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/a4/The_Artist_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Artist_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "George Valentin",
+        "Jean Dujardin"
+      ],
+      [
+        "Peppy Miller",
+        "Bérénice Bejo"
+      ],
+      [
+        "Jack",
+        "Uggie"
+      ],
+      [
+        "Al Zimmer",
+        "John Goodman"
+      ]
+    ]
+  },
+  "saludos-amigos": {
+    "title": "Saludos Amigos",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/af/Saludosposter.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Saludos_Amigos",
+    "premiered": "",
+    "genres": [],
+    "cast": []
+  },
+  "the-revenant": {
+    "title": "The Revenant (2015 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/b6/The_Revenant_2015_film_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Revenant_(2015_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Hugh Glass",
+        "Leonardo DiCaprio"
+      ],
+      [
+        "John S. Fitzgerald",
+        "Tom Hardy"
+      ],
+      [
+        "Andrew Henry",
+        "Domhnall Gleeson"
+      ],
+      [
+        "Jim Bridger",
+        "Will Poulter"
+      ]
+    ]
+  },
+  "doctor-strange": {
+    "title": "Doctor Strange (2016 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/a1/Doctor_Strange_%282016_film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Doctor_Strange_(2016_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Dr. Stephen Strange",
+        "Benedict Cumberbatch"
+      ],
+      [
+        "Karl Mordo",
+        "Chiwetel Ejiofor"
+      ],
+      [
+        "Christine Palmer",
+        "Rachel McAdams"
+      ],
+      [
+        "Wong",
+        "Benedict Wong"
+      ]
+    ]
+  },
+  "scarface": {
+    "title": "Scarface (1983 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/71/Scarface_-_1983_film.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Scarface_(1983_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Tony Montana",
+        "Al Pacino"
+      ],
+      [
+        "Manolo \"Manny\" Ribera",
+        "Steven Bauer"
+      ],
+      [
+        "Elvira Hancock",
+        "Michelle Pfeiffer"
+      ],
+      [
+        "Gina Montana",
+        "Mary Elizabeth Mastrantonio"
+      ]
+    ]
+  },
+  "shakespeare-in-love": {
+    "title": "Shakespeare in Love",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/e8/Shakespeare_in_Love_1998_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Shakespeare_in_Love",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "William Shakespeare",
+        "Joseph Fiennes"
+      ],
+      [
+        "Viola de Lesseps",
+        "Gwyneth Paltrow"
+      ],
+      [
+        "Philip Henslowe",
+        "Geoffrey Rush"
+      ],
+      [
+        "Lord Wessex",
+        "Colin Firth"
+      ]
+    ]
+  },
+  "memento": {
+    "title": "Memento (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/c/c7/Memento_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Memento_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Leonard Shelby",
+        "Guy Pearce"
+      ],
+      [
+        "Natalie",
+        "Carrie-Anne Moss"
+      ],
+      [
+        "John Edward \"Teddy\" Gammell",
+        "Joe Pantoliano"
+      ],
+      [
+        "Burt",
+        "Mark Boone Junior"
+      ]
+    ]
+  },
+  "the-english-patient": {
+    "title": "The English Patient (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/bd/The_English_Patient_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_English_Patient_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Almásy",
+        "Ralph Fiennes"
+      ],
+      [
+        "Hana",
+        "Juliette Binoche"
+      ],
+      [
+        "Caravaggio",
+        "Willem Dafoe"
+      ],
+      [
+        "Katharine Clifton",
+        "Kristin Scott Thomas"
+      ]
+    ]
+  },
+  "dr-strangelove": {
+    "title": "Dr. Strangelove",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/e6/Dr._Strangelove_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Dr._Strangelove",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "General Buck Turgidson",
+        "George C. Scott"
+      ],
+      [
+        "Brigadier General Jack D. Ripper",
+        "Sterling Hayden"
+      ],
+      [
+        "Colonel \"Bat\" Guano",
+        "Keenan Wynn"
+      ],
+      [
+        "Mr. Staines",
+        "Jack Creley"
+      ]
+    ]
+  },
+  "back-to-the-future-part-ii": {
+    "title": "Back to the Future Part II",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/c/c2/Back_to_the_Future_Part_II.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Back_to_the_Future_Part_II",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Dr. Emmett Brown",
+        "Christopher Lloyd"
+      ],
+      [
+        "Lorraine Baines-McFly",
+        "Lea Thompson"
+      ]
+    ]
+  },
+  "alice-in-wonderland": {
+    "title": "Alice in Wonderland (2010 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/36/Alice_in_Wonderland_%282010_film%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Alice_in_Wonderland_(2010_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Tarrant Hightopp / Mad Hatter",
+        "Johnny Depp"
+      ],
+      [
+        "Alice Kingsleigh",
+        "Mia Wasikowska"
+      ],
+      [
+        "Iracebeth / Red Queen",
+        "Helena Bonham Carter"
+      ],
+      [
+        "Mirana / White Queen",
+        "Anne Hathaway"
+      ]
+    ]
+  },
+  "a-clockwork-orange": {
+    "title": "A Clockwork Orange (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/73/A_Clockwork_Orange_%281971%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/A_Clockwork_Orange_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Alex DeLarge",
+        "Malcolm McDowell"
+      ],
+      [
+        "Frank Alexander",
+        "Patrick Magee"
+      ],
+      [
+        "Chief Guard Barnes",
+        "Michael Bates"
+      ],
+      [
+        "Dim",
+        "Warren Clarke"
+      ]
+    ]
+  },
+  "million-dollar-baby": {
+    "title": "Million Dollar Baby",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/d3/Million_Dollar_Baby_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Million_Dollar_Baby",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Frankie Dunn",
+        "Clint Eastwood"
+      ],
+      [
+        "Mary Margaret \"Maggie\" Fitzgerald",
+        "Hilary Swank"
+      ],
+      [
+        "Eddie \"Scrap-Iron\" Dupris",
+        "Morgan Freeman"
+      ],
+      [
+        "Shawrelle Berry",
+        "Anthony Mackie"
+      ]
+    ]
+  },
+  "the-bridge-on-the-river-kwai": {
+    "title": "The Bridge on the River Kwai",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/d/d9/The_Bridge_on_the_River_Kwai_%281958_US_poster_-_Style_A%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Bridge_on_the_River_Kwai",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "\"Commander\" Shears",
+        "William Holden"
+      ],
+      [
+        "Colonel Nicholson",
+        "Alec Guinness"
+      ],
+      [
+        "Major Warden",
+        "Jack Hawkins"
+      ],
+      [
+        "Colonel Saito",
+        "Sessue Hayakawa"
+      ]
+    ]
+  },
+  "the-dark-knight-rises": {
+    "title": "The Dark Knight Rises",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/8/83/Dark_knight_rises_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Dark_Knight_Rises",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Bruce Wayne / Batman",
+        "Christian Bale"
+      ],
+      [
+        "Alfred Pennyworth",
+        "Michael Caine"
+      ],
+      [
+        "James Gordon",
+        "Gary Oldman"
+      ],
+      [
+        "Selina Kyle / The Cat",
+        "Anne Hathaway"
+      ]
+    ]
+  },
+  "independence-day": {
+    "title": "Independence Day (1996 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/bb/Independence_day_movieposter.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Independence_Day_(1996_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Captain Steven Hiller",
+        "Will Smith"
+      ],
+      [
+        "President Thomas J. Whitmore",
+        "Bill Pullman"
+      ],
+      [
+        "David Levinson",
+        "Jeff Goldblum"
+      ],
+      [
+        "First Lady Marilyn Whitmore",
+        "Mary McDonnell"
+      ]
+    ]
+  },
+  "iron-man-3": {
+    "title": "Iron Man 3",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/1/19/Iron_Man_3_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Iron_Man_3",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Tony Stark / Iron Man",
+        "Robert Downey Jr."
+      ],
+      [
+        "Pepper Potts",
+        "Gwyneth Paltrow"
+      ],
+      [
+        "James \"Rhodey\" Rhodes / Iron Patriot",
+        "Don Cheadle"
+      ],
+      [
+        "Aldrich Killian",
+        "Guy Pearce"
+      ]
+    ]
+  },
+  "shutter-island": {
+    "title": "Shutter Island (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/76/Shutterislandposter.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Shutter_Island_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Edward \"Teddy\" Daniels / Andrew Laeddis",
+        "Leonardo DiCaprio"
+      ],
+      [
+        "Chuck Aule / Dr. Lester Sheehan",
+        "Mark Ruffalo"
+      ],
+      [
+        "Dr. John Cawley",
+        "Ben Kingsley"
+      ],
+      [
+        "Dr. Naehring",
+        "Max von Sydow"
+      ]
+    ]
+  },
+  "battleship-potemkin": {
+    "title": "Battleship Potemkin",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/8/85/Vintage_Potemkin.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Battleship_Potemkin",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Grigory Vakulinchuk",
+        "Aleksandr Antonov"
+      ],
+      [
+        "Commander Evgeny Golikov",
+        "Vladimir Barsky"
+      ],
+      [
+        "Chief Officer Giliarovsky",
+        "Grigori Aleksandrov"
+      ],
+      [
+        "Militant sailor",
+        "Mikhail Gomorov"
+      ]
+    ]
+  },
+  "captain-america-civil-war": {
+    "title": "Captain America: Civil War",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/53/Captain_America_Civil_War_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Captain_America%3A_Civil_War",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Steve Rogers / Captain America",
+        "Chris Evans"
+      ],
+      [
+        "Tony Stark / Iron Man",
+        "Robert Downey Jr."
+      ],
+      [
+        "Natasha Romanoff / Black Widow",
+        "Scarlett Johansson"
+      ],
+      [
+        "Bucky Barnes / Winter Soldier",
+        "Sebastian Stan"
+      ]
+    ]
+  },
+  "green-book": {
+    "title": "Green Book (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/5b/Green_Book_%282018_poster%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Green_Book_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Tony \"Lip\" Vallelonga",
+        "Viggo Mortensen"
+      ],
+      [
+        "Don Shirley",
+        "Mahershala Ali"
+      ],
+      [
+        "Dolores Venere",
+        "Linda Cardellini"
+      ],
+      [
+        "Johnny Venere",
+        "Sebastian Maniscalco"
+      ]
+    ]
+  },
+  "barbie": {
+    "title": "Barbie (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/0/0b/Barbie_2023_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Barbie_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Barbie",
+        "Margot Robbie"
+      ],
+      [
+        "President Barbie",
+        "Issa Rae"
+      ],
+      [
+        "Weird Barbie",
+        "Kate McKinnon"
+      ],
+      [
+        "Writer Barbie",
+        "Alexandra Shipp"
+      ]
+    ]
+  },
+  "reservoir-dogs": {
+    "title": "Reservoir Dogs",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/0/01/Reservoir_Dogs.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Reservoir_Dogs",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Larry Dimick \"Mr. White\"",
+        "Harvey Keitel"
+      ],
+      [
+        "Freddy Newendyke \"Mr. Orange\"",
+        "Tim Roth"
+      ],
+      [
+        "Vic Vega \"Mr. Blonde\"",
+        "Michael Madsen"
+      ],
+      [
+        "\"Nice Guy\" Eddie Cabot",
+        "Chris Penn"
+      ]
+    ]
+  },
+  "good-will-hunting": {
+    "title": "Good Will Hunting",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/52/Good_Will_Hunting.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Good_Will_Hunting",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Will Hunting",
+        "Matt Damon"
+      ],
+      [
+        "Dr. Sean Maguire",
+        "Robin Williams"
+      ],
+      [
+        "Chuckie Sullivan",
+        "Ben Affleck"
+      ],
+      [
+        "Professor Gerald Lambeau",
+        "Stellan Skarsgård"
+      ]
+    ]
+  },
+  "minions": {
+    "title": "Minions (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/1/19/Minions_%282015_film%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Minions_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "the yellow",
+        "Pierre Coffin"
+      ],
+      [
+        "Scarlet Overkill",
+        "Sandra Bullock"
+      ],
+      [
+        "Herb Overkill",
+        "Jon Hamm"
+      ],
+      [
+        "Walter Nelson",
+        "Michael Keaton"
+      ]
+    ]
+  },
+  "spectre": {
+    "title": "Spectre (2015 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/b9/Spectre_2015_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Spectre_(2015_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "James Bond",
+        "Daniel Craig"
+      ],
+      [
+        "Ernst Stavro Blofeld (born Franz Oberhauser)",
+        "Christoph Waltz"
+      ],
+      [
+        "Madeleine Swann",
+        "Léa Seydoux"
+      ],
+      [
+        "Eve Moneypenny",
+        "Naomie Harris"
+      ]
+    ]
+  },
+  "spider-man-far-from-home": {
+    "title": "Spider-Man: Far From Home",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/bd/Spider-Man_Far_From_Home_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Spider-Man%3A_Far_From_Home",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Peter Parker / Spider-Man",
+        "Tom Holland"
+      ],
+      [
+        "Nick Fury",
+        "Samuel L. Jackson"
+      ],
+      [
+        "MJ",
+        "Zendaya"
+      ],
+      [
+        "Maria Hill",
+        "Cobie Smulders"
+      ]
+    ]
+  },
+  "the-shape-of-water": {
+    "title": "The Shape of Water",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/37/The_Shape_of_Water_%28film%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Shape_of_Water",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Elisa Esposito",
+        "Sally Hawkins"
+      ],
+      [
+        "Richard Strickland",
+        "Michael Shannon"
+      ],
+      [
+        "Giles",
+        "Richard Jenkins"
+      ],
+      [
+        "\" The Amphibian Man \"",
+        "Doug Jones"
+      ]
+    ]
+  },
+  "dune": {
+    "title": "Dune (2021 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/8/8e/Dune_%282021_film%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Dune_(2021_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Paul Atreides",
+        "Timothée Chalamet"
+      ],
+      [
+        "Lady Jessica",
+        "Rebecca Ferguson"
+      ],
+      [
+        "Duke Leto Atreides",
+        "Oscar Isaac"
+      ],
+      [
+        "Gurney Halleck",
+        "Josh Brolin"
+      ]
+    ]
+  },
+  "quantum-of-solace": {
+    "title": "Quantum of Solace",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/2/2d/Quantum_of_Solace_-_UK_cinema_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Quantum_of_Solace",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Camille Montes",
+        "Olga Kurylenko"
+      ],
+      [
+        "Dominic Greene",
+        "Mathieu Amalric"
+      ],
+      [
+        "René Mathis",
+        "Giancarlo Giannini"
+      ],
+      [
+        "Strawberry Fields",
+        "Gemma Arterton"
+      ]
+    ]
+  },
+  "the-hurt-locker": {
+    "title": "The Hurt Locker",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/6/6c/HLposterUSA2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Hurt_Locker",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Sergeant First Class William James",
+        "Jeremy Renner"
+      ],
+      [
+        "Sergeant J. T. Sanborn",
+        "Anthony Mackie"
+      ],
+      [
+        "Specialist Owen Eldridge",
+        "Brian Geraghty"
+      ],
+      [
+        "Staff Sergeant Matthew Thompson",
+        "Guy Pearce"
+      ]
+    ]
+  },
+  "love-actually": {
+    "title": "Love Actually",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/eb/Love_Actually_movie.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Love_Actually",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Karen",
+        "Emma Thompson"
+      ],
+      [
+        "David",
+        "Hugh Grant"
+      ],
+      [
+        "Harry",
+        "Alan Rickman"
+      ],
+      [
+        "Daniel",
+        "Liam Neeson"
+      ]
+    ]
+  },
+  "dances-with-wolves": {
+    "title": "Dances With Wolves",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/8/82/Dances_with_Wolves_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Dances_With_Wolves",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Lt. John J. Dunbar/Dances With Wolves (Lakota",
+        "Kevin Costner"
+      ],
+      [
+        "Kicking Bird (Ziŋtká Nagwáka)",
+        "Graham Greene"
+      ],
+      [
+        "Wind In His Hair (Pȟehíŋ Otȟáte)",
+        "Rodney A. Grant"
+      ],
+      [
+        "Chief Ten Bears (Matȟó Wikčémna)",
+        "Floyd Westerman"
+      ]
+    ]
+  },
+  "lost-in-translation": {
+    "title": "Lost in Translation",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/4c/Lost_in_Translation_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Lost_in_Translation",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Bob Harris",
+        "Bill Murray"
+      ],
+      [
+        "Charlotte",
+        "Scarlett Johansson"
+      ],
+      [
+        "John",
+        "Giovanni Ribisi"
+      ],
+      [
+        "Kelly",
+        "Anna Faris"
+      ]
+    ]
+  },
+  "man-of-steel": {
+    "title": "Man of Steel (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/50/Man_of_Steel_%28film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Man_of_Steel_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Kal-El / Clark Kent",
+        "Henry Cavill"
+      ],
+      [
+        "Lois Lane",
+        "Amy Adams"
+      ],
+      [
+        "General Zod",
+        "Michael Shannon"
+      ],
+      [
+        "Jonathan Kent",
+        "Kevin Costner"
+      ]
+    ]
+  },
+  "ant-man": {
+    "title": "Ant-Man (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/1/12/Ant-Man_%28film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Ant-Man_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Scott Lang / Ant-Man",
+        "Paul Rudd"
+      ],
+      [
+        "Hope van Dyne",
+        "Evangeline Lilly"
+      ],
+      [
+        "Darren Cross / Yellowjacket",
+        "Corey Stoll"
+      ],
+      [
+        "Jim Paxton",
+        "Bobby Cannavale"
+      ]
+    ]
+  },
+  "once-upon-a-time-in-hollywood": {
+    "title": "Once Upon a Time in Hollywood",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/a6/Once_Upon_a_Time_in_Hollywood_poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Once_Upon_a_Time_in_Hollywood",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Rick Dalton",
+        "Leonardo DiCaprio"
+      ],
+      [
+        "Cliff Booth",
+        "Brad Pitt"
+      ],
+      [
+        "Sharon Tate",
+        "Margot Robbie"
+      ],
+      [
+        "Jay Sebring",
+        "Emile Hirsch"
+      ]
+    ]
+  },
+  "spider-man-3": {
+    "title": "Spider-Man 3",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/7a/Spider-Man_3%2C_International_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Spider-Man_3",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Peter Parker / Spider-Man",
+        "Tobey Maguire"
+      ],
+      [
+        "Mary Jane Watson",
+        "Kirsten Dunst"
+      ],
+      [
+        "Harry Osborn / New Goblin",
+        "James Franco"
+      ],
+      [
+        "Flint Marko / Sandman",
+        "Thomas Haden Church"
+      ]
+    ]
+  },
+  "goldeneye": {
+    "title": "GoldenEye",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/2/24/GoldenEye_-_UK_cinema_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/GoldenEye",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "James Bond (007)",
+        "Pierce Brosnan"
+      ],
+      [
+        "Alec Trevelyan (006)",
+        "Sean Bean"
+      ],
+      [
+        "Natalya Simonova",
+        "Izabella Scorupco"
+      ],
+      [
+        "Xenia Onatopp",
+        "Famke Janssen"
+      ]
+    ]
+  },
+  "cast-away": {
+    "title": "Cast Away",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/a7/Cast_away_film_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Cast_Away",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Chuck Noland",
+        "Tom Hanks"
+      ],
+      [
+        "Kelly Frears",
+        "Helen Hunt"
+      ],
+      [
+        "Stan",
+        "Nick Searcy"
+      ],
+      [
+        "Becca Twig",
+        "Jenifer Lewis"
+      ]
+    ]
+  },
+  "all-about-eve": {
+    "title": "All About Eve",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/a/a7/All_About_Eve_%281950_poster_-_retouch%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/All_About_Eve",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Margo Channing",
+        "Bette Davis"
+      ],
+      [
+        "Gertrude Slescynski / Eve Harrington",
+        "Anne Baxter"
+      ],
+      [
+        "Addison DeWitt",
+        "George Sanders"
+      ],
+      [
+        "Karen Richards",
+        "Celeste Holm"
+      ]
+    ]
+  },
+  "gandhi": {
+    "title": "Gandhi (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/1/10/Gandhi-poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Gandhi_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Mahatma Gandhi",
+        "Ben Kingsley"
+      ],
+      [
+        "Kasturba Gandhi",
+        "Rohini Hattangadi"
+      ],
+      [
+        "Jawaharlal Nehru",
+        "Roshan Seth"
+      ],
+      [
+        "Vallabhbhai Patel",
+        "Saeed Jaffrey"
+      ]
+    ]
+  },
+  "city-of-god": {
+    "title": "City of God (2002 film)",
+    "poster": "",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/City_of_God_(2002_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Rocket",
+        "Alexandre Rodrigues"
+      ],
+      [
+        "Li'l Zé/Li'l Dice",
+        "Leandro Firmino"
+      ],
+      [
+        "Benny",
+        "Phellipe Haagensen"
+      ],
+      [
+        "Carrot",
+        "Matheus Nachtergaele"
+      ]
+    ]
+  },
+  "metropolis": {
+    "title": "Metropolis (1927 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/97/Metropolis_%28German_three-sheet_poster%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Metropolis_(1927_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Joh Fredersen",
+        "Alfred Abel"
+      ],
+      [
+        "Freder",
+        "Gustav Fröhlich"
+      ],
+      [
+        "Rotwang",
+        "Rudolf Klein-Rogge"
+      ],
+      [
+        "the Thin Man",
+        "Fritz Rasp"
+      ]
+    ]
+  },
+  "gangs-of-new-york": {
+    "title": "Gangs of New York",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/ae/Gangs_of_New_York_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Gangs_of_New_York",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Amsterdam Vallon",
+        "Leonardo DiCaprio"
+      ],
+      [
+        "William \"Bill the Butcher\" Cutting",
+        "Daniel Day-Lewis"
+      ],
+      [
+        "Jenny Everdeane",
+        "Cameron Diaz"
+      ],
+      [
+        "William \"Boss\" Tweed",
+        "Jim Broadbent"
+      ]
+    ]
+  },
+  "transformers": {
+    "title": "Transformers (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/6/66/Transformers07.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Transformers_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Sam Witwicky",
+        "Shia LaBeouf"
+      ],
+      [
+        "Mikaela Banes",
+        "Megan Fox"
+      ],
+      [
+        "Captain William Lennox",
+        "Josh Duhamel"
+      ],
+      [
+        "Sergeant Robert Epps",
+        "Tyrese Gibson"
+      ]
+    ]
+  },
+  "thor-the-dark-world": {
+    "title": "Thor: The Dark World",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/7f/Thor_The_Dark_World_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Thor%3A_The_Dark_World",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Thor",
+        "Chris Hemsworth"
+      ],
+      [
+        "Jane Foster",
+        "Natalie Portman"
+      ],
+      [
+        "Loki",
+        "Tom Hiddleston"
+      ],
+      [
+        "Erik Selvig",
+        "Stellan Skarsgård"
+      ]
+    ]
+  },
+  "the-odyssey": {
+    "title": "The Odyssey (2016 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/e0/L%27Odyss%C3%A9e.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Odyssey_(2016_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Jacques-Yves Cousteau",
+        "Lambert Wilson"
+      ],
+      [
+        "Philippe Cousteau Ulysse Stein as young Philippe Cousteau",
+        "Pierre Niney"
+      ],
+      [
+        "Simone Melchior Cousteau",
+        "Audrey Tautou"
+      ],
+      [
+        "Philippe Tailliez",
+        "Laurent Lucas"
+      ]
+    ]
+  },
+  "borat": {
+    "title": "Borat",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/39/Borat_ver2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Borat",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Borat Sagdiyev ( Kazakh / Russian",
+        "Sacha Baron Cohen"
+      ],
+      [
+        "Azamat Bagatov ( Kazakh / Russian",
+        "Ken Davitian"
+      ],
+      [
+        "two of Borat's interviewees.",
+        "Politicians Alan Keyes and Bob Barr appear in the film"
+      ]
+    ]
+  },
+  "spartacus": {
+    "title": "Spartacus (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Spartacus_-_1960_-_poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Spartacus_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Spartacus",
+        "Kirk Douglas"
+      ],
+      [
+        "Crassus",
+        "Laurence Olivier"
+      ],
+      [
+        "Varinia",
+        "Jean Simmons"
+      ],
+      [
+        "Gracchus",
+        "Charles Laughton"
+      ]
+    ]
+  },
+  "the-wizard-of-oz": {
+    "title": "The Wizard of Oz",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/6/69/Wizard_of_oz_movie_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Wizard_of_Oz",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Dorothy Gale",
+        "Judy Garland"
+      ],
+      [
+        "Professor Marvel/ Wizard of Oz /Gatekeeper/Carriage Driver/Wizard's Guard",
+        "Frank Morgan"
+      ],
+      [
+        "Hunk/ Scarecrow",
+        "Ray Bolger"
+      ],
+      [
+        "Zeke/ Cowardly Lion",
+        "Bert Lahr"
+      ]
+    ]
+  },
+  "home-alone-2-lost-in-new-york": {
+    "title": "Home Alone 2: Lost in New York",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/50/Home_Alone_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Home_Alone_2%3A_Lost_in_New_York",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Kevin",
+        "Macaulay Culkin"
+      ],
+      [
+        "Harry",
+        "Joe Pesci"
+      ],
+      [
+        "Marv",
+        "Daniel Stern"
+      ],
+      [
+        "Peter",
+        "John Heard"
+      ]
+    ]
+  },
+  "kingdom-of-heaven": {
+    "title": "Kingdom of Heaven (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/9e/KoHposter.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Kingdom_of_Heaven_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "King Baldwin IV of Jerusalem",
+        "Edward Norton"
+      ],
+      [
+        "Balian of Ibelin",
+        "Orlando Bloom"
+      ],
+      [
+        "\"Sibylla of Jerusalem\" (a merging of Maria Comnena and Sibylla d'Anjou )",
+        "Eva Green"
+      ],
+      [
+        "\"Tiberias\" ( Raymond III of Tripoli )",
+        "Jeremy Irons"
+      ]
+    ]
+  },
+  "the-amazing-spider-man": {
+    "title": "The Amazing Spider-Man (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/e0/The_Amazing_Spider-Man_%28film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Amazing_Spider-Man_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Peter Parker / Spider-Man",
+        "Andrew Garfield"
+      ],
+      [
+        "Gwen Stacy",
+        "Emma Stone"
+      ],
+      [
+        "Dr. Curt Connors / Lizard",
+        "Rhys Ifans"
+      ],
+      [
+        "George Stacy",
+        "Denis Leary"
+      ]
+    ]
+  },
+  "the-usual-suspects": {
+    "title": "The Usual Suspects",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/9c/Usual_suspects_ver1.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Usual_Suspects",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Roger \"Verbal\" Kint/ Keyser Söze",
+        "Kevin Spacey"
+      ],
+      [
+        "Dean Keaton",
+        "Gabriel Byrne"
+      ],
+      [
+        "Agent Dave Kujan",
+        "Chazz Palminteri"
+      ],
+      [
+        "McManus",
+        "Stephen Baldwin"
+      ]
+    ]
+  },
+  "platoon": {
+    "title": "Platoon (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/a9/Platoon_posters_86.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Platoon_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Chris",
+        "Charlie Sheen"
+      ],
+      [
+        "Sgt. Barnes",
+        "Tom Berenger"
+      ],
+      [
+        "Sgt. Elias",
+        "Willem Dafoe"
+      ],
+      [
+        "King",
+        "Keith David"
+      ]
+    ]
+  },
+  "the-day-after-tomorrow": {
+    "title": "The Day After Tomorrow",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/58/The_Day_After_Tomorrow_movie.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Day_After_Tomorrow",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Jack Hall",
+        "Dennis Quaid"
+      ],
+      [
+        "Sam Hall",
+        "Jake Gyllenhaal"
+      ],
+      [
+        "Dr. Lucy Hall",
+        "Sela Ward"
+      ],
+      [
+        "Laura Chapman",
+        "Emmy Rossum"
+      ]
+    ]
+  },
+  "charlie-and-the-chocolate-factory": {
+    "title": "Charlie and the Chocolate Factory (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/1/17/Charlie_and_the_Chocolate_Factory_%28film%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Charlie_and_the_Chocolate_Factory_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Willy Wonka Blair Dunlop as Young Willy Wonka",
+        "Johnny Depp"
+      ],
+      [
+        "Charlie Bucket",
+        "Freddie Highmore"
+      ],
+      [
+        "Grandpa Joe",
+        "David Kelly"
+      ],
+      [
+        "Mrs. Bucket",
+        "Helena Bonham Carter"
+      ]
+    ]
+  },
+  "the-mask": {
+    "title": "The Mask (1994 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/4b/The_Mask_%28film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Mask_(1994_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Stanley Ipkiss / The Mask",
+        "Jim Carrey"
+      ],
+      [
+        "Lieutenant Mitch Kellaway",
+        "Peter Riegert"
+      ],
+      [
+        "Dorian Tyrell",
+        "Peter Greene"
+      ],
+      [
+        "Tina Carlyle",
+        "Cameron Diaz"
+      ]
+    ]
+  },
+  "goldfinger": {
+    "title": "Goldfinger (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/9a/Goldfinger_-_UK_cinema_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Goldfinger_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "James Bond (007)",
+        "Sean Connery"
+      ],
+      [
+        "Pussy Galore",
+        "Honor Blackman"
+      ],
+      [
+        "Auric Goldfinger",
+        "Gert Fröbe"
+      ],
+      [
+        "Jill Masterson",
+        "Shirley Eaton"
+      ]
+    ]
+  },
+  "sherlock-holmes": {
+    "title": "Sherlock Holmes (2009 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/e0/Sherlock_holmes_ver5.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Sherlock_Holmes_(2009_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Sherlock Holmes",
+        "Robert Downey Jr."
+      ],
+      [
+        "Dr. John Watson",
+        "Jude Law"
+      ],
+      [
+        "Lord Henry Blackwood",
+        "Mark Strong"
+      ],
+      [
+        "Irene Adler",
+        "Rachel McAdams"
+      ]
+    ]
+  },
+  "predator": {
+    "title": "Predator (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/95/Predator_Movie.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Predator_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Alan \"Dutch\" Schaefer",
+        "Arnold Schwarzenegger"
+      ],
+      [
+        "Al Dillon",
+        "Carl Weathers"
+      ],
+      [
+        "Anna Gonsalves",
+        "Elpidia Carrillo"
+      ],
+      [
+        "Mac Eliot",
+        "Bill Duke"
+      ]
+    ]
+  },
+  "vertigo": {
+    "title": "Vertigo (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/7/75/Vertigomovie_restoration.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Vertigo_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "John \"Scottie\" Ferguson",
+        "James Stewart"
+      ],
+      [
+        "Judy Barton / Madeleine Elster",
+        "Kim Novak"
+      ],
+      [
+        "Gavin Elster",
+        "Tom Helmore"
+      ],
+      [
+        "Marjorie \"Midge\" Wood",
+        "Barbara Bel Geddes"
+      ]
+    ]
+  },
+  "back-to-the-future-part-iii": {
+    "title": "Back to the Future Part III",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/4e/Back_to_the_Future_Part_III.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Back_to_the_Future_Part_III",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Emmett \"Doc\" Brown",
+        "Christopher Lloyd"
+      ],
+      [
+        "Clara Clayton",
+        "Mary Steenburgen"
+      ]
+    ]
+  },
+  "crouching-tiger-hidden-dragon": {
+    "title": "Crouching Tiger, Hidden Dragon",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/2/27/Crouching_Tiger%2C_Hidden_Dragon_%28Chinese_poster%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Crouching_Tiger%2C_Hidden_Dragon",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Li Mu Bai ( 李慕白",
+        "Chow Yun-fat"
+      ],
+      [
+        "Yu Shu Lien ( 俞秀蓮",
+        "Michelle Yeoh"
+      ],
+      [
+        "Jen Yu ( 玉嬌龍",
+        "Zhang Ziyi"
+      ],
+      [
+        "Lo \"Dark Cloud\" Xiao Hou ( 羅小虎",
+        "Chang Chen"
+      ]
+    ]
+  },
+  "bicycle-thieves": {
+    "title": "Bicycle Thieves",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/2/20/Ladri3.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Bicycle_Thieves",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Antonio Ricci",
+        "Lamberto Maggiorani"
+      ],
+      [
+        "Bruno Ricci",
+        "Enzo Staiola"
+      ],
+      [
+        "Maria Ricci",
+        "Lianella Carell"
+      ],
+      [
+        "the Charitable Lady",
+        "Elena Altieri"
+      ]
+    ]
+  },
+  "the-amazing-spider-man-2": {
+    "title": "The Amazing Spider-Man 2",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/2/24/The_Amazing_Spider-Man_2_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Amazing_Spider-Man_2",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Peter Parker / Spider-Man",
+        "Andrew Garfield"
+      ],
+      [
+        "Gwen Stacy",
+        "Emma Stone"
+      ],
+      [
+        "Max Dillon / Electro",
+        "Jamie Foxx"
+      ],
+      [
+        "Harry Osborn / Green Goblin",
+        "Dane DeHaan"
+      ]
+    ]
+  },
+  "fantastic-beasts-and-where-to-find-them": {
+    "title": "Fantastic Beasts and Where to Find Them (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/0/0b/FBAWTFT-poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Fantastic_Beasts_and_Where_to_Find_Them_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Newt Scamander An introverted British wizard",
+        "Eddie Redmayne"
+      ],
+      [
+        "Tina Goldstein A grounded",
+        "Katherine Waterston"
+      ],
+      [
+        "Queenie Goldstein Tina's younger sister and roommate. Described as a free-spirited",
+        "Alison Sudol"
+      ],
+      [
+        "Credence Barebone A secret Obscurial wizard and Mary Lou's troubled adopted son.",
+        "Ezra Miller"
+      ]
+    ]
+  },
+  "suicide-squad": {
+    "title": "Suicide Squad (2016 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/5c/Suicide_Squad_%282016_film%29_poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Suicide_Squad_(2016_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Floyd Lawton / Deadshot",
+        "Will Smith"
+      ],
+      [
+        "the Joker",
+        "Jared Leto"
+      ],
+      [
+        "Dr. Harleen Quinzel / Harley Quinn",
+        "Margot Robbie"
+      ],
+      [
+        "Rick Flag Jr.",
+        "Joel Kinnaman"
+      ]
+    ]
+  },
+  "arrival": {
+    "title": "Arrival (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/df/Arrival%2C_Movie_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Arrival_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Louise Banks",
+        "Amy Adams"
+      ],
+      [
+        "Ian Donnelly",
+        "Jeremy Renner"
+      ],
+      [
+        "Colonel Weber",
+        "Forest Whitaker"
+      ],
+      [
+        "Agent Halpern",
+        "Michael Stuhlbarg"
+      ]
+    ]
+  },
+  "terminator-3-rise-of-the-machines": {
+    "title": "Terminator 3: Rise of the Machines",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/39/Terminator_3_Rise_of_the_Machines_movie.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Terminator_3%3A_Rise_of_the_Machines",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "the Terminator .",
+        "Arnold Schwarzenegger"
+      ],
+      [
+        "John Connor . Stahl replaces Edward Furlong from the second film.",
+        "Nick Stahl"
+      ],
+      [
+        "the T-X",
+        "Kristanna Loken"
+      ],
+      [
+        "Kate Brewster",
+        "Claire Danes"
+      ]
+    ]
+  },
+  "men-in-black": {
+    "title": "Men in Black (1997 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/f/fb/Men_in_Black_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Men_in_Black_(1997_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Kevin Brown / Agent K",
+        "Tommy Lee Jones"
+      ],
+      [
+        "James Darrell Edwards III / Agent J",
+        "Will Smith"
+      ],
+      [
+        "Doctor Laurel Weaver / Agent L",
+        "Linda Fiorentino"
+      ],
+      [
+        "Edgar / The Bug",
+        "Vincent D'Onofrio"
+      ]
+    ]
+  },
+  "indiana-jones-and-the-kingdom-of-the-crystal-skull": {
+    "title": "Indiana Jones and the Kingdom of the Crystal Skull",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/d5/Kingdomofthecrystalskull.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Indiana_Jones_and_the_Kingdom_of_the_Crystal_Skull",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Indiana Jones ; To prepare for the role",
+        "Harrison Ford"
+      ],
+      [
+        "Irina Spalko",
+        "Cate Blanchett"
+      ],
+      [
+        "George \"Mac\" McHale",
+        "Ray Winstone"
+      ],
+      [
+        "Harold 'Ox' Oxley",
+        "John Hurt"
+      ]
+    ]
+  },
+  "a-fistful-of-dollars": {
+    "title": "A Fistful of Dollars",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/f/f0/Fistful-of-Dollars-poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/A_Fistful_of_Dollars",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "\"Joe\"",
+        "Clint Eastwood"
+      ],
+      [
+        "Marisol",
+        "Marianne Koch"
+      ],
+      [
+        "Ramón Rojo",
+        "Gian Maria Volonté"
+      ],
+      [
+        "Sheriff John Baxter",
+        "Wolfgang Lukschy"
+      ]
+    ]
+  },
+  "argo": {
+    "title": "Argo (2012 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/e1/Argo2012Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Argo_(2012_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "CIA Officer Tony Mendez",
+        "Ben Affleck"
+      ],
+      [
+        "CIA Deputy Director Jack O'Donnell",
+        "Bryan Cranston"
+      ],
+      [
+        "Lester Siegel",
+        "Alan Arkin"
+      ],
+      [
+        "John Chambers",
+        "John Goodman"
+      ]
+    ]
+  },
+  "prometheus": {
+    "title": "Prometheus (2012 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/a3/Prometheusposterfixed.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Prometheus_(2012_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Elizabeth Shaw :",
+        "Noomi Rapace"
+      ],
+      [
+        "David :",
+        "Michael Fassbender"
+      ],
+      [
+        "Meredith Vickers:",
+        "Charlize Theron"
+      ],
+      [
+        "Janek:",
+        "Idris Elba"
+      ]
+    ]
+  },
+  "the-lost-world-jurassic-park": {
+    "title": "The Lost World: Jurassic Park",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/c/cc/The_Lost_World_%E2%80%93_Jurassic_Park_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Lost_World%3A_Jurassic_Park",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Dr. Ian Malcolm",
+        "Jeff Goldblum"
+      ],
+      [
+        "Dr. Sarah Harding",
+        "Julianne Moore"
+      ],
+      [
+        "Roland Tembo",
+        "Pete Postlethwaite"
+      ],
+      [
+        "Peter Ludlow",
+        "Arliss Howard"
+      ]
+    ]
+  },
+  "the-aviator": {
+    "title": "The Aviator (2004 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/f/fa/The_Aviator_%282004%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Aviator_(2004_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Howard Hughes Jacob Davich as 8-year-old Howard Hughes",
+        "Leonardo DiCaprio"
+      ],
+      [
+        "Katharine Hepburn",
+        "Cate Blanchett"
+      ],
+      [
+        "Ava Gardner",
+        "Kate Beckinsale"
+      ],
+      [
+        "Noah Dietrich",
+        "John C. Reilly"
+      ]
+    ]
+  },
+  "annie-hall": {
+    "title": "Annie Hall",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/e6/Anniehallposter.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Annie_Hall",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Alvy Singer",
+        "Woody Allen"
+      ],
+      [
+        "Annie Hall",
+        "Diane Keaton"
+      ],
+      [
+        "Rob",
+        "Tony Roberts"
+      ],
+      [
+        "Allison Portchnik",
+        "Carol Kane"
+      ]
+    ]
+  },
+  "the-matrix-revolutions": {
+    "title": "The Matrix Revolutions",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/7b/The-matrix-revolutions_oxlati6t.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Matrix_Revolutions",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Neo",
+        "Keanu Reeves"
+      ],
+      [
+        "Morpheus",
+        "Laurence Fishburne"
+      ],
+      [
+        "Trinity",
+        "Carrie-Anne Moss"
+      ],
+      [
+        "Smith",
+        "Hugo Weaving"
+      ]
+    ]
+  },
+  "for-a-few-dollars-more": {
+    "title": "For a Few Dollars More",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/0/09/For_a_Few_Dollars_More-ita-poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/For_a_Few_Dollars_More",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Manco (the Man with No Name )",
+        "Clint Eastwood"
+      ],
+      [
+        "Colonel Douglas Mortimer",
+        "Lee Van Cleef"
+      ],
+      [
+        "El Indio",
+        "Gian Maria Volonté"
+      ],
+      [
+        "Mary",
+        "Mara Krupp"
+      ]
+    ]
+  },
+  "donnie-darko": {
+    "title": "Donnie Darko",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/db/Donnie_Darko_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Donnie_Darko",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Donnie Darko",
+        "Jake Gyllenhaal"
+      ],
+      [
+        "Eddie Darko",
+        "Holmes Osborne"
+      ],
+      [
+        "Elizabeth Darko",
+        "Maggie Gyllenhaal"
+      ],
+      [
+        "Samantha Darko",
+        "Daveigh Chase"
+      ]
+    ]
+  },
+  "the-terminal": {
+    "title": "The Terminal",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/8/86/Movie_poster_the_terminal.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Terminal",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Viktor Navorski",
+        "Tom Hanks"
+      ],
+      [
+        "Flight Attendant Amelia Warren",
+        "Catherine Zeta-Jones"
+      ],
+      [
+        "U.S. Customs and Border Protection Acting Field Commissioner Frank Dixon",
+        "Stanley Tucci"
+      ],
+      [
+        "U.S. Customs and Border Protection Officer Judge Thurman",
+        "Barry Shabaka Henley"
+      ]
+    ]
+  },
+  "pirates-of-the-caribbean-dead-men-tell-no-tales": {
+    "title": "Pirates of the Caribbean: Dead Men Tell No Tales",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/2/21/Pirates_of_the_Caribbean%2C_Dead_Men_Tell_No_Tales.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Pirates_of_the_Caribbean%3A_Dead_Men_Tell_No_Tales",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Captain Jack Sparrow",
+        "Johnny Depp"
+      ],
+      [
+        "Captain Armando Salazar",
+        "Javier Bardem"
+      ],
+      [
+        "Captain Hector Barbossa",
+        "Geoffrey Rush"
+      ],
+      [
+        "Henry Turner",
+        "Brenton Thwaites"
+      ]
+    ]
+  },
+  "the-imitation-game": {
+    "title": "The Imitation Game",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/8/87/The_Imitation_Game_%282014%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Imitation_Game",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Alan Turing Alex Lawther as young Alan Turing",
+        "Benedict Cumberbatch"
+      ],
+      [
+        "Joan Clarke",
+        "Keira Knightley"
+      ],
+      [
+        "Hugh Alexander",
+        "Matthew Goode"
+      ],
+      [
+        "Detective Robert Nock",
+        "Rory Kinnear"
+      ]
+    ]
+  },
+  "ant-man-and-the-wasp": {
+    "title": "Ant-Man and the Wasp",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/2/2c/Ant-Man_and_the_Wasp_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Ant-Man_and_the_Wasp",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Scott Lang / Ant-Man",
+        "Paul Rudd"
+      ],
+      [
+        "Hope van Dyne / Wasp",
+        "Evangeline Lilly"
+      ],
+      [
+        "Luis",
+        "Michael Peña"
+      ],
+      [
+        "Sonny Burch",
+        "Walton Goggins"
+      ]
+    ]
+  },
+  "aquaman": {
+    "title": "Aquaman (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/ed/Aquaman_%28film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Aquaman_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Arthur Curry / Aquaman",
+        "Jason Momoa"
+      ],
+      [
+        "Mera",
+        "Amber Heard"
+      ],
+      [
+        "Nuidis Vulko",
+        "Willem Dafoe"
+      ],
+      [
+        "Orm Marius / Ocean Master",
+        "Patrick Wilson"
+      ]
+    ]
+  },
+  "venom": {
+    "title": "Venom (2018 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/1/10/Venom_%282018_film%29_poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Venom_(2018_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Eddie Brock / Venom",
+        "Tom Hardy"
+      ],
+      [
+        "Anne Weying",
+        "Michelle Williams"
+      ],
+      [
+        "Carlton Drake / Riot",
+        "Riz Ahmed"
+      ],
+      [
+        "Roland Treece",
+        "Scott Haze"
+      ]
+    ]
+  },
+  "captain-marvel": {
+    "title": "Captain Marvel (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/4e/Captain_Marvel_%28film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Captain_Marvel_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Carol Danvers / Vers",
+        "Brie Larson"
+      ],
+      [
+        "Nick Fury",
+        "Samuel L. Jackson"
+      ],
+      [
+        "Talos and Keller",
+        "Ben Mendelsohn"
+      ],
+      [
+        "Korath",
+        "Djimon Hounsou"
+      ]
+    ]
+  },
+  "the-curious-case-of-benjamin-button": {
+    "title": "The Curious Case of Benjamin Button (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/7c/The_Curious_Case_of_Benjamin_Button_%28film%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Curious_Case_of_Benjamin_Button_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Benjamin Button (adult) Robert Towers as Benjamin Button (apparent adult)",
+        "Brad Pitt"
+      ],
+      [
+        "Benjamin Button (apparent adult)",
+        "Peter Donald Badalamenti II"
+      ],
+      [
+        "Benjamin Button (apparent age 12)",
+        "Spencer Daniels"
+      ],
+      [
+        "Benjamin Button (apparent age 8)",
+        "Chandler Canterbury"
+      ]
+    ]
+  },
+  "sin-city": {
+    "title": "Sin City (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/9e/Sincitypostercast.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Sin_City_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Detective John Hartigan",
+        "Bruce Willis"
+      ],
+      [
+        "Marv",
+        "Mickey Rourke"
+      ],
+      [
+        "Dwight McCarthy",
+        "Clive Owen"
+      ],
+      [
+        "Nancy Callahan Makenzie Vega as Nancy (age 11)",
+        "Jessica Alba"
+      ]
+    ]
+  },
+  "the-deer-hunter": {
+    "title": "The Deer Hunter",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/57/The_Deer_Hunter_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Deer_Hunter",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Corporal Steven Pushkov.",
+        "John Savage"
+      ],
+      [
+        "Stanley (\"Stan\"/\"Stosh\"). All scenes involving Cazale",
+        "John Cazale"
+      ],
+      [
+        "Linda. In the screenplay",
+        "Meryl Streep"
+      ],
+      [
+        "John Welsh.",
+        "George Dzundza"
+      ]
+    ]
+  },
+  "full-metal-jacket": {
+    "title": "Full Metal Jacket",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/99/Full_Metal_Jacket_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Full_Metal_Jacket",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Private (later Sergeant) James T. \"Joker\" Davis",
+        "Matthew Modine"
+      ],
+      [
+        "Sergeant \"Animal Mother\"",
+        "Adam Baldwin"
+      ],
+      [
+        "Private Leonard \" Gomer Pyle \" Lawrence",
+        "Vincent D'Onofrio"
+      ],
+      [
+        "\"Lee Ermey\") as Gunnery Sergeant L. Hartman",
+        "R. Lee Ermey (credited"
+      ]
+    ]
+  },
+  "rebecca": {
+    "title": "Rebecca (1940 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Rebecca_%281939_poster%29.jpeg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Rebecca_(1940_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "George Fortescue Maximilian \"Maxim\" de Winter",
+        "Laurence Olivier"
+      ],
+      [
+        "the second Mrs. de Winter",
+        "Joan Fontaine"
+      ],
+      [
+        "Jack Favell",
+        "George Sanders"
+      ],
+      [
+        "Mrs. Danvers",
+        "Judith Anderson"
+      ]
+    ]
+  },
+  "once-upon-a-time-in-america": {
+    "title": "Once Upon a Time in America",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/c/c2/Once_Upon_a_Time_in_America.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Once_Upon_a_Time_in_America",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "David \"Noodles\" Aaronson Scott Tiler as young Noodles",
+        "Robert De Niro"
+      ],
+      [
+        "Maximilian \"Max\" Bercovicz Rusty Jacobs as young Max and David Bailey",
+        "James Woods"
+      ],
+      [
+        "Deborah Gelly Jennifer Connelly as young Deborah",
+        "Elizabeth McGovern"
+      ],
+      [
+        "Frankie Minaldi",
+        "Joe Pesci"
+      ]
+    ]
+  },
+  "hugo": {
+    "title": "Hugo (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/73/Hugo_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Hugo_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Hugo Cabret",
+        "Asa Butterfield"
+      ],
+      [
+        "Georges Méliès / Papa Georges",
+        "Ben Kingsley"
+      ],
+      [
+        "Inspector Gustave Dasté (credited as Station Inspector)",
+        "Sacha Baron Cohen"
+      ],
+      [
+        "Isabelle",
+        "Chloë Grace Moretz"
+      ]
+    ]
+  },
+  "eyes-wide-shut": {
+    "title": "Eyes Wide Shut",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/73/Eyes_Wide_Shut_%281999%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Eyes_Wide_Shut",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Dr. Bill Harford",
+        "Tom Cruise"
+      ],
+      [
+        "Alice Harford",
+        "Nicole Kidman"
+      ],
+      [
+        "Victor Ziegler",
+        "Sydney Pollack"
+      ],
+      [
+        "Marion Nathanson",
+        "Marie Richardson"
+      ]
+    ]
+  },
+  "rashomon": {
+    "title": "Rashomon",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/6/61/Rashomon_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Rashomon",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Tajōmaru",
+        "Toshiro Mifune"
+      ],
+      [
+        "Takehiro Kanazawa",
+        "Masayuki Mori"
+      ],
+      [
+        "Masago",
+        "Machiko Kyō"
+      ],
+      [
+        "the woodcutter",
+        "Takashi Shimura"
+      ]
+    ]
+  },
+  "the-third-man": {
+    "title": "The Third Man",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/7/77/The_Third_Man_%281949_American_theatrical_poster%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Third_Man",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Holly Martins",
+        "Joseph Cotten"
+      ],
+      [
+        "'Valli') as Anna Schmidt",
+        "Alida Valli (credited"
+      ],
+      [
+        "Harry Lime",
+        "Orson Welles"
+      ],
+      [
+        "Major Calloway",
+        "Trevor Howard"
+      ]
+    ]
+  },
+  "the-exorcist": {
+    "title": "The Exorcist",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/7b/Exorcist_ver2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Exorcist",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Chris MacNeil",
+        "Ellen Burstyn"
+      ],
+      [
+        "Father Lankester Merrin",
+        "Max von Sydow"
+      ],
+      [
+        "Father / Dr. Damien Karras",
+        "Jason Miller"
+      ],
+      [
+        "Lieutenant William F. Kinderman",
+        "Lee J. Cobb"
+      ]
+    ]
+  },
+  "downfall": {
+    "title": "Downfall (2004 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/dc/Der_Untergang_Downfall_poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Downfall_(2004_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": []
+  },
+  "once-upon-a-time-in-the-west": {
+    "title": "Once Upon a Time in the West",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/a2/Once_upon_a_Time_in_the_West.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Once_Upon_a_Time_in_the_West",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Jill McBain",
+        "Claudia Cardinale"
+      ],
+      [
+        "Frank",
+        "Henry Fonda"
+      ],
+      [
+        "Manuel \"Cheyenne\" Gutiérrez",
+        "Jason Robards"
+      ],
+      [
+        "\"Harmonica\"",
+        "Charles Bronson"
+      ]
+    ]
+  },
+  "maleficent": {
+    "title": "Maleficent (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/55/Maleficent_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Maleficent_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Maleficent",
+        "Angelina Jolie"
+      ],
+      [
+        "Teen Maleficent.",
+        "Ella Purnell"
+      ],
+      [
+        "Aurora",
+        "Elle Fanning"
+      ],
+      [
+        "8-year-old Aurora.",
+        "Eleanor Worthington Cox"
+      ]
+    ]
+  },
+  "the-incredible-hulk": {
+    "title": "The Incredible Hulk (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/f/f0/The_Incredible_Hulk_%28film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Incredible_Hulk_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Bruce Banner",
+        "Edward Norton"
+      ],
+      [
+        "Betty Ross",
+        "Liv Tyler"
+      ],
+      [
+        "Emil Blonsky / Abomination",
+        "Tim Roth"
+      ],
+      [
+        "Thaddeus Ross",
+        "William Hurt"
+      ]
+    ]
+  },
+  "jurassic-world": {
+    "title": "Jurassic World",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/6/6e/Jurassic_World_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Jurassic_World",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Owen Grady",
+        "Chris Pratt"
+      ],
+      [
+        "Claire Dearing",
+        "Bryce Dallas Howard"
+      ],
+      [
+        "Vic Hoskins",
+        "Vincent D'Onofrio"
+      ],
+      [
+        "Gray Mitchell",
+        "Ty Simpkins"
+      ]
+    ]
+  },
+  "spotlight": {
+    "title": "Spotlight (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/f/f3/Spotlight_%28film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Spotlight_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Michael Rezendes",
+        "Mark Ruffalo"
+      ],
+      [
+        "Walter \"Robby\" Robinson",
+        "Michael Keaton"
+      ],
+      [
+        "Sacha Pfeiffer",
+        "Rachel McAdams"
+      ],
+      [
+        "Matt Carroll",
+        "Brian d'Arcy James"
+      ]
+    ]
+  },
+  "bohemian-rhapsody": {
+    "title": "Bohemian Rhapsody (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/2/2e/Bohemian_Rhapsody_poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Bohemian_Rhapsody_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Freddie Mercury (Farrokh Bulsara)",
+        "Rami Malek"
+      ],
+      [
+        "Freddie Mercury (additional singing",
+        "Marc Martel"
+      ],
+      [
+        "Mary Austin",
+        "Lucy Boynton"
+      ],
+      [
+        "Brian May",
+        "Gwilym Lee"
+      ]
+    ]
+  },
+  "crash": {
+    "title": "Crash (2004 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/d0/Crash_ver2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Crash_(2004_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Detective Graham Waters",
+        "Don Cheadle"
+      ],
+      [
+        "Jean Cabot",
+        "Sandra Bullock"
+      ],
+      [
+        "Sergeant John Ryan",
+        "Matt Dillon"
+      ],
+      [
+        "Ria",
+        "Jennifer Esposito"
+      ]
+    ]
+  },
+  "the-intouchables": {
+    "title": "The Intouchables",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/93/The_Intouchables.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Intouchables",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Philippe",
+        "François Cluzet"
+      ],
+      [
+        "Bakary \"Driss\" Bassari",
+        "Omar Sy"
+      ],
+      [
+        "Magalie",
+        "Audrey Fleurot"
+      ],
+      [
+        "Yvonne",
+        "Anne Le Ny"
+      ]
+    ]
+  },
+  "81-2": {
+    "title": "8½",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/46/8Mezzo.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/8%C2%BD",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Guido Anselmi",
+        "Marcello Mastroianni"
+      ],
+      [
+        "Claudia",
+        "Claudia Cardinale"
+      ],
+      [
+        "Luisa Anselmi",
+        "Anouk Aimée"
+      ],
+      [
+        "Carla",
+        "Sandra Milo"
+      ]
+    ]
+  },
+  "the-magnificent-seven": {
+    "title": "The Magnificent Seven",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/8/87/The_Magnificent_Seven_%281960_poster%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Magnificent_Seven",
+    "premiered": "",
+    "genres": [],
+    "cast": []
+  },
+  "the-world-is-not-enough": {
+    "title": "The World Is Not Enough",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/0/0c/The_World_Is_Not_Enough_%28UK_cinema_poster%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_World_Is_Not_Enough",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "James Bond",
+        "Pierce Brosnan"
+      ],
+      [
+        "Elektra King",
+        "Sophie Marceau"
+      ],
+      [
+        "Victor \"Renard\" Zokas",
+        "Robert Carlyle"
+      ],
+      [
+        "Dr. Christmas Jones",
+        "Denise Richards"
+      ]
+    ]
+  },
+  "i-am-legend": {
+    "title": "I Am Legend (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/df/I_am_legend_teaser.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/I_Am_Legend_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Dr. Robert Neville",
+        "Will Smith"
+      ],
+      [
+        "Anna",
+        "Alice Braga"
+      ],
+      [
+        "Ethan",
+        "Charlie Tahan"
+      ],
+      [
+        "Samantha (\"Sam\")",
+        "Abbey and Kona"
+      ]
+    ]
+  },
+  "the-fast-and-the-furious-tokyo-drift": {
+    "title": "The Fast and the Furious: Tokyo Drift",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/4f/Poster_-_Fast_and_Furious_Tokyo_Drift.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Fast_and_the_Furious%3A_Tokyo_Drift",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Sean Boswell",
+        "Lucas Black"
+      ],
+      [
+        "\"Twinkie\"",
+        "Bow Wow"
+      ],
+      [
+        "Han Lue",
+        "Sung Kang"
+      ],
+      [
+        "Takashi",
+        "Brian Tee"
+      ]
+    ]
+  },
+  "die-another-day": {
+    "title": "Die Another Day",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/3d/Die_another_Day_-_UK_cinema_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Die_Another_Day",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "James Bond",
+        "Pierce Brosnan"
+      ],
+      [
+        "Giacinta \"Jinx\" Johnson",
+        "Halle Berry"
+      ],
+      [
+        "Gustav Graves",
+        "Toby Stephens"
+      ],
+      [
+        "Colonel Tan-Sun Moon",
+        "Will Yun Lee"
+      ]
+    ]
+  },
+  "the-bourne-ultimatum": {
+    "title": "The Bourne Ultimatum (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/f/fe/The_Bourne_Ultimatum_%282007_film_poster%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Bourne_Ultimatum_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Jason Bourne",
+        "Matt Damon"
+      ],
+      [
+        "Nicky Parsons",
+        "Julia Stiles"
+      ],
+      [
+        "Noah Vosen",
+        "David Strathairn"
+      ],
+      [
+        "Ezra Kramer",
+        "Scott Glenn"
+      ]
+    ]
+  },
+  "top-gun": {
+    "title": "Top Gun",
+    "poster": "",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Top_Gun",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "LT Pete \"Maverick\" Mitchell",
+        "Tom Cruise"
+      ],
+      [
+        "Charlotte \"Charlie\" Blackwood",
+        "Kelly McGillis"
+      ],
+      [
+        "LT Tom \"Iceman\" Kazansky",
+        "Val Kilmer"
+      ],
+      [
+        "LTJG Nick \"Goose\" Bradshaw",
+        "Anthony Edwards"
+      ]
+    ]
+  },
+  "the-twilight-saga-new-moon": {
+    "title": "The Twilight Saga: New Moon",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/93/The_Twilight_Saga-_New_Moon_poster.JPG?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Twilight_Saga%3A_New_Moon",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Bella Swan",
+        "Kristen Stewart"
+      ],
+      [
+        "Edward Cullen",
+        "Robert Pattinson"
+      ],
+      [
+        "Jacob Black",
+        "Taylor Lautner"
+      ],
+      [
+        "Alice Cullen",
+        "Ashley Greene"
+      ]
+    ]
+  },
+  "angels-and-demons": {
+    "title": "Angels & Demons (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/44/Angels_and_demons.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Angels_%26_Demons_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Robert Langdon",
+        "Tom Hanks"
+      ],
+      [
+        "Fr. Patrick McKenna",
+        "Ewan McGregor"
+      ],
+      [
+        "Dr. Vittoria Vetra",
+        "Ayelet Zurer"
+      ],
+      [
+        "Commander Maximilian Richter",
+        "Stellan Skarsgård"
+      ]
+    ]
+  },
+  "breakfast-at-tiffany-s": {
+    "title": "Breakfast at Tiffany's (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Breakfast_at_Tiffany%27s_%281961_poster%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Breakfast_at_Tiffany's_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Holly Golightly",
+        "Audrey Hepburn"
+      ],
+      [
+        "Paul Varjak",
+        "George Peppard"
+      ],
+      [
+        "Mrs. Emily Eustace \"2E\" Failenson",
+        "Patricia Neal"
+      ],
+      [
+        "Doc Golightly",
+        "Buddy Ebsen"
+      ]
+    ]
+  },
+  "sunset-boulevard": {
+    "title": "Sunset Boulevard (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/1/14/Sunset_Boulevard_%281950_poster%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Sunset_Boulevard_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Joe Gillis (Joseph C. Gillis)",
+        "William Holden"
+      ],
+      [
+        "Norma Desmond",
+        "Gloria Swanson"
+      ],
+      [
+        "Max von Mayerling",
+        "Erich von Stroheim"
+      ],
+      [
+        "Betty Schaefer",
+        "Nancy Olson"
+      ]
+    ]
+  },
+  "kramer-vs-kramer": {
+    "title": "Kramer vs. Kramer",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/b0/Oscar_posters_79.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Kramer_vs._Kramer",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Ted Kramer",
+        "Dustin Hoffman"
+      ],
+      [
+        "Joanna (Stern) Kramer",
+        "Meryl Streep"
+      ],
+      [
+        "Billy Kramer",
+        "Justin Henry"
+      ],
+      [
+        "Margaret Phelps",
+        "Jane Alexander"
+      ]
+    ]
+  },
+  "jumanji": {
+    "title": "Jumanji (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/b6/Jumanji_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Jumanji_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Alan Parrish",
+        "Robin Williams"
+      ],
+      [
+        "Sarah Whittle",
+        "Bonnie Hunt"
+      ],
+      [
+        "Judy Shepherd",
+        "Kirsten Dunst"
+      ],
+      [
+        "Peter Shepherd",
+        "Bradley Pierce"
+      ]
+    ]
+  },
+  "transformers-dark-of-the-moon": {
+    "title": "Transformers: Dark of the Moon",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/bf/Transformers_dark_of_the_moon_ver5.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Transformers%3A_Dark_of_the_Moon",
+    "premiered": "",
+    "genres": [],
+    "cast": []
+  },
+  "sherlock-holmes-a-game-of-shadows": {
+    "title": "Sherlock Holmes: A Game of Shadows",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/53/Sherlock_Holmes2Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Sherlock_Holmes%3A_A_Game_of_Shadows",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Sherlock Holmes",
+        "Robert Downey Jr."
+      ],
+      [
+        "Dr. John Watson",
+        "Jude Law"
+      ],
+      [
+        "Professor James Moriarty",
+        "Jared Harris"
+      ],
+      [
+        "Madame Simza \"Sim\" Heron",
+        "Noomi Rapace"
+      ]
+    ]
+  },
+  "out-of-africa": {
+    "title": "Out of Africa (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/d8/Out_of_Africa_%281985%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Out_of_Africa_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Denys Finch Hatton",
+        "Robert Redford"
+      ],
+      [
+        "Karen Blixen",
+        "Meryl Streep"
+      ],
+      [
+        "Bror and Hans von Blixen-Finecke",
+        "Klaus Maria Brandauer"
+      ],
+      [
+        "Berkeley Cole",
+        "Michael Kitchen"
+      ]
+    ]
+  },
+  "on-the-waterfront": {
+    "title": "On the Waterfront",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/e/ee/On_the_Waterfront_%281954_poster%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/On_the_Waterfront",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Terry Malloy",
+        "Marlon Brando"
+      ],
+      [
+        "Father Pete Barry",
+        "Karl Malden"
+      ],
+      [
+        "Michael J. Skelly a.k.a. \"Johnny Friendly\"",
+        "Lee J. Cobb"
+      ],
+      [
+        "Charley \"the Gent\" Malloy",
+        "Rod Steiger"
+      ]
+    ]
+  },
+  "first-blood": {
+    "title": "First Blood",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/d6/First_blood_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/First_Blood",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "John Rambo",
+        "Sylvester Stallone"
+      ],
+      [
+        "Colonel Sam Trautman",
+        "Richard Crenna"
+      ],
+      [
+        "Sheriff William \"Will\" Teasle",
+        "Brian Dennehy"
+      ],
+      [
+        "Captain Dave Kern",
+        "Bill McKinney"
+      ]
+    ]
+  },
+  "all-quiet-on-the-western-front": {
+    "title": "All Quiet on the Western Front (1979 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/e4/All_Quiet_on_the_Western_Front_1979_film_DVD-cover.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/All_Quiet_on_the_Western_Front_(1979_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Paul Bäumer",
+        "Richard Thomas"
+      ],
+      [
+        "Stanislaus \"Kat\" Katczinsky",
+        "Ernest Borgnine"
+      ],
+      [
+        "Kantorek",
+        "Donald Pleasence"
+      ],
+      [
+        "Himmelstoss",
+        "Ian Holm"
+      ]
+    ]
+  },
+  "mulholland-drive": {
+    "title": "Mulholland Drive (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/0/0f/Mulholland.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Mulholland_Drive_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Betty Elms / Diane Selwyn (credited as Betty and Diane Selwyn)",
+        "Naomi Watts"
+      ],
+      [
+        "Rita / Camilla Rhodes (credited as Rita and Camilla Rhodes)",
+        "Laura Harring"
+      ],
+      [
+        "Adam Kesher",
+        "Justin Theroux"
+      ],
+      [
+        "Coco / Adam's Mother (credited as Coco)",
+        "Ann Miller"
+      ]
+    ]
+  },
+  "the-lives-of-others": {
+    "title": "The Lives of Others",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/9f/Leben_der_anderen.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Lives_of_Others",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Hauptmann Gerd Wiesler",
+        "Ulrich Mühe"
+      ],
+      [
+        "Georg Dreyman",
+        "Sebastian Koch"
+      ],
+      [
+        "Christa-Maria Sieland",
+        "Martina Gedeck"
+      ],
+      [
+        "Oberstleutnant Anton Grubitz",
+        "Ulrich Tukur"
+      ]
+    ]
+  },
+  "requiem-for-a-dream": {
+    "title": "Requiem for a Dream",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/92/Requiem_for_a_dream.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Requiem_for_a_Dream",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Sara Goldfarb",
+        "Ellen Burstyn"
+      ],
+      [
+        "Harry Goldfarb",
+        "Jared Leto"
+      ],
+      [
+        "Marion Silver",
+        "Jennifer Connelly"
+      ],
+      [
+        "Tyrone C. Love",
+        "Marlon Wayans"
+      ]
+    ]
+  },
+  "aladdin": {
+    "title": "Aladdin (2019 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/9a/Aladdin_%28Official_2019_Film_Poster%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Aladdin_(2019_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Genie / Mariner",
+        "Will Smith"
+      ],
+      [
+        "Aladdin",
+        "Mena Massoud"
+      ],
+      [
+        "Jasmine",
+        "Naomi Scott"
+      ],
+      [
+        "Jafar",
+        "Marwan Kenzari"
+      ]
+    ]
+  },
+  "sonic-the-hedgehog": {
+    "title": "Sonic the Hedgehog (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/45/Sonic_the_Hedgehog_film_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Sonic_the_Hedgehog_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": []
+  },
+  "live-free-or-die-hard": {
+    "title": "Live Free or Die Hard",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/46/Live_Free_or_Die_Hard.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Live_Free_or_Die_Hard",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Matthew \"Matt\" Farrell",
+        "Justin Long"
+      ],
+      [
+        "Thomas Gabriel",
+        "Timothy Olyphant"
+      ],
+      [
+        "Lucy Gennero-McClane",
+        "Mary Elizabeth Winstead"
+      ],
+      [
+        "Mai Linh",
+        "Maggie Q"
+      ]
+    ]
+  },
+  "la-dolce-vita": {
+    "title": "La Dolce Vita",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/c/c1/La_Dolce_Vita_%281960_film%29_coverart.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/La_Dolce_Vita",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Marcello Rubini",
+        "Marcello Mastroianni"
+      ],
+      [
+        "Sylvia Rank",
+        "Anita Ekberg"
+      ],
+      [
+        "Maddalena",
+        "Anouk Aimée"
+      ],
+      [
+        "Emma",
+        "Yvonne Furneaux"
+      ]
+    ]
+  },
+  "star-trek": {
+    "title": "Star Trek",
+    "poster": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Emblem.svg/500px-Emblem.svg.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Star_Trek",
+    "premiered": "",
+    "genres": [],
+    "cast": []
+  },
+  "x2": {
+    "title": "X2 (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/3e/X2_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/X2_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Professor Charles Xavier",
+        "Patrick Stewart"
+      ],
+      [
+        "Logan / Wolverine",
+        "Hugh Jackman"
+      ],
+      [
+        "Kurt Wagner / Nightcrawler",
+        "Alan Cumming"
+      ],
+      [
+        "Ororo Munroe / Storm",
+        "Halle Berry"
+      ]
+    ]
+  },
+  "monty-python-s-life-of-brian": {
+    "title": "Monty Python's Life of Brian",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/1/18/Lifeofbrianfilmposter.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Monty_Python's_Life_of_Brian",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Brian Cohen (of Nazareth)",
+        "Graham Chapman"
+      ],
+      [
+        "Judith Iscariot",
+        "Sue Jones-Davies"
+      ],
+      [
+        "Reg",
+        "John Cleese"
+      ],
+      [
+        "Another person further forward (at Mount",
+        "Terry Gilliam"
+      ]
+    ]
+  },
+  "you-only-live-twice": {
+    "title": "You Only Live Twice (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/32/You_Only_Live_Twice_-_UK_cinema_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/You_Only_Live_Twice_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "James Bond",
+        "Sean Connery"
+      ],
+      [
+        "Aki",
+        "Akiko Wakabayashi"
+      ],
+      [
+        "Tiger Tanaka",
+        "Tetsurō Tamba"
+      ],
+      [
+        "Kissy Suzuki",
+        "Mie Hama"
+      ]
+    ]
+  },
+  "babel": {
+    "title": "Babel (2006 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/9e/Babel_poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Babel_(2006_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Richard Jones",
+        "Brad Pitt"
+      ],
+      [
+        "Susan Jones",
+        "Cate Blanchett"
+      ],
+      [
+        "Anwar",
+        "Mohamed Akhzam"
+      ],
+      [
+        "Tom",
+        "Peter Wight"
+      ]
+    ]
+  },
+  "my-fair-lady": {
+    "title": "My Fair Lady (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/d5/My_fair_lady_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/My_Fair_Lady_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Eliza Doolittle",
+        "Audrey Hepburn"
+      ],
+      [
+        "Professor Henry Higgins",
+        "Rex Harrison"
+      ],
+      [
+        "Alfred P. Doolittle",
+        "Stanley Holloway"
+      ],
+      [
+        "Colonel Hugh Pickering",
+        "Wilfrid Hyde-White"
+      ]
+    ]
+  },
+  "milk": {
+    "title": "Milk (2008 American film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/0/02/Milkposter08.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Milk_(2008_American_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Harvey Milk",
+        "Sean Penn"
+      ],
+      [
+        "Cleve Jones",
+        "Emile Hirsch"
+      ],
+      [
+        "Dan White",
+        "Josh Brolin"
+      ],
+      [
+        "Jack Lira",
+        "Diego Luna"
+      ]
+    ]
+  },
+  "tomorrow-never-dies": {
+    "title": "Tomorrow Never Dies",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/b3/Tomorrow_Never_Dies_%28UK_cinema_poster%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Tomorrow_Never_Dies",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "James Bond",
+        "Pierce Brosnan"
+      ],
+      [
+        "Elliot Carver",
+        "Jonathan Pryce"
+      ],
+      [
+        "Wai Lin",
+        "Michelle Yeoh"
+      ],
+      [
+        "Paris Carver",
+        "Teri Hatcher"
+      ]
+    ]
+  },
+  "pretty-woman": {
+    "title": "Pretty Woman",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/b6/Pretty_woman_movie.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Pretty_Woman",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Edward Lewis",
+        "Richard Gere"
+      ],
+      [
+        "Vivian Ward",
+        "Julia Roberts"
+      ],
+      [
+        "Jim Morse",
+        "Ralph Bellamy"
+      ],
+      [
+        "Philip Stuckey",
+        "Jason Alexander"
+      ]
+    ]
+  },
+  "descendants-of-the-sun": {
+    "title": "Descendants of the Sun",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/240/602065.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/45799/descendants-of-the-sun",
+    "premiered": "2020-02-10",
+    "genres": [
+      "Drama",
+      "Romance",
+      "Medical"
+    ],
+    "cast": [
+      [
+        "Lucas Manalo",
+        "Dingdong Dantes"
+      ],
+      [
+        "Maxine Dela Cruz",
+        "Jennylyn Mercado"
+      ]
+    ]
+  },
+  "it-s-okay-to-not-be-okay": {
+    "title": "It's Okay to Not Be Okay",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/260/651608.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/48104/its-okay-to-not-be-okay",
+    "premiered": "2020-06-20",
+    "genres": [
+      "Drama",
+      "Fantasy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Moon Kang Tae",
+        "Kim Soo Hyun"
+      ],
+      [
+        "Go Moon Young",
+        "Seo Ye Ji"
+      ],
+      [
+        "Moon Sang Tae",
+        "Oh Jung Se"
+      ],
+      [
+        "Nam Joo Ri",
+        "Park Kyu Young"
+      ]
+    ]
+  },
+  "fringe": {
+    "title": "Fringe",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/0/2245.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/158/fringe",
+    "premiered": "2008-09-09",
+    "genres": [
+      "Drama",
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Dr. Walter Bishop",
+        "John Noble"
+      ],
+      [
+        "Peter Bishop",
+        "Joshua Jackson"
+      ],
+      [
+        "Olivia Dunham",
+        "Anna Torv"
+      ],
+      [
+        "Astrid Farnsworth",
+        "Jasika Nicole"
+      ]
+    ]
+  },
+  "alf": {
+    "title": "ALF",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/15848.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/848/alf",
+    "premiered": "1986-09-22",
+    "genres": [
+      "Comedy",
+      "Family",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "ALF",
+        "Paul Fusco"
+      ],
+      [
+        "William Tanner",
+        "Max Wright"
+      ],
+      [
+        "Kate Tanner",
+        "Anne Schedeen"
+      ],
+      [
+        "Lynn Tanner",
+        "Andrea Elson"
+      ]
+    ]
+  },
+  "el-chavo-del-8": {
+    "title": "El Chavo del Ocho",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/92/230988.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/24307/el-chavo-del-ocho",
+    "premiered": "1973-04-09",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Adventure"
+    ],
+    "cast": []
+  },
+  "ally-mcbeal": {
+    "title": "Ally McBeal",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/5/13018.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/655/ally-mcbeal",
+    "premiered": "1997-09-08",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Legal"
+    ],
+    "cast": [
+      [
+        "Ally McBeal",
+        "Calista Flockhart"
+      ],
+      [
+        "Richard Fish",
+        "Greg Germann"
+      ],
+      [
+        "Elaine Vassal",
+        "Jane Krakowski"
+      ],
+      [
+        "John Cage",
+        "Peter MacNicol"
+      ]
+    ]
+  },
+  "legends-of-tomorrow": {
+    "title": "DC's Legends of Tomorrow",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/315/787584.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1851/dcs-legends-of-tomorrow",
+    "premiered": "2016-01-21",
+    "genres": [
+      "Drama",
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Sara Lance / White Canary",
+        "Caity Lotz"
+      ],
+      [
+        "Gideon",
+        "Amy Pemberton"
+      ],
+      [
+        "Mick Rory / Heat Wave",
+        "Dominic Purcell"
+      ],
+      [
+        "Dr. Nathan Heywood",
+        "Nick Zano"
+      ]
+    ]
+  },
+  "supergirl": {
+    "title": "Supergirl",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/486/1215665.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1850/supergirl",
+    "premiered": "2015-10-26",
+    "genres": [
+      "Drama",
+      "Action",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Kara Zor-El / Kara Danvers / Supergirl",
+        "Melissa Benoist"
+      ],
+      [
+        "Alexandra \"Alex\" Danvers",
+        "Chyler Leigh"
+      ],
+      [
+        "Hank Henshaw / J'onn J'onzz / Martian Manhunter / John Jones",
+        "David Harewood"
+      ],
+      [
+        "Lena Luthor",
+        "Katie McGrath"
+      ]
+    ]
+  },
+  "monty-python-s-flying-circus": {
+    "title": "Monty Python's Flying Circus",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/5/14980.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/694/monty-pythons-flying-circus",
+    "premiered": "1969-10-05",
+    "genres": [
+      "Comedy"
+    ],
+    "cast": [
+      [
+        "Various Characters",
+        "John Cleese"
+      ]
+    ]
+  },
+  "2-broke-girls": {
+    "title": "2 Broke Girls",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/63/158548.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/124/2-broke-girls",
+    "premiered": "2011-09-19",
+    "genres": [
+      "Comedy"
+    ],
+    "cast": [
+      [
+        "Max Black",
+        "Kat Dennings"
+      ],
+      [
+        "Caroline Channing",
+        "Beth Behrs"
+      ],
+      [
+        "Earl",
+        "Garrett Morris"
+      ],
+      [
+        "Han Lee",
+        "Matthew Moy"
+      ]
+    ]
+  },
+  "rome": {
+    "title": "Rome",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/501/1253509.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/677/rome",
+    "premiered": "2005-08-28",
+    "genres": [
+      "Drama",
+      "Action",
+      "Adventure"
+    ],
+    "cast": [
+      [
+        "Lucius Vorenus",
+        "Kevin McKidd"
+      ],
+      [
+        "Titus Pullo",
+        "Ray Stevenson"
+      ],
+      [
+        "Atia of the Julii",
+        "Polly Walker"
+      ],
+      [
+        "Servilia of the Junii",
+        "Lindsay Duncan"
+      ]
+    ]
+  },
+  "hannibal": {
+    "title": "Hannibal",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/498/1246088.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/194/hannibal",
+    "premiered": "2013-04-04",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Horror"
+    ],
+    "cast": [
+      [
+        "Dr. Hannibal Lecter",
+        "Mads Mikkelsen"
+      ],
+      [
+        "FBI Special Agent Will Graham",
+        "Hugh Dancy"
+      ],
+      [
+        "FBI Special Agent Jack Crawford",
+        "Laurence Fishburne"
+      ],
+      [
+        "Dr. Alana Bloom",
+        "Caroline Dhavernas"
+      ]
+    ]
+  },
+  "coronation-street": {
+    "title": "Coronation Street",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/598/1495734.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/4139/coronation-street",
+    "premiered": "1960-12-09",
+    "genres": [
+      "Drama"
+    ],
+    "cast": [
+      [
+        "Todd Grimshaw",
+        "Bruno Langley"
+      ],
+      [
+        "Sally Metcalfe",
+        "Sally Dynevor"
+      ],
+      [
+        "David Platt",
+        "Jack P. Shepherd"
+      ],
+      [
+        "Ben Driscoll",
+        "Aaron McCusker"
+      ]
+    ]
+  },
+  "knight-rider": {
+    "title": "Knight Rider",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/15722.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/825/knight-rider",
+    "premiered": "1982-09-26",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Michael Long / Michael Knight",
+        "David Hasselhoff"
+      ],
+      [
+        "Devon Miles",
+        "Edward Mulhare"
+      ],
+      [
+        "Dr. Bonnie Barstow",
+        "Patricia McPherson"
+      ],
+      [
+        "Reginald Cornelius III \"RC3\"",
+        "Peter Parros"
+      ]
+    ]
+  },
+  "miami-vice": {
+    "title": "Miami Vice",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/357/894989.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/760/miami-vice",
+    "premiered": "1984-09-16",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime"
+    ],
+    "cast": [
+      [
+        "Det. James \"Sonny\" Crockett",
+        "Don Johnson"
+      ],
+      [
+        "Det. Ricardo \"Rico\" Tubbs",
+        "Philip Michael Thomas"
+      ],
+      [
+        "Det. Stanley \"Stan\" Switek",
+        "Michael Talbott"
+      ],
+      [
+        "Det. Trudy Joplin",
+        "Olivia Brown"
+      ]
+    ]
+  },
+  "under-the-dome": {
+    "title": "Under the Dome",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/610/1525272.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1/under-the-dome",
+    "premiered": "2013-06-24",
+    "genres": [
+      "Drama",
+      "Science-Fiction",
+      "Thriller"
+    ],
+    "cast": [
+      [
+        "Dale \"Barbie\" Barbara",
+        "Mike Vogel"
+      ],
+      [
+        "Julia Shumway",
+        "Rachelle Lefevre"
+      ],
+      [
+        "Junior Rennie",
+        "Alexander Koch"
+      ],
+      [
+        "Joe McAlister",
+        "Colin Ford"
+      ]
+    ]
+  },
+  "cosmos-a-spacetime-odyssey": {
+    "title": "Cosmos",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/402/1006408.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1128/cosmos",
+    "premiered": "1980-09-28",
+    "genres": [
+      "Mystery",
+      "Nature",
+      "History"
+    ],
+    "cast": [
+      [
+        "Host",
+        "Neil deGrasse Tyson"
+      ],
+      [
+        "Malala Yousefzai",
+        "Nadia Rochelle Pfarr"
+      ],
+      [
+        "George Tilton",
+        "Stoney Emshwiller"
+      ]
+    ]
+  },
+  "man-vs-wild": {
+    "title": "Man vs. Wild",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/9/23449.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/913/man-vs-wild",
+    "premiered": "2006-10-27",
+    "genres": [
+      "Action",
+      "Adventure"
+    ],
+    "cast": [
+      [
+        "Bear Grylls",
+        "Bear Grylls"
+      ]
+    ]
+  },
+  "entourage": {
+    "title": "Entourage",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/4/11656.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/559/entourage",
+    "premiered": "2004-07-18",
+    "genres": [
+      "Drama",
+      "Comedy"
+    ],
+    "cast": [
+      [
+        "Vincent Chase",
+        "Adrian Grenier"
+      ],
+      [
+        "Ari Gold",
+        "Jeremy Piven"
+      ],
+      [
+        "Turtle",
+        "Jerry Ferrara"
+      ],
+      [
+        "Eric Murphy",
+        "Kevin Connolly"
+      ]
+    ]
+  },
+  "this-is-us": {
+    "title": "This Is Us",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/401/1003345.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/17128/this-is-us",
+    "premiered": "2016-09-20",
+    "genres": [
+      "Drama",
+      "Comedy",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Rebecca Pearson",
+        "Mandy Moore"
+      ],
+      [
+        "Jack Pearson",
+        "Milo Ventimiglia"
+      ],
+      [
+        "Randall Pearson",
+        "Sterling K. Brown"
+      ],
+      [
+        "Kevin Pearson",
+        "Justin Hartley"
+      ]
+    ]
+  },
+  "fear-the-walking-dead": {
+    "title": "Fear the Walking Dead",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/479/1198360.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1824/fear-the-walking-dead",
+    "premiered": "2015-08-23",
+    "genres": [
+      "Drama",
+      "Action",
+      "Horror"
+    ],
+    "cast": [
+      [
+        "Alicia Clark",
+        "Alycia Debnam-Carey"
+      ],
+      [
+        "Victor Strand",
+        "Colman Domingo"
+      ],
+      [
+        "Morgan Jones",
+        "Lennie James"
+      ],
+      [
+        "Daniel Salazar",
+        "Rubén Blades"
+      ]
+    ]
+  },
+  "elite": {
+    "title": "Élite",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/529/1324751.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/37854/elite",
+    "premiered": "2018-10-05",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mystery"
+    ],
+    "cast": [
+      [
+        "Omar Shanaa",
+        "Omar Ayuso"
+      ],
+      [
+        "Samuel García Domínguez",
+        "Itzan Escamilla"
+      ],
+      [
+        "Guzmán Nunier Osuna",
+        "Miguel Bernardeau"
+      ],
+      [
+        "Ander Muñoz",
+        "Arón Piper"
+      ]
+    ]
+  },
+  "batwoman": {
+    "title": "Batwoman",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/361/903721.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/37776/batwoman",
+    "premiered": "2019-10-06",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Science-Fiction"
+    ],
+    "cast": [
+      [
+        "Alice",
+        "Rachel Skarsten"
+      ],
+      [
+        "Sophie Moore",
+        "Meagan Tandy"
+      ],
+      [
+        "Luke Fox",
+        "Camrus Johnson"
+      ],
+      [
+        "Mary Hamilton",
+        "Nicole Kang"
+      ]
+    ]
+  },
+  "days-of-our-lives": {
+    "title": "Days of Our Lives",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/598/1496284.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/812/days-of-our-lives",
+    "premiered": "1965-11-08",
+    "genres": [
+      "Drama",
+      "Family",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Brady Black",
+        "Eric Martsolf"
+      ],
+      [
+        "Rafe Hernandez",
+        "Galen Gering"
+      ],
+      [
+        "Julie Williams",
+        "Charla Doherty"
+      ],
+      [
+        "Nicole Walker",
+        "Arianne Zucker"
+      ]
+    ]
+  },
+  "brothers-and-sisters": {
+    "title": "Brothers & Sisters",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/546/1367083.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/779/brothers-sisters",
+    "premiered": "2006-09-24",
+    "genres": [
+      "Drama",
+      "Family",
+      "Romance"
+    ],
+    "cast": [
+      [
+        "Nora Holden Walker",
+        "Sally Field"
+      ],
+      [
+        "Kevin Walker",
+        "Matthew Rhys"
+      ],
+      [
+        "Justin Walker",
+        "Dave Annable"
+      ],
+      [
+        "Sarah Walker",
+        "Rachel Griffiths"
+      ]
+    ]
+  },
+  "batman": {
+    "title": "Batman",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/6/16463.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/975/batman",
+    "premiered": "1966-01-12",
+    "genres": [
+      "Comedy",
+      "Action",
+      "Adventure"
+    ],
+    "cast": [
+      [
+        "Robin the Boy Wonder / Dick Grayson",
+        "Burt Ward"
+      ],
+      [
+        "Batman / Bruce Wayne",
+        "Adam West"
+      ],
+      [
+        "Alfred Pennyworth",
+        "Alan Napier"
+      ],
+      [
+        "Commissioner James W. Gordon",
+        "Neil Hamilton"
+      ]
+    ]
+  },
+  "allo-allo": {
+    "title": "'Allo 'Allo!",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/62/156789.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/1056/allo-allo",
+    "premiered": "1982-12-30",
+    "genres": [
+      "Comedy",
+      "War"
+    ],
+    "cast": [
+      [
+        "René Artois",
+        "Gorden Kaye"
+      ],
+      [
+        "Yvette Carte-Blanche",
+        "Vicki Michelle"
+      ],
+      [
+        "Edith Melba Artois",
+        "Carmen Silvera"
+      ],
+      [
+        "Michelle Dubois",
+        "Kirsten Cooke"
+      ]
+    ]
+  },
+  "jackass": {
+    "title": "Jackass",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/19/49063.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/3954/jackass",
+    "premiered": "2000-04-12",
+    "genres": [
+      "Comedy"
+    ],
+    "cast": [
+      [
+        "Raab Himself",
+        "Chris Raab"
+      ],
+      [
+        "Johnny Knoxville",
+        "Johnny Knoxville"
+      ],
+      [
+        "Ryan Dunn",
+        "Ryan Dunn"
+      ],
+      [
+        "Steve-O",
+        "Steve-O"
+      ]
+    ]
+  },
+  "medium": {
+    "title": "Medium",
+    "poster": "https://static.tvmaze.com/uploads/images/original_untouched/495/1239868.jpg",
+    "sourceName": "TVmaze",
+    "sourceUrl": "https://www.tvmaze.com/shows/773/medium",
+    "premiered": "2005-01-03",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Supernatural"
+    ],
+    "cast": [
+      [
+        "Allison DuBois",
+        "Patricia Arquette"
+      ],
+      [
+        "Joe DuBois",
+        "Jake Weber"
+      ],
+      [
+        "Bridgette DuBois",
+        "Maria Lark"
+      ],
+      [
+        "D.A. Manuel Devalos",
+        "Miguel Sandoval"
+      ]
+    ]
+  },
+  "pirates-of-the-caribbean-on-stranger-tides": {
+    "title": "Pirates of the Caribbean: On Stranger Tides",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/5e/Pirates_of_the_Caribbean_-_On_Stranger_Tides.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Pirates_of_the_Caribbean%3A_On_Stranger_Tides",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Captain Jack Sparrow",
+        "Johnny Depp"
+      ],
+      [
+        "Angelica",
+        "Penélope Cruz"
+      ],
+      [
+        "Blackbeard",
+        "Ian McShane"
+      ],
+      [
+        "Captain Hector Barbossa",
+        "Geoffrey Rush"
+      ]
+    ]
+  },
+  "rain-man": {
+    "title": "Rain Man",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/b2/Rain_Man_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Rain_Man",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Raymond Babbitt",
+        "Dustin Hoffman"
+      ],
+      [
+        "Charlie Babbitt",
+        "Tom Cruise"
+      ],
+      [
+        "Susanna",
+        "Valeria Golino"
+      ],
+      [
+        "Dr. Gerald Bruner",
+        "Jerry Molen"
+      ]
+    ]
+  },
+  "iron-man-2": {
+    "title": "Iron Man 2",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/ed/Iron_Man_2_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Iron_Man_2",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Tony Stark / Iron Man",
+        "Robert Downey Jr."
+      ],
+      [
+        "Pepper Potts",
+        "Gwyneth Paltrow"
+      ],
+      [
+        "James \"Rhodey\" Rhodes / War Machine",
+        "Don Cheadle"
+      ],
+      [
+        "Natasha Romanoff / Black Widow",
+        "Scarlett Johansson"
+      ]
+    ]
+  },
+  "twilight": {
+    "title": "Twilight (2008 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/b6/Twilight_%282008_film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Twilight_(2008_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Bella Swan",
+        "Kristen Stewart"
+      ],
+      [
+        "Edward Cullen",
+        "Robert Pattinson"
+      ],
+      [
+        "Charlie Swan",
+        "Billy Burke"
+      ],
+      [
+        "Carlisle Cullen",
+        "Peter Facinelli"
+      ]
+    ]
+  },
+  "blood-diamond": {
+    "title": "Blood Diamond",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/5a/Blooddiamondposter.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Blood_Diamond",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Danny Archer",
+        "Leonardo DiCaprio"
+      ],
+      [
+        "Maddy Bowen",
+        "Jennifer Connelly"
+      ],
+      [
+        "Solomon Vandy",
+        "Djimon Hounsou"
+      ],
+      [
+        "Dia Vandy",
+        "Kagiso Kuypers"
+      ]
+    ]
+  },
+  "the-last-emperor": {
+    "title": "The Last Emperor",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/e5/The_Last_Emperor_filmposter.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Last_Emperor",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Puyi (adult) Richard Vuu as Puyi (3 years old)",
+        "John Lone"
+      ],
+      [
+        "Puyi (8 years old)",
+        "Tijger Tsou"
+      ],
+      [
+        "Puyi (15 years old)",
+        "Wu Tao"
+      ],
+      [
+        "Wanrong",
+        "Joan Chen"
+      ]
+    ]
+  },
+  "the-seventh-seal": {
+    "title": "The Seventh Seal",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/6/69/Seventhsealposter.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Seventh_Seal",
+    "premiered": "",
+    "genres": [],
+    "cast": []
+  },
+  "unforgiven": {
+    "title": "Unforgiven",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/4e/Unforgiven_2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Unforgiven",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "William \"Will\" Munny",
+        "Clint Eastwood"
+      ],
+      [
+        "Sheriff \"Little Bill” Daggett",
+        "Gene Hackman"
+      ],
+      [
+        "Ned Logan",
+        "Morgan Freeman"
+      ],
+      [
+        "English Bob",
+        "Richard Harris"
+      ]
+    ]
+  },
+  "x-men": {
+    "title": "X-Men (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/8/81/X-MenfilmPoster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/X-Men_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Logan / Wolverine",
+        "Hugh Jackman"
+      ],
+      [
+        "Professor Charles Xavier",
+        "Patrick Stewart"
+      ],
+      [
+        "Erik Lehnsherr / Magneto",
+        "Ian McKellen"
+      ],
+      [
+        "Marie D'Ancanto / Rogue",
+        "Anna Paquin"
+      ]
+    ]
+  },
+  "the-fifth-element": {
+    "title": "The Fifth Element",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/6/65/Fifth_element_poster_%281997%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Fifth_Element",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Korben Dallas",
+        "Bruce Willis"
+      ],
+      [
+        "Jean-Baptiste Emanuel Zorg",
+        "Gary Oldman"
+      ],
+      [
+        "Vito Cornelius",
+        "Ian Holm"
+      ],
+      [
+        "Leeloo",
+        "Milla Jovovich"
+      ]
+    ]
+  },
+  "from-russia-with-love": {
+    "title": "From Russia with Love (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/ad/From_Russia_with_Love_%E2%80%93_UK_cinema_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/From_Russia_with_Love_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "James Bond",
+        "Sean Connery"
+      ],
+      [
+        "Ali Kerim Bey",
+        "Pedro Armendáriz"
+      ],
+      [
+        "Rosa Klebb (SPECTRE No. 3)",
+        "Lotte Lenya"
+      ],
+      [
+        "Donald Grant",
+        "Robert Shaw"
+      ]
+    ]
+  },
+  "trainspotting": {
+    "title": "Trainspotting (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/71/Trainspotting_ver2.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Trainspotting_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Mark \"Rent Boy\" Renton",
+        "Ewan McGregor"
+      ],
+      [
+        "Daniel \"Spud\" Murphy",
+        "Ewen Bremner"
+      ],
+      [
+        "Simon \"Sick Boy\" Williamson",
+        "Jonny Lee Miller"
+      ],
+      [
+        "Francis \"Franco\" Begbie",
+        "Robert Carlyle"
+      ]
+    ]
+  },
+  "mr-and-mrs-smith": {
+    "title": "Mr. & Mrs. Smith (2005 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/f/fd/Mr_and_Mrs_Smith_poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Mr._%26_Mrs._Smith_(2005_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "John Smith",
+        "Brad Pitt"
+      ],
+      [
+        "Jane Smith",
+        "Angelina Jolie"
+      ],
+      [
+        "Eddie",
+        "Vince Vaughn"
+      ],
+      [
+        "Benjamin \"the Tank\" Danz",
+        "Adam Brody"
+      ]
+    ]
+  },
+  "midnight-in-paris": {
+    "title": "Midnight in Paris",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/9f/Midnight_in_Paris_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Midnight_in_Paris",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Gil Pender",
+        "Owen Wilson"
+      ],
+      [
+        "Inez",
+        "Rachel McAdams"
+      ],
+      [
+        "Adriana",
+        "Marion Cotillard"
+      ],
+      [
+        "F. Scott Fitzgerald",
+        "Tom Hiddleston"
+      ]
+    ]
+  },
+  "american-history-x": {
+    "title": "American History X",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/39/American_History_X_poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/American_History_X",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Derek Vinyard",
+        "Edward Norton"
+      ],
+      [
+        "Danny Vinyard",
+        "Edward Furlong"
+      ],
+      [
+        "Doris Vinyard",
+        "Beverly D'Angelo"
+      ],
+      [
+        "Davina Vinyard",
+        "Jennifer Lien"
+      ]
+    ]
+  },
+  "mary-poppins": {
+    "title": "Mary Poppins (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/78/Marypoppins.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Mary_Poppins_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": []
+  },
+  "10-things-i-hate-about-you": {
+    "title": "10 Things I Hate About You",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/95/10_Things_I_Hate_About_You_film.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/10_Things_I_Hate_About_You",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Katarina \"Kat\" Stratford",
+        "Julia Stiles"
+      ],
+      [
+        "Patrick Verona",
+        "Heath Ledger"
+      ],
+      [
+        "Cameron James",
+        "Joseph Gordon-Levitt"
+      ],
+      [
+        "Bianca Stratford",
+        "Larisa Oleynik"
+      ]
+    ]
+  },
+  "scent-of-a-woman": {
+    "title": "Scent of a Woman (1992 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/9/91/Scent_of_a_Woman.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Scent_of_a_Woman_(1992_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Lt. Col. Frank Slade",
+        "Al Pacino"
+      ],
+      [
+        "Charlie Simms",
+        "Chris O'Donnell"
+      ],
+      [
+        "Mr. Trask",
+        "James Rebhorn"
+      ],
+      [
+        "Donna",
+        "Gabrielle Anwar"
+      ]
+    ]
+  },
+  "lucy": {
+    "title": "Lucy (2014 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/1/14/Lucy_%282014_film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Lucy_(2014_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Lucy Miller",
+        "Scarlett Johansson"
+      ],
+      [
+        "Professor Samuel Norman",
+        "Morgan Freeman"
+      ],
+      [
+        "Mr. Jang",
+        "Choi Min-sik"
+      ],
+      [
+        "Pierre Del Rio",
+        "Amr Waked"
+      ]
+    ]
+  },
+  "the-jungle-book": {
+    "title": "The Jungle Book (2016 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/a/a4/The_Jungle_Book_%282016%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Jungle_Book_(2016_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Mowgli",
+        "Neel Sethi"
+      ],
+      [
+        "Mowgli's father.",
+        "Ritesh Rajan"
+      ]
+    ]
+  },
+  "star-wars-episode-viii-the-last-jedi": {
+    "title": "Star Wars: The Last Jedi",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/7f/Star_Wars_The_Last_Jedi.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Star_Wars%3A_The_Last_Jedi",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Luke Skywalker",
+        "Mark Hamill"
+      ],
+      [
+        "General Leia Organa",
+        "Carrie Fisher"
+      ],
+      [
+        "Kylo Ren",
+        "Adam Driver"
+      ],
+      [
+        "Rey",
+        "Daisy Ridley"
+      ]
+    ]
+  },
+  "call-me-by-your-name": {
+    "title": "Call Me by Your Name (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/c/c9/CallMeByYourName2017.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Call_Me_by_Your_Name_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Elio Perlman",
+        "Timothée Chalamet"
+      ],
+      [
+        "Oliver",
+        "Armie Hammer"
+      ],
+      [
+        "Mr. Perlman",
+        "Michael Stuhlbarg"
+      ],
+      [
+        "Annella Perlman",
+        "Amira Casar"
+      ]
+    ]
+  },
+  "django-unchained": {
+    "title": "Django Unchained",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/8/8b/Django_Unchained_Poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Django_Unchained",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Django Freeman",
+        "Jamie Foxx"
+      ],
+      [
+        "Dr. King Schultz",
+        "Christoph Waltz"
+      ],
+      [
+        "\"Monsieur\" Calvin J. Candie",
+        "Leonardo DiCaprio"
+      ],
+      [
+        "Broomhilda \"Hildi\" von Shaft",
+        "Kerry Washington"
+      ]
+    ]
+  },
+  "black-swan": {
+    "title": "Black Swan (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/6/68/Black_Swan_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Black_Swan_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Nina Sayers/White Swan/Black Swan",
+        "Natalie Portman"
+      ],
+      [
+        "Lily",
+        "Mila Kunis"
+      ],
+      [
+        "Thomas Leroy/The Gentleman",
+        "Vincent Cassel"
+      ],
+      [
+        "Erica Sayers/The Queen",
+        "Barbara Hershey"
+      ]
+    ]
+  },
+  "it-s-a-wonderful-life": {
+    "title": "It's a Wonderful Life",
+    "poster": "https://upload.wikimedia.org/wikipedia/commons/2/25/It%27s_a_Wonderful_Life_%281946_poster%29.jpeg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/It's_a_Wonderful_Life",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "George Bailey",
+        "James Stewart"
+      ],
+      [
+        "Mary Hatch Bailey",
+        "Donna Reed"
+      ],
+      [
+        "Mr. Potter",
+        "Lionel Barrymore"
+      ],
+      [
+        "Uncle Billy",
+        "Thomas Mitchell"
+      ]
+    ]
+  },
+  "the-da-vinci-code": {
+    "title": "The Da Vinci Code (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/e9/The_da_vinci_code_final.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Da_Vinci_Code_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Robert Langdon",
+        "Tom Hanks"
+      ],
+      [
+        "Sophie Neveu / Princess Sophie Saint-Clair",
+        "Audrey Tautou"
+      ],
+      [
+        "Sir Leigh Teabing",
+        "Ian McKellen"
+      ],
+      [
+        "Bishop Aringarosa",
+        "Alfred Molina"
+      ]
+    ]
+  },
+  "the-hobbit-the-desolation-of-smaug": {
+    "title": "The Hobbit: The Desolation of Smaug",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/4/4f/The_Hobbit_-_The_Desolation_of_Smaug_theatrical_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Hobbit%3A_The_Desolation_of_Smaug",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Bilbo Baggins",
+        "Martin Freeman"
+      ],
+      [
+        "Gandalf the Grey",
+        "Ian McKellen"
+      ],
+      [
+        "Thorin Oakenshield II",
+        "Richard Armitage"
+      ],
+      [
+        "Smaug (vocal performance/motion-capture)",
+        "Benedict Cumberbatch"
+      ]
+    ]
+  },
+  "the-three-caballeros": {
+    "title": "The Three Caballeros",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/7/7b/Three_caballeros_poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Three_Caballeros",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Donald Duck",
+        "Clarence Nash"
+      ],
+      [
+        "José Carioca",
+        "José do Patrocínio Oliveira"
+      ],
+      [
+        "Panchito Pistoles",
+        "Joaquin Garay"
+      ],
+      [
+        "the Aracuan Bird",
+        "Almirante"
+      ]
+    ]
+  },
+  "indiana-jones-and-the-temple-of-doom": {
+    "title": "Indiana Jones and the Temple of Doom",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/1/10/Indiana_Jones_and_the_Temple_of_Doom_PosterB.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Indiana_Jones_and_the_Temple_of_Doom",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Indiana Jones",
+        "Harrison Ford"
+      ],
+      [
+        "Short Round",
+        "Ke Huy Quan"
+      ],
+      [
+        "Wilhelmina \"Willie\" Scott",
+        "Kate Capshaw"
+      ],
+      [
+        "Mola Ram",
+        "Amrish Puri"
+      ]
+    ]
+  },
+  "avatar-the-way-of-water": {
+    "title": "Avatar: The Way of Water",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/54/Avatar_The_Way_of_Water_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Avatar%3A_The_Way_of_Water",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Jake Sully",
+        "Sam Worthington"
+      ],
+      [
+        "Neytiri",
+        "Zoe Saldaña"
+      ],
+      [
+        "Kiri",
+        "Sigourney Weaver"
+      ],
+      [
+        "Colonel Miles Quaritch",
+        "Stephen Lang"
+      ]
+    ]
+  },
+  "the-fast-and-the-furious": {
+    "title": "The Fast and the Furious (2001 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/54/Fast_and_the_furious_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Fast_and_the_Furious_(2001_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Brian O'Conner",
+        "Paul Walker"
+      ],
+      [
+        "Dominic Toretto",
+        "Vin Diesel"
+      ],
+      [
+        "Letty Ortiz",
+        "Michelle Rodriguez"
+      ],
+      [
+        "Mia Toretto",
+        "Jordana Brewster"
+      ]
+    ]
+  },
+  "saw": {
+    "title": "Saw (film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/5/56/Saw_official_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Saw_(film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Adam",
+        "Leigh Whannell"
+      ],
+      [
+        "Dr. Lawrence Gordon",
+        "Cary Elwes"
+      ],
+      [
+        "Detective David Tapp",
+        "Danny Glover"
+      ],
+      [
+        "Detective Steven Sing",
+        "Ken Leung"
+      ]
+    ]
+  },
+  "the-hobbit-the-battle-of-the-five-armies": {
+    "title": "The Hobbit: The Battle of the Five Armies",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/e/e7/The_Hobbit_-_The_Battle_of_the_Five_Armies.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Hobbit%3A_The_Battle_of_the_Five_Armies",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Bilbo Baggins Ian Holm as Old Bilbo Baggins",
+        "Martin Freeman"
+      ],
+      [
+        "Gandalf the Grey",
+        "Ian McKellen"
+      ],
+      [
+        "Thorin II Oakenshield",
+        "Richard Armitage"
+      ],
+      [
+        "Legolas",
+        "Orlando Bloom"
+      ]
+    ]
+  },
+  "guardians-of-the-galaxy-vol-2": {
+    "title": "Guardians of the Galaxy Vol. 2",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/32/Guardians_of_the_Galaxy_Vol._2_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Guardians_of_the_Galaxy_Vol._2",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Peter Quill / Star-Lord",
+        "Chris Pratt"
+      ],
+      [
+        "Gamora",
+        "Zoe Saldaña"
+      ],
+      [
+        "Drax the Destroyer",
+        "Dave Bautista"
+      ],
+      [
+        "Baby Groot",
+        "Vin Diesel"
+      ]
+    ]
+  },
+  "apocalypto": {
+    "title": "Apocalypto",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/6/62/Apocalypto-poster01.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Apocalypto",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Jaguar Paw / Almost",
+        "Rudy Youngblood"
+      ],
+      [
+        "Seven",
+        "Dalia Hernández"
+      ],
+      [
+        "Blunted",
+        "Jonathan Brewer"
+      ],
+      [
+        "Flint Sky",
+        "Morris Birdyellowhead"
+      ]
+    ]
+  },
+  "the-matrix-reloaded": {
+    "title": "The Matrix Reloaded",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/ba/Poster_-_The_Matrix_Reloaded.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Matrix_Reloaded",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Neo",
+        "Keanu Reeves"
+      ],
+      [
+        "Morpheus",
+        "Laurence Fishburne"
+      ],
+      [
+        "Trinity",
+        "Carrie-Anne Moss"
+      ],
+      [
+        "Smith",
+        "Hugo Weaving"
+      ]
+    ]
+  },
+  "3-idiots": {
+    "title": "3 Idiots",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/d/df/3_idiots_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/3_Idiots",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Phunsukh Wangdu",
+        "Aamir Khan"
+      ],
+      [
+        "Farhan Qureshi",
+        "R. Madhavan"
+      ],
+      [
+        "Raju Rastogi",
+        "Sharman Joshi"
+      ],
+      [
+        "Dr. Viru \"Virus\" Sahastrabuddhe",
+        "Boman Irani"
+      ]
+    ]
+  },
+  "12-monkeys": {
+    "title": "12 Monkeys",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/c/cf/Twelve_monkeysmp.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/12_Monkeys",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "James Cole Joseph Melito as young James Cole",
+        "Bruce Willis"
+      ],
+      [
+        "Dr. Kathryn Railly",
+        "Madeleine Stowe"
+      ],
+      [
+        "Jeffrey Goines",
+        "Brad Pitt"
+      ],
+      [
+        "Dr. Leland Goines",
+        "Christopher Plummer"
+      ]
+    ]
+  },
+  "fun-and-fancy-free": {
+    "title": "Fun and Fancy Free",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/b/b4/Funfanposter.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Fun_and_Fancy_Free",
+    "premiered": "",
+    "genres": [],
+    "cast": []
+  },
+  "batman-v-superman-dawn-of-justice": {
+    "title": "Batman v Superman: Dawn of Justice",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/3/31/Batman_v_Superman_Dawn_of_Justice_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Batman_v_Superman%3A_Dawn_of_Justice",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Bruce Wayne / Batman",
+        "Ben Affleck"
+      ],
+      [
+        "Clark Kent / Superman",
+        "Henry Cavill"
+      ],
+      [
+        "Lois Lane",
+        "Amy Adams"
+      ],
+      [
+        "Lex Luthor",
+        "Jesse Eisenberg"
+      ]
+    ]
+  },
+  "the-theory-of-everything": {
+    "title": "The Theory of Everything (2014 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/6/67/The_Theory_of_Everything_%282014%29.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/The_Theory_of_Everything_(2014_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Stephen Hawking",
+        "Eddie Redmayne"
+      ],
+      [
+        "Jane Wilde Hawking",
+        "Felicity Jones"
+      ],
+      [
+        "Jonathan Jones",
+        "Charlie Cox"
+      ],
+      [
+        "Dennis Sciama",
+        "David Thewlis"
+      ]
+    ]
+  },
+  "chicago": {
+    "title": "Chicago (2002 film)",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/f/f6/Chicago_%282002_film%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Chicago_(2002_film)",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "Roxie Hart",
+        "Renée Zellweger"
+      ],
+      [
+        "Velma Kelly",
+        "Catherine Zeta-Jones"
+      ],
+      [
+        "Billy Flynn",
+        "Richard Gere"
+      ],
+      [
+        "Matron \"Mama\" Morton",
+        "Queen Latifah"
+      ]
+    ]
+  },
+  "basic-instinct": {
+    "title": "Basic Instinct",
+    "poster": "https://upload.wikimedia.org/wikipedia/en/f/f9/Basic_Instinct.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+    "sourceName": "Wikipedia",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Basic_Instinct",
+    "premiered": "",
+    "genres": [],
+    "cast": [
+      [
+        "SFPD Police Detective Nick Curran",
+        "Michael Douglas"
+      ],
+      [
+        "Catherine Tramell",
+        "Sharon Stone"
+      ],
+      [
+        "Detective Gus Moran",
+        "George Dzundza"
+      ],
+      [
+        "Dr. Elizabeth Garner",
+        "Jeanne Tripplehorn"
+      ]
+    ]
   }
 };
   for (const [id, data] of Object.entries(ENRICHMENT)) {
@@ -13338,5 +26472,5 @@
       ROLE_ORDER.forEach((role, index) => { outcomes[role].character = data.cast[index][0]; outcomes[role].actor = data.cast[index][1]; });
     }
   }
-  window.CHARACTER_CHECK_ENRICHMENT = Object.freeze({ titles: Object.keys(ENRICHMENT).length, fullCasts: 439, images: 495 });
+  window.CHARACTER_CHECK_ENRICHMENT = Object.freeze({ titles: Object.keys(ENRICHMENT).length, fullCasts: 880, images: 987 });
 })();

@@ -26,13 +26,25 @@ async function loadCatalog() {
   const context = { window: {}, console };
   context.window = context;
   vm.createContext(context);
-  for (const filename of ["questions.js", "outcomes.js", "media.js", "title-questions.js", "expanded-catalog.js"]) {
+  const filenames = ["questions.js", "outcomes.js", "media.js", "title-questions.js", "expanded-catalog.js"];
+  try {
+    await fs.access(path.join(DATA_DIR, "expanded-catalog-2.js"));
+    filenames.push("expanded-catalog-2.js");
+  } catch {
+    // The second expansion is optional while rebuilding the first release.
+  }
+  for (const filename of filenames) {
     const source = await fs.readFile(path.join(DATA_DIR, filename), "utf8");
     vm.runInContext(source, context, { filename });
   }
   return Object.entries(context.MEDIA)
     .filter(([, media]) => media.catalogGenerated === true)
-    .map(([id, media]) => ({ id, title: media.officialTitle, type: media.type }));
+    .map(([id, media]) => ({
+      id,
+      title: media.officialTitle,
+      type: media.type,
+      catalogGeneration: media.catalogGeneration || 1,
+    }));
 }
 
 function normalize(value) {
@@ -217,18 +229,26 @@ async function loadExisting() {
 const entries = await loadCatalog();
 const moviesOnly = process.argv.includes("--movies-only");
 const missingOnly = process.argv.includes("--missing-only");
-const existing = moviesOnly || missingOnly ? await loadExisting() : {};
+const newOnly = process.argv.includes("--new-only");
+const existing = moviesOnly || missingOnly || newOnly ? await loadExisting() : {};
 const targets = moviesOnly
   ? entries.filter((entry) => entry.type === "movie")
-  : missingOnly
-    ? entries.filter((entry) => !existing[entry.id] || existing[entry.id].cast?.length !== 4)
-    : entries;
+  : newOnly
+    ? entries.filter((entry) => entry.catalogGeneration === 2 && !existing[entry.id])
+    : missingOnly
+      ? entries.filter((entry) => !existing[entry.id] || existing[entry.id].cast?.length !== 4)
+      : entries;
 const enriched = await mapLimited(targets, 6, async (entry) => {
   const data = entry.type === "show" ? await fetchShow(entry) : await fetchMovie(entry);
   if (CAST_OVERRIDES[entry.id]) data.cast = CAST_OVERRIDES[entry.id];
   return [entry.id, data];
 });
-const data = { ...existing, ...Object.fromEntries(enriched.filter(Boolean)) };
+const activeIds = new Set(entries.map((entry) => entry.id));
+const data = Object.fromEntries(
+  Object.entries({ ...existing, ...Object.fromEntries(enriched.filter(Boolean)) }).filter(([id]) =>
+    activeIds.has(id),
+  ),
+);
 const castCount = Object.values(data).filter((entry) => entry.cast?.length === 4).length;
 const imageCount = Object.values(data).filter((entry) => entry.poster).length;
 
