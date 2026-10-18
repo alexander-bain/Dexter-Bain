@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#10111a" />
     <meta
       name="description"
-      content="Choose from 5,000 shows and movies, answer ten quick personality questions, and discover which character you are."
+      content="Choose from 6,000 show, movie, sports, actor, and commercial-icon quizzes, answer ten quick questions, and discover your match."
     />
     <link rel="canonical" href="https://dexterbain.com/charactercheck/" />
     <meta property="og:type" content="website" />
@@ -14,7 +14,7 @@
     <meta property="og:title" content="Character Check — Which Character Are You?" />
     <meta
       property="og:description"
-      content="5,000 shows and movies with 10 quick questions each. Find your character twin."
+      content="6,000 show, movie, sports, actor, and commercial-icon quizzes with 10 quick questions each."
     />
     <meta property="og:url" content="https://dexterbain.com/charactercheck/" />
     <meta property="og:image" content="https://dexterbain.com/charactercheck/og.png" />
@@ -22,7 +22,7 @@
     <meta name="twitter:title" content="Character Check — Which Character Are You?" />
     <meta
       name="twitter:description"
-      content="5,000 shows and movies with 10 quick questions each. Find your character twin."
+      content="6,000 show, movie, sports, actor, and commercial-icon quizzes with 10 quick questions each."
     />
     <meta name="twitter:image" content="https://dexterbain.com/charactercheck/og.png" />
     <link rel="preconnect" href="https://static.tvmaze.com" crossorigin />
@@ -33,7 +33,7 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=League+Spartan:wght@600;700;800&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=catalog-5000-20261016-1" />
+    <link rel="stylesheet" href="styles.css?v=catalog-6000-20261018-1" />
     <title>Character Check — Which Character Are You?</title>
     <script defer src="data/questions.js?v=catalog-500-20261016-1"></script>
     <script defer src="data/outcomes.js?v=catalog-500-20261016-1"></script>
@@ -43,8 +43,9 @@
     <script defer src="data/expanded-catalog-2.js?v=catalog-1000-20261016-1"></script>
     <script defer src="data/expanded-catalog-3.js?v=catalog-1500-20261016-1"></script>
     <script defer src="data/expanded-catalog-4.js?v=catalog-5000-20261016-1"></script>
-    <script defer src="data/expanded-enrichment.js?v=catalog-5000-20261016-1"></script>
-    <script defer src="app.js?v=catalog-5000-20261016-1"></script>
+    <script defer src="data/expanded-catalog-5.js?v=catalog-6000-20261018-1"></script>
+    <script defer src="data/expanded-enrichment.js?v=catalog-6000-20261018-1"></script>
+    <script defer src="app.js?v=catalog-6000-20261018-1"></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to the game</a>
@@ -70,8 +71,8 @@
             <p class="eyebrow"><span>NEW</span> Your next personality rabbit hole</p>
             <h1 id="home-title">Which character are <em>you?</em></h1>
             <p class="hero-lede" id="hero-lede">
-              Pick a show or movie you know, answer ten quick questions, and meet your
-              character twin — plus why the match makes sense.
+              Pick a show, movie, sport, actor, or commercial icon, answer ten quick
+              questions, and meet your closest match.
             </p>
             <div class="hero-actions">
               <button class="primary-button" id="browse-button" type="button">
@@ -84,10 +85,10 @@
             <ul class="hero-facts" aria-label="Game facts">
               <li><strong id="title-total">—</strong><span id="title-kinds">titles</span></li>
               <li><strong>10</strong><span>questions each</span></li>
-              <li><strong>4,844</strong><span>new picks</span></li>
+              <li><strong>5,844</strong><span>new picks</span></li>
             </ul>
           </div>
-          <div class="hero-collage" id="hero-collage" role="group" aria-label="Featured shows and movies"></div>
+          <div class="hero-collage" id="hero-collage" role="group" aria-label="Featured Character Check quizzes"></div>
         </div>
 
         <section class="show-library" id="show-library" aria-labelledby="library-title">
@@ -98,11 +99,11 @@
             </div>
             <label class="search-box" for="show-search">
               <span aria-hidden="true">⌕</span>
-              <span class="visually-hidden">Search shows and movies</span>
+              <span class="visually-hidden">Search all Character Check quizzes</span>
               <input
                 id="show-search"
                 type="search"
-                placeholder="Search shows and movies…"
+                placeholder="Search 6,000 quizzes…"
                 autocomplete="off"
                 spellcheck="false"
               />
@@ -118,6 +119,9 @@
                   <button class="filter-chip active" type="button" data-filter-kind="type" data-filter="all" aria-pressed="true">All</button>
                   <button class="filter-chip" type="button" data-filter-kind="type" data-filter="show" aria-pressed="false">Shows</button>
                   <button class="filter-chip" type="button" data-filter-kind="type" data-filter="movie" aria-pressed="false">Movies</button>
+                  <button class="filter-chip" type="button" data-filter-kind="type" data-filter="sports" aria-pressed="false">Sports</button>
+                  <button class="filter-chip" type="button" data-filter-kind="type" data-filter="actor" aria-pressed="false">Actors</button>
+                  <button class="filter-chip" type="button" data-filter-kind="type" data-filter="commercial" aria-pressed="false">Ad icons</button>
                 </div>
               </div>
               <div class="filter-group">
@@ -140,6 +144,15 @@
                   <button class="filter-chip" type="button" data-filter-kind="collection" data-filter="encore" aria-pressed="false">500 more favorites</button>
                   <button class="filter-chip" type="button" data-filter-kind="collection" data-filter="encore-2" aria-pressed="false">another 500 favorites</button>
                   <button class="filter-chip" type="button" data-filter-kind="collection" data-filter="encore-3" aria-pressed="false">3,344 to 5,000</button>
+                  <button class="filter-chip" type="button" data-filter-kind="collection" data-filter="baseball" aria-pressed="false">Baseball</button>
+                  <button class="filter-chip" type="button" data-filter-kind="collection" data-filter="basketball" aria-pressed="false">Basketball</button>
+                  <button class="filter-chip" type="button" data-filter-kind="collection" data-filter="soccer" aria-pressed="false">Soccer</button>
+                  <button class="filter-chip" type="button" data-filter-kind="collection" data-filter="football" aria-pressed="false">Football</button>
+                  <button class="filter-chip" type="button" data-filter-kind="collection" data-filter="hockey" aria-pressed="false">Hockey</button>
+                  <button class="filter-chip" type="button" data-filter-kind="collection" data-filter="tennis" aria-pressed="false">Tennis</button>
+                  <button class="filter-chip" type="button" data-filter-kind="collection" data-filter="golf-stars" aria-pressed="false">Golf</button>
+                  <button class="filter-chip" type="button" data-filter-kind="collection" data-filter="actors" aria-pressed="false">Actors</button>
+                  <button class="filter-chip" type="button" data-filter-kind="collection" data-filter="ad-icons" aria-pressed="false">Commercial icons</button>
                 </div>
               </div>
             </div>
@@ -245,7 +258,8 @@
         Each image is credited beside its question. Show information and imagery use
         <a href="https://www.tvmaze.com/api" target="_blank" rel="noreferrer">TVmaze</a>
         under CC BY-SA; movie imagery links to
-        <a href="https://www.imdb.com/" target="_blank" rel="noreferrer">IMDb</a>.
+        <a href="https://www.imdb.com/" target="_blank" rel="noreferrer">IMDb</a>; sports,
+        actor, and icon images link to their Wikimedia or Wikipedia source.
       </p>
     </footer>
 

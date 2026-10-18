@@ -29,6 +29,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: clip;
   color: var(--ink);
   background:
     radial-gradient(circle at 10% 2%, rgba(185, 167, 255, 0.21), transparent 28rem),
@@ -248,6 +249,7 @@ main {
 }
 
 .hero-copy {
+  min-width: 0;
   max-width: 700px;
 }
 
@@ -751,6 +753,22 @@ main {
 .show-card-type.movie {
   color: var(--ink);
   background: var(--lavender);
+  border-color: var(--ink);
+}
+
+.show-card-type.sports {
+  color: var(--ink);
+  background: var(--lime);
+  border-color: var(--ink);
+}
+
+.show-card-type.actor {
+  background: #7b41e8;
+}
+
+.show-card-type.commercial {
+  color: var(--ink);
+  background: #ff86ac;
   border-color: var(--ink);
 }
 
@@ -1482,7 +1500,7 @@ main {
   }
 
   .hero h1 {
-    font-size: clamp(62px, 21vw, 92px);
+    font-size: clamp(56px, 18vw, 76px);
   }
 
   .hero-lede {
@@ -1505,7 +1523,9 @@ main {
   }
 
   .hero-facts li {
-    padding: 0 12px;
+    min-width: 0;
+    flex: 1;
+    padding: 0 8px;
   }
 
   .hero-facts strong {
@@ -1517,6 +1537,7 @@ main {
   }
 
   .hero-collage {
+    width: calc(100% - 4px);
     min-height: 380px;
     margin-top: 10px;
   }

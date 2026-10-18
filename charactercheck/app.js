@@ -8,9 +8,16 @@
     spark: { label: "Spark", color: "#b9a7ff" },
     wildcard: { label: "Wildcard", color: "#d7ff5b" },
   };
+  const TYPE_META = {
+    show: { label: "Show", plural: "shows" },
+    movie: { label: "Movie", plural: "movies" },
+    sports: { label: "Sports", plural: "sports matchups" },
+    actor: { label: "Actor", plural: "actor matchups" },
+    commercial: { label: "Ad icon", plural: "commercial icon matchups" },
+  };
   const BASE_MIN_TITLE_COUNT = 56;
   const BASE_FINAL_TITLE_COUNT = 156;
-  const EXPANDED_TITLE_COUNT = 4844;
+  const EXPANDED_TITLE_COUNT = 5844;
   const MIN_TITLE_COUNT = BASE_MIN_TITLE_COUNT + EXPANDED_TITLE_COUNT;
   const FINAL_TITLE_COUNT = BASE_FINAL_TITLE_COUNT + EXPANDED_TITLE_COUNT;
   const QUESTIONS_PER_TITLE = 10;
@@ -120,6 +127,23 @@
       .replace(/[’']/g, "")
       .toLowerCase()
       .trim();
+  }
+
+  function typeLabel(type) {
+    return TYPE_META[type]?.label || "Quiz";
+  }
+
+  function hashText(value) {
+    let result = 2166136261;
+    for (const character of String(value)) {
+      result ^= character.charCodeAt(0);
+      result = Math.imul(result, 16777619);
+    }
+    return result >>> 0;
+  }
+
+  function getOutcome(title, key) {
+    return title?.outcomes?.[key] || window.CHARACTER_CHECK_PROFILES?.[key] || null;
   }
 
   function compactQuestions(questions, titleId) {
@@ -264,13 +288,13 @@
     const fragment = document.createDocumentFragment();
 
     for (const titleData of visibleTitles) {
-      const typeLabel = titleData.type === "movie" ? "Movie" : "Show";
+      const cardTypeLabel = typeLabel(titleData.type);
       const card = document.createElement("button");
       card.type = "button";
       card.className = "show-card";
       card.setAttribute(
         "aria-label",
-        `Start the ${titleData.title} ${typeLabel.toLowerCase()} character quiz`,
+        `Start the ${titleData.title} ${cardTypeLabel.toLowerCase()} character quiz`,
       );
       card.addEventListener("click", () => startQuiz(titleData.id));
 
@@ -281,7 +305,7 @@
       wireFallback(image, titleData);
       const typeBadge = document.createElement("span");
       typeBadge.className = `show-card-type ${titleData.type}`;
-      typeBadge.textContent = typeLabel;
+      typeBadge.textContent = cardTypeLabel;
       const badge = document.createElement("span");
       badge.className = "show-card-badge";
       badge.textContent = "10 questions";
@@ -294,8 +318,8 @@
         ? titleData.collectionLabel
         : isNonemptyString(titleData.premiered)
         ? titleData.premiered.slice(0, 4)
-        : typeLabel;
-      meta.textContent = `${year} · ${titleData.genres.slice(0, 2).join(" / ") || `${typeLabel} quiz`}`;
+        : cardTypeLabel;
+      meta.textContent = `${year} · ${titleData.genres.slice(0, 2).join(" / ") || `${cardTypeLabel} quiz`}`;
       card.append(imageWrap, title, meta);
       fragment.append(card);
     }
@@ -308,37 +332,30 @@
     refs.showMoreButton.textContent = remaining > 0
       ? `Show ${Math.min(CATALOG_PAGE_SIZE, remaining)} more of ${matchingTitles.length.toLocaleString()}`
       : "All titles shown";
-    const showCount = matchingTitles.filter((title) => title.type === "show").length;
-    const movieCount = matchingTitles.length - showCount;
     const titleWord = matchingTitles.length === 1 ? "title" : "titles";
     const shownCopy = remaining > 0 ? ` · Showing ${visibleTitles.length}` : "";
-    refs.showCount.textContent = `${matchingTitles.length.toLocaleString()} ${titleWord} ready · ${showCount.toLocaleString()} ${showCount === 1 ? "show" : "shows"} · ${movieCount.toLocaleString()} ${movieCount === 1 ? "movie" : "movies"}${shownCopy}`;
+    const kindCount = new Set(matchingTitles.map((title) => title.type)).size;
+    refs.showCount.textContent = `${matchingTitles.length.toLocaleString()} ${titleWord} ready · ${kindCount.toLocaleString()} ${kindCount === 1 ? "category" : "categories"}${shownCopy}`;
   }
 
   function updateCatalogCopy() {
     const total = state.titles.length;
     const totalLabel = total.toLocaleString();
     const shows = state.titles.filter((title) => title.type === "show").length;
-    const movies = total - shows;
-    const hasMovies = movies > 0;
+    const movies = state.titles.filter((title) => title.type === "movie").length;
+    const peopleAndIcons = total - shows - movies;
     refs.headerCount.textContent = `${totalLabel} ${total === 1 ? "title" : "titles"} ready`;
     refs.titleTotal.textContent = totalLabel;
-    refs.titleKinds.textContent = hasMovies ? "shows + movies" : "shows";
-    refs.heroLede.textContent = hasMovies
-      ? "Pick a show or movie you know, answer ten quick questions, and meet your character twin — plus why the match makes sense."
-      : "Pick a show you know, answer ten quick questions, and meet your character twin — plus why the match makes sense.";
+    refs.titleKinds.textContent = "shows, sports + more";
+    refs.heroLede.textContent = "Pick a show, movie, sport, actor, or commercial icon, answer ten quick questions, and meet your closest match.";
     refs.heroCollage.setAttribute(
       "aria-label",
-      hasMovies ? "Featured shows and movies" : "Featured television shows",
+      "Featured Character Check quizzes",
     );
-    refs.showSearch.placeholder = hasMovies
-      ? `Search ${totalLabel} shows and movies…`
-      : `Search ${totalLabel} shows…`;
-    refs.typeFilterGroup.hidden = !hasMovies;
+    refs.showSearch.placeholder = `Search ${totalLabel} quizzes…`;
+    refs.typeFilterGroup.hidden = false;
 
-    const description = hasMovies
-      ? `${totalLabel} titles: ${shows.toLocaleString()} shows and ${movies.toLocaleString()} movies. Ten quick questions each.`
-      : `${totalLabel} shows. Ten unique questions each. Find your TV character twin.`;
+    const description = `${totalLabel} quizzes: ${shows.toLocaleString()} shows, ${movies.toLocaleString()} movies, and ${peopleAndIcons.toLocaleString()} sports, actor, and commercial-icon matchups. Ten quick questions each.`;
     document
       .querySelectorAll(
         'meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]',
@@ -424,7 +441,7 @@
     refs.progressFill.style.width = `${(number / title.questions.length) * 100}%`;
     refs.questionKicker.textContent = question.kicker;
     refs.questionTitle.textContent = question.prompt;
-    refs.photoLabel.textContent = `${title.type === "movie" ? "Movie" : "Show"} image · ${number}/${title.questions.length}`;
+    refs.photoLabel.textContent = `${typeLabel(title.type)} image · ${number}/${title.questions.length}`;
     refs.showSourceLink.href = photo.sourceUrl || title.sourceUrl;
     refs.showSourceLink.textContent = `Image via ${photo.sourceName || title.sourceName} ↗`;
 
@@ -527,9 +544,27 @@
     return { role, counts, tieResolved: tiedRoles.length > 1 };
   }
 
+  function scoreOutcomePool(title) {
+    if (!Array.isArray(title?.outcomePool) || title.outcomePool.length <= ROLE_ORDER.length) {
+      return null;
+    }
+    const answerSignature = state.answers.join("|");
+    const ranked = title.outcomePool.map((key) => {
+      const profile = window.CHARACTER_CHECK_PROFILES?.[key];
+      const matches = profile.traits.reduce(
+        (total, trait, index) => total + (trait === state.answers[index] ? 1 : 0),
+        0,
+      );
+      return { key, matches, tieBreak: hashText(`${answerSignature}:${key}`) };
+    });
+    ranked.sort((left, right) => right.matches - left.matches || right.tieBreak - left.tieBreak);
+    return ranked[0]?.key || null;
+  }
+
   function finishQuiz() {
     const { role, counts, tieResolved } = scoreAnswers();
-    renderResult(role, counts, { push: true, tieResolved });
+    const title = getTitle();
+    renderResult(scoreOutcomePool(title) || role, counts, { push: true, tieResolved });
   }
 
   function renderMix(counts, tieResolved = false) {
@@ -543,7 +578,8 @@
       ? "close tie · your strongest answer decided it"
       : "based on 10 answers";
     const questionCount = getTitle()?.questions.length || QUESTIONS_PER_TITLE;
-    const outcomes = getTitle()?.outcomes || {};
+    const title = getTitle();
+    const outcomes = title?.outcomePool?.length > ROLE_ORDER.length ? {} : title?.outcomes || {};
     const fragment = document.createDocumentFragment();
     for (const role of ROLE_ORDER) {
       const count = counts[role] || 0;
@@ -566,7 +602,7 @@
 
   function renderResult(role, counts = null, { push = true, tieResolved = false } = {}) {
     const title = getTitle();
-    const outcome = title?.outcomes?.[role];
+    const outcome = getOutcome(title, role);
     if (!title || !outcome) return showHome({ push });
     clearAdvanceTimer();
     clearFocusTimer();
@@ -576,14 +612,17 @@
     if (push) setUrl({ show: title.id, result: role }, true);
     document.title = `You are ${outcome.character} — ${title.title} Character Quiz`;
 
-    refs.resultBackdrop.style.backgroundImage = `url("${title.hero || title.poster}")`;
+    const resultImage = outcome.image || title.hero || title.poster;
+    refs.resultBackdrop.style.backgroundImage = `url(${JSON.stringify(resultImage)})`;
     refs.resultPhoto.hidden = false;
-    refs.resultPhoto.src = title.poster || title.hero;
-    refs.resultPhoto.alt = `${title.title} promotional artwork`;
+    refs.resultPhoto.src = resultImage;
+    refs.resultPhoto.alt = outcome.image
+      ? `${outcome.character} photo`
+      : `${title.title} promotional artwork`;
     wireFallback(refs.resultPhoto, title);
-    refs.resultShowName.textContent = `${title.type === "movie" ? "MOVIE" : "SHOW"} · ${title.title}`;
+    refs.resultShowName.textContent = `${typeLabel(title.type).toUpperCase()} · ${title.title}`;
     refs.resultCharacter.textContent = outcome.character;
-    refs.resultActor.textContent = outcome.actor ? `Played by ${outcome.actor}` : title.title;
+    refs.resultActor.textContent = outcome.actor ? `Played by ${outcome.actor}` : outcome.credit || title.title;
     refs.resultLabel.textContent = outcome.label;
     refs.resultWhy.textContent = outcome.why;
     renderMix(counts, tieResolved);
@@ -600,9 +639,9 @@
 
   async function shareResult() {
     const title = getTitle();
-    const outcome = title?.outcomes?.[state.resultRole];
+    const outcome = getOutcome(title, state.resultRole);
     if (!title || !outcome) return;
-    const typeLabel = title.type === "movie" ? "movie" : "show";
+    const shareTypeLabel = typeLabel(title.type).toLowerCase();
     const shareUrl = new URL(window.location.href);
     shareUrl.search = "";
     // Keep `show` so links shared by the original release remain compatible.
@@ -610,7 +649,7 @@
     shareUrl.searchParams.set("result", state.resultRole);
     const data = {
       title: `I’m ${outcome.character} in the ${title.title} character quiz!`,
-      text: `I got ${outcome.character} in the ${title.title} ${typeLabel} quiz. Which character are you?`,
+      text: `I got ${outcome.character} in the ${title.title} ${shareTypeLabel} quiz. Which character are you?`,
       url: shareUrl.toString(),
     };
     try {
@@ -650,7 +689,7 @@
     const resultRole = params.get("result");
     if (!titleId || !getTitle(titleId)) return showHome({ push: false });
     state.titleId = titleId;
-    if (resultRole && ROLE_ORDER.includes(resultRole)) {
+    if (resultRole && getOutcome(getTitle(titleId), resultRole)) {
       renderResult(resultRole, null, { push: false });
       return;
     }
@@ -804,8 +843,8 @@
         }
         // A cached first-release TVmaze entry has no `type`; it is always a show.
         const type = media.type || (media.tvmazeUrl ? "show" : "");
-        if (type !== "show" && type !== "movie") {
-          throw new Error(`${id} must be labeled as a show or movie`);
+        if (!TYPE_META[type]) {
+          throw new Error(`${id} has an unsupported quiz type`);
         }
         if (!Array.isArray(media.genres)) {
           throw new Error(`${id} must include genres`);
@@ -821,6 +860,28 @@
         const questions = resolveTitleQuestions(media, id);
         validateTitleQuestions(questions, id);
         validateOutcomes(outcomes, id);
+        if (Array.isArray(media.outcomePool)) {
+          if (media.outcomePool.length <= ROLE_ORDER.length) {
+            throw new Error(`${id} needs more than four possible results`);
+          }
+          if (new Set(media.outcomePool).size !== media.outcomePool.length) {
+            throw new Error(`${id} repeats a possible result`);
+          }
+          media.outcomePool.forEach((key) => {
+            const profile = window.CHARACTER_CHECK_PROFILES?.[key];
+            if (
+              !profile ||
+              !isNonemptyString(profile.character) ||
+              !isNonemptyString(profile.image) ||
+              !isNonemptyString(profile.sourceUrl) ||
+              !Array.isArray(profile.traits) ||
+              profile.traits.length !== QUESTIONS_PER_TITLE ||
+              !profile.traits.every((role) => ROLE_ORDER.includes(role))
+            ) {
+              throw new Error(`${id} has an incomplete result profile: ${key}`);
+            }
+          });
+        }
         return {
           ...media,
           id,

@@ -41,7 +41,10 @@ async function loadCatalog() {
     vm.runInContext(source, context, { filename });
   }
   return Object.entries(context.MEDIA)
-    .filter(([, media]) => media.catalogGenerated === true)
+    .filter(
+      ([, media]) =>
+        media.catalogGenerated === true && (media.type === "show" || media.type === "movie"),
+    )
     .map(([id, media]) => ({
       id,
       title: media.officialTitle,
