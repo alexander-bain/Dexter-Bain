@@ -36,13 +36,13 @@ const collectionCounts = Object.fromEntries(
   ]),
 );
 
-assert.equal(titles.length, 6000, "Character Check should have exactly 6,000 total quizzes");
-assert.equal(expanded.length, 5844, "The expansions should add exactly 5,844 quizzes");
+assert.equal(titles.length, 5010, "Character Check should have exactly 5,010 total quizzes");
+assert.equal(expanded.length, 4854, "The expansions should add exactly 4,854 quizzes");
 assert.equal(titles.filter(([, media]) => media.type === "show").length, 2500);
 assert.equal(titles.filter(([, media]) => media.type === "movie").length, 2500);
-assert.equal(titles.filter(([, media]) => media.type === "sports").length, 750);
-assert.equal(titles.filter(([, media]) => media.type === "actor").length, 200);
-assert.equal(titles.filter(([, media]) => media.type === "commercial").length, 50);
+assert.equal(titles.filter(([, media]) => media.type === "sports").length, 7);
+assert.equal(titles.filter(([, media]) => media.type === "actor").length, 2);
+assert.equal(titles.filter(([, media]) => media.type === "commercial").length, 1);
 assert.deepEqual(collectionCounts, {
   kids: 250,
   sitcoms: 50,
@@ -51,15 +51,16 @@ assert.deepEqual(collectionCounts, {
   encore: 500,
   "encore-2": 500,
   "encore-3": 3344,
-  baseball: 200,
-  basketball: 200,
-  soccer: 100,
-  football: 75,
-  hockey: 75,
-  tennis: 50,
-  "golf-stars": 50,
-  actors: 200,
-  "ad-icons": 50,
+  baseball: 1,
+  basketball: 1,
+  soccer: 1,
+  football: 1,
+  hockey: 1,
+  tennis: 1,
+  "golf-stars": 1,
+  actors: 1,
+  actresses: 1,
+  "ad-icons": 1,
 });
 assert.ok(context.MEDIA["henry-danger"], "Henry Danger should be available");
 assert.ok(context.MEDIA["bunk-d"], "Bunk'd should be available");
@@ -86,9 +87,33 @@ assert.equal(expanded.filter(([, media]) => media.catalogGeneration === 4).lengt
 assert.equal(expanded.filter(([, media]) => media.catalogGeneration === 4 && media.type === "show").length, 1554);
 assert.equal(expanded.filter(([, media]) => media.catalogGeneration === 4 && media.type === "movie").length, 1790);
 const peopleQuizzes = expanded.filter(([, media]) => media.catalogGeneration === 5);
-assert.equal(peopleQuizzes.length, 1000);
+assert.equal(peopleQuizzes.length, 10);
 assert.equal(Object.keys(context.CHARACTER_CHECK_PROFILES).length, 1000);
-assert.ok(context.MEDIA["match-ad-icons-geico-gecko"], "The GEICO Gecko should be available");
+assert.deepEqual(
+  peopleQuizzes.map(([id]) => id).sort(),
+  [
+    "match-actors",
+    "match-actresses",
+    "match-ad-icons",
+    "match-baseball",
+    "match-basketball",
+    "match-football",
+    "match-golf-stars",
+    "match-hockey",
+    "match-soccer",
+    "match-tennis",
+  ],
+  "Generation 5 should contain one quiz per category",
+);
+assert.equal(context.MEDIA["match-baseball"].outcomePool.length, 200);
+assert.equal(context.MEDIA["match-basketball"].outcomePool.length, 200);
+assert.equal(context.MEDIA["match-actors"].outcomePool.length, 100);
+assert.equal(context.MEDIA["match-actresses"].outcomePool.length, 100);
+assert.equal(context.MEDIA["match-ad-icons"].outcomePool.length, 50);
+assert.ok(
+  context.MEDIA["match-ad-icons"].outcomePool.includes("profile-ad-icons-geico-gecko"),
+  "The GEICO Gecko should be a Commercial Characters result",
+);
 for (const [id, media] of peopleQuizzes) {
   assert.ok(media.outcomePool.length > 4, `${id} should have more than four results`);
   assert.equal(new Set(media.outcomePool).size, media.outcomePool.length, `${id} should not repeat results`);
@@ -129,7 +154,11 @@ for (const [id, media] of peopleQuizzes) {
   const reachable = new Set(
     media.outcomePool.map((key) => winnerFor(media, context.CHARACTER_CHECK_PROFILES[key].traits)),
   );
-  assert.ok(reachable.size > 4, `${id} should produce more than four distinct results`);
+  assert.equal(
+    reachable.size,
+    media.outcomePool.length,
+    `${id} should make every photo-backed result reachable`,
+  );
 }
 const normalizedTitles = titles.map(([, media]) => media.officialTitle.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9]+/g, " ").trim().toLowerCase());
 assert.equal(new Set(normalizedTitles).size, titles.length, "Every title should be unique");
@@ -144,7 +173,7 @@ const thirdCatalogPosition = html.indexOf("data/expanded-catalog-3.js");
 const fourthCatalogPosition = html.indexOf("data/expanded-catalog-4.js");
 const fifthCatalogPosition = html.indexOf("data/expanded-catalog-5.js");
 const enrichmentPosition = html.indexOf("data/expanded-enrichment.js");
-const appPosition = html.indexOf("app.js?v=catalog-6000");
+const appPosition = html.indexOf("app.js?v=catalog-5010");
 assert.ok(
   catalogPosition > 0 &&
     secondCatalogPosition > catalogPosition &&

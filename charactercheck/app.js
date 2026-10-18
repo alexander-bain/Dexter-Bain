@@ -13,11 +13,11 @@
     movie: { label: "Movie", plural: "movies" },
     sports: { label: "Sports", plural: "sports matchups" },
     actor: { label: "Actor", plural: "actor matchups" },
-    commercial: { label: "Ad icon", plural: "commercial icon matchups" },
+    commercial: { label: "Commercial", plural: "commercial-character matchups" },
   };
   const BASE_MIN_TITLE_COUNT = 56;
   const BASE_FINAL_TITLE_COUNT = 156;
-  const EXPANDED_TITLE_COUNT = 5844;
+  const EXPANDED_TITLE_COUNT = 4854;
   const MIN_TITLE_COUNT = BASE_MIN_TITLE_COUNT + EXPANDED_TITLE_COUNT;
   const FINAL_TITLE_COUNT = BASE_FINAL_TITLE_COUNT + EXPANDED_TITLE_COUNT;
   const QUESTIONS_PER_TITLE = 10;
@@ -347,7 +347,7 @@
     refs.headerCount.textContent = `${totalLabel} ${total === 1 ? "title" : "titles"} ready`;
     refs.titleTotal.textContent = totalLabel;
     refs.titleKinds.textContent = "shows, sports + more";
-    refs.heroLede.textContent = "Pick a show, movie, sport, actor, or commercial icon, answer ten quick questions, and meet your closest match.";
+    refs.heroLede.textContent = "Pick a show, movie, sport, actor, actress, or commercial character, answer ten quick questions, and meet your closest match.";
     refs.heroCollage.setAttribute(
       "aria-label",
       "Featured Character Check quizzes",
@@ -355,7 +355,7 @@
     refs.showSearch.placeholder = `Search ${totalLabel} quizzes…`;
     refs.typeFilterGroup.hidden = false;
 
-    const description = `${totalLabel} quizzes: ${shows.toLocaleString()} shows, ${movies.toLocaleString()} movies, and ${peopleAndIcons.toLocaleString()} sports, actor, and commercial-icon matchups. Ten quick questions each.`;
+    const description = `${totalLabel} quizzes: ${shows.toLocaleString()} shows, ${movies.toLocaleString()} movies, and ${peopleAndIcons.toLocaleString()} sports, actor, actress, and commercial-character matchups. Ten quick questions each.`;
     document
       .querySelectorAll(
         'meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]',

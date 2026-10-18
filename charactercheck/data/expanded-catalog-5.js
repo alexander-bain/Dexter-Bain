@@ -33,16 +33,6 @@
     57
   ],
   [
-    "Q215777",
-    "Hank Aaron",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Hank%20Aaron.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q215777",
-    55
-  ],
-  [
     "Q221048",
     "Jackie Robinson",
     "baseball",
@@ -50,6 +40,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Jackie%20Robinson%2C%20NPG%2097%20135.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q221048",
+    55
+  ],
+  [
+    "Q215777",
+    "Hank Aaron",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hank%20Aaron.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q215777",
     55
   ],
   [
@@ -93,16 +93,6 @@
     35
   ],
   [
-    "Q705738",
-    "Chuck Connors",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Chuck%20Connors%20Brooklyn%20Dodgers.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q705738",
-    31
-  ],
-  [
     "Q148726",
     "Albert Pujols",
     "baseball",
@@ -110,6 +100,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Albert%20Pujols%20%28DgfQQAAmaFs%29.png",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q148726",
+    31
+  ],
+  [
+    "Q705738",
+    "Chuck Connors",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Chuck%20Connors%20Brooklyn%20Dodgers.JPG",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q705738",
     31
   ],
   [
@@ -223,26 +223,6 @@
     22
   ],
   [
-    "Q73086",
-    "Christy Mathewson",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Christy-Mathewson-1910.jpeg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q73086",
-    21
-  ],
-  [
-    "Q520665",
-    "Clayton Kershaw",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Kershaw%20at%20White%20House%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q520665",
-    21
-  ],
-  [
     "Q888295",
     "Bob Uecker",
     "baseball",
@@ -253,13 +233,13 @@
     21
   ],
   [
-    "Q731168",
-    "Cal Ripken Jr.",
+    "Q1131535",
+    "Bob Gibson",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/CalRipkenJrHWOFJune2013.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bob%20Gibson%20crop.JPG",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q731168",
+    "http://www.wikidata.org/entity/Q1131535",
     21
   ],
   [
@@ -273,13 +253,33 @@
     21
   ],
   [
-    "Q1131535",
-    "Bob Gibson",
+    "Q731168",
+    "Cal Ripken Jr.",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bob%20Gibson%20crop.JPG",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/CalRipkenJrHWOFJune2013.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1131535",
+    "http://www.wikidata.org/entity/Q731168",
+    21
+  ],
+  [
+    "Q520665",
+    "Clayton Kershaw",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Kershaw%20at%20White%20House%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q520665",
+    21
+  ],
+  [
+    "Q73086",
+    "Christy Mathewson",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Christy-Mathewson-1910.jpeg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q73086",
     21
   ],
   [
@@ -323,16 +323,6 @@
     20
   ],
   [
-    "Q1317158",
-    "Frank Robinson",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Frank%20Robinson%201961.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1317158",
-    20
-  ],
-  [
     "Q956100",
     "Carl Yastrzemski",
     "baseball",
@@ -343,44 +333,14 @@
     20
   ],
   [
-    "Q2524302",
-    "Bryce Harper",
+    "Q1317158",
+    "Frank Robinson",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bryce%20Harper%20%2832686597377%29%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Frank%20Robinson%201961.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2524302",
-    19
-  ],
-  [
-    "Q709138",
-    "Greg Maddux",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Greg%20Maddux%202008.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q709138",
-    19
-  ],
-  [
-    "Q707804",
-    "Joe Torre",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Joe%20Torre.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q707804",
-    19
-  ],
-  [
-    "Q684849",
-    "David Wright",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/WrightMarch2016.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q684849",
-    19
+    "http://www.wikidata.org/entity/Q1317158",
+    20
   ],
   [
     "Q926404",
@@ -403,13 +363,43 @@
     19
   ],
   [
-    "Q971912",
-    "Buster Posey",
+    "Q2524302",
+    "Bryce Harper",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Buster%20Posey%20%282011%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bryce%20Harper%20%2832686597377%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q971912",
+    "http://www.wikidata.org/entity/Q2524302",
+    19
+  ],
+  [
+    "Q684849",
+    "David Wright",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/WrightMarch2016.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q684849",
+    19
+  ],
+  [
+    "Q709138",
+    "Greg Maddux",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Greg%20Maddux%202008.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q709138",
+    19
+  ],
+  [
+    "Q919907",
+    "Don Larsen",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Don%20Larsen%201954.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q919907",
     18
   ],
   [
@@ -423,43 +413,33 @@
     18
   ],
   [
-    "Q919907",
-    "Don Larsen",
+    "Q954080",
+    "Hideki Matsui",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Don%20Larsen%201954.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hideki%20Matsui%20in%20USA-7.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q919907",
+    "http://www.wikidata.org/entity/Q954080",
     18
   ],
   [
-    "Q1363352",
-    "Alfonso Soriano",
+    "Q971912",
+    "Buster Posey",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Alfonso%20Soriano-Yankees-11092013.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Buster%20Posey%20%282011%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1363352",
-    17
+    "http://www.wikidata.org/entity/Q971912",
+    18
   ],
   [
-    "Q3105192",
-    "Giancarlo Stanton",
+    "Q1107989",
+    "Cole Hamels",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Giancarlo%20Stanton%20holds%20up%20the%20T-Mobile%20-HRDerby%20trophy.%20%2828447846942%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Cole%20Hamels%202018.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q3105192",
-    17
-  ],
-  [
-    "Q162360",
-    "Evan Longoria",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/EvanLongoria.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q162360",
+    "http://www.wikidata.org/entity/Q1107989",
     17
   ],
   [
@@ -473,23 +453,13 @@
     17
   ],
   [
-    "Q332804",
-    "David Price",
+    "Q162360",
+    "Evan Longoria",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/David%20Price%20%287179805024%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/EvanLongoria.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q332804",
-    17
-  ],
-  [
-    "Q521270",
-    "Brooks Robinson",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Brooks%20Robinson%202010.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q521270",
+    "http://www.wikidata.org/entity/Q162360",
     17
   ],
   [
@@ -503,63 +473,33 @@
     17
   ],
   [
-    "Q1042743",
-    "Carlos Beltrán",
+    "Q3105192",
+    "Giancarlo Stanton",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Carlos%20Beltr%C3%A1n%20in%202017%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Giancarlo%20Stanton%20holds%20up%20the%20T-Mobile%20-HRDerby%20trophy.%20%2828447846942%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1042743",
+    "http://www.wikidata.org/entity/Q3105192",
     17
   ],
   [
-    "Q1196594",
-    "Felix Hernandez",
+    "Q521270",
+    "Brooks Robinson",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/F%C3%A9lix%20Hern%C3%A1ndez%20on%20May%2011%2C%202011.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Brooks%20Robinson%202010.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1196594",
+    "http://www.wikidata.org/entity/Q521270",
     17
   ],
   [
-    "Q1047261",
-    "Casey Stengel",
+    "Q332804",
+    "David Price",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/HOF%20Stengel%20Casey%20plaque.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/David%20Price%20%287179805024%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1047261",
-    17
-  ],
-  [
-    "Q948508",
-    "Chipper Jones",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Chipper%20Jones%20in%20San%20Diego.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q948508",
-    17
-  ],
-  [
-    "Q954184",
-    "Deion Sanders",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Deion%20Sanders%2011-May-2008%20cropped.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q954184",
-    17
-  ],
-  [
-    "Q1107989",
-    "Cole Hamels",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Cole%20Hamels%202018.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1107989",
+    "http://www.wikidata.org/entity/Q332804",
     17
   ],
   [
@@ -593,6 +533,76 @@
     17
   ],
   [
+    "Q948508",
+    "Chipper Jones",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Chipper%20Jones%20in%20San%20Diego.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q948508",
+    17
+  ],
+  [
+    "Q954184",
+    "Deion Sanders",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Deion%20Sanders%2011-May-2008%20cropped.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q954184",
+    17
+  ],
+  [
+    "Q1196594",
+    "Felix Hernandez",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/F%C3%A9lix%20Hern%C3%A1ndez%20on%20May%2011%2C%202011.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1196594",
+    17
+  ],
+  [
+    "Q1363352",
+    "Alfonso Soriano",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Alfonso%20Soriano-Yankees-11092013.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1363352",
+    17
+  ],
+  [
+    "Q687282",
+    "Hank Greenberg",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hank%20Greenberg%201937%20cropped.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q687282",
+    17
+  ],
+  [
+    "Q1042743",
+    "Carlos Beltrán",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Carlos%20Beltr%C3%A1n%20in%202017%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1042743",
+    17
+  ],
+  [
+    "Q1047261",
+    "Casey Stengel",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/HOF%20Stengel%20Casey%20plaque.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1047261",
+    17
+  ],
+  [
     "Q14375933",
     "Christian Yelich",
     "baseball",
@@ -603,23 +613,53 @@
     17
   ],
   [
-    "Q863184",
-    "Billy Martin",
+    "Q1187225",
+    "Jim Thome",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Billy%20Martin%201954.png",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jim%20Thome%202008.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q863184",
+    "http://www.wikidata.org/entity/Q1187225",
     16
   ],
   [
-    "Q1387241",
-    "Giant Baba",
+    "Q888518",
+    "Bobby Doerr",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Shohei%20Baba%20%28Giant%20Baba%29%201955%20Scan10041.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bobby%20Doerr%201950%20Bowman.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1387241",
+    "http://www.wikidata.org/entity/Q888518",
+    16
+  ],
+  [
+    "Q2852937",
+    "Anthony Rizzo",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Anthony%20Rizzo%20on%20September%201%2C%202018%20%282%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q2852937",
+    16
+  ],
+  [
+    "Q736999",
+    "Cory Lidle",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Cory%20Lidle.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q736999",
+    16
+  ],
+  [
+    "Q126019",
+    "Branch Rickey",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Branch%20Rickey%201912.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q126019",
     16
   ],
   [
@@ -643,13 +683,13 @@
     16
   ],
   [
-    "Q126019",
-    "Branch Rickey",
+    "Q928223",
+    "Jon Lester",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Branch%20Rickey%201912.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jon%20Lester%20on%20June%2029%2C%202009.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q126019",
+    "http://www.wikidata.org/entity/Q928223",
     16
   ],
   [
@@ -663,93 +703,83 @@
     16
   ],
   [
-    "Q2852937",
-    "Anthony Rizzo",
+    "Q1387241",
+    "Giant Baba",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Anthony%20Rizzo%20on%20September%201%2C%202018%20%282%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Shohei%20Baba%20%28Giant%20Baba%29%201955%20Scan10041.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2852937",
+    "http://www.wikidata.org/entity/Q1387241",
     16
   ],
   [
-    "Q888518",
-    "Bobby Doerr",
+    "Q863184",
+    "Billy Martin",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bobby%20Doerr%201950%20Bowman.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Billy%20Martin%201954.png",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q888518",
+    "http://www.wikidata.org/entity/Q863184",
     16
   ],
   [
-    "Q736999",
-    "Cory Lidle",
+    "Q1186030",
+    "Bert Blyleven",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Cory%20Lidle.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bert%20Blyleven.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q736999",
-    16
-  ],
-  [
-    "Q1187225",
-    "Jim Thome",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jim%20Thome%202008.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1187225",
-    16
-  ],
-  [
-    "Q974125",
-    "Jason Bay",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Bay%20on%20June%2010%2C%202010.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q974125",
+    "http://www.wikidata.org/entity/Q1186030",
     15
   ],
   [
-    "Q960743",
-    "David Freese",
+    "Q1185516",
+    "Adam Wainwright",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/St.%20Louis%20Cardinals%20third%20baseman%20David%20Freese%20%2823%29%20%285883489176%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Adamwainwright2013cards.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q960743",
+    "http://www.wikidata.org/entity/Q1185516",
     15
   ],
   [
-    "Q862301",
-    "Bill Mazeroski",
+    "Q887401",
+    "Bo Jackson",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bill%20Mazeroski%20at%20Forbes%20Field%20-%20October%2013%2C%202010.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bo%20Jackson%2C%202011%20NCAA%20Honors%20Celebration%2C%20San%20Antonio%2C%20TX.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q862301",
+    "http://www.wikidata.org/entity/Q887401",
     15
   ],
   [
-    "Q1356627",
-    "Jim Palmer",
+    "Q1111592",
+    "Hanley Ramírez",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jim%20Palmer%20All%20Star%20Parade%202008.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hanley%20Ram%C3%ADrez%20on%20April%2020%2C%202013.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1356627",
+    "http://www.wikidata.org/entity/Q1111592",
     15
   ],
   [
-    "Q633736",
-    "Edwin Encarnación",
+    "Q2846523",
+    "Andrelton Simmons",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Blue%20Jays%20slugger%20Edwin%20Encarnacion%20talks%20to%20reporters%20at%202016%20All-Star%20Game%20availability.%20%2828498724865%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Andrelton%20Simmons%20%2829228566298%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q633736",
+    "http://www.wikidata.org/entity/Q2846523",
+    15
+  ],
+  [
+    "Q2834319",
+    "Alexei Ramírez",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/00063398%20Alexei%20Ram%C3%ADrez.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q2834319",
     15
   ],
   [
@@ -773,23 +803,13 @@
     15
   ],
   [
-    "Q1585630",
-    "Harmon Killebrew",
+    "Q910782",
+    "Brett Gardner",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Harmon%20Killebrew.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/001B4375%20Brett%20Gardner.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1585630",
-    15
-  ],
-  [
-    "Q5552563",
-    "Gerrit Cole",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gerrit%20Cole%20with%20the%20New%20York%20Yankees%20in%202020%20spring%20training%20camp.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q5552563",
+    "http://www.wikidata.org/entity/Q910782",
     15
   ],
   [
@@ -803,16 +823,6 @@
     15
   ],
   [
-    "Q1028466",
-    "Cap Anson",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Cap%20Anson%200555fu.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1028466",
-    15
-  ],
-  [
     "Q1329206",
     "Hiroki Kuroda",
     "baseball",
@@ -820,6 +830,26 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Hiroki%20Kuroda%20on%20May%2022%2C%202013%20%282%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q1329206",
+    15
+  ],
+  [
+    "Q1585630",
+    "Harmon Killebrew",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Harmon%20Killebrew.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1585630",
+    15
+  ],
+  [
+    "Q633736",
+    "Edwin Encarnación",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Blue%20Jays%20slugger%20Edwin%20Encarnacion%20talks%20to%20reporters%20at%202016%20All-Star%20Game%20availability.%20%2828498724865%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q633736",
     15
   ],
   [
@@ -833,23 +863,53 @@
     15
   ],
   [
-    "Q2834319",
-    "Alexei Ramírez",
+    "Q960743",
+    "David Freese",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/00063398%20Alexei%20Ram%C3%ADrez.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/St.%20Louis%20Cardinals%20third%20baseman%20David%20Freese%20%2823%29%20%285883489176%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2834319",
+    "http://www.wikidata.org/entity/Q960743",
     15
   ],
   [
-    "Q2846523",
-    "Andrelton Simmons",
+    "Q1028466",
+    "Cap Anson",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Andrelton%20Simmons%20%2829228566298%29%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Cap%20Anson%200555fu.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2846523",
+    "http://www.wikidata.org/entity/Q1028466",
+    15
+  ],
+  [
+    "Q5552563",
+    "Gerrit Cole",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gerrit%20Cole%20with%20the%20New%20York%20Yankees%20in%202020%20spring%20training%20camp.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q5552563",
+    15
+  ],
+  [
+    "Q974125",
+    "Jason Bay",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Bay%20on%20June%2010%2C%202010.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q974125",
+    15
+  ],
+  [
+    "Q862301",
+    "Bill Mazeroski",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bill%20Mazeroski%20at%20Forbes%20Field%20-%20October%2013%2C%202010.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q862301",
     15
   ],
   [
@@ -863,16 +923,6 @@
     15
   ],
   [
-    "Q887401",
-    "Bo Jackson",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bo%20Jackson%2C%202011%20NCAA%20Honors%20Celebration%2C%20San%20Antonio%2C%20TX.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q887401",
-    15
-  ],
-  [
     "Q1053189",
     "Barry Larkin",
     "baseball",
@@ -880,16 +930,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Baseball%20barry%20larkin%202004.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q1053189",
-    15
-  ],
-  [
-    "Q910782",
-    "Brett Gardner",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/001B4375%20Brett%20Gardner.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q910782",
     15
   ],
   [
@@ -903,16 +943,6 @@
     15
   ],
   [
-    "Q1111592",
-    "Hanley Ramírez",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Hanley%20Ram%C3%ADrez%20on%20April%2020%2C%202013.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1111592",
-    15
-  ],
-  [
     "Q29514757",
     "Cody Bellinger",
     "baseball",
@@ -923,103 +953,53 @@
     15
   ],
   [
-    "Q1185516",
-    "Adam Wainwright",
+    "Q1145308",
+    "John Smoltz",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Adamwainwright2013cards.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hall%20of%20Famer%20John%20Smoltz%20speaks%20to%20reporters%20before%20the%20MLBPAA%27s%202016%20Legends%20for%20Youth%20Dinner%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1185516",
-    15
-  ],
-  [
-    "Q1186030",
-    "Bert Blyleven",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bert%20Blyleven.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1186030",
-    15
-  ],
-  [
-    "Q972358",
-    "Don Drysdale",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Drysdale%20You%20Bet%20Your%20Life.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q972358",
+    "http://www.wikidata.org/entity/Q1145308",
     14
   ],
   [
-    "Q1972390",
-    "Grover Cleveland Alexander",
+    "Q1131057",
+    "Fernando Valenzuela",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Grover%20Cleveland%20Alexander.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Fernando%20Valenzuela%20in%20bullpen.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1972390",
+    "http://www.wikidata.org/entity/Q1131057",
     14
   ],
   [
-    "Q713081",
-    "Joe Cronin",
+    "Q1126349",
+    "Connie Mack",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Joe%20Cronin%201937%20cropped.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Connie%20Mack%20Portrait%20%284x5%20cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q713081",
+    "http://www.wikidata.org/entity/Q1126349",
     14
   ],
   [
-    "Q1376903",
-    "Andruw Jones",
+    "Q3012322",
+    "Dale Murphy",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Andruw%20Jones%20%28hacuhikuMyE%29.png",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Meeting%20Dale%20Murphy%20at%20CNN%20Center.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1376903",
+    "http://www.wikidata.org/entity/Q3012322",
     14
   ],
   [
-    "Q1683912",
-    "Jason Giambi",
+    "Q574689",
+    "Andrew McCutchen",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Giambi%20%282429833416%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Andrew%20McCutchen%20on%20June%2012%2C%202012.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1683912",
-    14
-  ],
-  [
-    "Q1653296",
-    "Jason Heyward",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Heyward%20in%202017%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1653296",
-    14
-  ],
-  [
-    "Q2421765",
-    "Hunter Pence",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Hunter%20Pence%20on%20September%2026%2C%202012.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2421765",
-    14
-  ],
-  [
-    "Q2386218",
-    "Jack Morris",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jack%20Morris%202013.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2386218",
+    "http://www.wikidata.org/entity/Q574689",
     14
   ],
   [
@@ -1033,23 +1013,13 @@
     14
   ],
   [
-    "Q2306581",
-    "Elmer Gedeon",
+    "Q256057",
+    "Frank Nelson",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Elmer%20gedeon%201938%20UofM%20football%20team.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/1912%20Frank%20Nelson.JPG",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2306581",
-    14
-  ],
-  [
-    "Q574689",
-    "Andrew McCutchen",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Andrew%20McCutchen%20on%20June%2012%2C%202012.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q574689",
+    "http://www.wikidata.org/entity/Q256057",
     14
   ],
   [
@@ -1083,6 +1053,16 @@
     14
   ],
   [
+    "Q372506",
+    "Andy Pettitte",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Andy%20Pettitte%20by%20Keith%20Allison%208%2031%2009%20pic2%20CROP.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q372506",
+    14
+  ],
+  [
     "Q26038",
     "Dave Parker",
     "baseball",
@@ -1103,26 +1083,6 @@
     14
   ],
   [
-    "Q256057",
-    "Frank Nelson",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/1912%20Frank%20Nelson.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q256057",
-    14
-  ],
-  [
-    "Q372506",
-    "Andy Pettitte",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Andy%20Pettitte%20by%20Keith%20Allison%208%2031%2009%20pic2%20CROP.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q372506",
-    14
-  ],
-  [
     "Q515894",
     "Gil Hodges",
     "baseball",
@@ -1133,13 +1093,43 @@
     14
   ],
   [
-    "Q5544750",
-    "George Springer",
+    "Q1173396",
+    "Dave Winfield",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Springer%20on%20August%2018%2C%202016.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/DaveWinfieldByPhilKonstantin.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q5544750",
+    "http://www.wikidata.org/entity/Q1173396",
+    14
+  ],
+  [
+    "Q3156794",
+    "J. D. Martinez",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/J.%20D.%20Martinez%20on%20first%20base%2C%20May%2025%2C%202024%20-%20001%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q3156794",
+    14
+  ],
+  [
+    "Q2306581",
+    "Elmer Gedeon",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Elmer%20gedeon%201938%20UofM%20football%20team.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q2306581",
+    14
+  ],
+  [
+    "Q2421765",
+    "Hunter Pence",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hunter%20Pence%20on%20September%2026%2C%202012.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q2421765",
     14
   ],
   [
@@ -1153,56 +1143,6 @@
     14
   ],
   [
-    "Q1022519",
-    "C. J. Wilson",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/C.%20J.%20Wilson%20on%20June%2026%2C%202012.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1022519",
-    14
-  ],
-  [
-    "Q3025621",
-    "Dexter Fowler",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dexter%20Fowler%20with%20Astros%20in%20April%202014.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q3025621",
-    14
-  ],
-  [
-    "Q3026194",
-    "Emilio Bonifacio",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Emilio%20Bonifacio%20on%20April%2022%2C%202013.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q3026194",
-    14
-  ],
-  [
-    "Q3032684",
-    "Dizzy Dean",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dizzy%20Dean%20Time.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q3032684",
-    14
-  ],
-  [
-    "Q3012322",
-    "Dale Murphy",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Meeting%20Dale%20Murphy%20at%20CNN%20Center.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q3012322",
-    14
-  ],
-  [
     "Q5483582",
     "Francisco Lindor",
     "baseball",
@@ -1210,6 +1150,26 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Francisco%20Lindor%20during%20warmups%2C%20March%2015%2C%202024%20%281%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q5483582",
+    14
+  ],
+  [
+    "Q1189671",
+    "Iván Nova",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/NovaPitching2.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1189671",
+    14
+  ],
+  [
+    "Q1376903",
+    "Andruw Jones",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Andruw%20Jones%20%28hacuhikuMyE%29.png",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1376903",
     14
   ],
   [
@@ -1233,43 +1193,93 @@
     14
   ],
   [
-    "Q1126349",
-    "Connie Mack",
+    "Q3025621",
+    "Dexter Fowler",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Connie%20Mack%20Portrait%20%284x5%20cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Dexter%20Fowler%20with%20Astros%20in%20April%202014.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1126349",
+    "http://www.wikidata.org/entity/Q3025621",
     14
   ],
   [
-    "Q1131057",
-    "Fernando Valenzuela",
+    "Q5544750",
+    "George Springer",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Fernando%20Valenzuela%20in%20bullpen.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Springer%20on%20August%2018%2C%202016.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1131057",
+    "http://www.wikidata.org/entity/Q5544750",
     14
   ],
   [
-    "Q1173396",
-    "Dave Winfield",
+    "Q3026194",
+    "Emilio Bonifacio",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/DaveWinfieldByPhilKonstantin.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Emilio%20Bonifacio%20on%20April%2022%2C%202013.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1173396",
+    "http://www.wikidata.org/entity/Q3026194",
     14
   ],
   [
-    "Q1185584",
-    "José Contreras",
+    "Q1022519",
+    "C. J. Wilson",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/IMG%201341%20Jos%C3%A9%20Contreras.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/C.%20J.%20Wilson%20on%20June%2026%2C%202012.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1185584",
+    "http://www.wikidata.org/entity/Q1022519",
+    14
+  ],
+  [
+    "Q972358",
+    "Don Drysdale",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Drysdale%20You%20Bet%20Your%20Life.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q972358",
+    14
+  ],
+  [
+    "Q3032684",
+    "Dizzy Dean",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Dizzy%20Dean%20Time.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q3032684",
+    14
+  ],
+  [
+    "Q1972390",
+    "Grover Cleveland Alexander",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Grover%20Cleveland%20Alexander.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1972390",
+    14
+  ],
+  [
+    "Q1683912",
+    "Jason Giambi",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Giambi%20%282429833416%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1683912",
+    14
+  ],
+  [
+    "Q1056244",
+    "Jim Rice",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jim%20Rice%202009.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1056244",
     14
   ],
   [
@@ -1283,83 +1293,43 @@
     14
   ],
   [
-    "Q2736194",
-    "Gene Conley",
+    "Q1185247",
+    "Carlos Lee",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gene%20Conley%201960%20%28cropped%29.JPG",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Carlos%20Lee%20on%20September%203%2C%202007.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2736194",
+    "http://www.wikidata.org/entity/Q1185247",
     13
   ],
   [
-    "Q1527827",
-    "King Kelly",
+    "Q1145696",
+    "Dennis Eckersley",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/%2410%2C000%20Kelly%2C%20Boston%2C%20from%20the%20Old%20Judge%20series%20%28N172%29%20for%20Old%20Judge%20Cigarettes%20MET%20DP824623.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Dennis%20Eckersley.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1527827",
+    "http://www.wikidata.org/entity/Q1145696",
     13
   ],
   [
-    "Q2699280",
-    "Carlos González",
+    "Q1133452",
+    "Elvis Andrus",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/IMG%201791%20Carlos%20Gonz%C3%A1lez.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/ElvisAndrus.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2699280",
+    "http://www.wikidata.org/entity/Q1133452",
     13
   ],
   [
-    "Q1496596",
-    "Gaylord Perry",
+    "Q809118",
+    "Barry Zito",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gaylord%20Perry%20in%201977.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Barry%20Zito%20%282011%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1496596",
-    13
-  ],
-  [
-    "Q862064",
-    "Bill Dickey",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bill%20Dickey%201937%20cropped.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q862064",
-    13
-  ],
-  [
-    "Q1699321",
-    "John Beradino",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Beradino%20St%20Louis%20Browns.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1699321",
-    13
-  ],
-  [
-    "Q712153",
-    "John Joseph McGraw",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/John-McGraw-1910.jpeg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q712153",
-    13
-  ],
-  [
-    "Q706446",
-    "Wang Chien-ming",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Chien-Ming%20Wang%20%282312062796%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q706446",
+    "http://www.wikidata.org/entity/Q809118",
     13
   ],
   [
@@ -1373,26 +1343,6 @@
     13
   ],
   [
-    "Q679120",
-    "Don Mattingly",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/2015%20-WinterMeetings-%20Don%20Mattingly%20%2823344128150%29%20crop.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q679120",
-    13
-  ],
-  [
-    "Q3082840",
-    "Frank Thomas",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/FrankThomas2007.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q3082840",
-    13
-  ],
-  [
     "Q567887",
     "Jake Peavy",
     "baseball",
@@ -1400,16 +1350,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Jake%20Peavy%2003.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q567887",
-    13
-  ],
-  [
-    "Q2255564",
-    "Addie Joss",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Addie%20Joss%20by%20Carl%20Horner%201902.png",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2255564",
     13
   ],
   [
@@ -1423,16 +1363,6 @@
     13
   ],
   [
-    "Q2026390",
-    "Dee Strange-Gordon",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/IMG%209661%20Dee%20Gordon.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2026390",
-    13
-  ],
-  [
     "Q257231",
     "Frank Castleman",
     "baseball",
@@ -1440,46 +1370,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Frank%20Castleman.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q257231",
-    13
-  ],
-  [
-    "Q212244",
-    "Curtis Granderson",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Curtis%20Granderson%20on%20August%2026%2C%202011.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q212244",
-    13
-  ],
-  [
-    "Q485712",
-    "Hideki Irabu",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Hideki%20Irabu%20in%202009.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q485712",
-    13
-  ],
-  [
-    "Q82518",
-    "Carlos Correa",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Correa%20practice%202025.png",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q82518",
-    13
-  ],
-  [
-    "Q349202",
-    "Adam Dunn",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Adam%20Dunn%20on%20August%2010%2C%202011.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q349202",
     13
   ],
   [
@@ -1493,6 +1383,206 @@
     13
   ],
   [
+    "Q212244",
+    "Curtis Granderson",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Curtis%20Granderson%20on%20August%2026%2C%202011.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q212244",
+    13
+  ],
+  [
+    "Q349202",
+    "Adam Dunn",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Adam%20Dunn%20on%20August%2010%2C%202011.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q349202",
+    13
+  ],
+  [
+    "Q82518",
+    "Carlos Correa",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Correa%20practice%202025.png",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q82518",
+    13
+  ],
+  [
+    "Q77840",
+    "Kim Hyun-soo",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/KoreaWBC2009.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q77840",
+    13
+  ],
+  [
+    "Q485712",
+    "Hideki Irabu",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hideki%20Irabu%20in%202009.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q485712",
+    13
+  ],
+  [
+    "Q3082840",
+    "Frank Thomas",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/FrankThomas2007.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q3082840",
+    13
+  ],
+  [
+    "Q3163218",
+    "Jay Bruce",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jay%20Bruce%20on%20August%202%2C%202016%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q3163218",
+    13
+  ],
+  [
+    "Q3176584",
+    "Jeff Samardzija",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jeff%20Samardzija%20catch%20crop.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q3176584",
+    13
+  ],
+  [
+    "Q1152442",
+    "George Brett",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Brett%201990%20CROP.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1152442",
+    13
+  ],
+  [
+    "Q1166727",
+    "Darryl Strawberry",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Daryl%20Strawberry%20%2829297363126%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1166727",
+    13
+  ],
+  [
+    "Q913269",
+    "Brian Wilson",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Brian%20Wilson%20Fear%20the%20Beard.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q913269",
+    13
+  ],
+  [
+    "Q2736194",
+    "Gene Conley",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gene%20Conley%201960%20%28cropped%29.JPG",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q2736194",
+    13
+  ],
+  [
+    "Q5526029",
+    "Gary Sánchez",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gary%20Sanchez%202012.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q5526029",
+    13
+  ],
+  [
+    "Q1204653",
+    "Duke Snider",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Duke%20Snider%201953.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1204653",
+    13
+  ],
+  [
+    "Q2699280",
+    "Carlos González",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/IMG%201791%20Carlos%20Gonz%C3%A1lez.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q2699280",
+    13
+  ],
+  [
+    "Q1282739",
+    "Eddie Collins",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Eddie%20Collins%201911.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1282739",
+    13
+  ],
+  [
+    "Q1496596",
+    "Gaylord Perry",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gaylord%20Perry%20in%201977.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1496596",
+    13
+  ],
+  [
+    "Q1322518",
+    "Bobby Abreu",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bobby%20Abreu%20in%202004.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1322518",
+    13
+  ],
+  [
+    "Q706446",
+    "Wang Chien-ming",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Chien-Ming%20Wang%20%282312062796%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q706446",
+    13
+  ],
+  [
+    "Q679120",
+    "Don Mattingly",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/2015%20-WinterMeetings-%20Don%20Mattingly%20%2823344128150%29%20crop.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q679120",
+    13
+  ],
+  [
     "Q988487",
     "Craig Biggio",
     "baseball",
@@ -1500,6 +1590,26 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Craig%20Biggio.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q988487",
+    13
+  ],
+  [
+    "Q862064",
+    "Bill Dickey",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bill%20Dickey%201937%20cropped.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q862064",
+    13
+  ],
+  [
+    "Q1038888",
+    "Hayato Sakamoto",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/%E5%9D%82%E6%9C%AC%E5%8B%87%E4%BA%BA%E3%80%90JERA%20%E3%82%BB%E3%83%BB%E3%83%AA%E3%83%BC%E3%82%B0%E5%85%AC%E5%BC%8F%E6%88%A6%E3%80%91%E8%AA%AD%E5%A3%B2%E3%82%B8%E3%83%A3%E3%82%A4%E3%82%A2%E3%83%B3%E3%83%84%20vs%20%E4%B8%AD%E6%97%A5%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%82%BA%2023%E5%9B%9E%E6%88%A6%20%E6%9D%B1%E4%BA%AC%E3%83%89%E3%83%BC%E3%83%A0%202026%E5%B9%B49%E6%9C%8810%E6%97%A5%E3%81%AE%E6%9D%B1%E4%BA%AC%20202609101735%20DSCN2977.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1038888",
     13
   ],
   [
@@ -1523,73 +1633,43 @@
     13
   ],
   [
-    "Q1282739",
-    "Eddie Collins",
+    "Q2026390",
+    "Dee Strange-Gordon",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Eddie%20Collins%201911.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/IMG%209661%20Dee%20Gordon.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1282739",
+    "http://www.wikidata.org/entity/Q2026390",
     13
   ],
   [
-    "Q1204653",
-    "Duke Snider",
+    "Q2255564",
+    "Addie Joss",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Duke%20Snider%201953.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Addie%20Joss%20by%20Carl%20Horner%201902.png",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1204653",
+    "http://www.wikidata.org/entity/Q2255564",
     13
   ],
   [
-    "Q1038888",
-    "Hayato Sakamoto",
+    "Q1699321",
+    "John Beradino",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/%E5%9D%82%E6%9C%AC%E5%8B%87%E4%BA%BA%E3%80%90JERA%20%E3%82%BB%E3%83%BB%E3%83%AA%E3%83%BC%E3%82%B0%E5%85%AC%E5%BC%8F%E6%88%A6%E3%80%91%E8%AA%AD%E5%A3%B2%E3%82%B8%E3%83%A3%E3%82%A4%E3%82%A2%E3%83%B3%E3%83%84%20vs%20%E4%B8%AD%E6%97%A5%E3%83%89%E3%83%A9%E3%82%B4%E3%83%B3%E3%82%BA%2023%E5%9B%9E%E6%88%A6%20%E6%9D%B1%E4%BA%AC%E3%83%89%E3%83%BC%E3%83%A0%202026%E5%B9%B49%E6%9C%8810%E6%97%A5%E3%81%AE%E6%9D%B1%E4%BA%AC%20202609101735%20DSCN2977.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Beradino%20St%20Louis%20Browns.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1038888",
+    "http://www.wikidata.org/entity/Q1699321",
     13
   ],
   [
-    "Q1322518",
-    "Bobby Abreu",
+    "Q16206952",
+    "Alex Bregman",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bobby%20Abreu%20in%202004.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Houston%20Astros%20at%20Camden%20Yards%20-%20September%202018%20%2852286182154%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1322518",
-    13
-  ],
-  [
-    "Q1056011",
-    "Gary Carter",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gary%20Carter%20OC.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1056011",
-    13
-  ],
-  [
-    "Q5526029",
-    "Gary Sánchez",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gary%20Sanchez%202012.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q5526029",
-    13
-  ],
-  [
-    "Q913269",
-    "Brian Wilson",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Brian%20Wilson%20Fear%20the%20Beard.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q913269",
+    "http://www.wikidata.org/entity/Q16206952",
     13
   ],
   [
@@ -1613,123 +1693,13 @@
     13
   ],
   [
-    "Q809118",
-    "Barry Zito",
+    "Q1056011",
+    "Gary Carter",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Barry%20Zito%20%282011%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gary%20Carter%20OC.JPG",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q809118",
-    13
-  ],
-  [
-    "Q1133452",
-    "Elvis Andrus",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/ElvisAndrus.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1133452",
-    13
-  ],
-  [
-    "Q1145696",
-    "Dennis Eckersley",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dennis%20Eckersley.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1145696",
-    13
-  ],
-  [
-    "Q1152442",
-    "George Brett",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Brett%201990%20CROP.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1152442",
-    13
-  ],
-  [
-    "Q1155003",
-    "Johnny Bench",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bench%20Johnny.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1155003",
-    13
-  ],
-  [
-    "Q1166727",
-    "Darryl Strawberry",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Daryl%20Strawberry%20%2829297363126%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1166727",
-    13
-  ],
-  [
-    "Q1185247",
-    "Carlos Lee",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Carlos%20Lee%20on%20September%203%2C%202007.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1185247",
-    13
-  ],
-  [
-    "Q1185498",
-    "Kirk Gibson",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gibsonwin3.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1185498",
-    13
-  ],
-  [
-    "Q1186457",
-    "Joe Girardi",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Joe%20Girardi%20April%202009.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1186457",
-    13
-  ],
-  [
-    "Q25189679",
-    "Brett Young",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Brett%20Young%20in%20concert%202015.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q25189679",
-    13
-  ],
-  [
-    "Q21062597",
-    "Blake Snell",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Blake%20Snell%2C%20Wilson%20Ramos%20%2841371609524%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q21062597",
-    13
-  ],
-  [
-    "Q50345083",
-    "Fernando Tatís Jr.",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Padres%20Visit%203rd%20MAW%20Marines%20at%20Miramar%20%282%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q50345083",
+    "http://www.wikidata.org/entity/Q1056011",
     13
   ],
   [
@@ -1743,93 +1713,123 @@
     13
   ],
   [
-    "Q16206952",
-    "Alex Bregman",
+    "Q25189679",
+    "Brett Young",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Houston%20Astros%20at%20Camden%20Yards%20-%20September%202018%20%2852286182154%29%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Brett%20Young%20in%20concert%202015.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q16206952",
+    "http://www.wikidata.org/entity/Q25189679",
     13
   ],
   [
-    "Q978930",
-    "Cliff Lee",
+    "Q50345083",
+    "Fernando Tatís Jr.",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Cliff%20Lee%2C%20philly%20crop.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Padres%20Visit%203rd%20MAW%20Marines%20at%20Miramar%20%282%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q978930",
+    "http://www.wikidata.org/entity/Q50345083",
+    13
+  ],
+  [
+    "Q21062597",
+    "Blake Snell",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Blake%20Snell%2C%20Wilson%20Ramos%20%2841371609524%29%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q21062597",
+    13
+  ],
+  [
+    "Q9013791",
+    "José Abreu",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jose%20Abreu%20on%20deck%20circle%20at%20Minute%20Maid%202014.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q9013791",
+    13
+  ],
+  [
+    "Q1186024",
+    "Jimmy Collins",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jimmy%20Collins%20HOF.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1186024",
     12
   ],
   [
-    "Q2739073",
-    "Frankie Frisch",
+    "Q4913471",
+    "Billy Williams",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/FrankieFrischGoudeycard.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Billy%20Williams%201961.png",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2739073",
+    "http://www.wikidata.org/entity/Q4913471",
     12
   ],
   [
-    "Q963269",
-    "Dallas Braden",
+    "Q1139273",
+    "Eduardo Núñez",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dallasbraden01.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Eduardo%20Nunez.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q963269",
+    "http://www.wikidata.org/entity/Q1139273",
     12
   ],
   [
-    "Q711946",
-    "Al Simmons",
+    "Q5272620",
+    "Dick Allen",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/AlSimmonsGoudeycard.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Dick%20Allen.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q711946",
+    "http://www.wikidata.org/entity/Q5272620",
     12
   ],
   [
-    "Q1377658",
-    "Jason Varitek",
+    "Q1136890",
+    "David Cone",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Varitek%20on%20June%2030%2C%202009.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/David%20Cone%202009.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1377658",
+    "http://www.wikidata.org/entity/Q1136890",
     12
   ],
   [
-    "Q708047",
-    "Chen Chin-feng",
+    "Q887934",
+    "Connie Marrero",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/%E9%8B%92%E5%93%A552.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/1954%20Bowman%20Connie%20Marrero.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q708047",
+    "http://www.wikidata.org/entity/Q887934",
     12
   ],
   [
-    "Q4773350",
-    "Anthony Rendon",
+    "Q1133513",
+    "Aroldis Chapman",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Anthony%20Rendon%202017%20%2834506991176%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Aroldis%20Chapman%20%28R9aL4A0TJTo%29.png",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q4773350",
+    "http://www.wikidata.org/entity/Q1133513",
     12
   ],
   [
-    "Q2367902",
-    "Carlos Santana",
+    "Q4661865",
+    "Aaron Boone",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Carlos%20Santana%20%2848156484636%29%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Aaron%20Boone%20June%2018%2C%202018%20%2850121262646%29%20cropped.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2367902",
+    "http://www.wikidata.org/entity/Q4661865",
     12
   ],
   [
@@ -1853,6 +1853,56 @@
     12
   ],
   [
+    "Q4244248",
+    "Chang Chih-Chia",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/%E5%BC%B5%E8%AA%8C%E5%AE%B62009%20%28Cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q4244248",
+    12
+  ],
+  [
+    "Q326958",
+    "Harry Hooper",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Harry%20Hooper%201915.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q326958",
+    12
+  ],
+  [
+    "Q278305",
+    "A. J. Pierzynski",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/A.J.%20Pierzynski%20April%202009.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q278305",
+    12
+  ],
+  [
+    "Q267760",
+    "George Kell",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Kell%201953.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q267760",
+    12
+  ],
+  [
+    "Q202212",
+    "Cal Hubbard",
+    "baseball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Cal%20Hubbard%20Football.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q202212",
+    12
+  ],
+  [
     "Q325991",
     "Earl Averill",
     "baseball",
@@ -1873,53 +1923,13 @@
     12
   ],
   [
-    "Q3082506",
-    "Frank Baumholtz",
+    "Q3106533",
+    "Jeff Kent",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Frankie%20Baumholtz%201941.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Kent-crop.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q3082506",
-    12
-  ],
-  [
-    "Q202212",
-    "Cal Hubbard",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Cal%20Hubbard%20Football.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q202212",
-    12
-  ],
-  [
-    "Q401892",
-    "Dallas Keuchel",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dallas%20Keuchel%20%2854651231635%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q401892",
-    12
-  ],
-  [
-    "Q278305",
-    "A. J. Pierzynski",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/A.J.%20Pierzynski%20April%202009.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q278305",
-    12
-  ],
-  [
-    "Q497645",
-    "Brandon Knight",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Brandon%20Knight%20-%20Spring%20Training%202012.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q497645",
+    "http://www.wikidata.org/entity/Q3106533",
     12
   ],
   [
@@ -1933,73 +1943,63 @@
     12
   ],
   [
-    "Q869771",
-    "Bobby Richardson",
+    "Q401892",
+    "Dallas Keuchel",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bobby%20Richardson%201963.JPG",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Dallas%20Keuchel%20%2854651231635%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q869771",
+    "http://www.wikidata.org/entity/Q401892",
     12
   ],
   [
-    "Q1608378",
-    "Dick Groat",
+    "Q3082506",
+    "Frank Baumholtz",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dick%20Groat%201960.png",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Frankie%20Baumholtz%201941.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1608378",
+    "http://www.wikidata.org/entity/Q3082506",
     12
   ],
   [
-    "Q2924886",
-    "Brian Dozier",
+    "Q497645",
+    "Brandon Knight",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Brian%20Dozier%20on%20June%2026%2C%202012.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Brandon%20Knight%20-%20Spring%20Training%202012.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2924886",
+    "http://www.wikidata.org/entity/Q497645",
     12
   ],
   [
-    "Q2926099",
-    "Bronson Arroyo",
+    "Q1152810",
+    "Chase Utley",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bronson%20Arroyo%202011.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Chase%20Utley%202009.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2926099",
+    "http://www.wikidata.org/entity/Q1152810",
     12
   ],
   [
-    "Q2747018",
-    "Al Rosen",
+    "Q941868",
+    "Bob Meusel",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Al%20Rosen%201953.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bob-meusel%20cleaned.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2747018",
+    "http://www.wikidata.org/entity/Q941868",
     12
   ],
   [
-    "Q1282549",
-    "Ed Walsh",
+    "Q947609",
+    "Joakim Soria",
     "baseball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ed%20Walsh%20portrait%201911.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Joakim%20Soria%20on%20July%2010%2C%202013.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1282549",
-    12
-  ],
-  [
-    "Q1028712",
-    "Charles Radbourn",
-    "baseball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Radbourne%20charles%201.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1028712",
+    "http://www.wikidata.org/entity/Q947609",
     12
   ],
   [
@@ -2213,16 +2213,6 @@
     50
   ],
   [
-    "Q312643",
-    "Bob Cousy",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bob%20Cousy%20%281%29.jpeg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q312643",
-    49
-  ],
-  [
     "Q309783",
     "Blake Griffin",
     "basketball",
@@ -2230,6 +2220,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Blake%20Griffin%20Clippers.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q309783",
+    49
+  ],
+  [
+    "Q312643",
+    "Bob Cousy",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bob%20Cousy%20%281%29.jpeg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q312643",
     49
   ],
   [
@@ -2243,16 +2243,6 @@
     48
   ],
   [
-    "Q309590",
-    "Jeremy Lin",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jeremy%20Lin%20with%20the%20Knicks%20and%20reporters%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q309590",
-    47
-  ],
-  [
     "Q211876",
     "David Robinson",
     "basketball",
@@ -2260,6 +2250,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/David%20Robinson%20%28Team%20USA%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q211876",
+    47
+  ],
+  [
+    "Q309590",
+    "Jeremy Lin",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jeremy%20Lin%20with%20the%20Knicks%20and%20reporters%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q309590",
     47
   ],
   [
@@ -2293,13 +2293,13 @@
     46
   ],
   [
-    "Q298531",
-    "Chauncey Billups",
+    "Q221341",
+    "Jason Kidd",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Billups%20coach%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Kidd.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q298531",
+    "http://www.wikidata.org/entity/Q221341",
     44
   ],
   [
@@ -2313,13 +2313,13 @@
     44
   ],
   [
-    "Q221341",
-    "Jason Kidd",
+    "Q298531",
+    "Chauncey Billups",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Kidd.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Billups%20coach%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q221341",
+    "http://www.wikidata.org/entity/Q298531",
     44
   ],
   [
@@ -2331,6 +2331,16 @@
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q20031362",
     44
+  ],
+  [
+    "Q357458",
+    "Elgin Baylor",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Elgin%20Baylor%20Night%20program-%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q357458",
+    43
   ],
   [
     "Q298981",
@@ -2353,14 +2363,14 @@
     43
   ],
   [
-    "Q357458",
-    "Elgin Baylor",
+    "Q2614593",
+    "Draymond Green",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Elgin%20Baylor%20Night%20program-%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Draymond%20Green%202019.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q357458",
-    43
+    "http://www.wikidata.org/entity/Q2614593",
+    42
   ],
   [
     "Q310108",
@@ -2393,16 +2403,6 @@
     42
   ],
   [
-    "Q2614593",
-    "Draymond Green",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Draymond%20Green%202019.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2614593",
-    42
-  ],
-  [
     "Q717344",
     "Bojan Bogdanović",
     "basketball",
@@ -2413,13 +2413,13 @@
     41
   ],
   [
-    "Q311533",
-    "Dominique Wilkins",
+    "Q363246",
+    "Bill Walton",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dominique%20Wilkins%202022.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bill%20walton%20blazers%20photo.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q311533",
+    "http://www.wikidata.org/entity/Q363246",
     40
   ],
   [
@@ -2433,6 +2433,16 @@
     40
   ],
   [
+    "Q311533",
+    "Dominique Wilkins",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Dominique%20Wilkins%202022.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q311533",
+    40
+  ],
+  [
     "Q270981",
     "Amar'e Stoudemire",
     "basketball",
@@ -2440,16 +2450,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Amar%27e%20Stoudemire%20free%20throw.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q270981",
-    40
-  ],
-  [
-    "Q363246",
-    "Bill Walton",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bill%20walton%20blazers%20photo.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q363246",
     40
   ],
   [
@@ -2473,6 +2473,36 @@
     39
   ],
   [
+    "Q240726",
+    "Diana Taurasi",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Diana%20Taurasi%202024%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q240726",
+    38
+  ],
+  [
+    "Q316256",
+    "Darko Miličić",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Darko%20Milicic%20cropped.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q316256",
+    38
+  ],
+  [
+    "Q316253",
+    "Andrea Bargnani",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Andrea%20Bargnani.JPG",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q316253",
+    38
+  ],
+  [
     "Q314185",
     "George Mikan",
     "basketball",
@@ -2493,13 +2523,13 @@
     38
   ],
   [
-    "Q298496",
-    "Deron Williams",
+    "Q310968",
+    "Alonzo Mourning",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Deron%20Williams%20Nets%202.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Alonzo%20Mourning.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q298496",
+    "http://www.wikidata.org/entity/Q310968",
     38
   ],
   [
@@ -2513,53 +2543,23 @@
     38
   ],
   [
-    "Q310968",
-    "Alonzo Mourning",
+    "Q298496",
+    "Deron Williams",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Alonzo%20Mourning.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Deron%20Williams%20Nets%202.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q310968",
+    "http://www.wikidata.org/entity/Q298496",
     38
   ],
   [
-    "Q240726",
-    "Diana Taurasi",
+    "Q366505",
+    "Jerry Lucas",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Diana%20Taurasi%202024%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jerry%20Lucas%201961.jpeg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q240726",
-    38
-  ],
-  [
-    "Q316253",
-    "Andrea Bargnani",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Andrea%20Bargnani.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q316253",
-    38
-  ],
-  [
-    "Q316256",
-    "Darko Miličić",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Darko%20Milicic%20cropped.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q316256",
-    38
-  ],
-  [
-    "Q456374",
-    "DeMar DeRozan",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/DeMar%20DeRozan%202022.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q456374",
+    "http://www.wikidata.org/entity/Q366505",
     38
   ],
   [
@@ -2583,13 +2583,13 @@
     38
   ],
   [
-    "Q366505",
-    "Jerry Lucas",
+    "Q456374",
+    "DeMar DeRozan",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jerry%20Lucas%201961.jpeg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/DeMar%20DeRozan%202022.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q366505",
+    "http://www.wikidata.org/entity/Q456374",
     38
   ],
   [
@@ -2603,13 +2603,13 @@
     38
   ],
   [
-    "Q311895",
-    "Grant Hill",
+    "Q362872",
+    "James Worthy",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/1%20grant%20hill%202019%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/James%20Worthy%20at%20UNC%20Basketball%20game.%20February%2010%2C%202007.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q311895",
+    "http://www.wikidata.org/entity/Q362872",
     37
   ],
   [
@@ -2623,33 +2623,13 @@
     37
   ],
   [
-    "Q5289916",
-    "Domantas Sabonis",
+    "Q311895",
+    "Grant Hill",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Domantas%20Sabonis%20by%20Augustas%20Didzgalvis%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/1%20grant%20hill%202019%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q5289916",
-    37
-  ],
-  [
-    "Q362872",
-    "James Worthy",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/James%20Worthy%20at%20UNC%20Basketball%20game.%20February%2010%2C%202007.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q362872",
-    37
-  ],
-  [
-    "Q380018",
-    "Jonas Valančiūnas",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jonas%20Valanciunas%202022%20by%20Augustas%20Didzgalvis.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q380018",
+    "http://www.wikidata.org/entity/Q311895",
     37
   ],
   [
@@ -2663,6 +2643,26 @@
     37
   ],
   [
+    "Q380018",
+    "Jonas Valančiūnas",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jonas%20Valanciunas%202022%20by%20Augustas%20Didzgalvis.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q380018",
+    37
+  ],
+  [
+    "Q5289916",
+    "Domantas Sabonis",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Domantas%20Sabonis%20by%20Augustas%20Didzgalvis%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q5289916",
+    37
+  ],
+  [
     "Q15920046",
     "Joel Embiid",
     "basketball",
@@ -2673,13 +2673,23 @@
     37
   ],
   [
-    "Q2337837",
-    "Elsa Hosk",
+    "Q352093",
+    "Doc Rivers",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Elsa%20Hosk%20262%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Rivers%2076ers.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2337837",
+    "http://www.wikidata.org/entity/Q352093",
+    36
+  ],
+  [
+    "Q334702",
+    "Alexey Shved",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Alexey%20Shved%20%40%20BC%20UNICS%20%282025-12-28%29%20-%200%2013.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q334702",
     36
   ],
   [
@@ -2703,23 +2713,13 @@
     36
   ],
   [
-    "Q352093",
-    "Doc Rivers",
+    "Q2337837",
+    "Elsa Hosk",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Rivers%2076ers.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Elsa%20Hosk%20262%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q352093",
-    36
-  ],
-  [
-    "Q334702",
-    "Alexey Shved",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Alexey%20Shved%20%40%20BC%20UNICS%20%282025-12-28%29%20-%200%2013.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q334702",
+    "http://www.wikidata.org/entity/Q2337837",
     36
   ],
   [
@@ -2753,6 +2753,16 @@
     36
   ],
   [
+    "Q316258",
+    "Emeka Okafor",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Emeka%20Okafor%20Washington%20at%20Orlando%20002.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q316258",
+    35
+  ],
+  [
     "Q310281",
     "Elton Brand",
     "basketball",
@@ -2773,23 +2783,13 @@
     35
   ],
   [
-    "Q316258",
-    "Emeka Okafor",
+    "Q21620668",
+    "Bam Adebayo",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Emeka%20Okafor%20Washington%20at%20Orlando%20002.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/20160330%20MCDAAG%20Bam%20Adebayo%20with%20the%20ball.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q316258",
-    35
-  ],
-  [
-    "Q17305725",
-    "Jalen Brunson",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jalen%20Brunson%202023%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q17305725",
+    "http://www.wikidata.org/entity/Q21620668",
     35
   ],
   [
@@ -2803,44 +2803,14 @@
     35
   ],
   [
-    "Q21620668",
-    "Bam Adebayo",
+    "Q17305725",
+    "Jalen Brunson",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/20160330%20MCDAAG%20Bam%20Adebayo%20with%20the%20ball.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jalen%20Brunson%202023%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q21620668",
+    "http://www.wikidata.org/entity/Q17305725",
     35
-  ],
-  [
-    "Q314415",
-    "Chris Webber",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Chris%20Webber%20NBA%20Asia%20Challenge%202010.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q314415",
-    34
-  ],
-  [
-    "Q313487",
-    "Greg Oden",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Greg%20Oden.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q313487",
-    34
-  ],
-  [
-    "Q313485",
-    "Brandon Roy",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Brandon%20Roy%20Wizards.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q313485",
-    34
   ],
   [
     "Q60478",
@@ -2873,13 +2843,43 @@
     34
   ],
   [
-    "Q264393",
-    "Dave Cowens",
+    "Q314415",
+    "Chris Webber",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dave%20Cowens.jpeg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Chris%20Webber%20NBA%20Asia%20Challenge%202010.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q264393",
+    "http://www.wikidata.org/entity/Q314415",
+    34
+  ],
+  [
+    "Q313499",
+    "Jermaine O'Neal",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jermaine%20O%27Neal%20smiling.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q313499",
+    34
+  ],
+  [
+    "Q313487",
+    "Greg Oden",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Greg%20Oden.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q313487",
+    34
+  ],
+  [
+    "Q313485",
+    "Brandon Roy",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Brandon%20Roy%20Wizards.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q313485",
     34
   ],
   [
@@ -2890,6 +2890,26 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/WallaceNets.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q317583",
+    34
+  ],
+  [
+    "Q264393",
+    "Dave Cowens",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Dave%20Cowens.jpeg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q264393",
+    34
+  ],
+  [
+    "Q115915",
+    "Jusuf Nurkić",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jusuf%20Nurki%C4%87%20against%20the%20Cleveland%20Cavaliers%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q115915",
     34
   ],
   [
@@ -2913,16 +2933,6 @@
     34
   ],
   [
-    "Q440324",
-    "Erik Spoelstra",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Erik%20Spoelstra%202022%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q440324",
-    34
-  ],
-  [
     "Q13860876",
     "Cedi Osman",
     "basketball",
@@ -2930,6 +2940,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Cedi%20Osman%206%20T%C3%BCrkiye%2020250220%20%284%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q13860876",
+    34
+  ],
+  [
+    "Q440324",
+    "Erik Spoelstra",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Erik%20Spoelstra%202022%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q440324",
     34
   ],
   [
@@ -2941,6 +2961,36 @@
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q20711111",
     34
+  ],
+  [
+    "Q337370",
+    "John Wall",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/John%20Wall%2C%20Caleb%20Homesley%202020%20Photo%20167%20%2850696541827%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q337370",
+    33
+  ],
+  [
+    "Q336030",
+    "Isaiah Thomas",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/2019%20Isaiah%20Thomas%20%2848823805453%29%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q336030",
+    33
+  ],
+  [
+    "Q242278",
+    "Candace Parker",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Candace%20Parker%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q242278",
+    33
   ],
   [
     "Q313486",
@@ -2963,36 +3013,6 @@
     33
   ],
   [
-    "Q242278",
-    "Candace Parker",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Candace%20Parker%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q242278",
-    33
-  ],
-  [
-    "Q1685",
-    "Jason Richardson",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Richardson.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1685",
-    33
-  ],
-  [
-    "Q336030",
-    "Isaiah Thomas",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/2019%20Isaiah%20Thomas%20%2848823805453%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q336030",
-    33
-  ],
-  [
     "Q12058834",
     "Aaron Gordon",
     "basketball",
@@ -3003,13 +3023,33 @@
     33
   ],
   [
-    "Q2526170",
-    "Dario Šarić",
+    "Q363409",
+    "David Andersen",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dario%20%C5%A0ari%C4%87%205%20Anadolu%20Efes%20TBSL%2020260927%20%283%29%20%28cropped%29.JPG",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/David%20Andersen%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2526170",
+    "http://www.wikidata.org/entity/Q363409",
+    32
+  ],
+  [
+    "Q360993",
+    "Eric Gordon",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Eric%20Gordon%20in%202019%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q360993",
+    32
+  ],
+  [
+    "Q352110",
+    "George Gervin",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Gervin%20ABA.jpeg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q352110",
     32
   ],
   [
@@ -3030,16 +3070,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Chris%20Kaman.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q77044",
-    32
-  ],
-  [
-    "Q352110",
-    "George Gervin",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Gervin%20ABA.jpeg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q352110",
     32
   ],
   [
@@ -3073,6 +3103,16 @@
     32
   ],
   [
+    "Q2526170",
+    "Dario Šarić",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Dario%20%C5%A0ari%C4%87%205%20Anadolu%20Efes%20TBSL%2020260927%20%283%29%20%28cropped%29.JPG",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q2526170",
+    32
+  ],
+  [
     "Q4717362",
     "Alex Len",
     "basketball",
@@ -3080,36 +3120,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Alex%20Len%202020.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q4717362",
-    32
-  ],
-  [
-    "Q360993",
-    "Eric Gordon",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Eric%20Gordon%20in%202019%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q360993",
-    32
-  ],
-  [
-    "Q363409",
-    "David Andersen",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/David%20Andersen%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q363409",
-    32
-  ],
-  [
-    "Q18638003",
-    "Ben Simmons",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ben%20Simmons%20for%20the%20Brooklyn%20Nets%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q18638003",
     32
   ],
   [
@@ -3123,23 +3133,43 @@
     32
   ],
   [
-    "Q441654",
-    "Jan Veselý",
+    "Q18638003",
+    "Ben Simmons",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/2021-10-12%20ALBA%20Berlin%20gegen%20Fenerbah%C3%A7e%20SK%20%28EuroLeague%202021-22%29%20by%20Sandro%20Halank%E2%80%93007.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ben%20Simmons%20for%20the%20Brooklyn%20Nets%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q441654",
+    "http://www.wikidata.org/entity/Q18638003",
     32
   ],
   [
-    "Q313473",
-    "Earl Boykins",
+    "Q358704",
+    "Jeff Green",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Earl%20Boykins%20Bucks.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jeff%20Green.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q313473",
+    "http://www.wikidata.org/entity/Q358704",
+    31
+  ],
+  [
+    "Q897000",
+    "Bradley Beal",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bradley%20Beal%202020.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q897000",
+    31
+  ],
+  [
+    "Q349922",
+    "Arne Duncan",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Arne%20Duncan%20official%20photo.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q349922",
     31
   ],
   [
@@ -3163,13 +3193,13 @@
     31
   ],
   [
-    "Q317021",
-    "Jameer Nelson",
+    "Q313473",
+    "Earl Boykins",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jameer%20Nelson%20pump%20fake%20cropped.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Earl%20Boykins%20Bucks.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q317021",
+    "http://www.wikidata.org/entity/Q313473",
     31
   ],
   [
@@ -3183,53 +3213,23 @@
     31
   ],
   [
-    "Q349922",
-    "Arne Duncan",
+    "Q317021",
+    "Jameer Nelson",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Arne%20Duncan%20official%20photo.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jameer%20Nelson%20pump%20fake%20cropped.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q349922",
+    "http://www.wikidata.org/entity/Q317021",
     31
   ],
   [
-    "Q555436",
-    "Danny Green",
+    "Q919197",
+    "Gordon Hayward",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Danny%20Green%281%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/20140814%20World%20Basketball%20Festival%20Gordon%20Hayward.JPG",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q555436",
-    31
-  ],
-  [
-    "Q553232",
-    "Bob McAdoo",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bob%20McAdoo%20in%202009.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q553232",
-    31
-  ],
-  [
-    "Q4772101",
-    "Anthony Bennett",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Anthony%20Bennett%20by%20Jeremy%20Rincon.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q4772101",
-    31
-  ],
-  [
-    "Q358704",
-    "Jeff Green",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jeff%20Green.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q358704",
+    "http://www.wikidata.org/entity/Q919197",
     31
   ],
   [
@@ -3253,33 +3253,33 @@
     31
   ],
   [
-    "Q18749170",
-    "D'Angelo Russell",
+    "Q553232",
+    "Bob McAdoo",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/D%27Angelo%20Russell%20%2851733686752%29%20%28cropped%29%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bob%20McAdoo%20in%202009.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q18749170",
+    "http://www.wikidata.org/entity/Q553232",
     31
   ],
   [
-    "Q897000",
-    "Bradley Beal",
+    "Q555436",
+    "Danny Green",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bradley%20Beal%202020.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Danny%20Green%281%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q897000",
+    "http://www.wikidata.org/entity/Q555436",
     31
   ],
   [
-    "Q919197",
-    "Gordon Hayward",
+    "Q4772101",
+    "Anthony Bennett",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/20140814%20World%20Basketball%20Festival%20Gordon%20Hayward.JPG",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Anthony%20Bennett%20by%20Jeremy%20Rincon.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q919197",
+    "http://www.wikidata.org/entity/Q4772101",
     31
   ],
   [
@@ -3293,63 +3293,23 @@
     31
   ],
   [
-    "Q1277708",
-    "Boban Marjanović",
+    "Q18749170",
+    "D'Angelo Russell",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Boban%20Marjanovi%C4%87%2051%20Fenerbah%C3%A7e%20Basketbol%20TBSL%2020241006%20%281%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/D%27Angelo%20Russell%20%2851733686752%29%20%28cropped%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1277708",
-    30
+    "http://www.wikidata.org/entity/Q18749170",
+    31
   ],
   [
-    "Q312648",
-    "Jason Terry",
+    "Q352162",
+    "Dennis Johnson",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Terry%203.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Dennis%20Johnson%20Lipofsky.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q312648",
-    30
-  ],
-  [
-    "Q598416",
-    "Jo Jo White",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jojo%20white%20press%20photo.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q598416",
-    30
-  ],
-  [
-    "Q317065",
-    "Antonio McDyess",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Mcdyess%20free%20throw.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q317065",
-    30
-  ],
-  [
-    "Q318908",
-    "Ben Gordon",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ben%20Gordon%204105090834.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q318908",
-    30
-  ],
-  [
-    "Q319313",
-    "Josh Smith",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Josh%20Smith%202014.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q319313",
+    "http://www.wikidata.org/entity/Q352162",
     30
   ],
   [
@@ -3363,13 +3323,43 @@
     30
   ],
   [
-    "Q352162",
-    "Dennis Johnson",
+    "Q312648",
+    "Jason Terry",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dennis%20Johnson%20Lipofsky.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Terry%203.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q352162",
+    "http://www.wikidata.org/entity/Q312648",
+    30
+  ],
+  [
+    "Q318908",
+    "Ben Gordon",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ben%20Gordon%204105090834.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q318908",
+    30
+  ],
+  [
+    "Q317065",
+    "Antonio McDyess",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Mcdyess%20free%20throw.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q317065",
+    30
+  ],
+  [
+    "Q380006",
+    "Darius Songaila",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Darius%20Songaila%20Wizards.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q380006",
     30
   ],
   [
@@ -3393,6 +3383,16 @@
     30
   ],
   [
+    "Q598416",
+    "Jo Jo White",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jojo%20white%20press%20photo.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q598416",
+    30
+  ],
+  [
     "Q514456",
     "Dolph Schayes",
     "basketball",
@@ -3403,13 +3403,23 @@
     30
   ],
   [
-    "Q380006",
-    "Darius Songaila",
+    "Q1277708",
+    "Boban Marjanović",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Darius%20Songaila%20Wizards.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Boban%20Marjanovi%C4%87%2051%20Fenerbah%C3%A7e%20Basketbol%20TBSL%2020241006%20%281%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q380006",
+    "http://www.wikidata.org/entity/Q1277708",
+    30
+  ],
+  [
+    "Q14469440",
+    "Dante Exum",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/2022-03-22%20ALBA%20Berlin%20gegen%20FC%20Barcelona%20B%C3%A0squet%20%28EuroLeague%202021-22%29%20by%20Sandro%20Halank%E2%80%93056.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q14469440",
     30
   ],
   [
@@ -3443,33 +3453,53 @@
     30
   ],
   [
-    "Q15623860",
-    "Julius Randle",
+    "Q364321",
+    "Fabricio Oberto",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Julius%20Randle%20with%20Lakers.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Fabri%20Oberto.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q15623860",
-    30
+    "http://www.wikidata.org/entity/Q364321",
+    29
   ],
   [
-    "Q14469440",
-    "Dante Exum",
+    "Q363445",
+    "Anderson Varejão",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/2022-03-22%20ALBA%20Berlin%20gegen%20FC%20Barcelona%20B%C3%A0squet%20%28EuroLeague%202021-22%29%20by%20Sandro%20Halank%E2%80%93056.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Anderson%20Varej%C3%A3o%202021.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q14469440",
-    30
+    "http://www.wikidata.org/entity/Q363445",
+    29
   ],
   [
-    "Q2317740",
-    "Jason Collins",
+    "Q669334",
+    "J. R. Smith",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Collins%20Nets%202014.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/J.R.%20Smith%20%2840627108671%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2317740",
+    "http://www.wikidata.org/entity/Q669334",
+    29
+  ],
+  [
+    "Q337729",
+    "Glen Davis",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Glen%20Davis%20Washington%20at%20Orlando%20055.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q337729",
+    29
+  ],
+  [
+    "Q334470",
+    "Jason Kapono",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Kapono%20with%20Miami.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q334470",
     29
   ],
   [
@@ -3493,46 +3523,6 @@
     29
   ],
   [
-    "Q337729",
-    "Glen Davis",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Glen%20Davis%20Washington%20at%20Orlando%20055.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q337729",
-    29
-  ],
-  [
-    "Q460764",
-    "Gianluca Basile",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Basile2.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q460764",
-    29
-  ],
-  [
-    "Q744920",
-    "Dāvis Bertāns",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/D%C4%81vis%20Bert%C4%81ns%208%20Dubai%20Basketball%20Euroleague%2020251014%20%282%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q744920",
-    29
-  ],
-  [
-    "Q669334",
-    "J. R. Smith",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/J.R.%20Smith%20%2840627108671%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q669334",
-    29
-  ],
-  [
     "Q370268",
     "Caron Butler",
     "basketball",
@@ -3540,6 +3530,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Caron%20Butler.JPG",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q370268",
+    29
+  ],
+  [
+    "Q928077",
+    "Kenneth Faried",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Kenneth%20Faried%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q928077",
     29
   ],
   [
@@ -3553,26 +3553,6 @@
     29
   ],
   [
-    "Q363445",
-    "Anderson Varejão",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Anderson%20Varej%C3%A3o%202021.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q363445",
-    29
-  ],
-  [
-    "Q364321",
-    "Fabricio Oberto",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Fabri%20Oberto.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q364321",
-    29
-  ],
-  [
     "Q698125",
     "Aron Baynes",
     "basketball",
@@ -3580,6 +3560,36 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Aron%20Baynes%20%2830882239003%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q698125",
+    29
+  ],
+  [
+    "Q455831",
+    "Jonas Jerebko",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jonas%20Jerebko%202019%20NBA%20Playoffs%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q455831",
+    29
+  ],
+  [
+    "Q744920",
+    "Dāvis Bertāns",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/D%C4%81vis%20Bert%C4%81ns%208%20Dubai%20Basketball%20Euroleague%2020251014%20%282%29%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q744920",
+    29
+  ],
+  [
+    "Q460764",
+    "Gianluca Basile",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Basile2.JPG",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q460764",
     29
   ],
   [
@@ -3603,13 +3613,13 @@
     29
   ],
   [
-    "Q444027",
-    "Andrés Nocioni",
+    "Q2317740",
+    "Jason Collins",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Andres%20Nocioni%202013.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Collins%20Nets%202014.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q444027",
+    "http://www.wikidata.org/entity/Q2317740",
     29
   ],
   [
@@ -3620,6 +3630,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Al-Farouq%20Aminu.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q427720",
+    29
+  ],
+  [
+    "Q444027",
+    "Andrés Nocioni",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Andres%20Nocioni%202013.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q444027",
     29
   ],
   [
@@ -3653,33 +3673,13 @@
     28
   ],
   [
-    "Q176263",
-    "Chuck Daly",
+    "Q358093",
+    "Hasheem Thabeet",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Chuck%20Daly%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hasheem%20Thabeet%20basketball.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q176263",
-    28
-  ],
-  [
-    "Q131942",
-    "Kendrick Perkins",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Kendrick%20Perkins.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q131942",
-    28
-  ],
-  [
-    "Q314621",
-    "Derek Fisher",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Derek%20Fisher%20Thunder.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q314621",
+    "http://www.wikidata.org/entity/Q358093",
     28
   ],
   [
@@ -3703,63 +3703,43 @@
     28
   ],
   [
-    "Q358093",
-    "Hasheem Thabeet",
+    "Q314621",
+    "Derek Fisher",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Hasheem%20Thabeet%20basketball.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Derek%20Fisher%20Thunder.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q358093",
+    "http://www.wikidata.org/entity/Q314621",
     28
   ],
   [
-    "Q5006560",
-    "CJ McCollum",
+    "Q176263",
+    "Chuck Daly",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/2025%20C.J.%20McCollum%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Chuck%20Daly%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q5006560",
+    "http://www.wikidata.org/entity/Q176263",
     28
   ],
   [
-    "Q557954",
-    "Dino Meneghin",
+    "Q131942",
+    "Kendrick Perkins",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dino%20Meneghin%20Premio%20Chiara.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Kendrick%20Perkins.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q557954",
+    "http://www.wikidata.org/entity/Q131942",
     28
   ],
   [
-    "Q361134",
-    "Marcus Camby",
+    "Q921340",
+    "Mike Conley Jr.",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Marcus%20Camby%20Clippers%20cropped2.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Mike%20Conley%20cropped%2020131118%20Clippers%20v%20Grizzles.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q361134",
-    28
-  ],
-  [
-    "Q362214",
-    "Kenyon Martin",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Kenyon%20Martin%20Nuggets.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q362214",
-    28
-  ],
-  [
-    "Q363421",
-    "Kris Humphries",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Kris%20Humphries%20NJ%20Nets%202009%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q363421",
+    "http://www.wikidata.org/entity/Q921340",
     28
   ],
   [
@@ -3783,13 +3763,23 @@
     28
   ],
   [
-    "Q381746",
-    "Monta Ellis",
+    "Q5006560",
+    "CJ McCollum",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Monta%20Ellis%202014-10-20.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/2025%20C.J.%20McCollum%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q381746",
+    "http://www.wikidata.org/entity/Q5006560",
+    28
+  ],
+  [
+    "Q557954",
+    "Dino Meneghin",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Dino%20Meneghin%20Premio%20Chiara.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q557954",
     28
   ],
   [
@@ -3803,26 +3793,6 @@
     28
   ],
   [
-    "Q19577360",
-    "Džanan Musa",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/D%C5%BEanan%20Musa%2020250206%20%281%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q19577360",
-    28
-  ],
-  [
-    "Q921340",
-    "Mike Conley Jr.",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Mike%20Conley%20cropped%2020131118%20Clippers%20v%20Grizzles.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q921340",
-    28
-  ],
-  [
     "Q21621315",
     "De'Aaron Fox",
     "basketball",
@@ -3833,33 +3803,23 @@
     28
   ],
   [
-    "Q611372",
-    "Greg Monroe",
+    "Q19577360",
+    "Džanan Musa",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Greg%20Monroe%20Player%20Introductions%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/D%C5%BEanan%20Musa%2020250206%20%281%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q611372",
-    27
+    "http://www.wikidata.org/entity/Q19577360",
+    28
   ],
   [
-    "Q24410",
-    "Jonas Mačiulis",
+    "Q361178",
+    "Glen Rice",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jonas%20Ma%C4%8Diulis%208%20Real%20Madrid%20Baloncesto%20Euroleague%2020171012.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Glen%20Rice%202010%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q24410",
-    27
-  ],
-  [
-    "Q352140",
-    "Antawn Jamison",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/2019%20Antawn%20Jamison%20%2848824316652%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q352140",
+    "http://www.wikidata.org/entity/Q361178",
     27
   ],
   [
@@ -3873,13 +3833,43 @@
     27
   ],
   [
-    "Q994442",
-    "Daniel Theis",
+    "Q352140",
+    "Antawn Jamison",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/2023-08-09%20Deutschland%20gegen%20Kanada%20%28Basketball-L%C3%A4nderspiel%29%20by%20Sandro%20Halank%E2%80%93115.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/2019%20Antawn%20Jamison%20%2848824316652%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q994442",
+    "http://www.wikidata.org/entity/Q352140",
+    27
+  ],
+  [
+    "Q24410",
+    "Jonas Mačiulis",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jonas%20Ma%C4%8Diulis%208%20Real%20Madrid%20Baloncesto%20Euroleague%2020171012.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q24410",
+    27
+  ],
+  [
+    "Q922355",
+    "Mahmoud Abdul-Rauf",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Mahmoud%20abdul-rauf.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q922355",
+    27
+  ],
+  [
+    "Q380013",
+    "Larry Brown",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Larry%20Brown%2C%201979.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q380013",
     27
   ],
   [
@@ -3903,83 +3893,13 @@
     27
   ],
   [
-    "Q493115",
-    "Andre Drummond",
+    "Q463635",
+    "Larry Johnson",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Andre%20Drummond%20%2851827246596%29%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Larry%20Johnson%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q493115",
-    27
-  ],
-  [
-    "Q2566702",
-    "Jānis Krūmiņš",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/J%C4%81nis%20Kr%C5%ABmi%C5%86%C5%A1%201960.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2566702",
-    27
-  ],
-  [
-    "Q361178",
-    "Glen Rice",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Glen%20Rice%202010%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q361178",
-    27
-  ],
-  [
-    "Q510816",
-    "Derrick Favors",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Derrick%20Favors%20Utah%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q510816",
-    27
-  ],
-  [
-    "Q512432",
-    "Fernando San Emeterio",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Fernando%20San%20Emeterio%2019%20Valencia%20Basket%2020171102%20%282%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q512432",
-    27
-  ],
-  [
-    "Q521950",
-    "Joel Anthony",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Joel%20Anthony%20Wizards%20vs%20Heat%202010%20cropped.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q521950",
-    27
-  ],
-  [
-    "Q16236628",
-    "Fred VanVleet",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Fred%20VanVleet%20%2851915270294%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q16236628",
-    27
-  ],
-  [
-    "Q6180570",
-    "Jerami Grant",
-    "basketball",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jerami%20Grant%20free%20throw%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q6180570",
+    "http://www.wikidata.org/entity/Q463635",
     27
   ],
   [
@@ -3993,13 +3913,93 @@
     27
   ],
   [
-    "Q23761524",
-    "Ivica Zubac",
+    "Q994442",
+    "Daniel Theis",
     "basketball",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ivica%20Zubac%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/2023-08-09%20Deutschland%20gegen%20Kanada%20%28Basketball-L%C3%A4nderspiel%29%20by%20Sandro%20Halank%E2%80%93115.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q23761524",
+    "http://www.wikidata.org/entity/Q994442",
+    27
+  ],
+  [
+    "Q611372",
+    "Greg Monroe",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Greg%20Monroe%20Player%20Introductions%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q611372",
+    27
+  ],
+  [
+    "Q493115",
+    "Andre Drummond",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Andre%20Drummond%20%2851827246596%29%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q493115",
+    27
+  ],
+  [
+    "Q512432",
+    "Fernando San Emeterio",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Fernando%20San%20Emeterio%2019%20Valencia%20Basket%2020171102%20%282%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q512432",
+    27
+  ],
+  [
+    "Q510816",
+    "Derrick Favors",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Derrick%20Favors%20Utah%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q510816",
+    27
+  ],
+  [
+    "Q521950",
+    "Joel Anthony",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Joel%20Anthony%20Wizards%20vs%20Heat%202010%20cropped.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q521950",
+    27
+  ],
+  [
+    "Q6180570",
+    "Jerami Grant",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jerami%20Grant%20free%20throw%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q6180570",
+    27
+  ],
+  [
+    "Q440382",
+    "Evan Turner",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Evan%20Turner%20against%20the%20Cleveland%20Cavaliers%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q440382",
+    27
+  ],
+  [
+    "Q440332",
+    "James Jones",
+    "basketball",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/James%20Jones.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q440332",
     27
   ],
   [
@@ -4193,16 +4193,6 @@
     95
   ],
   [
-    "Q184586",
-    "Gareth Bale",
-    "soccer",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/2022%20FIFA%20World%20Cup%20United%20States%201%E2%80%931%20Wales%20-%20%2832%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q184586",
-    94
-  ],
-  [
     "Q173139",
     "George Weah",
     "soccer",
@@ -4210,6 +4200,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/George%20Weah%20in%202019%20%28cropped%29%20mod-2.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q173139",
+    94
+  ],
+  [
+    "Q184586",
+    "Gareth Bale",
+    "soccer",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/2022%20FIFA%20World%20Cup%20United%20States%201%E2%80%931%20Wales%20-%20%2832%29%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q184586",
     94
   ],
   [
@@ -4273,16 +4273,6 @@
     91
   ],
   [
-    "Q164546",
-    "Alfredo Di Stéfano",
-    "soccer",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Di%20stefano%20argentina%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q164546",
-    90
-  ],
-  [
     "Q368441",
     "James Rodríguez",
     "soccer",
@@ -4290,6 +4280,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/James%20al%20natural%20-%20Series%2C%2002.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q368441",
+    90
+  ],
+  [
+    "Q164546",
+    "Alfredo Di Stéfano",
+    "soccer",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Di%20stefano%20argentina%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q164546",
     90
   ],
   [
@@ -4343,16 +4343,6 @@
     86
   ],
   [
-    "Q83006",
-    "David Villa",
-    "soccer",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Spain-Tahiti%2C%20Confederations%20Cup%202013%20%2802%29%20%28Villa%20crop%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q83006",
-    85
-  ],
-  [
     "Q167790",
     "Edinson Cavani",
     "soccer",
@@ -4360,6 +4350,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/PALMEIRAS%20X%20BOCA%20JUNIORS%20-%20COPA%20LIBERTADORES%202023%20-%2053286889335%20%28cropped%202%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q167790",
+    85
+  ],
+  [
+    "Q83006",
+    "David Villa",
+    "soccer",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Spain-Tahiti%2C%20Confederations%20Cup%202013%20%2802%29%20%28Villa%20crop%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q83006",
     85
   ],
   [
@@ -4423,16 +4423,6 @@
     81
   ],
   [
-    "Q187159",
-    "Jordi Alba",
-    "soccer",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Russia-Spain%202017%20%2811%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q187159",
-    80
-  ],
-  [
     "Q170328",
     "Eric Cantona",
     "soccer",
@@ -4440,6 +4430,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Eric%20Cantona%20Cannes%202009.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q170328",
+    80
+  ],
+  [
+    "Q187159",
+    "Jordi Alba",
+    "soccer",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Russia-Spain%202017%20%2811%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q187159",
     80
   ],
   [
@@ -4453,16 +4453,6 @@
     79
   ],
   [
-    "Q151260",
-    "Jérôme Boateng",
-    "soccer",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/MJK30405%20J%C3%A9r%C3%B4me%20Boateng%20%28Berlinale%202017%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q151260",
-    79
-  ],
-  [
     "Q180642",
     "Garrincha",
     "soccer",
@@ -4470,6 +4460,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Manoel%20Francisco%20dos%20Santos-Garrincha.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q180642",
+    79
+  ],
+  [
+    "Q151260",
+    "Jérôme Boateng",
+    "soccer",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/MJK30405%20J%C3%A9r%C3%B4me%20Boateng%20%28Berlinale%202017%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q151260",
     79
   ],
   [
@@ -4493,16 +4493,6 @@
     78
   ],
   [
-    "Q273715",
-    "Jordan Henderson",
-    "soccer",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jordan%20Henderson%20England%20v%20Ghana%2023%20June%202026-029%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q273715",
-    77
-  ],
-  [
     "Q207431",
     "Louis van Gaal",
     "soccer",
@@ -4523,6 +4513,16 @@
     77
   ],
   [
+    "Q273715",
+    "Jordan Henderson",
+    "soccer",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jordan%20Henderson%20England%20v%20Ghana%2023%20June%202026-029%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q273715",
+    77
+  ],
+  [
     "Q44298",
     "Bastian Schweinsteiger",
     "soccer",
@@ -4530,16 +4530,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Re-publica%2023%20-%20Tag%203%20%2852957826298%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q44298",
-    76
-  ],
-  [
-    "Q192671",
-    "Arturo Vidal",
-    "soccer",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Chile%20VS.%20Australia%20%2813%29%202017-6-25%20Arturo%20Vidal.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q192671",
     76
   ],
   [
@@ -4553,13 +4543,13 @@
     76
   ],
   [
-    "Q50600",
-    "Carlos Tevez",
+    "Q192671",
+    "Arturo Vidal",
     "soccer",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Carlos%20Tevez%20with%20Argentina%20November%202014%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Chile%20VS.%20Australia%20%2813%29%202017-6-25%20Arturo%20Vidal.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q50600",
+    "http://www.wikidata.org/entity/Q192671",
     76
   ],
   [
@@ -4570,6 +4560,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/David%20Silva%202017.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q161069",
+    76
+  ],
+  [
+    "Q50600",
+    "Carlos Tevez",
+    "soccer",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Carlos%20Tevez%20with%20Argentina%20November%202014%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q50600",
     76
   ],
   [
@@ -4683,6 +4683,16 @@
     72
   ],
   [
+    "Q52876",
+    "Javier Zanetti",
+    "soccer",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Metalist-Inter%20%282%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q52876",
+    72
+  ],
+  [
     "Q19518278",
     "Diogo Jota",
     "soccer",
@@ -4773,16 +4783,6 @@
     70
   ],
   [
-    "Q208050",
-    "Leonardo Bonucci",
-    "soccer",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/20150616%20-%20Portugal%20-%20Italie%20-%20Gen%C3%A8ve%20-%20Leonardo%20Bonucci.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q208050",
-    70
-  ],
-  [
     "Q127452",
     "Dani Carvajal",
     "soccer",
@@ -4803,6 +4803,16 @@
     70
   ],
   [
+    "Q170376",
+    "Gabriel Batistuta",
+    "soccer",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gabriel%20batistuta.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q170376",
+    69
+  ],
+  [
     "Q1935",
     "Eric Abidal",
     "soccer",
@@ -4810,6 +4820,26 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/%C3%89ric%20Abidal%20-%20001.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q1935",
+    69
+  ],
+  [
+    "Q153786",
+    "Edin Džeko",
+    "soccer",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/20150331%202026%20AUT%20BIH%202177%20Edin%20D%C5%BEeko%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q153786",
+    69
+  ],
+  [
+    "Q165125",
+    "Javier Hernández",
+    "soccer",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Javier%20Hern%C3%A1ndez%20Paley%20Center%20Fox%20Sports%20Soccer-12.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q165125",
     69
   ],
   [
@@ -4830,36 +4860,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/20140904%20-%20Christian%20Eriksen%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q294951",
-    69
-  ],
-  [
-    "Q165125",
-    "Javier Hernández",
-    "soccer",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Javier%20Hern%C3%A1ndez%20Paley%20Center%20Fox%20Sports%20Soccer-12.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q165125",
-    69
-  ],
-  [
-    "Q170376",
-    "Gabriel Batistuta",
-    "soccer",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gabriel%20batistuta.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q170376",
-    69
-  ],
-  [
-    "Q153786",
-    "Edin Džeko",
-    "soccer",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/20150331%202026%20AUT%20BIH%202177%20Edin%20D%C5%BEeko%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q153786",
     69
   ],
   [
@@ -4903,16 +4903,6 @@
     68
   ],
   [
-    "Q189892",
-    "Gheorghe Hagi",
-    "soccer",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Lansarea%20candidaturii%20Gabrielei%20Szabo%20pentru%20Camera%20Deputatilor%2C%20Voluntari%20-%2004.05%20%2848%29%20%2814270956179%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q189892",
-    67
-  ],
-  [
     "Q62786",
     "Hulk",
     "soccer",
@@ -4920,6 +4910,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Bayer-04%20-%20Zenit%20%2814%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q62786",
+    67
+  ],
+  [
+    "Q189892",
+    "Gheorghe Hagi",
+    "soccer",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Lansarea%20candidaturii%20Gabrielei%20Szabo%20pentru%20Camera%20Deputatilor%2C%20Voluntari%20-%2004.05%20%2848%29%20%2814270956179%29%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q189892",
     67
   ],
   [
@@ -4953,16 +4953,6 @@
     67
   ],
   [
-    "Q189217",
-    "Davor Šuker",
-    "soccer",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Football%20against%20poverty%202014%20-%20Davor%20%C5%A0uker%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q189217",
-    66
-  ],
-  [
     "Q20469",
     "Alan Dzagoev",
     "soccer",
@@ -4983,23 +4973,33 @@
     66
   ],
   [
-    "Q203002",
-    "Igor Akinfeev",
+    "Q189217",
+    "Davor Šuker",
     "soccer",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Igor%20Akinfeev%20Russia.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Football%20against%20poverty%202014%20-%20Davor%20%C5%A0uker%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q203002",
+    "http://www.wikidata.org/entity/Q189217",
     66
   ],
   [
-    "Q294214",
-    "Dirk Kuyt",
+    "Q96755",
+    "Antonio Rüdiger",
     "soccer",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dirk%20Kuyt%20Fenerbah%C3%A7e%2020260805%20%281%29%20%28cropped%29.JPG",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Antonio%20Rudiger%20Ecuador%20v%20Germany%2025%20June%202026-055%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q294214",
+    "http://www.wikidata.org/entity/Q96755",
+    66
+  ],
+  [
+    "Q484909",
+    "Clarence Seedorf",
+    "soccer",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Clarence%20Seedorf%202021.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q484909",
     66
   ],
   [
@@ -5123,13 +5123,13 @@
     33
   ],
   [
-    "Q549627",
-    "Glenn Davis",
+    "Q1452569",
+    "Fred Williamson",
     "football",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Glenn%20Davis%20Roma%201960.png",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/FredWilliamsonJun10.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q549627",
+    "http://www.wikidata.org/entity/Q1452569",
     30
   ],
   [
@@ -5143,24 +5143,14 @@
     30
   ],
   [
-    "Q1452569",
-    "Fred Williamson",
+    "Q549627",
+    "Glenn Davis",
     "football",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/FredWilliamsonJun10.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Glenn%20Davis%20Roma%201960.png",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1452569",
+    "http://www.wikidata.org/entity/Q549627",
     30
-  ],
-  [
-    "Q370729",
-    "John Carlos",
-    "football",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/John%20Carlos%2019.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q370729",
-    29
   ],
   [
     "Q3990706",
@@ -5170,6 +5160,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Baron%20Corbin%20as%20United%20States%20Champion.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q3990706",
+    29
+  ],
+  [
+    "Q370729",
+    "John Carlos",
+    "football",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/John%20Carlos%2019.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q370729",
     29
   ],
   [
@@ -5283,16 +5283,6 @@
     22
   ],
   [
-    "Q1097511",
-    "J. J. Watt",
-    "football",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/JJWatt.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1097511",
-    21
-  ],
-  [
     "Q1345694",
     "John Madden",
     "football",
@@ -5300,6 +5290,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/John%20Madden%20in%202007.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q1345694",
+    21
+  ],
+  [
+    "Q1097511",
+    "J. J. Watt",
+    "football",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/JJWatt.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1097511",
     21
   ],
   [
@@ -5313,16 +5313,6 @@
     21
   ],
   [
-    "Q717897",
-    "Alex Smith",
-    "football",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Washington%20Football%20Team%20QB%20Alex%20Smith%20pregame%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q717897",
-    20
-  ],
-  [
     "Q809097",
     "Barry Sanders",
     "football",
@@ -5330,6 +5320,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Barry%20Sanders.JPG",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q809097",
+    20
+  ],
+  [
+    "Q717897",
+    "Alex Smith",
+    "football",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Washington%20Football%20Team%20QB%20Alex%20Smith%20pregame%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q717897",
     20
   ],
   [
@@ -5343,23 +5343,13 @@
     20
   ],
   [
-    "Q482838",
-    "Hines Ward",
+    "Q1280022",
+    "Jerry Jones",
     "football",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Hines%20Ward%20Steelers.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jerry%20Jones%202015%20%282%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q482838",
-    19
-  ],
-  [
-    "Q506098",
-    "Andrew Luck",
-    "football",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Andrew%20Luck%20at%202010%20Stanford%20football%20open%20house.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q506098",
+    "http://www.wikidata.org/entity/Q1280022",
     19
   ],
   [
@@ -5373,6 +5363,26 @@
     19
   ],
   [
+    "Q506098",
+    "Andrew Luck",
+    "football",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Andrew%20Luck%20at%202010%20Stanford%20football%20open%20house.JPG",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q506098",
+    19
+  ],
+  [
+    "Q482838",
+    "Hines Ward",
+    "football",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hines%20Ward%20Steelers.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q482838",
+    19
+  ],
+  [
     "Q969866",
     "Alex Karras",
     "football",
@@ -5383,13 +5393,13 @@
     19
   ],
   [
-    "Q1280022",
-    "Jerry Jones",
+    "Q21621996",
+    "Christian McCaffrey",
     "football",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jerry%20Jones%202015%20%282%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Christian%20McCaffrey%202019.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1280022",
+    "http://www.wikidata.org/entity/Q21621996",
     19
   ],
   [
@@ -5400,16 +5410,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/LSU%20Football%20at%20the%20White%20House%20%2849400533066%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q56860229",
-    19
-  ],
-  [
-    "Q21621996",
-    "Christian McCaffrey",
-    "football",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Christian%20McCaffrey%202019.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q21621996",
     19
   ],
   [
@@ -5473,13 +5473,13 @@
     18
   ],
   [
-    "Q950311",
-    "Don Hutson",
+    "Q1365320",
+    "Lam Jones",
     "football",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Hutson-Don-portrait-1940.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Lam%20Jones%20%286147901416%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q950311",
+    "http://www.wikidata.org/entity/Q1365320",
     17
   ],
   [
@@ -5523,6 +5523,16 @@
     17
   ],
   [
+    "Q950311",
+    "Don Hutson",
+    "football",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hutson-Don-portrait-1940.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q950311",
+    17
+  ],
+  [
     "Q4776474",
     "Antonio Brown",
     "football",
@@ -5543,33 +5553,13 @@
     17
   ],
   [
-    "Q1365320",
-    "Lam Jones",
+    "Q1338802",
+    "Emmitt Smith",
     "football",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Lam%20Jones%20%286147901416%29%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/EmmittSmith2007.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1365320",
-    17
-  ],
-  [
-    "Q944199",
-    "Larry Fitzgerald",
-    "football",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Larry%20Fitzgerald%202017.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q944199",
-    16
-  ],
-  [
-    "Q898156",
-    "Brandon Marshall",
-    "football",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Miami%20Dolphins%20wide%20receiver%20Brandon%20Marshall%20practices%20during%20pregame%20warm%20up%20for%20the%20National%20Football%20League%27s%202012%20Pro%20Bowl%20game%20at%20Aloha%20Stadium%20in%20Honolulu%20Jan%20120129-M-DX861-041%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q898156",
+    "http://www.wikidata.org/entity/Q1338802",
     16
   ],
   [
@@ -5593,6 +5583,16 @@
     16
   ],
   [
+    "Q898156",
+    "Brandon Marshall",
+    "football",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Miami%20Dolphins%20wide%20receiver%20Brandon%20Marshall%20practices%20during%20pregame%20warm%20up%20for%20the%20National%20Football%20League%27s%202012%20Pro%20Bowl%20game%20at%20Aloha%20Stadium%20in%20Honolulu%20Jan%20120129-M-DX861-041%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q898156",
+    16
+  ],
+  [
     "Q3487172",
     "Anthony Gonzalez",
     "football",
@@ -5600,26 +5600,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Anthony%20Gonzalez%2C%20official%20portrait%2C%20116th%20Congress.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q3487172",
-    16
-  ],
-  [
-    "Q15267489",
-    "Aaron Donald",
-    "football",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Aaron%20Donald%202014%20combine.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q15267489",
-    16
-  ],
-  [
-    "Q1338802",
-    "Emmitt Smith",
-    "football",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/EmmittSmith2007.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1338802",
     16
   ],
   [
@@ -5643,6 +5623,16 @@
     16
   ],
   [
+    "Q15267489",
+    "Aaron Donald",
+    "football",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Aaron%20Donald%202014%20combine.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q15267489",
+    16
+  ],
+  [
     "Q2631300",
     "Jim Harbaugh",
     "football",
@@ -5653,6 +5643,16 @@
     15
   ],
   [
+    "Q1261570",
+    "Frank Gifford",
+    "football",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/FrankGifford.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1261570",
+    15
+  ],
+  [
     "Q927663",
     "Bronko Nagurski",
     "football",
@@ -5660,6 +5660,26 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Bronko%20Nagurski.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q927663",
+    15
+  ],
+  [
+    "Q1254455",
+    "Joe Gibbs",
+    "football",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Joe%20Gibbs%20Homestead%202018.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1254455",
+    15
+  ],
+  [
+    "Q1239512",
+    "Don Shula",
+    "football",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Don-Shula%20USO-Tour-USS-Reagan-Address%20July-13-2009.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1239512",
     15
   ],
   [
@@ -5713,23 +5733,13 @@
     15
   ],
   [
-    "Q1239512",
-    "Don Shula",
+    "Q18631600",
+    "Jalen Ramsey",
     "football",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Don-Shula%20USO-Tour-USS-Reagan-Address%20July-13-2009.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jalen%20Ramsey%202014.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1239512",
-    15
-  ],
-  [
-    "Q1261570",
-    "Frank Gifford",
-    "football",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/FrankGifford.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1261570",
+    "http://www.wikidata.org/entity/Q18631600",
     15
   ],
   [
@@ -5740,16 +5750,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Dak%20Prescott%20WAS%20%40%20DAL%202021%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q16235747",
-    15
-  ],
-  [
-    "Q18631600",
-    "Jalen Ramsey",
-    "football",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jalen%20Ramsey%202014.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q18631600",
     15
   ],
   [
@@ -5793,16 +5793,6 @@
     38
   ],
   [
-    "Q348017",
-    "Bobby Orr",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bobby%20Orr%202010%20WinterCl%20%283x4a%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q348017",
-    38
-  ],
-  [
     "Q456688",
     "Bobby Hull",
     "hockey",
@@ -5810,6 +5800,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Bobby%20Hull.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q456688",
+    38
+  ],
+  [
+    "Q348017",
+    "Bobby Orr",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bobby%20Orr%202010%20WinterCl%20%283x4a%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q348017",
     38
   ],
   [
@@ -5821,16 +5821,6 @@
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q2806736",
     32
-  ],
-  [
-    "Q434859",
-    "Ilya Kovalchuk",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ilya%20Kovalchuk%202017.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q434859",
-    30
   ],
   [
     "Q314433",
@@ -5850,6 +5840,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/BorjeSalming2012.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q739746",
+    30
+  ],
+  [
+    "Q434859",
+    "Ilya Kovalchuk",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ilya%20Kovalchuk%202017.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q434859",
     30
   ],
   [
@@ -5883,16 +5883,6 @@
     29
   ],
   [
-    "Q505479",
-    "Jean Béliveau",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jean%20B%C3%A9liveau%202009.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q505479",
-    28
-  ],
-  [
     "Q235029",
     "Hayley Wickenheiser",
     "hockey",
@@ -5900,6 +5890,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Hayley%20Wickenheiser%20%2817378332249%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q235029",
+    28
+  ],
+  [
+    "Q505479",
+    "Jean Béliveau",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jean%20B%C3%A9liveau%202009.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q505479",
     28
   ],
   [
@@ -5923,13 +5923,13 @@
     27
   ],
   [
-    "Q720963",
-    "Carey Price",
+    "Q456771",
+    "Igor Larionov",
     "hockey",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Carey%20Price%20shutout%202011-03-12.JPG",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Igor%20Larionov3-2008-11-21.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q720963",
+    "http://www.wikidata.org/entity/Q456771",
     27
   ],
   [
@@ -5943,13 +5943,13 @@
     27
   ],
   [
-    "Q456771",
-    "Igor Larionov",
+    "Q720963",
+    "Carey Price",
     "hockey",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Igor%20Larionov3-2008-11-21.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Carey%20Price%20shutout%202011-03-12.JPG",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q456771",
+    "http://www.wikidata.org/entity/Q720963",
     27
   ],
   [
@@ -5963,13 +5963,13 @@
     27
   ],
   [
-    "Q434899",
-    "Joe Thornton",
+    "Q553249",
+    "Guy Lafleur",
     "hockey",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Joe%20Thornton%202016.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Guy%20Lafleur%202013.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q434899",
+    "http://www.wikidata.org/entity/Q553249",
     26
   ],
   [
@@ -5980,16 +5980,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Jonathan%20Toews%20-%20NHL%20Store%20%281%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q528240",
-    26
-  ],
-  [
-    "Q960614",
-    "Eric Lindros",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Eric%20Lindros%20At%20Smashfest%202016.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q960614",
     26
   ],
   [
@@ -6013,23 +6003,23 @@
     26
   ],
   [
-    "Q440363",
-    "Brett Hull",
+    "Q434899",
+    "Joe Thornton",
     "hockey",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/BrettHullStlouisventure.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Joe%20Thornton%202016.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q440363",
+    "http://www.wikidata.org/entity/Q434899",
     26
   ],
   [
-    "Q553249",
-    "Guy Lafleur",
+    "Q960614",
+    "Eric Lindros",
     "hockey",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Guy%20Lafleur%202013.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Eric%20Lindros%20At%20Smashfest%202016.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q553249",
+    "http://www.wikidata.org/entity/Q960614",
     26
   ],
   [
@@ -6043,64 +6033,14 @@
     26
   ],
   [
-    "Q20164618",
-    "Kirill Kaprizov",
+    "Q440363",
+    "Brett Hull",
     "hockey",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Kirill%20Kaprizov%20%28cropped%29%202023.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/BrettHullStlouisventure.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q20164618",
+    "http://www.wikidata.org/entity/Q440363",
     26
-  ],
-  [
-    "Q15012236",
-    "Leon Draisaitl",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Leon%20Draisaitl%20-%202019202170353%202019-07-21%20Champions%20for%20Charity%20-%200622%20-%20AK8I4403.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q15012236",
-    26
-  ],
-  [
-    "Q722101",
-    "Duncan Keith",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Duncan%20Keith%20-%20Switzerland%20vs.%20Canada%2C%2029th%20April%202012-2%20%281%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q722101",
-    25
-  ],
-  [
-    "Q924245",
-    "Ion Țiriac",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ion%20Tiriac.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q924245",
-    25
-  ],
-  [
-    "Q390913",
-    "Evgeni Nabokov",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Evegeni%20Nabokov%2008%20retouched.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q390913",
-    25
-  ],
-  [
-    "Q388631",
-    "Ivan Hlinka",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ivan%20Hlinka%20Panini%201979.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q388631",
-    25
   ],
   [
     "Q471377",
@@ -6133,6 +6073,46 @@
     25
   ],
   [
+    "Q388631",
+    "Ivan Hlinka",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ivan%20Hlinka%20Panini%201979.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q388631",
+    25
+  ],
+  [
+    "Q390913",
+    "Evgeni Nabokov",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Evegeni%20Nabokov%2008%20retouched.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q390913",
+    25
+  ],
+  [
+    "Q924245",
+    "Ion Țiriac",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ion%20Tiriac.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q924245",
+    25
+  ],
+  [
+    "Q722101",
+    "Duncan Keith",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Duncan%20Keith%20-%20Switzerland%20vs.%20Canada%2C%2029th%20April%202012-2%20%281%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q722101",
+    25
+  ],
+  [
     "Q367531",
     "Boris Mikhailov",
     "hockey",
@@ -6140,16 +6120,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/2012-02-24%20%D0%91%D0%BE%D1%80%D0%B8%D1%81%20%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%20%28cropped%29.jpeg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q367531",
-    25
-  ],
-  [
-    "Q447297",
-    "Daniel Alfredsson",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Daniel%20Alfredsson%202013-05-24.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q447297",
     25
   ],
   [
@@ -6163,13 +6133,23 @@
     25
   ],
   [
-    "Q128328",
-    "Gustav Nyquist",
+    "Q447297",
+    "Daniel Alfredsson",
     "hockey",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gustav%20Nyquist.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Daniel%20Alfredsson%202013-05-24.JPG",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q128328",
+    "http://www.wikidata.org/entity/Q447297",
+    25
+  ],
+  [
+    "Q553286",
+    "Chris Pronger",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Chris%20Pronger.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q553286",
     24
   ],
   [
@@ -6193,6 +6173,16 @@
     24
   ],
   [
+    "Q128328",
+    "Gustav Nyquist",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gustav%20Nyquist.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q128328",
+    24
+  ],
+  [
     "Q537353",
     "John Tavares",
     "hockey",
@@ -6200,56 +6190,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/John%20Tavares%202013-05-09.JPG",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q537353",
-    24
-  ],
-  [
-    "Q375787",
-    "Anže Kopitar",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Anze%20Kopitar%202023-12-16%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q375787",
-    24
-  ],
-  [
-    "Q458564",
-    "Darius Kasparaitis",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Darius%20Kasparaitis%20Hartford.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q458564",
-    24
-  ],
-  [
-    "Q440283",
-    "Dany Heatley",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dany%20Heatley%202.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q440283",
-    24
-  ],
-  [
-    "Q553286",
-    "Chris Pronger",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Chris%20Pronger.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q553286",
-    24
-  ],
-  [
-    "Q446986",
-    "Eric Staal",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Eric%20Staal.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q446986",
     24
   ],
   [
@@ -6263,6 +6203,46 @@
     24
   ],
   [
+    "Q458564",
+    "Darius Kasparaitis",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Darius%20Kasparaitis%20Hartford.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q458564",
+    24
+  ],
+  [
+    "Q375787",
+    "Anže Kopitar",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Anze%20Kopitar%202023-12-16%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q375787",
+    24
+  ],
+  [
+    "Q440283",
+    "Dany Heatley",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Dany%20Heatley%202.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q440283",
+    24
+  ],
+  [
+    "Q446986",
+    "Eric Staal",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Eric%20Staal.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q446986",
+    24
+  ],
+  [
     "Q29342308",
     "Cale Makar",
     "hockey",
@@ -6271,6 +6251,26 @@
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q29342308",
     24
+  ],
+  [
+    "Q553261",
+    "Helmuts Balderis",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Balderis%20Helmuts%202014.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q553261",
+    23
+  ],
+  [
+    "Q656263",
+    "Jori Lehterä",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jori%20Lehter%C3%A4.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q656263",
+    23
   ],
   [
     "Q288994",
@@ -6293,26 +6293,6 @@
     23
   ],
   [
-    "Q656263",
-    "Jori Lehterä",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jori%20Lehter%C3%A4.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q656263",
-    23
-  ],
-  [
-    "Q739144",
-    "Brendan Shanahan",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/BrendanShanahan.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q739144",
-    23
-  ],
-  [
     "Q550733",
     "Alexander Ragulin",
     "hockey",
@@ -6320,6 +6300,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Alex%20Ragulin.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q550733",
+    23
+  ],
+  [
+    "Q352151",
+    "Kārlis Skrastiņš",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Karlis%20Skrastins.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q352151",
     23
   ],
   [
@@ -6333,6 +6323,16 @@
     23
   ],
   [
+    "Q739144",
+    "Brendan Shanahan",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/BrendanShanahan.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q739144",
+    23
+  ],
+  [
     "Q441047",
     "Dustin Brown",
     "hockey",
@@ -6340,36 +6340,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Dustin%20Brown%20and%20the%20Stanley%20Cup.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q441047",
-    23
-  ],
-  [
-    "Q553261",
-    "Helmuts Balderis",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Balderis%20Helmuts%202014.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q553261",
-    23
-  ],
-  [
-    "Q447270",
-    "Jordan Staal",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jordan%20Staal%202013.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q447270",
-    23
-  ],
-  [
-    "Q17285387",
-    "Jack Eichel",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jack%20Eichel%20-%20Buffalo%20Sabres.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q17285387",
     23
   ],
   [
@@ -6383,23 +6353,33 @@
     23
   ],
   [
-    "Q252043",
-    "Mats Zuccarello",
+    "Q17285387",
+    "Jack Eichel",
     "hockey",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Mats%20Zuccarello%20-%20YOG%20Ambassador%20%2822282331195%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jack%20Eichel%20-%20Buffalo%20Sabres.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q252043",
-    22
+    "http://www.wikidata.org/entity/Q17285387",
+    23
   ],
   [
-    "Q984048",
-    "Frederik Andersen",
+    "Q447270",
+    "Jordan Staal",
     "hockey",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Frederik%20Andersen%20%2851916832126%29%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jordan%20Staal%202013.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q984048",
+    "http://www.wikidata.org/entity/Q447270",
+    23
+  ],
+  [
+    "Q561610",
+    "Bobby Ryan",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bobby%20Ryan%20Ducks%202012-02-15.JPG",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q561610",
     22
   ],
   [
@@ -6423,43 +6403,33 @@
     22
   ],
   [
-    "Q350998",
-    "Alexander Galimov",
+    "Q252043",
+    "Mats Zuccarello",
     "hockey",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Alexander%20Galimov.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Mats%20Zuccarello%20-%20YOG%20Ambassador%20%2822282331195%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q350998",
+    "http://www.wikidata.org/entity/Q252043",
     22
   ],
   [
-    "Q964014",
-    "Martin Erat",
+    "Q984048",
+    "Frederik Andersen",
     "hockey",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Martin%20Erat%20at%20Fan%27s%20day%20in%20T%C5%99eb%C3%AD%C4%8D%2C%20T%C5%99eb%C3%AD%C4%8D%20District.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Frederik%20Andersen%20%2851916832126%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q964014",
+    "http://www.wikidata.org/entity/Q984048",
     22
   ],
   [
-    "Q1342539",
-    "Eric Brewer",
+    "Q1064791",
+    "Jamie Benn",
     "hockey",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/EricBrewerCanada.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jamie%20Benn%20-%20Dallas%20Stars.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1342539",
-    22
-  ],
-  [
-    "Q1354283",
-    "Grant Fuhr",
-    "hockey",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Grant%20Fuhr.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1354283",
+    "http://www.wikidata.org/entity/Q1064791",
     22
   ],
   [
@@ -6473,13 +6443,33 @@
     22
   ],
   [
-    "Q1064791",
-    "Jamie Benn",
+    "Q350998",
+    "Alexander Galimov",
     "hockey",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jamie%20Benn%20-%20Dallas%20Stars.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Alexander%20Galimov.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1064791",
+    "http://www.wikidata.org/entity/Q350998",
+    22
+  ],
+  [
+    "Q1354283",
+    "Grant Fuhr",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Grant%20Fuhr.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1354283",
+    22
+  ],
+  [
+    "Q1342539",
+    "Eric Brewer",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/EricBrewerCanada.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1342539",
     22
   ],
   [
@@ -6500,6 +6490,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Gabriel%20Landeskog%20Avalanche.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q715421",
+    22
+  ],
+  [
+    "Q717078",
+    "Matt Duchene",
+    "hockey",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Matt%20Duchene%20-%20Avs.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q717078",
     22
   ],
   [
@@ -6603,6 +6603,16 @@
     72
   ],
   [
+    "Q30758",
+    "Ana Ivanovic",
+    "tennis",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ana%20Ivanovi%C4%87%20%2814948461930%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q30758",
+    70
+  ],
+  [
     "Q54812588",
     "Jannik Sinner",
     "tennis",
@@ -6613,14 +6623,14 @@
     70
   ],
   [
-    "Q30758",
-    "Ana Ivanovic",
+    "Q54584",
+    "Andy Roddick",
     "tennis",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ana%20Ivanovi%C4%87%20%2814948461930%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Andy%20Roddick%2C%20US%20Open%20Tennis%202010%2C%201st%20Round%20200%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q30758",
-    70
+    "http://www.wikidata.org/entity/Q54584",
+    69
   ],
   [
     "Q14286",
@@ -6650,16 +6660,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Gustaf%20V%20f%C3%A4rgfoto.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q52890",
-    69
-  ],
-  [
-    "Q54584",
-    "Andy Roddick",
-    "tennis",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Andy%20Roddick%2C%20US%20Open%20Tennis%202010%2C%201st%20Round%20200%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q54584",
     69
   ],
   [
@@ -6903,16 +6903,6 @@
     51
   ],
   [
-    "Q53550",
-    "Althea Gibson",
-    "tennis",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Althea%20Gibson%20in%201956%20by%20Fred%20Palumbo%20%28NYWTS%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q53550",
-    51
-  ],
-  [
     "Q181501",
     "David Nalbandian",
     "tennis",
@@ -6920,6 +6910,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/David%20Nalbandian%20Boodles.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q181501",
+    51
+  ],
+  [
+    "Q53550",
+    "Althea Gibson",
+    "tennis",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Althea%20Gibson%20in%201956%20by%20Fred%20Palumbo%20%28NYWTS%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q53550",
     51
   ],
   [
@@ -6933,16 +6933,6 @@
     51
   ],
   [
-    "Q203591",
-    "Anastasia Myskina",
-    "tennis",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Anastasia%20Myskina%20in%202008.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q203591",
-    50
-  ],
-  [
     "Q207528",
     "Flavia Pennetta",
     "tennis",
@@ -6953,16 +6943,6 @@
     50
   ],
   [
-    "Q106113",
-    "Ilie Năstase",
-    "tennis",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ilie%20N%C4%83stase%20%40%20Transylvania%20Open%202025%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q106113",
-    50
-  ],
-  [
     "Q54684",
     "Bill Tilden",
     "tennis",
@@ -6970,6 +6950,26 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Bill%20Tilden.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q54684",
+    50
+  ],
+  [
+    "Q203591",
+    "Anastasia Myskina",
+    "tennis",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Anastasia%20Myskina%20in%202008.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q203591",
+    50
+  ],
+  [
+    "Q106113",
+    "Ilie Năstase",
+    "tennis",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ilie%20N%C4%83stase%20%40%20Transylvania%20Open%202025%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q106113",
     50
   ],
   [
@@ -7003,16 +7003,6 @@
     48
   ],
   [
-    "Q9434",
-    "Arnold Palmer",
-    "golf-stars",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/YN3ArnoldPalmer.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q9434",
-    46
-  ],
-  [
     "Q231983",
     "Babe Didrikson Zaharias",
     "golf-stars",
@@ -7023,14 +7013,14 @@
     46
   ],
   [
-    "Q9424",
-    "Jack Nicklaus",
+    "Q9434",
+    "Arnold Palmer",
     "golf-stars",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/JackNicklausMedalOfFreedom.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/YN3ArnoldPalmer.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q9424",
-    44
+    "http://www.wikidata.org/entity/Q9434",
+    46
   ],
   [
     "Q232711",
@@ -7040,6 +7030,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/2008%20LPGA%20Championship%20-%20Annika%20Sorenstam%20tee%20shot.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q232711",
+    44
+  ],
+  [
+    "Q9424",
+    "Jack Nicklaus",
+    "golf-stars",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/JackNicklausMedalOfFreedom.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q9424",
     44
   ],
   [
@@ -7083,16 +7083,6 @@
     29
   ],
   [
-    "Q172101",
-    "Alfonso de Portago",
-    "golf-stars",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Alfonso%2C%20Marquess%20of%20Portago.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q172101",
-    28
-  ],
-  [
     "Q722750",
     "Justin Rose",
     "golf-stars",
@@ -7103,14 +7093,14 @@
     28
   ],
   [
-    "Q54690",
-    "Ellsworth Vines",
+    "Q172101",
+    "Alfonso de Portago",
     "golf-stars",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/EllsworthVinesTen.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Alfonso%2C%20Marquess%20of%20Portago.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q54690",
-    25
+    "http://www.wikidata.org/entity/Q172101",
+    28
   ],
   [
     "Q440171",
@@ -7123,6 +7113,16 @@
     25
   ],
   [
+    "Q54690",
+    "Ellsworth Vines",
+    "golf-stars",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/EllsworthVinesTen.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q54690",
+    25
+  ],
+  [
     "Q25990418",
     "Aditi Ashok",
     "golf-stars",
@@ -7130,6 +7130,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Aditi%20Ashok.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q25990418",
+    23
+  ],
+  [
+    "Q725776",
+    "Byron Nelson",
+    "golf-stars",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Byron%20Nelson%20by%20Acme%2C%201944.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q725776",
     23
   ],
   [
@@ -7153,23 +7163,13 @@
     23
   ],
   [
-    "Q725776",
-    "Byron Nelson",
+    "Q706227",
+    "Bubba Watson",
     "golf-stars",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Byron%20Nelson%20by%20Acme%2C%201944.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Greenbrier%20Classic%20-%202013%20-%20Bubba%20Watson%20%289210023076%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q725776",
-    23
-  ],
-  [
-    "Q350869",
-    "Adam Scott",
-    "golf-stars",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/AdamScott1.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q350869",
+    "http://www.wikidata.org/entity/Q706227",
     22
   ],
   [
@@ -7183,16 +7183,6 @@
     22
   ],
   [
-    "Q706227",
-    "Bubba Watson",
-    "golf-stars",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Greenbrier%20Classic%20-%202013%20-%20Bubba%20Watson%20%289210023076%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q706227",
-    22
-  ],
-  [
     "Q1063676",
     "Charles B. Cory",
     "golf-stars",
@@ -7203,14 +7193,14 @@
     22
   ],
   [
-    "Q24800169",
-    "Jon Rahm",
+    "Q350869",
+    "Adam Scott",
     "golf-stars",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jon%20Rahm%20Ryder%20Cup%202025-130%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/AdamScott1.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q24800169",
-    21
+    "http://www.wikidata.org/entity/Q350869",
+    22
   ],
   [
     "Q5956645",
@@ -7220,26 +7210,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Hideki%20Matsuyama%20ClevelandGolf4-21.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q5956645",
-    21
-  ],
-  [
-    "Q432741",
-    "José María Olazábal",
-    "golf-stars",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jos%C3%A9%20Mar%C3%ADa%20Olaz%C3%A1bal%20Ryder%20Cup%202025-116%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q432741",
-    21
-  ],
-  [
-    "Q1002293",
-    "Dustin Johnson",
-    "golf-stars",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dustin%20Johnson%20-%202022.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1002293",
     21
   ],
   [
@@ -7263,6 +7233,16 @@
     21
   ],
   [
+    "Q1002293",
+    "Dustin Johnson",
+    "golf-stars",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Dustin%20Johnson%20-%202022.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1002293",
+    21
+  ],
+  [
     "Q2690977",
     "Inbee Park",
     "golf-stars",
@@ -7270,16 +7250,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/2009%20LPGA%20Championship%20-%20Inbee%20Park%20%282%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q2690977",
-    20
-  ],
-  [
-    "Q1255252",
-    "James Cecil Parke",
-    "golf-stars",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/James%20C.%20Parke.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1255252",
     20
   ],
   [
@@ -7293,33 +7263,33 @@
     20
   ],
   [
-    "Q545161",
-    "Ian Woosnam",
+    "Q1255252",
+    "James Cecil Parke",
     "golf-stars",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ian%20Woosnam%20at%20Royal%20Troon%20cropped.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/James%20C.%20Parke.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q545161",
+    "http://www.wikidata.org/entity/Q1255252",
+    20
+  ],
+  [
+    "Q863051",
+    "Billy Casper",
+    "golf-stars",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Billy%20Casper%202010.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q863051",
     19
   ],
   [
-    "Q1363419",
-    "Francesco Molinari",
+    "Q531474",
+    "Charl Schwartzel",
     "golf-stars",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Francesco%20Molinari.JPG",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Charl%20Schwartzel.JPG",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1363419",
-    19
-  ],
-  [
-    "Q389438",
-    "John Daly",
-    "golf-stars",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Greenbrier%20Classic%20-%202013%20-%20John%20Daly%20%289210073880%29%20%283x4%20cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q389438",
+    "http://www.wikidata.org/entity/Q531474",
     19
   ],
   [
@@ -7343,34 +7313,24 @@
     19
   ],
   [
-    "Q531474",
-    "Charl Schwartzel",
+    "Q545161",
+    "Ian Woosnam",
     "golf-stars",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Charl%20Schwartzel.JPG",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ian%20Woosnam%20at%20Royal%20Troon%20cropped.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q531474",
+    "http://www.wikidata.org/entity/Q545161",
     19
   ],
   [
-    "Q863051",
-    "Billy Casper",
+    "Q1363419",
+    "Francesco Molinari",
     "golf-stars",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Billy%20Casper%202010.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Francesco%20Molinari.JPG",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q863051",
+    "http://www.wikidata.org/entity/Q1363419",
     19
-  ],
-  [
-    "Q708089",
-    "Colin Montgomerie",
-    "golf-stars",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/ColinMontgomerie.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q708089",
-    18
   ],
   [
     "Q1383295",
@@ -7383,23 +7343,23 @@
     18
   ],
   [
-    "Q21005578",
-    "Bryson DeChambeau",
+    "Q708089",
+    "Colin Montgomerie",
     "golf-stars",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bryson%20DeChambeau%20in%202025%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/ColinMontgomerie.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q21005578",
-    17
+    "http://www.wikidata.org/entity/Q708089",
+    18
   ],
   [
-    "Q615937",
-    "Ian Poulter",
+    "Q23000822",
+    "Kai Trump",
     "golf-stars",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/IanPoulter01.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Kai%20Trump%20and%20Grandpa%20head%20to%20the%20Ryder%20Cup%20-%2002%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q615937",
+    "http://www.wikidata.org/entity/Q23000822",
     17
   ],
   [
@@ -7413,13 +7373,23 @@
     17
   ],
   [
-    "Q690638",
-    "Jim Furyk",
+    "Q21005578",
+    "Bryson DeChambeau",
     "golf-stars",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jim%20Furyk%20Ryder%20Cup%202025-147%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bryson%20DeChambeau%20in%202025%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q690638",
+    "http://www.wikidata.org/entity/Q21005578",
+    17
+  ],
+  [
+    "Q246992",
+    "Jason Day",
+    "golf-stars",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Day.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q246992",
     17
   ],
   [
@@ -7433,6 +7403,26 @@
     17
   ],
   [
+    "Q615937",
+    "Ian Poulter",
+    "golf-stars",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/IanPoulter01.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q615937",
+    17
+  ],
+  [
+    "Q690638",
+    "Jim Furyk",
+    "golf-stars",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jim%20Furyk%20Ryder%20Cup%202025-147%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q690638",
+    17
+  ],
+  [
     "Q964427",
     "Graeme McDowell",
     "golf-stars",
@@ -7440,16 +7430,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Graeme%20McDowell.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q964427",
-    17
-  ],
-  [
-    "Q246992",
-    "Jason Day",
-    "golf-stars",
-    "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Day.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q246992",
     17
   ],
   [
@@ -7483,13 +7463,13 @@
     16
   ],
   [
-    "Q15877245",
-    "Justin Thomas",
+    "Q816472",
+    "Ben Crenshaw",
     "golf-stars",
     "sports",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Justin%20Thomas%20Ryder%20Cup%202025-052%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ben%20Crenshaw%20%283969519739%29%20in%202009%20%283x4%20cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q15877245",
+    "http://www.wikidata.org/entity/Q816472",
     16
   ],
   [
@@ -7500,6 +7480,26 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Chandler%20Egan.JPG",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q2638533",
+    16
+  ],
+  [
+    "Q15877245",
+    "Justin Thomas",
+    "golf-stars",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Justin%20Thomas%20Ryder%20Cup%202025-052%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q15877245",
+    16
+  ],
+  [
+    "Q1396324",
+    "Jeanne Carmen",
+    "golf-stars",
+    "sports",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jeanne%20Carmen%20in%20Portland%20Expos%C3%A9.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1396324",
     16
   ],
   [
@@ -7543,16 +7543,6 @@
     162
   ],
   [
-    "Q38757",
-    "Bertolt Brecht",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bundesarchiv%20Bild%20183-W0409-300%2C%20Bertolt%20Brecht.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q38757",
-    155
-  ],
-  [
     "Q2685",
     "Arnold Schwarzenegger",
     "actors",
@@ -7563,56 +7553,6 @@
     153
   ],
   [
-    "Q11637",
-    "Judy Garland",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Judy%20Garland%20The%20Harvey%20Girls%20MGM%20Publicity%20still.jpeg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q11637",
-    153
-  ],
-  [
-    "Q36268",
-    "Brigitte Bardot",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Brigitte%20Bardot%20-%201962.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q36268",
-    152
-  ],
-  [
-    "Q42786",
-    "Audrey Hepburn",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Audrey%20Hepburn%20in%201966.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q42786",
-    150
-  ],
-  [
-    "Q221310",
-    "Anggun",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Anggun%20at%20Sundance%20Film%20Festival%202026-6%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q221310",
-    149
-  ],
-  [
-    "Q1362169",
-    "Agnez Mo",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Agnez%20Monica%202019%20%28facecrop%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1362169",
-    148
-  ],
-  [
     "Q35332",
     "Brad Pitt",
     "actors",
@@ -7621,36 +7561,6 @@
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q35332",
     147
-  ],
-  [
-    "Q34851",
-    "Elizabeth Taylor",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Elizabeth%20Taylor%20with%20Kennedy%20award.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q34851",
-    145
-  ],
-  [
-    "Q39476",
-    "Emma Watson",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Emma%20Watson%202013.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q39476",
-    144
-  ],
-  [
-    "Q151892",
-    "Ariana Grande",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ariana%20Grande%20promoting%20Wicked%20%282024%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q151892",
-    141
   ],
   [
     "Q106529",
@@ -7671,16 +7581,6 @@
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q40912",
     138
-  ],
-  [
-    "Q40715",
-    "Jennifer Lopez",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jennifer%20Lopez%20at%20the%202025%20Sundance%20Film%20Festival%20%28cropped%203%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q40715",
-    136
   ],
   [
     "Q5383",
@@ -7723,76 +7623,6 @@
     134
   ],
   [
-    "Q41173",
-    "Demi Lovato",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Demi%20Lovato%20Interview%20Feb%202020.png",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q41173",
-    133
-  ],
-  [
-    "Q80966",
-    "Cate Blanchett",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Cate%20Blanchett-63298%20%28cropped%202%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q80966",
-    133
-  ],
-  [
-    "Q202765",
-    "Kate Winslet",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/KateWinslet%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q202765",
-    133
-  ],
-  [
-    "Q34460",
-    "Gwyneth Paltrow",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gwyneth%20Paltrow%20avp%20Iron%20Man%203%20Paris.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q34460",
-    132
-  ],
-  [
-    "Q40523",
-    "Julia Roberts",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Julia%20Roberts%20Delivers%20Remarks%20at%20the%202022%20Kennedy%20Center%20Honors%20Dinner%20%2852542372884%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q40523",
-    131
-  ],
-  [
-    "Q234679",
-    "Charlotte Rampling",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Actress%20Charlotte%20Rampling%20At%20the%20premiere%20of%20the%20movie%20%2245%20Years%22%20%28cropped1%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q234679",
-    131
-  ],
-  [
-    "Q41594",
-    "Christina Aguilera",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Christina%20Aguilera%20%282006%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q41594",
-    130
-  ],
-  [
     "Q39792",
     "Jack Nicholson",
     "actors",
@@ -7823,16 +7653,6 @@
     127
   ],
   [
-    "Q32522",
-    "Jennifer Aniston",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/JenniferAnistonHWoFFeb2012.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q32522",
-    127
-  ],
-  [
     "Q9570",
     "Amitabh Bachchan",
     "actors",
@@ -7841,16 +7661,6 @@
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q9570",
     126
-  ],
-  [
-    "Q43247",
-    "Ingrid Bergman",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bergman%20Harcourt%201957.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q43247",
-    123
   ],
   [
     "Q72984",
@@ -7863,16 +7673,6 @@
     123
   ],
   [
-    "Q41142",
-    "Jane Fonda",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jane%20Fonda%201963.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q41142",
-    122
-  ],
-  [
     "Q40531",
     "John Wayne",
     "actors",
@@ -7881,16 +7681,6 @@
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q40531",
     121
-  ],
-  [
-    "Q12003",
-    "Cher",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Cher%20in%202019%20cropped.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q12003",
-    120
   ],
   [
     "Q65932",
@@ -7903,24 +7693,14 @@
     120
   ],
   [
-    "Q1033016",
-    "Halle Berry",
+    "Q159577",
+    "Jet Li",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Halle%20Berry-1910.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jet%20Li%20cropped.JPG",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1033016",
+    "http://www.wikidata.org/entity/Q159577",
     120
-  ],
-  [
-    "Q3925",
-    "Grace Kelly",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gracia%20van%20Monaco%20%281972%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q3925",
-    119
   ],
   [
     "Q16390",
@@ -7933,16 +7713,6 @@
     118
   ],
   [
-    "Q80046",
-    "Charlize Theron",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/CharlizeTheron-byPhilipRomano2.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q80046",
-    118
-  ],
-  [
     "Q23466",
     "Chris Pine",
     "actors",
@@ -7951,36 +7721,6 @@
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q23466",
     117
-  ],
-  [
-    "Q188500",
-    "Elisha Cuthbert",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Elisha%20Cuthbert%20in%202009.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q188500",
-    117
-  ],
-  [
-    "Q47059",
-    "Aishwarya Rai",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Aishwarya%20Rai%20Cannes%202017.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q47059",
-    116
-  ],
-  [
-    "Q5443",
-    "Greta Garbo",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Garbo%20in%20Inspiration.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q5443",
-    116
   ],
   [
     "Q81328",
@@ -8013,16 +7753,6 @@
     113
   ],
   [
-    "Q38119",
-    "Daniel Radcliffe",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Daniel%20Radcliffe%20in%20July%202015.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q38119",
-    112
-  ],
-  [
     "Q10738",
     "Dwayne Johnson",
     "actors",
@@ -8030,6 +7760,16 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Dwayne%20Johnson-1809%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q10738",
+    112
+  ],
+  [
+    "Q38119",
+    "Daniel Radcliffe",
+    "actors",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Daniel%20Radcliffe%20in%20July%202015.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q38119",
     112
   ],
   [
@@ -8053,14 +7793,14 @@
     112
   ],
   [
-    "Q2448709",
-    "Benedicta Boccoli",
+    "Q2673",
+    "Chuck Norris",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Benedicta-boccoli-2013.JPG",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Chuck%20Norris%2C%20The%20Delta%20Force%201986%20%28slight%20cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2448709",
-    111
+    "http://www.wikidata.org/entity/Q2673",
+    110
   ],
   [
     "Q40572",
@@ -8070,16 +7810,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Heath%20Ledger.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q40572",
-    110
-  ],
-  [
-    "Q4636",
-    "Barbra Streisand",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Barbra%20Streisand%20with%20Francis%20Collins%20and%20Anthony%20Fauci%20%2827806589237%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q4636",
     110
   ],
   [
@@ -8093,16 +7823,6 @@
     110
   ],
   [
-    "Q2673",
-    "Chuck Norris",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Chuck%20Norris%2C%20The%20Delta%20Force%201986%20%28slight%20cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2673",
-    110
-  ],
-  [
     "Q43874",
     "Eddie Murphy",
     "actors",
@@ -8113,26 +7833,6 @@
     110
   ],
   [
-    "Q284636",
-    "Jason Bateman",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jason%20Bateman.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q284636",
-    110
-  ],
-  [
-    "Q42455",
-    "Björk",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bj%C3%B6rk%20at%20Cannes.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q42455",
-    109
-  ],
-  [
     "Q765",
     "Dario Fo",
     "actors",
@@ -8141,66 +7841,6 @@
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q765",
     109
-  ],
-  [
-    "Q108941",
-    "Carrie Fisher",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Carrie%20Fisher%202013-a%20straightened.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q108941",
-    109
-  ],
-  [
-    "Q44380",
-    "Cameron Diaz",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Cameron%20Diaz%20at%20WWD%20Style%20Awards%202026-1998.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q44380",
-    109
-  ],
-  [
-    "Q71206",
-    "Bette Davis",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/BetteDavis1935.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q71206",
-    109
-  ],
-  [
-    "Q40933",
-    "Eva Perón",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Evita%20%28cropped2%29.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q40933",
-    108
-  ],
-  [
-    "Q42581",
-    "Keira Knightley",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/KeiraKnightleyByAndreaRaffin2011%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q42581",
-    107
-  ],
-  [
-    "Q80405",
-    "Julianne Moore",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Julianne%20Moore-60954.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q80405",
-    107
   ],
   [
     "Q71243",
@@ -8223,16 +7863,6 @@
     105
   ],
   [
-    "Q83492",
-    "Gary Oldman",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gary%20Oldman%20by%20Gage%20Skidmore.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q83492",
-    104
-  ],
-  [
     "Q190523",
     "Christopher Plummer",
     "actors",
@@ -8243,34 +7873,14 @@
     104
   ],
   [
-    "Q131324",
-    "Janet Jackson",
+    "Q83492",
+    "Gary Oldman",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/JanetJacksonUnbreakableTourSanFran2015%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gary%20Oldman%20by%20Gage%20Skidmore.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q131324",
+    "http://www.wikidata.org/entity/Q83492",
     104
-  ],
-  [
-    "Q47664",
-    "Catherine Zeta-Jones",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Catherine%20Zeta-Jones%20VF%202012%20Shankbone.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q47664",
-    103
-  ],
-  [
-    "Q40475",
-    "Joan Crawford",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Joan%20Crawford%20-%201936%20-%20Hurrell.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q40475",
-    103
   ],
   [
     "Q9557",
@@ -8280,16 +7890,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Aamir%20Khan%20%28Berlin%20Film%20Festival%202011%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q9557",
-    103
-  ],
-  [
-    "Q104372",
-    "Doris Day",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Doris%20Day%201958%20crop.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q104372",
     103
   ],
   [
@@ -8313,16 +7913,6 @@
     103
   ],
   [
-    "Q56094",
-    "Francis Ford Coppola",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Francis%20Ford%20Coppola%20on%20December%208%2C%202024%20in%20the%20White%20House%20Oval%20Office%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q56094",
-    102
-  ],
-  [
     "Q106508",
     "Gérard Depardieu",
     "actors",
@@ -8343,26 +7933,6 @@
     102
   ],
   [
-    "Q485298",
-    "Gillian Anderson",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gillian%20Anderson%20Cannes%20Film%20Festival%202026%2002%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q485298",
-    102
-  ],
-  [
-    "Q349391",
-    "Helen Mirren",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/MKr24815%20Helen%20Mirren%20%28Golda%2C%20Berlinale%202023%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q349391",
-    102
-  ],
-  [
     "Q41548",
     "Antonio Banderas",
     "actors",
@@ -8370,26 +7940,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Antonio%20Banderas-66031%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q41548",
-    101
-  ],
-  [
-    "Q104027",
-    "Kirk Douglas",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Kirk%20douglas%20photo%20signed.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q104027",
-    101
-  ],
-  [
-    "Q167520",
-    "Jon Voight",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jon%20Voight%202011.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q167520",
     101
   ],
   [
@@ -8403,16 +7953,6 @@
     101
   ],
   [
-    "Q49034",
-    "Hedy Lamarr",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Hedy%20Lamarr%20in%20The%20Heavenly%20Body%201944.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q49034",
-    100
-  ],
-  [
     "Q19155",
     "Henry Fonda",
     "actors",
@@ -8423,26 +7963,6 @@
     100
   ],
   [
-    "Q676094",
-    "Drew Barrymore",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Drew%20Barrymore%20in%202019%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q676094",
-    100
-  ],
-  [
-    "Q45772",
-    "Christian Bale",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Christian%20Bale-7837.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q45772",
-    99
-  ],
-  [
     "Q1785",
     "Charles Aznavour",
     "actors",
@@ -8450,26 +7970,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/2014.06.23.%20Charles%20Aznavour%20Fot%20Mariusz%20Kubik%2001.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q1785",
-    99
-  ],
-  [
-    "Q83410",
-    "Cary Grant",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Grant%2C%20Cary%20%28Suspicion%29%2001%20Crisco%20edit.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q83410",
-    99
-  ],
-  [
-    "Q178348",
-    "Chris Evans",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Chris%20Evans%20Red%202024.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q178348",
     99
   ],
   [
@@ -8483,13 +7983,33 @@
     99
   ],
   [
-    "Q215072",
-    "John Goodman",
+    "Q178348",
+    "Chris Evans",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/John%20Goodman%202014.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Chris%20Evans%20Red%202024.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q215072",
+    "http://www.wikidata.org/entity/Q178348",
+    99
+  ],
+  [
+    "Q83410",
+    "Cary Grant",
+    "actors",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Grant%2C%20Cary%20%28Suspicion%29%2001%20Crisco%20edit.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q83410",
+    99
+  ],
+  [
+    "Q45772",
+    "Christian Bale",
+    "actors",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Christian%20Bale-7837.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q45772",
     99
   ],
   [
@@ -8513,34 +8033,24 @@
     98
   ],
   [
-    "Q151972",
-    "Josephine Baker",
+    "Q53002",
+    "François Truffaut",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Baker%20Harcourt%201940%202.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Fran%C3%A7ois%20Truffaut%20%281965%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q151972",
-    98
+    "http://www.wikidata.org/entity/Q53002",
+    97
   ],
   [
-    "Q161819",
-    "Julie Andrews",
+    "Q93957",
+    "Gary Cooper",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Julie%20Andrews%20Park%20Hyatt%2C%20Sydney%2C%20Australia%202013.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gary%20cooper%20promo%20image.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q161819",
-    98
-  ],
-  [
-    "Q481832",
-    "Amy Adams",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Amy%20Adams%20UK%20Nocturnal%20Animals%20Premiere%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q481832",
-    98
+    "http://www.wikidata.org/entity/Q93957",
+    97
   ],
   [
     "Q36105",
@@ -8563,36 +8073,6 @@
     97
   ],
   [
-    "Q28054",
-    "Judi Dench",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Judi%20Dench%20at%20the%20BAFTAs%202007%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q28054",
-    97
-  ],
-  [
-    "Q56009",
-    "Gina Lollobrigida",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gina%20Lollobrigida%20-%20Publicity%20still%20%281956%29.png",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q56009",
-    97
-  ],
-  [
-    "Q53002",
-    "François Truffaut",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Fran%C3%A7ois%20Truffaut%20%281965%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q53002",
-    97
-  ],
-  [
     "Q102462",
     "James Stewart",
     "actors",
@@ -8611,46 +8091,6 @@
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q103784",
     97
-  ],
-  [
-    "Q93957",
-    "Gary Cooper",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gary%20cooper%20promo%20image.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q93957",
-    97
-  ],
-  [
-    "Q35912",
-    "Emmy Rossum",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/EmmyRossum-byPhilipRomano3%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q35912",
-    96
-  ],
-  [
-    "Q193517",
-    "Emily Blunt",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Emily%20Blunt%20at%20WWD%20Style%20Awards%202026-02.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q193517",
-    95
-  ],
-  [
-    "Q44437",
-    "John Cena",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/John%20Cena%20by%20Gage%20Skidmore.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q44437",
-    95
   ],
   [
     "Q103846",
@@ -8683,43 +8123,13 @@
     94
   ],
   [
-    "Q185654",
-    "Gal Gadot",
+    "Q132952",
+    "Adam Sandler",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gal%20Gadot%20for%20Revlon%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jackie%20Sandler%20Adam%20Sandler%20Jay%20Kelly-36%20%283x4%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q185654",
-    94
-  ],
-  [
-    "Q93187",
-    "Hilary Swank",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Hilary%20Swank%20Life%20Ball%202013%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q93187",
-    94
-  ],
-  [
-    "Q235132",
-    "Emilia Clarke",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Emilia%20Clarke%20Dior%20Roses%20des%20Vents.png",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q235132",
-    94
-  ],
-  [
-    "Q80739",
-    "Charlton Heston",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Charlton%20Heston%20-%201953.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q80739",
+    "http://www.wikidata.org/entity/Q132952",
     93
   ],
   [
@@ -8733,23 +8143,23 @@
     93
   ],
   [
-    "Q131380",
-    "Kim Basinger",
+    "Q308722",
+    "James Gandolfini",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Kim%20Basinger%20-%20The%20Natural.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/James%20Gandolfini%20in%20Kuwait%20City%202010%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q131380",
+    "http://www.wikidata.org/entity/Q308722",
     93
   ],
   [
-    "Q132952",
-    "Adam Sandler",
+    "Q80739",
+    "Charlton Heston",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jackie%20Sandler%20Adam%20Sandler%20Jay%20Kelly-36%20%283x4%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Charlton%20Heston%20-%201953.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q132952",
+    "http://www.wikidata.org/entity/Q80739",
     93
   ],
   [
@@ -8761,36 +8171,6 @@
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q314801",
     93
-  ],
-  [
-    "Q308722",
-    "James Gandolfini",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/James%20Gandolfini%20in%20Kuwait%20City%202010%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q308722",
-    93
-  ],
-  [
-    "Q483325",
-    "Ellen DeGeneres",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ellen%20DeGeneres%202011.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q483325",
-    93
-  ],
-  [
-    "Q106383",
-    "Isabelle Adjani",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Isabelle%20Adjani%20Cannes%202018.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q106383",
-    92
   ],
   [
     "Q94041",
@@ -8813,36 +8193,6 @@
     92
   ],
   [
-    "Q25144",
-    "Kevin Spacey",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Kevin%20Spacey-9243%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q25144",
-    91
-  ],
-  [
-    "Q229232",
-    "Gloria Swanson",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gloria%20Swanson%201941.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q229232",
-    91
-  ],
-  [
-    "Q122020",
-    "Hilary Duff",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Hilary%20Duff%20%2835661671285%29%20%28cropped%29%20%283%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q122020",
-    91
-  ],
-  [
     "Q170510",
     "Ian McKellen",
     "actors",
@@ -8853,13 +8203,23 @@
     91
   ],
   [
-    "Q29328",
-    "Brie Larson",
+    "Q25144",
+    "Kevin Spacey",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Captain%20Marvel%20trailer%20at%20the%20National%20Air%20and%20Space%20Museum%204%20%28cropped%29.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Kevin%20Spacey-9243%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q29328",
+    "http://www.wikidata.org/entity/Q25144",
+    91
+  ],
+  [
+    "Q160432",
+    "Jude Law",
+    "actors",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jude%20Law-67896.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q160432",
     90
   ],
   [
@@ -8873,24 +8233,14 @@
     90
   ],
   [
-    "Q218679",
-    "Colette",
+    "Q170572",
+    "Alec Baldwin",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Colette%20-%20photo.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Alec%20Baldwin%20by%20Gage%20Skidmore.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q218679",
-    90
-  ],
-  [
-    "Q191644",
-    "Eva Green",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Eva%20Green%20%28Headshot%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q191644",
-    90
+    "http://www.wikidata.org/entity/Q170572",
+    89
   ],
   [
     "Q33240",
@@ -8903,36 +8253,6 @@
     89
   ],
   [
-    "Q159178",
-    "Deepika Padukone",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Deepika%20Padukone%202025%20%281%29.png",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q159178",
-    89
-  ],
-  [
-    "Q107006",
-    "Claudia Cardinale",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Claudia%20Cardinale%20%281960%20hq%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q107006",
-    89
-  ],
-  [
-    "Q164487",
-    "Ava Gardner",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ava%20Gardner%20Show%20Boat%201951.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q164487",
-    89
-  ],
-  [
     "Q165518",
     "Ewan McGregor",
     "actors",
@@ -8940,26 +8260,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Ewan%20McGregor%20-%20Los%20Angeles%20Comic%20Con%202024.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q165518",
-    89
-  ],
-  [
-    "Q168724",
-    "Emma Thompson",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Emma%20Thompson%20at%20the%2078th%20Locarno%20Film%20Festival%20photocall%2001.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q168724",
-    89
-  ],
-  [
-    "Q170572",
-    "Alec Baldwin",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Alec%20Baldwin%20by%20Gage%20Skidmore.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q170572",
     89
   ],
   [
@@ -8993,6 +8293,16 @@
     89
   ],
   [
+    "Q550778",
+    "John de Lancie",
+    "actors",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/John%20de%20Lancie%20Photo%20Op%20GalaxyCon%20Raleigh%202023.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q550778",
+    89
+  ],
+  [
     "Q26806",
     "Danny DeVito",
     "actors",
@@ -9000,16 +8310,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/Danny%20DeVito%20cropped%20and%20edited%20for%20brightness.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q26806",
-    88
-  ],
-  [
-    "Q58912",
-    "Courteney Cox",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/CourteneyCoxFeb09%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q58912",
     88
   ],
   [
@@ -9023,16 +8323,6 @@
     88
   ],
   [
-    "Q234141",
-    "Ian McShane",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/McShaneTamLinRio311022%20%281%20of%2021%29%20%2852470810951%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q234141",
-    88
-  ],
-  [
     "Q171745",
     "Jeremy Irons",
     "actors",
@@ -9043,13 +8333,13 @@
     88
   ],
   [
-    "Q184103",
-    "Christina Ricci",
+    "Q234141",
+    "Ian McShane",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Christina%20Ricci%20at%20Los%20Angeles%20Comic%20Con%202024-2.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/McShaneTamLinRio311022%20%281%20of%2021%29%20%2852470810951%29%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q184103",
+    "http://www.wikidata.org/entity/Q234141",
     88
   ],
   [
@@ -9063,33 +8353,13 @@
     88
   ],
   [
-    "Q65586823",
-    "Joshua Bassett",
+    "Q213512",
+    "Bill Cosby",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Joshua%20Bassett%20accepting%20his%20award%20at%202022%20KCAs.png",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bill%20Cosby%201965.JPG",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q65586823",
-    88
-  ],
-  [
-    "Q47100",
-    "Ben Stiller",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ben%20Stiller%20at%20the%202024%20Toronto%20International%20Film%20Festival%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q47100",
-    87
-  ],
-  [
-    "Q36290",
-    "Diana Ross",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/DRossLongleat010722%20%289%20of%2043%29%20%2852189231585%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q36290",
+    "http://www.wikidata.org/entity/Q213512",
     87
   ],
   [
@@ -9113,26 +8383,6 @@
     87
   ],
   [
-    "Q173158",
-    "Ben Kingsley",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ben%20Kingsley%20by%20Gage%20Skidmore.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q173158",
-    87
-  ],
-  [
-    "Q213512",
-    "Bill Cosby",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bill%20Cosby%201965.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q213512",
-    87
-  ],
-  [
     "Q73089",
     "Gene Kelly",
     "actors",
@@ -9143,24 +8393,24 @@
     87
   ],
   [
-    "Q240933",
-    "Joan Rivers",
+    "Q173158",
+    "Ben Kingsley",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Joan%20Rivers%201.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ben%20Kingsley%20by%20Gage%20Skidmore.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q240933",
+    "http://www.wikidata.org/entity/Q173158",
     87
   ],
   [
-    "Q150943",
-    "Gene Hackman",
+    "Q47100",
+    "Ben Stiller",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Gene%20Hackman%20-%201972.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ben%20Stiller%20at%20the%202024%20Toronto%20International%20Film%20Festival%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q150943",
-    86
+    "http://www.wikidata.org/entity/Q47100",
+    87
   ],
   [
     "Q134895",
@@ -9170,36 +8420,6 @@
     "https://commons.wikimedia.org/wiki/Special:FilePath/MJK%2071654%20Javier%20Bardem%20%28The%20Roads%20Not%20Taken%2C%20Berlinale%202020%29.jpg",
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q134895",
-    86
-  ],
-  [
-    "Q170428",
-    "Helena Bonham Carter",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/MerchantIvoryCurzMayfair201124%20%289%20of%2028%29%20%2854154554480%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q170428",
-    86
-  ],
-  [
-    "Q182408",
-    "Glenda Jackson",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Glenda%20Jackson.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q182408",
-    86
-  ],
-  [
-    "Q342604",
-    "Idris Elba",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Idris%20Elba%20in%202024%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q342604",
     86
   ],
   [
@@ -9213,23 +8433,33 @@
     86
   ],
   [
-    "Q203819",
-    "Claudette Colbert",
+    "Q150943",
+    "Gene Hackman",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Claudette%20colbert.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gene%20Hackman%20-%201972.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q203819",
+    "http://www.wikidata.org/entity/Q150943",
     86
   ],
   [
-    "Q263696",
-    "Debbie Reynolds",
+    "Q342604",
+    "Idris Elba",
     "actors",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Debbie%20Reynolds.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Idris%20Elba%20in%202024%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q263696",
+    "http://www.wikidata.org/entity/Q342604",
+    86
+  ],
+  [
+    "Q294927",
+    "Jerry Lewis",
+    "actors",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jerry%20Lewis%20%28Paramount%20photo%20by%20Bud%20Fraker%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q294927",
     86
   ],
   [
@@ -9241,16 +8471,6 @@
     "Wikimedia Commons via Wikidata",
     "http://www.wikidata.org/entity/Q483771",
     86
-  ],
-  [
-    "Q189226",
-    "Amanda Seyfried",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Amanda%20Seyfried%20at%20Berlinale%202026-1%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q189226",
-    85
   ],
   [
     "Q173637",
@@ -9273,26 +8493,6 @@
     85
   ],
   [
-    "Q229166",
-    "Amber Heard",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Amber%20Heard%20%2843723454772%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q229166",
-    85
-  ],
-  [
-    "Q94002",
-    "Barbara Stanwyck",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Barbara%20Stanwyck%20Big%20Valley%201967.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q94002",
-    85
-  ],
-  [
     "Q162492",
     "Colin Firth",
     "actors",
@@ -9303,9 +8503,769 @@
     85
   ],
   [
+    "Q11637",
+    "Judy Garland",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Judy%20Garland%20The%20Harvey%20Girls%20MGM%20Publicity%20still.jpeg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q11637",
+    153
+  ],
+  [
+    "Q36268",
+    "Brigitte Bardot",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Brigitte%20Bardot%20-%201962.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q36268",
+    152
+  ],
+  [
+    "Q42786",
+    "Audrey Hepburn",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Audrey%20Hepburn%20in%201966.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q42786",
+    150
+  ],
+  [
+    "Q221310",
+    "Anggun",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Anggun%20at%20Sundance%20Film%20Festival%202026-6%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q221310",
+    149
+  ],
+  [
+    "Q1362169",
+    "Agnez Mo",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Agnez%20Monica%202019%20%28facecrop%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1362169",
+    148
+  ],
+  [
+    "Q34851",
+    "Elizabeth Taylor",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Elizabeth%20Taylor%20with%20Kennedy%20award.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q34851",
+    145
+  ],
+  [
+    "Q39476",
+    "Emma Watson",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Emma%20Watson%202013.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q39476",
+    144
+  ],
+  [
+    "Q151892",
+    "Ariana Grande",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ariana%20Grande%20promoting%20Wicked%20%282024%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q151892",
+    141
+  ],
+  [
+    "Q40715",
+    "Jennifer Lopez",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jennifer%20Lopez%20at%20the%202025%20Sundance%20Film%20Festival%20%28cropped%203%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q40715",
+    136
+  ],
+  [
+    "Q80966",
+    "Cate Blanchett",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Cate%20Blanchett-63298%20%28cropped%202%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q80966",
+    133
+  ],
+  [
+    "Q34460",
+    "Gwyneth Paltrow",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gwyneth%20Paltrow%20avp%20Iron%20Man%203%20Paris.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q34460",
+    132
+  ],
+  [
+    "Q40523",
+    "Julia Roberts",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Julia%20Roberts%20Delivers%20Remarks%20at%20the%202022%20Kennedy%20Center%20Honors%20Dinner%20%2852542372884%29%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q40523",
+    131
+  ],
+  [
+    "Q234679",
+    "Charlotte Rampling",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Actress%20Charlotte%20Rampling%20At%20the%20premiere%20of%20the%20movie%20%2245%20Years%22%20%28cropped1%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q234679",
+    131
+  ],
+  [
+    "Q41594",
+    "Christina Aguilera",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Christina%20Aguilera%20%282006%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q41594",
+    130
+  ],
+  [
+    "Q32522",
+    "Jennifer Aniston",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/JenniferAnistonHWoFFeb2012.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q32522",
+    127
+  ],
+  [
+    "Q43247",
+    "Ingrid Bergman",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bergman%20Harcourt%201957.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q43247",
+    123
+  ],
+  [
+    "Q41142",
+    "Jane Fonda",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jane%20Fonda%201963.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q41142",
+    122
+  ],
+  [
+    "Q12003",
+    "Cher",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Cher%20in%202019%20cropped.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q12003",
+    120
+  ],
+  [
+    "Q1033016",
+    "Halle Berry",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Halle%20Berry-1910.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q1033016",
+    120
+  ],
+  [
+    "Q3925",
+    "Grace Kelly",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gracia%20van%20Monaco%20%281972%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q3925",
+    119
+  ],
+  [
+    "Q80046",
+    "Charlize Theron",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/CharlizeTheron-byPhilipRomano2.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q80046",
+    118
+  ],
+  [
+    "Q188500",
+    "Elisha Cuthbert",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Elisha%20Cuthbert%20in%202009.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q188500",
+    117
+  ],
+  [
+    "Q5443",
+    "Greta Garbo",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Garbo%20in%20Inspiration.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q5443",
+    116
+  ],
+  [
+    "Q47059",
+    "Aishwarya Rai",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Aishwarya%20Rai%20Cannes%202017.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q47059",
+    116
+  ],
+  [
+    "Q2448709",
+    "Benedicta Boccoli",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Benedicta-boccoli-2013.JPG",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q2448709",
+    111
+  ],
+  [
+    "Q4636",
+    "Barbra Streisand",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Barbra%20Streisand%20with%20Francis%20Collins%20and%20Anthony%20Fauci%20%2827806589237%29%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q4636",
+    110
+  ],
+  [
+    "Q44380",
+    "Cameron Diaz",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Cameron%20Diaz%20at%20WWD%20Style%20Awards%202026-1998.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q44380",
+    109
+  ],
+  [
+    "Q108941",
+    "Carrie Fisher",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Carrie%20Fisher%202013-a%20straightened.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q108941",
+    109
+  ],
+  [
+    "Q42455",
+    "Björk",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Bj%C3%B6rk%20at%20Cannes.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q42455",
+    109
+  ],
+  [
+    "Q71206",
+    "Bette Davis",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/BetteDavis1935.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q71206",
+    109
+  ],
+  [
+    "Q40933",
+    "Eva Perón",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Evita%20%28cropped2%29.JPG",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q40933",
+    108
+  ],
+  [
+    "Q42581",
+    "Keira Knightley",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/KeiraKnightleyByAndreaRaffin2011%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q42581",
+    107
+  ],
+  [
+    "Q80405",
+    "Julianne Moore",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Julianne%20Moore-60954.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q80405",
+    107
+  ],
+  [
+    "Q131324",
+    "Janet Jackson",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/JanetJacksonUnbreakableTourSanFran2015%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q131324",
+    104
+  ],
+  [
+    "Q40475",
+    "Joan Crawford",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Joan%20Crawford%20-%201936%20-%20Hurrell.JPG",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q40475",
+    103
+  ],
+  [
+    "Q126599",
+    "Kristen Stewart",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Kristen%20Stewart%20at%20WWD%20Style%20Awards%202026.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q126599",
+    103
+  ],
+  [
+    "Q104000",
+    "Lauren Bacall",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Lauren%20Bacall%201945%20press%20photo.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q104000",
+    103
+  ],
+  [
+    "Q76478",
+    "Kirsten Dunst",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Kirsten%20Dunst%20Cannes%202016.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q76478",
+    103
+  ],
+  [
+    "Q47664",
+    "Catherine Zeta-Jones",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Catherine%20Zeta-Jones%20VF%202012%20Shankbone.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q47664",
+    103
+  ],
+  [
+    "Q104372",
+    "Doris Day",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Doris%20Day%201958%20crop.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q104372",
+    103
+  ],
+  [
+    "Q485298",
+    "Gillian Anderson",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gillian%20Anderson%20Cannes%20Film%20Festival%202026%2002%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q485298",
+    102
+  ],
+  [
+    "Q349391",
+    "Helen Mirren",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/MKr24815%20Helen%20Mirren%20%28Golda%2C%20Berlinale%202023%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q349391",
+    102
+  ],
+  [
+    "Q49034",
+    "Hedy Lamarr",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hedy%20Lamarr%20in%20The%20Heavenly%20Body%201944.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q49034",
+    100
+  ],
+  [
+    "Q676094",
+    "Drew Barrymore",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Drew%20Barrymore%20in%202019%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q676094",
+    100
+  ],
+  [
+    "Q161819",
+    "Julie Andrews",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Julie%20Andrews%20Park%20Hyatt%2C%20Sydney%2C%20Australia%202013.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q161819",
+    98
+  ],
+  [
+    "Q151972",
+    "Josephine Baker",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Baker%20Harcourt%201940%202.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q151972",
+    98
+  ],
+  [
+    "Q481832",
+    "Amy Adams",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Amy%20Adams%20UK%20Nocturnal%20Animals%20Premiere%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q481832",
+    98
+  ],
+  [
+    "Q28054",
+    "Judi Dench",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Judi%20Dench%20at%20the%20BAFTAs%202007%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q28054",
+    97
+  ],
+  [
+    "Q56009",
+    "Gina Lollobrigida",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gina%20Lollobrigida%20-%20Publicity%20still%20%281956%29.png",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q56009",
+    97
+  ],
+  [
+    "Q35912",
+    "Emmy Rossum",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/EmmyRossum-byPhilipRomano3%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q35912",
+    96
+  ],
+  [
+    "Q193517",
+    "Emily Blunt",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Emily%20Blunt%20at%20WWD%20Style%20Awards%202026-02.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q193517",
+    95
+  ],
+  [
+    "Q185654",
+    "Gal Gadot",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gal%20Gadot%20for%20Revlon%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q185654",
+    94
+  ],
+  [
+    "Q93187",
+    "Hilary Swank",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hilary%20Swank%20Life%20Ball%202013%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q93187",
+    94
+  ],
+  [
+    "Q235132",
+    "Emilia Clarke",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Emilia%20Clarke%20Dior%20Roses%20des%20Vents.png",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q235132",
+    94
+  ],
+  [
+    "Q483325",
+    "Ellen DeGeneres",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ellen%20DeGeneres%202011.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q483325",
+    93
+  ],
+  [
+    "Q106383",
+    "Isabelle Adjani",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Isabelle%20Adjani%20Cannes%202018.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q106383",
+    92
+  ],
+  [
+    "Q229232",
+    "Gloria Swanson",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Gloria%20Swanson%201941.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q229232",
+    91
+  ],
+  [
+    "Q122020",
+    "Hilary Duff",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Hilary%20Duff%20%2835661671285%29%20%28cropped%29%20%283%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q122020",
+    91
+  ],
+  [
+    "Q173585",
+    "Jessica Lange",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Lange%20PF%202013.JPG",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q173585",
+    90
+  ],
+  [
+    "Q29328",
+    "Brie Larson",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Captain%20Marvel%20trailer%20at%20the%20National%20Air%20and%20Space%20Museum%204%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q29328",
+    90
+  ],
+  [
+    "Q191644",
+    "Eva Green",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Eva%20Green%20%28Headshot%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q191644",
+    90
+  ],
+  [
+    "Q218679",
+    "Colette",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Colette%20-%20photo.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q218679",
+    90
+  ],
+  [
+    "Q107006",
+    "Claudia Cardinale",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Claudia%20Cardinale%20%281960%20hq%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q107006",
+    89
+  ],
+  [
+    "Q103343",
+    "Jennifer Connelly",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jennifer%20Connelly%202010%20TIFF.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q103343",
+    89
+  ],
+  [
+    "Q159178",
+    "Deepika Padukone",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Deepika%20Padukone%202025%20%281%29.png",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q159178",
+    89
+  ],
+  [
+    "Q164487",
+    "Ava Gardner",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ava%20Gardner%20Show%20Boat%201951.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q164487",
+    89
+  ],
+  [
+    "Q168724",
+    "Emma Thompson",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Emma%20Thompson%20at%20the%2078th%20Locarno%20Film%20Festival%20photocall%2001.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q168724",
+    89
+  ],
+  [
+    "Q184103",
+    "Christina Ricci",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Christina%20Ricci%20at%20Los%20Angeles%20Comic%20Con%202024-2.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q184103",
+    88
+  ],
+  [
+    "Q58912",
+    "Courteney Cox",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/CourteneyCoxFeb09%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q58912",
+    88
+  ],
+  [
+    "Q36290",
+    "Diana Ross",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/DRossLongleat010722%20%289%20of%2043%29%20%2852189231585%29%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q36290",
+    87
+  ],
+  [
+    "Q182408",
+    "Glenda Jackson",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Glenda%20Jackson.JPG",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q182408",
+    86
+  ],
+  [
+    "Q170428",
+    "Helena Bonham Carter",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/MerchantIvoryCurzMayfair201124%20%289%20of%2028%29%20%2854154554480%29%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q170428",
+    86
+  ],
+  [
+    "Q263696",
+    "Debbie Reynolds",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Debbie%20Reynolds.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q263696",
+    86
+  ],
+  [
+    "Q203819",
+    "Claudette Colbert",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Claudette%20colbert.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q203819",
+    86
+  ],
+  [
+    "Q189226",
+    "Amanda Seyfried",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Amanda%20Seyfried%20at%20Berlinale%202026-1%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q189226",
+    85
+  ],
+  [
+    "Q94002",
+    "Barbara Stanwyck",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Barbara%20Stanwyck%20Big%20Valley%201967.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q94002",
+    85
+  ],
+  [
     "Q222071",
     "Courtney Love",
-    "actors",
+    "actresses",
     "actor",
     "https://commons.wikimedia.org/wiki/Special:FilePath/Life%20Ball%202014%20Courtney%20Love%20Crop.png",
     "Wikimedia Commons via Wikidata",
@@ -9313,79 +9273,19 @@
     85
   ],
   [
-    "Q1374481",
-    "Garry Shandling",
-    "actors",
+    "Q229166",
+    "Amber Heard",
+    "actresses",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/GarryShandlingApr2011.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Amber%20Heard%20%2843723454772%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q1374481",
+    "http://www.wikidata.org/entity/Q229166",
     85
-  ],
-  [
-    "Q49017",
-    "Hugh Laurie",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Hugh%20Laurie%20Actors%20Guild.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q49017",
-    84
-  ],
-  [
-    "Q83484",
-    "Anthony Quinn",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Anthony%20Quinn%20around%20the%201960s.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q83484",
-    84
-  ],
-  [
-    "Q193555",
-    "Brendan Fraser",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Brendan%20Fraser%20October%202022.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q193555",
-    84
-  ],
-  [
-    "Q133313",
-    "Jake Gyllenhaal",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Jake%20Gyllenhaal%202019%20by%20Glenn%20Francis.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q133313",
-    84
-  ],
-  [
-    "Q160528",
-    "Burt Lancaster",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Burt%20Lancaster%20-%20publicity%201947.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q160528",
-    84
-  ],
-  [
-    "Q164782",
-    "Ashton Kutcher",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Ashton%20Kutcher%20-%202023%20-%20P060603-362041%20%28cropped%202%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q164782",
-    84
   ],
   [
     "Q183532",
     "Anne Bancroft",
-    "actors",
+    "actresses",
     "actor",
     "https://commons.wikimedia.org/wiki/Special:FilePath/Anne%20Bancroft%20Chrysler%20Theatre%201964%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
@@ -9393,19 +9293,9 @@
     84
   ],
   [
-    "Q215359",
-    "Dean Martin",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Dean%20Martin%20-%20publicity.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q215359",
-    83
-  ],
-  [
     "Q163263",
     "Eva Longoria",
-    "actors",
+    "actresses",
     "actor",
     "https://commons.wikimedia.org/wiki/Special:FilePath/Eva%20Longoria-1384.jpg",
     "Wikimedia Commons via Wikidata",
@@ -9413,29 +9303,9 @@
     83
   ],
   [
-    "Q211283",
-    "Bob Hoskins",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bob%20hoskins%20filming%20ruby%20blue%20cropped%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q211283",
-    83
-  ],
-  [
-    "Q171905",
-    "Jamie Foxx",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/TIFF%202019%20jamie%20foxx%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q171905",
-    83
-  ],
-  [
     "Q204299",
     "Frances McDormand",
-    "actors",
+    "actresses",
     "actor",
     "https://commons.wikimedia.org/wiki/Special:FilePath/Frances%20McDormand%202015%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
@@ -9443,39 +9313,9 @@
     83
   ],
   [
-    "Q306403",
-    "James Franco",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/James%20Franco%204%2C%202013.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q306403",
-    83
-  ],
-  [
-    "Q2731624",
-    "Conrad Bain",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Conrad%20Bain%20Arthur%20Harmon%20Maude%201975.JPG",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q2731624",
-    83
-  ],
-  [
-    "Q3626966",
-    "Harry Styles",
-    "actors",
-    "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/HarryStylesWembley170623%20%2814%20of%2093%29%20%2852982076132%29%20%28cropped%29.jpg",
-    "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q3626966",
-    83
-  ],
-  [
     "Q13560423",
     "Dove Cameron",
-    "actors",
+    "actresses",
     "actor",
     "https://commons.wikimedia.org/wiki/Special:FilePath/Dove%20Cameron%20in%202026.png",
     "Wikimedia Commons via Wikidata",
@@ -9483,24 +9323,184 @@
     83
   ],
   [
-    "Q103894",
-    "Alec Guinness",
-    "actors",
+    "Q372311",
+    "Glenn Close",
+    "actresses",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Alec%20Guinness%206%20Allan%20Warren.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Glenn%20Close%20TIFF%202025%20%28cropped%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q103894",
+    "http://www.wikidata.org/entity/Q372311",
     82
   ],
   [
-    "Q94081",
-    "Bob Hope",
-    "actors",
+    "Q373895",
+    "Betty White",
+    "actresses",
     "actor",
-    "https://commons.wikimedia.org/wiki/Special:FilePath/Bob%20Hope%201969%20Publicity%20Photo.jpg",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Betty%20White%201988%20Emmy%20Awards%20%28cropped%202%29.jpg",
     "Wikimedia Commons via Wikidata",
-    "http://www.wikidata.org/entity/Q94081",
+    "http://www.wikidata.org/entity/Q373895",
     82
+  ],
+  [
+    "Q76717",
+    "Claudia Schiffer",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Claudia%20Schiffer%2020091006%20Chanel%2005.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q76717",
+    81
+  ],
+  [
+    "Q57118",
+    "Diane Kruger",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/MKr378435%20Diane%20Kruger%20%28Amrum%2C%20Cannes%202025%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q57118",
+    81
+  ],
+  [
+    "Q222818",
+    "Eartha Kitt",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Eartha%20Kitt%202007.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q222818",
+    81
+  ],
+  [
+    "Q106997",
+    "Jamie Lee Curtis",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/2025%20Jamie%20Lee%20Curtis%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q106997",
+    80
+  ],
+  [
+    "Q95089",
+    "Ginger Rogers",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Ginger%20Rogers%20-%20Tender%20Comrade.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q95089",
+    80
+  ],
+  [
+    "Q160392",
+    "Evangeline Lilly",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Evangeline%20Lilly%202014%20Comic%20Con%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q160392",
+    80
+  ],
+  [
+    "Q106099",
+    "Jeanne Moreau",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jeanne%20Moreau%20%282009%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q106099",
+    80
+  ],
+  [
+    "Q234644",
+    "Elizabeth Olsen",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/ElizabethOlsen-TIFF2025-02.png",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q234644",
+    80
+  ],
+  [
+    "Q2315802",
+    "Dakota Johnson",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/59th%20Karlovy%20Vary%20International%20Film%20Festival%2C%20Dakota%20Johnson%2001%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q2315802",
+    80
+  ],
+  [
+    "Q102341",
+    "Farrah Fawcett",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Farrah%20Fawcett%201977.JPG",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q102341",
+    79
+  ],
+  [
+    "Q162959",
+    "Blake Lively",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Guests%20at%20the%202026%20Met%20Gala%20435%20%28Blake%20Lively%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q162959",
+    79
+  ],
+  [
+    "Q170606",
+    "Eva Mendes",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Eva%20Mendes%202009.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q170606",
+    79
+  ],
+  [
+    "Q21738166",
+    "Jenna Ortega",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Jenna%20Ortega-63799%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q21738166",
+    79
+  ],
+  [
+    "Q28933211",
+    "Ana Mena",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Premios%20Goya%202026%20-%20Ana%20Mena%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q28933211",
+    79
+  ],
+  [
+    "Q180004",
+    "Fergie",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Fergie%20Washington%20D.C%202014%20%28cropped%29.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q180004",
+    77
+  ],
+  [
+    "Q230662",
+    "Anita Ekberg",
+    "actresses",
+    "actor",
+    "https://commons.wikimedia.org/wiki/Special:FilePath/Anita%20Ekberg%201956.jpg",
+    "Wikimedia Commons via Wikidata",
+    "http://www.wikidata.org/entity/Q230662",
+    77
   ],
   [
     "",
@@ -10008,73 +10008,71 @@
     "id": "baseball",
     "label": "Baseball",
     "type": "sports",
-    "count": 200,
-    "credit": "Baseball star",
-    "poolSize": 12
+    "profileCount": 200,
+    "credit": "Baseball star"
   },
   "basketball": {
     "id": "basketball",
     "label": "Basketball",
     "type": "sports",
-    "count": 200,
-    "credit": "Basketball star",
-    "poolSize": 12
+    "profileCount": 200,
+    "credit": "Basketball star"
   },
   "soccer": {
     "id": "soccer",
     "label": "Soccer",
     "type": "sports",
-    "count": 100,
-    "credit": "Soccer star",
-    "poolSize": 12
+    "profileCount": 100,
+    "credit": "Soccer star"
   },
   "football": {
     "id": "football",
     "label": "Football",
     "type": "sports",
-    "count": 75,
-    "credit": "Football star",
-    "poolSize": 12
+    "profileCount": 75,
+    "credit": "Football star"
   },
   "hockey": {
     "id": "hockey",
     "label": "Hockey",
     "type": "sports",
-    "count": 75,
-    "credit": "Hockey star",
-    "poolSize": 12
+    "profileCount": 75,
+    "credit": "Hockey star"
   },
   "tennis": {
     "id": "tennis",
     "label": "Tennis",
     "type": "sports",
-    "count": 50,
-    "credit": "Tennis star",
-    "poolSize": 12
+    "profileCount": 50,
+    "credit": "Tennis star"
   },
   "golf-stars": {
     "id": "golf-stars",
     "label": "Golf",
     "type": "sports",
-    "count": 50,
-    "credit": "Golf star",
-    "poolSize": 12
+    "profileCount": 50,
+    "credit": "Golf star"
   },
   "actors": {
     "id": "actors",
     "label": "Actors",
     "type": "actor",
-    "count": 200,
-    "credit": "Screen star",
-    "poolSize": 12
+    "profileCount": 100,
+    "credit": "Actor"
+  },
+  "actresses": {
+    "id": "actresses",
+    "label": "Actresses",
+    "type": "actor",
+    "profileCount": 100,
+    "credit": "Actress"
   },
   "ad-icons": {
     "id": "ad-icons",
-    "label": "Commercial Icons",
+    "label": "Commercial Characters",
     "type": "commercial",
-    "count": 50,
-    "credit": "Advertising icon",
-    "poolSize": 10
+    "profileCount": 50,
+    "credit": "Advertising icon"
   }
 };
   const ROLES = ["heart", "mind", "spark", "wildcard"];
@@ -10083,17 +10081,17 @@
   const normalize = (value) => String(value || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9]+/g, " " ).trim().toLowerCase();
   const slugify = (value) => normalize(value).replace(/\s+/g, "-");
   function hash(value) { let result = 2166136261; for (const character of value) { result ^= character.charCodeAt(0); result = Math.imul(result, 16777619); } return result >>> 0; }
-  function traits(key) { let seed = hash(key) || 0x9e3779b9; return Array.from({ length: 10 }, () => { seed ^= seed << 13; seed ^= seed >>> 17; seed ^= seed << 5; seed >>>= 0; return ROLES[seed % ROLES.length]; }); }
+  function traits(key, profileIndex) { let seed = hash(key) || 0x9e3779b9; return Array.from({ length: 10 }, (_, questionIndex) => { if (questionIndex < 4) return ROLES[Math.floor(profileIndex / (ROLES.length ** questionIndex)) % ROLES.length]; seed ^= seed << 13; seed ^= seed >>> 17; seed ^= seed << 5; seed >>>= 0; return ROLES[seed % ROLES.length]; }); }
   function dominantRole(profileTraits) { const counts = Object.fromEntries(ROLES.map((role) => [role, 0])); profileTraits.forEach((role) => counts[role] += 1); return ROLES.reduce((best, role) => counts[role] > counts[best] ? role : best, ROLES[0]); }
   function profileKey(category, name) { return "profile-" + category + "-" + slugify(name); }
   function escapeXml(value) { return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
-  function makeCover(title, category) { const color = category === "actors" ? "#7b41e8" : category === "ad-icons" ? "#ff5f8f" : "#0a7cff"; const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900"><rect width="600" height="900" rx="28" fill="#10111a"/><circle cx="420" cy="160" r="300" fill="${color}"/><text x="48" y="380" fill="white" font-family="Arial,sans-serif" font-size="48" font-weight="800">${escapeXml(title.slice(0, 24))}</text><text x="48" y="740" fill="white" font-family="Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="3">CHARACTER CHECK</text></svg>`; return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg); }
+  function makeCover(title, category) { const color = category === "actors" ? "#7b41e8" : category === "actresses" ? "#e84d9b" : category === "ad-icons" ? "#ff5f8f" : "#0a7cff"; const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900"><rect width="600" height="900" rx="28" fill="#10111a"/><circle cx="420" cy="160" r="300" fill="${color}"/><text x="48" y="380" fill="white" font-family="Arial,sans-serif" font-size="48" font-weight="800">${escapeXml(title.slice(0, 24))}</text><text x="48" y="740" fill="white" font-family="Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="3">CHARACTER CHECK</text></svg>`; return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg); }
   if (!window.MEDIA || !window.OUTCOMES || !Array.isArray(window.FALLBACK_QUESTIONS)) throw new Error("Earlier Character Check data must load before the people catalog.");
-  const profiles = {}; const grouped = {};
-  for (const [qid, name, category, type, image, sourceName, sourceUrl, sitelinks] of ENTRIES) { const key = profileKey(category, name); const profileTraits = traits(key); const dominant = dominantRole(profileTraits); const meta = CATEGORIES[category]; profiles[key] = Object.freeze({ key, character: name, actor: "", credit: meta.credit, label: meta.label + " match", why: "Your ten answers match " + name + ": " + ROLE_COPY[dominant].charAt(0).toLowerCase() + ROLE_COPY[dominant].slice(1), image, sourceName, sourceUrl, traits: profileTraits, category, type, qid, sitelinks }); (grouped[category] ||= []).push(key); }
+  const profiles = {}; const grouped = {}; const categoryIndexes = {};
+  for (const [qid, name, category, type, image, sourceName, sourceUrl, sitelinks] of ENTRIES) { const key = profileKey(category, name); const profileIndex = categoryIndexes[category] || 0; categoryIndexes[category] = profileIndex + 1; const profileTraits = traits(key, profileIndex); const dominant = dominantRole(profileTraits); const meta = CATEGORIES[category]; profiles[key] = Object.freeze({ key, character: name, actor: "", credit: meta.credit, label: meta.label + " match", why: "Your ten answers match " + name + ": " + ROLE_COPY[dominant].charAt(0).toLowerCase() + ROLE_COPY[dominant].slice(1), image, sourceName, sourceUrl, traits: profileTraits, category, type, qid, sitelinks }); (grouped[category] ||= []).push(key); }
   window.CHARACTER_CHECK_PROFILES = Object.freeze({ ...(window.CHARACTER_CHECK_PROFILES || {}), ...profiles });
   const existingIds = new Set(Object.keys(window.MEDIA)); let added = 0;
-  for (const [category, keys] of Object.entries(grouped)) { const meta = CATEGORIES[category]; if (keys.length !== meta.count) throw new Error(category + " needs " + meta.count + " profiles"); keys.forEach((anchorKey, index) => { const anchor = profiles[anchorKey]; const pool = Array.from({ length: meta.poolSize }, (_, offset) => keys[(index + offset) % keys.length]); const id = "match-" + category + "-" + slugify(anchor.character); if (existingIds.has(id)) throw new Error("People catalog repeats an id: " + id); const fallback = makeCover(anchor.character, category); window.MEDIA[id] = { type: meta.type, officialTitle: meta.label + " Match: " + anchor.character, genres: meta.type === "sports" ? ["Sports", meta.label] : [meta.label, "Personality"], poster: anchor.image, hero: anchor.image, artworkFallback: fallback, sourceName: anchor.sourceName, sourceUrl: anchor.sourceUrl, collection: category, collectionLabel: meta.label, catalogGenerated: true, catalogGeneration: 5, wikidataId: anchor.qid || undefined, sitelinks: anchor.sitelinks, outcomePool: pool, questionImages: Array.from({ length: 10 }, (_, questionIndex) => { const profile = profiles[pool[questionIndex % pool.length]]; return { url: profile.image, alt: profile.character + " photo for " + meta.label + " question " + (questionIndex + 1), sourceName: profile.sourceName, sourceUrl: profile.sourceUrl }; }) }; window.OUTCOMES[id] = Object.fromEntries(Object.entries(ROLE_BLUEPRINTS).map(([role, outcome]) => [role, { ...outcome, why: "In this " + meta.label + " matchup, " + outcome.why.charAt(0).toLowerCase() + outcome.why.slice(1) }])); added += 1; }); }
-  if (ENTRIES.length !== 1000 || added !== 1000) throw new Error("People catalog must add exactly 1,000 photo-backed quizzes.");
-  const collections = Object.values(CATEGORIES).map(({ id, label, count }) => Object.freeze({ id, label, count })); window.CHARACTER_CHECK_COLLECTIONS = Object.freeze([...(window.CHARACTER_CHECK_COLLECTIONS || []), ...collections]);
+  for (const [category, keys] of Object.entries(grouped)) { const meta = CATEGORIES[category]; if (keys.length !== meta.profileCount) throw new Error(category + " needs " + meta.profileCount + " profiles"); const anchor = profiles[keys[0]]; const id = "match-" + category; if (existingIds.has(id)) throw new Error("People catalog repeats an id: " + id); const fallback = makeCover(meta.label, category); window.MEDIA[id] = { type: meta.type, officialTitle: meta.label + " Match", genres: meta.type === "sports" ? ["Sports", meta.label] : [meta.label, "Personality"], poster: anchor.image, hero: anchor.image, artworkFallback: fallback, sourceName: anchor.sourceName, sourceUrl: anchor.sourceUrl, collection: category, collectionLabel: meta.label, catalogGenerated: true, catalogGeneration: 5, wikidataId: anchor.qid || undefined, sitelinks: anchor.sitelinks, outcomePool: [...keys], questionImages: Array.from({ length: 10 }, (_, questionIndex) => { const profile = profiles[keys[Math.floor((questionIndex * keys.length) / 10)]]; return { url: profile.image, alt: profile.character + " photo for " + meta.label + " question " + (questionIndex + 1), sourceName: profile.sourceName, sourceUrl: profile.sourceUrl }; }) }; window.OUTCOMES[id] = Object.fromEntries(Object.entries(ROLE_BLUEPRINTS).map(([role, outcome]) => [role, { ...outcome, why: "In this " + meta.label + " matchup, " + outcome.why.charAt(0).toLowerCase() + outcome.why.slice(1) }])); added += 1; }
+  if (ENTRIES.length !== 1000 || added !== Object.keys(CATEGORIES).length) throw new Error("People catalog must add one quiz per photo-backed category.");
+  const collections = Object.values(CATEGORIES).map(({ id, label }) => Object.freeze({ id, label, count: 1 })); window.CHARACTER_CHECK_COLLECTIONS = Object.freeze([...(window.CHARACTER_CHECK_COLLECTIONS || []), ...collections]);
 })();
