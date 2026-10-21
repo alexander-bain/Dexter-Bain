@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#10111a" />
+    <meta
+      name="description"
+      content="The photo, catalog, artwork, ranking, and question-writing sources behind Character Check."
+    />
+    <link rel="canonical" href="https://dexterbain.com/charactercheck/about.html" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=League+Spartan:wght@600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css?v=catalog-10000-20261020-1" />
+    <title>About + Sources — Character Check</title>
+  </head>
+  <body class="about-body">
+    <a class="skip-link" href="#about-content">Skip to sources</a>
+
+    <header class="site-header">
+      <a class="brand brand-link" href="./" aria-label="Character Check home">
+        <span class="brand-mark" aria-hidden="true"><i>?</i><b>!</b></span>
+        <span>
+          <strong>CHARACTER</strong>
+          <small>CHECK</small>
+        </span>
+      </a>
+      <a class="header-about" href="./">Back to quizzes</a>
+    </header>
+
+    <main class="about-main" id="about-content">
+      <section class="about-hero">
+        <p class="eyebrow"><span>OPEN BOOK</span> How Character Check is made</p>
+        <h1>About the <em>sources.</em></h1>
+        <p>
+          Character Check is a fan-made personality game with 10,000 quizzes. This page
+          explains where title information and images come from, how the collections are
+          ranked, and how the questions are written.
+        </p>
+      </section>
+
+      <section class="about-grid" aria-label="Character Check source information">
+        <article class="about-card" id="photos">
+          <span class="about-number">01</span>
+          <h2>Photos and title data</h2>
+          <p>
+            Show listings, cast information, episode images, and links use the
+            <a href="https://www.tvmaze.com/api" target="_blank" rel="noreferrer">TVmaze API</a>.
+            TVmaze describes its API data license on its
+            <a href="https://www.tvmaze.com/faq/40/api-licensing" target="_blank" rel="noreferrer">licensing page</a>.
+          </p>
+          <p>
+            Film research and linked imagery use
+            <a href="https://www.wikipedia.org/" target="_blank" rel="noreferrer">Wikipedia</a>,
+            <a href="https://commons.wikimedia.org/" target="_blank" rel="noreferrer">Wikimedia Commons</a>,
+            and source links to <a href="https://www.imdb.com/" target="_blank" rel="noreferrer">IMDb</a>.
+            Image rights stay with their respective owners. Every quiz image includes a
+            visible source link beside it.
+          </p>
+        </article>
+
+        <article class="about-card" id="catalog">
+          <span class="about-number">02</span>
+          <h2>The 10,000-title catalog</h2>
+          <p>
+            The large catalog collections are assembled from
+            <a href="https://www.wikidata.org/" target="_blank" rel="noreferrer">Wikidata</a>
+            using the
+            <a href="https://query.wikidata.org/" target="_blank" rel="noreferrer">Wikidata Query Service</a>.
+            Titles are deduplicated before publishing.
+          </p>
+          <p>
+            “Most famous” is measured by the number of Wikipedia-language sites linking to
+            a Wikidata title, after titles already present in Character Check are removed.
+            That makes the documentary list reproducible, but it is a popularity proxy—not
+            an official all-time ranking.
+          </p>
+        </article>
+
+        <article class="about-card" id="questions">
+          <span class="about-number">03</span>
+          <h2>Where the question ideas come from</h2>
+          <p>
+            The question wording and answer choices are original Character Check writing.
+            The first 156 quizzes have hand-authored prompts based on their recognizable
+            settings and premises. Every other title receives ten deterministic,
+            title-specific scenarios shaped by its format, collection, and public genre
+            metadata from TVmaze, Wikidata, and Wikipedia.
+          </p>
+          <p>
+            Questions are not copied from scripts, reviews, personality tests, or fan sites.
+            A full-catalog test checks that all ten prompts are present, distinct within each
+            quiz, and identifiable to that title.
+          </p>
+        </article>
+
+        <article class="about-card" id="artwork">
+          <span class="about-number">04</span>
+          <h2>Original collection artwork</h2>
+          <p>
+            When a reliable promotional image is not part of the local catalog, Character
+            Check draws a title card in the browser from the title and collection colors.
+            Those generated cards are original site artwork, not third-party photos.
+          </p>
+          <p>
+            The new collections contain exactly 1,000 kids' shows, 1,000 documentaries,
+            1,000 game shows, 1,000 reality shows, and 1,000 short films or other formats.
+          </p>
+        </article>
+
+        <article class="about-card about-card-wide" id="requested-titles">
+          <span class="about-number">05</span>
+          <h2>Requested titles checked directly</h2>
+          <p>
+            The documentary collection includes
+            <a href="https://www.wikidata.org/wiki/Q141336617" target="_blank" rel="noreferrer">You Can See Everything</a>.
+            The reality collection includes
+            <a href="https://www.wikidata.org/wiki/Q10935299" target="_blank" rel="noreferrer">Nathan for You</a>
+            and
+            <a href="https://www.wikidata.org/wiki/Q112915576" target="_blank" rel="noreferrer">The Rehearsal</a>.
+          </p>
+        </article>
+      </section>
+
+      <a class="primary-button about-return" href="./">Explore all 10,000 quizzes <span aria-hidden="true">→</span></a>
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <strong>CHARACTER CHECK</strong>
+        <p>A fan-made personality game. Not affiliated with or endorsed by any featured title.</p>
+      </div>
+      <p>Source details last reviewed October 20, 2026.</p>
+    </footer>
+  </body>
+</html>

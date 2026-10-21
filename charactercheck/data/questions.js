@@ -1,5 +1,6 @@
 // These questions are an emergency-only fallback for a partial or stale data
-// load. Every normal quiz reads its own ten questions from MEDIA[id].questions.
+// load. Normal quizzes use either the hand-authored TITLE_QUESTIONS set or the
+// deterministic title-specific generator in distinct-questions.js.
 const FALLBACK_QUESTIONS = [
   {
     prompt: "A friend has a rough day. What do you do first?",

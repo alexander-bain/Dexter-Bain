@@ -11,10 +11,15 @@
   const TYPE_META = {
     show: { label: "Show", plural: "shows" },
     movie: { label: "Movie", plural: "movies" },
+    kids: { label: "Kids", plural: "kids' shows" },
+    documentary: { label: "Documentary", plural: "documentaries" },
+    "game-show": { label: "Game Show", plural: "game shows" },
+    reality: { label: "Reality", plural: "reality shows" },
+    other: { label: "Other", plural: "short films and other formats" },
   };
   const BASE_MIN_TITLE_COUNT = 56;
   const BASE_FINAL_TITLE_COUNT = 156;
-  const EXPANDED_TITLE_COUNT = 4844;
+  const EXPANDED_TITLE_COUNT = 9844;
   const MIN_TITLE_COUNT = BASE_MIN_TITLE_COUNT + EXPANDED_TITLE_COUNT;
   const FINAL_TITLE_COUNT = BASE_FINAL_TITLE_COUNT + EXPANDED_TITLE_COUNT;
   const QUESTIONS_PER_TITLE = 10;
@@ -340,10 +345,15 @@
     const totalLabel = total.toLocaleString();
     const shows = state.titles.filter((title) => title.type === "show").length;
     const movies = state.titles.filter((title) => title.type === "movie").length;
+    const kids = state.titles.filter((title) => title.type === "kids").length;
+    const documentaries = state.titles.filter((title) => title.type === "documentary").length;
+    const gameShows = state.titles.filter((title) => title.type === "game-show").length;
+    const realityShows = state.titles.filter((title) => title.type === "reality").length;
+    const otherFormats = state.titles.filter((title) => title.type === "other").length;
     refs.headerCount.textContent = `${totalLabel} ${total === 1 ? "title" : "titles"} ready`;
     refs.titleTotal.textContent = totalLabel;
-    refs.titleKinds.textContent = "shows + movies";
-    refs.heroLede.textContent = "Pick a show or movie, answer ten quick questions, and meet your closest character match.";
+    refs.titleKinds.textContent = "stories + screen formats";
+    refs.heroLede.textContent = "Pick a show, film, documentary, game show, reality series, or short, answer ten title-specific questions, and meet your match.";
     refs.heroCollage.setAttribute(
       "aria-label",
       "Featured Character Check quizzes",
@@ -351,7 +361,7 @@
     refs.showSearch.placeholder = `Search ${totalLabel} quizzes…`;
     refs.typeFilterGroup.hidden = false;
 
-    const description = `${totalLabel} quizzes: ${shows.toLocaleString()} shows and ${movies.toLocaleString()} movies. Ten quick questions each.`;
+    const description = `${totalLabel} quizzes: ${shows.toLocaleString()} shows, ${movies.toLocaleString()} movies, ${kids.toLocaleString()} kids' shows, ${documentaries.toLocaleString()} documentaries, ${gameShows.toLocaleString()} game shows, ${realityShows.toLocaleString()} reality shows, and ${otherFormats.toLocaleString()} short films and other formats. Ten title-specific questions each.`;
     document
       .querySelectorAll(
         'meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]',
@@ -393,6 +403,10 @@
   function startQuiz(id, { push = true } = {}) {
     const title = getTitle(id);
     if (!title) return showHome({ push });
+    if (!Array.isArray(title.questions)) {
+      title.questions = resolveTitleQuestions(title, id);
+      validateTitleQuestions(title.questions, id);
+    }
     clearAdvanceTimer();
     clearFocusTimer();
     state.titleId = id;
@@ -618,7 +632,9 @@
     wireFallback(refs.resultPhoto, title);
     refs.resultShowName.textContent = `${typeLabel(title.type).toUpperCase()} · ${title.title}`;
     refs.resultCharacter.textContent = outcome.character;
-    refs.resultActor.textContent = outcome.actor ? `Played by ${outcome.actor}` : outcome.credit || title.title;
+    refs.resultActor.textContent = ["show", "movie"].includes(title.type) && outcome.actor
+      ? `Played by ${outcome.actor}`
+      : outcome.actor || outcome.credit || title.title;
     refs.resultLabel.textContent = outcome.label;
     refs.resultWhy.textContent = outcome.why;
     renderMix(counts, tieResolved);
@@ -742,6 +758,21 @@
     if (Array.isArray(media.questions)) return compactQuestions(media.questions, id);
 
     if (
+      typeof window.CHARACTER_CHECK_DISTINCT_QUESTIONS === "function" &&
+      Array.isArray(media.questionImages) &&
+      media.questionImages.length === QUESTIONS_PER_TITLE
+    ) {
+      const generatedQuestions = window.CHARACTER_CHECK_DISTINCT_QUESTIONS(media, id);
+      if (Array.isArray(generatedQuestions) && generatedQuestions.length === QUESTIONS_PER_TITLE) {
+        return generatedQuestions.map((question, index) => ({
+          ...question,
+          options: question.options.map((option) => ({ ...option })),
+          image: { ...media.questionImages[index] },
+        }));
+      }
+    }
+
+    if (
       media.catalogGenerated === true &&
       Array.isArray(window.FALLBACK_QUESTIONS) &&
       Array.isArray(media.questionImages) &&
@@ -853,8 +884,17 @@
         if (!isNonemptyString(sourceName) || !isNonemptyString(sourceUrl)) {
           throw new Error(`${id} must include its image source`);
         }
-        const questions = resolveTitleQuestions(media, id);
-        validateTitleQuestions(questions, id);
+        let questions = null;
+        if (Array.isArray(media.questions)) {
+          questions = resolveTitleQuestions(media, id);
+          validateTitleQuestions(questions, id);
+        } else if (
+          typeof window.CHARACTER_CHECK_DISTINCT_QUESTIONS !== "function" ||
+          !Array.isArray(media.questionImages) ||
+          media.questionImages.length !== QUESTIONS_PER_TITLE
+        ) {
+          throw new Error(`${id} cannot build its title-specific questions`);
+        }
         validateOutcomes(outcomes, id);
         if (Array.isArray(media.outcomePool)) {
           if (media.outcomePool.length <= ROLE_ORDER.length) {
