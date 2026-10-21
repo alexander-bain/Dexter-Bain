@@ -69,6 +69,14 @@
     libraryTitle: document.querySelector("#library-title"),
     emptySearch: document.querySelector("#empty-search"),
     filterChips: [...document.querySelectorAll(".filter-chip")],
+    accountButton: document.querySelector("#account-button"),
+    accountPanel: document.querySelector("#account-panel"),
+    accountTitle: document.querySelector("#account-title"),
+    accountStatus: document.querySelector("#account-status"),
+    accountTestCount: document.querySelector("#account-test-count"),
+    accountAverage: document.querySelector("#account-average"),
+    accountHistory: document.querySelector("#account-history"),
+    accountHistoryList: document.querySelector("#account-history-list"),
     quizExitButton: document.querySelector("#quiz-exit-button"),
     quizRestartButton: document.querySelector("#quiz-restart-button"),
     quizShowName: document.querySelector("#quiz-show-name"),
@@ -85,6 +93,7 @@
     resultBackdrop: document.querySelector("#result-backdrop"),
     resultPhoto: document.querySelector("#result-photo"),
     resultShowName: document.querySelector("#result-show-name"),
+    resultKicker: document.querySelector("#result-kicker"),
     resultCharacter: document.querySelector("#result-character"),
     resultActor: document.querySelector("#result-actor"),
     resultLabel: document.querySelector("#result-label"),
@@ -92,9 +101,15 @@
     personalityMix: document.querySelector("#personality-mix"),
     mixNote: document.querySelector("#mix-note"),
     mixBars: document.querySelector("#mix-bars"),
+    saveResultButton: document.querySelector("#save-result-button"),
     shareResultButton: document.querySelector("#share-result-button"),
     retakeButton: document.querySelector("#retake-button"),
     anotherShowButton: document.querySelector("#another-show-button"),
+    predictionDialog: document.querySelector("#prediction-dialog"),
+    predictionCopy: document.querySelector("#prediction-copy"),
+    predictionCloseButton: document.querySelector("#prediction-close-button"),
+    predictionGuessButton: document.querySelector("#prediction-guess-button"),
+    predictionStartButton: document.querySelector("#prediction-start-button"),
     toast: document.querySelector("#toast"),
     liveRegion: document.querySelector("#live-region"),
   };
@@ -111,6 +126,11 @@
     collectionFilter: "all",
     catalogLimit: CATALOG_PAGE_SIZE,
     resultRole: null,
+    resultCounts: null,
+    resultIsPrediction: false,
+    resultSavedThisView: false,
+    account: null,
+    pendingTitleId: null,
     toastTimer: null,
     advanceTimer: null,
     focusTimer: null,
@@ -211,6 +231,140 @@
     refs.toast.textContent = message;
     refs.toast.classList.add("visible");
     state.toastTimer = window.setTimeout(() => refs.toast.classList.remove("visible"), 2600);
+  }
+
+  function accountAverage() {
+    return window.CharacterCheckAccount.average(state.account);
+  }
+
+  function renderAccount() {
+    const profile = accountAverage();
+    refs.accountTestCount.textContent = String(profile.testCount);
+    if (profile.testCount === 0) {
+      refs.accountStatus.textContent = "Finish a quiz, then add the result here to build your personality profile.";
+    } else if (profile.testCount < 5) {
+      const remaining = 5 - profile.testCount;
+      refs.accountStatus.textContent = `Saved on this device. Add ${remaining} more ${remaining === 1 ? "result" : "results"} to unlock predictions.`;
+    } else {
+      refs.accountStatus.textContent = "Prediction unlocked. Pick any title and I can guess your match before the quiz.";
+    }
+
+    const averageFragment = document.createDocumentFragment();
+    for (const role of ROLE_ORDER) {
+      const percent = Math.round(profile.percentages[role]);
+      const row = document.createElement("div");
+      row.className = "account-average-row";
+      row.innerHTML = `<span></span><span class="account-average-track"><i></i></span><b>${percent}%</b>`;
+      row.firstElementChild.textContent = ROLE_META[role].label;
+      const fill = row.querySelector("i");
+      fill.style.setProperty("--account-width", `${percent}%`);
+      fill.style.setProperty("--account-color", ROLE_META[role].color);
+      averageFragment.append(row);
+    }
+    refs.accountAverage.replaceChildren(averageFragment);
+
+    const savedResults = [...state.account.results]
+      .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
+    refs.accountHistory.hidden = savedResults.length === 0;
+    const historyFragment = document.createDocumentFragment();
+    savedResults.forEach((result) => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.className = "account-history-item";
+      item.innerHTML = "<span></span><strong></strong><small>View quiz →</small>";
+      item.querySelector("span").textContent = result.title;
+      item.querySelector("strong").textContent = result.character;
+      item.addEventListener("click", () => startQuiz(result.titleId));
+      historyFragment.append(item);
+    });
+    refs.accountHistoryList.replaceChildren(historyFragment);
+  }
+
+  function scrollToAccount() {
+    showHome({ push: true });
+    refs.accountPanel.scrollIntoView({ behavior: prefersReducedMotion.matches ? "auto" : "smooth" });
+    state.focusTimer = window.setTimeout(() => {
+      state.focusTimer = null;
+      refs.accountTitle.focus({ preventScroll: true });
+    }, prefersReducedMotion.matches ? 0 : 420);
+  }
+
+  function resultAlreadySaved() {
+    return state.account.results.some((result) => result.titleId === state.titleId);
+  }
+
+  function updateSaveResultButton() {
+    const canSave = !state.resultIsPrediction && state.resultCounts && state.answers.length === QUESTIONS_PER_TITLE;
+    refs.saveResultButton.hidden = !canSave;
+    if (!canSave) return;
+    refs.saveResultButton.disabled = state.resultSavedThisView;
+    refs.saveResultButton.textContent = state.resultSavedThisView
+      ? "Saved to my account ✓"
+      : resultAlreadySaved()
+        ? "Update my account"
+        : "Add to my account";
+  }
+
+  function saveCurrentResult() {
+    const title = getTitle();
+    const outcome = getOutcome(title, state.resultRole);
+    if (!title || !outcome || !state.resultCounts || state.resultIsPrediction) return;
+    const next = window.CharacterCheckAccount.upsert(state.account, {
+      titleId: title.id,
+      title: title.title,
+      type: title.type,
+      outcomeKey: state.resultRole,
+      character: outcome.character,
+      counts: state.resultCounts,
+    });
+    if (!window.CharacterCheckAccount.persist(next)) {
+      showToast("This browser could not save the result.");
+      return;
+    }
+    state.account = next;
+    state.resultSavedThisView = true;
+    renderAccount();
+    updateSaveResultButton();
+    const testCount = state.account.results.length;
+    showToast(testCount === 5 ? "Saved — predictions are now unlocked!" : "Result added to My account");
+    announce(`${outcome.character} from ${title.title} was added to your account.`);
+  }
+
+  function closePredictionDialog() {
+    state.pendingTitleId = null;
+    if (refs.predictionDialog.open) refs.predictionDialog.close();
+  }
+
+  function offerPrediction(title) {
+    state.pendingTitleId = title.id;
+    refs.predictionCopy.textContent = `Your ${state.account.results.length}-test average can predict your ${title.title} match before you answer.`;
+    refs.predictionDialog.showModal();
+  }
+
+  function startPendingQuiz() {
+    const id = state.pendingTitleId;
+    closePredictionDialog();
+    if (id) startQuiz(id, { skipPrediction: true });
+  }
+
+  function showPredictedResult() {
+    const id = state.pendingTitleId;
+    const title = getTitle(id);
+    if (!title) return closePredictionDialog();
+    const outcomeKey = window.CharacterCheckAccount.predictOutcome(
+      title,
+      window.CHARACTER_CHECK_PROFILES,
+      state.account,
+    );
+    if (!outcomeKey) return startPendingQuiz();
+    const profile = accountAverage();
+    const displayCounts = Object.fromEntries(
+      ROLE_ORDER.map((role) => [role, profile.percentages[role] / 10]),
+    );
+    closePredictionDialog();
+    state.titleId = id;
+    state.answers = [];
+    renderResult(outcomeKey, displayCounts, { push: true, prediction: true });
   }
 
   function makeImage(src, alt, className = "") {
@@ -401,6 +555,9 @@
     state.questionIndex = 0;
     state.answers = [];
     state.resultRole = null;
+    state.resultCounts = null;
+    state.resultIsPrediction = false;
+    state.resultSavedThisView = false;
     setView("home");
     document.title = "Character Check — Which Character Are You?";
     if (push) setUrl({}, true);
@@ -425,9 +582,13 @@
     if (title) startQuiz(title.id);
   }
 
-  function startQuiz(id, { push = true } = {}) {
+  function startQuiz(id, { push = true, skipPrediction = false } = {}) {
     const title = getTitle(id);
     if (!title) return showHome({ push });
+    if (!skipPrediction && state.account.results.length >= 5) {
+      offerPrediction(title);
+      return;
+    }
     if (!Array.isArray(title.questions)) {
       title.questions = resolveTitleQuestions(title, id);
       validateTitleQuestions(title.questions, id);
@@ -439,6 +600,9 @@
     state.answers = [];
     state.answerLocked = false;
     state.resultRole = null;
+    state.resultCounts = null;
+    state.resultIsPrediction = false;
+    state.resultSavedThisView = false;
     setView("quiz");
     if (push) setUrl({ show: id }, true);
     document.title = `${title.title} Character Quiz — Character Check`;
@@ -450,7 +614,7 @@
   function restartQuiz() {
     const id = state.titleId;
     if (!id) return;
-    startQuiz(id, { push: false });
+    startQuiz(id, { push: false, skipPrediction: true });
     setUrl({ show: id }, false);
     showToast("Quiz restarted");
   }
@@ -635,17 +799,22 @@
     refs.mixBars.replaceChildren(fragment);
   }
 
-  function renderResult(role, counts = null, { push = true, tieResolved = false } = {}) {
+  function renderResult(role, counts = null, { push = true, tieResolved = false, prediction = false } = {}) {
     const title = getTitle();
     const outcome = getOutcome(title, role);
     if (!title || !outcome) return showHome({ push });
     clearAdvanceTimer();
     clearFocusTimer();
     state.resultRole = role;
+    state.resultCounts = prediction || !counts ? null : { ...counts };
+    state.resultIsPrediction = prediction;
+    state.resultSavedThisView = false;
     state.answerLocked = false;
     setView("result");
-    if (push) setUrl({ show: title.id, result: role }, true);
-    document.title = `You are ${outcome.character} — ${title.title} Character Quiz`;
+    if (push) setUrl(prediction ? { show: title.id, prediction: role } : { show: title.id, result: role }, true);
+    document.title = prediction
+      ? `Prediction: ${outcome.character} — ${title.title} Character Quiz`
+      : `You are ${outcome.character} — ${title.title} Character Quiz`;
 
     const resultImage = outcome.image || title.hero || title.poster;
     refs.resultBackdrop.style.backgroundImage = `url(${JSON.stringify(resultImage)})`;
@@ -656,15 +825,26 @@
       : `${title.title} promotional artwork`;
     wireFallback(refs.resultPhoto, title);
     refs.resultShowName.textContent = `${typeLabel(title.type).toUpperCase()} · ${title.title}`;
+    refs.resultKicker.textContent = prediction ? "Your account prediction is" : "Your character match is";
     refs.resultCharacter.textContent = outcome.character;
     refs.resultActor.textContent = ["show", "movie"].includes(title.type) && outcome.actor
       ? `Played by ${outcome.actor}`
       : outcome.actor || outcome.credit || title.title;
     refs.resultLabel.textContent = outcome.label;
-    refs.resultWhy.textContent = outcome.why;
+    refs.resultWhy.textContent = prediction
+      ? `This is a prediction based on your saved quiz averages. ${outcome.why}`
+      : outcome.why;
+    refs.shareResultButton.hidden = prediction;
+    refs.retakeButton.textContent = prediction ? "Take the real quiz" : "Retake quiz";
     renderMix(counts, tieResolved);
+    if (prediction) refs.mixNote.textContent = `average of ${state.account.results.length} saved tests`;
+    updateSaveResultButton();
     scrollToTop();
-    announce(`Your ${title.title} character match is ${outcome.character}. ${outcome.why}`);
+    announce(
+      prediction
+        ? `Your predicted ${title.title} match is ${outcome.character}.`
+        : `Your ${title.title} character match is ${outcome.character}. ${outcome.why}`,
+    );
     state.focusTimer = window.setTimeout(
       () => {
         state.focusTimer = null;
@@ -724,26 +904,47 @@
     const params = new URLSearchParams(window.location.search);
     const titleId = params.get("show");
     const resultRole = params.get("result");
+    const predictionRole = params.get("prediction");
     if (!titleId || !getTitle(titleId)) return showHome({ push: false });
     state.titleId = titleId;
+    if (
+      predictionRole &&
+      state.account.results.length >= 5 &&
+      getOutcome(getTitle(titleId), predictionRole)
+    ) {
+      const profile = accountAverage();
+      const displayCounts = Object.fromEntries(
+        ROLE_ORDER.map((role) => [role, profile.percentages[role] / 10]),
+      );
+      renderResult(predictionRole, displayCounts, { push: false, prediction: true });
+      return;
+    }
     if (resultRole && getOutcome(getTitle(titleId), resultRole)) {
       renderResult(resultRole, null, { push: false });
       return;
     }
-    startQuiz(titleId, { push: false });
+    startQuiz(titleId, { push: false, skipPrediction: true });
   }
 
   function bindEvents() {
     refs.homeButton.addEventListener("click", () => showHome());
+    refs.accountButton.addEventListener("click", scrollToAccount);
     refs.browseButton.addEventListener("click", () => showHome({ push: false, focusLibrary: true }));
     refs.surpriseButton.addEventListener("click", chooseRandomTitle);
     refs.emptySurpriseButton.addEventListener("click", chooseRandomTitle);
     refs.quizExitButton.addEventListener("click", () => showHome());
     refs.quizRestartButton.addEventListener("click", restartQuiz);
     refs.previousQuestionButton.addEventListener("click", previousQuestion);
+    refs.saveResultButton.addEventListener("click", saveCurrentResult);
     refs.shareResultButton.addEventListener("click", shareResult);
     refs.retakeButton.addEventListener("click", restartQuiz);
     refs.anotherShowButton.addEventListener("click", () => showHome());
+    refs.predictionCloseButton.addEventListener("click", closePredictionDialog);
+    refs.predictionGuessButton.addEventListener("click", showPredictedResult);
+    refs.predictionStartButton.addEventListener("click", startPendingQuiz);
+    refs.predictionDialog.addEventListener("cancel", () => {
+      state.pendingTitleId = null;
+    });
     refs.showSearch.addEventListener("input", (event) => {
       state.search = event.currentTarget.value;
       state.catalogLimit = CATALOG_PAGE_SIZE;
@@ -880,7 +1081,8 @@
         !window.MEDIA ||
         !window.OUTCOMES ||
         !window.TITLE_QUESTIONS ||
-        !Array.isArray(window.FALLBACK_QUESTIONS)
+        !Array.isArray(window.FALLBACK_QUESTIONS) ||
+        !window.CharacterCheckAccount
       ) {
         throw new Error("Quiz data is unavailable");
       }
@@ -960,9 +1162,11 @@
       if (state.titles.length !== PUBLISHED_TITLE_COUNT) {
         throw new Error(`Expected exactly ${PUBLISHED_TITLE_COUNT} titles`);
       }
+      state.account = window.CharacterCheckAccount.load();
       updateCatalogCopy();
       renderHeroCollage();
       renderCatalog();
+      renderAccount();
       bindEvents();
       routeFromUrl();
     } catch (error) {

@@ -21,6 +21,7 @@ for (const filename of [
   "expanded-catalog-4.js",
   "expanded-catalog-5.js",
   "expanded-enrichment.js",
+  "artwork-enrichment.js",
   "verified-catalog.js",
   "distinct-questions.js",
 ]) {
@@ -106,8 +107,17 @@ assert.equal(new Set(publishedIds).size, publishedIds.length, "Published title i
 assert.equal(context.CHARACTER_CHECK_QUALITY.candidates, 10000);
 assert.equal(context.CHARACTER_CHECK_QUALITY.published, publishedIds.length);
 assert.equal(context.CHARACTER_CHECK_QUALITY.hidden, 0);
-assert.ok(context.CHARACTER_CHECK_QUALITY.sourcedImages >= 4200);
+assert.equal(context.CHARACTER_CHECK_QUALITY.sourcedImages, 10000);
 assert.ok(context.CHARACTER_CHECK_QUALITY.namedOutcomes >= 3600);
+assert.equal(context.CHARACTER_CHECK_ARTWORK.sourced, 5723);
+for (const [id, media] of titles) {
+  assert.match(media.poster, /^https?:\/\//, `${id} must use real remote artwork`);
+  assert.match(media.artworkFallback, /^https?:\/\//, `${id} needs a real remote fallback image`);
+  assert.ok(
+    media.questionImages.every((image) => /^https?:\/\//.test(image.url) && /^https?:\/\//.test(image.sourceUrl)),
+    `${id} question images must be sourced and linked`,
+  );
+}
 for (const requiredId of ["you-can-see-everything", "nathan-for-you", "the-rehearsal"]) {
   assert.ok(publishedIds.includes(requiredId), `${requiredId} should pass the public quality gate`);
 }
@@ -149,9 +159,11 @@ const thirdCatalogPosition = html.indexOf("data/expanded-catalog-3.js");
 const fourthCatalogPosition = html.indexOf("data/expanded-catalog-4.js");
 const fifthCatalogPosition = html.indexOf("data/expanded-catalog-5.js");
 const enrichmentPosition = html.indexOf("data/expanded-enrichment.js");
+const artworkPosition = html.indexOf("data/artwork-enrichment.js");
 const verifiedCatalogPosition = html.indexOf("data/verified-catalog.js");
 const distinctQuestionPosition = html.indexOf("data/distinct-questions.js");
-const appPosition = html.indexOf("app.js?v=restored-20261020-1");
+const accountPosition = html.indexOf("account.js?v=account-20261020-1");
+const appPosition = html.indexOf("app.js?v=account-artwork-20261020-1");
 assert.ok(
   catalogPosition > 0 &&
     secondCatalogPosition > catalogPosition &&
@@ -159,9 +171,57 @@ assert.ok(
     fourthCatalogPosition > thirdCatalogPosition &&
     fifthCatalogPosition > fourthCatalogPosition &&
     enrichmentPosition > fifthCatalogPosition &&
-    verifiedCatalogPosition > enrichmentPosition &&
+    artworkPosition > enrichmentPosition &&
+    verifiedCatalogPosition > artworkPosition &&
     distinctQuestionPosition > verifiedCatalogPosition &&
-    appPosition > distinctQuestionPosition,
+    accountPosition > distinctQuestionPosition &&
+    appPosition > accountPosition,
+);
+
+vm.runInContext(
+  await fs.readFile(path.join(root, "charactercheck", "account.js"), "utf8"),
+  context,
+  { filename: "account.js" },
+);
+const storageValues = new Map();
+const storage = {
+  getItem(key) { return storageValues.get(key) || null; },
+  setItem(key, value) { storageValues.set(key, value); },
+};
+let account = context.CharacterCheckAccount.emptyAccount();
+for (let index = 0; index < 5; index += 1) {
+  account = context.CharacterCheckAccount.upsert(account, {
+    titleId: `test-${index}`,
+    title: `Test ${index}`,
+    type: "show",
+    outcomeKey: "heart",
+    character: `Character ${index}`,
+    counts: { heart: 6, mind: 2, spark: 1, wildcard: 1 },
+  });
+}
+assert.equal(context.CharacterCheckAccount.persist(account, storage), true);
+const savedAccount = context.CharacterCheckAccount.load(storage);
+const savedAverage = context.CharacterCheckAccount.average(savedAccount);
+assert.equal(savedAverage.testCount, 5);
+assert.equal(Math.round(savedAverage.percentages.heart), 60);
+assert.equal(savedAverage.dominantRole, "heart");
+const updatedAccount = context.CharacterCheckAccount.upsert(savedAccount, {
+  titleId: "test-0",
+  title: "Test 0",
+  type: "show",
+  outcomeKey: "mind",
+  character: "Updated Character",
+  counts: { heart: 0, mind: 10, spark: 0, wildcard: 0 },
+});
+assert.equal(updatedAccount.results.length, 5, "Retaking a saved title should update it instead of duplicating it");
+assert.equal(updatedAccount.results.find((result) => result.titleId === "test-0").character, "Updated Character");
+assert.equal(
+  context.CharacterCheckAccount.predictOutcome(
+    { outcomes: context.OUTCOMES.friends },
+    context.CHARACTER_CHECK_PROFILES,
+    savedAccount,
+  ),
+  "heart",
 );
 
 const about = await fs.readFile(path.join(root, "charactercheck", "about.html"), "utf8");
