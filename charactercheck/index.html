@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#10111a" />
     <meta
       name="description"
-      content="Choose from 10,000 show, film, documentary, game-show, reality, kids, and short-form quizzes with ten title-specific questions each."
+      content="Choose from thousands of screened show, film, documentary, game-show, reality, and kids' quizzes with sourced artwork and four named results each."
     />
     <link rel="canonical" href="https://dexterbain.com/charactercheck/" />
     <meta property="og:type" content="website" />
@@ -14,7 +14,7 @@
     <meta property="og:title" content="Character Check — Which Character Are You?" />
     <meta
       property="og:description"
-      content="10,000 screen-title quizzes with 10 title-specific questions each."
+      content="Thousands of screened screen-title quizzes with sourced artwork, named results, and 10 title-specific questions each."
     />
     <meta property="og:url" content="https://dexterbain.com/charactercheck/" />
     <meta property="og:image" content="https://dexterbain.com/charactercheck/og.png" />
@@ -22,7 +22,7 @@
     <meta name="twitter:title" content="Character Check — Which Character Are You?" />
     <meta
       name="twitter:description"
-      content="10,000 screen-title quizzes with 10 title-specific questions each."
+      content="Thousands of screened screen-title quizzes with sourced artwork, named results, and 10 title-specific questions each."
     />
     <meta name="twitter:image" content="https://dexterbain.com/charactercheck/og.png" />
     <link rel="preconnect" href="https://static.tvmaze.com" crossorigin />
@@ -33,7 +33,7 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&amp;family=League+Spartan:wght@600;700;800&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=catalog-10000-20261020-1" />
+    <link rel="stylesheet" href="styles.css?v=verified-20261020-2" />
     <title>Character Check — Which Character Are You?</title>
     <script defer src="data/questions.js?v=catalog-500-20261016-1"></script>
     <script defer src="data/outcomes.js?v=catalog-500-20261016-1"></script>
@@ -45,8 +45,9 @@
     <script defer src="data/expanded-catalog-4.js?v=catalog-5000-20261016-1"></script>
     <script defer src="data/expanded-catalog-5.js?v=catalog-10000-20261020-1"></script>
     <script defer src="data/expanded-enrichment.js?v=catalog-10000-20261020-1"></script>
+    <script defer src="data/verified-catalog.js?v=verified-20261020-2"></script>
     <script defer src="data/distinct-questions.js?v=catalog-10000-20261020-1"></script>
-    <script defer src="app.js?v=catalog-10000-20261020-1"></script>
+    <script defer src="app.js?v=verified-20261020-2"></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to the game</a>
@@ -75,8 +76,8 @@
             <p class="eyebrow"><span>NEW</span> Your next personality rabbit hole</p>
             <h1 id="home-title">Which character are <em>you?</em></h1>
             <p class="hero-lede" id="hero-lede">
-              Pick a show, film, documentary, game show, reality series, or short,
-              answer ten title-specific questions, and meet your match.
+              Pick a screened title, answer ten title-specific questions, and meet one
+              of four real named matches.
             </p>
             <div class="hero-actions">
               <button class="primary-button" id="browse-button" type="button">
@@ -89,7 +90,7 @@
             <ul class="hero-facts" aria-label="Game facts">
               <li><strong id="title-total">—</strong><span id="title-kinds">titles</span></li>
               <li><strong>10</strong><span>questions each</span></li>
-              <li><strong>9,844</strong><span>new picks</span></li>
+              <li><strong>4</strong><span>named matches each</span></li>
             </ul>
           </div>
           <div class="hero-collage" id="hero-collage" role="group" aria-label="Featured Character Check quizzes"></div>
@@ -107,7 +108,7 @@
               <input
                 id="show-search"
                 type="search"
-                placeholder="Search 10,000 quizzes…"
+                placeholder="Search screened quizzes…"
                 autocomplete="off"
                 spellcheck="false"
               />
@@ -259,8 +260,9 @@
       <p>
         Each image is credited beside its question. Show information and imagery use
         <a href="https://www.tvmaze.com/api" target="_blank" rel="noreferrer">TVmaze</a>
-        under CC BY-SA; movie imagery links to
-        <a href="https://www.imdb.com/" target="_blank" rel="noreferrer">IMDb</a>.
+        under CC BY-SA; film imagery and research link to
+        <a href="https://www.wikipedia.org/" target="_blank" rel="noreferrer">Wikipedia</a>
+        and <a href="https://commons.wikimedia.org/" target="_blank" rel="noreferrer">Wikimedia Commons</a>.
         <a href="about.html">See every source and how questions are made.</a>
       </p>
     </footer>

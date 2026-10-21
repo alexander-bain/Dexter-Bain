@@ -17,11 +17,7 @@
     reality: { label: "Reality", plural: "reality shows" },
     other: { label: "Other", plural: "short films and other formats" },
   };
-  const BASE_MIN_TITLE_COUNT = 56;
-  const BASE_FINAL_TITLE_COUNT = 156;
-  const EXPANDED_TITLE_COUNT = 9844;
-  const MIN_TITLE_COUNT = BASE_MIN_TITLE_COUNT + EXPANDED_TITLE_COUNT;
-  const FINAL_TITLE_COUNT = BASE_FINAL_TITLE_COUNT + EXPANDED_TITLE_COUNT;
+  const MIN_PUBLISHED_TITLE_COUNT = 3500;
   const QUESTIONS_PER_TITLE = 10;
   const CATALOG_PAGE_SIZE = 210;
   // If two roles receive the same number of answers, use the most revealing
@@ -350,10 +346,10 @@
     const gameShows = state.titles.filter((title) => title.type === "game-show").length;
     const realityShows = state.titles.filter((title) => title.type === "reality").length;
     const otherFormats = state.titles.filter((title) => title.type === "other").length;
-    refs.headerCount.textContent = `${totalLabel} ${total === 1 ? "title" : "titles"} ready`;
+    refs.headerCount.textContent = `${totalLabel} screened ${total === 1 ? "title" : "titles"} ready`;
     refs.titleTotal.textContent = totalLabel;
-    refs.titleKinds.textContent = "stories + screen formats";
-    refs.heroLede.textContent = "Pick a show, film, documentary, game show, reality series, or short, answer ten title-specific questions, and meet your match.";
+    refs.titleKinds.textContent = "screened titles";
+    refs.heroLede.textContent = "Pick a screened title, answer ten title-specific questions, and meet one of four real named matches.";
     refs.heroCollage.setAttribute(
       "aria-label",
       "Featured Character Check quizzes",
@@ -361,7 +357,36 @@
     refs.showSearch.placeholder = `Search ${totalLabel} quizzes…`;
     refs.typeFilterGroup.hidden = false;
 
-    const description = `${totalLabel} quizzes: ${shows.toLocaleString()} shows, ${movies.toLocaleString()} movies, ${kids.toLocaleString()} kids' shows, ${documentaries.toLocaleString()} documentaries, ${gameShows.toLocaleString()} game shows, ${realityShows.toLocaleString()} reality shows, and ${otherFormats.toLocaleString()} short films and other formats. Ten title-specific questions each.`;
+    const typeCounts = {
+      show: shows,
+      movie: movies,
+      kids,
+      documentary: documentaries,
+      "game-show": gameShows,
+      reality: realityShows,
+      other: otherFormats,
+    };
+    const collectionCounts = Object.fromEntries(
+      state.titles
+        .map((title) => title.collection)
+        .filter(Boolean)
+        .map((collection) => [collection, 0]),
+    );
+    state.titles.forEach((title) => {
+      if (title.collection) {
+        collectionCounts[title.collection] = (collectionCounts[title.collection] || 0) + 1;
+      }
+    });
+    refs.filterChips.forEach((chip) => {
+      const kind = chip.dataset.filterKind;
+      const value = chip.dataset.filter;
+      if (value === "all" || kind === "genre") return;
+      chip.hidden = kind === "type"
+        ? !typeCounts[value]
+        : kind === "collection" && !collectionCounts[value];
+    });
+
+    const description = `${totalLabel} screened quizzes with sourced artwork, four named results, and ten title-specific questions each.`;
     document
       .querySelectorAll(
         'meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]',
@@ -863,7 +888,10 @@
         throw new Error("Emergency questions are unavailable");
       }
 
-      state.titles = Object.entries(window.MEDIA).map(([id, media]) => {
+      const publishedIds = new Set(window.CHARACTER_CHECK_PUBLISHED_IDS || []);
+      state.titles = Object.entries(window.MEDIA)
+        .filter(([id]) => publishedIds.has(id))
+        .map(([id, media]) => {
         const outcomes = window.OUTCOMES[id];
         if (!isNonemptyString(media.officialTitle)) {
           throw new Error(`Missing title name: ${id}`);
@@ -929,14 +957,8 @@
           questions,
         };
       });
-      if (state.titles.length < MIN_TITLE_COUNT || state.titles.length > FINAL_TITLE_COUNT) {
-        throw new Error(`Expected between ${MIN_TITLE_COUNT} and ${FINAL_TITLE_COUNT} titles`);
-      }
-      if (state.titles.length === FINAL_TITLE_COUNT) {
-        const expandedCount = state.titles.filter((title) => title.catalogGenerated === true).length;
-        if (expandedCount !== EXPANDED_TITLE_COUNT) {
-          throw new Error(`The full catalog needs ${EXPANDED_TITLE_COUNT} expanded titles`);
-        }
+      if (state.titles.length < MIN_PUBLISHED_TITLE_COUNT) {
+        throw new Error(`Expected at least ${MIN_PUBLISHED_TITLE_COUNT} screened titles`);
       }
       updateCatalogCopy();
       renderHeroCollage();
