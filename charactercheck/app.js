@@ -11,13 +11,10 @@
   const TYPE_META = {
     show: { label: "Show", plural: "shows" },
     movie: { label: "Movie", plural: "movies" },
-    sports: { label: "Sports", plural: "sports matchups" },
-    actor: { label: "Actor", plural: "actor matchups" },
-    commercial: { label: "Commercial", plural: "commercial-character matchups" },
   };
   const BASE_MIN_TITLE_COUNT = 56;
   const BASE_FINAL_TITLE_COUNT = 156;
-  const EXPANDED_TITLE_COUNT = 4854;
+  const EXPANDED_TITLE_COUNT = 4844;
   const MIN_TITLE_COUNT = BASE_MIN_TITLE_COUNT + EXPANDED_TITLE_COUNT;
   const FINAL_TITLE_COUNT = BASE_FINAL_TITLE_COUNT + EXPANDED_TITLE_COUNT;
   const QUESTIONS_PER_TITLE = 10;
@@ -343,11 +340,10 @@
     const totalLabel = total.toLocaleString();
     const shows = state.titles.filter((title) => title.type === "show").length;
     const movies = state.titles.filter((title) => title.type === "movie").length;
-    const peopleAndIcons = total - shows - movies;
     refs.headerCount.textContent = `${totalLabel} ${total === 1 ? "title" : "titles"} ready`;
     refs.titleTotal.textContent = totalLabel;
-    refs.titleKinds.textContent = "shows, sports + more";
-    refs.heroLede.textContent = "Pick a show, movie, sport, actor, actress, or commercial character, answer ten quick questions, and meet your closest match.";
+    refs.titleKinds.textContent = "shows + movies";
+    refs.heroLede.textContent = "Pick a show or movie, answer ten quick questions, and meet your closest character match.";
     refs.heroCollage.setAttribute(
       "aria-label",
       "Featured Character Check quizzes",
@@ -355,7 +351,7 @@
     refs.showSearch.placeholder = `Search ${totalLabel} quizzes…`;
     refs.typeFilterGroup.hidden = false;
 
-    const description = `${totalLabel} quizzes: ${shows.toLocaleString()} shows, ${movies.toLocaleString()} movies, and ${peopleAndIcons.toLocaleString()} sports, actor, actress, and commercial-character matchups. Ten quick questions each.`;
+    const description = `${totalLabel} quizzes: ${shows.toLocaleString()} shows and ${movies.toLocaleString()} movies. Ten quick questions each.`;
     document
       .querySelectorAll(
         'meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]',
