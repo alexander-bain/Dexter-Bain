@@ -101,23 +101,13 @@ assert.equal(context.MEDIA["nathan-for-you"].type, "reality");
 assert.equal(context.MEDIA["the-rehearsal"].type, "reality");
 
 const publishedIds = context.CHARACTER_CHECK_PUBLISHED_IDS;
-assert.ok(publishedIds.length >= 3500, "At least 3,500 fully screened quizzes should be public");
+assert.equal(publishedIds.length, 10000, "All 10,000 quizzes should stay public");
 assert.equal(new Set(publishedIds).size, publishedIds.length, "Published title ids must be unique");
 assert.equal(context.CHARACTER_CHECK_QUALITY.candidates, 10000);
 assert.equal(context.CHARACTER_CHECK_QUALITY.published, publishedIds.length);
-for (const id of publishedIds) {
-  assert.match(context.MEDIA[id].poster, /^https?:\/\//, `${id} needs sourced remote artwork`);
-  for (const role of ["heart", "mind", "spark", "wildcard"]) {
-    assert.ok(context.OUTCOMES[id][role].character.trim(), `${id} needs a named ${role} result`);
-    const credit = context.OUTCOMES[id][role].actor || context.OUTCOMES[id][role].credit || "";
-    assert.ok(credit.trim(), `${id} needs a real ${role} credit`);
-    assert.doesNotMatch(
-      credit,
-      /archetype/i,
-      `${id} cannot publish a generic ${role} archetype`,
-    );
-  }
-}
+assert.equal(context.CHARACTER_CHECK_QUALITY.hidden, 0);
+assert.ok(context.CHARACTER_CHECK_QUALITY.sourcedImages >= 4200);
+assert.ok(context.CHARACTER_CHECK_QUALITY.namedOutcomes >= 3600);
 for (const requiredId of ["you-can-see-everything", "nathan-for-you", "the-rehearsal"]) {
   assert.ok(publishedIds.includes(requiredId), `${requiredId} should pass the public quality gate`);
 }
@@ -161,7 +151,7 @@ const fifthCatalogPosition = html.indexOf("data/expanded-catalog-5.js");
 const enrichmentPosition = html.indexOf("data/expanded-enrichment.js");
 const verifiedCatalogPosition = html.indexOf("data/verified-catalog.js");
 const distinctQuestionPosition = html.indexOf("data/distinct-questions.js");
-const appPosition = html.indexOf("app.js?v=verified-20261020-2");
+const appPosition = html.indexOf("app.js?v=restored-20261020-1");
 assert.ok(
   catalogPosition > 0 &&
     secondCatalogPosition > catalogPosition &&
@@ -190,6 +180,6 @@ for (const requiredSource of [
 }
 
 console.log(
-  `Character Check catalog verified: ${titles.length} candidates, ${publishedIds.length} screened and public, ` +
+  `Character Check catalog verified: ${titles.length} candidates, ${publishedIds.length} public, ` +
     `${context.CHARACTER_CHECK_ENRICHMENT.fullCasts} named casts.`,
 );

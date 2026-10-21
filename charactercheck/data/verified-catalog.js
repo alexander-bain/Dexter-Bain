@@ -144,15 +144,22 @@
     });
 
   const allIds = Object.keys(window.MEDIA || {});
-  const publishedIds = allIds.filter(
+  const sourcedImageIds = allIds.filter((id) => isRemoteImage(window.MEDIA[id]?.poster));
+  const namedOutcomeIds = allIds.filter((id) => hasNamedOutcomes(id));
+  const fullyScreenedIds = allIds.filter(
     (id) => isRemoteImage(window.MEDIA[id]?.poster) && hasNamedOutcomes(id),
   );
 
-  window.CHARACTER_CHECK_PUBLISHED_IDS = Object.freeze(publishedIds);
+  // Keep the complete catalog public. Sourcing progress is tracked separately
+  // so an incomplete artwork record never removes a requested quiz again.
+  window.CHARACTER_CHECK_PUBLISHED_IDS = Object.freeze(allIds);
   window.CHARACTER_CHECK_QUALITY = Object.freeze({
     candidates: allIds.length,
-    published: publishedIds.length,
-    hidden: allIds.length - publishedIds.length,
+    published: allIds.length,
+    hidden: 0,
+    sourcedImages: sourcedImageIds.length,
+    namedOutcomes: namedOutcomeIds.length,
+    fullyScreened: fullyScreenedIds.length,
     namedOutcomesPerQuiz: ROLE_ORDER.length,
   });
 })();

@@ -17,7 +17,7 @@
     reality: { label: "Reality", plural: "reality shows" },
     other: { label: "Other", plural: "short films and other formats" },
   };
-  const MIN_PUBLISHED_TITLE_COUNT = 3500;
+  const PUBLISHED_TITLE_COUNT = 10000;
   const QUESTIONS_PER_TITLE = 10;
   const CATALOG_PAGE_SIZE = 210;
   // If two roles receive the same number of answers, use the most revealing
@@ -346,10 +346,10 @@
     const gameShows = state.titles.filter((title) => title.type === "game-show").length;
     const realityShows = state.titles.filter((title) => title.type === "reality").length;
     const otherFormats = state.titles.filter((title) => title.type === "other").length;
-    refs.headerCount.textContent = `${totalLabel} screened ${total === 1 ? "title" : "titles"} ready`;
+    refs.headerCount.textContent = `${totalLabel} ${total === 1 ? "title" : "titles"} ready`;
     refs.titleTotal.textContent = totalLabel;
-    refs.titleKinds.textContent = "screened titles";
-    refs.heroLede.textContent = "Pick a screened title, answer ten title-specific questions, and meet one of four real named matches.";
+    refs.titleKinds.textContent = "titles";
+    refs.heroLede.textContent = "Pick a show, film, documentary, game show, reality series, kids' show, or short and answer ten title-specific questions.";
     refs.heroCollage.setAttribute(
       "aria-label",
       "Featured Character Check quizzes",
@@ -386,7 +386,7 @@
         : kind === "collection" && !collectionCounts[value];
     });
 
-    const description = `${totalLabel} screened quizzes with sourced artwork, four named results, and ten title-specific questions each.`;
+    const description = `${totalLabel} show, film, documentary, game-show, reality, kids', and short-form quizzes with ten title-specific questions each.`;
     document
       .querySelectorAll(
         'meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]',
@@ -957,8 +957,8 @@
           questions,
         };
       });
-      if (state.titles.length < MIN_PUBLISHED_TITLE_COUNT) {
-        throw new Error(`Expected at least ${MIN_PUBLISHED_TITLE_COUNT} screened titles`);
+      if (state.titles.length !== PUBLISHED_TITLE_COUNT) {
+        throw new Error(`Expected exactly ${PUBLISHED_TITLE_COUNT} titles`);
       }
       updateCatalogCopy();
       renderHeroCollage();
