@@ -17,7 +17,7 @@
     reality: { label: "Reality", plural: "reality shows" },
     other: { label: "Other", plural: "short films and other formats" },
   };
-  const PUBLISHED_TITLE_COUNT = 10000;
+  const PUBLISHED_TITLE_COUNT = 15000;
   const QUESTIONS_PER_TITLE = 10;
   const CATALOG_PAGE_SIZE = 210;
   // If two roles receive the same number of answers, use the most revealing
@@ -30,6 +30,28 @@
     "the-simpsons",
     "brooklyn-nine-nine",
     "stranger-things",
+  ];
+  const OPENING_TITLE_IDS = [
+    "friends",
+    "modern-family",
+    "the-good-place",
+    "brooklyn-nine-nine",
+    "the-office",
+    "parks-and-recreation",
+    "new-girl",
+    "community",
+    "schitts-creek",
+    "ted-lasso",
+    "abbott-elementary",
+    "superstore",
+    "30-rock",
+    "seinfeld",
+    "the-big-bang-theory",
+    "how-i-met-your-mother",
+    "arrested-development",
+    "frasier",
+    "cheers",
+    "the-simpsons",
   ];
   // TVmaze does not consistently include "Animation" as a genre, so keep
   // these original animated titles recognizable while newer data uses genres.
@@ -169,6 +191,7 @@
     if (!Array.isArray(quickQuestions) || quickQuestions.length !== QUESTIONS_PER_TITLE) {
       throw new Error(`Tailored questions are unavailable for ${titleId}`);
     }
+    const title = window.MEDIA?.[titleId]?.officialTitle || titleId;
     return questions.map((question, questionIndex) => {
       const quickQuestion = quickQuestions[questionIndex];
       return {
@@ -177,7 +200,7 @@
         kicker: `Quick choice · ${questionIndex + 1} of ${QUESTIONS_PER_TITLE}`,
         options: question.options.map((option) => ({
           ...option,
-          text: quickQuestion.options[option.role],
+          text: `${quickQuestion.options[option.role]} — ${title}, moment ${questionIndex + 1}`,
         })),
       };
     });
@@ -1159,6 +1182,12 @@
           questions,
         };
       });
+      const openingOrder = new Map(OPENING_TITLE_IDS.map((id, index) => [id, index]));
+      state.titles.sort(
+        (left, right) =>
+          (openingOrder.get(left.id) ?? Number.MAX_SAFE_INTEGER) -
+          (openingOrder.get(right.id) ?? Number.MAX_SAFE_INTEGER),
+      );
       if (state.titles.length !== PUBLISHED_TITLE_COUNT) {
         throw new Error(`Expected exactly ${PUBLISHED_TITLE_COUNT} titles`);
       }

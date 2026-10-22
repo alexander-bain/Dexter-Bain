@@ -5,10 +5,12 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DATA_DIRECTORY = path.join(ROOT, "charactercheck", "data");
-function numberArgument(name, fallback) {
+function numberArgument(name, fallback, { allowZero = false } = {}) {
   const argument = process.argv.find((value) => value.startsWith(`--${name}=`));
   const number = Number(argument?.split("=")[1] || fallback);
-  if (!Number.isInteger(number) || number < 1) throw new Error(`--${name} must be a positive integer.`);
+  if (!Number.isInteger(number) || number < (allowZero ? 0 : 1)) {
+    throw new Error(`--${name} must be ${allowZero ? "a non-negative" : "a positive"} integer.`);
+  }
   return number;
 }
 const generationArgument = process.argv.find((argument) => argument.startsWith("--generation="));
@@ -16,8 +18,8 @@ const GENERATION = Number(generationArgument?.split("=")[1] || 2);
 if (!Number.isInteger(GENERATION) || GENERATION < 2) {
   throw new Error("--generation must be an integer of 2 or greater.");
 }
-const SHOW_COUNT = numberArgument("shows", 250);
-const MOVIE_COUNT = numberArgument("movies", 250);
+const SHOW_COUNT = numberArgument("shows", 250, { allowZero: true });
+const MOVIE_COUNT = numberArgument("movies", 250, { allowZero: true });
 const TOTAL_COUNT = SHOW_COUNT + MOVIE_COUNT;
 const CANDIDATE_LIMIT = numberArgument("candidate-limit", TOTAL_COUNT > 500 ? 6000 : 1400);
 const OUTPUT = path.join(DATA_DIRECTORY, `expanded-catalog-${GENERATION}.js`);
@@ -29,6 +31,8 @@ const COLLECTION = GENERATION === 2
         ? "Another 500 Favorites"
         : GENERATION === 4
           ? "3,344 to 5,000"
+          : GENERATION === 6
+            ? "5,000 More Films"
           : `Expansion ${GENERATION} Favorites`,
     };
 const USER_AGENT = "DexterBainCharacterCheck/1.0 (https://dexterbain.com/charactercheck/)";
@@ -107,7 +111,7 @@ const existingTitles = await loadExistingTitles();
 const selected = [];
 const selectedTitles = new Set();
 
-for (const target of TARGETS) {
+for (const target of TARGETS.filter((item) => item.count > 0)) {
   const candidates = await fetchCandidates(target);
   let added = 0;
   for (const candidate of candidates) {

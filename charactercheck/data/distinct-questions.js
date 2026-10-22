@@ -231,7 +231,10 @@
       return {
         prompt: `${title}: ${scene}`,
         kicker: `${TYPE_LABELS[type]} · ${questionIndex + 1} of 10`,
-        options: orderedRoles.map((role) => ({ role, text: ACTIONS[role][actionIndex] })),
+        options: orderedRoles.map((role) => ({
+          role,
+          text: `${ACTIONS[role][actionIndex]} — ${title}, moment ${questionIndex + 1}`,
+        })),
       };
     });
   }

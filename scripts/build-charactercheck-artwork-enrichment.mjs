@@ -24,6 +24,7 @@ async function loadCatalog() {
     "expanded-catalog-3.js",
     "expanded-catalog-4.js",
     "expanded-catalog-5.js",
+    "expanded-catalog-6.js",
     "expanded-enrichment.js",
     "verified-catalog.js",
   ]) {
@@ -78,7 +79,7 @@ async function fetchJson(url, attempts = 6) {
         continue;
       }
       if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
-      return response.json();
+      return await response.json();
     } catch (error) {
       lastError = error;
       await new Promise((resolve) => setTimeout(resolve, attempt * 650));
@@ -185,7 +186,7 @@ async function fetchWikipediaPages(entries, cache) {
 async function fetchRelatedPeople(entries, cache) {
   const ids = [...new Set(entries.flatMap((entry) => cache.entities[entry.wikidataId]?.related || []))];
   const missing = ids.filter((id) => !cache.people[id]);
-  const batches = chunks(missing, 20);
+  const batches = chunks(missing, 50);
   async function fetchBatch(batch) {
     const url = new URL("https://www.wikidata.org/w/api.php");
     url.search = new URLSearchParams({
@@ -222,7 +223,7 @@ async function fetchRelatedPeople(entries, cache) {
     });
   }
 
-  await mapLimited(batches, 2, async (batch, index) => {
+  await mapLimited(batches, 4, async (batch, index) => {
     await fetchBatch(batch);
     if ((index + 1) % 10 === 0 || index === batches.length - 1) {
       await writeCache(cache);

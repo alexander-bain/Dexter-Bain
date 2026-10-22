@@ -20,8 +20,10 @@ for (const filename of [
   "expanded-catalog-3.js",
   "expanded-catalog-4.js",
   "expanded-catalog-5.js",
+  "expanded-catalog-6.js",
   "expanded-enrichment.js",
   "artwork-enrichment.js",
+  "character-enrichment.js",
   "verified-catalog.js",
   "distinct-questions.js",
 ]) {
@@ -39,10 +41,10 @@ const collectionCounts = Object.fromEntries(
   ]),
 );
 
-assert.equal(titles.length, 10000, "Character Check should have exactly 10,000 total quizzes");
-assert.equal(expanded.length, 9844, "The expansions should add exactly 9,844 quizzes");
+assert.equal(titles.length, 15000, "Character Check should have exactly 15,000 total quizzes");
+assert.equal(expanded.length, 14844, "The expansions should add exactly 14,844 quizzes");
 assert.equal(titles.filter(([, media]) => media.type === "show").length, 2500);
-assert.equal(titles.filter(([, media]) => media.type === "movie").length, 2500);
+assert.equal(titles.filter(([, media]) => media.type === "movie").length, 7500);
 assert.equal(titles.filter(([, media]) => media.type === "kids").length, 1000);
 assert.equal(titles.filter(([, media]) => media.type === "documentary").length, 1000);
 assert.equal(titles.filter(([, media]) => media.type === "game-show").length, 1000);
@@ -57,6 +59,7 @@ assert.deepEqual(collectionCounts, {
   encore: 500,
   "encore-2": 500,
   "encore-3": 3344,
+  "encore-5": 5000,
   "kids-shows": 1000,
   documentaries: 1000,
   "game-shows": 1000,
@@ -94,6 +97,9 @@ assert.equal(formatCatalog.filter(([, media]) => media.collection === "documenta
 assert.equal(formatCatalog.filter(([, media]) => media.collection === "game-shows").length, 1000);
 assert.equal(formatCatalog.filter(([, media]) => media.collection === "reality-shows").length, 1000);
 assert.equal(formatCatalog.filter(([, media]) => media.collection === "other-formats").length, 1000);
+const filmCatalog = expanded.filter(([, media]) => media.catalogGeneration === 6);
+assert.equal(filmCatalog.length, 5000);
+assert.ok(filmCatalog.every(([, media]) => media.type === "movie"));
 assert.equal(context.MEDIA["you-can-see-everything"].type, "documentary");
 assert.equal(context.MEDIA["you-can-see-everything"].wikidataId, "Q141336617");
 assert.equal(context.OUTCOMES["you-can-see-everything"].mind.character, "Nathan Fielder");
@@ -102,20 +108,26 @@ assert.equal(context.MEDIA["nathan-for-you"].type, "reality");
 assert.equal(context.MEDIA["the-rehearsal"].type, "reality");
 
 const publishedIds = context.CHARACTER_CHECK_PUBLISHED_IDS;
-assert.equal(publishedIds.length, 10000, "All 10,000 quizzes should stay public");
+assert.equal(publishedIds.length, 15000, "All 15,000 quizzes should stay public");
 assert.equal(new Set(publishedIds).size, publishedIds.length, "Published title ids must be unique");
-assert.equal(context.CHARACTER_CHECK_QUALITY.candidates, 10000);
+assert.equal(context.CHARACTER_CHECK_QUALITY.candidates, 15000);
 assert.equal(context.CHARACTER_CHECK_QUALITY.published, publishedIds.length);
 assert.equal(context.CHARACTER_CHECK_QUALITY.hidden, 0);
-assert.equal(context.CHARACTER_CHECK_QUALITY.sourcedImages, 10000);
-assert.ok(context.CHARACTER_CHECK_QUALITY.namedOutcomes >= 3600);
-assert.equal(context.CHARACTER_CHECK_ARTWORK.sourced, 5723);
+assert.equal(context.CHARACTER_CHECK_QUALITY.sourcedImages, 15000);
+assert.equal(context.CHARACTER_CHECK_QUALITY.namedOutcomes, 15000);
+assert.equal(context.CHARACTER_CHECK_ARTWORK.sourced, 10723);
 for (const [id, media] of titles) {
   assert.match(media.poster, /^https?:\/\//, `${id} must use real remote artwork`);
   assert.match(media.artworkFallback, /^https?:\/\//, `${id} needs a real remote fallback image`);
   assert.ok(
     media.questionImages.every((image) => /^https?:\/\//.test(image.url) && /^https?:\/\//.test(image.sourceUrl)),
     `${id} question images must be sourced and linked`,
+  );
+  const matches = Object.values(context.OUTCOMES[id]);
+  assert.equal(new Set(matches.map((outcome) => outcome.character)).size, 4, `${id} needs four different result names`);
+  assert.ok(
+    matches.every((outcome) => String(outcome.actor || outcome.credit || "").trim() && !/archetype/i.test(outcome.actor || outcome.credit || "")),
+    `${id} needs four named, title-specific result credits`,
   );
 }
 for (const requiredId of ["you-can-see-everything", "nathan-for-you", "the-rehearsal"]) {
@@ -124,6 +136,7 @@ for (const requiredId of ["you-can-see-everything", "nathan-for-you", "the-rehea
 
 const generatedPromptSignatures = new Set();
 const generatedPrompts = new Set();
+const allAnswerChoices = new Set();
 for (const [id, media] of expanded) {
   const questions = context.CHARACTER_CHECK_DISTINCT_QUESTIONS(media, id);
   assert.equal(questions.length, 10, `${id} needs ten title-specific questions`);
@@ -133,6 +146,10 @@ for (const [id, media] of expanded) {
     generatedPrompts.add(question.prompt);
     assert.equal(question.options.map((option) => option.role).sort().join("|"), "heart|mind|spark|wildcard");
     assert.equal(new Set(question.options.map((option) => option.text)).size, 4, `${id} repeats answer text`);
+    for (const option of question.options) {
+      assert.ok(!allAnswerChoices.has(option.text), `${id} repeats an answer choice from another question`);
+      allAnswerChoices.add(option.text);
+    }
   }
   generatedPromptSignatures.add(questions.map((question) => question.prompt).join("|"));
 }
@@ -143,9 +160,17 @@ for (const [id, media] of titles.filter(([, item]) => item.catalogGenerated !== 
   const questions = context.TITLE_QUESTIONS[id];
   assert.equal(questions.length, 10, `${id} needs ten hand-authored questions`);
   assert.equal(new Set(questions.map((question) => question.prompt)).size, 10, `${id} repeats a hand-authored prompt`);
+  questions.forEach((question, questionIndex) => {
+    for (const answer of Object.values(question.options)) {
+      const optionText = `${answer} — ${media.officialTitle}, moment ${questionIndex + 1}`;
+      assert.ok(!allAnswerChoices.has(optionText), `${id} repeats an answer choice from another question`);
+      allAnswerChoices.add(optionText);
+    }
+  });
   allQuestionSignatures.add(questions.map((question) => question.prompt).join("|"));
 }
-assert.equal(allQuestionSignatures.size, titles.length, "All 10,000 quizzes need distinct question sets");
+assert.equal(allQuestionSignatures.size, titles.length, "All 15,000 quizzes need distinct question sets");
+assert.equal(allAnswerChoices.size, titles.length * 10 * 4, "All 600,000 answer choices should be unique");
 const normalizedTitles = titles.map(([, media]) => media.officialTitle.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9]+/g, " ").trim().toLowerCase());
 assert.equal(new Set(normalizedTitles).size, titles.length, "Every title should be unique");
 assert.ok(context.CHARACTER_CHECK_ENRICHMENT.titles >= 4100, "At least 4,100 titles should use sourced metadata");
@@ -153,26 +178,36 @@ assert.ok(context.CHARACTER_CHECK_ENRICHMENT.fullCasts >= 3500, "At least 3,500 
 assert.ok(context.CHARACTER_CHECK_ENRICHMENT.images >= 4100, "At least 4,100 titles should use sourced artwork");
 
 const html = await fs.readFile(path.join(root, "charactercheck", "index.html"), "utf8");
+const appSource = await fs.readFile(path.join(root, "charactercheck", "app.js"), "utf8");
+assert.ok(
+  appSource.indexOf('"friends"') < appSource.indexOf('"modern-family"') &&
+    appSource.indexOf('"modern-family"') < appSource.indexOf('"the-good-place"'),
+  "The opening catalog should lead with Friends, Modern Family, and favorite sitcoms",
+);
 const catalogPosition = html.indexOf("data/expanded-catalog.js");
 const secondCatalogPosition = html.indexOf("data/expanded-catalog-2.js");
 const thirdCatalogPosition = html.indexOf("data/expanded-catalog-3.js");
 const fourthCatalogPosition = html.indexOf("data/expanded-catalog-4.js");
 const fifthCatalogPosition = html.indexOf("data/expanded-catalog-5.js");
+const sixthCatalogPosition = html.indexOf("data/expanded-catalog-6.js");
 const enrichmentPosition = html.indexOf("data/expanded-enrichment.js");
 const artworkPosition = html.indexOf("data/artwork-enrichment.js");
+const characterPosition = html.indexOf("data/character-enrichment.js");
 const verifiedCatalogPosition = html.indexOf("data/verified-catalog.js");
 const distinctQuestionPosition = html.indexOf("data/distinct-questions.js");
 const accountPosition = html.indexOf("account.js?v=account-20261020-1");
-const appPosition = html.indexOf("app.js?v=account-artwork-20261020-1");
+const appPosition = html.indexOf("app.js?v=catalog-15000-20261021-1");
 assert.ok(
   catalogPosition > 0 &&
     secondCatalogPosition > catalogPosition &&
     thirdCatalogPosition > secondCatalogPosition &&
     fourthCatalogPosition > thirdCatalogPosition &&
     fifthCatalogPosition > fourthCatalogPosition &&
-    enrichmentPosition > fifthCatalogPosition &&
+    sixthCatalogPosition > fifthCatalogPosition &&
+    enrichmentPosition > sixthCatalogPosition &&
     artworkPosition > enrichmentPosition &&
-    verifiedCatalogPosition > artworkPosition &&
+    characterPosition > artworkPosition &&
+    verifiedCatalogPosition > characterPosition &&
     distinctQuestionPosition > verifiedCatalogPosition &&
     accountPosition > distinctQuestionPosition &&
     appPosition > accountPosition,
