@@ -14,7 +14,7 @@ const date = requestedDate || core.getPuzzleKey(new Date());
 const index = core.getPuzzleIndex(date, puzzles.length);
 const selected = puzzles[index];
 
-if (!selected || core.normalizePhrase(selected.answer).length !== 10) {
+if (!selected || core.normalizePhrase(selected.answer).length !== 15) {
   throw new Error("The selected Letter Reveal puzzle is invalid.");
 }
 

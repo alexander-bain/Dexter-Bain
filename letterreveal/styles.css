@@ -7,7 +7,7 @@
   --key: #e6e6e1;
   --green: #238636;
   --red: #c93434;
-  --tile: clamp(24px, calc((100vw - 94px) / 10), 34px);
+  --tile: clamp(24px, calc((100vw - 104px) / 8), 32px);
 }
 
 * {

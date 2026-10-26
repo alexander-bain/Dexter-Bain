@@ -15,10 +15,11 @@ const scoreStoreSource = fs.readFileSync(path.join(repositoryRoot, "letterreveal
 const accountPageSource = fs.readFileSync(path.join(repositoryRoot, "letterreveal", "account", "index.html"), "utf8");
 const accountScriptSource = fs.readFileSync(path.join(repositoryRoot, "letterreveal", "account", "account.js"), "utf8");
 
-assert.match(appSource, /const FREE_REVEALS = 2;/, "Every fresh daily puzzle must begin with two revealed letters.");
+assert.match(appSource, /const TARGET_LETTERS = 15;/, "Every daily puzzle must contain fifteen letters.");
+assert.match(appSource, /const FREE_REVEALS = 1;/, "Every fresh daily puzzle must begin with one revealed letter.");
 assert.match(appSource, /const RESET_CODE = "CENA";/, "Typing CENA must remain the puzzle reset code.");
 assert.match(appSource, /function resetGuess\(\)/, "The keypad reset must clear only the current guess.");
-assert.match(pageSource, /id="knownValue">2 \/ 10</, "The initial revealed-letter count must show two of ten.");
+assert.match(pageSource, /id="knownValue">1 \/ 15</, "The initial revealed-letter count must show one of fifteen.");
 assert.match(pageSource, /class="letter-table known-table"/, "The top table must keep its green styling hook.");
 assert.match(pageSource, /data-key="RESET"[^>]*>Reset<\/button>/, "Reset must remain beside Delete on the keypad.");
 assert.ok(pageSource.indexOf('data-key="RESET"') < pageSource.indexOf('data-key="DELETE"'), "Reset must appear directly before Delete.");
@@ -45,7 +46,8 @@ assert.ok(puzzles.length >= 100, "The puzzle bank should include at least 100 ph
 assert.equal(new Set(puzzles.map((puzzle) => puzzle.answer.toLowerCase())).size, puzzles.length, "Puzzle answers must be unique.");
 
 for (const puzzle of puzzles) {
-  assert.equal(core.normalizePhrase(puzzle.answer).length, 10, `${puzzle.answer} must contain exactly ten letters.`);
+  assert.equal(core.normalizePhrase(puzzle.answer).length, 15, `${puzzle.answer} must contain exactly fifteen letters.`);
+  assert.ok(Math.max(...core.getWordLengths(puzzle.answer)) <= 8, `${puzzle.answer} has a word that is too wide for a phone.`);
   assert.ok(puzzle.hint.length >= 12, `${puzzle.answer} needs a useful hint.`);
 }
 
@@ -63,8 +65,8 @@ assert.deepEqual(
 );
 
 const revealOrder = core.getRevealOrder(daily.date, daily.answer);
-assert.equal(revealOrder.length, 10, "Every reveal order must contain ten positions.");
-assert.equal(new Set(revealOrder).size, 10, "Every reveal position must be unique.");
+assert.equal(revealOrder.length, 15, "Every reveal order must contain fifteen positions.");
+assert.equal(new Set(revealOrder).size, 15, "Every reveal position must be unique.");
 assert.deepEqual(revealOrder, core.getRevealOrder(daily.date, daily.answer), "The reveal order must be stable for the day.");
 
 console.log(`Letter Reveal checks passed for ${puzzles.length} daily phrases.`);

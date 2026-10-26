@@ -6,7 +6,8 @@ import scoreStore from "./score-store.js";
 
   const STORAGE_PREFIX = "letter-reveal-v2:";
   const STARTING_CREDITS = 10;
-  const FREE_REVEALS = 2;
+  const TARGET_LETTERS = 15;
+  const FREE_REVEALS = 1;
   const RESET_CODE = "CENA";
 
   const elements = {
@@ -40,7 +41,7 @@ import scoreStore from "./score-store.js";
     return candidate
       && typeof candidate.answer === "string"
       && typeof candidate.hint === "string"
-      && core.normalizePhrase(candidate.answer).length === 10;
+      && core.normalizePhrase(candidate.answer).length === TARGET_LETTERS;
   }
 
   async function loadJson(path) {
@@ -222,7 +223,7 @@ import scoreStore from "./score-store.js";
 
   function render() {
     elements.hintText.textContent = puzzle.hint;
-    elements.knownValue.textContent = `${state.revealed.length} / 10`;
+    elements.knownValue.textContent = `${state.revealed.length} / ${TARGET_LETTERS}`;
     elements.revealButton.disabled = state.solved || state.credits <= 0 || state.revealed.length >= answer.length;
     elements.revealButton.querySelector("span").textContent = state.solved ? "Score" : "Reveal letter";
     elements.creditsValue.textContent = state.solved ? `${state.credits} credits` : `${state.credits} left`;
