@@ -19,6 +19,8 @@ assert.match(appSource, /const TARGET_LETTERS = 15;/, "Every daily puzzle must c
 assert.match(appSource, /const FREE_REVEALS = 1;/, "Every fresh daily puzzle must begin with one revealed letter.");
 assert.match(appSource, /const RESET_CODE = "CENA";/, "Typing CENA must remain the puzzle reset code.");
 assert.match(appSource, /function resetGuess\(\)/, "The keypad reset must clear only the current guess.");
+assert.match(appSource, /setStatus\("Wrong", "is-wrong"\)/, "An incorrect full guess must show one Wrong message.");
+assert.doesNotMatch(appSource, /tile\.classList\.add\("is-wrong"\)/, "Incorrect guesses must not reveal which letters are wrong.");
 assert.match(pageSource, /id="knownValue">1 \/ 15</, "The initial revealed-letter count must show one of fifteen.");
 assert.match(pageSource, /class="letter-table known-table"/, "The top table must keep its green styling hook.");
 assert.match(pageSource, /data-key="RESET"[^>]*>Reset<\/button>/, "Reset must remain beside Delete on the keypad.");

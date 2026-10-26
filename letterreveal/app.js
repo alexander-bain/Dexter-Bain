@@ -35,7 +35,6 @@ import scoreStore from "./score-store.js";
   let activeIndex = -1;
   let newlyRevealed = -1;
   let resetSequence = "";
-  let wrongPositions = new Set();
 
   function isValidPuzzle(candidate) {
     return candidate
@@ -165,14 +164,12 @@ import scoreStore from "./score-store.js";
 
       if (isGiven) tile.classList.add("is-given");
       if (!state.solved && !isGiven && index === activeIndex) tile.classList.add("is-active");
-      if (wrongPositions.has(index)) tile.classList.add("is-wrong");
       if (state.solved) tile.classList.add("is-correct");
 
       tile.disabled = isGiven || state.solved;
       if (!tile.disabled) {
         tile.addEventListener("click", () => {
           activeIndex = index;
-          wrongPositions.clear();
           setStatus("");
           renderGuessBoard();
         });
@@ -240,7 +237,6 @@ import scoreStore from "./score-store.js";
     state.solved = true;
     state.guess = answer.split("");
     state.revealed = Array.from({ length: answer.length }, (_, index) => index);
-    wrongPositions.clear();
     saveState();
     scoreStore.recordScore(puzzleKey, state.credits);
     render();
@@ -253,11 +249,8 @@ import scoreStore from "./score-store.js";
       return true;
     }
 
-    wrongPositions = new Set(
-      state.guess.map((letter, index) => (letter !== answer[index] ? index : -1)).filter((index) => index >= 0)
-    );
-    activeIndex = [...wrongPositions][0] ?? firstEmptyPosition();
-    setStatus("Try again", "is-wrong");
+    activeIndex = editablePositions()[0] ?? -1;
+    setStatus("Wrong", "is-wrong");
     renderGuessBoard();
     return false;
   }
@@ -267,7 +260,6 @@ import scoreStore from "./score-store.js";
     activeIndex = firstEmptyPosition();
     newlyRevealed = -1;
     resetSequence = "";
-    wrongPositions.clear();
     setStatus("");
     saveState();
     render();
@@ -288,7 +280,6 @@ import scoreStore from "./score-store.js";
     if (activeIndex < 0) return;
 
     state.guess[activeIndex] = letter;
-    wrongPositions.clear();
     setStatus("");
     const enteredIndex = activeIndex;
     activeIndex = nextEmptyPosition(enteredIndex);
@@ -317,7 +308,6 @@ import scoreStore from "./score-store.js";
       }
     }
 
-    wrongPositions.clear();
     setStatus("");
     saveState();
     renderGuessBoard();
@@ -330,7 +320,6 @@ import scoreStore from "./score-store.js";
       state.revealed.includes(index) ? answer[index] : ""
     ));
     activeIndex = firstEmptyPosition();
-    wrongPositions.clear();
     setStatus("");
     saveState();
     renderGuessBoard();
@@ -346,7 +335,6 @@ import scoreStore from "./score-store.js";
     state.revealed.push(next);
     state.guess[next] = answer[next];
     newlyRevealed = next;
-    wrongPositions.clear();
     setStatus("");
     activeIndex = firstEmptyPosition();
     saveState();
