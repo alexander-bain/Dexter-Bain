@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#ffffff" />
   <meta name="description" content="A daily ten-letter phrase game." />
   <title>Letter Reveal</title>
-  <link rel="stylesheet" href="styles.css?v=green-reset-20261025" />
+  <link rel="stylesheet" href="styles.css?v=local-account-20261025" />
 </head>
 <body>
   <main class="game" aria-label="Letter Reveal daily game">
@@ -71,8 +71,19 @@
         <button class="delete-key" type="button" data-key="DELETE" aria-label="Delete">Delete</button>
       </div>
     </div>
+
+    <section class="score-chart" id="scoreChart" aria-labelledby="scoreTitle" hidden>
+      <div class="score-heading">
+        <h2 id="scoreTitle">Your score</h2>
+        <strong id="scoreValue"></strong>
+      </div>
+      <div class="score-bars" id="scoreBars" aria-label="Past score distribution"></div>
+      <p id="scoreNote"></p>
+    </section>
+
+    <a class="account-link" id="accountLink" href="account/">Account</a>
   </main>
 
-  <script type="module" src="app.js?v=green-reset-20261025"></script>
+  <script type="module" src="app.js?v=local-account-20261025"></script>
 </body>
 </html>

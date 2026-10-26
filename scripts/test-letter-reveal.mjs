@@ -11,6 +11,9 @@ const daily = JSON.parse(fs.readFileSync(path.join(repositoryRoot, "letterreveal
 const appSource = fs.readFileSync(path.join(repositoryRoot, "letterreveal", "app.js"), "utf8");
 const pageSource = fs.readFileSync(path.join(repositoryRoot, "letterreveal", "index.html"), "utf8");
 const styleSource = fs.readFileSync(path.join(repositoryRoot, "letterreveal", "styles.css"), "utf8");
+const scoreStoreSource = fs.readFileSync(path.join(repositoryRoot, "letterreveal", "score-store.js"), "utf8");
+const accountPageSource = fs.readFileSync(path.join(repositoryRoot, "letterreveal", "account", "index.html"), "utf8");
+const accountScriptSource = fs.readFileSync(path.join(repositoryRoot, "letterreveal", "account", "account.js"), "utf8");
 
 assert.match(appSource, /const FREE_REVEALS = 2;/, "Every fresh daily puzzle must begin with two revealed letters.");
 assert.match(appSource, /const RESET_CODE = "CENA";/, "Typing CENA must remain the puzzle reset code.");
@@ -25,6 +28,18 @@ assert.ok(
 );
 assert.match(styleSource, /\.hint-heading h1[\s\S]*font-size: clamp\(1\.35rem, 6vw, 1\.75rem\)/, "The hint must remain visually prominent.");
 assert.match(styleSource, /\.known-table \{[\s\S]*background: var\(--green\)/, "The complete top table must remain green.");
+assert.match(pageSource, /id="scoreChart"[\s\S]*hidden/, "The score chart must stay hidden until the puzzle is solved.");
+assert.match(pageSource, /href="account\/"/, "The game must link to the account page.");
+assert.match(appSource, /scoreStore\.recordScore\(puzzleKey, state\.credits\)/, "A completed puzzle must save its score.");
+assert.match(scoreStoreSource, /crypto\.subtle/, "Passwords must be hashed with the browser's cryptography API.");
+assert.match(scoreStoreSource, /PBKDF2/, "Local password hashes must use PBKDF2.");
+assert.match(scoreStoreSource, /\{ label: "≤5"/, "The score graph must include a five-or-less bucket.");
+assert.match(accountPageSource, /Saved only on this device for now/, "The account page must explain the local-only limitation.");
+assert.match(accountScriptSource, /scoreStore\.createAccount/, "The account page must support creating an account.");
+
+for (const source of [appSource, pageSource, scoreStoreSource, accountPageSource, accountScriptSource]) {
+  assert.doesNotMatch(source, /supabase/i, "The temporary account system must not depend on Supabase.");
+}
 
 assert.ok(puzzles.length >= 100, "The puzzle bank should include at least 100 phrases.");
 assert.equal(new Set(puzzles.map((puzzle) => puzzle.answer.toLowerCase())).size, puzzles.length, "Puzzle answers must be unique.");

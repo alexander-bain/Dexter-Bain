@@ -1,4 +1,5 @@
 import core from "./game-core.js";
+import scoreStore from "./score-store.js";
 
 (function startLetterReveal() {
   "use strict";
@@ -9,6 +10,7 @@ import core from "./game-core.js";
   const RESET_CODE = "CENA";
 
   const elements = {
+    accountLink: document.querySelector("#accountLink"),
     creditsValue: document.querySelector("#creditsValue"),
     guessBoard: document.querySelector("#guessBoard"),
     guessStatus: document.querySelector("#guessStatus"),
@@ -16,7 +18,11 @@ import core from "./game-core.js";
     keypad: document.querySelector("#keypad"),
     knownBoard: document.querySelector("#knownBoard"),
     knownValue: document.querySelector("#knownValue"),
-    revealButton: document.querySelector("#revealButton")
+    revealButton: document.querySelector("#revealButton"),
+    scoreBars: document.querySelector("#scoreBars"),
+    scoreChart: document.querySelector("#scoreChart"),
+    scoreNote: document.querySelector("#scoreNote"),
+    scoreValue: document.querySelector("#scoreValue")
   };
 
   let puzzleKey;
@@ -179,6 +185,41 @@ import core from "./game-core.js";
     elements.guessStatus.className = className;
   }
 
+  function renderAccount() {
+    const account = scoreStore.currentAccount();
+    elements.accountLink.textContent = account ? account.username : "Account";
+  }
+
+  function renderScoreChart() {
+    elements.scoreChart.hidden = !state.solved;
+    if (!state.solved) return;
+
+    const distribution = scoreStore.getDistribution();
+    const largestCount = Math.max(1, ...distribution.map((bucket) => bucket.count));
+    const recordedScore = scoreStore.getScore(puzzleKey) ?? state.credits;
+    elements.scoreValue.textContent = `${recordedScore} points`;
+    elements.scoreNote.textContent = scoreStore.currentAccount()
+      ? "Your scores are saved to this account on this browser."
+      : "Saved on this browser. Sign in to keep scores under a username.";
+    elements.scoreBars.replaceChildren();
+
+    distribution.forEach((bucket) => {
+      const row = document.createElement("div");
+      row.className = "score-row";
+      const label = document.createElement("span");
+      label.textContent = bucket.label;
+      const track = document.createElement("div");
+      track.className = "score-track";
+      const bar = document.createElement("div");
+      bar.className = "score-bar";
+      bar.style.width = bucket.count ? `${Math.max(14, (bucket.count / largestCount) * 100)}%` : "0";
+      bar.textContent = String(bucket.count);
+      track.append(bar);
+      row.append(label, track);
+      elements.scoreBars.append(row);
+    });
+  }
+
   function render() {
     elements.hintText.textContent = puzzle.hint;
     elements.knownValue.textContent = `${state.revealed.length} / 10`;
@@ -189,6 +230,8 @@ import core from "./game-core.js";
     if (state.solved) setStatus("Solved", "is-win");
     renderKnownBoard();
     renderGuessBoard();
+    renderAccount();
+    renderScoreChart();
     newlyRevealed = -1;
   }
 
@@ -198,6 +241,7 @@ import core from "./game-core.js";
     state.revealed = Array.from({ length: answer.length }, (_, index) => index);
     wrongPositions.clear();
     saveState();
+    scoreStore.recordScore(puzzleKey, state.credits);
     render();
   }
 
@@ -333,6 +377,11 @@ import core from "./game-core.js";
     window.setInterval(() => {
       if (core.getPuzzleKey(new Date()) !== puzzleKey) window.location.reload();
     }, 60_000);
+    window.addEventListener("pageshow", () => {
+      if (state.solved) scoreStore.recordScore(puzzleKey, state.credits);
+      renderAccount();
+      renderScoreChart();
+    });
   }
 
   async function init() {
@@ -342,6 +391,7 @@ import core from "./game-core.js";
     wordLengths = core.getWordLengths(puzzle.answer);
     revealOrder = core.getRevealOrder(puzzleKey, answer);
     state = loadState();
+    if (state.solved) scoreStore.recordScore(puzzleKey, state.credits);
     activeIndex = state.solved ? -1 : firstEmptyPosition();
     bindEvents();
     render();
