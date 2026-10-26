@@ -15,6 +15,7 @@ import scoreStore from "./score-store.js";
     creditsValue: document.querySelector("#creditsValue"),
     guessBoard: document.querySelector("#guessBoard"),
     guessStatus: document.querySelector("#guessStatus"),
+    guessTable: document.querySelector("#guessTable"),
     hintText: document.querySelector("#hintText"),
     keypad: document.querySelector("#keypad"),
     knownBoard: document.querySelector("#knownBoard"),
@@ -160,6 +161,7 @@ import scoreStore from "./score-store.js";
       tile.className = "guess-tile";
       tile.textContent = state.guess[index] || "";
       tile.dataset.index = String(index);
+      tile.style.setProperty("--tile-index", index);
       tile.setAttribute("aria-label", `Guess letter ${index + 1}${state.guess[index] ? `: ${state.guess[index]}` : ""}`);
 
       if (isGiven) tile.classList.add("is-given");
@@ -170,6 +172,7 @@ import scoreStore from "./score-store.js";
       if (!tile.disabled) {
         tile.addEventListener("click", () => {
           activeIndex = index;
+          clearGuessFeedback();
           setStatus("");
           renderGuessBoard();
         });
@@ -181,6 +184,16 @@ import scoreStore from "./score-store.js";
   function setStatus(message, className = "") {
     elements.guessStatus.textContent = message;
     elements.guessStatus.className = className;
+  }
+
+  function clearGuessFeedback() {
+    elements.guessTable.classList.remove("is-wrong-feedback", "is-correct-feedback");
+  }
+
+  function showGuessFeedback(className) {
+    clearGuessFeedback();
+    void elements.guessTable.offsetWidth;
+    elements.guessTable.classList.add(className);
   }
 
   function renderAccount() {
@@ -240,6 +253,7 @@ import scoreStore from "./score-store.js";
     saveState();
     scoreStore.recordScore(puzzleKey, state.credits);
     render();
+    showGuessFeedback("is-correct-feedback");
   }
 
   function checkCompletedGuess() {
@@ -252,6 +266,7 @@ import scoreStore from "./score-store.js";
     activeIndex = editablePositions()[0] ?? -1;
     setStatus("Wrong", "is-wrong");
     renderGuessBoard();
+    showGuessFeedback("is-wrong-feedback");
     return false;
   }
 
@@ -260,6 +275,7 @@ import scoreStore from "./score-store.js";
     activeIndex = firstEmptyPosition();
     newlyRevealed = -1;
     resetSequence = "";
+    clearGuessFeedback();
     setStatus("");
     saveState();
     render();
@@ -280,6 +296,7 @@ import scoreStore from "./score-store.js";
     if (activeIndex < 0) return;
 
     state.guess[activeIndex] = letter;
+    clearGuessFeedback();
     setStatus("");
     const enteredIndex = activeIndex;
     activeIndex = nextEmptyPosition(enteredIndex);
@@ -308,6 +325,7 @@ import scoreStore from "./score-store.js";
       }
     }
 
+    clearGuessFeedback();
     setStatus("");
     saveState();
     renderGuessBoard();
@@ -320,6 +338,7 @@ import scoreStore from "./score-store.js";
       state.revealed.includes(index) ? answer[index] : ""
     ));
     activeIndex = firstEmptyPosition();
+    clearGuessFeedback();
     setStatus("");
     saveState();
     renderGuessBoard();
@@ -335,6 +354,7 @@ import scoreStore from "./score-store.js";
     state.revealed.push(next);
     state.guess[next] = answer[next];
     newlyRevealed = next;
+    clearGuessFeedback();
     setStatus("");
     activeIndex = firstEmptyPosition();
     saveState();

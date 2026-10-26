@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#ffffff" />
   <meta name="description" content="A daily fifteen-letter phrase game." />
   <title>Letter Reveal</title>
-  <link rel="stylesheet" href="styles.css?v=whole-guess-wrong-20261025" />
+  <link rel="stylesheet" href="styles.css?v=whole-feedback-20261025" />
 </head>
 <body>
   <main class="game" aria-label="Letter Reveal daily game">
@@ -27,7 +27,7 @@
       <small id="creditsValue">10 left</small>
     </button>
 
-    <section class="letter-table" aria-labelledby="guessLabel">
+    <section class="letter-table guess-table" id="guessTable" aria-labelledby="guessLabel">
       <div class="table-heading compact-heading">
         <h2 id="guessLabel">Your guess</h2>
         <span id="guessStatus" role="status" aria-live="polite"></span>
@@ -84,6 +84,6 @@
     <a class="account-link" id="accountLink" href="account/">Account</a>
   </main>
 
-  <script type="module" src="app.js?v=whole-guess-wrong-20261025"></script>
+  <script type="module" src="app.js?v=whole-feedback-20261025"></script>
 </body>
 </html>

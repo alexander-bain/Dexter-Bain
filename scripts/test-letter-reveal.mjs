@@ -21,6 +21,11 @@ assert.match(appSource, /const RESET_CODE = "CENA";/, "Typing CENA must remain t
 assert.match(appSource, /function resetGuess\(\)/, "The keypad reset must clear only the current guess.");
 assert.match(appSource, /setStatus\("Wrong", "is-wrong"\)/, "An incorrect full guess must show one Wrong message.");
 assert.doesNotMatch(appSource, /tile\.classList\.add\("is-wrong"\)/, "Incorrect guesses must not reveal which letters are wrong.");
+assert.match(pageSource, /class="letter-table guess-table" id="guessTable"/, "Whole-guess feedback must target the complete lower table.");
+assert.match(appSource, /showGuessFeedback\("is-wrong-feedback"\)/, "A wrong guess must animate the complete lower table.");
+assert.match(appSource, /showGuessFeedback\("is-correct-feedback"\)/, "A correct guess must trigger the answer reveal.");
+assert.match(styleSource, /\.guess-table\.is-wrong-feedback[\s\S]*animation: guess-shake/, "The whole wrong guess must be red and shake.");
+assert.match(styleSource, /\.guess-table\.is-correct-feedback \.guess-tile\.is-correct[\s\S]*animation: correct-reveal/, "Correct letters must reveal with a staggered animation.");
 assert.match(pageSource, /id="knownValue">1 \/ 15</, "The initial revealed-letter count must show one of fifteen.");
 assert.match(pageSource, /class="letter-table known-table"/, "The top table must keep its green styling hook.");
 assert.match(pageSource, /data-key="RESET"[^>]*>Reset<\/button>/, "Reset must remain beside Delete on the keypad.");
