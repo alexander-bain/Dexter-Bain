@@ -278,6 +278,19 @@ import core from "./game-core.js";
     renderGuessBoard();
   }
 
+  function resetGuess() {
+    resetSequence = "";
+    if (state.solved) return;
+    state.guess = Array.from({ length: answer.length }, (_, index) => (
+      state.revealed.includes(index) ? answer[index] : ""
+    ));
+    activeIndex = firstEmptyPosition();
+    wrongPositions.clear();
+    setStatus("");
+    saveState();
+    renderGuessBoard();
+  }
+
   function revealLetter() {
     if (state.solved || state.credits <= 0) return;
     const revealed = new Set(state.revealed);
@@ -306,6 +319,7 @@ import core from "./game-core.js";
       const key = event.target.closest("button[data-key]")?.dataset.key;
       if (!key) return;
       if (key === "DELETE") deleteLetter();
+      else if (key === "RESET") resetGuess();
       else enterLetter(key);
     });
     document.addEventListener("keydown", (event) => {

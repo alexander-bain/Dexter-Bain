@@ -6,11 +6,11 @@
   <meta name="theme-color" content="#ffffff" />
   <meta name="description" content="A daily ten-letter phrase game." />
   <title>Letter Reveal</title>
-  <link rel="stylesheet" href="styles.css?v=cena-20261025" />
+  <link rel="stylesheet" href="styles.css?v=green-reset-20261025" />
 </head>
 <body>
   <main class="game" aria-label="Letter Reveal daily game">
-    <section class="letter-table" aria-labelledby="knownLabel">
+    <section class="letter-table known-table" aria-labelledby="knownLabel">
       <div class="hint-heading">
         <span>Hint</span>
         <h1 id="hintText">Loading today’s hint…</h1>
@@ -67,11 +67,12 @@
         <button type="button" data-key="B">B</button>
         <button type="button" data-key="N">N</button>
         <button type="button" data-key="M">M</button>
+        <button class="reset-key" type="button" data-key="RESET" aria-label="Reset guess">Reset</button>
         <button class="delete-key" type="button" data-key="DELETE" aria-label="Delete">Delete</button>
       </div>
     </div>
   </main>
 
-  <script type="module" src="app.js?v=cena-20261025"></script>
+  <script type="module" src="app.js?v=green-reset-20261025"></script>
 </body>
 </html>

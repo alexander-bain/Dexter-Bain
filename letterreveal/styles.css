@@ -51,6 +51,31 @@ button {
   background: #ffffff;
 }
 
+.known-table {
+  border-color: #1b702d;
+  background: var(--green);
+  color: #ffffff;
+}
+
+.known-table .hint-heading,
+.known-table .known-heading {
+  border-bottom-color: rgba(255, 255, 255, 0.24);
+}
+
+.known-table .hint-heading > span,
+.known-table .known-heading > span {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.known-table .word-row {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.known-table .letter-tile.is-unknown {
+  color: #a9cfb2;
+}
+
 .hint-heading {
   padding: 17px 15px 14px;
   border-bottom: 1px solid #ecece8;
@@ -242,8 +267,8 @@ button {
 }
 
 .last-row {
-  grid-template-columns: repeat(7, minmax(0, 1fr)) minmax(58px, 1.75fr);
-  padding: 0 2.4%;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) minmax(48px, 1.55fr) minmax(52px, 1.7fr);
+  gap: 4px;
 }
 
 .key-row button {
@@ -273,6 +298,12 @@ button {
   background: #222222;
   color: #ffffff;
   font-size: 0.68rem;
+}
+
+.key-row .reset-key {
+  border: 1px solid #c5c5bf;
+  background: #ffffff;
+  font-size: 0.66rem;
 }
 
 @keyframes flip {

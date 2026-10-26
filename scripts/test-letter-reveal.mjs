@@ -14,12 +14,17 @@ const styleSource = fs.readFileSync(path.join(repositoryRoot, "letterreveal", "s
 
 assert.match(appSource, /const FREE_REVEALS = 2;/, "Every fresh daily puzzle must begin with two revealed letters.");
 assert.match(appSource, /const RESET_CODE = "CENA";/, "Typing CENA must remain the puzzle reset code.");
+assert.match(appSource, /function resetGuess\(\)/, "The keypad reset must clear only the current guess.");
 assert.match(pageSource, /id="knownValue">2 \/ 10</, "The initial revealed-letter count must show two of ten.");
+assert.match(pageSource, /class="letter-table known-table"/, "The top table must keep its green styling hook.");
+assert.match(pageSource, /data-key="RESET"[^>]*>Reset<\/button>/, "Reset must remain beside Delete on the keypad.");
+assert.ok(pageSource.indexOf('data-key="RESET"') < pageSource.indexOf('data-key="DELETE"'), "Reset must appear directly before Delete.");
 assert.ok(
   pageSource.indexOf('id="hintText"') < pageSource.indexOf('id="knownLabel"'),
   "The hint must appear above the known-letter label."
 );
 assert.match(styleSource, /\.hint-heading h1[\s\S]*font-size: clamp\(1\.35rem, 6vw, 1\.75rem\)/, "The hint must remain visually prominent.");
+assert.match(styleSource, /\.known-table \{[\s\S]*background: var\(--green\)/, "The complete top table must remain green.");
 
 assert.ok(puzzles.length >= 100, "The puzzle bank should include at least 100 phrases.");
 assert.equal(new Set(puzzles.map((puzzle) => puzzle.answer.toLowerCase())).size, puzzles.length, "Puzzle answers must be unique.");
