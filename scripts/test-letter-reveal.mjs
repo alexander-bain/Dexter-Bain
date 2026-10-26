@@ -8,6 +8,18 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(scriptDirectory, "..");
 const puzzles = JSON.parse(fs.readFileSync(path.join(repositoryRoot, "letterreveal", "puzzles.json"), "utf8"));
 const daily = JSON.parse(fs.readFileSync(path.join(repositoryRoot, "letterreveal", "daily.json"), "utf8"));
+const appSource = fs.readFileSync(path.join(repositoryRoot, "letterreveal", "app.js"), "utf8");
+const pageSource = fs.readFileSync(path.join(repositoryRoot, "letterreveal", "index.html"), "utf8");
+const styleSource = fs.readFileSync(path.join(repositoryRoot, "letterreveal", "styles.css"), "utf8");
+
+assert.match(appSource, /const FREE_REVEALS = 2;/, "Every fresh daily puzzle must begin with two revealed letters.");
+assert.match(appSource, /const RESET_CODE = "CENA";/, "Typing CENA must remain the puzzle reset code.");
+assert.match(pageSource, /id="knownValue">2 \/ 10</, "The initial revealed-letter count must show two of ten.");
+assert.ok(
+  pageSource.indexOf('id="hintText"') < pageSource.indexOf('id="knownLabel"'),
+  "The hint must appear above the known-letter label."
+);
+assert.match(styleSource, /\.hint-heading h1[\s\S]*font-size: clamp\(1\.35rem, 6vw, 1\.75rem\)/, "The hint must remain visually prominent.");
 
 assert.ok(puzzles.length >= 100, "The puzzle bank should include at least 100 phrases.");
 assert.equal(new Set(puzzles.map((puzzle) => puzzle.answer.toLowerCase())).size, puzzles.length, "Puzzle answers must be unique.");

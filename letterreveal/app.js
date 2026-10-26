@@ -3,9 +3,10 @@ import core from "./game-core.js";
 (function startLetterReveal() {
   "use strict";
 
-  const STORAGE_PREFIX = "letter-reveal-v1:";
+  const STORAGE_PREFIX = "letter-reveal-v2:";
   const STARTING_CREDITS = 10;
-  const FREE_REVEALS = 3;
+  const FREE_REVEALS = 2;
+  const RESET_CODE = "CENA";
 
   const elements = {
     creditsValue: document.querySelector("#creditsValue"),
@@ -26,6 +27,7 @@ import core from "./game-core.js";
   let state;
   let activeIndex = -1;
   let newlyRevealed = -1;
+  let resetSequence = "";
   let wrongPositions = new Set();
 
   function isValidPuzzle(candidate) {
@@ -183,7 +185,7 @@ import core from "./game-core.js";
     elements.revealButton.disabled = state.solved || state.credits <= 0 || state.revealed.length >= answer.length;
     elements.revealButton.querySelector("span").textContent = state.solved ? "Score" : "Reveal letter";
     elements.creditsValue.textContent = state.solved ? `${state.credits} credits` : `${state.credits} left`;
-    elements.keypad.querySelectorAll("button").forEach((key) => { key.disabled = state.solved; });
+    elements.keypad.querySelectorAll("button").forEach((key) => { key.disabled = false; });
     if (state.solved) setStatus("Solved", "is-win");
     renderKnownBoard();
     renderGuessBoard();
@@ -215,8 +217,28 @@ import core from "./game-core.js";
     return false;
   }
 
+  function resetPuzzle() {
+    state = createFreshState();
+    activeIndex = firstEmptyPosition();
+    newlyRevealed = -1;
+    resetSequence = "";
+    wrongPositions.clear();
+    setStatus("");
+    saveState();
+    render();
+  }
+
+  function trackResetCode(letter) {
+    resetSequence = `${resetSequence}${letter}`.slice(-RESET_CODE.length);
+    if (resetSequence !== RESET_CODE) return false;
+    resetPuzzle();
+    return true;
+  }
+
   function enterLetter(letter) {
-    if (state.solved || !/^[A-Z]$/.test(letter)) return;
+    if (!/^[A-Z]$/.test(letter)) return;
+    if (trackResetCode(letter)) return;
+    if (state.solved) return;
     if (activeIndex < 0 || state.revealed.includes(activeIndex)) activeIndex = firstEmptyPosition();
     if (activeIndex < 0) return;
 
@@ -231,6 +253,7 @@ import core from "./game-core.js";
   }
 
   function deleteLetter() {
+    resetSequence = "";
     if (state.solved) return;
     const positions = editablePositions();
     if (!positions.length) return;

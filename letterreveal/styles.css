@@ -51,22 +51,47 @@ button {
   background: #ffffff;
 }
 
+.hint-heading {
+  padding: 17px 15px 14px;
+  border-bottom: 1px solid #ecece8;
+}
+
+.hint-heading > span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hint-heading h1 {
+  margin: 0;
+  font-size: clamp(1.35rem, 6vw, 1.75rem);
+  font-weight: 850;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.known-heading,
 .table-heading {
   display: flex;
-  min-height: 66px;
-  padding: 13px 15px;
+  min-height: 48px;
+  padding: 11px 15px;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   border-bottom: 1px solid #ecece8;
 }
 
+.known-heading h2,
 .table-heading h1,
-.table-heading h2,
-.table-heading p {
+.table-heading h2 {
   margin: 0;
 }
 
+.known-heading h2,
 .table-heading h1,
 .table-heading h2 {
   font-size: 0.92rem;
@@ -74,23 +99,12 @@ button {
   letter-spacing: -0.025em;
 }
 
-.table-heading p {
-  max-width: 285px;
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: 0.72rem;
-  line-height: 1.25;
-}
-
+.known-heading > span,
 .table-heading > span {
   flex: 0 0 auto;
   color: var(--muted);
   font-size: 0.7rem;
   font-weight: 750;
-}
-
-.compact-heading {
-  min-height: 48px;
 }
 
 #guessStatus.is-win {

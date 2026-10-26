@@ -6,17 +6,18 @@
   <meta name="theme-color" content="#ffffff" />
   <meta name="description" content="A daily ten-letter phrase game." />
   <title>Letter Reveal</title>
-  <link rel="stylesheet" href="styles.css?v=simple-20261025" />
+  <link rel="stylesheet" href="styles.css?v=cena-20261025" />
 </head>
 <body>
   <main class="game" aria-label="Letter Reveal daily game">
     <section class="letter-table" aria-labelledby="knownLabel">
-      <div class="table-heading">
-        <div>
-          <h1 id="knownLabel">Letters you know</h1>
-          <p id="hintText">Loading today’s hint…</p>
-        </div>
-        <span id="knownValue">3 / 10</span>
+      <div class="hint-heading">
+        <span>Hint</span>
+        <h1 id="hintText">Loading today’s hint…</h1>
+      </div>
+      <div class="known-heading">
+        <h2 id="knownLabel">Letters you know</h2>
+        <span id="knownValue">2 / 10</span>
       </div>
       <div class="letter-board" id="knownBoard" aria-label="Revealed letters"></div>
     </section>
@@ -71,6 +72,6 @@
     </div>
   </main>
 
-  <script type="module" src="app.js?v=simple-20261025"></script>
+  <script type="module" src="app.js?v=cena-20261025"></script>
 </body>
 </html>
