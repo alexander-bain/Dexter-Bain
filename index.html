@@ -369,6 +369,42 @@
       background-size: cover;
     }
 
+    .letter-reveal-icon {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(94, 232, 255, 0.3), transparent 43%),
+        linear-gradient(145deg, #15172d, #080a15);
+    }
+
+    .letter-reveal-icon::before {
+      position: absolute;
+      inset: 17%;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(200, 255, 68, 0.5);
+      border-radius: 20%;
+      background: linear-gradient(145deg, rgba(200, 255, 68, 0.18), rgba(140, 108, 255, 0.14));
+      color: #c8ff44;
+      font-size: clamp(1.45rem, 5vw, 2rem);
+      font-weight: 950;
+      letter-spacing: 0.06em;
+      text-shadow: 0 0 18px rgba(200, 255, 68, 0.38);
+      content: "A?";
+    }
+
+    .letter-reveal-icon::after {
+      position: absolute;
+      right: 10%;
+      bottom: 10%;
+      width: 16%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #8c6cff;
+      box-shadow: 0 0 15px rgba(140, 108, 255, 0.8);
+      content: "";
+    }
+
     .app-name {
       display: -webkit-box;
       min-height: 2.45em;
@@ -611,7 +647,7 @@
     <section class="library" id="gamesArea">
       <div class="library-heading">
         <div>
-          <p class="section-kicker">26 apps</p>
+          <p class="section-kicker">27 apps</p>
           <h2 class="section-title">Pick something fun.</h2>
         </div>
         <div class="search-wrap">
@@ -621,6 +657,12 @@
       </div>
 
       <div class="app-grid" id="gamesGrid">
+        <article class="app-card" data-search="letter reveal daily phrase sentence word guessing puzzle">
+          <a class="app-link" href="letterreveal/">
+            <span class="app-icon letter-reveal-icon" aria-hidden="true"></span>
+            <span class="app-name">Letter Reveal</span>
+          </a>
+        </article>
         <article class="app-card" data-search="sat wordboard vocabulary flashcards study words">
           <a class="app-link" href="satprep/">
             <span class="app-icon sheet-three" style="--x:0%;--y:0%" aria-hidden="true"></span>
