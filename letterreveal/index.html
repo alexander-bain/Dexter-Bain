@@ -3,96 +3,73 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0a0b18" />
-  <meta name="description" content="Reveal a little, guess a lot. A new ten-letter phrase every day." />
-  <title>Letter Reveal · Daily Phrase Game</title>
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="A daily ten-letter phrase game." />
+  <title>Letter Reveal</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="game-shell">
-    <header class="topbar">
-      <a class="home-link" href="../" aria-label="Back to DexterBain home">
-        <span aria-hidden="true">←</span>
-      </a>
-      <div class="brand">
-        <span class="brand-mark" aria-hidden="true"><i>L</i><i>R</i></span>
-        <span>Letter Reveal</span>
-      </div>
-      <span class="daily-pill">Daily</span>
-    </header>
-
-    <section class="intro" aria-labelledby="gameTitle">
-      <p class="puzzle-number" id="puzzleNumber">Daily puzzle</p>
-      <h1 id="gameTitle">Reveal a little.<br /><span>Guess a lot.</span></h1>
-      <p class="intro-copy">Find today’s common ten-letter phrase. Three letters are free.</p>
-    </section>
-
-    <section class="score-strip" aria-label="Game status">
-      <div class="credit-count">
-        <span class="credit-icon" aria-hidden="true">✦</span>
-        <span><strong id="creditsValue">10</strong> credits</span>
-      </div>
-      <div class="reveal-count"><strong id="knownValue">3</strong> / 10 known</div>
-    </section>
-
-    <section class="hint-card" aria-labelledby="hintLabel">
-      <span class="hint-icon" aria-hidden="true">⌁</span>
-      <div>
-        <p id="hintLabel">Today’s hint</p>
-        <strong id="hintText">Loading today’s clue…</strong>
-      </div>
-    </section>
-
-    <section class="board-card known-card" aria-labelledby="knownTitle">
-      <div class="card-heading">
+  <main class="game" aria-label="Letter Reveal daily game">
+    <section class="letter-table" aria-labelledby="knownLabel">
+      <div class="table-heading">
         <div>
-          <p class="step-label">Table 01</p>
-          <h2 id="knownTitle">Letters you know</h2>
+          <h1 id="knownLabel">Letters you know</h1>
+          <p id="hintText">Loading today’s hint…</p>
         </div>
-        <span class="mini-label">3 free</span>
+        <span id="knownValue">3 / 10</span>
       </div>
       <div class="letter-board" id="knownBoard" aria-label="Revealed letters"></div>
     </section>
 
     <button class="reveal-button" id="revealButton" type="button">
-      <span class="reveal-button-icon" aria-hidden="true">✦</span>
-      <span>
-        <strong>Reveal a random letter</strong>
-        <small>Costs 1 credit</small>
-      </span>
-      <span class="reveal-button-arrow" aria-hidden="true">→</span>
+      <span>Reveal letter</span>
+      <small id="creditsValue">10 left</small>
     </button>
 
-    <form class="board-card guess-card" id="guessForm" novalidate>
-      <div class="card-heading">
-        <div>
-          <p class="step-label">Table 02</p>
-          <h2>Your guess</h2>
-        </div>
-        <button class="clear-button" id="clearButton" type="button">Clear</button>
+    <section class="letter-table" aria-labelledby="guessLabel">
+      <div class="table-heading compact-heading">
+        <h2 id="guessLabel">Your guess</h2>
+        <span id="guessStatus" role="status" aria-live="polite"></span>
       </div>
-      <p class="guess-help">Tap a box and type the full phrase.</p>
-      <div class="letter-board guess-board" id="guessBoard" aria-label="Enter your guess"></div>
-      <button class="guess-button" id="guessButton" type="submit">Check my answer</button>
-      <p class="feedback" id="feedback" role="status" aria-live="polite"></p>
-    </form>
+      <div class="letter-board" id="guessBoard" aria-label="Your phrase guess"></div>
+    </section>
 
-    <p class="schedule-note"><span aria-hidden="true">◷</span> New phrase every day at 6:30 AM Pacific</p>
-  </main>
-
-  <dialog class="result-dialog" id="resultDialog">
-    <div class="result-glow" aria-hidden="true"></div>
-    <p class="result-kicker">Phrase revealed</p>
-    <h2>Brilliant!</h2>
-    <p class="answer-line" id="answerLine"></p>
-    <div class="final-score">
-      <span>Final score</span>
-      <strong><b id="finalScore">10</b> credits</strong>
+    <div class="keypad" id="keypad" aria-label="Letter keypad">
+      <div class="key-row">
+        <button type="button" data-key="Q">Q</button>
+        <button type="button" data-key="W">W</button>
+        <button type="button" data-key="E">E</button>
+        <button type="button" data-key="R">R</button>
+        <button type="button" data-key="T">T</button>
+        <button type="button" data-key="Y">Y</button>
+        <button type="button" data-key="U">U</button>
+        <button type="button" data-key="I">I</button>
+        <button type="button" data-key="O">O</button>
+        <button type="button" data-key="P">P</button>
+      </div>
+      <div class="key-row middle-row">
+        <button type="button" data-key="A">A</button>
+        <button type="button" data-key="S">S</button>
+        <button type="button" data-key="D">D</button>
+        <button type="button" data-key="F">F</button>
+        <button type="button" data-key="G">G</button>
+        <button type="button" data-key="H">H</button>
+        <button type="button" data-key="J">J</button>
+        <button type="button" data-key="K">K</button>
+        <button type="button" data-key="L">L</button>
+      </div>
+      <div class="key-row last-row">
+        <button type="button" data-key="Z">Z</button>
+        <button type="button" data-key="X">X</button>
+        <button type="button" data-key="C">C</button>
+        <button type="button" data-key="V">V</button>
+        <button type="button" data-key="B">B</button>
+        <button type="button" data-key="N">N</button>
+        <button type="button" data-key="M">M</button>
+        <button class="delete-key" type="button" data-key="DELETE" aria-label="Delete">Delete</button>
+      </div>
     </div>
-    <button class="share-button" id="shareButton" type="button">Share result</button>
-    <button class="close-button" id="closeButton" type="button">View my board</button>
-    <p class="tomorrow-note">A new phrase arrives at 6:30 AM Pacific.</p>
-  </dialog>
+  </main>
 
   <script type="module" src="app.js"></script>
 </body>

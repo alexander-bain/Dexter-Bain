@@ -8,32 +8,25 @@ import core from "./game-core.js";
   const FREE_REVEALS = 3;
 
   const elements = {
-    answerLine: document.querySelector("#answerLine"),
-    clearButton: document.querySelector("#clearButton"),
-    closeButton: document.querySelector("#closeButton"),
     creditsValue: document.querySelector("#creditsValue"),
-    feedback: document.querySelector("#feedback"),
-    finalScore: document.querySelector("#finalScore"),
     guessBoard: document.querySelector("#guessBoard"),
-    guessButton: document.querySelector("#guessButton"),
-    guessForm: document.querySelector("#guessForm"),
+    guessStatus: document.querySelector("#guessStatus"),
     hintText: document.querySelector("#hintText"),
+    keypad: document.querySelector("#keypad"),
     knownBoard: document.querySelector("#knownBoard"),
     knownValue: document.querySelector("#knownValue"),
-    puzzleNumber: document.querySelector("#puzzleNumber"),
-    resultDialog: document.querySelector("#resultDialog"),
-    revealButton: document.querySelector("#revealButton"),
-    shareButton: document.querySelector("#shareButton")
+    revealButton: document.querySelector("#revealButton")
   };
 
   let puzzleKey;
-  let puzzleNumber;
   let puzzle;
   let answer;
   let wordLengths;
   let revealOrder;
   let state;
-  let wrongGuess = false;
+  let activeIndex = -1;
+  let newlyRevealed = -1;
+  let wrongPositions = new Set();
 
   function isValidPuzzle(candidate) {
     return candidate
@@ -44,26 +37,22 @@ import core from "./game-core.js";
 
   async function loadJson(path) {
     const response = await fetch(path, { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error(`Could not load ${path}`);
-    }
+    if (!response.ok) throw new Error(`Could not load ${path}`);
     return response.json();
   }
 
   async function loadPuzzle() {
     const puzzles = await loadJson(`puzzles.json?v=${encodeURIComponent(puzzleKey)}`);
-    if (!Array.isArray(puzzles) || puzzles.length === 0 || puzzles.some((item) => !isValidPuzzle(item))) {
-      throw new Error("The daily puzzle list is invalid.");
+    if (!Array.isArray(puzzles) || !puzzles.length || puzzles.some((item) => !isValidPuzzle(item))) {
+      throw new Error("The puzzle list is invalid.");
     }
 
     const fallback = puzzles[core.getPuzzleIndex(puzzleKey, puzzles.length)];
     try {
       const daily = await loadJson(`daily.json?v=${encodeURIComponent(puzzleKey)}`);
-      if (daily.date === puzzleKey && isValidPuzzle(daily)) {
-        return daily;
-      }
+      if (daily.date === puzzleKey && isValidPuzzle(daily)) return daily;
     } catch (error) {
-      // The deterministic fallback keeps the daily game available if the daily file is late.
+      // The deterministic fallback keeps the puzzle available if the daily file is late.
     }
     return fallback;
   }
@@ -71,35 +60,26 @@ import core from "./game-core.js";
   function createFreshState() {
     const revealed = revealOrder.slice(0, FREE_REVEALS);
     const guess = Array(answer.length).fill("");
-    revealed.forEach((index) => {
-      guess[index] = answer[index];
-    });
-    return {
-      answer,
-      credits: STARTING_CREDITS,
-      guess,
-      revealed,
-      solved: false
-    };
+    revealed.forEach((index) => { guess[index] = answer[index]; });
+    return { answer, credits: STARTING_CREDITS, guess, revealed, solved: false };
   }
 
   function loadState() {
     try {
       const saved = JSON.parse(localStorage.getItem(`${STORAGE_PREFIX}${puzzleKey}`));
-      if (!saved || saved.answer !== answer || !Array.isArray(saved.revealed) || !Array.isArray(saved.guess)) {
+      if (!saved || saved.answer !== answer || !Array.isArray(saved.guess) || !Array.isArray(saved.revealed)) {
         return createFreshState();
       }
 
       const revealed = [...new Set(saved.revealed)]
         .filter((index) => Number.isInteger(index) && index >= 0 && index < answer.length);
-      if (revealed.length < FREE_REVEALS) {
-        return createFreshState();
-      }
+      if (revealed.length < FREE_REVEALS) return createFreshState();
 
-      const guess = Array.from({ length: answer.length }, (_, index) => {
-        if (revealed.includes(index)) return answer[index];
-        return String(saved.guess[index] || "").replace(/[^a-z]/gi, "").slice(0, 1).toUpperCase();
-      });
+      const guess = Array.from({ length: answer.length }, (_, index) => (
+        revealed.includes(index)
+          ? answer[index]
+          : String(saved.guess[index] || "").replace(/[^a-z]/gi, "").slice(0, 1).toUpperCase()
+      ));
 
       return {
         answer,
@@ -117,8 +97,25 @@ import core from "./game-core.js";
     try {
       localStorage.setItem(`${STORAGE_PREFIX}${puzzleKey}`, JSON.stringify(state));
     } catch (error) {
-      // The game still works when private browsing blocks storage.
+      // The game remains playable if storage is unavailable.
     }
+  }
+
+  function editablePositions() {
+    return Array.from({ length: answer.length }, (_, index) => index)
+      .filter((index) => !state.revealed.includes(index));
+  }
+
+  function firstEmptyPosition() {
+    return editablePositions().find((index) => !state.guess[index]) ?? editablePositions()[0] ?? -1;
+  }
+
+  function nextEmptyPosition(afterIndex) {
+    const positions = editablePositions();
+    const start = Math.max(0, positions.indexOf(afterIndex) + 1);
+    return positions.slice(start).find((index) => !state.guess[index])
+      ?? positions.slice(0, start).find((index) => !state.guess[index])
+      ?? afterIndex;
   }
 
   function createWordRows(container, createTile) {
@@ -140,115 +137,122 @@ import core from "./game-core.js";
     createWordRows(elements.knownBoard, (index) => {
       const tile = document.createElement("span");
       const isKnown = revealed.has(index) || state.solved;
-      tile.className = `letter-tile${isKnown ? " is-known" : ""}`;
+      tile.className = `letter-tile ${isKnown ? "is-known" : "is-unknown"}${index === newlyRevealed ? " is-new" : ""}`;
       tile.textContent = isKnown ? answer[index] : "•";
       tile.setAttribute("aria-label", isKnown ? `Letter ${index + 1}: ${answer[index]}` : `Letter ${index + 1}: unknown`);
       return tile;
     });
   }
 
-  function nextEditableIndex(fromIndex, direction = 1) {
-    let index = fromIndex + direction;
-    while (index >= 0 && index < answer.length) {
-      if (!state.revealed.includes(index)) return index;
-      index += direction;
-    }
-    return -1;
-  }
-
-  function focusGuess(index) {
-    const input = elements.guessBoard.querySelector(`[data-index="${index}"]`);
-    if (input) {
-      input.focus();
-      input.select();
-    }
-  }
-
   function renderGuessBoard() {
     createWordRows(elements.guessBoard, (index) => {
-      const input = document.createElement("input");
+      const tile = document.createElement("button");
       const isGiven = state.revealed.includes(index);
-      input.className = `guess-tile${isGiven ? " is-given" : ""}`;
-      input.dataset.index = String(index);
-      input.value = isGiven ? answer[index] : state.guess[index];
-      input.maxLength = 1;
-      input.inputMode = "text";
-      input.autocomplete = "off";
-      input.autocapitalize = "characters";
-      input.spellcheck = false;
-      input.readOnly = isGiven || state.solved;
-      input.setAttribute("aria-label", `Guess letter ${index + 1}`);
-      if (wrongGuess && input.value && input.value !== answer[index]) {
-        input.classList.add("is-wrong");
-      }
+      tile.type = "button";
+      tile.className = "guess-tile";
+      tile.textContent = state.guess[index] || "";
+      tile.dataset.index = String(index);
+      tile.setAttribute("aria-label", `Guess letter ${index + 1}${state.guess[index] ? `: ${state.guess[index]}` : ""}`);
 
-      input.addEventListener("focus", () => input.select());
-      input.addEventListener("input", () => {
-        const letter = input.value.replace(/[^a-z]/gi, "").slice(-1).toUpperCase();
-        input.value = letter;
-        state.guess[index] = letter;
-        wrongGuess = false;
-        elements.feedback.textContent = "";
-        saveState();
-        if (letter) {
-          const next = nextEditableIndex(index);
-          if (next >= 0) focusGuess(next);
-        }
-      });
-      input.addEventListener("keydown", (event) => {
-        if (event.key === "Backspace" && !input.value) {
-          const previous = nextEditableIndex(index, -1);
-          if (previous >= 0) {
-            event.preventDefault();
-            state.guess[previous] = "";
-            saveState();
-            focusGuess(previous);
-          }
-        }
-        if (event.key === "ArrowLeft") {
-          const previous = nextEditableIndex(index, -1);
-          if (previous >= 0) focusGuess(previous);
-        }
-        if (event.key === "ArrowRight") {
-          const next = nextEditableIndex(index);
-          if (next >= 0) focusGuess(next);
-        }
-      });
-      return input;
+      if (isGiven) tile.classList.add("is-given");
+      if (!state.solved && !isGiven && index === activeIndex) tile.classList.add("is-active");
+      if (wrongPositions.has(index)) tile.classList.add("is-wrong");
+      if (state.solved) tile.classList.add("is-correct");
+
+      tile.disabled = isGiven || state.solved;
+      if (!tile.disabled) {
+        tile.addEventListener("click", () => {
+          activeIndex = index;
+          wrongPositions.clear();
+          setStatus("");
+          renderGuessBoard();
+        });
+      }
+      return tile;
     });
   }
 
-  function render() {
-    elements.creditsValue.textContent = String(state.credits);
-    elements.knownValue.textContent = String(state.revealed.length);
-    elements.hintText.textContent = puzzle.hint;
-    elements.puzzleNumber.textContent = `Daily puzzle #${puzzleNumber}`;
-    elements.revealButton.disabled = state.solved || state.credits <= 0 || state.revealed.length >= answer.length;
-    elements.guessButton.disabled = state.solved;
-    elements.clearButton.disabled = state.solved;
-    renderKnownBoard();
-    renderGuessBoard();
+  function setStatus(message, className = "") {
+    elements.guessStatus.textContent = message;
+    elements.guessStatus.className = className;
   }
 
-  function showResult() {
-    elements.answerLine.textContent = puzzle.answer;
-    elements.finalScore.textContent = String(state.credits);
-    if (!elements.resultDialog.open) {
-      if (typeof elements.resultDialog.showModal === "function") {
-        elements.resultDialog.showModal();
-      } else {
-        elements.resultDialog.setAttribute("open", "");
-      }
-    }
+  function render() {
+    elements.hintText.textContent = puzzle.hint;
+    elements.knownValue.textContent = `${state.revealed.length} / 10`;
+    elements.revealButton.disabled = state.solved || state.credits <= 0 || state.revealed.length >= answer.length;
+    elements.revealButton.querySelector("span").textContent = state.solved ? "Score" : "Reveal letter";
+    elements.creditsValue.textContent = state.solved ? `${state.credits} credits` : `${state.credits} left`;
+    elements.keypad.querySelectorAll("button").forEach((key) => { key.disabled = state.solved; });
+    if (state.solved) setStatus("Solved", "is-win");
+    renderKnownBoard();
+    renderGuessBoard();
+    newlyRevealed = -1;
   }
 
   function finishGame() {
     state.solved = true;
     state.guess = answer.split("");
     state.revealed = Array.from({ length: answer.length }, (_, index) => index);
+    wrongPositions.clear();
     saveState();
     render();
-    window.setTimeout(showResult, 260);
+  }
+
+  function checkCompletedGuess() {
+    if (state.guess.some((letter) => !letter)) return false;
+    if (state.guess.join("") === answer) {
+      finishGame();
+      return true;
+    }
+
+    wrongPositions = new Set(
+      state.guess.map((letter, index) => (letter !== answer[index] ? index : -1)).filter((index) => index >= 0)
+    );
+    activeIndex = [...wrongPositions][0] ?? firstEmptyPosition();
+    setStatus("Try again", "is-wrong");
+    renderGuessBoard();
+    return false;
+  }
+
+  function enterLetter(letter) {
+    if (state.solved || !/^[A-Z]$/.test(letter)) return;
+    if (activeIndex < 0 || state.revealed.includes(activeIndex)) activeIndex = firstEmptyPosition();
+    if (activeIndex < 0) return;
+
+    state.guess[activeIndex] = letter;
+    wrongPositions.clear();
+    setStatus("");
+    const enteredIndex = activeIndex;
+    activeIndex = nextEmptyPosition(enteredIndex);
+    saveState();
+    renderGuessBoard();
+    checkCompletedGuess();
+  }
+
+  function deleteLetter() {
+    if (state.solved) return;
+    const positions = editablePositions();
+    if (!positions.length) return;
+    if (!positions.includes(activeIndex)) activeIndex = positions[positions.length - 1];
+
+    if (state.guess[activeIndex]) {
+      state.guess[activeIndex] = "";
+    } else {
+      const currentPosition = positions.indexOf(activeIndex);
+      const earlier = [...positions.slice(0, currentPosition)].reverse().find((index) => state.guess[index]);
+      const fallback = [...positions].reverse().find((index) => state.guess[index]);
+      const target = earlier ?? fallback;
+      if (target !== undefined) {
+        activeIndex = target;
+        state.guess[target] = "";
+      }
+    }
+
+    wrongPositions.clear();
+    setStatus("");
+    saveState();
+    renderGuessBoard();
   }
 
   function revealLetter() {
@@ -260,81 +264,35 @@ import core from "./game-core.js";
     state.credits -= 1;
     state.revealed.push(next);
     state.guess[next] = answer[next];
-    wrongGuess = false;
-    elements.feedback.textContent = `Letter ${next + 1} is ${answer[next]}.`;
+    newlyRevealed = next;
+    wrongPositions.clear();
+    setStatus("");
+    activeIndex = firstEmptyPosition();
     saveState();
-    render();
 
-    if (state.revealed.length === answer.length) {
+    if (state.revealed.length === answer.length || state.guess.join("") === answer) {
       finishGame();
-    }
-  }
-
-  function checkGuess(event) {
-    event.preventDefault();
-    if (state.solved) return;
-    const entered = state.guess.join("");
-    if (entered.length < answer.length) {
-      elements.feedback.textContent = "Fill every box before checking your answer.";
-      const firstEmpty = state.guess.findIndex((letter, index) => !letter && !state.revealed.includes(index));
-      if (firstEmpty >= 0) focusGuess(firstEmpty);
-      return;
-    }
-    if (entered === answer) {
-      elements.feedback.textContent = "";
-      finishGame();
-      return;
-    }
-    wrongGuess = true;
-    elements.feedback.textContent = "Not quite. Change the red letters and try again.";
-    renderGuessBoard();
-  }
-
-  function clearGuess() {
-    if (state.solved) return;
-    state.guess = state.guess.map((letter, index) => (
-      state.revealed.includes(index) ? answer[index] : ""
-    ));
-    wrongGuess = false;
-    elements.feedback.textContent = "";
-    saveState();
-    renderGuessBoard();
-    const firstEditable = nextEditableIndex(-1);
-    if (firstEditable >= 0) focusGuess(firstEditable);
-  }
-
-  async function shareResult() {
-    const text = `Letter Reveal #${puzzleNumber}\n${state.credits}/10 credits left\nhttps://dexterbain.com/letterreveal/`;
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: "Letter Reveal", text });
-      } else {
-        await navigator.clipboard.writeText(text);
-        elements.shareButton.textContent = "Copied!";
-        window.setTimeout(() => { elements.shareButton.textContent = "Share result"; }, 1400);
-      }
-    } catch (error) {
-      if (error && error.name !== "AbortError") {
-        elements.shareButton.textContent = "Could not share";
-        window.setTimeout(() => { elements.shareButton.textContent = "Share result"; }, 1400);
-      }
-    }
-  }
-
-  function closeResult() {
-    if (typeof elements.resultDialog.close === "function") {
-      elements.resultDialog.close();
     } else {
-      elements.resultDialog.removeAttribute("open");
+      render();
     }
   }
 
   function bindEvents() {
     elements.revealButton.addEventListener("click", revealLetter);
-    elements.guessForm.addEventListener("submit", checkGuess);
-    elements.clearButton.addEventListener("click", clearGuess);
-    elements.shareButton.addEventListener("click", shareResult);
-    elements.closeButton.addEventListener("click", closeResult);
+    elements.keypad.addEventListener("click", (event) => {
+      const key = event.target.closest("button[data-key]")?.dataset.key;
+      if (!key) return;
+      if (key === "DELETE") deleteLetter();
+      else enterLetter(key);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Backspace" || event.key === "Delete") {
+        event.preventDefault();
+        deleteLetter();
+      } else if (/^[a-z]$/i.test(event.key)) {
+        enterLetter(event.key.toUpperCase());
+      }
+    });
     window.setInterval(() => {
       if (core.getPuzzleKey(new Date()) !== puzzleKey) window.location.reload();
     }, 60_000);
@@ -342,20 +300,19 @@ import core from "./game-core.js";
 
   async function init() {
     puzzleKey = core.getPuzzleKey(new Date());
-    puzzleNumber = core.getPuzzleNumber(puzzleKey);
     puzzle = await loadPuzzle();
     answer = core.normalizePhrase(puzzle.answer);
     wordLengths = core.getWordLengths(puzzle.answer);
     revealOrder = core.getRevealOrder(puzzleKey, answer);
     state = loadState();
+    activeIndex = state.solved ? -1 : firstEmptyPosition();
     bindEvents();
     render();
-    if (state.solved) window.setTimeout(showResult, 180);
   }
 
   init().catch(() => {
-    elements.hintText.textContent = "Today’s puzzle could not load. Please refresh and try again.";
+    elements.hintText.textContent = "Refresh to load today’s puzzle.";
     elements.revealButton.disabled = true;
-    elements.guessButton.disabled = true;
+    elements.keypad.querySelectorAll("button").forEach((key) => { key.disabled = true; });
   });
 }());
