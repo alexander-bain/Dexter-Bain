@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fbfaf7">
+  <meta name="description" content="Practice imagery, characterization, and conflict with focused prompts and AI-powered feedback.">
+  <meta property="og:title" content="DraftLab — Creative Writing Practice">
+  <meta property="og:description" content="Write four or five sentences. Get a score, targeted feedback, and a polished example.">
+  <meta property="og:image" content="https://draftlab-writing.dexterhbain.chatgpt.site/og.png">
+  <title>DraftLab — Creative Writing Practice</title>
+  <link rel="stylesheet" href="styles.css?v=20261027-1">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="DraftLab home"><span class="brand-mark">D</span><span>DraftLab</span></div>
+      <div class="topbar-actions">
+        <div class="streak-pill"><strong id="streak">0</strong> day streak</div>
+        <button class="account-button" id="account-button" type="button">Save progress</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">Creative writing practice</p>
+      <h1>Write with purpose. Improve with proof.</h1>
+      <p class="hero-copy">Build a four or five sentence scene, work around one useful constraint, and get feedback you can use in your next draft.</p>
+    </section>
+
+    <section class="workspace-card loading-card" id="loading" aria-live="polite">
+      <div><div class="loading-mark" aria-hidden="true"></div><strong>Preparing your next challenge</strong><p>One focused prompt. One creative handicap.</p></div>
+    </section>
+
+    <section class="workspace-card" id="workspace" hidden>
+      <div class="prompt-panel">
+        <div class="prompt-topline">
+          <div class="category-row" aria-label="Writing category">
+            <button class="category-button active" type="button" data-category="Imagery">Imagery</button>
+            <button class="category-button" type="button" data-category="Characterization">Characterization</button>
+            <button class="category-button" type="button" data-category="Conflict">Conflict</button>
+          </div>
+          <span class="prompt-kicker">Today’s challenge</span>
+        </div>
+        <h2 class="prompt-title" id="prompt-title"></h2>
+        <p class="prompt-text" id="prompt-text"></p>
+        <div class="handicap"><span class="handicap-label">The handicap</span><p id="handicap-text"></p></div>
+      </div>
+      <div class="editor-panel">
+        <div class="editor-label-row"><label for="story">Your 4–5 sentence story</label><span class="sentence-count" id="sentence-count">0 / 4–5 sentences</span></div>
+        <textarea class="story-editor" id="story" maxlength="2000" placeholder="Start writing here…"></textarea>
+        <div class="editor-footer"><span class="coach-tip" id="coach-tip"></span><button class="primary-button" id="score-button" type="button" disabled>Score my story</button></div>
+        <p class="error-message" id="editor-error" role="alert" hidden></p>
+      </div>
+    </section>
+
+    <section class="results-card" id="results" aria-live="polite" hidden>
+      <div class="results-heading">
+        <div class="score-ring" id="score-ring"><div><strong id="score">0</strong><span>out of 100</span></div></div>
+        <div class="results-copy"><h2 id="result-title"></h2><p id="result-subtitle"></p></div>
+        <div class="carryover-badge"><strong id="carryover-score">0/10</strong><span>past feedback</span></div>
+      </div>
+      <div class="result-grid">
+        <div class="feedback-panel"><h3 id="feedback-title">Five ways to improve</h3><ul class="feedback-list" id="feedback-list"></ul><p class="carryover-note"><strong>Built on past feedback:</strong> <span id="carryover-note"></span></p></div>
+        <div class="example-panel"><h3>A 100-point version</h3><p id="perfect-example"></p></div>
+      </div>
+      <div class="results-actions"><button class="quiet-button" id="edit-button" type="button">Edit my draft</button><button class="primary-button" id="next-button" type="button">Next prompt</button></div>
+    </section>
+
+    <section class="stats-strip" aria-label="Writing statistics">
+      <div class="stat-card"><span>High score</span><strong id="high-score">0</strong></div>
+      <div class="stat-card"><span>Average</span><strong id="average-score">0</strong></div>
+      <div class="stat-card"><span>Completed</span><strong id="attempts">0</strong></div>
+    </section>
+  </main>
+
+  <dialog class="account-dialog" id="account-dialog">
+    <div class="modal-card">
+      <div class="modal-topline"><h2>Your DraftLab account</h2><button class="close-button" id="close-account" type="button" aria-label="Close">×</button></div>
+      <p class="modal-copy">Save your high score, average, and daily streak.</p>
+      <div id="signed-out-box" class="signin-box">
+        <p>Sign in securely with ChatGPT. DraftLab never stores your password.</p>
+        <a class="signin-link" href="https://draftlab-writing.dexterhbain.chatgpt.site/bridge">Sign in to save progress</a>
+      </div>
+      <div id="signed-in-box" hidden>
+        <p class="account-email" id="account-email"></p>
+        <form class="username-form" id="username-form">
+          <label for="username">Username</label>
+          <div class="username-form-row"><input id="username" autocomplete="username" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]+" required><button class="primary-button compact" type="submit">Save</button></div>
+        </form>
+        <p class="account-note" id="account-message">Use 3–20 letters, numbers, or underscores.</p>
+        <div class="signed-actions"><button class="text-button" id="forget-device" type="button">Sign out on this device</button></div>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="app.js?v=20261027-1" defer></script>
+</body>
+</html>
