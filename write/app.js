@@ -4,27 +4,33 @@
   const API = "https://draftlab-writing.dexterhbain.chatgpt.site";
   const TOKEN_KEY = "draftlab-session-v1";
   const FEEDBACK_KEY = "draftlab-feedback-v1";
-  const categories = ["Imagery", "Characterization", "Conflict"];
+  const OUTLINE_BEST_KEY = "draftlab-outline-best-v1";
+  const categories = ["Imagery", "Characterization", "Dialogue"];
   const quickPrompts = {
     Imagery: [
-      { category: "Imagery", title: "Dinner, Interrupted", prompt: "Describe a kitchen just after dinner burns.", handicap: "Do not use smell, smoke, or burnt.", forbiddenWords: ["smell", "smoke", "burnt"], coachTip: "Use details the reader can see, hear, or feel." },
-      { category: "Imagery", title: "Overnight Flood", prompt: "Describe a classroom after a pipe bursts overnight.", handicap: "Do not use wet, water, or flood.", forbiddenWords: ["wet", "water", "flood"], coachTip: "Show the damage through clear physical details." },
-      { category: "Imagery", title: "After the Storm", prompt: "Describe a backyard just after a violent storm.", handicap: "Do not use rain, wind, or storm.", forbiddenWords: ["rain", "wind", "storm"], coachTip: "Use broken objects, sounds, and movement." },
-      { category: "Imagery", title: "Cake Disaster", prompt: "Describe a bakery after every cake falls to the floor.", handicap: "Do not use sweet, icing, or mess.", forbiddenWords: ["sweet", "icing", "mess"], coachTip: "Use color, texture, and the position of objects." },
+      { category: "Imagery", title: "Rush Hour", prompt: "Describe a packed train station during rush hour.", handicap: "Do not use loud, noisy, roar, or booming.", forbiddenWords: ["loud", "noisy", "roar", "booming"], coachTip: "Use movement, color, and small physical details." },
+      { category: "Imagery", title: "Thin Shoes", prompt: "Describe climbing a rocky trail in shoes with thin soles.", handicap: "Do not use pain, hurt, ache, or sore.", forbiddenWords: ["pain", "hurt", "ache", "sore"], coachTip: "Show the feeling through movement and texture." },
+      { category: "Imagery", title: "Oven Trouble", prompt: "Describe a bakery after every oven overheats at once.", handicap: "Do not use hot, heat, smoke, or smell.", forbiddenWords: ["hot", "heat", "smoke", "smell"], coachTip: "Show the scene through objects and reactions." },
     ],
     Characterization: [
-      { category: "Characterization", title: "The Broken Trophy", prompt: "Show a student hiding a trophy they broke.", handicap: "Do not name any emotion.", forbiddenWords: ["sad", "scared", "nervous", "guilty"], coachTip: "Let their actions show how they feel." },
-      { category: "Characterization", title: "A New Seat", prompt: "Show a new student choosing where to sit.", handicap: "Do not use shy, nervous, or scared.", forbiddenWords: ["shy", "nervous", "scared"], coachTip: "Use one small choice to reveal personality." },
-      { category: "Characterization", title: "Borrowed", prompt: "Show a sibling returning something they secretly borrowed.", handicap: "Do not use sorry or apologize.", forbiddenWords: ["sorry", "apologize"], coachTip: "Use body language and dialogue." },
+      { category: "Characterization", title: "The Selfish Teammate", prompt: "Gradually reveal a selfish teammate during practice.", handicap: "Do not use insults, threats, or physical aggression.", forbiddenWords: ["selfish", "punch", "hit", "kick"], coachTip: "Reveal personality through choices and body language." },
+      { category: "Characterization", title: "The Loyal Neighbor", prompt: "Gradually reveal a loyal neighbor during a difficult morning.", handicap: "Do not use loyal, kind, helpful, or caring.", forbiddenWords: ["loyal", "kind", "helpful", "caring"], coachTip: "Let actions prove the character trait." },
+      { category: "Characterization", title: "The Curious Camper", prompt: "Gradually reveal a curious camper exploring a new trail.", handicap: "Every sentence must begin with an action.", forbiddenWords: [], coachTip: "Use repeated choices to reveal curiosity." },
     ],
-    Conflict: [
-      { category: "Conflict", title: "Computer Time", prompt: "Two siblings both need the computer. Show why.", handicap: "No shouting or insults.", forbiddenWords: ["shout", "yell", "stupid"], coachTip: "Give each sibling a real need." },
-      { category: "Conflict", title: "The Last Shot", prompt: "Two teammates disagree about who should take the last shot.", handicap: "Do not use angry, unfair, or selfish.", forbiddenWords: ["angry", "unfair", "selfish"], coachTip: "Make both teammates sound reasonable." },
-      { category: "Conflict", title: "One Ticket", prompt: "Two friends find one concert ticket. Show their problem.", handicap: "Neither friend may offer to sell it.", forbiddenWords: ["sell", "sold"], coachTip: "Show what the ticket means to each friend." },
+    Dialogue: [
+      { category: "Dialogue", title: "The Shared Room", prompt: "Write a conversation between cousins who disagree about sharing a room.", handicap: "Neither character may raise their voice.", forbiddenWords: ["yelled", "shouted", "screamed"], coachTip: "Give each speaker a different way of talking." },
+      { category: "Dialogue", title: "Rules Expert", prompt: "Write a coach helping a player who knows the rules better.", handicap: "The player must correct the coach politely.", forbiddenWords: [], coachTip: "Use the conversation to shift who has control." },
+      { category: "Dialogue", title: "Final Inning", prompt: "Write a baseball dugout conversation before the final pitch.", handicap: "Do not use common sports clichés.", forbiddenWords: ["believe", "heart", "champions"], coachTip: "Keep each line brief and purposeful." },
     ],
   };
+  const quickOutlinePrompts = [
+    { id: "best-season", question: "Which season of the year is the best?" },
+    { id: "good-friend", question: "What is the most important quality in a friend?" },
+    { id: "useful-skill", question: "What skill should every student learn?" },
+  ];
   const $ = (id) => document.getElementById(id);
   const state = { category: "Imagery", prompt: null, token: localStorage.getItem(TOKEN_KEY) || "", profile: null, priorFeedback: {} };
+  const outlineState = { prompt: null, loaded: false, startedAt: 0, elapsedMs: 0, running: false, timer: 0, bestTime: Number(localStorage.getItem(OUTLINE_BEST_KEY)) || null };
 
   try { state.priorFeedback = JSON.parse(localStorage.getItem(FEEDBACK_KEY) || "{}"); } catch { state.priorFeedback = {}; }
 
@@ -179,6 +185,159 @@
     $("account-dialog").showModal();
   }
 
+  function formatTime(milliseconds) {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${String(seconds).padStart(2, "0")}`;
+  }
+
+  function showMode(mode) {
+    const outlineMode = mode === "outline";
+    $("story-mode").hidden = outlineMode;
+    $("outline-mode").hidden = !outlineMode;
+    $("story-mode-button").classList.toggle("active", !outlineMode);
+    $("outline-mode-button").classList.toggle("active", outlineMode);
+    if (outlineMode && !outlineState.loaded) loadOutlinePrompt();
+  }
+
+  function renderOutlineTimer() {
+    $("outline-time").textContent = formatTime(outlineState.elapsedMs);
+    $("outline-best").textContent = outlineState.bestTime ? formatTime(outlineState.bestTime) : "—";
+  }
+
+  function startOutlineTimer() {
+    window.clearInterval(outlineState.timer);
+    outlineState.running = true;
+    outlineState.timer = window.setInterval(() => {
+      if (!outlineState.running) return;
+      outlineState.elapsedMs = Date.now() - outlineState.startedAt;
+      renderOutlineTimer();
+    }, 250);
+  }
+
+  function resetOutlineFields() {
+    $("outline-answer").value = "";
+    for (let reasonIndex = 0; reasonIndex < 3; reasonIndex += 1) {
+      $(`outline-reason-${reasonIndex}`).value = "";
+      for (let supportIndex = 0; supportIndex < 3; supportIndex += 1) {
+        $(`outline-support-${reasonIndex}-${supportIndex}`).value = "";
+      }
+    }
+    $("outline-results").hidden = true;
+    $("outline-form").hidden = false;
+    $("outline-error").hidden = true;
+    updateOutlineReady();
+  }
+
+  function outlineValues() {
+    return {
+      answer: $("outline-answer").value.trim(),
+      reasons: [0, 1, 2].map((reasonIndex) => ({
+        reason: $(`outline-reason-${reasonIndex}`).value.trim(),
+        supports: [0, 1, 2].map((supportIndex) => $(`outline-support-${reasonIndex}-${supportIndex}`).value.trim()),
+      })),
+    };
+  }
+
+  function outlineComplete(outline) {
+    return outline.answer.length > 1 && outline.reasons.every((item) => item.reason.length > 1 && item.supports.every((support) => support.length > 1));
+  }
+
+  function updateOutlineReady() {
+    $("outline-grade").disabled = !outlineComplete(outlineValues()) || !outlineState.prompt;
+  }
+
+  async function loadOutlinePrompt() {
+    outlineState.loaded = true;
+    outlineState.running = false;
+    window.clearInterval(outlineState.timer);
+    resetOutlineFields();
+    $("outline-question").textContent = "Preparing your question…";
+    try {
+      outlineState.prompt = await api("/api/outline-prompt", { method: "POST", timeoutMs: 2800 });
+    } catch {
+      outlineState.prompt = quickOutlinePrompts[Math.floor(Math.random() * quickOutlinePrompts.length)];
+    }
+    $("outline-question").textContent = outlineState.prompt.question;
+    outlineState.startedAt = Date.now();
+    outlineState.elapsedMs = 0;
+    renderOutlineTimer();
+    startOutlineTimer();
+    updateOutlineReady();
+  }
+
+  function addOutlineGradeCard(container, title, score, feedback, supportScores = []) {
+    const card = document.createElement("article");
+    card.className = "part-grade";
+    const heading = document.createElement("div");
+    const label = document.createElement("span");
+    const badge = document.createElement("strong");
+    label.textContent = title;
+    badge.textContent = `${score}/10`;
+    heading.append(label, badge);
+    const note = document.createElement("p");
+    note.textContent = feedback;
+    card.append(heading, note);
+    if (supportScores.length) {
+      const row = document.createElement("div");
+      row.className = "support-score-row";
+      supportScores.forEach((detailScore, index) => {
+        const item = document.createElement("span");
+        item.textContent = `Detail ${index + 1}: ${detailScore}/10`;
+        row.append(item);
+      });
+      card.append(row);
+    }
+    container.append(card);
+  }
+
+  function showOutlineResults(result) {
+    $("outline-form").hidden = true;
+    $("outline-results").hidden = false;
+    $("outline-score").textContent = result.score;
+    $("outline-strength").textContent = result.strength;
+    $("outline-summary").textContent = `Finished in ${formatTime(outlineState.elapsedMs)}. Organization: ${result.organizationScore}/10.`;
+    $("outline-next-step").textContent = result.nextStep;
+    const grid = $("outline-grade-grid");
+    grid.replaceChildren();
+    addOutlineGradeCard(grid, "Overall answer", result.answer.score, result.answer.feedback);
+    result.reasons.forEach((reason, index) => addOutlineGradeCard(grid, `Reason ${index + 1}`, reason.score, reason.feedback, reason.supportScores));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function gradeOutline() {
+    const outline = outlineValues();
+    if (!outlineState.prompt || !outlineComplete(outline)) return;
+    outlineState.elapsedMs = Date.now() - outlineState.startedAt;
+    outlineState.running = false;
+    window.clearInterval(outlineState.timer);
+    renderOutlineTimer();
+    $("outline-grade").disabled = true;
+    $("outline-grade").textContent = "Grading…";
+    $("outline-error").hidden = true;
+    try {
+      const result = await api("/api/evaluate-outline", {
+        method: "POST",
+        body: JSON.stringify({ prompt: outlineState.prompt.question, outline }),
+      });
+      if (!outlineState.bestTime || outlineState.elapsedMs < outlineState.bestTime) {
+        outlineState.bestTime = outlineState.elapsedMs;
+        localStorage.setItem(OUTLINE_BEST_KEY, String(outlineState.bestTime));
+        renderOutlineTimer();
+      }
+      showOutlineResults(result);
+    } catch (error) {
+      $("outline-error").textContent = error.message;
+      $("outline-error").hidden = false;
+      outlineState.startedAt = Date.now() - outlineState.elapsedMs;
+      startOutlineTimer();
+    } finally {
+      $("outline-grade").textContent = "Stop timer & grade";
+      updateOutlineReady();
+    }
+  }
+
   document.querySelectorAll("[data-category]").forEach((button) => button.addEventListener("click", () => loadPrompt(button.dataset.category)));
   $("story").addEventListener("input", updateSentenceCount);
   $("score-button").addEventListener("click", scoreStory);
@@ -201,6 +360,18 @@
     localStorage.removeItem(TOKEN_KEY);
     $("account-dialog").close();
     loadProfile();
+  });
+  $("story-mode-button").addEventListener("click", () => showMode("story"));
+  $("outline-mode-button").addEventListener("click", () => showMode("outline"));
+  $("outline-mode").querySelectorAll("textarea, input").forEach((field) => field.addEventListener("input", updateOutlineReady));
+  $("outline-grade").addEventListener("click", gradeOutline);
+  $("outline-skip").addEventListener("click", loadOutlinePrompt);
+  $("outline-new").addEventListener("click", loadOutlinePrompt);
+  $("outline-edit").addEventListener("click", () => {
+    $("outline-results").hidden = true;
+    $("outline-form").hidden = false;
+    outlineState.startedAt = Date.now() - outlineState.elapsedMs;
+    startOutlineTimer();
   });
 
   Promise.all([loadProfile(), loadPrompt(categories[0])]);

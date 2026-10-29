@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#fbfaf7">
-  <meta name="description" content="Practice imagery, characterization, and conflict with focused prompts and AI-powered feedback.">
+  <meta name="description" content="Practice creative writing and build fast, organized essay outlines with AI-powered feedback.">
   <meta property="og:title" content="DraftLab — Creative Writing Practice">
   <meta property="og:description" content="Write four or five sentences. Get a score, targeted feedback, and a polished example.">
   <meta property="og:image" content="https://draftlab-writing.dexterhbain.chatgpt.site/og.png">
   <title>DraftLab — Creative Writing Practice</title>
-  <link rel="stylesheet" href="styles.css?v=20261027-1">
+  <link rel="stylesheet" href="styles.css?v=20261028-4">
 </head>
 <body>
   <main class="app-shell">
@@ -22,11 +22,17 @@
     </header>
 
     <section class="hero">
-      <p class="eyebrow">Creative writing practice</p>
+      <p class="eyebrow">Writing practice</p>
       <h1>Write with purpose. Improve with proof.</h1>
-      <p class="hero-copy">Build a four or five sentence scene, work around one useful constraint, and get feedback you can use in your next draft.</p>
+      <p class="hero-copy">Practice a short creative scene or race the clock to build a clear essay outline.</p>
     </section>
 
+    <nav class="mode-switch" aria-label="Practice mode">
+      <button class="active" id="story-mode-button" type="button">Story Challenge</button>
+      <button id="outline-mode-button" type="button">Outline Sprint</button>
+    </nav>
+
+    <div id="story-mode">
     <section class="workspace-card loading-card" id="loading" aria-live="polite">
       <div><div class="loading-mark" aria-hidden="true"></div><strong>Preparing your next challenge</strong><p>One focused prompt. One creative handicap.</p></div>
     </section>
@@ -37,7 +43,7 @@
           <div class="category-row" aria-label="Writing category">
             <button class="category-button active" type="button" data-category="Imagery">Imagery</button>
             <button class="category-button" type="button" data-category="Characterization">Characterization</button>
-            <button class="category-button" type="button" data-category="Conflict">Conflict</button>
+            <button class="category-button" type="button" data-category="Dialogue">Dialogue</button>
           </div>
           <span class="prompt-kicker">Today’s challenge</span>
         </div>
@@ -71,6 +77,52 @@
       <div class="stat-card"><span>Average</span><strong id="average-score">0</strong></div>
       <div class="stat-card"><span>Completed</span><strong id="attempts">0</strong></div>
     </section>
+    </div>
+
+    <section class="outline-card" id="outline-mode" hidden>
+      <div class="outline-header">
+        <div><p class="eyebrow">Essay outline sprint</p><h2 id="outline-question">Preparing your question…</h2><p>Build your answer, three reasons, and three supporting details for each reason.</p></div>
+        <div class="timer-panel" aria-live="polite"><span>Time</span><strong id="outline-time">0:00</strong><small>Best: <span id="outline-best">—</span></small></div>
+      </div>
+      <div class="outline-form" id="outline-form">
+        <label class="answer-field"><span><b>1</b> Overall answer</span><textarea id="outline-answer" maxlength="240" rows="2" placeholder="Your direct answer to the question"></textarea></label>
+        <div class="outline-step-heading"><b>2</b><div><strong>Three reasons</strong><span>Add three details under each reason.</span></div></div>
+        <div class="reason-grid">
+          <article class="reason-card">
+            <label><span>Reason 1</span><textarea id="outline-reason-0" maxlength="240" rows="2" placeholder="Main reason"></textarea></label>
+            <div class="support-list">
+              <label><span>1</span><input id="outline-support-0-0" maxlength="240" placeholder="Supporting detail 1"></label>
+              <label><span>2</span><input id="outline-support-0-1" maxlength="240" placeholder="Supporting detail 2"></label>
+              <label><span>3</span><input id="outline-support-0-2" maxlength="240" placeholder="Supporting detail 3"></label>
+            </div>
+          </article>
+          <article class="reason-card">
+            <label><span>Reason 2</span><textarea id="outline-reason-1" maxlength="240" rows="2" placeholder="Main reason"></textarea></label>
+            <div class="support-list">
+              <label><span>1</span><input id="outline-support-1-0" maxlength="240" placeholder="Supporting detail 1"></label>
+              <label><span>2</span><input id="outline-support-1-1" maxlength="240" placeholder="Supporting detail 2"></label>
+              <label><span>3</span><input id="outline-support-1-2" maxlength="240" placeholder="Supporting detail 3"></label>
+            </div>
+          </article>
+          <article class="reason-card">
+            <label><span>Reason 3</span><textarea id="outline-reason-2" maxlength="240" rows="2" placeholder="Main reason"></textarea></label>
+            <div class="support-list">
+              <label><span>1</span><input id="outline-support-2-0" maxlength="240" placeholder="Supporting detail 1"></label>
+              <label><span>2</span><input id="outline-support-2-1" maxlength="240" placeholder="Supporting detail 2"></label>
+              <label><span>3</span><input id="outline-support-2-2" maxlength="240" placeholder="Supporting detail 3"></label>
+            </div>
+          </article>
+        </div>
+        <div class="outline-footer"><button class="quiet-button" id="outline-skip" type="button">Skip prompt</button><button class="primary-button" id="outline-grade" type="button" disabled>Stop timer &amp; grade</button></div>
+        <p class="error-message" id="outline-error" role="alert" hidden></p>
+      </div>
+      <div class="outline-results" id="outline-results" aria-live="polite" hidden>
+        <div class="outline-score-row"><div class="score-ring"><div><strong id="outline-score">0</strong><span>out of 100</span></div></div><div><h3 id="outline-strength"></h3><p id="outline-summary"></p></div></div>
+        <div class="outline-grade-grid" id="outline-grade-grid"></div>
+        <div class="next-step"><strong>Next step</strong><p id="outline-next-step"></p></div>
+        <div class="results-actions"><button class="quiet-button" id="outline-edit" type="button">Edit outline</button><button class="primary-button" id="outline-new" type="button">New sprint</button></div>
+      </div>
+    </section>
   </main>
 
   <dialog class="account-dialog" id="account-dialog">
@@ -93,6 +145,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20261028-3" defer></script>
+  <script src="app.js?v=20261028-4" defer></script>
 </body>
 </html>
