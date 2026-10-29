@@ -5,6 +5,23 @@
   const TOKEN_KEY = "draftlab-session-v1";
   const FEEDBACK_KEY = "draftlab-feedback-v1";
   const categories = ["Imagery", "Characterization", "Conflict"];
+  const quickPrompts = {
+    Imagery: [
+      { category: "Imagery", title: "After the Rain", prompt: "Describe an empty playground just after the rain stops.", handicap: "Do not use wet, rain, or puddle.", forbiddenWords: ["wet", "rain", "puddle"], coachTip: "Use color, sound, and movement." },
+      { category: "Imagery", title: "Lights Out", prompt: "Describe a bedroom during a power outage.", handicap: "Do not use dark, black, or scary.", forbiddenWords: ["dark", "black", "scary"], coachTip: "Show what changes when the lights go out." },
+      { category: "Imagery", title: "Before Lunch", prompt: "Describe a cafeteria one minute before lunch begins.", handicap: "Do not use hungry, food, or smell.", forbiddenWords: ["hungry", "food", "smell"], coachTip: "Use sounds and small details." },
+    ],
+    Characterization: [
+      { category: "Characterization", title: "The Broken Trophy", prompt: "Show a student hiding a trophy they broke.", handicap: "Do not name any emotion.", forbiddenWords: ["sad", "scared", "nervous", "guilty"], coachTip: "Let their actions show how they feel." },
+      { category: "Characterization", title: "A New Seat", prompt: "Show a new student choosing where to sit.", handicap: "Do not use shy, nervous, or scared.", forbiddenWords: ["shy", "nervous", "scared"], coachTip: "Use one small choice to reveal personality." },
+      { category: "Characterization", title: "Borrowed", prompt: "Show a sibling returning something they secretly borrowed.", handicap: "Do not use sorry or apologize.", forbiddenWords: ["sorry", "apologize"], coachTip: "Use body language and dialogue." },
+    ],
+    Conflict: [
+      { category: "Conflict", title: "Computer Time", prompt: "Two siblings both need the computer. Show why.", handicap: "No shouting or insults.", forbiddenWords: ["shout", "yell", "stupid"], coachTip: "Give each sibling a real need." },
+      { category: "Conflict", title: "The Last Shot", prompt: "Two teammates disagree about who should take the last shot.", handicap: "Do not use angry, unfair, or selfish.", forbiddenWords: ["angry", "unfair", "selfish"], coachTip: "Make both teammates sound reasonable." },
+      { category: "Conflict", title: "One Ticket", prompt: "Two friends find one concert ticket. Show their problem.", handicap: "Neither friend may offer to sell it.", forbiddenWords: ["sell", "sold"], coachTip: "Show what the ticket means to each friend." },
+    ],
+  };
   const $ = (id) => document.getElementById(id);
   const state = { category: "Imagery", prompt: null, token: localStorage.getItem(TOKEN_KEY) || "", profile: null, priorFeedback: {} };
 
@@ -24,13 +41,20 @@
   }
 
   async function api(path, options = {}) {
+    const { timeoutMs, ...fetchOptions } = options;
     const headers = new Headers(options.headers || {});
     if (options.body) headers.set("Content-Type", "application/json");
     if (state.token) headers.set("Authorization", `Bearer ${state.token}`);
-    const response = await fetch(`${API}${path}`, { ...options, headers });
-    const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.error || "DraftLab could not respond.");
-    return data;
+    const controller = timeoutMs ? new AbortController() : null;
+    const timeout = controller ? window.setTimeout(() => controller.abort(), timeoutMs) : null;
+    try {
+      const response = await fetch(`${API}${path}`, { ...fetchOptions, headers, signal: controller?.signal });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || "DraftLab could not respond.");
+      return data;
+    } finally {
+      if (timeout) window.clearTimeout(timeout);
+    }
   }
 
   function setError(message = "") {
@@ -68,7 +92,12 @@
     setError();
     document.querySelectorAll("[data-category]").forEach((button) => button.classList.toggle("active", button.dataset.category === category));
     try {
-      state.prompt = await api("/api/prompt", { method: "POST", body: JSON.stringify({ category }) });
+      state.prompt = await api("/api/prompt", { method: "POST", body: JSON.stringify({ category }), timeoutMs: 2800 });
+    } catch {
+      const choices = quickPrompts[category];
+      state.prompt = choices[Math.floor(Math.random() * choices.length)];
+    }
+    try {
       $("prompt-title").textContent = state.prompt.title;
       $("prompt-text").textContent = state.prompt.prompt;
       $("handicap-text").textContent = state.prompt.handicap;
@@ -76,9 +105,9 @@
       $("story").value = "";
       updateSentenceCount();
       $("workspace").hidden = false;
-    } catch (error) {
+    } catch {
       $("workspace").hidden = false;
-      setError(error.message);
+      setError("Could not prepare a prompt. Tap a category to try again.");
     } finally {
       $("loading").hidden = true;
     }
