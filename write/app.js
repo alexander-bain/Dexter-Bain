@@ -7,9 +7,10 @@
   const categories = ["Imagery", "Characterization", "Conflict"];
   const quickPrompts = {
     Imagery: [
-      { category: "Imagery", title: "After the Rain", prompt: "Describe an empty playground just after the rain stops.", handicap: "Do not use wet, rain, or puddle.", forbiddenWords: ["wet", "rain", "puddle"], coachTip: "Use color, sound, and movement." },
-      { category: "Imagery", title: "Lights Out", prompt: "Describe a bedroom during a power outage.", handicap: "Do not use dark, black, or scary.", forbiddenWords: ["dark", "black", "scary"], coachTip: "Show what changes when the lights go out." },
-      { category: "Imagery", title: "Before Lunch", prompt: "Describe a cafeteria one minute before lunch begins.", handicap: "Do not use hungry, food, or smell.", forbiddenWords: ["hungry", "food", "smell"], coachTip: "Use sounds and small details." },
+      { category: "Imagery", title: "Dinner, Interrupted", prompt: "Describe a kitchen just after dinner burns.", handicap: "Do not use smell, smoke, or burnt.", forbiddenWords: ["smell", "smoke", "burnt"], coachTip: "Use details the reader can see, hear, or feel." },
+      { category: "Imagery", title: "Overnight Flood", prompt: "Describe a classroom after a pipe bursts overnight.", handicap: "Do not use wet, water, or flood.", forbiddenWords: ["wet", "water", "flood"], coachTip: "Show the damage through clear physical details." },
+      { category: "Imagery", title: "After the Storm", prompt: "Describe a backyard just after a violent storm.", handicap: "Do not use rain, wind, or storm.", forbiddenWords: ["rain", "wind", "storm"], coachTip: "Use broken objects, sounds, and movement." },
+      { category: "Imagery", title: "Cake Disaster", prompt: "Describe a bakery after every cake falls to the floor.", handicap: "Do not use sweet, icing, or mess.", forbiddenWords: ["sweet", "icing", "mess"], coachTip: "Use color, texture, and the position of objects." },
     ],
     Characterization: [
       { category: "Characterization", title: "The Broken Trophy", prompt: "Show a student hiding a trophy they broke.", handicap: "Do not name any emotion.", forbiddenWords: ["sad", "scared", "nervous", "guilty"], coachTip: "Let their actions show how they feel." },
