@@ -649,6 +649,18 @@
     preloader.src = nextImage.url;
   }
 
+  function questionTextWithoutShowName(text, showName) {
+    let displayText = String(text || "");
+    if (!showName) return displayText;
+
+    const promptPrefix = `${showName}: `;
+    if (displayText.startsWith(promptPrefix)) {
+      displayText = displayText.slice(promptPrefix.length);
+    }
+
+    return displayText.replace(` — ${showName}, `, " — ");
+  }
+
   function renderQuestion() {
     const title = getTitle();
     const question = title?.questions?.[state.questionIndex];
@@ -662,7 +674,7 @@
     refs.progressTrack.setAttribute("aria-valuemax", String(title.questions.length));
     refs.progressFill.style.width = `${(number / title.questions.length) * 100}%`;
     refs.questionKicker.textContent = question.kicker;
-    refs.questionTitle.textContent = question.prompt;
+    refs.questionTitle.textContent = questionTextWithoutShowName(question.prompt, title.title);
     refs.photoLabel.textContent = `${typeLabel(title.type)} image · ${number}/${title.questions.length}`;
     refs.showSourceLink.href = photo.sourceUrl || title.sourceUrl;
     refs.showSourceLink.textContent = `Image via ${photo.sourceName || title.sourceName} ↗`;
@@ -689,7 +701,7 @@
         <span class="answer-text"></span>
         <span class="answer-arrow" aria-hidden="true">→</span>
       `;
-      button.querySelector(".answer-text").textContent = option.text;
+      button.querySelector(".answer-text").textContent = questionTextWithoutShowName(option.text, title.title);
       button.addEventListener("click", () => answerQuestion(option.role, button));
       fragment.append(button);
     });

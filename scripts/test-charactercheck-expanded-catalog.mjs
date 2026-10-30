@@ -196,7 +196,7 @@ const characterPosition = html.indexOf("data/character-enrichment.js");
 const verifiedCatalogPosition = html.indexOf("data/verified-catalog.js");
 const distinctQuestionPosition = html.indexOf("data/distinct-questions.js");
 const accountPosition = html.indexOf("account.js?v=account-20261020-1");
-const appPosition = html.indexOf("app.js?v=catalog-15000-20261021-1");
+const appPosition = html.indexOf("app.js?v=questions-no-show-20261029-1");
 assert.ok(
   catalogPosition > 0 &&
     secondCatalogPosition > catalogPosition &&
