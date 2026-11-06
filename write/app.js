@@ -19,6 +19,10 @@
     ["organization", "Organization"],
     ["styleAndConventions", "Style & conventions"],
   ];
+  const MISSING_WORD_STOP_WORDS = new Set([
+    "about", "after", "again", "also", "among", "another", "because", "before", "being", "between", "could", "does", "doing", "during", "each", "every", "from", "have", "having", "into", "itself", "might", "more", "most", "much", "must", "other", "ours", "should", "some", "such", "than", "that", "their", "theirs", "them", "then", "there", "these", "they", "this", "those", "through", "under", "until", "very", "what", "when", "where", "which", "while", "who", "will", "with", "would", "your", "yours",
+  ]);
+  const MISSING_WORD_FALLBACKS = ["important", "different", "community", "creative", "evidence", "purpose", "support", "change", "future", "careful", "strong", "helpful"];
   const categories = ["Imagery", "Characterization", "Dialogue"];
   const quickPrompts = {
     Imagery: [
@@ -141,7 +145,19 @@
   const $ = (id) => document.getElementById(id);
   const state = { category: "Imagery", prompt: null, token: localStorage.getItem(TOKEN_KEY) || "", profile: null, priorFeedback: {}, promptHistory: Object.fromEntries(categories.map((category) => [category, []])), promptHistoryAll: [] };
   const outlineState = { prompt: null, promptHistory: readStoredOutlineHistory(), loaded: false, startedAt: 0, elapsedMs: 0, running: false, timer: 0, bestTime: Number(localStorage.getItem(OUTLINE_BEST_KEY)) || null };
-  const essayState = { grading: false, requestError: "", submittedEssay: "", shuffleOriginal: [], shuffleCurrent: [], shuffleSolved: false };
+  const essayState = {
+    grading: false,
+    requestError: "",
+    submittedEssay: "",
+    activeGame: "shuffle",
+    shuffleOriginal: [],
+    shuffleCurrent: [],
+    shuffleSolved: false,
+    missingRounds: [],
+    missingRoundIndex: 0,
+    missingSolved: false,
+    missingReplayCount: 0,
+  };
 
   try { state.priorFeedback = JSON.parse(localStorage.getItem(FEEDBACK_KEY) || "{}"); } catch { state.priorFeedback = {}; }
   try {
@@ -797,7 +813,6 @@
   }
 
   function resetEssayShuffle() {
-    essayState.submittedEssay = "";
     essayState.shuffleOriginal = [];
     essayState.shuffleCurrent = [];
     essayState.shuffleSolved = false;
@@ -841,6 +856,249 @@
     setEssayShuffleFeedback("Correct! Your sentences are back in their original order.", "correct");
   }
 
+  function createEssayGameRandom(essay, replay = 0) {
+    let seed = 2166136261 ^ (replay >>> 0);
+    for (let index = 0; index < essay.length; index += 1) {
+      seed ^= essay.charCodeAt(index);
+      seed = Math.imul(seed, 16777619);
+    }
+    return () => {
+      seed = (seed + 0x6d2b79f5) | 0;
+      let value = seed;
+      value = Math.imul(value ^ (value >>> 15), value | 1);
+      value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
+      return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function boundedEssayRandom(random) {
+    const value = random();
+    if (!Number.isFinite(value) || value <= 0) return 0;
+    if (value >= 1) return 0.9999999999999999;
+    return value;
+  }
+
+  function shuffledCopy(items, random = Math.random) {
+    const copy = [...items];
+    for (let index = copy.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(boundedEssayRandom(random) * (index + 1));
+      [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
+    }
+    return copy;
+  }
+
+  function rotatedCopy(items, offset) {
+    if (!items.length) return [];
+    const start = ((offset % items.length) + items.length) % items.length;
+    return [...items.slice(start), ...items.slice(0, start)];
+  }
+
+  function normalizeMissingWord(word) {
+    return String(word || "").normalize("NFKC").toLocaleLowerCase("en-US").replace(/[’']/g, "'");
+  }
+
+  function meaningfulEssayWords(sentence) {
+    return Array.from(String(sentence || "").matchAll(/[\p{L}\p{M}]+(?:[’'-][\p{L}\p{M}]+)*/gu), (match) => {
+      const text = match[0];
+      const key = normalizeMissingWord(text);
+      const start = match.index || 0;
+      return { text, key, start, end: start + text.length };
+    }).filter(({ text, key }) => Array.from(text).filter((character) => /\p{L}/u.test(character)).length >= 4 && !MISSING_WORD_STOP_WORDS.has(key));
+  }
+
+  function uniqueMissingWords(words) {
+    const seen = new Set();
+    return words.filter(({ key }) => {
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
+
+  function wordsUsedOnce(words) {
+    const counts = words.reduce((totals, { key }) => totals.set(key, (totals.get(key) || 0) + 1), new Map());
+    return words.filter(({ key }) => counts.get(key) === 1);
+  }
+
+  function matchingWordCase(word, example) {
+    const letters = String(example).match(/[\p{L}\p{M}]/gu)?.join("") || "";
+    if (letters && letters === letters.toLocaleUpperCase()) return word.toLocaleUpperCase();
+    const firstLetter = String(example).match(/[\p{L}\p{M}]/u)?.[0] || "";
+    if (firstLetter && firstLetter === firstLetter.toLocaleUpperCase()) {
+      return word.toLocaleLowerCase().replace(/[\p{L}\p{M}]/u, (letter) => letter.toLocaleUpperCase());
+    }
+    return word.toLocaleLowerCase();
+  }
+
+  function buildMissingWordRounds(text, replaySeed = 0, random = createEssayGameRandom(text, replaySeed)) {
+    const sentenceChoices = uniqueEssaySentences(text)
+      .map((sentence) => ({ sentence, words: wordsUsedOnce(meaningfulEssayWords(sentence)) }))
+      .filter(({ words }) => words.length > 0);
+    if (!sentenceChoices.length) return [];
+
+    const essayWordPool = uniqueMissingWords(sentenceChoices.flatMap(({ words }) => words));
+    const fallbackPool = MISSING_WORD_FALLBACKS.map((word) => ({ text: word, key: normalizeMissingWord(word) }));
+    const usedAnswers = new Set();
+    const selectedRounds = [];
+    const shuffledSentences = rotatedCopy(shuffledCopy(sentenceChoices, random), replaySeed);
+    shuffledSentences.forEach(({ sentence, words }, sentenceIndex) => {
+      if (selectedRounds.length >= 3) return;
+      const target = rotatedCopy(shuffledCopy(words, random), replaySeed + sentenceIndex).find(({ key }) => !usedAnswers.has(key));
+      if (!target) return;
+      usedAnswers.add(target.key);
+      selectedRounds.push({ sentence, target });
+    });
+    if (selectedRounds.length < 3) {
+      for (const [sentenceIndex, { sentence, words }] of shuffledSentences.entries()) {
+        for (const target of rotatedCopy(shuffledCopy(words, random), replaySeed + sentenceIndex + selectedRounds.length)) {
+          if (selectedRounds.length >= 3) break;
+          if (usedAnswers.has(target.key)) continue;
+          usedAnswers.add(target.key);
+          selectedRounds.push({ sentence, target });
+        }
+      }
+    }
+    if (selectedRounds.length !== 3) return [];
+
+    return selectedRounds.map(({ sentence, target }, roundIndex) => {
+
+      const choices = new Map([[target.key, target.text]]);
+      for (const option of shuffledCopy(essayWordPool, random)) {
+        if (choices.size >= 4) break;
+        if (!choices.has(option.key)) choices.set(option.key, option.text);
+      }
+      for (const option of fallbackPool) {
+        if (choices.size >= 4) break;
+        if (!choices.has(option.key)) choices.set(option.key, option.text);
+      }
+
+      return {
+        before: sentence.slice(0, target.start),
+        after: sentence.slice(target.end),
+        answerKey: target.key,
+        choices: rotatedCopy(shuffledCopy(Array.from(choices, ([key, label]) => ({ key, label: matchingWordCase(label, target.text) })), random), replaySeed + roundIndex),
+      };
+    });
+  }
+
+  function setMissingWordFeedback(message, tone = "") {
+    const feedback = $("essay-missing-feedback");
+    feedback.textContent = message;
+    feedback.className = `essay-shuffle-feedback${tone ? ` ${tone}` : ""}`;
+  }
+
+  function renderMissingWordRound(moveFocus = false) {
+    const round = essayState.missingRounds[essayState.missingRoundIndex];
+    if (!round) return;
+    essayState.missingSolved = false;
+    $("essay-missing-question").hidden = false;
+    $("essay-missing-complete").hidden = true;
+    $("essay-missing-progress").textContent = `Round ${essayState.missingRoundIndex + 1} of ${essayState.missingRounds.length}`;
+
+    const sentence = $("essay-missing-sentence");
+    const blank = document.createElement("span");
+    blank.className = "essay-missing-blank";
+    blank.textContent = "_____";
+    blank.setAttribute("aria-label", "blank");
+    sentence.replaceChildren(document.createTextNode(round.before), blank, document.createTextNode(round.after));
+
+    const choices = $("essay-missing-choices");
+    choices.replaceChildren();
+    round.choices.forEach(({ key, label }) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.choiceKey = key;
+      button.textContent = label;
+      button.addEventListener("click", () => chooseMissingWord(key, button));
+      choices.append(button);
+    });
+
+    const next = $("essay-missing-next");
+    next.disabled = true;
+    next.textContent = essayState.missingRoundIndex === essayState.missingRounds.length - 1 ? "Finish game" : "Next sentence";
+    setMissingWordFeedback("Choose the word you used in your essay.");
+    if (moveFocus) sentence.focus();
+  }
+
+  function chooseMissingWord(choiceKey, button) {
+    if (essayState.missingSolved) return;
+    const round = essayState.missingRounds[essayState.missingRoundIndex];
+    if (!round) return;
+    document.querySelectorAll("#essay-missing-choices button").forEach((choice) => choice.classList.remove("incorrect"));
+    if (choiceKey !== round.answerKey) {
+      button.classList.add("incorrect");
+      setMissingWordFeedback("Not that one—try another word.", "try-again");
+      return;
+    }
+    essayState.missingSolved = true;
+    button.classList.add("correct");
+    document.querySelectorAll("#essay-missing-choices button").forEach((choice) => { choice.disabled = true; });
+    $("essay-missing-next").disabled = false;
+    setMissingWordFeedback("Correct! That is the word from your essay.", "correct");
+  }
+
+  function nextMissingWordRound() {
+    if (!essayState.missingSolved) return;
+    if (essayState.missingRoundIndex < essayState.missingRounds.length - 1) {
+      essayState.missingRoundIndex += 1;
+      renderMissingWordRound(true);
+      return;
+    }
+    $("essay-missing-question").hidden = true;
+    $("essay-missing-complete").hidden = false;
+    $("essay-missing-complete-copy").textContent = `You completed all ${essayState.missingRounds.length} ${essayState.missingRounds.length === 1 ? "round" : "rounds"}.`;
+    $("essay-missing-complete-replay").focus();
+  }
+
+  function resetMissingWord() {
+    essayState.missingRounds = [];
+    essayState.missingRoundIndex = 0;
+    essayState.missingSolved = false;
+    essayState.missingReplayCount = 0;
+    $("essay-missing-play").hidden = true;
+    $("essay-missing-question").hidden = false;
+    $("essay-missing-complete").hidden = true;
+    $("essay-missing-unavailable").hidden = true;
+    $("essay-missing-choices").replaceChildren();
+    $("essay-missing-next").disabled = true;
+    setMissingWordFeedback("Choose the word you used in your essay.");
+  }
+
+  function startMissingWord(text = essayState.submittedEssay, isReplay = false) {
+    essayState.missingReplayCount = isReplay ? essayState.missingReplayCount + 1 : 0;
+    essayState.missingRounds = buildMissingWordRounds(text, essayState.missingReplayCount);
+    essayState.missingRoundIndex = 0;
+    essayState.missingSolved = false;
+    const canPlay = essayState.missingRounds.length > 0;
+    $("essay-missing-play").hidden = !canPlay;
+    $("essay-missing-unavailable").hidden = canPlay;
+    if (canPlay) renderMissingWordRound(isReplay);
+  }
+
+  function showEssayGame(game) {
+    const nextGame = game === "missing" ? "missing" : "shuffle";
+    essayState.activeGame = nextGame;
+    $("essay-game-shuffle-panel").hidden = nextGame !== "shuffle";
+    $("essay-game-missing-panel").hidden = nextGame !== "missing";
+    $("essay-game-shuffle-button").classList.toggle("active", nextGame === "shuffle");
+    $("essay-game-missing-button").classList.toggle("active", nextGame === "missing");
+    $("essay-game-shuffle-button").setAttribute("aria-pressed", String(nextGame === "shuffle"));
+    $("essay-game-missing-button").setAttribute("aria-pressed", String(nextGame === "missing"));
+  }
+
+  function resetEssayArcade() {
+    essayState.submittedEssay = "";
+    resetEssayShuffle();
+    resetMissingWord();
+    showEssayGame("shuffle");
+  }
+
+  function startEssayArcade(text = essayState.submittedEssay) {
+    startEssayShuffle(text);
+    startMissingWord(text);
+    showEssayGame("shuffle");
+  }
+
   function showEssayResults(result) {
     $("essay-form").hidden = true;
     $("essay-results").hidden = false;
@@ -867,7 +1125,7 @@
     });
     renderEssayFeedback("essay-strengths", result.strengths);
     renderEssayFeedback("essay-improvements", result.improvements);
-    startEssayShuffle(essayState.submittedEssay);
+    startEssayArcade(essayState.submittedEssay);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -877,7 +1135,7 @@
     const words = essayWordCount(essay);
     if (essayState.grading || words < ESSAY_MIN_WORDS || essayLimitError()) return;
     const button = $("essay-grade");
-    resetEssayShuffle();
+    resetEssayArcade();
     essayState.submittedEssay = essay;
     essayState.grading = true;
     button.textContent = "Grading…";
@@ -903,7 +1161,7 @@
   }
 
   function editEssay() {
-    resetEssayShuffle();
+    resetEssayArcade();
     $("essay-results").hidden = true;
     $("essay-form").hidden = false;
     setEssayError();
@@ -963,8 +1221,13 @@
   $("essay-grade").addEventListener("click", gradeEssay);
   $("essay-edit").addEventListener("click", editEssay);
   $("essay-reset").addEventListener("click", resetEssay);
+  $("essay-game-shuffle-button").addEventListener("click", () => showEssayGame("shuffle"));
+  $("essay-game-missing-button").addEventListener("click", () => showEssayGame("missing"));
   $("essay-shuffle-check").addEventListener("click", checkEssayShuffle);
   $("essay-shuffle-replay").addEventListener("click", () => startEssayShuffle(essayState.submittedEssay));
+  $("essay-missing-next").addEventListener("click", nextMissingWordRound);
+  $("essay-missing-replay").addEventListener("click", () => startMissingWord(essayState.submittedEssay, true));
+  $("essay-missing-complete-replay").addEventListener("click", () => startMissingWord(essayState.submittedEssay, true));
 
   updateEssayReady();
   Promise.all([loadProfile(), loadPrompt(categories[0])]);

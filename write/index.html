@@ -9,7 +9,7 @@
   <meta property="og:description" content="Write a short challenge, build an outline, or paste a full essay for a score and useful feedback.">
   <meta property="og:image" content="https://draftlab-writing.dexterhbain.chatgpt.site/og.png">
   <title>DraftLab — Creative Writing Practice</title>
-  <link rel="stylesheet" href="styles.css?v=20261105-3">
+  <link rel="stylesheet" href="styles.css?v=20261105-4">
 </head>
 <body>
   <main class="app-shell">
@@ -146,7 +146,7 @@
         </div>
         <p class="error-message" id="essay-error" role="alert" hidden></p>
       </div>
-      <div class="essay-results" id="essay-results" aria-live="polite" hidden>
+      <div class="essay-results" id="essay-results" hidden>
         <div class="essay-score-row">
           <div class="score-ring"><div><strong id="essay-score">0</strong><span>out of 100</span></div></div>
           <div class="essay-result-copy"><p class="eyebrow">Essay grade</p><h3 id="essay-result-title">Your feedback is ready.</h3><p id="essay-summary"></p><p class="essay-practice-note">This is practice feedback, not an official teacher grade.</p></div>
@@ -158,22 +158,64 @@
           <section class="essay-feedback-panel"><h3>What to improve</h3><ul class="feedback-list" id="essay-improvements"></ul></section>
         </div>
         <div class="next-step"><strong>Next step</strong><p id="essay-next-step"></p></div>
-        <section class="essay-shuffle" aria-labelledby="essay-shuffle-title" aria-live="off">
-          <div class="essay-shuffle-heading">
-            <div><p class="eyebrow">From your essay</p><h3 id="essay-shuffle-title">Sentence Shuffle</h3></div>
-            <p>Put the sentences back in their original order.</p>
+        <section class="essay-arcade" aria-labelledby="essay-arcade-title" aria-live="off">
+          <div class="essay-arcade-heading">
+            <div><p class="eyebrow">Made from your essay</p><h3 id="essay-arcade-title">Essay Arcade</h3></div>
+            <p>Choose a quick game. Your progress stays put when you switch.</p>
           </div>
-          <div id="essay-shuffle-play">
-            <ol class="essay-shuffle-list" id="essay-shuffle-list"></ol>
-            <div class="essay-shuffle-footer">
-              <p class="essay-shuffle-feedback" id="essay-shuffle-feedback" role="status" aria-live="polite" aria-atomic="true">Move the sentences, then check your order.</p>
-              <div class="essay-shuffle-actions">
-                <button class="quiet-button" id="essay-shuffle-replay" type="button">Replay</button>
-                <button class="primary-button compact" id="essay-shuffle-check" type="button">Check order</button>
+          <div class="essay-game-picker" role="group" aria-label="Choose an essay game">
+            <button class="essay-game-button active" id="essay-game-shuffle-button" type="button" aria-pressed="true" aria-controls="essay-game-shuffle-panel"><strong>Sentence Shuffle</strong><span>Restore the original order</span></button>
+            <button class="essay-game-button" id="essay-game-missing-button" type="button" aria-pressed="false" aria-controls="essay-game-missing-panel"><strong>Missing Word</strong><span>Remember your exact words</span></button>
+          </div>
+
+          <section class="essay-game-panel" id="essay-game-shuffle-panel" aria-labelledby="essay-shuffle-title">
+            <div class="essay-game-heading">
+              <div><p class="essay-game-kicker">Order challenge</p><h4 id="essay-shuffle-title">Sentence Shuffle</h4></div>
+              <p>Put the sentences back in their original order.</p>
+            </div>
+            <div id="essay-shuffle-play">
+              <ol class="essay-shuffle-list" id="essay-shuffle-list"></ol>
+              <div class="essay-shuffle-footer">
+                <p class="essay-shuffle-feedback" id="essay-shuffle-feedback" role="status" aria-live="polite" aria-atomic="true">Move the sentences, then check your order.</p>
+                <div class="essay-shuffle-actions">
+                  <button class="quiet-button" id="essay-shuffle-replay" type="button">Replay</button>
+                  <button class="primary-button compact" id="essay-shuffle-check" type="button">Check order</button>
+                </div>
               </div>
             </div>
-          </div>
-          <p class="essay-shuffle-unavailable" id="essay-shuffle-unavailable" hidden>Sentence Shuffle needs at least two different sentences. Add another sentence to your essay, then grade it again.</p>
+            <p class="essay-game-unavailable" id="essay-shuffle-unavailable" hidden>Sentence Shuffle needs at least two different sentences. Add another sentence to your essay, then grade it again.</p>
+          </section>
+
+          <section class="essay-game-panel" id="essay-game-missing-panel" aria-labelledby="essay-missing-title" hidden>
+            <div class="essay-game-heading">
+              <div><p class="essay-game-kicker">Memory challenge</p><h4 id="essay-missing-title">Missing Word</h4></div>
+              <p>Choose the word you originally wrote.</p>
+            </div>
+            <div id="essay-missing-play" hidden>
+              <div id="essay-missing-question">
+                <p class="essay-missing-progress" id="essay-missing-progress">Round 1 of 3</p>
+                <p class="essay-missing-sentence" id="essay-missing-sentence" tabindex="-1"></p>
+                <fieldset class="essay-missing-fieldset">
+                  <legend>Which word belongs in the blank?</legend>
+                  <div class="essay-missing-choices" id="essay-missing-choices"></div>
+                </fieldset>
+                <div class="essay-shuffle-footer">
+                  <p class="essay-shuffle-feedback" id="essay-missing-feedback" role="status" aria-live="polite" aria-atomic="true">Choose the word you used in your essay.</p>
+                  <div class="essay-shuffle-actions">
+                    <button class="quiet-button" id="essay-missing-replay" type="button">Replay</button>
+                    <button class="primary-button compact" id="essay-missing-next" type="button" disabled>Next sentence</button>
+                  </div>
+                </div>
+              </div>
+              <div class="essay-missing-complete" id="essay-missing-complete" hidden>
+                <span aria-hidden="true">✓</span>
+                <h5>You remembered every missing word.</h5>
+                <p id="essay-missing-complete-copy">You completed all 3 rounds.</p>
+                <button class="primary-button compact" id="essay-missing-complete-replay" type="button">Play again</button>
+              </div>
+            </div>
+            <p class="essay-game-unavailable" id="essay-missing-unavailable" hidden>Missing Word needs at least three different meaningful words to make three fair rounds. Add a little more detail, then grade your essay again.</p>
+          </section>
         </section>
         <div class="results-actions"><button class="quiet-button" id="essay-edit" type="button">Edit essay</button><button class="primary-button" id="essay-reset" type="button">Grade another essay</button></div>
       </div>
@@ -200,6 +242,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20261105-3" defer></script>
+  <script src="app.js?v=20261105-4" defer></script>
 </body>
 </html>
