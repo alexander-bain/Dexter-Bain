@@ -9,6 +9,16 @@
   const OUTLINE_HISTORY_LIMIT = 1000;
   const PROMPT_HISTORY_KEY = "draftlab-prompt-history-v2";
   const PROMPT_HISTORY_LIMIT = 50;
+  const ESSAY_MIN_WORDS = 50;
+  const ESSAY_MAX_WORDS = 3500;
+  const ESSAY_MAX_CHARACTERS = 20000;
+  const ESSAY_MAX_ASSIGNMENT_CHARACTERS = 600;
+  const ESSAY_CRITERIA = [
+    ["focusAndIdeas", "Focus & ideas"],
+    ["evidenceAndReasoning", "Support & development"],
+    ["organization", "Organization"],
+    ["styleAndConventions", "Style & conventions"],
+  ];
   const categories = ["Imagery", "Characterization", "Dialogue"];
   const quickPrompts = {
     Imagery: [
@@ -131,6 +141,7 @@
   const $ = (id) => document.getElementById(id);
   const state = { category: "Imagery", prompt: null, token: localStorage.getItem(TOKEN_KEY) || "", profile: null, priorFeedback: {}, promptHistory: Object.fromEntries(categories.map((category) => [category, []])), promptHistoryAll: [] };
   const outlineState = { prompt: null, promptHistory: readStoredOutlineHistory(), loaded: false, startedAt: 0, elapsedMs: 0, running: false, timer: 0, bestTime: Number(localStorage.getItem(OUTLINE_BEST_KEY)) || null };
+  const essayState = { grading: false, requestError: "" };
 
   try { state.priorFeedback = JSON.parse(localStorage.getItem(FEEDBACK_KEY) || "{}"); } catch { state.priorFeedback = {}; }
   try {
@@ -429,11 +440,18 @@
   }
 
   function showMode(mode) {
+    const storyMode = mode === "story";
     const outlineMode = mode === "outline";
-    $("story-mode").hidden = outlineMode;
+    const essayMode = mode === "essay";
+    $("story-mode").hidden = !storyMode;
     $("outline-mode").hidden = !outlineMode;
-    $("story-mode-button").classList.toggle("active", !outlineMode);
+    $("essay-mode").hidden = !essayMode;
+    $("story-mode-button").classList.toggle("active", storyMode);
     $("outline-mode-button").classList.toggle("active", outlineMode);
+    $("essay-mode-button").classList.toggle("active", essayMode);
+    $("story-mode-button").setAttribute("aria-pressed", String(storyMode));
+    $("outline-mode-button").setAttribute("aria-pressed", String(outlineMode));
+    $("essay-mode-button").setAttribute("aria-pressed", String(essayMode));
     if (outlineMode && !outlineState.loaded) loadOutlinePrompt();
   }
 
@@ -602,6 +620,171 @@
     }
   }
 
+  function essayWordCount(text) {
+    const words = text.trim().match(/\S+/g);
+    return words ? words.length : 0;
+  }
+
+  function essayLimitError() {
+    const assignment = $("essay-assignment").value;
+    const essay = $("essay-text").value;
+    const words = essayWordCount(essay);
+    if (assignment.trim().length > ESSAY_MAX_ASSIGNMENT_CHARACTERS) return "The assignment is over 600 characters.";
+    if (essay.length > ESSAY_MAX_CHARACTERS) return "The essay is over 20,000 characters.";
+    if (words > ESSAY_MAX_WORDS) return "The essay is over 3,500 words.";
+    return "";
+  }
+
+  function renderEssayError() {
+    const message = essayLimitError() || essayState.requestError;
+    $("essay-error").textContent = message;
+    $("essay-error").hidden = !message;
+  }
+
+  function setEssayError(message = "") {
+    essayState.requestError = message;
+    renderEssayError();
+  }
+
+  function updateEssayReady() {
+    const essay = $("essay-text").value;
+    const words = essayWordCount(essay);
+    const characters = essay.length;
+    const assignmentCharacters = $("essay-assignment").value.length;
+    const ready = words >= ESSAY_MIN_WORDS && !essayLimitError();
+    $("essay-assignment-count").textContent = `Optional · ${assignmentCharacters.toLocaleString()} / 600 characters`;
+    $("essay-assignment-count").classList.toggle("over-limit", $("essay-assignment").value.trim().length > ESSAY_MAX_ASSIGNMENT_CHARACTERS);
+    $("essay-word-count").textContent = `${words.toLocaleString()} / 50–3,500 words · ${characters.toLocaleString()} / 20,000 characters`;
+    $("essay-word-count").classList.toggle("ready", ready);
+    $("essay-word-count").classList.toggle("over-limit", words > ESSAY_MAX_WORDS || characters > ESSAY_MAX_CHARACTERS);
+    $("essay-grade").disabled = essayState.grading || !ready;
+    renderEssayError();
+  }
+
+  function validEssayResult(result) {
+    if (!result || !Number.isInteger(result.score) || result.score < 0 || result.score > 100) return false;
+    if (result.letterGrade !== essayLetterGrade(result.score)) return false;
+    if (typeof result.summary !== "string" || typeof result.nextStep !== "string") return false;
+    if (!Array.isArray(result.strengths) || result.strengths.length !== 3 || !result.strengths.every((item) => typeof item === "string")) return false;
+    if (!Array.isArray(result.improvements) || result.improvements.length !== 3 || !result.improvements.every((item) => typeof item === "string")) return false;
+    if (!result.breakdown || typeof result.breakdown !== "object") return false;
+    let rubricTotal = 0;
+    const validBreakdown = ESSAY_CRITERIA.every(([key]) => {
+      const criterion = result.breakdown[key];
+      const validCriterion = criterion
+        && Number.isInteger(criterion.score)
+        && criterion.score >= 0
+        && criterion.score <= 25
+        && typeof criterion.feedback === "string";
+      if (validCriterion) rubricTotal += criterion.score;
+      return validCriterion;
+    });
+    return validBreakdown && rubricTotal === result.score;
+  }
+
+  function essayLetterGrade(score) {
+    if (score >= 97) return "A+";
+    if (score >= 93) return "A";
+    if (score >= 90) return "A−";
+    if (score >= 87) return "B+";
+    if (score >= 83) return "B";
+    if (score >= 80) return "B−";
+    if (score >= 77) return "C+";
+    if (score >= 73) return "C";
+    if (score >= 70) return "C−";
+    if (score >= 67) return "D+";
+    if (score >= 63) return "D";
+    if (score >= 60) return "D−";
+    return "F";
+  }
+
+  function renderEssayFeedback(listId, items) {
+    const list = $(listId);
+    list.replaceChildren();
+    items.forEach((item) => {
+      const entry = document.createElement("li");
+      entry.textContent = item;
+      list.append(entry);
+    });
+  }
+
+  function showEssayResults(result) {
+    $("essay-form").hidden = true;
+    $("essay-results").hidden = false;
+    $("essay-score").textContent = result.score;
+    $("essay-letter").textContent = result.letterGrade;
+    $("essay-summary").textContent = result.summary;
+    $("essay-next-step").textContent = result.nextStep;
+    const breakdown = $("essay-breakdown");
+    breakdown.replaceChildren();
+    ESSAY_CRITERIA.forEach(([key, label]) => {
+      const criterion = result.breakdown[key];
+      const card = document.createElement("article");
+      card.className = "essay-criterion";
+      const heading = document.createElement("div");
+      const name = document.createElement("strong");
+      const score = document.createElement("span");
+      const feedback = document.createElement("p");
+      name.textContent = label;
+      score.textContent = `${criterion.score}/25`;
+      feedback.textContent = criterion.feedback;
+      heading.append(name, score);
+      card.append(heading, feedback);
+      breakdown.append(card);
+    });
+    renderEssayFeedback("essay-strengths", result.strengths);
+    renderEssayFeedback("essay-improvements", result.improvements);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function gradeEssay() {
+    const essay = $("essay-text").value.trim();
+    const assignment = $("essay-assignment").value.trim();
+    const words = essayWordCount(essay);
+    if (essayState.grading || words < ESSAY_MIN_WORDS || essayLimitError()) return;
+    const button = $("essay-grade");
+    essayState.grading = true;
+    button.textContent = "Grading…";
+    button.setAttribute("aria-busy", "true");
+    setEssayError();
+    updateEssayReady();
+    try {
+      const result = await api("/api/evaluate-essay", {
+        method: "POST",
+        body: JSON.stringify({ assignment, essay }),
+        timeoutMs: 60000,
+      });
+      if (!validEssayResult(result)) throw new Error("DraftLab returned incomplete essay feedback. Please try again.");
+      showEssayResults(result);
+    } catch (error) {
+      setEssayError(error instanceof Error ? error.message : "Could not grade your essay.");
+    } finally {
+      essayState.grading = false;
+      button.textContent = "Grade my essay";
+      button.removeAttribute("aria-busy");
+      updateEssayReady();
+    }
+  }
+
+  function editEssay() {
+    $("essay-results").hidden = true;
+    $("essay-form").hidden = false;
+    setEssayError();
+    updateEssayReady();
+    $("essay-text").focus();
+  }
+
+  function resetEssay() {
+    $("essay-assignment").value = "";
+    $("essay-text").value = "";
+    editEssay();
+  }
+
+  function handleEssayInput() {
+    essayState.requestError = "";
+    updateEssayReady();
+  }
+
   document.querySelectorAll("[data-category]").forEach((button) => button.addEventListener("click", () => loadPrompt(button.dataset.category)));
   $("story").addEventListener("input", updateSentenceCount);
   $("score-button").addEventListener("click", scoreStory);
@@ -627,6 +810,7 @@
   });
   $("story-mode-button").addEventListener("click", () => showMode("story"));
   $("outline-mode-button").addEventListener("click", () => showMode("outline"));
+  $("essay-mode-button").addEventListener("click", () => showMode("essay"));
   $("outline-mode").querySelectorAll("textarea, input").forEach((field) => field.addEventListener("input", updateOutlineReady));
   $("outline-grade").addEventListener("click", gradeOutline);
   $("outline-skip").addEventListener("click", loadOutlinePrompt);
@@ -637,6 +821,12 @@
     outlineState.startedAt = Date.now() - outlineState.elapsedMs;
     startOutlineTimer();
   });
+  $("essay-assignment").addEventListener("input", handleEssayInput);
+  $("essay-text").addEventListener("input", handleEssayInput);
+  $("essay-grade").addEventListener("click", gradeEssay);
+  $("essay-edit").addEventListener("click", editEssay);
+  $("essay-reset").addEventListener("click", resetEssay);
 
+  updateEssayReady();
   Promise.all([loadProfile(), loadPrompt(categories[0])]);
 })();

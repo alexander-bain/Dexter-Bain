@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#fbfaf7">
-  <meta name="description" content="Practice creative writing and build fast, organized essay outlines with AI-powered feedback.">
+  <meta name="description" content="Practice creative writing, build organized outlines, and get clear feedback on a full essay.">
   <meta property="og:title" content="DraftLab — Creative Writing Practice">
-  <meta property="og:description" content="Write four or five sentences. Get a score, targeted feedback, and a polished example.">
+  <meta property="og:description" content="Write a short challenge, build an outline, or paste a full essay for a score and useful feedback.">
   <meta property="og:image" content="https://draftlab-writing.dexterhbain.chatgpt.site/og.png">
   <title>DraftLab — Creative Writing Practice</title>
-  <link rel="stylesheet" href="styles.css?v=20261028-4">
+  <link rel="stylesheet" href="styles.css?v=20261105-2">
 </head>
 <body>
   <main class="app-shell">
@@ -24,12 +24,13 @@
     <section class="hero">
       <p class="eyebrow">Writing practice</p>
       <h1>Write with purpose. Improve with proof.</h1>
-      <p class="hero-copy">Practice a short creative scene or race the clock to build a clear essay outline.</p>
+      <p class="hero-copy">Practice a short creative scene, race the clock to build an outline, or paste a full essay for clear feedback.</p>
     </section>
 
     <nav class="mode-switch" aria-label="Practice mode">
-      <button class="active" id="story-mode-button" type="button">Story Challenge</button>
-      <button id="outline-mode-button" type="button">Outline Sprint</button>
+      <button class="active" id="story-mode-button" type="button" aria-pressed="true">Story Challenge</button>
+      <button id="outline-mode-button" type="button" aria-pressed="false">Outline Sprint</button>
+      <button id="essay-mode-button" type="button" aria-pressed="false">Essay Grader</button>
     </nav>
 
     <div id="story-mode">
@@ -123,6 +124,43 @@
         <div class="results-actions"><button class="quiet-button" id="outline-edit" type="button">Edit outline</button><button class="primary-button" id="outline-new" type="button">New sprint</button></div>
       </div>
     </section>
+
+    <section class="essay-card" id="essay-mode" hidden>
+      <div class="essay-header">
+        <p class="eyebrow">Full essay grader</p>
+        <h2>Paste your essay. Get a clear grade.</h2>
+        <p>Add the assignment if you have it, then paste your essay for a score, letter grade, and focused feedback.</p>
+      </div>
+      <div class="essay-form" id="essay-form">
+        <label class="essay-field" for="essay-assignment">
+          <span>Assignment or prompt <small id="essay-assignment-count">Optional · 0 / 600 characters</small></span>
+          <textarea id="essay-assignment" rows="3" aria-describedby="essay-assignment-count essay-error" placeholder="What were you asked to write about?"></textarea>
+        </label>
+        <label class="essay-field" for="essay-text">
+          <span>Your essay</span>
+          <textarea id="essay-text" rows="14" aria-describedby="essay-word-count essay-error" placeholder="Paste your essay here…"></textarea>
+        </label>
+        <div class="essay-footer">
+          <span class="essay-word-count" id="essay-word-count" aria-live="polite">0 / 50–3,500 words · 0 / 20,000 characters</span>
+          <button class="primary-button" id="essay-grade" type="button" disabled>Grade my essay</button>
+        </div>
+        <p class="error-message" id="essay-error" role="alert" hidden></p>
+      </div>
+      <div class="essay-results" id="essay-results" aria-live="polite" hidden>
+        <div class="essay-score-row">
+          <div class="score-ring"><div><strong id="essay-score">0</strong><span>out of 100</span></div></div>
+          <div class="essay-result-copy"><p class="eyebrow">Essay grade</p><h3 id="essay-result-title">Your feedback is ready.</h3><p id="essay-summary"></p><p class="essay-practice-note">This is practice feedback, not an official teacher grade.</p></div>
+          <div class="letter-grade-badge"><span>Letter grade</span><strong id="essay-letter">—</strong></div>
+        </div>
+        <div class="essay-breakdown" id="essay-breakdown"></div>
+        <div class="essay-feedback-grid">
+          <section class="essay-feedback-panel"><h3>What worked</h3><ul class="feedback-list" id="essay-strengths"></ul></section>
+          <section class="essay-feedback-panel"><h3>What to improve</h3><ul class="feedback-list" id="essay-improvements"></ul></section>
+        </div>
+        <div class="next-step"><strong>Next step</strong><p id="essay-next-step"></p></div>
+        <div class="results-actions"><button class="quiet-button" id="essay-edit" type="button">Edit essay</button><button class="primary-button" id="essay-reset" type="button">Grade another essay</button></div>
+      </div>
+    </section>
   </main>
 
   <dialog class="account-dialog" id="account-dialog">
@@ -145,6 +183,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20261105-1" defer></script>
+  <script src="app.js?v=20261105-2" defer></script>
 </body>
 </html>
