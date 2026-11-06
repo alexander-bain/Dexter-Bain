@@ -141,7 +141,7 @@
   const $ = (id) => document.getElementById(id);
   const state = { category: "Imagery", prompt: null, token: localStorage.getItem(TOKEN_KEY) || "", profile: null, priorFeedback: {}, promptHistory: Object.fromEntries(categories.map((category) => [category, []])), promptHistoryAll: [] };
   const outlineState = { prompt: null, promptHistory: readStoredOutlineHistory(), loaded: false, startedAt: 0, elapsedMs: 0, running: false, timer: 0, bestTime: Number(localStorage.getItem(OUTLINE_BEST_KEY)) || null };
-  const essayState = { grading: false, requestError: "" };
+  const essayState = { grading: false, requestError: "", submittedEssay: "", shuffleOriginal: [], shuffleCurrent: [], shuffleSolved: false };
 
   try { state.priorFeedback = JSON.parse(localStorage.getItem(FEEDBACK_KEY) || "{}"); } catch { state.priorFeedback = {}; }
   try {
@@ -708,6 +708,139 @@
     });
   }
 
+  function essaySentences(text) {
+    const clean = String(text || "").trim().replace(/\s+/g, " ");
+    if (!clean) return [];
+    if (typeof Intl !== "undefined" && typeof Intl.Segmenter === "function") {
+      try {
+        return Array.from(new Intl.Segmenter(undefined, { granularity: "sentence" }).segment(clean), ({ segment }) => segment.trim()).filter(Boolean);
+      } catch {
+        // Fall through to a punctuation-based split for older browsers.
+      }
+    }
+    const punctuationSegments = clean.match(/[^.!?]+(?:[.!?]+["'’”)\]]*|$)/g);
+    return (punctuationSegments || [clean]).map((sentence) => sentence.trim()).filter(Boolean);
+  }
+
+  function uniqueEssaySentences(text) {
+    const seen = new Set();
+    return essaySentences(text).filter((sentence) => {
+      const key = sentence.toLocaleLowerCase().replace(/\s+/g, " ");
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
+
+  function shuffledEssayItems(items) {
+    const shuffled = items.map((item) => ({ ...item }));
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+    }
+    if (shuffled.every((item, index) => item.id === items[index].id)) {
+      shuffled.push(shuffled.shift());
+    }
+    return shuffled;
+  }
+
+  function setEssayShuffleFeedback(message, tone = "") {
+    const feedback = $("essay-shuffle-feedback");
+    feedback.textContent = message;
+    feedback.className = `essay-shuffle-feedback${tone ? ` ${tone}` : ""}`;
+  }
+
+  function renderEssayShuffle(focusId = null, focusMove = "") {
+    const list = $("essay-shuffle-list");
+    list.replaceChildren();
+    essayState.shuffleCurrent.forEach((item, index) => {
+      const entry = document.createElement("li");
+      entry.dataset.shuffleId = String(item.id);
+      const sentence = document.createElement("p");
+      sentence.textContent = item.text;
+      const controls = document.createElement("div");
+      controls.className = "essay-shuffle-move";
+      const up = document.createElement("button");
+      up.type = "button";
+      up.dataset.move = "up";
+      up.textContent = "Up";
+      const sentenceLabel = item.text.length > 54 ? `${item.text.slice(0, 51)}…` : item.text;
+      up.setAttribute("aria-label", `Move “${sentenceLabel}” up`);
+      up.disabled = essayState.shuffleSolved || index === 0;
+      up.addEventListener("click", () => moveEssaySentence(index, -1));
+      const down = document.createElement("button");
+      down.type = "button";
+      down.dataset.move = "down";
+      down.textContent = "Down";
+      down.setAttribute("aria-label", `Move “${sentenceLabel}” down`);
+      down.disabled = essayState.shuffleSolved || index === essayState.shuffleCurrent.length - 1;
+      down.addEventListener("click", () => moveEssaySentence(index, 1));
+      controls.append(up, down);
+      entry.append(sentence, controls);
+      list.append(entry);
+    });
+    $("essay-shuffle-check").disabled = essayState.shuffleSolved;
+    if (focusId !== null && focusMove) {
+      const movedControl = list.querySelector(`[data-shuffle-id="${focusId}"] [data-move="${focusMove}"]`);
+      movedControl?.focus();
+    }
+  }
+
+  function moveEssaySentence(index, direction) {
+    if (essayState.shuffleSolved) return;
+    const nextIndex = index + direction;
+    if (nextIndex < 0 || nextIndex >= essayState.shuffleCurrent.length) return;
+    const movedId = essayState.shuffleCurrent[index].id;
+    [essayState.shuffleCurrent[index], essayState.shuffleCurrent[nextIndex]] = [essayState.shuffleCurrent[nextIndex], essayState.shuffleCurrent[index]];
+    setEssayShuffleFeedback("Order changed. Check it when you are ready.");
+    renderEssayShuffle(movedId, direction < 0 ? "up" : "down");
+  }
+
+  function resetEssayShuffle() {
+    essayState.submittedEssay = "";
+    essayState.shuffleOriginal = [];
+    essayState.shuffleCurrent = [];
+    essayState.shuffleSolved = false;
+    $("essay-shuffle-list").replaceChildren();
+    $("essay-shuffle-play").hidden = true;
+    $("essay-shuffle-unavailable").hidden = true;
+    $("essay-shuffle-check").disabled = false;
+    setEssayShuffleFeedback("Move the sentences, then check your order.");
+  }
+
+  function startEssayShuffle(text = essayState.submittedEssay) {
+    const sentences = uniqueEssaySentences(text);
+    const canPlay = sentences.length >= 2;
+    $("essay-shuffle-play").hidden = !canPlay;
+    $("essay-shuffle-unavailable").hidden = canPlay;
+    essayState.shuffleSolved = false;
+    if (!canPlay) {
+      essayState.shuffleOriginal = [];
+      essayState.shuffleCurrent = [];
+      $("essay-shuffle-list").replaceChildren();
+      return;
+    }
+    const gameSize = Math.min(4, sentences.length);
+    const maxStart = sentences.length - gameSize;
+    const start = maxStart ? Math.floor(Math.random() * (maxStart + 1)) : 0;
+    essayState.shuffleOriginal = sentences.slice(start, start + gameSize).map((text, index) => ({ id: start + index, text }));
+    essayState.shuffleCurrent = shuffledEssayItems(essayState.shuffleOriginal);
+    setEssayShuffleFeedback("Move the sentences, then check your order.");
+    renderEssayShuffle();
+  }
+
+  function checkEssayShuffle() {
+    const correct = essayState.shuffleCurrent.length >= 2
+      && essayState.shuffleCurrent.every((item, index) => item.id === essayState.shuffleOriginal[index].id);
+    if (!correct) {
+      setEssayShuffleFeedback("Not quite—keep adjusting the order and try again.", "try-again");
+      return;
+    }
+    essayState.shuffleSolved = true;
+    renderEssayShuffle();
+    setEssayShuffleFeedback("Correct! Your sentences are back in their original order.", "correct");
+  }
+
   function showEssayResults(result) {
     $("essay-form").hidden = true;
     $("essay-results").hidden = false;
@@ -734,6 +867,7 @@
     });
     renderEssayFeedback("essay-strengths", result.strengths);
     renderEssayFeedback("essay-improvements", result.improvements);
+    startEssayShuffle(essayState.submittedEssay);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -743,6 +877,8 @@
     const words = essayWordCount(essay);
     if (essayState.grading || words < ESSAY_MIN_WORDS || essayLimitError()) return;
     const button = $("essay-grade");
+    resetEssayShuffle();
+    essayState.submittedEssay = essay;
     essayState.grading = true;
     button.textContent = "Grading…";
     button.setAttribute("aria-busy", "true");
@@ -767,6 +903,7 @@
   }
 
   function editEssay() {
+    resetEssayShuffle();
     $("essay-results").hidden = true;
     $("essay-form").hidden = false;
     setEssayError();
@@ -826,6 +963,8 @@
   $("essay-grade").addEventListener("click", gradeEssay);
   $("essay-edit").addEventListener("click", editEssay);
   $("essay-reset").addEventListener("click", resetEssay);
+  $("essay-shuffle-check").addEventListener("click", checkEssayShuffle);
+  $("essay-shuffle-replay").addEventListener("click", () => startEssayShuffle(essayState.submittedEssay));
 
   updateEssayReady();
   Promise.all([loadProfile(), loadPrompt(categories[0])]);

@@ -9,7 +9,7 @@
   <meta property="og:description" content="Write a short challenge, build an outline, or paste a full essay for a score and useful feedback.">
   <meta property="og:image" content="https://draftlab-writing.dexterhbain.chatgpt.site/og.png">
   <title>DraftLab — Creative Writing Practice</title>
-  <link rel="stylesheet" href="styles.css?v=20261105-2">
+  <link rel="stylesheet" href="styles.css?v=20261105-3">
 </head>
 <body>
   <main class="app-shell">
@@ -158,6 +158,23 @@
           <section class="essay-feedback-panel"><h3>What to improve</h3><ul class="feedback-list" id="essay-improvements"></ul></section>
         </div>
         <div class="next-step"><strong>Next step</strong><p id="essay-next-step"></p></div>
+        <section class="essay-shuffle" aria-labelledby="essay-shuffle-title" aria-live="off">
+          <div class="essay-shuffle-heading">
+            <div><p class="eyebrow">From your essay</p><h3 id="essay-shuffle-title">Sentence Shuffle</h3></div>
+            <p>Put the sentences back in their original order.</p>
+          </div>
+          <div id="essay-shuffle-play">
+            <ol class="essay-shuffle-list" id="essay-shuffle-list"></ol>
+            <div class="essay-shuffle-footer">
+              <p class="essay-shuffle-feedback" id="essay-shuffle-feedback" role="status" aria-live="polite" aria-atomic="true">Move the sentences, then check your order.</p>
+              <div class="essay-shuffle-actions">
+                <button class="quiet-button" id="essay-shuffle-replay" type="button">Replay</button>
+                <button class="primary-button compact" id="essay-shuffle-check" type="button">Check order</button>
+              </div>
+            </div>
+          </div>
+          <p class="essay-shuffle-unavailable" id="essay-shuffle-unavailable" hidden>Sentence Shuffle needs at least two different sentences. Add another sentence to your essay, then grade it again.</p>
+        </section>
         <div class="results-actions"><button class="quiet-button" id="essay-edit" type="button">Edit essay</button><button class="primary-button" id="essay-reset" type="button">Grade another essay</button></div>
       </div>
     </section>
@@ -183,6 +200,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20261105-2" defer></script>
+  <script src="app.js?v=20261105-3" defer></script>
 </body>
 </html>
