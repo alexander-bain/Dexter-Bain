@@ -9,7 +9,7 @@
   <meta property="og:description" content="Write a short challenge, build an outline, or paste a full essay for a score and useful feedback.">
   <meta property="og:image" content="https://draftlab-writing.dexterhbain.chatgpt.site/og.png">
   <title>DraftLab — Creative Writing Practice</title>
-  <link rel="stylesheet" href="styles.css?v=20261105-5">
+  <link rel="stylesheet" href="styles.css?v=20261105-6">
 </head>
 <body>
   <main class="app-shell">
@@ -164,9 +164,9 @@
             <p>Choose a quick game. Your progress stays put when you switch.</p>
           </div>
           <div class="essay-game-picker" role="group" aria-label="Choose an essay game">
-            <button class="essay-game-button active" id="essay-game-quest-button" type="button" aria-pressed="true" aria-controls="essay-game-quest-panel"><strong>Idea Quest</strong><span>Explore your essay world</span></button>
-            <button class="essay-game-button" id="essay-game-shuffle-button" type="button" aria-pressed="false" aria-controls="essay-game-shuffle-panel"><strong>Sentence Shuffle</strong><span>Restore the original order</span></button>
-            <button class="essay-game-button" id="essay-game-missing-button" type="button" aria-pressed="false" aria-controls="essay-game-missing-panel"><strong>Missing Word</strong><span>Remember your exact words</span></button>
+            <button class="essay-game-button active" id="essay-game-quest-button" type="button" aria-pressed="true" aria-controls="essay-game-quest-panel"><img src="assets/essay-arcade/hero.webp" alt="" aria-hidden="true"><span class="essay-game-button-copy"><strong>Idea Quest</strong><span>Explore your essay world</span></span></button>
+            <button class="essay-game-button" id="essay-game-shuffle-button" type="button" aria-pressed="false" aria-controls="essay-game-shuffle-panel"><img src="assets/essay-arcade/train-engine.webp" alt="" aria-hidden="true"><span class="essay-game-button-copy"><strong>Sentence Train</strong><span>Build your essay train</span></span></button>
+            <button class="essay-game-button" id="essay-game-missing-button" type="button" aria-pressed="false" aria-controls="essay-game-missing-panel"><img src="assets/essay-arcade/wizard.webp" alt="" aria-hidden="true"><span class="essay-game-button-copy"><strong>Word Wizard</strong><span>Cast the missing word</span></span></button>
           </div>
 
           <section class="essay-game-panel" id="essay-game-quest-panel" aria-labelledby="essay-quest-title">
@@ -205,51 +205,67 @@
 
           <section class="essay-game-panel" id="essay-game-shuffle-panel" aria-labelledby="essay-shuffle-title" hidden>
             <div class="essay-game-heading">
-              <div><p class="essay-game-kicker">Order challenge</p><h4 id="essay-shuffle-title">Sentence Shuffle</h4></div>
-              <p>Put the sentences back in their original order.</p>
+              <div><p class="essay-game-kicker">Train-building challenge</p><h4 id="essay-shuffle-title">Sentence Train</h4></div>
+              <p>Arrange your sentence cars, then send the train to the station.</p>
             </div>
             <div id="essay-shuffle-play">
-              <ol class="essay-shuffle-list" id="essay-shuffle-list"></ol>
+              <div class="essay-train-stage" id="essay-train-stage" data-state="building" aria-hidden="true">
+                <img class="essay-train-engine" src="assets/essay-arcade/train-engine.webp" alt="">
+                <img class="essay-train-station" src="assets/essay-arcade/train-station.webp" alt="">
+                <img class="essay-train-signal" src="assets/essay-arcade/train-signal.webp" alt="">
+                <span class="essay-train-track"></span>
+                <span class="essay-train-victory"><strong>Train complete!</strong><small>All sentence cars are in order.</small></span>
+              </div>
+              <p class="essay-train-instructions">Use each car's Up and Down buttons to rebuild your essay train.</p>
+              <ol class="essay-shuffle-list" id="essay-shuffle-list" aria-label="Sentence train cars"></ol>
               <div class="essay-shuffle-footer">
-                <p class="essay-shuffle-feedback" id="essay-shuffle-feedback" role="status" aria-live="polite" aria-atomic="true">Move the sentences, then check your order.</p>
+                <p class="essay-shuffle-feedback" id="essay-shuffle-feedback" role="status" aria-live="polite" aria-atomic="true">Move the sentence cars, then check your train.</p>
                 <div class="essay-shuffle-actions">
-                  <button class="quiet-button" id="essay-shuffle-replay" type="button">Replay</button>
-                  <button class="primary-button compact" id="essay-shuffle-check" type="button">Check order</button>
+                  <button class="quiet-button" id="essay-shuffle-replay" type="button">New train</button>
+                  <button class="primary-button compact" id="essay-shuffle-check" type="button">Send train</button>
                 </div>
               </div>
             </div>
-            <p class="essay-game-unavailable" id="essay-shuffle-unavailable" hidden>Sentence Shuffle needs at least two different sentences. Add another sentence to your essay, then grade it again.</p>
+            <p class="essay-game-unavailable" id="essay-shuffle-unavailable" hidden>Sentence Train needs at least two different sentences. Add another sentence to your essay, then grade it again.</p>
           </section>
 
           <section class="essay-game-panel" id="essay-game-missing-panel" aria-labelledby="essay-missing-title" hidden>
             <div class="essay-game-heading">
-              <div><p class="essay-game-kicker">Memory challenge</p><h4 id="essay-missing-title">Missing Word</h4></div>
-              <p>Choose the word you originally wrote.</p>
+              <div><p class="essay-game-kicker">Spell-casting challenge</p><h4 id="essay-missing-title">Word Wizard</h4></div>
+              <p>Cast the exact word back into your sentence.</p>
             </div>
             <div id="essay-missing-play" hidden>
+              <div class="essay-spell-stage" id="essay-spell-stage" data-state="ready" aria-hidden="true">
+                <img class="essay-spell-wizard" src="assets/essay-arcade/wizard.webp" alt="">
+                <img class="essay-spell-orb" src="assets/essay-arcade/spell-orb.webp" alt="">
+                <img class="essay-spell-ghost" src="assets/essay-arcade/ink-ghost.webp" alt="">
+                <img class="essay-spell-book" src="assets/essay-arcade/spellbook.webp" alt="">
+                <span class="essay-spell-fizzle">Fizz!</span>
+                <span class="essay-spell-victory"><strong>Spellbook complete!</strong><small>All three words are restored.</small></span>
+              </div>
               <div id="essay-missing-question">
                 <p class="essay-missing-progress" id="essay-missing-progress">Round 1 of 3</p>
                 <p class="essay-missing-sentence" id="essay-missing-sentence" tabindex="-1"></p>
                 <fieldset class="essay-missing-fieldset">
-                  <legend>Which word belongs in the blank?</legend>
+                  <legend>Which word belongs in the blank? Choose a spell or press 1–4.</legend>
                   <div class="essay-missing-choices" id="essay-missing-choices"></div>
                 </fieldset>
                 <div class="essay-shuffle-footer">
-                  <p class="essay-shuffle-feedback" id="essay-missing-feedback" role="status" aria-live="polite" aria-atomic="true">Choose the word you used in your essay.</p>
+                  <p class="essay-shuffle-feedback" id="essay-missing-feedback" role="status" aria-live="polite" aria-atomic="true">Choose the spell containing the word you used in your essay.</p>
                   <div class="essay-shuffle-actions">
-                    <button class="quiet-button" id="essay-missing-replay" type="button">Replay</button>
-                    <button class="primary-button compact" id="essay-missing-next" type="button" disabled>Next sentence</button>
+                    <button class="quiet-button" id="essay-missing-replay" type="button">New spells</button>
+                    <button class="primary-button compact" id="essay-missing-next" type="button" disabled>Next spell</button>
                   </div>
                 </div>
               </div>
               <div class="essay-missing-complete" id="essay-missing-complete" hidden>
                 <span aria-hidden="true">✓</span>
-                <h5>You remembered every missing word.</h5>
+                <h5>Your spellbook is complete.</h5>
                 <p id="essay-missing-complete-copy">You completed all 3 rounds.</p>
                 <button class="primary-button compact" id="essay-missing-complete-replay" type="button">Play again</button>
               </div>
             </div>
-            <p class="essay-game-unavailable" id="essay-missing-unavailable" hidden>Missing Word needs at least three different meaningful words to make three fair rounds. Add a little more detail, then grade your essay again.</p>
+            <p class="essay-game-unavailable" id="essay-missing-unavailable" hidden>Word Wizard needs at least three different meaningful words to make three fair rounds. Add a little more detail, then grade your essay again.</p>
           </section>
         </section>
         <div class="results-actions"><button class="quiet-button" id="essay-edit" type="button">Edit essay</button><button class="primary-button" id="essay-reset" type="button">Grade another essay</button></div>
@@ -277,6 +293,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20261105-5" defer></script>
+  <script src="app.js?v=20261105-6" defer></script>
 </body>
 </html>

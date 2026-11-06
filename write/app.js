@@ -782,10 +782,21 @@
     return shuffled;
   }
 
+  function setEssayTrainState(state = "building") {
+    const stage = $("essay-train-stage");
+    if (!stage) return;
+    if (["blocked", "departing"].includes(state)) {
+      stage.dataset.state = "building";
+      void stage.offsetWidth;
+    }
+    stage.dataset.state = state;
+  }
+
   function setEssayShuffleFeedback(message, tone = "") {
     const feedback = $("essay-shuffle-feedback");
     feedback.textContent = message;
     feedback.className = `essay-shuffle-feedback${tone ? ` ${tone}` : ""}`;
+    setEssayTrainState(tone === "correct" ? "departing" : tone === "try-again" ? "blocked" : "building");
   }
 
   function renderEssayShuffle(focusId = null, focusMove = "") {
@@ -793,7 +804,13 @@
     list.replaceChildren();
     essayState.shuffleCurrent.forEach((item, index) => {
       const entry = document.createElement("li");
+      entry.className = "essay-train-car";
       entry.dataset.shuffleId = String(item.id);
+      const carArt = document.createElement("img");
+      carArt.className = "essay-train-car-art";
+      carArt.src = "assets/essay-arcade/train-car.webp";
+      carArt.alt = "";
+      carArt.setAttribute("aria-hidden", "true");
       const sentence = document.createElement("p");
       sentence.textContent = item.text;
       const controls = document.createElement("div");
@@ -814,12 +831,16 @@
       down.disabled = essayState.shuffleSolved || index === essayState.shuffleCurrent.length - 1;
       down.addEventListener("click", () => moveEssaySentence(index, 1));
       controls.append(up, down);
-      entry.append(sentence, controls);
+      entry.append(carArt, sentence, controls);
       list.append(entry);
     });
     $("essay-shuffle-check").disabled = essayState.shuffleSolved;
     if (focusId !== null && focusMove) {
-      const movedControl = list.querySelector(`[data-shuffle-id="${focusId}"] [data-move="${focusMove}"]`);
+      const movedEntry = list.querySelector(`[data-shuffle-id="${focusId}"]`);
+      const preferredControl = movedEntry?.querySelector(`[data-move="${focusMove}"]`);
+      const movedControl = preferredControl && !preferredControl.disabled
+        ? preferredControl
+        : movedEntry?.querySelector("button:not(:disabled)");
       movedControl?.focus();
     }
   }
@@ -830,7 +851,7 @@
     if (nextIndex < 0 || nextIndex >= essayState.shuffleCurrent.length) return;
     const movedId = essayState.shuffleCurrent[index].id;
     [essayState.shuffleCurrent[index], essayState.shuffleCurrent[nextIndex]] = [essayState.shuffleCurrent[nextIndex], essayState.shuffleCurrent[index]];
-    setEssayShuffleFeedback("Order changed. Check it when you are ready.");
+    setEssayShuffleFeedback("Car moved. Send the train when the sentence order looks right.");
     renderEssayShuffle(movedId, direction < 0 ? "up" : "down");
   }
 
@@ -842,7 +863,7 @@
     $("essay-shuffle-play").hidden = true;
     $("essay-shuffle-unavailable").hidden = true;
     $("essay-shuffle-check").disabled = false;
-    setEssayShuffleFeedback("Move the sentences, then check your order.");
+    setEssayShuffleFeedback("Move the sentence cars, then send your train.");
   }
 
   function startEssayShuffle(text = essayState.submittedEssay) {
@@ -862,7 +883,7 @@
     const start = maxStart ? Math.floor(Math.random() * (maxStart + 1)) : 0;
     essayState.shuffleOriginal = sentences.slice(start, start + gameSize).map((text, index) => ({ id: start + index, text }));
     essayState.shuffleCurrent = shuffledEssayItems(essayState.shuffleOriginal);
-    setEssayShuffleFeedback("Move the sentences, then check your order.");
+    setEssayShuffleFeedback("Move the sentence cars, then send your train.");
     renderEssayShuffle();
   }
 
@@ -870,12 +891,12 @@
     const correct = essayState.shuffleCurrent.length >= 2
       && essayState.shuffleCurrent.every((item, index) => item.id === essayState.shuffleOriginal[index].id);
     if (!correct) {
-      setEssayShuffleFeedback("Not quite—keep adjusting the order and try again.", "try-again");
+      setEssayShuffleFeedback("Red signal—those cars are not in the original order yet. Keep adjusting them.", "try-again");
       return;
     }
     essayState.shuffleSolved = true;
     renderEssayShuffle();
-    setEssayShuffleFeedback("Correct! Your sentences are back in their original order.", "correct");
+    setEssayShuffleFeedback("Green signal! Your sentence train is in order and has reached the station.", "correct");
   }
 
   function createEssayGameRandom(essay, replay = 0) {
@@ -1003,10 +1024,21 @@
     });
   }
 
+  function setEssaySpellState(state = "ready") {
+    const stage = $("essay-spell-stage");
+    if (!stage) return;
+    if (["fizzle", "correct"].includes(state)) {
+      stage.dataset.state = "ready";
+      void stage.offsetWidth;
+    }
+    stage.dataset.state = state;
+  }
+
   function setMissingWordFeedback(message, tone = "") {
     const feedback = $("essay-missing-feedback");
     feedback.textContent = message;
     feedback.className = `essay-shuffle-feedback${tone ? ` ${tone}` : ""}`;
+    setEssaySpellState(tone === "correct" ? "correct" : tone === "try-again" ? "fizzle" : "ready");
   }
 
   function renderMissingWordRound(moveFocus = false) {
@@ -1026,19 +1058,33 @@
 
     const choices = $("essay-missing-choices");
     choices.replaceChildren();
-    round.choices.forEach(({ key, label }) => {
+    round.choices.forEach(({ key, label }, index) => {
       const button = document.createElement("button");
       button.type = "button";
       button.dataset.choiceKey = key;
-      button.textContent = label;
+      button.className = "essay-spell-choice";
+      button.setAttribute("aria-keyshortcuts", String(index + 1));
+      button.setAttribute("aria-label", `Spell ${index + 1}: ${label}`);
+      const shortcut = document.createElement("span");
+      shortcut.className = "essay-spell-shortcut";
+      shortcut.textContent = String(index + 1);
+      shortcut.setAttribute("aria-hidden", "true");
+      const orb = document.createElement("img");
+      orb.src = "assets/essay-arcade/spell-orb.webp";
+      orb.alt = "";
+      orb.setAttribute("aria-hidden", "true");
+      const word = document.createElement("span");
+      word.className = "essay-spell-word";
+      word.textContent = label;
+      button.append(shortcut, orb, word);
       button.addEventListener("click", () => chooseMissingWord(key, button));
       choices.append(button);
     });
 
     const next = $("essay-missing-next");
     next.disabled = true;
-    next.textContent = essayState.missingRoundIndex === essayState.missingRounds.length - 1 ? "Finish game" : "Next sentence";
-    setMissingWordFeedback("Choose the word you used in your essay.");
+    next.textContent = essayState.missingRoundIndex === essayState.missingRounds.length - 1 ? "Finish spellbook" : "Next spell";
+    setMissingWordFeedback("Choose the spell containing the word you used in your essay.");
     if (moveFocus) sentence.focus();
   }
 
@@ -1049,14 +1095,14 @@
     document.querySelectorAll("#essay-missing-choices button").forEach((choice) => choice.classList.remove("incorrect"));
     if (choiceKey !== round.answerKey) {
       button.classList.add("incorrect");
-      setMissingWordFeedback("Not that one—try another word.", "try-again");
+      setMissingWordFeedback("That spell fizzled. Try another word.", "try-again");
       return;
     }
     essayState.missingSolved = true;
     button.classList.add("correct");
     document.querySelectorAll("#essay-missing-choices button").forEach((choice) => { choice.disabled = true; });
     $("essay-missing-next").disabled = false;
-    setMissingWordFeedback("Correct! That is the word from your essay.", "correct");
+    setMissingWordFeedback("Spell landed! That is the exact word from your essay.", "correct");
   }
 
   function nextMissingWordRound() {
@@ -1068,7 +1114,8 @@
     }
     $("essay-missing-question").hidden = true;
     $("essay-missing-complete").hidden = false;
-    $("essay-missing-complete-copy").textContent = `You completed all ${essayState.missingRounds.length} ${essayState.missingRounds.length === 1 ? "round" : "rounds"}.`;
+    setEssaySpellState("complete");
+    $("essay-missing-complete-copy").textContent = `You restored all ${essayState.missingRounds.length} ${essayState.missingRounds.length === 1 ? "word" : "words"} from your essay.`;
     $("essay-missing-complete-replay").focus();
   }
 
@@ -1083,7 +1130,7 @@
     $("essay-missing-unavailable").hidden = true;
     $("essay-missing-choices").replaceChildren();
     $("essay-missing-next").disabled = true;
-    setMissingWordFeedback("Choose the word you used in your essay.");
+    setMissingWordFeedback("Choose the spell containing the word you used in your essay.");
   }
 
   function startMissingWord(text = essayState.submittedEssay, isReplay = false) {
@@ -1095,6 +1142,17 @@
     $("essay-missing-play").hidden = !canPlay;
     $("essay-missing-unavailable").hidden = canPlay;
     if (canPlay) renderMissingWordRound(isReplay);
+  }
+
+  function handleMissingWordKeydown(event) {
+    if (essayState.activeGame !== "missing" || $("essay-results").hidden || $("essay-game-missing-panel").hidden) return;
+    if (event.altKey || event.ctrlKey || event.metaKey || event.repeat || !/^[1-4]$/.test(event.key)) return;
+    const target = event.target;
+    if (target instanceof HTMLElement && (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName))) return;
+    const button = document.querySelectorAll("#essay-missing-choices button")[Number(event.key) - 1];
+    if (!button || button.disabled) return;
+    event.preventDefault();
+    button.click();
   }
 
   function collectIdeaQuestCandidates(text, minimumLetters, useStopWords) {
@@ -1600,6 +1658,7 @@
   $("essay-missing-next").addEventListener("click", nextMissingWordRound);
   $("essay-missing-replay").addEventListener("click", () => startMissingWord(essayState.submittedEssay, true));
   $("essay-missing-complete-replay").addEventListener("click", () => startMissingWord(essayState.submittedEssay, true));
+  document.addEventListener("keydown", handleMissingWordKeydown);
 
   updateEssayReady();
   Promise.all([loadProfile(), loadPrompt(categories[0])]);
