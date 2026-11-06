@@ -5,6 +5,8 @@
   const TOKEN_KEY = "draftlab-session-v1";
   const FEEDBACK_KEY = "draftlab-feedback-v1";
   const OUTLINE_BEST_KEY = "draftlab-outline-best-v1";
+  const OUTLINE_HISTORY_KEY = "draftlab-outline-prompt-history-v1";
+  const OUTLINE_HISTORY_LIMIT = 1000;
   const PROMPT_HISTORY_KEY = "draftlab-prompt-history-v2";
   const PROMPT_HISTORY_LIMIT = 50;
   const categories = ["Imagery", "Characterization", "Dialogue"];
@@ -52,14 +54,83 @@
       { category: "Dialogue", title: "Wrong Order", prompt: "Write a chef and customer discussing the wrong meal.", handicap: "Both speakers must remain polite.", forbiddenWords: ["stupid", "terrible", "hate"], coachTip: "Use subtext to keep the disagreement alive." },
     ],
   };
-  const quickOutlinePrompts = [
+  const retiredOutlinePrompts = [
+    { id: "celebration-food", question: "What is the best food for a celebration?" },
+    { id: "school-rule", question: "What school rule would you change, and why?" },
     { id: "best-season", question: "Which season of the year is the best?" },
+    { id: "book-or-movie", question: "Is it better to read a book or watch a movie?" },
     { id: "good-friend", question: "What is the most important quality in a friend?" },
+    { id: "homework", question: "Should students have homework every night?" },
+    { id: "free-afternoon", question: "What is the best way to spend a free afternoon?" },
     { id: "useful-skill", question: "What skill should every student learn?" },
+    { id: "perfect-pet", question: "Which animal makes the best pet?" },
+    { id: "field-trip", question: "Where should your class go on its next field trip?" },
+  ];
+  const quickOutlinePrompts = [
+    { id: "later-start", question: "Should the school day begin later in the morning?" },
+    { id: "outdoor-class", question: "Should every class spend one lesson outside each week?" },
+    { id: "school-garden", question: "Would a school garden improve student life?" },
+    { id: "lunch-choice", question: "Should students help choose the school lunch menu?" },
+    { id: "uniforms", question: "Do school uniforms make school better or worse?" },
+    { id: "four-day-week", question: "Would a four-day school week help students learn?" },
+    { id: "reading-time", question: "Should schools provide daily time for independent reading?" },
+    { id: "service-project", question: "Should community service be part of every school year?" },
+    { id: "class-devices", question: "When should personal devices be allowed during class?" },
+    { id: "longer-lunch", question: "Would a longer lunch break improve the school day?" },
+    { id: "club-time", question: "Should clubs meet during the regular school day?" },
+    { id: "welcome-student", question: "What is the best way to welcome a new student?" },
+    { id: "local-project", question: "Should classes work on real problems in their community?" },
+    { id: "assemblies", question: "What makes a school assembly worth attending?" },
+    { id: "team-or-solo", question: "Do team activities teach more than individual activities?" },
+    { id: "morning-exercise", question: "Should students exercise before their first class?" },
+    { id: "library-value", question: "Why are public libraries still important today?" },
+    { id: "neighborhood-change", question: "What single change would most improve your neighborhood?" },
+    { id: "save-water", question: "What is the most effective way for families to save water?" },
+    { id: "reusable-items", question: "Should schools replace disposable items with reusable ones?" },
+    { id: "town-park", question: "What feature should every town park include?" },
+    { id: "bus-or-car", question: "Should more people use buses instead of cars?" },
+    { id: "helpful-technology", question: "What technology has improved everyday life the most?" },
+    { id: "screen-free-day", question: "Would one screen-free day each week be helpful?" },
+    { id: "social-media-age", question: "Should social media have a higher minimum age?" },
+    { id: "games-teach", question: "Can video games teach useful real-world skills?" },
+    { id: "ai-schoolwork", question: "How should students be allowed to use artificial intelligence?" },
+    { id: "online-or-classroom", question: "Is learning online as effective as learning in person?" },
+    { id: "learn-skill", question: "What is the best way to learn a difficult new skill?" },
+    { id: "group-projects", question: "Are group projects better than working alone?" },
+    { id: "grades-feedback", question: "Is written feedback more useful than a letter grade?" },
+    { id: "weekend-work", question: "Should students receive schoolwork over the weekend?" },
+    { id: "arts-required", question: "Should every student take an art or music class?" },
+    { id: "school-news", question: "Should every school have a student-run news team?" },
+    { id: "class-debates", question: "Do classroom debates help students understand difficult topics?" },
+    { id: "leadership", question: "What quality matters most in a good leader?" },
+    { id: "solve-disagreement", question: "What is the fairest way to solve a disagreement?" },
+    { id: "include-others", question: "How can a group help someone feel included?" },
+    { id: "courage", question: "What does everyday courage look like?" },
+    { id: "learn-failure", question: "Can failure teach more than success?" },
+    { id: "competition", question: "Does competition usually help people improve?" },
+    { id: "money-skills", question: "Should schools teach students how to manage money?" },
+    { id: "career-choice", question: "What should matter most when choosing a future career?" },
+    { id: "healthy-sleep", question: "How can teenagers make enough sleep a priority?" },
+    { id: "breakfast", question: "Should schools make breakfast available to every student?" },
+    { id: "city-country", question: "Is it better to live in a city or the countryside?" },
+    { id: "train-plane", question: "Is train travel better than air travel for shorter trips?" },
+    { id: "local-business", question: "Why should people support small local businesses?" },
+    { id: "public-art", question: "Should towns spend money on public art?" },
+    { id: "protect-animals", question: "What is the best way to protect endangered animals?" },
+    { id: "community-event", question: "What kind of event best brings a community together?" },
+    { id: "quiet-spaces", question: "Should every school provide a quiet room for breaks?" },
+    { id: "chores", question: "Should everyone in a household share daily chores?" },
+    { id: "allowance", question: "Should children earn money for completing household jobs?" },
+    { id: "second-language", question: "Should every student learn a second language?" },
+    { id: "school-mascot", question: "What makes a school mascot effective?" },
+    { id: "recess-older", question: "Should older students have a daily recess period?" },
+    { id: "class-seating", question: "Should students be allowed to choose their classroom seats?" },
+    { id: "phone-free-meals", question: "Should family meals be phone-free?" },
+    { id: "repair-or-replace", question: "Is repairing old belongings better than replacing them?" },
   ];
   const $ = (id) => document.getElementById(id);
   const state = { category: "Imagery", prompt: null, token: localStorage.getItem(TOKEN_KEY) || "", profile: null, priorFeedback: {}, promptHistory: Object.fromEntries(categories.map((category) => [category, []])), promptHistoryAll: [] };
-  const outlineState = { prompt: null, loaded: false, startedAt: 0, elapsedMs: 0, running: false, timer: 0, bestTime: Number(localStorage.getItem(OUTLINE_BEST_KEY)) || null };
+  const outlineState = { prompt: null, promptHistory: readStoredOutlineHistory(), loaded: false, startedAt: 0, elapsedMs: 0, running: false, timer: 0, bestTime: Number(localStorage.getItem(OUTLINE_BEST_KEY)) || null };
 
   try { state.priorFeedback = JSON.parse(localStorage.getItem(FEEDBACK_KEY) || "{}"); } catch { state.priorFeedback = {}; }
   try {
@@ -118,6 +189,59 @@
     if (!firstWords.size || !secondWords.size) return false;
     const overlap = [...firstWords].filter((word) => secondWords.has(word)).length;
     return overlap >= 4 && (overlap / Math.min(firstWords.size, secondWords.size) >= 0.8 || overlap / new Set([...firstWords, ...secondWords]).size >= 0.7);
+  }
+
+  function sanitizeOutlineHistory(value) {
+    if (!Array.isArray(value)) return [];
+    const sanitized = [];
+    value.slice(-OUTLINE_HISTORY_LIMIT * 2).forEach((item) => {
+      const source = typeof item === "string" ? { question: item } : item;
+      if (!source || typeof source !== "object") return;
+      const question = typeof source.question === "string" ? source.question.trim().slice(0, 180) : "";
+      if (question.length < 8) return;
+      const normalizedQuestion = normalizedPrompt(question);
+      if (!normalizedQuestion) return;
+      const existingIndex = sanitized.findIndex((prompt) => normalizedPrompt(prompt.question) === normalizedQuestion);
+      if (existingIndex >= 0) sanitized.splice(existingIndex, 1);
+      const id = typeof source.id === "string" && source.id.trim()
+        ? source.id.trim().slice(0, 80)
+        : `question-${normalizedQuestion.slice(0, 48).replace(/\s+/g, "-")}`;
+      sanitized.push({ id, question });
+    });
+    return sanitized.slice(-OUTLINE_HISTORY_LIMIT);
+  }
+
+  function readStoredOutlineHistory() {
+    try {
+      return sanitizeOutlineHistory(JSON.parse(localStorage.getItem(OUTLINE_HISTORY_KEY) || "[]"));
+    } catch {
+      return [];
+    }
+  }
+
+  function outlinePromptHistory() {
+    return [...retiredOutlinePrompts, ...outlineState.promptHistory];
+  }
+
+  function outlinePromptWasSeen(candidate, history = outlinePromptHistory()) {
+    if (!candidate || typeof candidate.id !== "string" || !candidate.id.trim() || typeof candidate.question !== "string" || candidate.question.trim().length < 8) return true;
+    return history.some((seenPrompt) => (
+      candidate.id === seenPrompt.id || promptsAreNearDuplicates(candidate.question, seenPrompt.question)
+    ));
+  }
+
+  function rememberOutlinePrompt(prompt) {
+    outlineState.promptHistory = sanitizeOutlineHistory([...outlineState.promptHistory, prompt]);
+    try {
+      localStorage.setItem(OUTLINE_HISTORY_KEY, JSON.stringify(outlineState.promptHistory));
+    } catch {
+      // Keep protecting this browser session if persistent storage is unavailable.
+    }
+  }
+
+  function unseenOutlineFallback(history = outlinePromptHistory()) {
+    const choices = quickOutlinePrompts.filter((prompt) => !outlinePromptWasSeen(prompt, history));
+    return choices.length ? choices[Math.floor(Math.random() * choices.length)] : null;
   }
 
   function recentPrompts() {
@@ -364,14 +488,42 @@
     outlineState.loaded = true;
     outlineState.running = false;
     window.clearInterval(outlineState.timer);
+    outlineState.prompt = null;
     resetOutlineFields();
     $("outline-question").textContent = "Preparing your question…";
+    $("outline-skip").textContent = "Skip prompt";
+    const recentPrompts = outlinePromptHistory();
+    let nextPrompt = null;
+    let failureMessage = "DraftLab could not create a brand-new outline question.";
     try {
-      outlineState.prompt = await api("/api/outline-prompt", { method: "POST", timeoutMs: 2800 });
-    } catch {
-      outlineState.prompt = quickOutlinePrompts[Math.floor(Math.random() * quickOutlinePrompts.length)];
+      const candidate = await api("/api/outline-prompt", {
+        method: "POST",
+        body: JSON.stringify({ recentPrompts }),
+        cache: "no-store",
+        timeoutMs: 22000,
+      });
+      const sanitizedCandidate = sanitizeOutlineHistory([candidate])[0];
+      if (!sanitizedCandidate || outlinePromptWasSeen(sanitizedCandidate, recentPrompts)) {
+        throw new Error("DraftLab returned an outline question you already saw.");
+      }
+      nextPrompt = sanitizedCandidate;
+    } catch (error) {
+      failureMessage = error instanceof Error ? error.message : failureMessage;
+      nextPrompt = unseenOutlineFallback(recentPrompts);
     }
-    $("outline-question").textContent = outlineState.prompt.question;
+    if (!nextPrompt) {
+      $("outline-question").textContent = "No new outline question is ready yet.";
+      $("outline-error").textContent = `${failureMessage} Tap Try again in a moment.`;
+      $("outline-error").hidden = false;
+      $("outline-skip").textContent = "Try again";
+      outlineState.elapsedMs = 0;
+      renderOutlineTimer();
+      updateOutlineReady();
+      return;
+    }
+    rememberOutlinePrompt(nextPrompt);
+    outlineState.prompt = nextPrompt;
+    $("outline-question").textContent = nextPrompt.question;
     outlineState.startedAt = Date.now();
     outlineState.elapsedMs = 0;
     renderOutlineTimer();
