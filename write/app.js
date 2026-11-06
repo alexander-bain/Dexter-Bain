@@ -23,6 +23,20 @@
     "about", "after", "again", "also", "among", "another", "because", "before", "being", "between", "could", "does", "doing", "during", "each", "every", "from", "have", "having", "into", "itself", "might", "more", "most", "much", "must", "other", "ours", "should", "some", "such", "than", "that", "their", "theirs", "them", "then", "there", "these", "they", "this", "those", "through", "under", "until", "very", "what", "when", "where", "which", "while", "who", "will", "with", "would", "your", "yours",
   ]);
   const MISSING_WORD_FALLBACKS = ["important", "different", "community", "creative", "evidence", "purpose", "support", "change", "future", "careful", "strong", "helpful"];
+  const IDEA_QUEST_WIDTH = 7;
+  const IDEA_QUEST_HEIGHT = 5;
+  const IDEA_QUEST_CELL_COUNT = IDEA_QUEST_WIDTH * IDEA_QUEST_HEIGHT;
+  const IDEA_QUEST_START = 28;
+  const IDEA_QUEST_PORTAL = 6;
+  const IDEA_QUEST_DIRECTIONS = {
+    up: { row: -1, column: 0 },
+    down: { row: 1, column: 0 },
+    left: { row: 0, column: -1 },
+    right: { row: 0, column: 1 },
+  };
+  const IDEA_QUEST_STOP_WORDS = new Set([
+    "about", "after", "again", "against", "also", "another", "because", "been", "before", "being", "between", "both", "could", "does", "doing", "during", "each", "even", "every", "from", "have", "having", "into", "itself", "just", "more", "most", "much", "must", "only", "other", "over", "same", "should", "some", "such", "than", "that", "their", "them", "then", "there", "these", "they", "this", "those", "through", "under", "very", "want", "were", "what", "when", "where", "which", "while", "with", "would", "your", "youre",
+  ]);
   const categories = ["Imagery", "Characterization", "Dialogue"];
   const quickPrompts = {
     Imagery: [
@@ -149,7 +163,7 @@
     grading: false,
     requestError: "",
     submittedEssay: "",
-    activeGame: "shuffle",
+    activeGame: "quest",
     shuffleOriginal: [],
     shuffleCurrent: [],
     shuffleSolved: false,
@@ -157,6 +171,14 @@
     missingRoundIndex: 0,
     missingSolved: false,
     missingReplayCount: 0,
+    questReplayCount: 0,
+    questLevel: null,
+    questPlayer: IDEA_QUEST_START,
+    questHearts: 3,
+    questMoves: 0,
+    questCollected: new Set(),
+    questOutcome: "playing",
+    questMessage: "Find all three ideas.",
   };
 
   try { state.priorFeedback = JSON.parse(localStorage.getItem(FEEDBACK_KEY) || "{}"); } catch { state.priorFeedback = {}; }
@@ -1075,28 +1097,370 @@
     if (canPlay) renderMissingWordRound(isReplay);
   }
 
+  function collectIdeaQuestCandidates(text, minimumLetters, useStopWords) {
+    const candidates = new Map();
+    for (const match of String(text || "").matchAll(/[\p{L}\p{N}]+(?:[’'-][\p{L}\p{N}]+)*/gu)) {
+      const label = match[0];
+      const letterCount = Array.from(label).filter((character) => /\p{L}/u.test(character)).length;
+      const normalized = normalizeMissingWord(label);
+      if (
+        letterCount < minimumLetters
+        || letterCount > 24
+        || !/\p{L}/u.test(label)
+        || (useStopWords && IDEA_QUEST_STOP_WORDS.has(normalized))
+      ) continue;
+      const existing = candidates.get(normalized);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        candidates.set(normalized, { label, normalized, count: 1, firstIndex: match.index || 0 });
+      }
+    }
+    return Array.from(candidates.values());
+  }
+
+  function ideaQuestLabels(text, random = createEssayGameRandom(text, 1701)) {
+    let candidates = collectIdeaQuestCandidates(text, 4, true);
+    if (candidates.length < 3) candidates = collectIdeaQuestCandidates(text, 2, false);
+    if (candidates.length < 3) return [];
+    candidates.sort((first, second) => (
+      second.count - first.count
+      || Math.min(second.label.length, 12) - Math.min(first.label.length, 12)
+      || first.firstIndex - second.firstIndex
+    ));
+    return shuffledCopy(candidates.slice(0, Math.min(12, candidates.length)), random)
+      .slice(0, 3)
+      .map(({ label }) => label);
+  }
+
+  function ideaQuestRow(position) {
+    return Math.floor(position / IDEA_QUEST_WIDTH);
+  }
+
+  function ideaQuestColumn(position) {
+    return position % IDEA_QUEST_WIDTH;
+  }
+
+  function ideaQuestManhattan(first, second) {
+    return Math.abs(ideaQuestRow(first) - ideaQuestRow(second)) + Math.abs(ideaQuestColumn(first) - ideaQuestColumn(second));
+  }
+
+  function ideaQuestNeighbors(position) {
+    const row = ideaQuestRow(position);
+    const column = ideaQuestColumn(position);
+    return Object.values(IDEA_QUEST_DIRECTIONS).flatMap((direction) => {
+      const nextRow = row + direction.row;
+      const nextColumn = column + direction.column;
+      if (nextRow < 0 || nextRow >= IDEA_QUEST_HEIGHT || nextColumn < 0 || nextColumn >= IDEA_QUEST_WIDTH) return [];
+      return [nextRow * IDEA_QUEST_WIDTH + nextColumn];
+    });
+  }
+
+  function ideaQuestCanReach(start, targets, enemies) {
+    const blocked = new Set(enemies);
+    const visited = new Set([start]);
+    const queue = [start];
+    while (queue.length) {
+      const current = queue.shift();
+      ideaQuestNeighbors(current).forEach((next) => {
+        if (blocked.has(next) || visited.has(next)) return;
+        visited.add(next);
+        queue.push(next);
+      });
+    }
+    return targets.every((target) => visited.has(target));
+  }
+
+  function buildIdeaQuestLevel(text, replay = 0) {
+    const safeReplay = Math.max(0, Math.floor(replay));
+    const random = createEssayGameRandom(text, safeReplay + 1701);
+    const labels = ideaQuestLabels(text, random);
+    if (labels.length !== 3) return null;
+    const cells = Array.from({ length: IDEA_QUEST_CELL_COUNT }, (_, index) => index);
+    for (let attempt = 0; attempt < 40; attempt += 1) {
+      const positions = shuffledCopy(cells, random);
+      const start = positions[0];
+      const portal = positions[1];
+      const ideaPositions = positions.slice(2, 5);
+      const enemies = positions.slice(5, 8);
+      if (ideaQuestManhattan(start, portal) < 5) continue;
+      if (enemies.some((enemy) => ideaQuestManhattan(start, enemy) <= 1)) continue;
+      if (!ideaQuestCanReach(start, [portal, ...ideaPositions], enemies)) continue;
+      return {
+        id: `idea-quest-${safeReplay}`,
+        start,
+        portal,
+        enemies,
+        ideas: labels.map((label, index) => ({ id: `idea-${index}`, label, position: ideaPositions[index] })),
+      };
+    }
+    return {
+      id: `idea-quest-${safeReplay}`,
+      start: IDEA_QUEST_START,
+      portal: IDEA_QUEST_PORTAL,
+      enemies: [15, 17, 19],
+      ideas: labels.map((label, index) => ({ id: `idea-${index}`, label, position: [30, 11, 27][index] })),
+    };
+  }
+
+  function ideaQuestScore() {
+    const collectedPoints = essayState.questCollected.size * 200;
+    const finishPoints = essayState.questOutcome === "won" ? 400 : 0;
+    const moveCost = essayState.questMoves * 2;
+    const heartCost = (3 - essayState.questHearts) * 50;
+    return Math.max(0, collectedPoints + finishPoints - moveCost - heartCost);
+  }
+
+  function setIdeaQuestMessage(message) {
+    essayState.questMessage = message;
+    $("essay-quest-status").textContent = message;
+  }
+
+  function placeIdeaQuestSprite(board, className, position, source, label) {
+    const sprite = document.createElement("div");
+    sprite.className = className;
+    sprite.style.gridColumn = String(ideaQuestColumn(position) + 1);
+    sprite.style.gridRow = String(ideaQuestRow(position) + 1);
+    sprite.setAttribute("role", "img");
+    sprite.setAttribute("aria-label", label);
+    const image = document.createElement("img");
+    image.src = source;
+    image.alt = "";
+    image.draggable = false;
+    sprite.append(image);
+    board.append(sprite);
+    return sprite;
+  }
+
+  function renderIdeaQuestLabels() {
+    const list = $("essay-quest-labels");
+    list.replaceChildren();
+    essayState.questLevel?.ideas.forEach((idea, index) => {
+      const collected = essayState.questCollected.has(idea.id);
+      const item = document.createElement("div");
+      item.className = `essay-quest-label${collected ? " collected" : ""}`;
+      const marker = document.createElement("span");
+      marker.textContent = collected ? "✓" : String(index + 1);
+      marker.setAttribute("aria-hidden", "true");
+      const label = document.createElement("strong");
+      label.textContent = idea.label;
+      item.append(marker, label);
+      list.append(item);
+    });
+  }
+
+  function renderIdeaQuest() {
+    const level = essayState.questLevel;
+    const board = $("essay-quest-board");
+    board.replaceChildren();
+    $("essay-quest-play").hidden = !level;
+    $("essay-quest-unavailable").hidden = Boolean(level);
+    if (!level) {
+      board.setAttribute("aria-label", "Idea Quest is unavailable for this essay.");
+      return;
+    }
+
+    for (let position = 0; position < IDEA_QUEST_CELL_COUNT; position += 1) {
+      const tile = document.createElement("span");
+      tile.className = "essay-quest-tile";
+      tile.setAttribute("aria-hidden", "true");
+      board.append(tile);
+    }
+
+    const portalOpen = essayState.questCollected.size === 3;
+    const portal = placeIdeaQuestSprite(
+      board,
+      `essay-quest-sprite essay-quest-portal${portalOpen ? " open" : " locked"}`,
+      level.portal,
+      "assets/essay-arcade/portal.webp",
+      portalOpen ? "Open idea portal" : "Locked idea portal",
+    );
+    const portalLabel = document.createElement("span");
+    portalLabel.textContent = portalOpen ? "Portal open" : "Collect 3";
+    portal.append(portalLabel);
+
+    level.ideas.forEach((idea) => {
+      if (essayState.questCollected.has(idea.id)) return;
+      const collectible = placeIdeaQuestSprite(
+        board,
+        "essay-quest-sprite essay-quest-idea",
+        idea.position,
+        "assets/essay-arcade/idea.webp",
+        `Idea to collect: ${idea.label}`,
+      );
+      const label = document.createElement("span");
+      label.textContent = idea.label;
+      collectible.append(label);
+    });
+
+    level.enemies.forEach((position) => {
+      placeIdeaQuestSprite(board, "essay-quest-sprite essay-quest-enemy", position, "assets/essay-arcade/ink.webp", "Ink enemy");
+    });
+    placeIdeaQuestSprite(board, "essay-quest-sprite essay-quest-hero", essayState.questPlayer, "assets/essay-arcade/hero.webp", "Your idea explorer");
+
+    if (essayState.questOutcome !== "playing") {
+      const overlay = document.createElement("div");
+      overlay.className = `essay-quest-overlay ${essayState.questOutcome}`;
+      const title = document.createElement("strong");
+      title.textContent = essayState.questOutcome === "won" ? "Quest complete!" : "Ink spill!";
+      const copy = document.createElement("span");
+      copy.textContent = essayState.questOutcome === "won"
+        ? `You saved all three ideas in ${essayState.questMoves} moves.`
+        : "You ran out of hearts. Retry this map and find a safer path.";
+      overlay.append(title, copy);
+      board.append(overlay);
+    }
+
+    $("essay-quest-hearts").textContent = `${essayState.questHearts} / 3`;
+    $("essay-quest-ideas").textContent = `${essayState.questCollected.size} / 3`;
+    $("essay-quest-moves").textContent = String(essayState.questMoves);
+    $("essay-quest-score").textContent = String(ideaQuestScore());
+    setIdeaQuestMessage(essayState.questMessage);
+    renderIdeaQuestLabels();
+    board.setAttribute(
+      "aria-label",
+      `Idea Quest game board, 7 columns by 5 rows. Explorer at row ${ideaQuestRow(essayState.questPlayer) + 1}, column ${ideaQuestColumn(essayState.questPlayer) + 1}. ${essayState.questCollected.size} of 3 ideas collected.`,
+    );
+  }
+
+  function resetIdeaQuestRun(message = "Find all three ideas.") {
+    const level = essayState.questLevel;
+    essayState.questPlayer = level?.start ?? IDEA_QUEST_START;
+    essayState.questHearts = 3;
+    essayState.questMoves = 0;
+    essayState.questCollected = new Set();
+    essayState.questOutcome = "playing";
+    essayState.questMessage = message;
+    renderIdeaQuest();
+  }
+
+  function startIdeaQuest(text = essayState.submittedEssay, replay = 0) {
+    essayState.questReplayCount = replay;
+    essayState.questLevel = buildIdeaQuestLevel(text, replay);
+    resetIdeaQuestRun(replay ? "A new essay world is ready. Find all three ideas." : "Find all three ideas.");
+  }
+
+  function resetIdeaQuest() {
+    essayState.questReplayCount = 0;
+    essayState.questLevel = null;
+    essayState.questPlayer = IDEA_QUEST_START;
+    essayState.questHearts = 3;
+    essayState.questMoves = 0;
+    essayState.questCollected = new Set();
+    essayState.questOutcome = "playing";
+    essayState.questMessage = "Find all three ideas.";
+    $("essay-quest-board").replaceChildren();
+    $("essay-quest-play").hidden = true;
+    $("essay-quest-unavailable").hidden = true;
+    $("essay-quest-labels").replaceChildren();
+    $("essay-quest-hearts").textContent = "3 / 3";
+    $("essay-quest-ideas").textContent = "0 / 3";
+    $("essay-quest-moves").textContent = "0";
+    $("essay-quest-score").textContent = "0";
+    setIdeaQuestMessage("Find all three ideas.");
+  }
+
+  function moveIdeaQuest(directionName) {
+    const level = essayState.questLevel;
+    const direction = IDEA_QUEST_DIRECTIONS[directionName];
+    if (!level || !direction || essayState.questOutcome !== "playing") return;
+    const currentRow = ideaQuestRow(essayState.questPlayer);
+    const currentColumn = ideaQuestColumn(essayState.questPlayer);
+    const nextRow = currentRow + direction.row;
+    const nextColumn = currentColumn + direction.column;
+    if (nextRow < 0 || nextRow >= IDEA_QUEST_HEIGHT || nextColumn < 0 || nextColumn >= IDEA_QUEST_WIDTH) {
+      setIdeaQuestMessage("That is the edge of the page. Try another direction.");
+      return;
+    }
+
+    const nextPosition = nextRow * IDEA_QUEST_WIDTH + nextColumn;
+    essayState.questMoves += 1;
+    if (level.enemies.includes(nextPosition)) {
+      essayState.questHearts -= 1;
+      essayState.questPlayer = level.start;
+      if (essayState.questHearts <= 0) {
+        essayState.questHearts = 0;
+        essayState.questOutcome = "lost";
+        essayState.questMessage = "Ink spill! You ran out of hearts.";
+      } else {
+        essayState.questMessage = `Ink splash! You have ${essayState.questHearts} ${essayState.questHearts === 1 ? "heart" : "hearts"} left and returned to the start.`;
+      }
+      renderIdeaQuest();
+      return;
+    }
+
+    essayState.questPlayer = nextPosition;
+    const foundIdea = level.ideas.find((idea) => idea.position === nextPosition && !essayState.questCollected.has(idea.id));
+    if (foundIdea) {
+      essayState.questCollected.add(foundIdea.id);
+      essayState.questMessage = `Idea collected: ${foundIdea.label}.`;
+    } else if (nextPosition === level.portal) {
+      if (essayState.questCollected.size === 3) {
+        essayState.questOutcome = "won";
+        essayState.questMessage = `Quest complete! You reached the portal in ${essayState.questMoves} moves.`;
+      } else {
+        const remaining = 3 - essayState.questCollected.size;
+        essayState.questMessage = `The portal is locked. Find ${remaining} more ${remaining === 1 ? "idea" : "ideas"}.`;
+      }
+    } else {
+      essayState.questMessage = "Keep exploring. The glowing pages hold your ideas.";
+    }
+    renderIdeaQuest();
+  }
+
+  function newIdeaQuest() {
+    startIdeaQuest(essayState.submittedEssay, essayState.questReplayCount + 1);
+    $("essay-quest-board").focus();
+  }
+
+  function handleIdeaQuestKeydown(event) {
+    if (essayState.activeGame !== "quest" || $("essay-results").hidden) return;
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    const target = event.target;
+    if (target instanceof HTMLElement && (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName))) return;
+    const key = event.key.toLocaleLowerCase();
+    const direction = {
+      arrowup: "up",
+      w: "up",
+      arrowdown: "down",
+      s: "down",
+      arrowleft: "left",
+      a: "left",
+      arrowright: "right",
+      d: "right",
+    }[key];
+    if (!direction) return;
+    event.preventDefault();
+    moveIdeaQuest(direction);
+  }
+
   function showEssayGame(game) {
-    const nextGame = game === "missing" ? "missing" : "shuffle";
+    const nextGame = ["quest", "shuffle", "missing"].includes(game) ? game : "quest";
     essayState.activeGame = nextGame;
+    $("essay-game-quest-panel").hidden = nextGame !== "quest";
     $("essay-game-shuffle-panel").hidden = nextGame !== "shuffle";
     $("essay-game-missing-panel").hidden = nextGame !== "missing";
+    $("essay-game-quest-button").classList.toggle("active", nextGame === "quest");
     $("essay-game-shuffle-button").classList.toggle("active", nextGame === "shuffle");
     $("essay-game-missing-button").classList.toggle("active", nextGame === "missing");
+    $("essay-game-quest-button").setAttribute("aria-pressed", String(nextGame === "quest"));
     $("essay-game-shuffle-button").setAttribute("aria-pressed", String(nextGame === "shuffle"));
     $("essay-game-missing-button").setAttribute("aria-pressed", String(nextGame === "missing"));
   }
 
   function resetEssayArcade() {
     essayState.submittedEssay = "";
+    resetIdeaQuest();
     resetEssayShuffle();
     resetMissingWord();
-    showEssayGame("shuffle");
+    showEssayGame("quest");
   }
 
   function startEssayArcade(text = essayState.submittedEssay) {
+    startIdeaQuest(text);
     startEssayShuffle(text);
     startMissingWord(text);
-    showEssayGame("shuffle");
+    showEssayGame("quest");
   }
 
   function showEssayResults(result) {
@@ -1221,8 +1585,16 @@
   $("essay-grade").addEventListener("click", gradeEssay);
   $("essay-edit").addEventListener("click", editEssay);
   $("essay-reset").addEventListener("click", resetEssay);
+  $("essay-game-quest-button").addEventListener("click", () => showEssayGame("quest"));
   $("essay-game-shuffle-button").addEventListener("click", () => showEssayGame("shuffle"));
   $("essay-game-missing-button").addEventListener("click", () => showEssayGame("missing"));
+  document.querySelectorAll("[data-quest-move]").forEach((button) => button.addEventListener("click", () => moveIdeaQuest(button.dataset.questMove)));
+  $("essay-quest-retry").addEventListener("click", () => {
+    resetIdeaQuestRun("Same map, fresh start. Find all three ideas.");
+    $("essay-quest-board").focus();
+  });
+  $("essay-quest-new").addEventListener("click", newIdeaQuest);
+  $("essay-quest-board").addEventListener("keydown", handleIdeaQuestKeydown);
   $("essay-shuffle-check").addEventListener("click", checkEssayShuffle);
   $("essay-shuffle-replay").addEventListener("click", () => startEssayShuffle(essayState.submittedEssay));
   $("essay-missing-next").addEventListener("click", nextMissingWordRound);

@@ -9,7 +9,7 @@
   <meta property="og:description" content="Write a short challenge, build an outline, or paste a full essay for a score and useful feedback.">
   <meta property="og:image" content="https://draftlab-writing.dexterhbain.chatgpt.site/og.png">
   <title>DraftLab — Creative Writing Practice</title>
-  <link rel="stylesheet" href="styles.css?v=20261105-4">
+  <link rel="stylesheet" href="styles.css?v=20261105-5">
 </head>
 <body>
   <main class="app-shell">
@@ -164,11 +164,46 @@
             <p>Choose a quick game. Your progress stays put when you switch.</p>
           </div>
           <div class="essay-game-picker" role="group" aria-label="Choose an essay game">
-            <button class="essay-game-button active" id="essay-game-shuffle-button" type="button" aria-pressed="true" aria-controls="essay-game-shuffle-panel"><strong>Sentence Shuffle</strong><span>Restore the original order</span></button>
+            <button class="essay-game-button active" id="essay-game-quest-button" type="button" aria-pressed="true" aria-controls="essay-game-quest-panel"><strong>Idea Quest</strong><span>Explore your essay world</span></button>
+            <button class="essay-game-button" id="essay-game-shuffle-button" type="button" aria-pressed="false" aria-controls="essay-game-shuffle-panel"><strong>Sentence Shuffle</strong><span>Restore the original order</span></button>
             <button class="essay-game-button" id="essay-game-missing-button" type="button" aria-pressed="false" aria-controls="essay-game-missing-panel"><strong>Missing Word</strong><span>Remember your exact words</span></button>
           </div>
 
-          <section class="essay-game-panel" id="essay-game-shuffle-panel" aria-labelledby="essay-shuffle-title">
+          <section class="essay-game-panel" id="essay-game-quest-panel" aria-labelledby="essay-quest-title">
+            <div class="essay-game-heading">
+              <div><p class="essay-game-kicker">Sprite adventure</p><h4 id="essay-quest-title">Idea Quest</h4></div>
+              <p>Collect three ideas from your essay, avoid the ink, then reach the portal.</p>
+            </div>
+            <div id="essay-quest-play">
+            <div class="essay-quest-hud" aria-label="Idea Quest score">
+              <span>Hearts <strong id="essay-quest-hearts">3</strong></span>
+              <span>Ideas <strong id="essay-quest-ideas">0 / 3</strong></span>
+              <span>Moves <strong id="essay-quest-moves">0</strong></span>
+              <span>Score <strong id="essay-quest-score">0</strong></span>
+            </div>
+            <div class="essay-quest-board-wrap">
+              <div class="essay-quest-board" id="essay-quest-board" role="group" tabindex="0" aria-describedby="essay-quest-instructions essay-quest-status" aria-keyshortcuts="ArrowUp ArrowDown ArrowLeft ArrowRight W A S D" aria-label="Idea Quest game board, 7 columns by 5 rows"></div>
+            </div>
+            <p class="essay-quest-instructions" id="essay-quest-instructions">Use the arrow keys, WASD, or the direction buttons. Ink costs one heart and sends you back to the start.</p>
+            <p class="essay-quest-status" id="essay-quest-status" role="status" aria-live="polite" aria-atomic="true">Find all three ideas.</p>
+            <div class="essay-quest-labels" id="essay-quest-labels" aria-label="Ideas to collect"></div>
+            <div class="essay-quest-controls">
+              <div class="essay-quest-dpad" role="group" aria-label="Move your explorer">
+                <button class="quest-up" type="button" data-quest-move="up" aria-label="Move up">↑</button>
+                <button class="quest-left" type="button" data-quest-move="left" aria-label="Move left">←</button>
+                <button class="quest-down" type="button" data-quest-move="down" aria-label="Move down">↓</button>
+                <button class="quest-right" type="button" data-quest-move="right" aria-label="Move right">→</button>
+              </div>
+              <div class="essay-quest-actions">
+                <button class="quiet-button" id="essay-quest-retry" type="button">Retry this map</button>
+                <button class="primary-button compact" id="essay-quest-new" type="button">New map</button>
+              </div>
+            </div>
+            </div>
+            <p class="essay-game-unavailable" id="essay-quest-unavailable" hidden>Idea Quest needs at least three different idea words. Add a little more detail, then grade your essay again.</p>
+          </section>
+
+          <section class="essay-game-panel" id="essay-game-shuffle-panel" aria-labelledby="essay-shuffle-title" hidden>
             <div class="essay-game-heading">
               <div><p class="essay-game-kicker">Order challenge</p><h4 id="essay-shuffle-title">Sentence Shuffle</h4></div>
               <p>Put the sentences back in their original order.</p>
@@ -242,6 +277,6 @@
     </div>
   </dialog>
 
-  <script src="app.js?v=20261105-4" defer></script>
+  <script src="app.js?v=20261105-5" defer></script>
 </body>
 </html>
