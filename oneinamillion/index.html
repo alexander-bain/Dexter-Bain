@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0820" />
+  <meta name="description" content="Roll six real dice, discover rare patterns, multiply your score, and battle your friends." />
+  <meta property="og:title" content="One in a Million — The Real-Dice Rarity Game" />
+  <meta property="og:description" content="Six real dice. 200 discoveries. One ridiculous multiplier." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dexterbain.com/oneinamillion/" />
+  <title>One in a Million · Real-Dice Party Game</title>
+  <link rel="canonical" href="https://dexterbain.com/oneinamillion/" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=20261110-2" />
+</head>
+<body data-release="2026-11-10-oiam-v2">
+  <div class="ambient" aria-hidden="true">
+    <span class="float-die float-one">⚄</span>
+    <span class="float-die float-two">⚁</span>
+    <span class="float-die float-three">⚅</span>
+  </div>
+
+  <header class="topbar">
+    <a class="home-link" href="../" aria-label="Back to DexterBain home">
+      <span aria-hidden="true">←</span><span>DexterBain</span>
+    </a>
+    <button class="icon-button" id="soundButton" type="button" aria-label="Turn sound off" aria-pressed="true" title="Sound on">🔊</button>
+  </header>
+
+  <main class="page-shell">
+    <header class="brand-block">
+      <p class="kicker"><span>IRL DICE</span><b>•</b><span>200 DISCOVERIES</span></p>
+      <h1><span>ONE IN A</span><strong>MILLION</strong></h1>
+      <p class="tagline">Roll it for real. Record it here. Find out how lucky you got.</p>
+      <div class="brand-actions">
+        <button class="text-button" id="howButton" type="button">How to play</button>
+        <button class="text-button" id="rulesButton" type="button"><span id="collectionCount">0</span>/200 collection</button>
+      </div>
+    </header>
+
+    <section class="setup-view" id="setupView" aria-labelledby="setupTitle">
+      <div class="setup-card panel">
+        <div class="panel-heading">
+          <span class="step-chip">NEW MATCH</span>
+          <h2 id="setupTitle">Who’s feeling lucky?</h2>
+          <p>Pass this screen around. Every player gets the same number of turns.</p>
+        </div>
+
+        <form id="setupForm">
+          <div class="player-fields" id="playerFields"></div>
+          <button class="add-player" id="addPlayerButton" type="button">＋ Add player</button>
+
+          <label class="round-field" for="roundSelect">
+            <span>Turns per player</span>
+            <select id="roundSelect" name="rounds">
+              <option value="2">2 · Quick</option>
+              <option value="3" selected>3 · Classic</option>
+              <option value="5">5 · Big game</option>
+              <option value="10">10 · Marathon</option>
+            </select>
+          </label>
+
+          <button class="primary-button start-button" type="submit">
+            <span>START THE MATCH</span><span aria-hidden="true">🎲</span>
+          </button>
+        </form>
+      </div>
+
+      <div class="rarity-preview" aria-label="Rarity point values">
+        <div data-tier="common"><b>1</b><span>Common</span></div>
+        <div data-tier="rare"><b>2</b><span>Rare</span></div>
+        <div data-tier="epic"><b>5</b><span>Epic</span></div>
+        <div data-tier="boss"><b>8</b><span>Boss</span></div>
+        <div data-tier="legendary"><b>9</b><span>Legendary</span></div>
+        <div data-tier="millionaire"><b>15</b><span>Millionaire</span></div>
+      </div>
+    </section>
+
+    <section class="game-view" id="gameView" hidden>
+      <section class="scoreboard-wrap" aria-label="Player scores">
+        <div class="scoreboard" id="scoreboard"></div>
+      </section>
+
+      <div class="game-layout">
+        <section class="play-panel panel" id="playPanel" aria-live="polite"></section>
+
+        <aside class="side-column">
+          <section class="mini-panel turn-guide">
+            <h2>The loop</h2>
+            <ol>
+              <li><b>Roll</b> six real dice</li>
+              <li><b>Record</b> them in order</li>
+              <li><b>Reveal</b> every discovery</li>
+              <li><b>Roll one more</b> for ×1–×6</li>
+            </ol>
+          </section>
+          <section class="mini-panel history-panel">
+            <div class="mini-heading"><h2>Roll history</h2><span id="historyCount">0</span></div>
+            <div class="history-list" id="historyList"><p class="empty-note">The first roll is waiting.</p></div>
+          </section>
+          <button class="danger-link" id="newMatchButton" type="button">Start a new match</button>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="sheet-dialog" id="howDialog">
+    <div class="dialog-top">
+      <div><span class="step-chip">THE RULES</span><h2>How to play</h2></div>
+      <button class="close-button" type="button" data-close="howDialog" aria-label="Close">×</button>
+    </div>
+    <div class="how-grid">
+      <article><span>1</span><h3>Roll six dice</h3><p>Use six real six-sided dice. Keep them in the order they landed.</p></article>
+      <article><span>2</span><h3>Record the roll</h3><p>Tap a slot, then tap 1–6. When every slot is filled, hit GO!</p></article>
+      <article><span>3</span><h3>Stack discoveries</h3><p>One roll can earn lots of discoveries. Rarer patterns are worth more points.</p></article>
+      <article><span>4</span><h3>Multiply it</h3><p>Roll one extra die. Enter that result to multiply the entire base score.</p></article>
+    </div>
+    <div class="example-roll">
+      <div class="example-dice" aria-label="Example roll 6, 6, 6, 2, 3, 4"><span>6</span><span>6</span><span>6</span><span>2</span><span>3</span><span>4</span></div>
+      <p><b>Example:</b> this can uncover The Devil, Triple Line: Sixes, Step Trio: 2–3–4, a total award, and more.</p>
+    </div>
+  </dialog>
+
+  <dialog class="sheet-dialog rulebook-dialog" id="rulesDialog">
+    <div class="dialog-top sticky-dialog-top">
+      <div><span class="step-chip">200 TOTAL</span><h2>The Million List</h2></div>
+      <button class="close-button" type="button" data-close="rulesDialog" aria-label="Close">×</button>
+    </div>
+    <p class="dialog-intro">Every discovery has exact odds calculated from all 46,656 possible six-dice rolls.</p>
+    <div class="rule-tools">
+      <label class="search-field"><span aria-hidden="true">⌕</span><input id="ruleSearch" type="search" placeholder="Search discoveries" autocomplete="off" /></label>
+      <select id="tierFilter" aria-label="Filter by rarity">
+        <option value="all">Every rarity</option>
+        <option value="common">Common</option>
+        <option value="rare">Rare</option>
+        <option value="epic">Epic</option>
+        <option value="boss">Boss</option>
+        <option value="legendary">Legendary</option>
+        <option value="millionaire">Millionaire</option>
+      </select>
+    </div>
+    <p class="rule-result-count" id="ruleResultCount"></p>
+    <div class="rulebook-list" id="rulebookList"></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+  <div class="sr-only" id="liveRegion" aria-live="polite"></div>
+
+  <script src="awards.js?v=20261110-2"></script>
+  <script src="app.js?v=20261110-2"></script>
+</body>
+</html>
