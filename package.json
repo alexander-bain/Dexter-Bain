@@ -10,7 +10,6 @@
     "test:weather-current": "node scripts/test-daily-weather-current.mjs",
     "test:weather-replacement": "node scripts/test-daily-weather-replacement.mjs",
     "test:weekend-sharing": "node scripts/test-weekend-weather-sharing.mjs",
-    "test:world-war": "node scripts/test-world-war.mjs",
     "start": "node server.js"
   },
   "dependencies": {
