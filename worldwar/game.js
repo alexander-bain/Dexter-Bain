@@ -14,7 +14,7 @@ import {
   neighbors4,
 } from "./game-core.js";
 
-const API_BASE = window.WORLD_COMMAND_API_BASE ||
+const API_BASE = window.WORLD_WAR_API_BASE ||
   (new URLSearchParams(location.search).get("api")) ||
   (["localhost", "127.0.0.1"].includes(location.hostname)
     ? "http://127.0.0.1:8080"
@@ -125,7 +125,7 @@ const app = {
 };
 
 function getPlayerId() {
-  const key = "world-command-player-v2";
+  const key = "world-war-player-v2";
   let id = "";
   try { id = localStorage.getItem(key) || ""; } catch {}
   if (!/^[a-zA-Z0-9_-]{8,90}$/.test(id)) {
@@ -172,13 +172,13 @@ function currentProfile() {
 function saveLocalProfile() {
   const profile = currentProfile();
   try {
-    localStorage.setItem("world-command-profile-v2", JSON.stringify(profile));
+    localStorage.setItem("world-war-profile-v2", JSON.stringify(profile));
   } catch {}
 }
 
 function loadLocalProfile() {
   try {
-    const saved = JSON.parse(localStorage.getItem("world-command-profile-v2") || "null");
+    const saved = JSON.parse(localStorage.getItem("world-war-profile-v2") || "null");
     if (saved?.name) els.nameInput.value = String(saved.name).slice(0, 18);
     if (PLAYER_COLORS.includes(saved?.color)) app.selectedColor = saved.color;
     if (typeof saved?.photo === "string" && saved.photo.length < 28000) app.profilePhoto = saved.photo;
@@ -295,7 +295,7 @@ function activateRoom(payload) {
 }
 
 async function createRoom(aiCount, autoStart = false) {
-  const payload = await api("/api/world-command/rooms", {
+  const payload = await api("/api/world-war/rooms", {
     method: "POST",
     body: JSON.stringify({
       playerId: app.playerId,
@@ -309,7 +309,7 @@ async function createRoom(aiCount, autoStart = false) {
   });
   activateRoom(payload);
   if (autoStart) {
-    const started = await api(`/api/world-command/rooms/${payload.roomCode}/start`, {
+    const started = await api(`/api/world-war/rooms/${payload.roomCode}/start`, {
       method: "POST",
       body: JSON.stringify({ playerId: app.playerId }),
     });
@@ -321,7 +321,7 @@ async function joinRoom() {
   const code = els.joinCodeInput.value.replace(/\D/g, "").slice(0, 6);
   els.joinCodeInput.value = code;
   if (code.length !== 6) throw new Error("Enter the full six-digit battle code.");
-  const payload = await api(`/api/world-command/rooms/${code}/join`, {
+  const payload = await api(`/api/world-war/rooms/${code}/join`, {
     method: "POST",
     body: JSON.stringify({ playerId: app.playerId, profile: currentProfile() }),
   });
@@ -343,7 +343,7 @@ async function pollRoom() {
   if (!app.room || app.polling) return;
   app.polling = true;
   try {
-    const payload = await api(`/api/world-command/rooms/${app.room.roomCode}?playerId=${encodeURIComponent(app.playerId)}`);
+    const payload = await api(`/api/world-war/rooms/${app.room.roomCode}?playerId=${encodeURIComponent(app.playerId)}`);
     receiveRoom(payload);
     app.connectionFailures = 0;
     setConnection("online", "Live");
@@ -492,7 +492,7 @@ function escapeHtml(value) {
 
 async function removeAi(targetId) {
   try {
-    const payload = await api(`/api/world-command/rooms/${app.room.roomCode}/ai/${encodeURIComponent(targetId)}`, {
+    const payload = await api(`/api/world-war/rooms/${app.room.roomCode}/ai/${encodeURIComponent(targetId)}`, {
       method: "DELETE",
       body: JSON.stringify({ playerId: app.playerId }),
     });
@@ -634,7 +634,7 @@ async function sendMapAction(target) {
   if (app.room.state === "placement") {
     app.requestBusy = true;
     try {
-      receiveRoom(await api(`/api/world-command/rooms/${app.room.roomCode}/pick`, {
+      receiveRoom(await api(`/api/world-war/rooms/${app.room.roomCode}/pick`, {
         method: "POST",
         body: JSON.stringify({ playerId: app.playerId, target }),
       }));
@@ -650,7 +650,7 @@ async function sendMapAction(target) {
   try {
     const action = { type: app.activeOrder, target };
     if (["expand", "attack"].includes(app.activeOrder)) action.amount = Number(els.orderAmountRange.value);
-    receiveRoom(await api(`/api/world-command/rooms/${app.room.roomCode}/action`, {
+    receiveRoom(await api(`/api/world-war/rooms/${app.room.roomCode}/action`, {
       method: "POST",
       body: JSON.stringify({ playerId: app.playerId, action }),
     }));
@@ -1049,12 +1049,12 @@ function wireEvents() {
   });
   els.addAiButton.addEventListener("click", async () => {
     try {
-      receiveRoom(await api(`/api/world-command/rooms/${app.room.roomCode}/ai`, { method: "POST", body: JSON.stringify({ playerId: app.playerId }) }));
+      receiveRoom(await api(`/api/world-war/rooms/${app.room.roomCode}/ai`, { method: "POST", body: JSON.stringify({ playerId: app.playerId }) }));
     } catch (error) { toast(error.message, true); }
   });
   els.saveProfileButton.addEventListener("click", async () => {
     try {
-      receiveRoom(await api(`/api/world-command/rooms/${app.room.roomCode}/profile`, {
+      receiveRoom(await api(`/api/world-war/rooms/${app.room.roomCode}/profile`, {
         method: "PATCH",
         body: JSON.stringify({ playerId: app.playerId, profile: { name: els.lobbyNameInput.value, color: app.selectedColor, photo: app.profilePhoto } }),
       }));
@@ -1065,7 +1065,7 @@ function wireEvents() {
     } catch (error) { toast(error.message, true); }
   });
   els.startMatchButton.addEventListener("click", () => busyAction(els.startMatchButton, async () => {
-    receiveRoom(await api(`/api/world-command/rooms/${app.room.roomCode}/start`, { method: "POST", body: JSON.stringify({ playerId: app.playerId }) }));
+    receiveRoom(await api(`/api/world-war/rooms/${app.room.roomCode}/start`, { method: "POST", body: JSON.stringify({ playerId: app.playerId }) }));
   }));
   els.leaveLobbyButton.addEventListener("click", leaveRoom);
   $$(".order-button").forEach((button) => button.addEventListener("click", () => selectOrder(button.dataset.order)));

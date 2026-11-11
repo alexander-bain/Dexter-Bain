@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
-import { createWorldCommandService } from "../world-command/server-game.js";
-import { isCoastal, neighbors4 } from "../world-command/game-core.js";
+import { createWorldWarService } from "../worldwar/server-game.js";
+import { isCoastal, neighbors4 } from "../worldwar/game-core.js";
 
-const game = createWorldCommandService();
+const game = createWorldWarService();
 let host = game.createRoom({
   playerId: "test-host",
   profile: { name: "Host", color: "#00D4FF" },
@@ -71,4 +71,4 @@ missile.arrivesAt = Date.now() - 1;
 game.getSummary(host.roomCode, "test-host");
 assert.equal(missile.completed, true);
 
-console.log("World Command contract tests passed.");
+console.log("World War contract tests passed.");

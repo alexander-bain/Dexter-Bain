@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#05080f" />
+  <meta name="description" content="World War is a live online world-conquest game for friends and AI commanders." />
+  <title>World War — Live World Conquest</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="World War home">
+        <span class="brand-orbit" aria-hidden="true"><span>W</span></span>
+        <span>
+          <strong>WORLD WAR</strong>
+          <small>LIVE CONQUEST</small>
+        </span>
+      </a>
+      <div class="topbar-actions">
+        <div class="connection-pill" id="connectionPill"><span></span><b>Ready</b></div>
+        <a class="ghost-link" href="../index.html">Arcade</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="screen menu-screen" id="menuScreen">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> Real-time strategy for up to 10 commanders</p>
+          <h1>THE WORLD<br /><em>IS YOURS.</em></h1>
+          <p class="hero-lede">Choose your beachheads, grow a living pixel empire, and outplay friends or AI with ground offensives, landing fleets, and missiles.</p>
+          <div class="feature-strip" aria-label="Game features">
+            <div><b>6/sec</b><span>troop income</span></div>
+            <div><b>10 sec</b><span>deployment</span></div>
+            <div><b>Live</b><span>online rooms</span></div>
+          </div>
+        </div>
+
+        <div class="setup-card glass-panel">
+          <div class="setup-heading">
+            <div>
+              <p class="kicker">COMMANDER PROFILE</p>
+              <h2>Enter the war room</h2>
+            </div>
+            <div class="avatar-preview" id="avatarPreview"><span id="avatarInitial">D</span><img id="avatarImage" alt="" hidden /></div>
+          </div>
+
+          <div class="profile-grid">
+            <label class="field">
+              <span>Commander name</span>
+              <input id="nameInput" maxlength="18" autocomplete="nickname" value="Dexter" />
+            </label>
+            <label class="photo-button" for="photoInput">
+              <span class="photo-icon" aria-hidden="true">+</span>
+              <span><b>Add photo</b><small>Optional</small></span>
+              <input id="photoInput" type="file" accept="image/png,image/jpeg,image/webp" hidden />
+            </label>
+          </div>
+
+          <fieldset class="color-fieldset">
+            <legend>Territory color</legend>
+            <div class="color-picker" id="colorPicker"></div>
+            <p>Colors stay far apart so every border is clear.</p>
+          </fieldset>
+
+          <div class="mode-tabs" role="tablist" aria-label="Play mode">
+            <button class="mode-tab is-active" data-mode="host" role="tab" aria-selected="true">Host</button>
+            <button class="mode-tab" data-mode="join" role="tab" aria-selected="false">Join</button>
+            <button class="mode-tab" data-mode="practice" role="tab" aria-selected="false">Vs AI</button>
+          </div>
+
+          <div class="mode-panel is-active" id="hostPanel">
+            <div class="rule-grid">
+              <label class="field">
+                <span>Starting territories</span>
+                <select id="territorySelect">
+                  <option value="1">1 territory</option>
+                  <option value="2">2 territories</option>
+                  <option value="3" selected>3 territories</option>
+                  <option value="4">4 territories</option>
+                  <option value="5">5 territories</option>
+                  <option value="6">6 territories</option>
+                  <option value="7">7 territories</option>
+                  <option value="8">8 territories</option>
+                  <option value="9">9 territories</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Victory rule</span>
+                <select id="winSelect">
+                  <option value="last" selected>Last one standing</option>
+                  <option value="80">Control 80%</option>
+                  <option value="60">Control 60%</option>
+                  <option value="50">Control 50%</option>
+                </select>
+              </label>
+            </div>
+            <label class="range-field">
+              <span><b>AI commanders</b><output id="hostAiOutput">2</output></span>
+              <input id="hostAiRange" type="range" min="0" max="8" value="2" />
+            </label>
+            <button class="primary-button" id="createButton"><span>CREATE BATTLE</span><i aria-hidden="true">→</i></button>
+          </div>
+
+          <div class="mode-panel" id="joinPanel">
+            <label class="field code-field">
+              <span>Six-digit battle code</span>
+              <input id="joinCodeInput" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="000000" autocomplete="one-time-code" />
+            </label>
+            <button class="primary-button" id="joinButton"><span>JOIN BATTLE</span><i aria-hidden="true">→</i></button>
+            <p class="panel-note">Your friend must keep the lobby open until everyone joins.</p>
+          </div>
+
+          <div class="mode-panel" id="practicePanel">
+            <label class="range-field">
+              <span><b>AI opponents</b><output id="practiceAiOutput">4</output></span>
+              <input id="practiceAiRange" type="range" min="1" max="9" value="4" />
+            </label>
+            <p class="panel-note">Same world, same weapons, no room code needed.</p>
+            <button class="primary-button" id="practiceButton"><span>START AI LOBBY</span><i aria-hidden="true">→</i></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen lobby-screen" id="lobbyScreen" hidden>
+        <div class="lobby-wrap">
+          <div class="lobby-title-row">
+            <div>
+              <p class="eyebrow"><span></span> SECURE WAITING ROOM</p>
+              <h2>Commanders assembling</h2>
+              <p>Share the code. The host launches when everyone is ready.</p>
+            </div>
+            <div class="room-code-card">
+              <small>BATTLE CODE</small>
+              <strong id="roomCodeText">000000</strong>
+              <button id="copyCodeButton">Copy invite</button>
+            </div>
+          </div>
+
+          <div class="lobby-grid">
+            <section class="glass-panel roster-panel">
+              <div class="panel-heading">
+                <div><p class="kicker">ROSTER</p><h3 id="rosterTitle">1 / 10 commanders</h3></div>
+                <button class="small-button" id="addAiButton">+ Add AI</button>
+              </div>
+              <div class="roster-list" id="rosterList"></div>
+            </section>
+
+            <aside class="lobby-side">
+              <section class="glass-panel rules-panel">
+                <div class="panel-heading"><div><p class="kicker">MATCH RULES</p><h3>Host settings</h3></div></div>
+                <div class="rule-summary">
+                  <div><span>Start points</span><b id="lobbyTerritories">3 each</b></div>
+                  <div><span>Win condition</span><b id="lobbyWin">Last standing</b></div>
+                  <div><span>Deployment</span><b>10 seconds</b></div>
+                  <div><span>Troop income</span><b>6 every second</b></div>
+                </div>
+              </section>
+
+              <section class="glass-panel identity-panel">
+                <div class="panel-heading"><div><p class="kicker">YOUR IDENTITY</p><h3>Lobby profile</h3></div></div>
+                <label class="field"><span>Name</span><input id="lobbyNameInput" maxlength="18" /></label>
+                <div class="color-picker compact" id="lobbyColorPicker"></div>
+                <div class="identity-actions">
+                  <label class="small-button" for="lobbyPhotoInput">Change photo<input id="lobbyPhotoInput" type="file" accept="image/png,image/jpeg,image/webp" hidden /></label>
+                  <button class="small-button accent" id="saveProfileButton">Save</button>
+                </div>
+              </section>
+            </aside>
+          </div>
+
+          <div class="lobby-footer">
+            <button class="text-button" id="leaveLobbyButton">← Leave lobby</button>
+            <div>
+              <p id="lobbyStatus">Waiting for the host to launch.</p>
+              <button class="launch-button" id="startMatchButton"><span>LAUNCH MATCH</span><i>10</i></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen game-screen" id="gameScreen" hidden>
+        <div class="game-hud">
+          <div class="hud-room"><span>ROOM</span><b id="gameRoomCode">000000</b></div>
+          <div class="hud-resource">
+            <span class="resource-icon">✦</span>
+            <div><small>AVAILABLE TROOPS</small><strong id="troopCount">0</strong></div>
+            <em>+6/sec</em>
+          </div>
+          <div class="hud-control"><small>WORLD CONTROL</small><b id="controlPercent">0.0%</b></div>
+          <button class="hud-menu" id="gameMenuButton" aria-label="Game information">?</button>
+        </div>
+
+        <div class="battle-layout">
+          <section class="map-stage" id="mapStage">
+            <canvas id="worldCanvas" aria-label="Interactive pixel world map"></canvas>
+            <div class="map-vignette" aria-hidden="true"></div>
+            <div class="placement-banner" id="placementBanner" hidden>
+              <p>DEPLOYMENT WINDOW</p>
+              <strong><span id="placementCountdown">10</span>s</strong>
+              <small id="placementHelp">Choose 3 starting territories</small>
+            </div>
+            <div class="map-instruction" id="mapInstruction">Select an order below, then choose a pixel on the map.</div>
+            <div class="map-tooltip" id="mapTooltip" hidden></div>
+            <div class="target-reticle" id="targetReticle" hidden></div>
+          </section>
+
+          <aside class="command-rail">
+            <section class="rail-section leaderboard-section">
+              <div class="rail-title"><span>POWER RANKING</span><b>LIVE</b></div>
+              <div class="leaderboard" id="leaderboard"></div>
+            </section>
+            <section class="rail-section objective-section">
+              <div class="rail-title"><span>VICTORY OBJECTIVE</span></div>
+              <strong id="objectiveTitle">Last one standing</strong>
+              <p id="objectiveText">Eliminate every rival command.</p>
+              <div class="objective-track"><i id="objectiveFill"></i></div>
+            </section>
+            <section class="rail-section feed-section">
+              <div class="rail-title"><span>WAR FEED</span></div>
+              <div class="war-feed" id="warFeed"><p>The world is quiet. For now.</p></div>
+            </section>
+          </aside>
+        </div>
+
+        <div class="order-tray" id="orderTray" hidden>
+          <button class="tray-close" id="closeTrayButton" aria-label="Cancel order">×</button>
+          <div>
+            <p class="kicker" id="trayKicker">GROUND ORDER</p>
+            <h3 id="trayTitle">Expand your border</h3>
+            <p id="trayDescription">Each troop captures up to four neutral pixels.</p>
+          </div>
+          <label class="troop-slider" id="troopSliderWrap">
+            <span>Troops committed <output id="orderAmountOutput">10</output></span>
+            <input id="orderAmountRange" type="range" min="1" max="10" value="10" />
+          </label>
+          <strong class="tray-prompt" id="trayPrompt">Choose a neutral border pixel</strong>
+        </div>
+
+        <nav class="action-dock" aria-label="Battle orders">
+          <button class="order-button" data-order="expand">
+            <span class="order-icon expand-icon" aria-hidden="true">↗</span>
+            <span><b>EXPAND</b><small>4 pixels / troop</small></span>
+          </button>
+          <button class="order-button" data-order="attack">
+            <span class="order-icon attack-icon" aria-hidden="true">⚔</span>
+            <span><b>ATTACK</b><small>Adjacent border</small></span>
+          </button>
+          <button class="order-button" data-order="boat">
+            <span class="order-icon boat-icon" aria-hidden="true">◢</span>
+            <span><b>LANDING FLEET</b><small><i id="boatCostText">18</i> troops</small></span>
+          </button>
+          <button class="order-button" data-order="missile">
+            <span class="order-icon missile-icon" aria-hidden="true">▲</span>
+            <span><b>MISSILE</b><small><i id="missileCostText">30</i> troops</small></span>
+          </button>
+        </nav>
+
+        <div class="game-over glass-panel" id="gameOverPanel" hidden>
+          <p class="kicker">BATTLE COMPLETE</p>
+          <div class="winner-emblem" id="winnerEmblem">W</div>
+          <h2 id="winnerTitle">World secured</h2>
+          <p id="winnerText"></p>
+          <div class="game-over-actions">
+            <button class="primary-button" id="rematchButton"><span>NEW BATTLE</span><i>→</i></button>
+            <a class="small-button" href="../index.html">Back to Arcade</a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <script type="module" src="game.js"></script>
+</body>
+</html>

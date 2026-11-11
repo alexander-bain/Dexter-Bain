@@ -534,7 +534,7 @@ function roomSummary(room, playerId, now = Date.now()) {
   };
 }
 
-export function createWorldCommandService() {
+export function createWorldWarService() {
   const rooms = new Map();
 
   function cleanup() {
