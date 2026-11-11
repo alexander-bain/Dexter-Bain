@@ -9,6 +9,7 @@ import OpenAI from "openai";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { createWorldCommandService } from "./world-command/server-game.js";
 
 const app = express();
 app.set("trust proxy", 1);
@@ -18,7 +19,8 @@ app.use((req, res, next) => {
   if (
     req.path.startsWith("/api/minigames") ||
     req.path.startsWith("/api/notifications") ||
-    req.path.startsWith("/api/rockem-sockem")
+    req.path.startsWith("/api/rockem-sockem") ||
+    req.path.startsWith("/api/world-command")
   ) {
     res.set("Cache-Control", "no-store");
   }
@@ -63,6 +65,7 @@ const resultCheckCooldowns = new Map();
 const resultCheckCooldownMs = Number(process.env.MINIGAMES_RESULT_CHECK_COOLDOWN_MS) || 60000;
 const maxAutoResultQuestions = 24;
 const robotBoxingRooms = new Map();
+const worldCommand = createWorldCommandService();
 const robotBoxingRoomTtlMs =
   Number(process.env.ROBOT_BOXING_ROOM_TTL_MS) || 45 * 60 * 1000;
 
@@ -2568,6 +2571,89 @@ app.post("/api/minigames/:gameId/rooms/:roomCode/entries", async (req, res) => {
     }
     console.error("Minigames room save error:", err);
     res.status(500).json({ error: "Failed to save minigame room entry" });
+  }
+});
+
+function sendWorldCommandError(res, error) {
+  const statusCode = Number(error?.statusCode) || 500;
+  if (statusCode >= 500) {
+    console.error("World Command API error:", error);
+  }
+  res.status(statusCode).json({
+    error: statusCode >= 500 ? "World Command could not answer yet." : error.message,
+  });
+}
+
+app.post("/api/world-command/rooms", (req, res) => {
+  try {
+    const payload = worldCommand.createRoom(req.body || {});
+    res.status(201).json(payload);
+  } catch (error) {
+    sendWorldCommandError(res, error);
+  }
+});
+
+app.post("/api/world-command/rooms/:roomCode/join", (req, res) => {
+  try {
+    res.json(worldCommand.joinRoom(req.params.roomCode, req.body || {}));
+  } catch (error) {
+    sendWorldCommandError(res, error);
+  }
+});
+
+app.get("/api/world-command/rooms/:roomCode", (req, res) => {
+  try {
+    res.json(worldCommand.getSummary(req.params.roomCode, req.query?.playerId));
+  } catch (error) {
+    sendWorldCommandError(res, error);
+  }
+});
+
+app.patch("/api/world-command/rooms/:roomCode/profile", (req, res) => {
+  try {
+    res.json(worldCommand.updateProfile(req.params.roomCode, req.body?.playerId, req.body?.profile));
+  } catch (error) {
+    sendWorldCommandError(res, error);
+  }
+});
+
+app.post("/api/world-command/rooms/:roomCode/ai", (req, res) => {
+  try {
+    res.json(worldCommand.addAi(req.params.roomCode, req.body?.playerId));
+  } catch (error) {
+    sendWorldCommandError(res, error);
+  }
+});
+
+app.delete("/api/world-command/rooms/:roomCode/ai/:targetId", (req, res) => {
+  try {
+    res.json(worldCommand.removeAi(req.params.roomCode, req.body?.playerId, req.params.targetId));
+  } catch (error) {
+    sendWorldCommandError(res, error);
+  }
+});
+
+app.post("/api/world-command/rooms/:roomCode/start", (req, res) => {
+  try {
+    res.json(worldCommand.startRoom(req.params.roomCode, req.body?.playerId));
+  } catch (error) {
+    sendWorldCommandError(res, error);
+  }
+});
+
+app.post("/api/world-command/rooms/:roomCode/pick", (req, res) => {
+  try {
+    res.json(worldCommand.pickStart(req.params.roomCode, req.body?.playerId, req.body?.target));
+  } catch (error) {
+    sendWorldCommandError(res, error);
+  }
+});
+
+app.post("/api/world-command/rooms/:roomCode/action", (req, res) => {
+  try {
+    res.json(worldCommand.action(req.params.roomCode, req.body?.playerId, req.body?.action));
+  } catch (error) {
+    sendWorldCommandError(res, error);
   }
 });
 
