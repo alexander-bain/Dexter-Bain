@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#10213f" />
+  <meta name="description" content="Automatic daily geometry practice for Mr. D's Hillview course, with AI-generated Level 1–4 questions and instant grading." />
+  <meta name="math-release" content="2026-11-16-math-1" />
+  <title>Mr. D Math Coach · DexterBain</title>
+  <link rel="stylesheet" href="styles.css?v=20261116-1" />
+</head>
+<body>
+  <a class="skip-link" href="#practiceLab">Skip to practice</a>
+
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="DexterBain home">
+      <span class="brand-mark" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+      <span>
+        <strong>Mr. D Math Coach</strong>
+        <small>Hillview Geometry</small>
+      </span>
+    </a>
+    <div class="api-pill" id="apiPill" title="Practice generator connection">
+      <span class="api-dot" aria-hidden="true"></span>
+      <span id="apiLabel">Getting today’s plan…</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero section-shell" aria-labelledby="heroTitle">
+      <div class="hero-copy">
+        <p class="eyebrow"><span id="todayDate">Today</span> · <span id="courseYear">2026–27</span></p>
+        <div class="status-row">
+          <span class="plan-badge" id="planBadge">Finding your focus</span>
+          <span class="test-countdown" id="testCountdown"></span>
+        </div>
+        <h1 id="heroTitle">You don’t choose the unit.<br /><em>Today already knows.</em></h1>
+        <p class="hero-lede" id="planMessage">Your daily geometry plan is loading from the Hillview course calendar.</p>
+
+        <div class="focus-ticket" aria-live="polite">
+          <div class="ticket-label">Work on this today</div>
+          <p class="unit-name" id="unitName">Geometry</p>
+          <h2 id="todayTopic">Loading today’s skill…</h2>
+          <div class="ticket-rule" aria-hidden="true"></div>
+          <ul id="goalList"></ul>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="shape-card triangle-card">
+          <svg viewBox="0 0 220 190" role="img">
+            <path d="M110 20 202 165H18Z" />
+            <path class="measure" d="M94 41a24 24 0 0 1 32 0" />
+            <path class="measure" d="M34 148h27v17" />
+            <text x="100" y="73">x°</text>
+            <text x="48" y="143">90°</text>
+          </svg>
+          <span>Solve smart.</span>
+        </div>
+        <div class="floating-note note-one">SSS ≅</div>
+        <div class="floating-note note-two">m∠A = ?</div>
+        <div class="floating-note note-three">rise / run</div>
+      </div>
+    </section>
+
+    <section class="review-alert section-shell" id="reviewAlert" hidden>
+      <div class="review-icon" aria-hidden="true">⚡</div>
+      <div>
+        <p class="eyebrow">Automatic review mode</p>
+        <h2>A test is close. Today’s questions will mix the whole chapter.</h2>
+        <p>You never have to switch the unit yourself.</p>
+      </div>
+    </section>
+
+    <section class="practice section-shell" id="practiceLab" aria-labelledby="practiceTitle">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">AI practice lab</p>
+          <h2 id="practiceTitle">Pick how hard. We’ll handle what to study.</h2>
+        </div>
+        <p class="heading-note">Questions are generated for today’s exact focus and graded automatically.</p>
+      </div>
+
+      <div class="level-grid" role="radiogroup" aria-label="Question level">
+        <button class="level-card is-selected" type="button" data-level="1" role="radio" aria-checked="true">
+          <span class="level-number">01</span>
+          <span><strong>Level 1</strong><small>Recall &amp; identify</small></span>
+          <span class="level-shape circle" aria-hidden="true"></span>
+        </button>
+        <button class="level-card" type="button" data-level="2" role="radio" aria-checked="false">
+          <span class="level-number">02</span>
+          <span><strong>Level 2</strong><small>One clear calculation</small></span>
+          <span class="level-shape square" aria-hidden="true"></span>
+        </button>
+        <button class="level-card" type="button" data-level="3" role="radio" aria-checked="false">
+          <span class="level-number">03</span>
+          <span><strong>Level 3</strong><small>Multi-step reasoning</small></span>
+          <span class="level-shape triangle" aria-hidden="true"></span>
+        </button>
+        <button class="level-card" type="button" data-level="4" role="radio" aria-checked="false">
+          <span class="level-number">04</span>
+          <span><strong>Level 4</strong><small>Proof &amp; challenge</small></span>
+          <span class="level-shape diamond" aria-hidden="true"></span>
+        </button>
+      </div>
+
+      <div class="launch-row">
+        <button class="primary-button" id="practiceButton" type="button">
+          <span>Generate 5 practice questions</span>
+          <span aria-hidden="true">→</span>
+        </button>
+        <button class="secondary-button" id="testButton" type="button">
+          <span>Take a 10-question practice test</span>
+          <span aria-hidden="true">✦</span>
+        </button>
+      </div>
+      <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="loading-card section-shell" id="loadingCard" hidden aria-live="polite">
+      <div class="compass-loader" aria-hidden="true"><span></span></div>
+      <div>
+        <p class="eyebrow">Building your set</p>
+        <h2 id="loadingMessage">Drawing clean diagrams in our head…</h2>
+        <p>The generator is matching your level to today’s lesson.</p>
+      </div>
+    </section>
+
+    <section class="quiz section-shell" id="quizSection" hidden aria-labelledby="quizTitle">
+      <div class="quiz-head">
+        <div>
+          <p class="eyebrow" id="quizKicker">Level 1 · Practice</p>
+          <h2 id="quizTitle">Your geometry set</h2>
+        </div>
+        <div class="progress-wrap">
+          <span id="progressLabel">0 of 5 answered</span>
+          <div class="progress-track" aria-hidden="true"><span id="progressBar"></span></div>
+        </div>
+      </div>
+      <form id="quizForm">
+        <div class="question-list" id="questionList"></div>
+        <div class="submit-row">
+          <button class="primary-button submit-button" type="submit">Grade my answers <span aria-hidden="true">✓</span></button>
+          <p>Blank answers count as incorrect. You’ll see a clear explanation for every question.</p>
+        </div>
+      </form>
+    </section>
+
+    <section class="results section-shell" id="resultsSection" hidden aria-labelledby="resultsTitle">
+      <div class="score-orbit">
+        <div class="score-ring">
+          <span id="scorePercent">0%</span>
+          <small id="scoreFraction">0 / 0</small>
+        </div>
+      </div>
+      <div class="result-copy">
+        <p class="eyebrow">Instantly graded</p>
+        <h2 id="resultsTitle">Your results</h2>
+        <p class="mastery-line" id="masteryLine"></p>
+        <div class="result-actions">
+          <button class="primary-button" id="tryAgainButton" type="button">Make another set <span aria-hidden="true">↻</span></button>
+          <button class="text-button" id="reviewAnswersButton" type="button">Review every answer ↓</button>
+        </div>
+      </div>
+      <div class="answer-review" id="answerReview"></div>
+    </section>
+
+    <section class="history section-shell" aria-labelledby="historyTitle">
+      <div>
+        <p class="eyebrow">Your device</p>
+        <h2 id="historyTitle">Recent scores</h2>
+        <p>Saved only in this browser—no account needed.</p>
+      </div>
+      <div class="history-list" id="historyList">
+        <p class="empty-history">Your first score will appear here.</p>
+      </div>
+    </section>
+
+    <section class="sources section-shell">
+      <div>
+        <p class="eyebrow">Built from the real course</p>
+        <h2>Mr. D’s sequence + Hillview’s calendar.</h2>
+        <p>This independent study helper estimates daily pacing from Mr. D’s public Geometry chapter order and the official 2026–27 MPCSD instructional calendar. Always follow the exact assignment and test date Mr. D gives in class.</p>
+      </div>
+      <div class="source-links">
+        <a href="https://teachers.mpcsd.org/mdoroquez/pages/Geo.htm" target="_blank" rel="noreferrer">Mr. D’s Geometry page <span>↗</span></a>
+        <a href="https://district.mpcsd.org/calendar" target="_blank" rel="noreferrer">MPCSD calendar <span>↗</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Made for focused geometry practice.</span>
+    <a href="/">DexterBain.com</a>
+  </footer>
+
+  <script type="module" src="app.js?v=20261116-1"></script>
+</body>
+</html>

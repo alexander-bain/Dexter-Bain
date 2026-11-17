@@ -9,6 +9,9 @@ import OpenAI from "openai";
 import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { getDailyPlan, publicPlan } from "./math/curriculum.js";
+import { parseGeneratedSet, publicQuestion, scoreSubmission } from "./math/question-core.js";
+import { buildControlledQuestionSet } from "./math/question-bank.js";
 
 const app = express();
 app.set("trust proxy", 1);
@@ -18,7 +21,8 @@ app.use((req, res, next) => {
   if (
     req.path.startsWith("/api/minigames") ||
     req.path.startsWith("/api/notifications") ||
-    req.path.startsWith("/api/rockem-sockem")
+    req.path.startsWith("/api/rockem-sockem") ||
+    req.path.startsWith("/api/mr-d-geometry")
   ) {
     res.set("Cache-Control", "no-store");
   }
@@ -65,6 +69,10 @@ const maxAutoResultQuestions = 24;
 const robotBoxingRooms = new Map();
 const robotBoxingRoomTtlMs =
   Number(process.env.ROBOT_BOXING_ROOM_TTL_MS) || 45 * 60 * 1000;
+const geometryPracticeSessions = new Map();
+const geometryGenerateCooldowns = new Map();
+const geometrySessionTtlMs = 2 * 60 * 60 * 1000;
+const geometryGenerateCooldownMs = 4000;
 
 // IMPORTANT: set this in your environment on Render, don't hardcode it in code
 const openai = new OpenAI({
@@ -2688,6 +2696,133 @@ app.post("/api/rockem-sockem/rooms/:roomCode/input", (req, res) => {
   room.inputs[side] = cleanRobotInput(req.body?.input);
   touchRobotBoxingPlayer(room, playerId);
   res.json(robotBoxingRoomSummary(room, roomCode, playerId));
+});
+
+function cleanupGeometryPracticeSessions() {
+  const cutoff = Date.now() - geometrySessionTtlMs;
+  for (const [sessionId, session] of geometryPracticeSessions.entries()) {
+    if (session.createdAt < cutoff) geometryPracticeSessions.delete(sessionId);
+  }
+  for (const [clientId, generatedAt] of geometryGenerateCooldowns.entries()) {
+    if (generatedAt < Date.now() - 60000) geometryGenerateCooldowns.delete(clientId);
+  }
+}
+
+function geometryClientId(req) {
+  return cleanText(req.ip || req.socket?.remoteAddress || "unknown", 120);
+}
+
+async function generateGeometryQuestionSet(plan, level, mode, count) {
+  const completion = await openai.chat.completions.create({
+    model: process.env.GEOMETRY_PRACTICE_MODEL || "gpt-4o-mini",
+    response_format: { type: "json_object" },
+    temperature: 0.8,
+    messages: [
+      {
+        role: "system",
+        content: "You choose a variation seed for a curated geometry practice generator. Return JSON only.",
+      },
+      {
+        role: "user",
+        content: JSON.stringify({
+          chapter: plan.unitTitle,
+          todayFocus: plan.topic,
+          level,
+          mode,
+          count,
+          instruction: "Return {\"seed\": integer from 1 through 2000000000}. Pick a fresh unpredictable seed.",
+        }),
+      },
+    ],
+  });
+  const variation = JSON.parse(completion.choices?.[0]?.message?.content || "{}");
+  const seed = Number.isInteger(variation.seed) && variation.seed > 0
+    ? variation.seed
+    : crypto.randomInt(1, 2000000000);
+  const rawQuestions = buildControlledQuestionSet(plan, level, count, seed);
+  return parseGeneratedSet({ questions: rawQuestions }, count);
+}
+
+app.get("/api/mr-d-geometry/today", (req, res) => {
+  res.json({
+    release: "2026-11-16-math-1",
+    plan: publicPlan(getDailyPlan()),
+  });
+});
+
+app.post("/api/mr-d-geometry/generate", async (req, res) => {
+  cleanupGeometryPracticeSessions();
+  const clientId = geometryClientId(req);
+  const lastGeneratedAt = geometryGenerateCooldowns.get(clientId) || 0;
+  if (Date.now() - lastGeneratedAt < geometryGenerateCooldownMs) {
+    res.status(429).json({ error: "Give the generator a few seconds before making another set." });
+    return;
+  }
+
+  const level = Number(req.body?.level);
+  const mode = req.body?.mode === "test" ? "test" : req.body?.mode === "practice" ? "practice" : "";
+  if (![1, 2, 3, 4].includes(level) || !mode) {
+    res.status(400).json({ error: "Choose a valid Level 1–4 and practice type." });
+    return;
+  }
+  if (!process.env.OPENAI_API_KEY) {
+    res.status(503).json({ error: "AI practice is not configured yet." });
+    return;
+  }
+
+  const plan = getDailyPlan();
+  const count = mode === "test" ? 10 : 5;
+  geometryGenerateCooldowns.set(clientId, Date.now());
+
+  try {
+    const questions = await generateGeometryQuestionSet(plan, level, mode, count);
+    const sessionId = crypto.randomUUID();
+    geometryPracticeSessions.set(sessionId, {
+      createdAt: Date.now(),
+      level,
+      mode,
+      plan: publicPlan(plan),
+      questions,
+    });
+    res.json({
+      release: "2026-11-16-math-1",
+      sessionId,
+      level,
+      mode,
+      plan: publicPlan(plan),
+      questions: questions.map(publicQuestion),
+      expiresInMinutes: Math.round(geometrySessionTtlMs / 60000),
+    });
+  } catch (error) {
+    console.error("Geometry question generation error:", error?.message || error);
+    res.status(502).json({ error: "The AI made an invalid set. Please try again." });
+  }
+});
+
+app.post("/api/mr-d-geometry/grade", (req, res) => {
+  cleanupGeometryPracticeSessions();
+  const sessionId = cleanText(req.body?.sessionId, 80).replace(/[^a-f0-9-]/gi, "");
+  const session = geometryPracticeSessions.get(sessionId);
+  if (!session) {
+    res.status(410).json({ error: "This question set expired. Generate a fresh set." });
+    return;
+  }
+
+  const submitted = req.body?.answers && typeof req.body.answers === "object" && !Array.isArray(req.body.answers)
+    ? req.body.answers
+    : {};
+  const answers = {};
+  for (const question of session.questions) {
+    answers[question.id] = cleanText(submitted[question.id], 180);
+  }
+  const score = scoreSubmission(session.questions, answers);
+  res.json({
+    release: "2026-11-16-math-1",
+    sessionId,
+    level: session.level,
+    mode: session.mode,
+    ...score,
+  });
 });
 
 // Basic health check
