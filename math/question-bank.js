@@ -26,6 +26,73 @@ function shuffled(rng, values) {
   return copy;
 }
 
+function numericLabels(prompt) {
+  return (String(prompt).match(/(?:−|-)?\d+(?:\.\d+)?(?:\s*\/\s*\d+)?(?:π)?°?/g) || [])
+    .filter((label, index, values) => values.indexOf(label) === index)
+    .slice(0, 4);
+}
+
+function diagramLabels(kind, prompt) {
+  if (kind === "triangle-midsegment") {
+    const side = String(prompt).match(/side of\s+([\d.]+)\s*cm/i)?.[1];
+    if (side) return ["?", `${side} cm`];
+    const midsegment = String(prompt).match(/midsegment is\s+([\d.]+)\s*cm/i)?.[1];
+    if (midsegment) return [`${midsegment} cm`, "2 × DE"];
+    const namedMidsegment = String(prompt).match(/DE\s*=\s*([\d.]+)\s*cm/i)?.[1];
+    if (namedMidsegment) return [`${namedMidsegment} cm`, "2 × DE"];
+    return [];
+  }
+  if (kind === "triangle-median") return ["2:1"];
+  if (["triangle", "triangle-median", "right-triangle", "quadrilateral", "area-shape", "circle", "solid"].includes(kind)) {
+    return numericLabels(prompt);
+  }
+  return [];
+}
+
+function diagramKindForQuestion(unitId, skill) {
+  const value = String(skill).toLowerCase();
+  if (value.includes("midsegment")) return "triangle-midsegment";
+  if (value.includes("centroid") || value.includes("median") || value.includes("altitude")) return "triangle-median";
+  if (value.includes("center") || value.includes("bisector")) return "triangle-center";
+  if (value.includes("indirect proof")) return "proof-flow";
+  if (value.includes("triangle inequality")) return "triangle";
+  if (value.includes("right triangle") || value.includes("pythag") || value.includes("trig") || value.includes("special right")) return "right-triangle";
+  if (value.includes("circle") || value.includes("arc") || value.includes("chord") || value.includes("secant") || value.includes("tangent")) return "circle";
+  if (value.includes("solid") || value.includes("volume") || value.includes("surface") || value.includes("prism") || value.includes("cylinder") || value.includes("cone") || value.includes("sphere")) return "solid";
+  if (value.includes("transform") || value.includes("rotation") || value.includes("reflection") || value.includes("translation") || value.includes("dilation")) return "transformation";
+  if (value.includes("slope") || value.includes("coordinate") || value.includes("line equation") || value.includes("midpoint")) return "coordinate-grid";
+  if (value.includes("parallel") || value.includes("perpendicular line")) return "parallel-lines";
+  if (value.includes("congru") || value.includes("cpctc") || value.includes("triangle proof")) return "congruent-triangles";
+  if (value.includes("similar") || value.includes("proportion")) return "similar-triangles";
+  if (value.includes("quadrilateral") || value.includes("parallelogram") || value.includes("trapezoid") || value.includes("rhombus") || value.includes("kite") || value.includes("rectangle") || value.includes("square")) return "quadrilateral";
+  if (value.includes("polygon")) return "polygon";
+  if (value.includes("area") || value.includes("perimeter")) return "area-shape";
+  if (/(^|\s)angle/.test(value) && unitId !== "chapter-4") return "angle";
+  if (value.includes("conditional") || value.includes("inductive") || value.includes("deductive") || value.includes("property") || value.includes("proof")) return "proof-flow";
+  if (["chapter-4", "chapter-5"].includes(unitId) || value.includes("triangle")) return "triangle";
+  if (unitId === "chapter-8") return "right-triangle";
+  if (unitId === "chapter-9") return "transformation";
+  if (unitId === "chapter-10") return "area-shape";
+  if (unitId === "chapter-11") return "solid";
+  if (unitId === "chapter-12") return "circle";
+  if (unitId === "chapter-13") return "coordinate-grid";
+  return "proof-flow";
+}
+
+function addDiagram(question, unitId, variant) {
+  const kind = diagramKindForQuestion(unitId, question.skill);
+  return {
+    ...question,
+    diagram: {
+      kind,
+      labels: diagramLabels(kind, question.prompt),
+      variant: variant % 4,
+      alt: `${question.skill} diagram for this question`,
+      caption: "Use the marked relationships. Diagram not to scale.",
+    },
+  };
+}
+
 function mc(rng, { prompt, answers, correct, skill, hint, explanation }) {
   const options = shuffled(
     rng,
@@ -560,6 +627,105 @@ function congruencePack() {
         explanation:
           "SSA has an ambiguous case and can produce two noncongruent triangles, so it is not a general congruence theorem.",
       }),
+  ];
+}
+
+function midsegmentFocusPack() {
+  return [
+    (rng, level, variant) => {
+      const base = 16 + 2 * variant + 2 * int(rng, 0, 5);
+      const left = 12 + 2 * variant;
+      const right = 16 + 2 * (variant % 5);
+      return numberQuestion({
+        prompt:
+          level >= 3
+            ? `In △ABC, D and E are the midpoints of AB and AC. AB = ${left} cm, AC = ${right} cm, and DE = ${base / 2} cm. What is the perimeter of △ABC?`
+            : `A triangle has a side of ${base} cm. What is the length of the midsegment parallel to that side?`,
+        answer: level >= 3 ? left + right + base : base / 2,
+        skill: "Triangle midsegments",
+        hint: "A midsegment is half its parallel side.",
+        explanation:
+          level >= 3
+            ? `BC = 2(${base / 2}) = ${base} cm. The perimeter is ${left} + ${right} + ${base} = ${left + right + base} cm.`
+            : `The midsegment is half the parallel side: ${base} ÷ 2 = ${base / 2} cm.`,
+      });
+    },
+    (rng, level, variant) => {
+      const scale = 1 + (variant % 4);
+      const dx = 3 * scale;
+      const ey = 4 * scale;
+      const midsegment = 5 * scale;
+      return numberQuestion({
+        prompt:
+          level >= 3
+            ? `D(${dx}, 0) and E(0, ${ey}) are the midpoints of two sides of △ABC. What is the length of the side of △ABC parallel to DE?`
+            : `D(${dx}, 0) and E(0, ${ey}) are midpoints of two sides of a triangle. What is the length of midsegment DE?`,
+        answer: level >= 3 ? 2 * midsegment : midsegment,
+        skill: "Triangle midsegments",
+        hint: "Use the distance formula for DE, then double it only if the question asks for the parallel side.",
+        explanation: `DE = √(${dx}² + ${ey}²) = ${midsegment}. A midsegment is half its parallel side${level >= 3 ? `, so that side is ${2 * midsegment}` : ""}.`,
+      });
+    },
+    (rng, level, variant) => {
+      const x = 6 + variant;
+      const constant = 2 + (variant % 3);
+      const offset = 2 * x - 2 * constant;
+      const side = 6 * x - offset;
+      return numberQuestion({
+        prompt:
+          level >= 3
+            ? `In △ABC, DE is a midsegment. DE = (2x + ${constant}) cm and parallel side BC = (6x − ${offset}) cm. After solving for x, what is BC?`
+            : `In △ABC, DE is a midsegment. DE = (2x + ${constant}) cm and parallel side BC = (6x − ${offset}) cm. What is x?`,
+        answer: level >= 3 ? side : x,
+        skill: "Triangle midsegments",
+        hint: "The parallel side is twice the midsegment, so BC = 2(DE).",
+        explanation: `6x - ${offset} = 2(2x + ${constant}), so 2x = ${2 * x} and x = ${x}. Then BC = ${side} cm.`,
+      });
+    },
+    (rng, level, variant) => {
+      const rotate = variant % 3;
+      const facts = [
+        "D and E are the midpoints of AB and AC",
+        "AD = DB and AE = EC",
+        "D bisects AB and E bisects AC",
+      ];
+      return mc(rng, {
+        prompt:
+          level >= 3
+            ? `In △ABC, ${facts[rotate]}. Which conclusion follows from the Triangle Midsegment Theorem?`
+            : `Which statement describes a triangle midsegment?`,
+        answers:
+          level >= 3
+            ? ["DE ∥ BC and DE = ½BC", "DE ⟂ BC and DE = BC", "DE ∥ AC and DE = 2BC", "DE bisects ∠B and ∠C"]
+            : ["It joins the midpoints of two sides", "It joins a vertex to the opposite midpoint", "It is any altitude", "It bisects one angle"],
+        correct: 0,
+        skill: "Triangle midsegments",
+        hint: "A midsegment connects two side midpoints.",
+        explanation:
+          level >= 3
+            ? "The segment joining two side midpoints is parallel to the third side and half as long."
+            : "A triangle midsegment is the segment connecting the midpoints of two sides.",
+      });
+    },
+    (rng, level, variant) => {
+      const a = 10 + 2 * variant;
+      const b = 14 + 2 * (variant % 5);
+      const c = 18 + 2 * (variant % 4);
+      const medialPerimeter = (a + b + c) / 2;
+      return numberQuestion({
+        prompt:
+          level >= 3
+            ? `A triangle has side lengths ${a} cm, ${b} cm, and ${c} cm. Connecting all three side midpoints forms the medial triangle. What is the medial triangle's perimeter?`
+            : `A triangle side is ${c} cm. What is the length of the medial triangle side parallel to it?`,
+        answer: level >= 3 ? medialPerimeter : c / 2,
+        skill: "Triangle midsegments",
+        hint: "Every side of the medial triangle is half a corresponding side of the original triangle.",
+        explanation:
+          level >= 3
+            ? `The medial triangle's perimeter is half the original perimeter: (${a} + ${b} + ${c})/2 = ${medialPerimeter} cm.`
+            : `The parallel midsegment is half of ${c}, so its length is ${c / 2} cm.`,
+      });
+    },
   ];
 }
 
@@ -1572,9 +1738,21 @@ function generatorsForUnit(unitId) {
   return (packByUnit[unitId] || congruencePack)();
 }
 
+function generatorsForPlan(plan) {
+  const generators = generatorsForUnit(plan.unitId);
+  if (plan.mode !== "lesson" || plan.unitId !== "chapter-5") return generators;
+  const topic = String(plan.topic).toLowerCase();
+  if (topic.includes("midsegment")) return midsegmentFocusPack();
+  if (topic.includes("perpendicular bisector") || topic.includes("angle bisector")) return [generators[3]];
+  if (topic.includes("median") || topic.includes("altitude")) return [generators[1]];
+  if (topic.includes("inequalit")) return [generators[2]];
+  if (topic.includes("indirect")) return [generators[4]];
+  return generators;
+}
+
 export function buildControlledQuestionSet(plan, level, count, seed) {
   const rng = makeRng(seed);
-  const generators = shuffled(rng, generatorsForUnit(plan.unitId));
+  const generators = shuffled(rng, generatorsForPlan(plan));
   const questions = [];
   const prompts = new Set();
   let attempt = 0;
@@ -1582,7 +1760,7 @@ export function buildControlledQuestionSet(plan, level, count, seed) {
     const generator = generators[attempt % generators.length];
     const variant =
       questions.length + 1 + Math.floor(attempt / generators.length);
-    const question = generator(rng, level, variant);
+    const question = addDiagram(generator(rng, level, variant), plan.unitId, variant);
     const key = question.prompt.replace(/\s+/g, " ").trim().toLowerCase();
     if (!prompts.has(key)) {
       prompts.add(key);

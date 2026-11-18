@@ -58,7 +58,7 @@ const units = [
     number: "4",
     title: "Congruent Triangles",
     start: "2026-10-26",
-    testDate: "2026-11-20",
+    testDate: "2026-11-13",
     topics: [
       "Triangle angle sums",
       "Congruent figures",
@@ -73,7 +73,7 @@ const units = [
     id: "chapter-5",
     number: "5",
     title: "Relationships Within Triangles",
-    start: "2026-11-30",
+    start: "2026-11-16",
     testDate: "2026-12-11",
     topics: [
       "Triangle midsegments",
@@ -392,7 +392,7 @@ export function getDailyPlan(dateInput = new Date()) {
       ? "Warm up briefly, then trust your work. Practice mode stays available."
       : mode === "weekend"
         ? "No new lesson today. Practice the current skill or take a short mixed test."
-        : "This is today’s focus from the course pacing calendar—no unit selection needed.";
+        : "This focus is calibrated to the current class checkpoint—no unit selection needed.";
 
   return {
     date,

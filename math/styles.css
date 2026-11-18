@@ -229,6 +229,31 @@ h1 em { color: var(--blue); font-style: normal; }
 .question-number { color: var(--coral); font-size: 0.73rem; font-weight: 950; letter-spacing: 0.12em; text-transform: uppercase; }
 .skill-chip { padding: 6px 9px; border-radius: 999px; color: var(--blue-deep); background: #edf0ff; font-size: 0.69rem; font-weight: 850; }
 .question-card h3 { margin: 16px 0 20px; font-size: clamp(1rem, 2.5vw, 1.24rem); line-height: 1.45; }
+.question-diagram { display: grid; width: min(100%, 560px); margin: 0 auto 22px; overflow: hidden; border: 2px solid var(--ink); border-radius: 18px; background: #f6fbff; box-shadow: 5px 6px 0 rgba(16,33,63,0.12); }
+.question-diagram svg { display: block; width: 100%; max-height: 260px; padding: 10px; }
+.question-diagram figcaption { padding: 9px 13px; border-top: 1px solid var(--line); color: var(--muted); background: white; font-size: 0.7rem; font-weight: 800; }
+.diagram-line, .diagram-accent, .diagram-guide, .diagram-axis, .diagram-grid, .diagram-arc, .diagram-tick, .diagram-orbit { fill: none; vector-effect: non-scaling-stroke; }
+.diagram-line { stroke: var(--ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.diagram-accent { stroke: var(--coral); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.diagram-guide { stroke: var(--blue); stroke-width: 2.5; stroke-dasharray: 7 6; }
+.diagram-grid { stroke: #dce7f4; stroke-width: 1; }
+.diagram-axis { stroke: var(--ink); stroke-width: 2.5; }
+.diagram-arc { stroke: var(--blue-deep); stroke-width: 4; }
+.diagram-tick { stroke: var(--coral); stroke-width: 3; }
+.diagram-orbit { stroke: var(--blue); stroke-width: 2; stroke-dasharray: 6 5; }
+.diagram-point { fill: var(--ink); }
+.diagram-center { fill: var(--coral); stroke: white; stroke-width: 2; }
+.diagram-text, .diagram-value, .diagram-note, .diagram-symbol, .diagram-box-text { fill: var(--ink); font-family: inherit; font-weight: 900; }
+.diagram-text { font-size: 16px; }
+.diagram-value { fill: var(--blue); font-size: 16px; }
+.diagram-note { fill: var(--muted); font-size: 12px; }
+.diagram-symbol { fill: var(--coral); font-size: 28px; text-anchor: middle; }
+.diagram-fill-one { fill: rgba(50,119,255,0.18); stroke: var(--blue); stroke-width: 3; }
+.diagram-fill-two { fill: rgba(255,106,91,0.18); stroke: var(--coral); stroke-width: 3; }
+.diagram-box, .diagram-box-accent { stroke-width: 3; }
+.diagram-box { fill: white; stroke: var(--blue); }
+.diagram-box-accent { fill: var(--yellow); stroke: var(--ink); }
+.diagram-box-text { font-size: 14px; text-anchor: middle; }
 .choice-list { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
 .choice { position: relative; display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 11px 14px; border: 2px solid var(--line); border-radius: 13px; cursor: pointer; transition: border-color 140ms ease, background 140ms ease; }
 .choice:hover { border-color: rgba(52,88,229,0.45); background: #f7f8ff; }

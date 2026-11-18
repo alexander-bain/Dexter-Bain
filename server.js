@@ -2745,7 +2745,7 @@ async function generateGeometryQuestionSet(plan, level, mode, count) {
 
 app.get("/api/mr-d-geometry/today", (req, res) => {
   res.json({
-    release: "2026-11-16-math-1",
+    release: "2026-11-17-math-2",
     plan: publicPlan(getDailyPlan()),
   });
 });
@@ -2785,7 +2785,7 @@ app.post("/api/mr-d-geometry/generate", async (req, res) => {
       questions,
     });
     res.json({
-      release: "2026-11-16-math-1",
+      release: "2026-11-17-math-2",
       sessionId,
       level,
       mode,
@@ -2817,7 +2817,7 @@ app.post("/api/mr-d-geometry/grade", (req, res) => {
   }
   const score = scoreSubmission(session.questions, answers);
   res.json({
-    release: "2026-11-16-math-1",
+    release: "2026-11-17-math-2",
     sessionId,
     level: session.level,
     mode: session.mode,

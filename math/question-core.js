@@ -22,6 +22,43 @@ function normalizeChoice(choice, index) {
   return { id, text };
 }
 
+const DIAGRAM_KINDS = new Set([
+  "angle",
+  "area-shape",
+  "circle",
+  "congruent-triangles",
+  "coordinate-grid",
+  "parallel-lines",
+  "polygon",
+  "proof-flow",
+  "quadrilateral",
+  "right-triangle",
+  "similar-triangles",
+  "solid",
+  "transformation",
+  "triangle",
+  "triangle-center",
+  "triangle-median",
+  "triangle-midsegment",
+]);
+
+function normalizeDiagram(diagram, skill) {
+  const kind = cleanText(diagram?.kind, 40);
+  if (!DIAGRAM_KINDS.has(kind)) {
+    throw new Error("A generated question has an invalid diagram kind.");
+  }
+  const labels = Array.isArray(diagram?.labels)
+    ? diagram.labels.slice(0, 4).map((label) => cleanText(label, 24)).filter(Boolean)
+    : [];
+  return {
+    kind,
+    labels,
+    variant: Math.max(0, Math.min(3, Math.trunc(Number(diagram?.variant) || 0))),
+    alt: cleanText(diagram?.alt, 180) || `${skill} geometry diagram`,
+    caption: cleanText(diagram?.caption, 120) || "Diagram not to scale.",
+  };
+}
+
 function normalizeQuestion(question, index) {
   const prompt = cleanText(question?.prompt, 420);
   const skill = cleanText(question?.skill, 100);
@@ -31,6 +68,7 @@ function normalizeQuestion(question, index) {
   if (!prompt || !skill || !explanation) {
     throw new Error("A generated question is missing its prompt, skill, or explanation.");
   }
+  const diagram = normalizeDiagram(question?.diagram, skill);
 
   if (type === "number") {
     const correctAnswer = Number(question.correctAnswer);
@@ -45,6 +83,7 @@ function normalizeQuestion(question, index) {
       skill,
       hint,
       explanation,
+      diagram,
       correctAnswer,
       tolerance,
       answerLabel: cleanText(question.answerLabel, 60) || String(correctAnswer),
@@ -72,6 +111,7 @@ function normalizeQuestion(question, index) {
     skill,
     hint,
     explanation,
+    diagram,
     choices,
     correctAnswer: matchingChoice.id,
     answerLabel: matchingChoice.text,
@@ -97,6 +137,10 @@ export function publicQuestion(question) {
     prompt: question.prompt,
     skill: question.skill,
     hint: question.hint,
+    diagram: {
+      ...question.diagram,
+      labels: [...question.diagram.labels],
+    },
   };
   if (question.type === "multiple-choice") result.choices = question.choices.map((choice) => ({ ...choice }));
   return result;
