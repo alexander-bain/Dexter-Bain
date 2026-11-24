@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import { ArtFactory } from "../art/ArtFactory";
 import { BALANCE, COLORS } from "../data/balance";
 import { CUSTOMER_TYPES } from "../data/customerTypes";
+import { storeShelfPosition } from "../data/storeLayout";
 import { Customer } from "../entities/Customer";
 import { session } from "../systems/GameSession";
 import type { StoreCustomerState } from "../types";
@@ -38,9 +39,9 @@ export class StoreScene extends BaseWorldScene {
     this.drawStore();
     const captureY = new URLSearchParams(window.location.search).get("capture") === "store" ? 650 : 1125;
     this.setupWorld(960, captureY);
-    this.addInteraction(150, 1000, "Return to Hub", () => this.transitionTo("HubScene"), 120);
+    this.addInteraction(150, 1080, "Return to Hub", () => this.transitionTo("HubScene"), 120);
     this.addInteraction(960, 465, "Serve Next Customer", () => this.serveNext(), 150);
-    this.addInteraction(1360, 940, "Open Special Order", () => this.openSpecialOrder(), 125);
+    this.addInteraction(1360, 1080, "Open Special Order", () => this.openSpecialOrder(), 125);
     this.addInteraction(850, 955, "Start Customer Craze", () => this.activateCraze(), 105);
     this.syncCustomers(true);
     if (this.entryReport) this.time.delayedCall(280, () => ui.showAwaySummary(this.entryReport!));
@@ -103,8 +104,8 @@ export class StoreScene extends BaseWorldScene {
         const customer = new Customer(this, type, 960, immediate ? 1010 : 1110, state.patienceSeconds);
         this.customers.set(state.id, customer);
         if (!immediate) {
-          const shelfX = state.id % 2 ? 350 : 1570;
-          customer.moveTo(shelfX, 545 + state.id % 3 * 150, 650);
+          const shelfSpot = storeShelfPosition(state.id % Math.max(1, session.data.shelves.length));
+          customer.moveTo(shelfSpot.aisleX, shelfSpot.y, 650);
         }
       }
     }
@@ -128,8 +129,9 @@ export class StoreScene extends BaseWorldScene {
     let y: number;
     if (state.phase === "browsing") {
       const shelfIndex = Math.max(0, session.data.shelves.findIndex((shelf) => shelf.shelfId === state.shelfId));
-      x = shelfIndex % 2 ? 1500 : 420;
-      y = 365 + Math.floor(shelfIndex / 2) * 135;
+      const shelfSpot = storeShelfPosition(shelfIndex);
+      x = shelfSpot.aisleX;
+      y = shelfSpot.y;
     } else {
       const waiting = session.data.storeState.customers.filter((entry) => entry.phase === "waiting");
       const queueIndex = waiting.findIndex((entry) => entry.id === state.id);
@@ -185,14 +187,15 @@ export class StoreScene extends BaseWorldScene {
     if (!this.janitor) return;
     const state = session.data.storeState.janitor;
     const targetIndex = Math.max(0, session.data.shelves.findIndex((shelf) => shelf.shelfId === state.targetShelfId));
-    const targetX = targetIndex % 2 ? 1480 : 440;
-    const targetY = 365 + Math.floor(targetIndex / 2) * 135;
+    const shelfSpot = storeShelfPosition(targetIndex);
+    const targetX = shelfSpot.aisleX;
+    const targetY = shelfSpot.y;
     const points = {
-      idle: { x: 700, y: 920 },
-      "to-backroom": { x: 610, y: 920 },
+      idle: { x: 700, y: 1070 },
+      "to-backroom": { x: 960, y: 260 },
       "to-shelf": { x: targetX, y: targetY },
       restocking: { x: targetX, y: targetY },
-      returning: { x: 700, y: 920 }
+      returning: { x: 700, y: 1070 }
     };
     const point = points[state.phase];
     if (state.phase === "restocking") this.janitor.play("janitor-work", true);
@@ -381,9 +384,7 @@ export class StoreScene extends BaseWorldScene {
 
     const shelfCount = Math.min(12, snapshot.shelfCount);
     for (let index = 0; index < shelfCount; index += 1) {
-      const column = index % 2;
-      const x = column ? 1610 : 310;
-      const y = 365 + Math.floor(index / 2) * 135;
+      const { x, y, aisleX } = storeShelfPosition(index);
       const shelf = this.add.container(x, y).setDepth(y).setScale(.8 + Math.min(.12, session.economy.upgrades.level("better-display") * .024));
       const shelfG = this.add.graphics();
       shelfG.fillStyle(0x3b244e, .22).fillEllipse(12, 70, 330, 42);
@@ -399,17 +400,21 @@ export class StoreScene extends BaseWorldScene {
       this.shelfLabels.push(shelfLabel);
       this.addBlocker(x, y, 265, 128);
       const shelfId = session.data.shelves[index]?.shelfId;
-      if (shelfId) this.addInteraction(x + (column ? -155 : 155), y + 36, `Restock Shelf ${index + 1} — $10`, () => this.restockShelf(shelfId), 105);
+      if (shelfId) {
+        this.add.ellipse(aisleX, y + 45, 120, 48, 0x5de4aa, .24).setStrokeStyle(4, 0x5de4aa, .72).setDepth(y + 1);
+        this.add.text(aisleX, y + 45, "RESTOCK", { fontFamily: "Trebuchet MS", fontSize: "11px", fontStyle: "bold", color: "#eafff6", stroke: "#25195f", strokeThickness: 4 }).setOrigin(.5).setDepth(y + 2);
+        this.addInteraction(aisleX, y + 30, `Restock Shelf ${index + 1} for $10`, () => this.restockShelf(shelfId), 145);
+      }
     }
     this.refreshShelfDisplays(true);
 
-    const backroom = this.add.container(1740, 295).setDepth(310);
+    const backroom = this.add.container(960, 190).setDepth(310);
     backroom.add([
       this.add.rectangle(0, 0, 170, 96, 0x38528f).setStrokeStyle(6, 0x25205e),
       this.add.rectangle(-52, 3, 44, 72, 0x9be4ef).setStrokeStyle(4, 0xffffff, .55),
       this.add.image(38, 8, "package-art").setScale(.24)
     ]);
-    this.backroomLabel = this.add.text(1740, 235, "", { align: "center", fontFamily: "Trebuchet MS", fontSize: "12px", fontStyle: "bold", color: "#ffffff", backgroundColor: "#29206a", padding: { x: 8, y: 5 } }).setOrigin(.5).setDepth(320);
+    this.backroomLabel = this.add.text(960, 125, "", { align: "center", fontFamily: "Trebuchet MS", fontSize: "12px", fontStyle: "bold", color: "#ffffff", backgroundColor: "#29206a", padding: { x: 8, y: 5 } }).setOrigin(.5).setDepth(320);
 
     if (session.economy.upgrades.has("premium-display")) {
       const premium = this.add.container(610, 745).setDepth(760);
@@ -423,19 +428,19 @@ export class StoreScene extends BaseWorldScene {
       }
     }
     if (session.economy.upgrades.has("decorations")) {
-      [[600,340],[1320,340],[630,850],[1290,850]].forEach(([x,y]) => {
+      [[760,420],[1160,420],[760,745],[1160,745]].forEach(([x,y]) => {
         const pot = this.add.container(x,y).setDepth(y);
         pot.add([this.add.rectangle(0,0,42,34,0xc76573), this.add.circle(-12,-30,18,0x61bd6f), this.add.circle(12,-34,20,0x76d87b)]);
       });
     }
     if (session.economy.upgrades.has("cold-storage")) {
-      const fridge = this.add.container(620, 950).setDepth(960);
+      const fridge = this.add.container(600, 1090).setDepth(1110);
       fridge.add([this.add.rectangle(0, 0, 190, 180, 0xbdefff).setStrokeStyle(7, 0x456bb0), this.add.rectangle(0, -5, 155, 135, 0x78c6e8, .55).setStrokeStyle(3, 0xffffff, .7), this.add.text(0, -78, "CHILLED", { fontFamily: "Trebuchet MS", fontSize: "14px", fontStyle: "bold", color: "#284c8d" }).setOrigin(.5), this.add.text(0, 12, "🥤  ❄️\n🧃  🫐", { align: "center", fontSize: "28px" }).setOrigin(.5)]);
-      this.addBlocker(620, 950, 205, 190);
+      this.addBlocker(600, 1090, 205, 190);
     }
 
-    this.inventoryLabel = this.add.text(1240, 315, "", { fontFamily: "Trebuchet MS", fontSize: "15px", fontStyle: "bold", color: "#fff8d8", backgroundColor: "#38277e", padding: { x: 14, y: 9 }, stroke: "#21145d", strokeThickness: 4 }).setOrigin(.5).setDepth(600);
-    this.statusLabel = this.add.text(680, 315, "", { fontFamily: "Trebuchet MS", fontSize: "16px", fontStyle: "bold", color: "#79efbd", backgroundColor: "#25195f", padding: { x: 14, y: 9 }, stroke: "#150d45", strokeThickness: 4 }).setOrigin(.5).setDepth(600);
+    this.inventoryLabel = this.add.text(1140, 245, "", { fontFamily: "Trebuchet MS", fontSize: "15px", fontStyle: "bold", color: "#fff8d8", backgroundColor: "#38277e", padding: { x: 14, y: 9 }, stroke: "#21145d", strokeThickness: 4 }).setOrigin(.5).setDepth(600);
+    this.statusLabel = this.add.text(780, 245, "", { fontFamily: "Trebuchet MS", fontSize: "16px", fontStyle: "bold", color: "#79efbd", backgroundColor: "#25195f", padding: { x: 14, y: 9 }, stroke: "#150d45", strokeThickness: 4 }).setOrigin(.5).setDepth(600);
 
     const terminal = this.add.container(STORE_UPGRADE_SPOT.x, 855).setDepth(900);
     terminal.add([this.add.ellipse(0, 160, 220, 76, 0x392b80).setStrokeStyle(8, COLORS.mint), this.add.rectangle(0, 0, 170, 120, 0x392b80).setStrokeStyle(6, 0x24185f), this.add.rectangle(0, -12, 126, 70, 0x6be8ff).setStrokeStyle(4, 0xffffff, .5), this.add.text(0, -12, "STORE\nUPGRADES", { align: "center", fontFamily: "Trebuchet MS", fontSize: "17px", fontStyle: "bold", color: "#25316c" }).setOrigin(.5), this.add.text(0, 95, "↓ STAND ON THE GLOWING PAD ↓", { fontFamily: "Trebuchet MS", fontSize: "12px", fontStyle: "bold", color: "#4c2f95", backgroundColor: "#fff4c4", padding: { x: 8, y: 5 } }).setOrigin(.5)]);
@@ -443,9 +448,9 @@ export class StoreScene extends BaseWorldScene {
     this.addBlocker(STORE_UPGRADE_SPOT.x, 855, 180, 125);
 
     if (session.economy.upgrades.has("hire-janitor")) {
-      this.janitor = this.add.sprite(700, 920, "janitor", 20).setScale(.7).setDepth(950);
-      this.add.text(700, 855, `JANITOR STOCKER\nAUTO: ${session.data.settings.autoRestock ? "ON" : "OFF"}`, { align: "center", fontFamily: "Trebuchet MS", fontSize: "12px", fontStyle: "bold", color: "#eafff6", backgroundColor: "#2d246f", padding: { x: 8, y: 5 } }).setOrigin(.5).setDepth(960);
-      this.addInteraction(700, 920, `Turn Auto-Restock ${session.data.settings.autoRestock ? "Off" : "On"}`, () => {
+      this.janitor = this.add.sprite(700, 1070, "janitor", 20).setScale(.7).setDepth(1100);
+      this.add.text(700, 1005, `JANITOR STOCKER\nAUTO: ${session.data.settings.autoRestock ? "ON" : "OFF"}`, { align: "center", fontFamily: "Trebuchet MS", fontSize: "12px", fontStyle: "bold", color: "#eafff6", backgroundColor: "#2d246f", padding: { x: 8, y: 5 } }).setOrigin(.5).setDepth(1110);
+      this.addInteraction(700, 1070, `Turn Auto-Restock ${session.data.settings.autoRestock ? "Off" : "On"}`, () => {
         session.data.settings.autoRestock = !session.data.settings.autoRestock;
         session.save("StoreScene");
         ui.showToast(`Janitor auto-restock ${session.data.settings.autoRestock ? "ON" : "OFF"}.`, "info");
@@ -453,12 +458,12 @@ export class StoreScene extends BaseWorldScene {
       }, 110);
     }
 
-    const orderDesk = this.add.container(1360, 920).setDepth(930);
+    const orderDesk = this.add.container(1360, 1080).setDepth(1110);
     orderDesk.add([this.add.rectangle(0, 0, 180, 95, 0x9a642c).setStrokeStyle(6, 0x5d3528), this.add.text(0, -58, "⭐ SPECIAL ORDER", { fontFamily: "Trebuchet MS", fontSize: "15px", fontStyle: "bold", color: "#fff1a6", stroke: "#3f246b", strokeThickness: 6 }).setOrigin(.5), this.add.text(0, 0, "MULTIPLY\nFOR A BONUS!", { align: "center", fontFamily: "Trebuchet MS", fontSize: "14px", fontStyle: "bold", color: "#ffffff" }).setOrigin(.5)]);
     const craze = this.add.container(850, 955).setDepth(970);
     craze.add([this.add.ellipse(0, 0, 188, 72, 0x4d3ab0).setStrokeStyle(8, COLORS.mint), this.add.text(0, -4, "CUSTOMER CRAZE", { fontFamily: "Trebuchet MS", fontSize: "17px", fontStyle: "bold", color: "#d6ffe9", stroke: "#2a1c72", strokeThickness: 5 }).setOrigin(.5)]);
     this.tweens.add({ targets: craze, alpha: .72, duration: 650, yoyo: true, repeat: -1 });
-    ArtFactory.portal(this, 150, 955, "HUB", [0x75e6ff, 0x4b45c9]).setScale(.72).setDepth(990);
+    ArtFactory.portal(this, 150, 1080, "HUB", [0x75e6ff, 0x4b45c9]).setScale(.72).setDepth(1110);
     this.add.text(960, 1050, session.economy.upgrades.has("bigger-entrance") ? "GRAND ENTRANCE" : "ENTRANCE", { fontFamily: "Trebuchet MS", fontSize: "18px", fontStyle: "bold", color: "#6a4a95", backgroundColor: "#fff4cf", padding: { x: 16, y: 8 } }).setOrigin(.5).setDepth(1080);
     if (session.economy.upgrades.has("bigger-entrance")) {
       this.add.rectangle(960, 1090, 360, 18, 0x6d4ec5).setStrokeStyle(4, 0xffe38b).setDepth(1075);

@@ -14,6 +14,7 @@ export class UIBridge {
   private game: Game | null = null;
   private pauseCallback: Callback | null = null;
   private interactCallback: Callback | null = null;
+  private interactLabel: string | null = null;
   private touchVectorValue = { x: 0, y: 0 };
 
   connect(game: Game): void {
@@ -24,6 +25,7 @@ export class UIBridge {
     this.root.innerHTML = "";
     this.pauseCallback = null;
     this.interactCallback = null;
+    this.interactLabel = null;
     this.touchVectorValue = { x: 0, y: 0 };
   }
 
@@ -50,7 +52,7 @@ export class UIBridge {
             <button data-action="settings">⚙ SETTINGS</button>
           </div>
         </div>
-        <p class="menu-tip">WASD or arrow keys to move · E or Space to interact</p>
+        <p class="menu-tip">Move with keys or the joystick · Press E/Space or tap the action button</p>
       </section>`;
     this.bindAction("new", callbacks.newGame);
     this.bindAction("continue", callbacks.continueGame);
@@ -68,11 +70,12 @@ export class UIBridge {
       ${this.sceneStatusMarkup(scene)}
       <div class="touch-controls" aria-label="Touch controls">
         <div class="joystick" id="joystick"><span></span></div>
-        <button id="touch-interact" class="touch-interact">INTERACT</button>
+        <button id="touch-interact" class="touch-interact" aria-label="Move near something to use it" disabled><span>USE</span><small>move closer</small></button>
       </div>`;
     this.pauseCallback = pause;
     this.bindAction("pause", pause);
     this.bindTouchControls();
+    this.syncTouchInteraction();
     this.root.dataset.scene = scene;
   }
 
@@ -89,6 +92,7 @@ export class UIBridge {
     if (this.pauseCallback) this.bindAction("pause", this.pauseCallback);
     this.bindTouchControls();
     if (this.interactCallback) this.bindInteractionButton();
+    this.syncTouchInteraction();
     this.root.dataset.scene = scene;
   }
 
@@ -114,17 +118,23 @@ export class UIBridge {
   }
 
   setInteraction(label: string | null, callback?: Callback): void {
-    const prompt = this.root.querySelector<HTMLElement>("#interaction-prompt");
-    if (!prompt) return;
     this.interactCallback = callback ?? null;
+    this.interactLabel = label;
+    const prompt = this.root.querySelector<HTMLElement>("#interaction-prompt");
+    if (!prompt) {
+      this.syncTouchInteraction();
+      return;
+    }
     if (!label || !callback) {
       prompt.classList.add("is-hidden");
       prompt.innerHTML = "";
+      this.syncTouchInteraction();
       return;
     }
     prompt.classList.remove("is-hidden");
-    prompt.innerHTML = `<button data-action="interact"><kbd>E</kbd><span>${label}</span></button>`;
+    prompt.innerHTML = `<button data-action="interact" aria-label="${label}"><kbd class="keyboard-badge">E</kbd><span>${label}</span><em class="tap-badge">TAP</em></button>`;
     this.bindInteractionButton();
+    this.syncTouchInteraction();
   }
 
   touchVector(): { x: number; y: number } {
@@ -418,6 +428,30 @@ export class UIBridge {
     const callback = this.interactCallback;
     if (!callback) return;
     this.root.querySelector<HTMLElement>('[data-action="interact"]')?.addEventListener("click", callback, { once: true });
+  }
+
+  private touchActionName(): string {
+    const label = this.interactLabel?.toLowerCase() ?? "";
+    if (label.startsWith("restock")) return "RESTOCK";
+    if (label.startsWith("serve")) return "SERVE";
+    if (label.startsWith("return")) return "GO TO HUB";
+    if (label.startsWith("open")) return "OPEN";
+    if (label.startsWith("start")) return "START";
+    if (label.startsWith("enter")) return "ENTER";
+    if (label.startsWith("activate")) return "ACTIVATE";
+    if (label.startsWith("turn")) return "TOGGLE";
+    if (label.startsWith("collect")) return "COLLECT";
+    return "USE";
+  }
+
+  private syncTouchInteraction(): void {
+    const button = this.root.querySelector<HTMLButtonElement>("#touch-interact");
+    if (!button) return;
+    const ready = Boolean(this.interactCallback && this.interactLabel);
+    button.disabled = !ready;
+    button.classList.toggle("is-ready", ready);
+    button.setAttribute("aria-label", ready ? this.interactLabel! : "Move near something to use it");
+    button.innerHTML = `<span>${ready ? this.touchActionName() : "USE"}</span><small>${ready ? "tap button" : "move closer"}</small>`;
   }
 
   private bindTouchControls(): void {

@@ -17,7 +17,7 @@
 html, body, #game-shell, #game { width: 100%; height: 100%; margin: 0; overflow: hidden; }
 body { background: #181044; overscroll-behavior: none; touch-action: none; user-select: none; }
 button, input { font: inherit; }
-button { border: 0; cursor: pointer; }
+button { border: 0; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 button:focus-visible, input:focus-visible { outline: 4px solid var(--cyan); outline-offset: 3px; }
 button:disabled { cursor: not-allowed; }
 canvas { display: block; }
@@ -61,7 +61,8 @@ canvas { display: block; }
 .progress-track { height: 7px; margin: .42rem 0 .3rem; overflow: hidden; border-radius: 99px; background: rgba(10,5,45,.55); }.progress-track i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #5ce6aa, #ffdc65); }
 .interaction-prompt { position: absolute; z-index: 14; left: 50%; bottom: 1.5rem; transform: translateX(-50%); transition: opacity .2s, transform .2s; }
 .interaction-prompt.is-hidden { opacity: 0; transform: translate(-50%, 15px); pointer-events: none; }
-.interaction-prompt button { display: flex; align-items: center; gap: .7rem; min-width: 220px; padding: .65rem .9rem; border: 3px solid #fff; border-radius: 17px; color: #fff; background: linear-gradient(180deg, #674be0, #3b2ca6); box-shadow: 0 8px 0 rgba(21,12,79,.55), 0 14px 25px rgba(11,5,51,.35); font-weight: 1000; }
+.interaction-prompt button { display: flex; align-items: center; justify-content: center; gap: .7rem; min-width: 250px; min-height: 58px; padding: .65rem .9rem; border: 3px solid #fff; border-radius: 17px; color: #fff; background: linear-gradient(180deg, #674be0, #3b2ca6); box-shadow: 0 8px 0 rgba(21,12,79,.55), 0 14px 25px rgba(11,5,51,.35); font-weight: 1000; }
+.tap-badge { display: none; padding: .32rem .48rem; border-radius: 8px; color: #153e31; background: #80efbe; font-size: .68rem; font-style: normal; letter-spacing: .06em; }
 kbd { display: grid; place-items: center; min-width: 34px; height: 34px; border: 2px solid #fff; border-radius: 9px; background: #22176b; box-shadow: inset 0 -3px rgba(0,0,0,.22); font-family: inherit; }
 .toast-stack { position: absolute; top: 145px; right: 1rem; z-index: 80; display: grid; gap: .55rem; width: min(320px, 80vw); }
 .toast { padding: .75rem .9rem; border: 2px solid rgba(255,255,255,.7); border-radius: 14px; background: #174f49; box-shadow: 0 8px 20px rgba(0,0,0,.24); font-weight: 800; animation: toast-in .3s both; }.toast.info { background: #33258a; }
@@ -71,7 +72,8 @@ kbd { display: grid; place-items: center; min-width: 34px; height: 34px; border:
 .joystick { position: relative; width: 116px; height: 116px; border: 3px solid rgba(255,255,255,.5); border-radius: 50%; background: rgba(26,17,81,.46); box-shadow: inset 0 0 30px rgba(8,4,42,.4); touch-action: none; }
 .joystick::before, .joystick::after { content: ""; position: absolute; background: rgba(255,255,255,.16); }.joystick::before { left: 50%; top: 10px; width: 2px; height: calc(100% - 20px); }.joystick::after { top: 50%; left: 10px; height: 2px; width: calc(100% - 20px); }
 .joystick span { position: absolute; z-index: 2; inset: 30px; border: 3px solid rgba(255,255,255,.72); border-radius: 50%; background: linear-gradient(180deg, rgba(107,80,225,.95), rgba(57,40,161,.95)); box-shadow: 0 5px 12px rgba(8,4,42,.45); }
-.touch-interact { width: 98px; height: 98px; border: 4px solid rgba(255,255,255,.8); border-radius: 50%; color: #fff; background: linear-gradient(180deg, rgba(75,220,160,.96), rgba(16,142,105,.96)); box-shadow: inset 0 -7px rgba(8,95,72,.35), 0 8px 20px rgba(8,4,42,.4); font-size: .72rem; font-weight: 1000; }
+.touch-interact { display: grid; place-content: center; width: 108px; height: 108px; padding: .55rem; border: 4px solid rgba(255,255,255,.8); border-radius: 50%; color: #fff; background: linear-gradient(180deg, rgba(75,220,160,.96), rgba(16,142,105,.96)); box-shadow: inset 0 -7px rgba(8,95,72,.35), 0 8px 20px rgba(8,4,42,.4); font-size: .72rem; font-weight: 1000; line-height: 1.05; }
+.touch-interact span,.touch-interact small { display: block; }.touch-interact small { margin-top: .28rem; color: rgba(255,255,255,.78); font-size: .52rem; }.touch-interact:disabled { opacity: .48; filter: saturate(.45); }.touch-interact.is-ready { animation: touch-ready .65s ease-in-out infinite alternate; }
 
 /* Math challenge */
 .math-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6.3rem 1rem 1.2rem; background: radial-gradient(circle at center, rgba(53,56,182,.08), rgba(10,6,48,.34)); }
@@ -108,12 +110,14 @@ kbd { display: grid; place-items: center; min-width: 34px; height: 34px; border:
 @keyframes menu-in { from { opacity: 0; transform: translateY(25px); } }
 @keyframes toast-in { from { opacity: 0; transform: translateX(20px); } }
 @keyframes pulse { to { transform: scale(1.12); } }
+@keyframes touch-ready { to { transform: scale(1.06); filter: brightness(1.1); } }
 @keyframes purchase-pop { 0% { opacity: 0; transform: translate(-50%,-45%) scale(.7); } 16%,70% { opacity: 1; transform: translate(-50%,-50%) scale(1); } 100% { opacity: 0; transform: translate(-50%,-58%) scale(.96); } }
 
-@media (pointer: coarse), (max-width: 900px) {
+@media (pointer: coarse), (max-width: 1100px) {
   .touch-controls { display: flex; }
-  .interaction-prompt { bottom: 1.2rem; }
-  .interaction-prompt button { min-width: 180px; }
+  .interaction-prompt { bottom: max(2rem, env(safe-area-inset-bottom)); }
+  .interaction-prompt button { min-width: 270px; min-height: 64px; padding: .75rem 1rem; font-size: .92rem; }
+  .keyboard-badge { display: none; }.tap-badge { display: inline-block; }
   .desktop-only, .brand-chip { display: none; }
   .resource-strip { justify-content: flex-start; overflow: hidden; }.resource { min-width: 88px; padding: .38rem .48rem; }.resource small { display: none; }
   .objective-card { top: 68px; }
@@ -126,7 +130,7 @@ kbd { display: grid; place-items: center; min-width: 34px; height: 34px; border:
   .secondary-grid { grid-template-columns: 1fr; }.secondary-grid button { min-height: 40px; }.title-lockup h1 { font-size: clamp(2.8rem, 15vw, 4.7rem); }.title-berry { transform: scale(.8); margin-bottom: -.3rem; }.menu-tip { display: none; }
   .upgrade-grid { grid-template-columns: 1fr; }.upgrade-card { grid-template-columns: 44px 1fr auto; min-height: 95px; padding: .65rem; }.upgrade-icon { width: 42px; height: 42px; }.product-grid { grid-template-columns: repeat(2, 1fr); }.tab-row { padding: .45rem; }.tab-row button { padding: .65rem .35rem; font-size: .7rem; }.panel-header { min-height: 66px; padding: .7rem; }.panel-money { font-size: .72rem; }
   .how-grid, .stats-columns { grid-template-columns: 1fr; }.how-grid article { padding: .8rem; }.controls-card { grid-template-columns: auto 1fr; }.stat-cards { grid-template-columns: repeat(2, 1fr); }.mastery-grid span { font-size: .5rem; }.settings-panel > label { grid-template-columns: 1fr; }.toggle-row { grid-template-columns: 1fr auto !important; }.danger-zone { align-items: flex-start; flex-direction: column; }.danger-zone button { width: 100%; }
-  .touch-controls { padding: 0 .7rem; }.joystick { width: 98px; height: 98px; }.joystick span { inset: 26px; }.touch-interact { width: 82px; height: 82px; font-size: .62rem; }
+  .touch-controls { padding: 0 .7rem; }.joystick { width: 98px; height: 98px; }.joystick span { inset: 26px; }.touch-interact { width: 92px; height: 92px; font-size: .62rem; }
 }
 
 @media (max-height: 650px) {

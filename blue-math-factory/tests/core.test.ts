@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { BALANCE } from "../src/data/balance";
 import { ALL_UPGRADES, FACTORY_UPGRADES, STORE_UPGRADES, VALUE_UPGRADES } from "../src/data/upgrades";
 import { CUSTOMER_TYPES } from "../src/data/customerTypes";
+import { storeShelfPosition } from "../src/data/storeLayout";
 import { EconomySystem } from "../src/systems/EconomySystem";
 import { MathEngine, createEmptyMathStats } from "../src/systems/MathEngine";
 import { SaveSystem } from "../src/systems/SaveSystem";
@@ -155,6 +156,15 @@ describe("lossless Version 3 migration", () => {
 });
 
 describe("physical blueberry-package economy", () => {
+  it("spaces all twelve shelves into distinct tablet-friendly store positions", () => {
+    const positions = Array.from({ length: 12 }, (_, index) => storeShelfPosition(index));
+    expect(new Set(positions.map(({ x, y }) => `${x},${y}`)).size).toBe(12);
+    expect(new Set(positions.map(({ x }) => x)).size).toBe(4);
+    expect(new Set(positions.map(({ y }) => y)).size).toBe(3);
+    expect(positions.every(({ x, aisleX }) => Math.abs(x - aisleX) === 170)).toBe(true);
+    expect([...new Set(positions.map(({ y }) => y))].sort((left, right) => left - right)).toEqual([300, 580, 860]);
+  });
+
   it("keeps a large upgrade catalog and ten visually distinct shopper types", () => {
     expect(FACTORY_UPGRADES.length).toBeGreaterThanOrEqual(22);
     expect(STORE_UPGRADES.length).toBeGreaterThanOrEqual(33);

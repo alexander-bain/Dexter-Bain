@@ -51,6 +51,7 @@ export abstract class BaseWorldScene extends Phaser.Scene {
   protected prepareWorld(): void {
     this.interactions = [];
     this.activeInteraction = null;
+    ui.setInteraction(null);
     this.tapTarget = null;
     this.frozen = false;
     this.blockers = this.physics.add.staticGroup();

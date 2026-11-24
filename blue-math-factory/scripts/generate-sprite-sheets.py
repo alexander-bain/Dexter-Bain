@@ -56,9 +56,9 @@ def accessory(draw, kind, cx, top, direction, accent):
         draw.rounded_rectangle((cx-22, top-2, cx+22, top+9), 5, fill=rgba(accent), outline=(35,30,80,255), width=2)
         if direction != "up": draw.ellipse((cx+7 if direction != "left" else cx-25, top+3, cx+29 if direction != "left" else cx-4, top+10), fill=shade(accent, .8))
     elif kind in ("chef", "baker"):
-        draw.ellipse((cx-23, top-14, cx+23, top+9), fill=(250,248,237,255), outline=(54,46,87,255), width=2)
-        draw.ellipse((cx-18, top-23, cx+3, top+6), fill=(255,255,250,255))
-        draw.ellipse((cx-2, top-25, cx+19, top+5), fill=(255,255,250,255))
+        draw.ellipse((cx-23, top+2, cx+23, top+22), fill=(250,248,237,255), outline=(54,46,87,255), width=2)
+        draw.ellipse((cx-18, top-4, cx+3, top+17), fill=(255,255,250,255))
+        draw.ellipse((cx-2, top-5, cx+19, top+16), fill=(255,255,250,255))
     elif kind == "headband":
         draw.rounded_rectangle((cx-20, top+4, cx+20, top+10), 3, fill=rgba(accent))
     elif kind == "glasses" and direction != "up":
@@ -104,7 +104,6 @@ def draw_person(draw, frame_x, frame_y, shirt, accent, skin, direction, phase, s
     swing = [-7,-3,0,3,7][step % 5] if phase in ("walk","carry") else 0
     if direction == "left": swing = -swing
 
-    draw.ellipse((cx-29, base_y-7, cx+29, base_y+5), fill=(20,16,60,65))
     leg_color = (43,52,93,255)
     shoe = (27,27,55,255)
     if direction in ("left","right"):
@@ -129,7 +128,9 @@ def draw_person(draw, frame_x, frame_y, shirt, accent, skin, direction, phase, s
     line(draw,[(cx-21,torso_top+10),(cx-30-arm_swing//2,torso_bottom-2)],skin_rgba,10)
     line(draw,[(cx+21,torso_top+10),(cx+30+arm_swing//2,torso_bottom-2)],skin_rgba,10)
 
-    head_y = torso_top-21
+    # Keep the complete head, hair, and hats inside each frame. The old head
+    # center sat above the frame and let accessories leak into the prior row.
+    head_y = torso_top + 8
     if direction == "up":
         draw.ellipse((cx-21,head_y-22,cx+21,head_y+20),fill=(83,49,43,255),outline=(38,27,61,255),width=3)
         draw.ellipse((cx-18,head_y-17,cx+18,head_y+17),fill=skin_rgba)
@@ -160,18 +161,26 @@ def draw_person(draw, frame_x, frame_y, shirt, accent, skin, direction, phase, s
 
 def build_sheet(name, shirt, accent, skin="#efb98e", accessory_kind="", role_tool=""):
     sheet = Image.new("RGBA",(FRAME_W*COLS,FRAME_H*ROWS),(0,0,0,0))
-    draw = ImageDraw.Draw(sheet)
+    def render_frame(column, row, direction, phase, step):
+        # Render into an isolated frame before pasting. Even a future accessory
+        # that reaches outside its cell can be clipped, never drawn under the
+        # character in the row above.
+        frame = Image.new("RGBA", (FRAME_W, FRAME_H), (0,0,0,0))
+        frame_draw = ImageDraw.Draw(frame)
+        draw_person(frame_draw,0,0,shirt,accent,skin,direction,phase,step,accessory_kind,role_tool)
+        sheet.alpha_composite(frame, (column*FRAME_W, row*FRAME_H))
+
     directions = ["down","left","right","up"]
     for row,direction in enumerate(directions):
-        for col in range(COLS): draw_person(draw,col*FRAME_W,row*FRAME_H,shirt,accent,skin,direction,"walk",col,accessory_kind,role_tool)
+        for col in range(COLS): render_frame(col,row,direction,"walk",col)
     idle_dirs = ["down","left","right","up"]
-    for col,direction in enumerate(idle_dirs): draw_person(draw,col*FRAME_W,4*FRAME_H,shirt,accent,skin,direction,"idle",0,accessory_kind,role_tool)
-    draw_person(draw,4*FRAME_W,4*FRAME_H,shirt,accent,skin,"down","celebrate",0,accessory_kind,role_tool)
-    for col in range(COLS): draw_person(draw,col*FRAME_W,5*FRAME_H,shirt,accent,skin,"down","work",col,accessory_kind,role_tool)
+    for col,direction in enumerate(idle_dirs): render_frame(col,4,direction,"idle",0)
+    render_frame(4,4,"down","celebrate",0)
+    for col in range(COLS): render_frame(col,5,"down","work",col)
     carry_dirs = ["down","left","right","up","down"]
-    for col,direction in enumerate(carry_dirs): draw_person(draw,col*FRAME_W,6*FRAME_H,shirt,accent,skin,direction,"carry",col,accessory_kind,role_tool)
+    for col,direction in enumerate(carry_dirs): render_frame(col,6,direction,"carry",col)
     interact_dirs = ["down","left","right","down","down"]
-    for col,direction in enumerate(interact_dirs): draw_person(draw,col*FRAME_W,7*FRAME_H,shirt,accent,skin,direction,"interact",col,accessory_kind,role_tool)
+    for col,direction in enumerate(interact_dirs): render_frame(col,7,direction,"interact",col)
     sheet.save(OUT / f"{name}.png", optimize=True)
 
 def main():

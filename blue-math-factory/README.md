@@ -55,7 +55,7 @@ The static site serves `bluemath/index.html`, so refreshing the public route doe
 | Action | Desktop / Chromebook | Tablet / phone |
 | --- | --- | --- |
 | Move | WASD or arrow keys | Virtual joystick |
-| Interact | E or Space | Interact button |
+| Interact | E or Space | Tap the large action button or the nearby prompt |
 | Pause | Escape | Pause button |
 | Math answer | Number keys 1–4, arrows + Enter, or click | Tap answer |
 
