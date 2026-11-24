@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { ArtFactory } from "../art/ArtFactory";
 import { COLORS } from "../data/balance";
+import { QUESTS } from "../data/quests";
 import { session } from "../systems/GameSession";
 import { ui } from "../ui/UIBridge";
 
@@ -30,7 +31,9 @@ export class MenuScene extends Phaser.Scene {
       "backroom-expansion": 1, "faster-cashier": 2, "decorations": 2, "better-lighting": 1,
       "music-system": 1, "second-register": 1, "second-cashier": 1
     });
-    session.data.rawBlueberries = 460;
+    const rawParameter = new URLSearchParams(window.location.search).get("raw");
+    const requestedRaw = rawParameter === null ? Number.NaN : Number(rawParameter);
+    session.data.rawBlueberries = Number.isFinite(requestedRaw) && requestedRaw >= 0 ? Math.min(460, Math.floor(requestedRaw)) : 460;
     session.data.warehousePackages = 28;
     session.data.storeBackroomPackages = 44;
     session.data.money = 4_850;
@@ -39,6 +42,8 @@ export class MenuScene extends Phaser.Scene {
     session.data.totals.productsProcessed = 790;
     session.data.totals.totalPackagesSold = mode === "victory" ? 10_000 : 423;
     session.data.totals.productsSold = session.data.totals.totalPackagesSold;
+    session.data.completedQuests = QUESTS.map((quest) => quest.id);
+    session.data.claimedQuests = [...session.data.completedQuests];
     const snapshot = session.economy.snapshot();
     session.economy.inventory.ensureShelfLayout(snapshot.shelfCount, snapshot.shelfCapacityEach);
     for (const shelf of session.data.shelves) shelf.currentItems = Math.min(shelf.capacity, 7 + Number(shelf.shelfId.slice(-1)) % 4);

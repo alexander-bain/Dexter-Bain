@@ -13,6 +13,7 @@ export class FactoryScene extends BaseWorldScene {
   private statusText!: Phaser.GameObjects.Text;
   private resourceText!: Phaser.GameObjects.Text;
   private powerText!: Phaser.GameObjects.Text;
+  private beltStatusText!: Phaser.GameObjects.Text;
   private holdLabel!: Phaser.GameObjects.Text;
   private holdSeconds = 0;
 
@@ -31,19 +32,29 @@ export class FactoryScene extends BaseWorldScene {
     super.update(time, delta);
     if (this.frozen) return;
     const snapshot = session.economy.snapshot();
-    const running = session.data.rawBlueberries >= BALANCE.packageRecipeRaw && session.data.warehousePackages < snapshot.warehouseCapacity;
-    const speed = running ? 38 + snapshot.processingRate * 3 : 0;
-    for (const berry of this.beltBerries) {
+    const wholeBerries = Math.floor(session.data.rawBlueberries);
+    const packing = wholeBerries >= BALANCE.packageRecipeRaw && session.data.warehousePackages < snapshot.warehouseCapacity;
+    const visibleBerries = Math.min(this.beltBerries.length, wholeBerries);
+    const speed = wholeBerries > 0 ? (packing ? 62 + snapshot.processingRate * 3 : 42) : 0;
+    for (const [index, berry] of this.beltBerries.entries()) {
       berry.x += delta / 1000 * speed;
       berry.angle += delta * .11;
       if (berry.x > 1640) berry.x = 320;
-      berry.setVisible(running && this.beltBerries.indexOf(berry) < Math.min(this.beltBerries.length, Math.ceil(session.data.rawBlueberries / 10)));
+      berry.setVisible(index < visibleBerries);
     }
     for (const box of this.outputBoxes) {
-      box.x += delta / 1000 * (running ? 32 : 0);
+      box.x += delta / 1000 * (packing ? 32 : 0);
       if (box.x > 1760) box.x = 1150;
       box.setVisible(session.data.warehousePackages > this.outputBoxes.indexOf(box));
     }
+    const warehouseFull = session.data.warehousePackages >= snapshot.warehouseCapacity - .001;
+    this.beltStatusText.setText(warehouseFull && wholeBerries > 0
+      ? `🫐 ${wholeBerries} BLUEBERRIES MOVING SLOWLY · WAREHOUSE FULL`
+      : wholeBerries >= BALANCE.packageRecipeRaw
+        ? `🫐 ${wholeBerries} BLUEBERRIES MOVING  →  10 BERRIES = 1 PACKAGE`
+        : wholeBerries > 0
+          ? `🫐 ${wholeBerries}/10 BLUEBERRIES MOVING  ·  ANSWER MATH FOR ${BALANCE.packageRecipeRaw - wholeBerries} MORE`
+          : "ANSWER MATH TO PUT BLUEBERRIES ON THIS BELT");
     this.statusText.setText(session.economy.factory.bottleneck());
     this.statusText.setColor(session.economy.factory.bottleneck() === "PRODUCTION FLOWING" ? "#74efb4" : "#ffd36b");
     this.resourceText.setText(`RAW  ${Math.floor(session.data.rawBlueberries)} / ${Math.floor(snapshot.rawStorageCapacity)}\nWAREHOUSE PACKAGES  ${Math.floor(session.data.warehousePackages)} / ${Math.floor(snapshot.warehouseCapacity)}\nTO BACKROOM  ${snapshot.deliveryRate.toFixed(1)} packages/min`);
@@ -123,7 +134,16 @@ export class FactoryScene extends BaseWorldScene {
     belt.lineStyle(5, 0xd7e3ec, .45).strokeRoundedRect(260, 535, 1420, 105, 20);
     {
       const count = 18;
-      for (let index = 0; index < count; index += 1) this.beltBerries.push(this.add.image(310 + index * 74, 548, "berry").setScale(.8).setDepth(590));
+      for (let index = 0; index < count; index += 1) {
+        const berry = this.add.image(310 + index * 74, 552, "berry")
+          .setScale(1.06 + index % 3 * .1)
+          .setAngle(index * 47)
+          .setDepth(620);
+        if (index % 4 === 1) berry.setTint(0x94a8ff);
+        if (index % 4 === 3) berry.setTint(0x6f82ec);
+        this.beltBerries.push(berry);
+        this.tweens.add({ targets: berry, y: 546, duration: 360 + index % 3 * 70, yoyo: true, repeat: -1, ease: "Sine.easeInOut" });
+      }
       for (let index = 0; index < 5; index += 1) this.outputBoxes.push(this.add.image(1240 + index * 92, 562, "package-art").setScale(.25).setDepth(600));
     }
 
@@ -229,7 +249,7 @@ export class FactoryScene extends BaseWorldScene {
       const crown = this.add.text(960, 250, "★ ULTIMATE BLUE FACTORY ★", { fontFamily: "Trebuchet MS", fontSize: "24px", fontStyle: "bold", color: "#fff19a", stroke: "#342078", strokeThickness: 8 }).setOrigin(.5).setDepth(100);
       this.tweens.add({ targets: crown, scale: 1.05, duration: 700, yoyo: true, repeat: -1 });
     }
-    this.add.text(960, 680, "10 RAW BLUEBERRIES  →  WASH  →  SORT  →  PACK  →  SEAL  →  1 PACKAGE", { fontFamily: "Trebuchet MS", fontSize: "18px", fontStyle: "bold", color: "#fff4b8", backgroundColor: "#29216d", padding: { x: 16, y: 9 }, stroke: "#16103f", strokeThickness: 4 }).setOrigin(.5).setDepth(850);
+    this.beltStatusText = this.add.text(960, 680, "", { fontFamily: "Trebuchet MS", fontSize: "18px", fontStyle: "bold", color: "#fff4b8", backgroundColor: "#29216d", padding: { x: 16, y: 9 }, stroke: "#16103f", strokeThickness: 4 }).setOrigin(.5).setDepth(850);
     this.statusText = this.add.text(960, 300, session.economy.factory.bottleneck(), { fontFamily: "Trebuchet MS", fontSize: "20px", fontStyle: "bold", color: "#74efb4", backgroundColor: "#241962", padding: { x: 16, y: 9 }, stroke: "#130c43", strokeThickness: 5 }).setOrigin(.5).setDepth(620);
     this.resourceText = this.add.text(690, 960, "", { fontFamily: "Trebuchet MS", fontSize: "15px", fontStyle: "bold", color: "#e7f4ff", backgroundColor: "#282168", padding: { x: 13, y: 9 }, stroke: "#151044", strokeThickness: 4 }).setOrigin(.5).setDepth(1000);
     this.powerText = this.add.text(1480, 955, "", { fontFamily: "Trebuchet MS", fontSize: "15px", fontStyle: "bold", color: "#fff1a0", backgroundColor: "#282168", padding: { x: 13, y: 9 }, stroke: "#151044", strokeThickness: 4 }).setOrigin(.5).setDepth(1000);
