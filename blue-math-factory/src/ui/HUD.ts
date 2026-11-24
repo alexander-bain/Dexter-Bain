@@ -9,16 +9,18 @@ export const compactNumber = (value: number): string => {
 
 export const hudMarkup = (data: GameSave, snapshot: EconomySnapshot, quest: QuestDefinition | null, questValue: number): string => {
   const progress = quest ? Math.min(100, questValue / quest.target * 100) : 100;
+  const shelfStock = data.shelves.reduce((sum, shelf) => sum + shelf.currentItems, 0);
   return `
     <header class="hud" aria-label="Factory status">
       <div class="brand-chip"><span class="mini-berry">●</span><span>BlueMath</span></div>
       <div class="resource-strip">
         <div class="resource"><span>🫐</span><strong>${compactNumber(data.rawBlueberries)}</strong><small>raw</small></div>
-        <div class="resource"><span>📦</span><strong>${compactNumber(data.processedProducts)}</strong><small>warehouse</small></div>
-        <div class="resource"><span>🛒</span><strong>${compactNumber(data.storeInventory)}</strong><small>shelves</small></div>
+        <div class="resource"><span>🏭</span><strong>${compactNumber(data.warehousePackages)}</strong><small>warehouse</small></div>
+        <div class="resource"><span>🚪</span><strong>${compactNumber(data.storeBackroomPackages)}</strong><small>backroom</small></div>
+        <div class="resource"><span>📦</span><strong>${compactNumber(shelfStock)}</strong><small>shelves</small></div>
         <div class="resource"><span>💰</span><strong>$${compactNumber(data.money)}</strong><small>money</small></div>
         <div class="resource math-power-resource"><span>×</span><strong>${Math.floor(data.mathPower)}/100</strong><small>math power</small></div>
-        <div class="resource desktop-only"><span>⚙️</span><strong>${snapshot.processingRate.toFixed(1)}/m</strong><small>packages</small></div>
+        <div class="resource desktop-only"><span>🏆</span><strong>${compactNumber(data.totals.totalPackagesSold)}</strong><small>sold / 10k</small></div>
       </div>
       <button class="icon-button pause-button" data-action="pause" aria-label="Pause game">Ⅱ</button>
     </header>

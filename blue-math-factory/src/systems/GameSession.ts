@@ -13,6 +13,7 @@ export class GameSession {
   private autosaveElapsed = 0;
   private activeScene: SceneKey | "MenuScene" = "MenuScene";
   private started = false;
+  private captureMode = false;
 
   hasSave(): boolean {
     return SaveSystem.hasSave();
@@ -23,15 +24,19 @@ export class GameSession {
   }
 
   newGame(): void {
+    this.captureMode = false;
     this.bind(SaveSystem.createNew());
+    this.audio.unlock();
     this.started = true;
     this.save();
   }
 
   continueGame(): OfflineResult | null {
+    this.captureMode = false;
     const loaded = SaveSystem.load();
     if (!loaded) return null;
     this.bind(loaded);
+    this.audio.unlock();
     this.started = true;
     const offline = this.economy.applyOffline();
     this.save();
@@ -43,6 +48,12 @@ export class GameSession {
     if (!loaded) return false;
     this.bind(loaded);
     return true;
+  }
+
+  startCapture(): void {
+    this.captureMode = true;
+    this.bind(SaveSystem.createNew());
+    this.started = true;
   }
 
   previewSavedData(): GameSave | null {
@@ -70,6 +81,7 @@ export class GameSession {
     this.activeScene = scene;
     this.data.lastScene = scene;
     this.economy.setStoreVisible(scene === "StoreScene");
+    this.audio.setScene(scene);
     const report = scene === "StoreScene" ? this.economy.store.consumeAwayReport() : null;
     this.save(scene);
     return report;
@@ -78,6 +90,7 @@ export class GameSession {
   leaveForMenu(): void {
     this.activeScene = "MenuScene";
     this.economy.setStoreVisible(false);
+    this.audio.setScene("MenuScene");
   }
 
   mathMultiplier(): number {
@@ -101,10 +114,12 @@ export class GameSession {
 
   save(scene?: SceneKey): void {
     if (scene) this.data.lastScene = scene;
+    if (this.captureMode) return;
     SaveSystem.save(this.data);
   }
 
   resetSave(): void {
+    this.captureMode = false;
     SaveSystem.reset();
     this.bind(SaveSystem.createNew());
   }

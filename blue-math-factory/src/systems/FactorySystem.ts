@@ -1,5 +1,4 @@
 import { BALANCE } from "../data/balance";
-import { PRODUCTS } from "../data/products";
 import type { GameSave } from "../types";
 import type { EconomySnapshot } from "./EconomySystem";
 import { InventorySystem } from "./InventorySystem";
@@ -14,31 +13,30 @@ export class FactorySystem {
   tick(seconds: number): void {
     if (!Number.isFinite(seconds) || seconds <= 0) return;
     const snapshot = this.snapshot();
-    const recipe = PRODUCTS.find((product) => product.id === this.data.selectedProduct) ?? PRODUCTS[0];
-
     const harvested = this.inventory.addRaw(snapshot.productionRate * seconds, snapshot.rawStorageCapacity);
     if (harvested > 0) this.data.totals.blueberriesEarned += harvested;
 
-    const canProcess = this.data.rawBlueberries >= recipe.productionCost && this.data.processedProducts < snapshot.warehouseCapacity;
+    const canProcess = this.data.rawBlueberries >= BALANCE.packageRecipeRaw && this.data.warehousePackages < snapshot.warehouseCapacity;
     if (canProcess && snapshot.processingRate > 0) {
       this.data.factoryState.processingProgress += snapshot.processingRate * seconds / 60;
       const ready = Math.floor(this.data.factoryState.processingProgress);
-      const byRaw = Math.floor(this.data.rawBlueberries / recipe.productionCost);
-      const byWarehouse = Math.floor(snapshot.warehouseCapacity - this.data.processedProducts);
+      const byRaw = Math.floor(this.data.rawBlueberries / BALANCE.packageRecipeRaw);
+      const byWarehouse = Math.floor(snapshot.warehouseCapacity - this.data.warehousePackages);
       const packages = Math.max(0, Math.min(ready, byRaw, byWarehouse));
       if (packages > 0) {
-        this.inventory.consumeRaw(packages * recipe.productionCost);
-        this.inventory.addProcessed(packages, snapshot.warehouseCapacity);
+        this.inventory.consumeRaw(packages * BALANCE.packageRecipeRaw);
+        this.inventory.addWarehouse(packages, snapshot.warehouseCapacity);
         this.data.factoryState.processingProgress -= packages;
         this.data.totals.productsProcessed += packages;
+        this.data.totals.totalPackagesProduced += packages;
       }
     }
 
-    if (this.data.processedProducts > 0 && this.data.storeInventory < snapshot.shelfCapacity) {
+    if (this.data.warehousePackages > 0 && this.data.storeBackroomPackages < snapshot.backroomCapacity) {
       this.data.factoryState.deliveryProgress += snapshot.deliveryRate * seconds / 60;
       const ready = Math.floor(this.data.factoryState.deliveryProgress);
       if (ready > 0) {
-        const moved = this.inventory.transferToStore(ready, snapshot.shelfCapacity);
+        const moved = this.inventory.transferToBackroom(ready, snapshot.backroomCapacity);
         this.data.factoryState.deliveryProgress -= moved;
         this.data.totals.productsDelivered += moved;
       }
@@ -51,11 +49,10 @@ export class FactorySystem {
 
   bottleneck(): string {
     const snapshot = this.snapshot();
-    const recipe = PRODUCTS.find((product) => product.id === this.data.selectedProduct) ?? PRODUCTS[0];
-    if (this.data.processedProducts >= snapshot.warehouseCapacity - 0.001) return "WAREHOUSE FULL";
-    if (this.data.rawBlueberries < recipe.productionCost && snapshot.productionRate <= 0) return "NEED MORE BLUEBERRIES";
-    if (this.data.storeInventory >= snapshot.shelfCapacity - 0.001 && this.data.processedProducts > 0) return "STORE SHELVES FULL";
-    if (this.data.storeInventory <= 0 && this.data.processedProducts <= 0) return "SEND PRODUCTS TO THE STORE";
+    if (this.data.warehousePackages >= snapshot.warehouseCapacity - 0.001) return "WAREHOUSE FULL";
+    if (this.data.storeBackroomPackages >= snapshot.backroomCapacity - 0.001 && this.data.warehousePackages > 0) return "STORE BACKROOM FULL";
+    if (this.data.rawBlueberries < BALANCE.packageRecipeRaw && snapshot.productionRate <= 0) return "NEED MORE BLUEBERRIES";
+    if (this.inventory.totalShelfStock() <= 0 && this.data.storeBackroomPackages <= 0 && this.data.warehousePackages <= 0) return "MAKE BLUEBERRY PACKAGES";
     if (this.data.mathPower < 20) return "ANSWER MATH QUESTIONS TO BOOST YOUR FACTORY";
     return "PRODUCTION FLOWING";
   }

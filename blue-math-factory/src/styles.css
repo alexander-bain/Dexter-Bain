@@ -75,10 +75,10 @@ kbd { display: grid; place-items: center; min-width: 34px; height: 34px; border:
 
 /* Math challenge */
 .math-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6.3rem 1rem 1.2rem; background: radial-gradient(circle at center, rgba(53,56,182,.08), rgba(10,6,48,.34)); }
-.math-topbar { position: absolute; top: max(.8rem, env(safe-area-inset-top)); left: .8rem; right: .8rem; display: grid; grid-template-columns: auto repeat(5, minmax(90px, 1fr)); gap: .55rem; align-items: stretch; }
+.math-topbar { position: absolute; top: max(.8rem, env(safe-area-inset-top)); left: .8rem; right: .8rem; display: grid; grid-template-columns: auto repeat(6, minmax(84px, 1fr)); gap: .55rem; align-items: stretch; }
 .math-topbar > div, .back-button { display: grid; place-items: center; padding: .5rem .7rem; border: 2px solid rgba(255,255,255,.5); border-radius: 14px; color: #fff; background: rgba(27,18,83,.91); box-shadow: 0 6px 18px rgba(10,4,47,.25); }
 .math-topbar span { color: #a9c9ef; font-size: .56rem; font-weight: 900; letter-spacing: .1em; }.math-topbar strong { font-size: .95rem; }.back-button { font-weight: 1000; }
-.timer-box strong { color: #78ecff; font-variant-numeric: tabular-nums; }.timer-box strong.urgent { color: #ffdd64; animation: pulse .55s infinite alternate; }
+.timer-box { border-width: 4px !important; border-color: #8ff3ff !important; background: linear-gradient(160deg,#3928a5,#181052) !important; }.timer-box strong { color: #78ecff; font-size: clamp(1.55rem,3vw,2.35rem) !important; line-height: 1; font-variant-numeric: tabular-nums; text-shadow: 0 3px 0 #171044; }.timer-box strong.urgent { color: #ffdd64; animation: pulse .55s infinite alternate; }
 .math-card { width: min(720px, 94vw); padding: clamp(1rem, 3vh, 2.2rem); border: 3px solid rgba(255,255,255,.7); border-radius: 32px; text-align: center; background: linear-gradient(145deg, rgba(37,24,112,.96), rgba(19,15,73,.97)); box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 22px 55px rgba(9,4,45,.48); }
 .math-callout { margin: 0 0 .45rem; color: #88eaff; font-size: .68rem; font-weight: 1000; letter-spacing: .16em; }
 .math-problem { display: flex; justify-content: center; align-items: center; gap: clamp(1rem, 4vw, 2.2rem); margin-bottom: 1rem; font-size: clamp(4rem, 10vw, 7.5rem); font-weight: 1000; line-height: 1; text-shadow: 0 6px 0 rgba(20,12,78,.5); }
@@ -163,4 +163,21 @@ kbd { display: grid; place-items: center; min-width: 34px; height: 34px; border:
 }
 @media (prefers-reduced-motion: reduce) {
   .purchase-celebration { animation-duration: .01ms !important; }
+}
+
+/* BlueMath Factory 3: five-question rush, package economy, and victory */
+.perfect-rush-backdrop { background: radial-gradient(circle at 50% 35%,rgba(112,78,225,.58),rgba(10,5,48,.9)); }
+.perfect-rush-card,.victory-card { width: min(620px,94vw); border-color: #fff0a1; background: linear-gradient(150deg,#5b3cc0,#24156d 62%,#15104e); overflow: hidden; }
+.perfect-rush-card h2,.victory-card h2 { margin: .25rem 0; color: #fff0a1; font-size: clamp(2.2rem,7vw,4rem); text-shadow: 0 5px #332077; }
+.perfect-rays { display: grid; place-items: center; width: 92px; height: 92px; margin: 0 auto .5rem; border-radius: 50%; color: #fff7c5; background: radial-gradient(circle,#ffd452,#e58d37); box-shadow: 0 0 0 10px rgba(255,222,92,.14),0 0 55px rgba(255,218,80,.58); font-size: 3.5rem; animation: pulse .65s infinite alternate; }
+.perfect-rewards { display: grid; grid-template-columns: repeat(3,1fr); gap: .65rem; margin: 1rem 0; }.perfect-rewards div { padding: .8rem .45rem; border: 2px solid rgba(255,255,255,.24); border-radius: 15px; background: rgba(10,6,50,.28); }.perfect-rewards strong,.perfect-rewards span { display: block; }.perfect-rewards strong { color: #ffdf66; font-size: 1.65rem; }.perfect-rewards span { margin-top: .25rem; color: #dceaff; font-size: .67rem; line-height: 1.25; }
+.victory-backdrop { background: radial-gradient(circle at 50% 32%,rgba(244,190,58,.4),rgba(10,5,48,.92)); }.victory-trophy { font-size: 6rem; filter: drop-shadow(0 8px 0 rgba(53,31,103,.5)); animation: pulse .7s infinite alternate; }
+
+@media (max-width: 1050px) {
+  .math-topbar { grid-template-columns: auto repeat(3,1fr); }
+  .math-topbar > div:nth-of-type(3),.math-topbar > div:nth-of-type(4),.math-topbar > div:nth-of-type(5) { display:none; }
+}
+@media (max-width: 700px) {
+  .perfect-rewards { grid-template-columns: 1fr; }.perfect-rewards div { padding: .55rem; }
+  .timer-box strong { font-size: 1.7rem !important; }
 }

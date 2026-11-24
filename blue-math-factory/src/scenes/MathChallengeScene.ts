@@ -11,7 +11,7 @@ export class MathChallengeScene extends Phaser.Scene {
   private question!: MathQuestion;
   private streak = 0;
   private roundBerries = 0;
-  private remaining = 9;
+  private remaining = 5;
   private selectedIndex = 0;
   private startedAt = 0;
   private locked = false;
@@ -99,10 +99,23 @@ export class MathChallengeScene extends Phaser.Scene {
       const messages = ["CORRECT!", "BERRY IMPRESSIVE!", "PERFECT!", "FACTORY POWER +!", "AWESOME MATH!"];
       this.showFeedback(messages[(this.streak - 1) % messages.length], 0x7af0b7);
       this.berryBurst();
-      const boost = session.economy.activateStreakBoost(this.streak);
-      if (boost) this.time.delayedCall(180, () => this.showFeedback(boost, this.streak >= 5 ? COLORS.gold : COLORS.cyan));
+      const boost = this.streak < 5 ? session.economy.activateStreakBoost(this.streak) : null;
+      if (boost) this.time.delayedCall(180, () => this.showFeedback(boost, COLORS.cyan));
       session.save("MathChallengeScene");
-      this.time.delayedCall(520, () => this.startQuestion());
+      if (this.streak === 5) {
+        const perfect = session.economy.awardPerfectRush();
+        this.roundBerries += perfect.raw;
+        session.audio.play("upgrade");
+        this.showFeedback("PERFECT RUSH!", COLORS.gold);
+        session.save("MathChallengeScene");
+        this.time.delayedCall(750, () => ui.showPerfectRush(this.roundBerries, perfect.power, () => {
+          this.streak = 0;
+          this.roundBerries = 0;
+          this.startQuestion();
+        }, () => this.returnHub()));
+      } else {
+        this.time.delayedCall(520, () => this.startQuestion());
+      }
     } else {
       session.audio.play("wrong");
       this.showFeedback(answer < 0 ? "TIME'S UP — NICE TRY!" : "SO CLOSE — KEEP GOING!", 0xffb57c);

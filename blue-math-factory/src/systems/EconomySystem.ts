@@ -1,6 +1,5 @@
 import { BALANCE } from "../data/balance";
 import { CUSTOMER_TYPES } from "../data/customerTypes";
-import { PRODUCTS } from "../data/products";
 import type { CustomerType, GameSave, StoreAwayReport } from "../types";
 import { FactorySystem } from "./FactorySystem";
 import { InventorySystem } from "./InventorySystem";
@@ -13,7 +12,10 @@ export interface EconomySnapshot {
   rawStorageCapacity: number;
   storage: number;
   warehouseCapacity: number;
+  backroomCapacity: number;
   shelfCapacity: number;
+  shelfCount: number;
+  shelfCapacityEach: number;
   deliveryRate: number;
   productValue: number;
   queueCapacity: number;
@@ -36,7 +38,7 @@ export interface EconomySnapshot {
 export interface OfflineResult extends StoreAwayReport {
   seconds: number;
   berries: number;
-  processedProducts: number;
+  packagesProduced: number;
 }
 
 export class EconomySystem {
@@ -60,18 +62,20 @@ export class EconomySystem {
     const global = 1 + effect("global");
     const checkoutBoost = Math.min(0.75, effect("checkout"));
     const arrivalBoost = Math.min(0.7, effect("arrival"));
-    const selected = PRODUCTS.find((product) => product.id === this.data.selectedProduct) ?? PRODUCTS[0];
     const mathPowerSpeed = this.mathPowerSpeed();
     const boostActive = this.data.activeBoosts.endsAt > Date.now();
     const productionBoost = boostActive ? Math.max(1, this.data.activeBoosts.productionMultiplier) : 1;
     const valueBoost = boostActive ? Math.max(1, this.data.activeBoosts.productValueMultiplier) : 1;
     const productionRate = effect("production") * global * mathPowerSpeed * productionBoost;
-    const processingRate = (BALANCE.baseProcessingPerMinute * 8 / selected.productionTime + effect("processing")) * global * mathPowerSpeed * productionBoost;
+    const processingRate = (BALANCE.baseProcessingPerMinute + effect("processing")) * global * mathPowerSpeed * productionBoost;
     const rawStorageCapacity = BALANCE.baseRawStorage + effect("storage");
-    const warehouseCapacity = BALANCE.baseWarehouseCapacity + level("packing-machine") * 8 + level("mega-packer") * 20 + level("giant-silo") * 25;
-    const shelfCapacity = BALANCE.baseShelfCapacity + effect("shelf") + level("store-expansion") * 30;
+    const warehouseCapacity = BALANCE.baseWarehouseCapacity + effect("warehouse") + level("packing-machine") * 8 + level("mega-packer") * 20 + level("giant-silo") * 25;
+    const backroomCapacity = BALANCE.baseBackroomCapacity + level("backroom-expansion") * 50 + level("store-expansion") * 25;
+    const shelfCount = BALANCE.baseShelfCount + level("extra-shelf") + level("store-expansion");
+    const shelfCapacityEach = BALANCE.baseShelfCapacity + level("better-display") * 5;
+    const shelfCapacity = shelfCount * shelfCapacityEach;
     const deliveryRate = (BALANCE.baseDeliveryPerMinute + effect("delivery")) * global * mathPowerSpeed;
-    const productValue = selected.saleValue * (1 + effect("value")) * valueBoost;
+    const productValue = BALANCE.baseProductValue * (1 + effect("value")) * valueBoost;
     const queueCapacity = BALANCE.baseQueueCapacity + Math.floor(effect("queue"));
     const customerBoost = Date.now() < this.customerBoostUntil ? 1.75 : 1;
     const arrivalSeconds = Math.max(1.2, BALANCE.baseArrivalSeconds * (1 - arrivalBoost) / customerBoost);
@@ -90,7 +94,10 @@ export class EconomySystem {
       rawStorageCapacity,
       storage: rawStorageCapacity,
       warehouseCapacity,
+      backroomCapacity,
       shelfCapacity,
+      shelfCount,
+      shelfCapacityEach,
       deliveryRate,
       productValue,
       queueCapacity,
@@ -104,8 +111,8 @@ export class EconomySystem {
       factoryLevel: this.upgrades.categoryLevel("factory"),
       storeLevel: this.upgrades.categoryLevel("store"),
       mathPowerSpeed,
-      expectedIncomePerMinute: this.data.storeInventory > 0 ? customerRate * averageBasket * productValue : 0,
-      selectedProductName: selected.name,
+      expectedIncomePerMinute: this.inventory.totalShelfStock() > 0 ? customerRate * averageBasket * productValue : 0,
+      selectedProductName: "Blueberry Package",
       productionBoost,
       valueBoost
     };
@@ -116,6 +123,8 @@ export class EconomySystem {
     let remaining = Math.min(seconds, BALANCE.offlineCapSeconds);
     while (remaining > 0) {
       const step = Math.min(5, remaining);
+      const snapshot = this.snapshot();
+      this.inventory.ensureShelfLayout(snapshot.shelfCount, snapshot.shelfCapacityEach);
       this.factory.tick(step);
       this.store.tick(step, !this.storeVisible);
       this.data.totals.playtimeSeconds += step;
@@ -123,6 +132,7 @@ export class EconomySystem {
     }
     this.unlockProducts();
     this.inventory.clamp();
+    this.checkVictory();
   }
 
   setStoreVisible(visible: boolean): void {
@@ -158,13 +168,28 @@ export class EconomySystem {
     return `${boost.label} FOR ${boost.seconds} SECONDS`;
   }
 
-  activateProductionBoost(multiplier = 2, seconds = BALANCE.boostSeconds): void {
+  activateProductionBoost(multiplier = 2, seconds: number = BALANCE.boostSeconds): void {
     this.data.activeBoosts = {
       productionMultiplier: multiplier,
       productValueMultiplier: 1,
       endsAt: Date.now() + seconds * 1000,
       label: `${multiplier}× FACTORY RUSH`
     };
+  }
+
+  awardPerfectRush(): { raw: number; power: number } {
+    const beforeRaw = this.data.rawBlueberries;
+    const beforePower = this.data.mathPower;
+    const rawCapacity = Math.max(this.snapshot().rawStorageCapacity, beforeRaw + BALANCE.perfectRushRaw);
+    this.inventory.addRaw(BALANCE.perfectRushRaw, rawCapacity);
+    this.data.mathPower = Math.min(BALANCE.mathPowerMax, this.data.mathPower + BALANCE.perfectRushPower);
+    const raw = this.data.rawBlueberries - beforeRaw;
+    const power = this.data.mathPower - beforePower;
+    this.data.totals.blueberriesEarned += raw;
+    this.data.totals.mathPowerEarned += power;
+    this.data.totals.perfectRushes += 1;
+    this.activateProductionBoost(BALANCE.perfectRushMultiplier, BALANCE.perfectRushSeconds);
+    return { raw, power };
   }
 
   activateCustomerBoost(seconds = BALANCE.boostSeconds): void {
@@ -178,13 +203,13 @@ export class EconomySystem {
   applyOffline(now = Date.now()): OfflineResult {
     const seconds = Math.min(BALANCE.offlineCapSeconds, Math.max(0, (now - this.data.lastSimulationAt) / 1000));
     const beforeRaw = this.data.rawBlueberries;
-    const beforeProcessed = this.data.processedProducts;
+    const beforeProduced = this.data.totals.totalPackagesProduced;
     const beforeReport = { ...this.data.awayReport };
     this.tick(seconds);
     return {
       seconds,
       berries: this.data.rawBlueberries - beforeRaw,
-      processedProducts: this.data.processedProducts - beforeProcessed,
+      packagesProduced: this.data.totals.totalPackagesProduced - beforeProduced,
       customersServed: this.data.awayReport.customersServed - beforeReport.customersServed,
       productsSold: this.data.awayReport.productsSold - beforeReport.productsSold,
       moneyEarned: this.data.awayReport.moneyEarned - beforeReport.moneyEarned,
@@ -200,10 +225,11 @@ export class EconomySystem {
   }
 
   private unlockProducts(): void {
-    const level = this.snapshot().factoryLevel;
-    for (const product of PRODUCTS) {
-      const requiredMachine = !product.requiredUpgrade || this.upgrades.has(product.requiredUpgrade);
-      if (level >= product.unlockFactoryLevel && requiredMachine && !this.data.unlockedProducts.includes(product.id)) this.data.unlockedProducts.push(product.id);
-    }
+    if (!this.data.unlockedProducts.includes("fresh")) this.data.unlockedProducts.push("fresh");
+  }
+
+  private checkVictory(): void {
+    if (this.data.victory.unlocked || this.data.totals.totalPackagesSold < BALANCE.victoryPackages) return;
+    this.data.victory = { unlocked: true, celebrated: false, endlessMode: true, trophyEarned: true };
   }
 }

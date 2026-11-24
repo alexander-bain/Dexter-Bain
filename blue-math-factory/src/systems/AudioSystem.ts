@@ -1,4 +1,4 @@
-import type { GameSettings } from "../types";
+import type { GameSettings, SceneKey } from "../types";
 
 type SoundName = "button" | "correct" | "wrong" | "coin" | "upgrade" | "portal" | "checkout";
 
@@ -14,13 +14,25 @@ const SOUNDS: Record<SoundName, [number, number, OscillatorType]> = {
 
 export class AudioSystem {
   private context: AudioContext | null = null;
-  private musicTimer = 0;
+  private currentMusic: HTMLAudioElement | null = null;
+  private previousMusic: HTMLAudioElement | null = null;
+  private theme: "hub" | "factory" | "store" | "math" = "hub";
+  private unlocked = false;
 
   constructor(private readonly settings: GameSettings) {}
 
   unlock(): void {
+    this.unlocked = true;
     if (!this.context) this.context = new AudioContext();
     if (this.context.state === "suspended") void this.context.resume();
+    if (!this.currentMusic) this.startTheme();
+  }
+
+  setScene(scene: SceneKey | "MenuScene"): void {
+    const next = scene === "FactoryScene" ? "factory" : scene === "StoreScene" ? "store" : scene === "MathChallengeScene" ? "math" : "hub";
+    if (next === this.theme && this.currentMusic) return;
+    this.theme = next;
+    if (this.unlocked) this.startTheme();
   }
 
   play(name: SoundName): void {
@@ -42,20 +54,25 @@ export class AudioSystem {
   }
 
   updateMusic(deltaSeconds: number): void {
-    if (this.settings.muted || this.settings.music <= 0 || !this.context) return;
-    this.musicTimer -= deltaSeconds;
-    if (this.musicTimer > 0) return;
-    const notes = [261.6, 329.6, 392, 523.3, 392, 329.6];
-    const note = notes[Math.floor(performance.now() / 700) % notes.length];
-    const oscillator = this.context.createOscillator();
-    const gain = this.context.createGain();
-    oscillator.type = "sine";
-    oscillator.frequency.value = note;
-    gain.gain.setValueAtTime(this.settings.music * 0.025, this.context.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, this.context.currentTime + 0.45);
-    oscillator.connect(gain).connect(this.context.destination);
-    oscillator.start();
-    oscillator.stop(this.context.currentTime + 0.5);
-    this.musicTimer = 0.7;
+    const target = this.settings.muted ? 0 : this.settings.music * .42;
+    if (this.currentMusic) this.currentMusic.volume += (target - this.currentMusic.volume) * Math.min(1, deltaSeconds * 2.6);
+    if (this.previousMusic) {
+      this.previousMusic.volume = Math.max(0, this.previousMusic.volume - deltaSeconds * .35);
+      if (this.previousMusic.volume <= .005) {
+        this.previousMusic.pause();
+        this.previousMusic = null;
+      }
+    }
+  }
+
+  private startTheme(): void {
+    if (typeof Audio === "undefined") return;
+    if (this.currentMusic) this.previousMusic = this.currentMusic;
+    const next = new Audio(`audio/${this.theme}.wav`);
+    next.loop = true;
+    next.preload = "auto";
+    next.volume = 0;
+    this.currentMusic = next;
+    void next.play().catch(() => undefined);
   }
 }

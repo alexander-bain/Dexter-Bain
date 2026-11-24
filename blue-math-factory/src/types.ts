@@ -102,6 +102,10 @@ export interface GameTotals {
   customersLost: number;
   specialOrdersCompleted: number;
   mathPowerEarned: number;
+  totalPackagesProduced: number;
+  totalPackagesSold: number;
+  shelfRestockCount: number;
+  perfectRushes: number;
 }
 
 export interface GameSettings {
@@ -110,6 +114,16 @@ export interface GameSettings {
   muted: boolean;
   reducedMotion: boolean;
   graphicsQuality: "low" | "medium" | "high";
+  autoRestock: boolean;
+  animationQuality: "reduced" | "full";
+}
+
+export interface ShelfInventory {
+  shelfId: string;
+  capacity: number;
+  currentItems: number;
+  productType: "blueberry-package";
+  restockCost: 10;
 }
 
 export interface StoreCustomerState {
@@ -118,6 +132,17 @@ export interface StoreCustomerState {
   phase: "browsing" | "waiting";
   browseSeconds: number;
   patienceSeconds: number;
+  targetPackages: number;
+  carriedPackages: number;
+  shelfId: string | null;
+  shoppingProgress: number;
+}
+
+export interface JanitorState {
+  phase: "idle" | "to-backroom" | "to-shelf" | "restocking" | "returning";
+  targetShelfId: string | null;
+  progress: number;
+  carryingPackages: number;
 }
 
 export interface StoreAwayReport {
@@ -152,16 +177,26 @@ export interface StoreState {
   arrivalProgress: number;
   checkoutProgress: number;
   nextCustomerId: number;
+  janitor: JanitorState;
+}
+
+export interface VictoryState {
+  unlocked: boolean;
+  celebrated: boolean;
+  endlessMode: boolean;
+  trophyEarned: boolean;
 }
 
 export interface GameSave {
-  version: 2;
+  version: 3;
   createdAt: number;
   savedAt: number;
   lastSimulationAt: number;
   rawBlueberries: number;
-  processedProducts: number;
-  storeInventory: number;
+  blueberryPackages: number;
+  warehousePackages: number;
+  storeBackroomPackages: number;
+  shelves: ShelfInventory[];
   money: number;
   mathPower: number;
   upgradeLevels: Record<string, number>;
@@ -175,6 +210,34 @@ export interface GameSave {
   lastScene: SceneKey;
   factoryState: FactoryState;
   storeState: StoreState;
+  awayReport: StoreAwayReport;
+  activeBoosts: ActiveBoosts;
+  specialOrder: SpecialOrder | null;
+  specialOrderCooldownSeconds: number;
+  victory: VictoryState;
+}
+
+export interface LegacyGameSaveV2 {
+  version: 2;
+  createdAt: number;
+  savedAt: number;
+  lastSimulationAt: number;
+  rawBlueberries: number;
+  processedProducts: number;
+  storeInventory: number;
+  money: number;
+  mathPower: number;
+  upgradeLevels: Record<string, number>;
+  unlockedProducts: string[];
+  selectedProduct: string;
+  mathStats: MathStats;
+  totals: Partial<GameTotals>;
+  completedQuests: string[];
+  claimedQuests: string[];
+  settings: Partial<GameSettings>;
+  lastScene: SceneKey;
+  factoryState: FactoryState;
+  storeState: Omit<StoreState, "janitor"> & { janitor?: JanitorState };
   awayReport: StoreAwayReport;
   activeBoosts: ActiveBoosts;
   specialOrder: SpecialOrder | null;

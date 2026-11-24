@@ -46,7 +46,7 @@ declare global {
     BlueMathDebug?: {
       session: typeof session;
       game: Phaser.Game;
-      setResources: (values: Partial<Pick<typeof session.data, "rawBlueberries" | "processedProducts" | "storeInventory" | "money" | "mathPower">>) => void;
+      setResources: (values: Partial<Pick<typeof session.data, "rawBlueberries" | "warehousePackages" | "storeBackroomPackages" | "money" | "mathPower">>) => void;
     };
   }
 }

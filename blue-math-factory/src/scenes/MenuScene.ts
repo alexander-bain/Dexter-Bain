@@ -10,9 +10,42 @@ export class MenuScene extends Phaser.Scene {
   constructor() { super("MenuScene"); }
 
   create(): void {
+    const captureScene = new URLSearchParams(window.location.search).get("capture");
+    if (captureScene && ["hub", "factory", "store", "math", "victory"].includes(captureScene)) {
+      this.startCapture(captureScene);
+      return;
+    }
     this.drawAnimatedWorld();
     this.renderMenu();
     this.input.once("pointerdown", () => session.audio.unlock());
+  }
+
+  private startCapture(mode: string): void {
+    session.startCapture();
+    Object.assign(session.data.upgradeLevels, {
+      "starter-conveyor": 1, "faster-conveyor": 3, "automatic-picker": 1, "berry-washer": 1,
+      "smart-sorter": 1, "packing-machine": 1, "extra-conveyor": 1, "batch-hopper": 1,
+      "warehouse-expansion": 2, "delivery-truck": 1, "extra-shelf": 2, "better-display": 1,
+      "queue-ropes": 3, "bigger-entrance": 1, "hire-cashier": 1, "hire-janitor": 1,
+      "backroom-expansion": 1, "faster-cashier": 2, "decorations": 2, "better-lighting": 1,
+      "music-system": 1, "second-register": 1, "second-cashier": 1
+    });
+    session.data.rawBlueberries = 460;
+    session.data.warehousePackages = 28;
+    session.data.storeBackroomPackages = 44;
+    session.data.money = 4_850;
+    session.data.mathPower = 92;
+    session.data.totals.totalPackagesProduced = 790;
+    session.data.totals.productsProcessed = 790;
+    session.data.totals.totalPackagesSold = mode === "victory" ? 10_000 : 423;
+    session.data.totals.productsSold = session.data.totals.totalPackagesSold;
+    const snapshot = session.economy.snapshot();
+    session.economy.inventory.ensureShelfLayout(snapshot.shelfCount, snapshot.shelfCapacityEach);
+    for (const shelf of session.data.shelves) shelf.currentItems = Math.min(shelf.capacity, 7 + Number(shelf.shelfId.slice(-1)) % 4);
+    session.economy.inventory.syncPackageTotal();
+    if (mode === "victory") session.data.victory = { unlocked: true, celebrated: true, endlessMode: true, trophyEarned: true };
+    const target = mode === "factory" ? "FactoryScene" : mode === "store" ? "StoreScene" : mode === "math" ? "MathChallengeScene" : "HubScene";
+    this.scene.start(target);
   }
 
   update(_time: number, delta: number): void {
@@ -33,7 +66,7 @@ export class MenuScene extends Phaser.Scene {
       continueGame: () => {
         const offline = session.continueGame();
         if (!offline) { this.renderMenu(); return; }
-        if (offline.seconds >= 5) this.registry.set("offlineMessage", `While away: ${Math.max(0, Math.floor(offline.processedProducts))} products made, ${offline.customersServed} customers served, and $${offline.moneyEarned} earned.`);
+        if (offline.seconds >= 5) this.registry.set("offlineMessage", `While away: ${Math.max(0, Math.floor(offline.packagesProduced))} packages made, ${offline.customersServed} customers served, and $${offline.moneyEarned} earned.`);
         this.scene.start(session.data.lastScene === "MathChallengeScene" ? "HubScene" : session.data.lastScene);
       },
       retryMigration: () => {
@@ -94,7 +127,7 @@ export class MenuScene extends Phaser.Scene {
     ArtFactory.tree(this, width * .93, height * .68, .72).setDepth(40);
     const shop = ArtFactory.building(this, width * .2, height * .75, Math.min(260, width * .28), 170, { color: 0xf09a78, roof: 0x5c3898, label: "BERRY MARKET", windows: 2 });
     shop.setScale(width < 700 ? .72 : 1);
-    this.add.text(width - 20, height - 18, "BLUEBERRY PIPELINE UPDATE • v2.0", { fontFamily: "Trebuchet MS", fontSize: "10px", fontStyle: "bold", color: "#e6f6ff", stroke: "#244f60", strokeThickness: 3 }).setOrigin(1).setDepth(3000).setAlpha(.75);
+    this.add.text(width - 20, height - 18, "MAKE & SELL BLUEBERRY PACKAGES • v3.0", { fontFamily: "Trebuchet MS", fontSize: "10px", fontStyle: "bold", color: "#e6f6ff", stroke: "#244f60", strokeThickness: 3 }).setOrigin(1).setDepth(3000).setAlpha(.75);
     this.cameras.main.fadeIn(350, COLORS.ink >> 16, (COLORS.ink >> 8) & 255, COLORS.ink & 255);
   }
 }

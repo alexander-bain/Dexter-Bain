@@ -1,16 +1,9 @@
 import Phaser from "phaser";
 import { COLORS } from "../data/balance";
-import { CUSTOMER_TYPES } from "../data/customerTypes";
 
 export class ArtFactory {
   static generateTextures(scene: Phaser.Scene): void {
-    if (scene.textures.exists("player-idle")) return;
-    this.makePersonTexture(scene, "player-idle", COLORS.blueberry, COLORS.gold, 0);
-    this.makePersonTexture(scene, "player-walk-a", COLORS.blueberry, COLORS.gold, -4);
-    this.makePersonTexture(scene, "player-walk-b", COLORS.blueberry, COLORS.gold, 4);
-    CUSTOMER_TYPES.forEach((customer) => this.makePersonTexture(scene, `customer-${customer.id}`, customer.color, customer.accent, 0, true));
-    this.makePersonTexture(scene, "worker", 0x5a45c8, 0x5ce0a3, 0, true);
-    this.makePersonTexture(scene, "cashier", 0x3657e7, 0xffc84d, 0, true);
+    if (scene.textures.exists("berry")) return;
 
     const berry = scene.add.graphics();
     berry.fillStyle(0x17104f, 0.25).fillEllipse(15, 22, 24, 10);
@@ -30,6 +23,19 @@ export class ArtFactory {
     const blocker = scene.add.graphics();
     blocker.fillStyle(0xffffff, 0.01).fillRect(0, 0, 8, 8);
     blocker.generateTexture("blocker", 8, 8).destroy();
+  }
+
+  static generateAnimations(scene: Phaser.Scene, spriteKeys: string[]): void {
+    const ranges = [
+      ["walk-down", 0, 4, 9], ["walk-left", 5, 9, 9], ["walk-right", 10, 14, 9], ["walk-up", 15, 19, 9],
+      ["work", 25, 29, 7], ["carry", 30, 34, 8], ["interact", 35, 39, 7]
+    ] as const;
+    for (const spriteKey of spriteKeys) {
+      for (const [name, start, end, frameRate] of ranges) {
+        const key = `${spriteKey}-${name}`;
+        if (!scene.anims.exists(key)) scene.anims.create({ key, frames: scene.anims.generateFrameNumbers(spriteKey, { start, end }), frameRate, repeat: name.startsWith("walk") || name === "carry" || name === "work" ? -1 : 0 });
+      }
+    }
   }
 
   static drawWorldGround(scene: Phaser.Scene, width: number, height: number, color = 0x75c86d): void {
@@ -181,23 +187,4 @@ export class ArtFactory {
     return container;
   }
 
-  private static makePersonTexture(scene: Phaser.Scene, key: string, shirt: number, accent: number, step: number, customer = false): void {
-    const graphics = scene.add.graphics();
-    graphics.fillStyle(0x151044, .24).fillEllipse(34, 82, 47, 15);
-    graphics.fillStyle(0x273164).fillRoundedRect(22 + step, 59, 12, 24, 5).fillRoundedRect(39 - step, 59, 12, 24, 5);
-    graphics.fillStyle(0x18214e).fillRoundedRect(18 + step, 77, 20, 8, 4).fillRoundedRect(36 - step, 77, 20, 8, 4);
-    graphics.fillStyle(shirt).fillRoundedRect(16, 34, 40, 35, 12);
-    graphics.fillStyle(accent).fillRoundedRect(16, 38, 40, 8, 4);
-    graphics.fillStyle(0xf0b98b).fillRoundedRect(7, 38, 12, 28, 6).fillRoundedRect(53, 38, 12, 28, 6);
-    graphics.fillStyle(0xf2bd91).fillCircle(36, 26, 18);
-    graphics.fillStyle(0x5d342e).fillEllipse(36, 17, 35, 18);
-    if (!customer) {
-      graphics.fillStyle(accent).fillEllipse(35, 12, 39, 14).fillRoundedRect(16, 11, 38, 8, 4);
-      graphics.fillStyle(shirt).fillRoundedRect(34, 6, 22, 10, 5);
-    }
-    graphics.fillStyle(0x23204a).fillCircle(30, 26, 2).fillCircle(42, 26, 2);
-    graphics.lineStyle(2, 0x8c493e).beginPath().arc(36, 31, 5, .25, 2.8).strokePath();
-    graphics.lineStyle(2, 0x171044, .6).strokeRoundedRect(16, 34, 40, 35, 12);
-    graphics.generateTexture(key, 72, 92).destroy();
-  }
 }

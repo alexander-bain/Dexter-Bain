@@ -1,15 +1,15 @@
 import Phaser from "phaser";
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
-  private walkElapsed = 0;
+  private facing: "down" | "left" | "right" | "up" = "down";
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
-    super(scene, x, y, "player-idle");
+    super(scene, x, y, "player", 20);
     scene.add.existing(this);
     scene.physics.add.existing(this);
-    this.setCollideWorldBounds(true).setDepth(y).setScale(1.05);
+    this.setCollideWorldBounds(true).setDepth(y).setScale(.78);
     const body = this.body as Phaser.Physics.Arcade.Body;
-    body.setSize(34, 32).setOffset(19, 54);
+    body.setSize(42, 38).setOffset(27, 84);
   }
 
   move(x: number, y: number, deltaSeconds: number): void {
@@ -19,13 +19,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     const moving = vector.lengthSq() > .02;
     body.setVelocity(vector.x * 250, vector.y * 220);
     if (moving) {
-      this.walkElapsed += deltaSeconds * 9;
-      const texture = Math.floor(this.walkElapsed) % 2 === 0 ? "player-walk-a" : "player-walk-b";
-      this.setTexture(texture);
-      if (Math.abs(vector.x) > .08) this.setFlipX(vector.x < 0);
-      this.setScale(1.05, 1.05 + Math.sin(this.walkElapsed * Math.PI) * .015);
+      if (Math.abs(vector.x) > Math.abs(vector.y)) this.facing = vector.x < 0 ? "left" : "right";
+      else this.facing = vector.y < 0 ? "up" : "down";
+      this.play(`player-walk-${this.facing}`, true).setScale(.78);
     } else {
-      this.setTexture("player-idle").setScale(1.05);
+      this.stop().setFrame({ down: 20, left: 21, right: 22, up: 23 }[this.facing]).setScale(.78);
     }
     this.setDepth(this.y + 40);
   }

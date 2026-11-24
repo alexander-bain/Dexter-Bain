@@ -8,7 +8,7 @@ import type { StoreCustomerState } from "../types";
 import { ui } from "../ui/UIBridge";
 import { BaseWorldScene } from "./BaseWorldScene";
 
-const STORE_UPGRADE_SPOT = { x: 1200, y: 1035 };
+const STORE_UPGRADE_SPOT = { x: 960, y: 1015 };
 
 export class StoreScene extends BaseWorldScene {
   private customers = new Map<number, Customer>();
@@ -24,6 +24,8 @@ export class StoreScene extends BaseWorldScene {
   private shelfProductLayers: Phaser.GameObjects.Container[] = [];
   private shelfLabels: Phaser.GameObjects.Text[] = [];
   private shelfDisplaySignature = "";
+  private backroomLabel!: Phaser.GameObjects.Text;
+  private janitor?: Phaser.GameObjects.Sprite;
 
   constructor() { super("StoreScene"); }
 
@@ -34,7 +36,7 @@ export class StoreScene extends BaseWorldScene {
     this.shelfLabels = [];
     this.shelfDisplaySignature = "";
     this.drawStore();
-    this.setupWorld(960, 1010);
+    this.setupWorld(960, 1125);
     this.addInteraction(150, 1000, "Return to Hub", () => this.transitionTo("HubScene"), 120);
     this.addInteraction(960, 465, "Serve Next Customer", () => this.serveNext(), 150);
     this.addInteraction(1360, 940, "Open Special Order", () => this.openSpecialOrder(), 125);
@@ -62,7 +64,7 @@ export class StoreScene extends BaseWorldScene {
   private serveNext(): void {
     const result = session.economy.store.manualServe();
     if (result.sold <= 0) {
-      ui.showToast(session.data.storeInventory <= 0 ? "STORE NEEDS MORE PRODUCTS" : "No customer is ready at checkout yet.", "info");
+      ui.showToast(session.economy.inventory.totalShelfStock() <= 0 ? "STOCK A SHELF WITH BACKROOM PACKAGES" : "No customer is ready at checkout yet.", "info");
       return;
     }
     session.audio.play("checkout");
@@ -72,7 +74,13 @@ export class StoreScene extends BaseWorldScene {
 
   private handleStoreEvents(): void {
     for (const event of session.economy.store.consumeEvents()) {
-      if (event.type === "arrival") continue;
+      if (event.type === "arrival" || event.type === "picked") continue;
+      if (event.type === "restocked") {
+        session.audio.play("upgrade");
+        ui.showToast(`${event.automatic ? "Janitor" : "Shelf"} stocked ${event.moved} packages for $10.`, "good");
+        continue;
+      }
+      if (!event.customer) continue;
       const customer = this.customers.get(event.customer.id);
       if (!customer) continue;
       this.customers.delete(event.customer.id);
@@ -101,11 +109,11 @@ export class StoreScene extends BaseWorldScene {
     }
     for (const [id, customer] of this.customers) {
       if (!states.some((state) => state.id === id)) {
-        customer.sprite.destroy();
+        customer.destroy();
         this.customers.delete(id);
       }
     }
-    const signature = states.map((state) => `${state.id}:${state.phase}`).join("|");
+    const signature = states.map((state) => `${state.id}:${state.phase}:${state.shelfId}:${state.carriedPackages}`).join("|");
     if (signature === this.queueSignature) return;
     this.queueSignature = signature;
     states.forEach((state, index) => this.positionCustomer(state, index, immediate));
@@ -114,11 +122,13 @@ export class StoreScene extends BaseWorldScene {
   private positionCustomer(state: StoreCustomerState, index: number, immediate: boolean): void {
     const customer = this.customers.get(state.id);
     if (!customer) return;
+    customer.setPackageCount(state.carriedPackages);
     let x: number;
     let y: number;
     if (state.phase === "browsing") {
-      x = state.id % 2 ? 370 : 1550;
-      y = 440 + state.id % 3 * 220;
+      const shelfIndex = Math.max(0, session.data.shelves.findIndex((shelf) => shelf.shelfId === state.shelfId));
+      x = shelfIndex % 2 ? 1500 : 420;
+      y = 365 + Math.floor(shelfIndex / 2) * 135;
     } else {
       const waiting = session.data.storeState.customers.filter((entry) => entry.phase === "waiting");
       const queueIndex = waiting.findIndex((entry) => entry.id === state.id);
@@ -134,33 +144,68 @@ export class StoreScene extends BaseWorldScene {
     const snapshot = session.economy.snapshot();
     const waiting = session.data.storeState.customers.filter((customer) => customer.phase === "waiting").length;
     this.queueLabel.setText(`CUSTOMER LINE  ${waiting}/${snapshot.queueCapacity}\n${snapshot.cashierLevel ? `${snapshot.activeCheckoutLanes} lane${snapshot.activeCheckoutLanes === 1 ? "" : "s"} · ${snapshot.checkoutSeconds.toFixed(1)} sec checkout` : "YOU ARE THE CASHIER"}`);
-    this.inventoryLabel.setText(`SHELF STOCK  ${Math.floor(session.data.storeInventory)} / ${Math.floor(snapshot.shelfCapacity)}\nAbout ${snapshot.averageBasketSize.toFixed(1)} items/shopper · $${Math.floor(snapshot.expectedIncomePerMinute)}/min`);
+    this.inventoryLabel.setText(`SHELVES  ${Math.floor(session.economy.inventory.totalShelfStock())} / ${Math.floor(snapshot.shelfCapacity)}\nBACKROOM  ${Math.floor(session.data.storeBackroomPackages)} / ${Math.floor(snapshot.backroomCapacity)}`);
+    this.backroomLabel.setText(`STORE BACKROOM\n${Math.floor(session.data.storeBackroomPackages)} / ${Math.floor(snapshot.backroomCapacity)} PACKAGES`);
     this.statusLabel.setText(session.economy.store.status());
-    this.statusLabel.setColor(session.data.storeInventory <= 0 ? "#ff8d8d" : "#79efbd");
+    this.statusLabel.setColor(session.economy.inventory.totalShelfStock() <= 0 ? "#ff8d8d" : "#79efbd");
+    this.updateJanitorVisual();
     this.refreshShelfDisplays();
   }
 
   private refreshShelfDisplays(force = false): void {
     if (!this.shelfProductLayers.length) return;
     const snapshot = session.economy.snapshot();
-    const stock = Math.max(0, Math.floor(session.data.storeInventory));
-    const signature = `${stock}:${Math.floor(snapshot.shelfCapacity)}:${snapshot.selectedProductName}:${snapshot.productValue.toFixed(2)}:${this.shelfProductLayers.length}`;
+    const signature = `${session.data.shelves.map((shelf) => `${shelf.currentItems}/${shelf.capacity}`).join("|")}:${snapshot.productValue.toFixed(2)}`;
     if (!force && signature === this.shelfDisplaySignature) return;
     this.shelfDisplaySignature = signature;
-    const fillRatio = snapshot.shelfCapacity > 0 ? stock / snapshot.shelfCapacity : 0;
-    const visiblePerShelf = stock > 0 ? Math.min(8, Math.max(1, Math.ceil(fillRatio * 8))) : 0;
-    const productIcons = ["🫐", "📦", "🧺", "🫙", "🧁", "🥤"];
     this.shelfProductLayers.forEach((layer, index) => {
       layer.removeAll(true);
-      const visible = visiblePerShelf;
+      const data = session.data.shelves[index];
+      if (!data) return;
+      const visible = data.currentItems > 0 ? Math.min(10, Math.max(1, Math.ceil(data.currentItems / data.capacity * 10))) : 0;
       for (let item = 0; item < visible; item += 1) {
-        layer.add(this.add.text(-112 + item % 4 * 74, item < 4 ? -49 : 12, productIcons[index % productIcons.length], { fontSize: "27px" }).setOrigin(.5));
+        layer.add(this.add.image(-112 + item % 5 * 56, item < 5 ? -48 : 11, "package-art").setScale(.15).setOrigin(.5));
       }
       const label = this.shelfLabels[index];
-      label.setText(visible ? `${snapshot.selectedProductName.toUpperCase()}  $${snapshot.productValue.toFixed(0)}` : "OUT OF STOCK");
+      label.setText(visible ? `${data.currentItems}/${data.capacity} PACKAGES · RESTOCK $10` : "OUT OF STOCK · RESTOCK $10");
       label.setColor(visible ? "#ffffff" : "#ff8b8b");
       label.setBackgroundColor(visible ? "#4c368f" : "#6f283d");
     });
+  }
+
+  private restockShelf(shelfId: string): void {
+    const result = session.economy.store.restockShelf(shelfId);
+    ui.showToast(result.message, result.ok ? "good" : "info");
+    if (result.ok) { session.audio.play("upgrade"); session.save("StoreScene"); }
+    this.refreshShelfDisplays(true);
+  }
+
+  private updateJanitorVisual(): void {
+    if (!this.janitor) return;
+    const state = session.data.storeState.janitor;
+    const targetIndex = Math.max(0, session.data.shelves.findIndex((shelf) => shelf.shelfId === state.targetShelfId));
+    const targetX = targetIndex % 2 ? 1480 : 440;
+    const targetY = 365 + Math.floor(targetIndex / 2) * 135;
+    const points = {
+      idle: { x: 700, y: 920 },
+      "to-backroom": { x: 610, y: 920 },
+      "to-shelf": { x: targetX, y: targetY },
+      restocking: { x: targetX, y: targetY },
+      returning: { x: 700, y: 920 }
+    };
+    const point = points[state.phase];
+    if (state.phase === "restocking") this.janitor.play("janitor-work", true);
+    else if (state.phase === "idle") this.janitor.stop().setFrame(20);
+    else {
+      const dx = point.x - this.janitor.x;
+      const dy = point.y - this.janitor.y;
+      const direction = Math.abs(dx) > Math.abs(dy) ? (dx < 0 ? "left" : "right") : (dy < 0 ? "up" : "down");
+      this.janitor.play(`janitor-walk-${direction}`, true);
+    }
+    this.janitor.setPosition(
+      Phaser.Math.Linear(this.janitor.x, point.x, .08),
+      Phaser.Math.Linear(this.janitor.y, point.y, .08)
+    ).setDepth(this.janitor.y + 30);
   }
 
   private updateUpgradePlatform(seconds: number): void {
@@ -316,7 +361,7 @@ export class StoreScene extends BaseWorldScene {
       counter.add([counterG, register, this.add.text(0, -103, `$${index + 1}`, { fontFamily: "Trebuchet MS", fontSize: "18px", fontStyle: "bold", color: "#244c70" }).setOrigin(.5), this.add.text(0, -8, "CHECKOUT", { fontFamily: "Trebuchet MS", fontSize: "15px", fontStyle: "bold", color: "#ffffff", stroke: "#342074", strokeThickness: 5 }).setOrigin(.5)]);
       this.addBlocker(x, 410, 235, 120);
       if (index < snapshot.activeCheckoutLanes) {
-        const cashier = this.add.sprite(x, 320, "cashier").setScale(.85).setDepth(380);
+        const cashier = this.add.sprite(x, 310, "cashier", 20).setScale(.7).setDepth(510).play("cashier-work");
         this.tweens.add({ targets: cashier, y: cashier.y - 4, duration: 620 + index * 100, yoyo: true, repeat: -1 });
       }
     }
@@ -333,12 +378,12 @@ export class StoreScene extends BaseWorldScene {
     }
     this.queueLabel = this.add.text(960, 510, "", { align: "center", fontFamily: "Trebuchet MS", fontSize: "13px", fontStyle: "bold", color: "#5c3b9f", backgroundColor: "#fff8e6", padding: { x: 12, y: 6 }, stroke: "#ffffff", strokeThickness: 2 }).setOrigin(.5).setDepth(580);
 
-    const shelfCount = Math.min(8, 3 + session.economy.upgrades.level("extra-shelf"));
+    const shelfCount = Math.min(12, snapshot.shelfCount);
     for (let index = 0; index < shelfCount; index += 1) {
       const column = index % 2;
-      const x = column ? 1580 : 340;
-      const y = 390 + Math.floor(index / 2) * 205;
-      const shelf = this.add.container(x, y).setDepth(y).setScale(1 + Math.min(.16, session.economy.upgrades.level("better-display") * .032));
+      const x = column ? 1610 : 310;
+      const y = 365 + Math.floor(index / 2) * 135;
+      const shelf = this.add.container(x, y).setDepth(y).setScale(.8 + Math.min(.12, session.economy.upgrades.level("better-display") * .024));
       const shelfG = this.add.graphics();
       shelfG.fillStyle(0x3b244e, .22).fillEllipse(12, 70, 330, 42);
       shelfG.fillStyle(0x7d4d3e).fillRoundedRect(-155, -82, 310, 152, 18);
@@ -351,9 +396,19 @@ export class StoreScene extends BaseWorldScene {
       shelf.add([productLayer, shelfLabel]);
       this.shelfProductLayers.push(productLayer);
       this.shelfLabels.push(shelfLabel);
-      this.addBlocker(x, y, 320, 160);
+      this.addBlocker(x, y, 265, 128);
+      const shelfId = session.data.shelves[index]?.shelfId;
+      if (shelfId) this.addInteraction(x + (column ? -155 : 155), y + 36, `Restock Shelf ${index + 1} — $10`, () => this.restockShelf(shelfId), 105);
     }
     this.refreshShelfDisplays(true);
+
+    const backroom = this.add.container(1740, 295).setDepth(310);
+    backroom.add([
+      this.add.rectangle(0, 0, 170, 96, 0x38528f).setStrokeStyle(6, 0x25205e),
+      this.add.rectangle(-52, 3, 44, 72, 0x9be4ef).setStrokeStyle(4, 0xffffff, .55),
+      this.add.image(38, 8, "package-art").setScale(.24)
+    ]);
+    this.backroomLabel = this.add.text(1740, 235, "", { align: "center", fontFamily: "Trebuchet MS", fontSize: "12px", fontStyle: "bold", color: "#ffffff", backgroundColor: "#29206a", padding: { x: 8, y: 5 } }).setOrigin(.5).setDepth(320);
 
     if (session.economy.upgrades.has("premium-display")) {
       const premium = this.add.container(610, 745).setDepth(760);
@@ -381,10 +436,21 @@ export class StoreScene extends BaseWorldScene {
     this.inventoryLabel = this.add.text(1240, 315, "", { fontFamily: "Trebuchet MS", fontSize: "15px", fontStyle: "bold", color: "#fff8d8", backgroundColor: "#38277e", padding: { x: 14, y: 9 }, stroke: "#21145d", strokeThickness: 4 }).setOrigin(.5).setDepth(600);
     this.statusLabel = this.add.text(680, 315, "", { fontFamily: "Trebuchet MS", fontSize: "16px", fontStyle: "bold", color: "#79efbd", backgroundColor: "#25195f", padding: { x: 14, y: 9 }, stroke: "#150d45", strokeThickness: 4 }).setOrigin(.5).setDepth(600);
 
-    const terminal = this.add.container(STORE_UPGRADE_SPOT.x, 875).setDepth(900);
+    const terminal = this.add.container(STORE_UPGRADE_SPOT.x, 855).setDepth(900);
     terminal.add([this.add.ellipse(0, 160, 220, 76, 0x392b80).setStrokeStyle(8, COLORS.mint), this.add.rectangle(0, 0, 170, 120, 0x392b80).setStrokeStyle(6, 0x24185f), this.add.rectangle(0, -12, 126, 70, 0x6be8ff).setStrokeStyle(4, 0xffffff, .5), this.add.text(0, -12, "STORE\nUPGRADES", { align: "center", fontFamily: "Trebuchet MS", fontSize: "17px", fontStyle: "bold", color: "#25316c" }).setOrigin(.5), this.add.text(0, 95, "↓ STAND ON THE GLOWING PAD ↓", { fontFamily: "Trebuchet MS", fontSize: "12px", fontStyle: "bold", color: "#4c2f95", backgroundColor: "#fff4c4", padding: { x: 8, y: 5 } }).setOrigin(.5)]);
     this.holdLabel = this.add.text(STORE_UPGRADE_SPOT.x, 1120, "STAND HERE 5 SECONDS\nTO UPGRADE STORE", { align: "center", fontFamily: "Trebuchet MS", fontSize: "13px", fontStyle: "bold", color: "#eafff6", backgroundColor: "#2d246f", padding: { x: 10, y: 7 } }).setOrigin(.5).setDepth(1100);
-    this.addBlocker(STORE_UPGRADE_SPOT.x, 870, 180, 125);
+    this.addBlocker(STORE_UPGRADE_SPOT.x, 855, 180, 125);
+
+    if (session.economy.upgrades.has("hire-janitor")) {
+      this.janitor = this.add.sprite(700, 920, "janitor", 20).setScale(.7).setDepth(950);
+      this.add.text(700, 855, `JANITOR STOCKER\nAUTO: ${session.data.settings.autoRestock ? "ON" : "OFF"}`, { align: "center", fontFamily: "Trebuchet MS", fontSize: "12px", fontStyle: "bold", color: "#eafff6", backgroundColor: "#2d246f", padding: { x: 8, y: 5 } }).setOrigin(.5).setDepth(960);
+      this.addInteraction(700, 920, `Turn Auto-Restock ${session.data.settings.autoRestock ? "Off" : "On"}`, () => {
+        session.data.settings.autoRestock = !session.data.settings.autoRestock;
+        session.save("StoreScene");
+        ui.showToast(`Janitor auto-restock ${session.data.settings.autoRestock ? "ON" : "OFF"}.`, "info");
+        this.scene.restart();
+      }, 110);
+    }
 
     const orderDesk = this.add.container(1360, 920).setDepth(930);
     orderDesk.add([this.add.rectangle(0, 0, 180, 95, 0x9a642c).setStrokeStyle(6, 0x5d3528), this.add.text(0, -58, "⭐ SPECIAL ORDER", { fontFamily: "Trebuchet MS", fontSize: "15px", fontStyle: "bold", color: "#fff1a6", stroke: "#3f246b", strokeThickness: 6 }).setOrigin(.5), this.add.text(0, 0, "MULTIPLY\nFOR A BONUS!", { align: "center", fontFamily: "Trebuchet MS", fontSize: "14px", fontStyle: "bold", color: "#ffffff" }).setOrigin(.5)]);

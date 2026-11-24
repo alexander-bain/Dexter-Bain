@@ -1,6 +1,6 @@
 # BlueMath Factory
 
-BlueMath Factory is a polished educational tycoon game for ages 9+. Players power a blueberry business by solving multiplication facts, then use the berries to run a factory, make products, serve customers, hire cashiers, and upgrade a growing store.
+BlueMath Factory is a polished educational tycoon game for ages 9+. Players power a blueberry-package business by solving multiplication facts, then move real inventory through a factory, warehouse, store backroom, visible shelves, customer baskets, and the cashier.
 
 The production game is published at `https://dexterbain.com/bluemath/`.
 
@@ -10,10 +10,10 @@ The production game is published at `https://dexterbain.com/bluemath/`.
 - TypeScript for the game and economy systems
 - Vite with `base: "/bluemath/"`
 - HTML/CSS for accessible, responsive menus and controls
-- Web Audio API for original synthesized feedback and music
-- LocalStorage for versioned saves
+- Web Audio API plus four original music arrangements
+- LocalStorage with lossless Version 1 and Version 2 migration into Version 3
 
-All visuals are original procedural/vector-style game art. The game has no backend, accounts, ads, payments, or paid assets.
+All visuals are original game art. The game has no backend, accounts, ads, payments, or paid assets.
 
 ## Run locally
 
@@ -61,31 +61,34 @@ The static site serves `bluemath/index.html`, so refreshing the public route doe
 
 ## Multiplication progression
 
-Each streak starts with 1–3 facts and expands through 1–10. The seven difficulty steps use 9, 8, 7, 6, 5, 4, and 3 seconds. Rewards are 1, 2, 4, 8, 16, 32, and 64 blueberries. The timer never drops below 3 seconds and the reward stays at 64 after the seventh correct answer.
+Every round contains five multiplication facts using factors from 1 through 10. Each question has an exact visible countdown of 5, 4, 3, 2, then 1 second. Correct answers increase the blueberry reward multiplier. Five correct answers trigger Perfect Rush: +50 raw blueberries, +20 Math Power, and double factory speed for 60 seconds.
 
-`MathEngine` tracks every normalized fact, accuracy, misses, recency, fastest answer, and best streak. Missed facts return later at a fair rate, while a recent-fact queue prevents annoying repetition.
+`MathEngine` tracks normalized facts, accuracy, misses, recency, fastest answer, and best streak. Missed facts return later at a fair rate, while a recent-fact queue prevents annoying repetition.
 
 ## Factory and economy
 
-Math creates the first raw blueberries. The Starter Conveyor unlocks passive production. Later upgrades add production, processing, storage, value, delivery capacity, and global efficiency. Packing machines consume raw berries to create the selected product. Eleven products unlock gradually, from fresh berries to blueberry pie.
+The fixed production recipe is **10 raw blueberries → 1 blueberry package** in an eight-second base cycle. Packages move from the factory into the warehouse, then to the store backroom, and only reach customers after appearing on an actual shelf. Upgrades improve raw production, processing speed, storage, value, delivery capacity, staff, and global efficiency. The long-term win condition is selling 10,000 packages; reaching it unlocks a golden victory celebration and endless play.
 
 Factory and store upgrades live in `src/data/upgrades.ts`. Prices use `baseCost × growth^currentLevel`. Effects are summed by type in `UpgradeSystem` and exposed as a single economy snapshot, making the balance easy to inspect.
 
-## Customer line system
+## Store, shelves, and staff
 
-The store begins with a one-customer queue. Queue upgrades add visible waiting spaces. Each waiting customer gives a 5% social-proof arrival bonus, capped at 20%. Customers have patience, basket size, spending multipliers, and attraction values. Slow lines can cause departures. Cashiers and extra registers reduce the problem.
+Every shelf has its own capacity and live package count. A manual restock costs exactly $10 only when at least one package can move from the backroom onto that shelf. Customers visibly collect multiple packages one at a time and money is added only after their basket reaches a cashier.
 
-The player initially serves the register manually. Hiring a cashier unlocks automatic checkout; speed and register upgrades increase throughput.
+Hiring the cashier unlocks automatic checkout; speed and register upgrades increase throughput. Hiring the animated janitor/stocker unlocks automatic restocking for shelves at or below 25%. The janitor walks to the backroom, carries stock to the shelf, and pays the same $10 restock fee. Auto-restock can be turned off in Settings.
 
 ## Save system
 
-Progress is stored under `blueMathFactory_save_v1`. The game autosaves every 10 seconds, after math rounds, purchases, scene changes, and before the page closes. Loads are schema-checked and numeric values are clamped. Offline production is limited to four hours. Reset Save always asks for confirmation.
+Progress is stored under `blueMathFactory_save_v3`. On first Version 3 load, the exact Version 2 text is copied to `blueMathFactory_save_backup_v2` before migration. Money, upgrades, products, statistics, settings, and every old package are preserved; old store inventory is distributed onto shelves and into the backroom without loss. The original Version 1 and Version 2 keys remain untouched. The game autosaves every 10 seconds, after math rounds, purchases, scene changes, and before the page closes. Loads are schema-checked and numeric values are clamped. Offline production is limited to four hours. Reset Save always asks for confirmation.
 
 ## Folder structure
 
 ```text
 blue-math-factory/
   public/          Static assets copied by Vite
+  art-source/      Editable source for the package art
+  promo/           Trailer plan, captions, voiceover, and gameplay stills
+  scripts/         Deterministic sprite-sheet and music generators
   src/
     data/          Balance, upgrades, products, quests, customers
     entities/      Player and customer game objects
@@ -102,16 +105,16 @@ bluemath/          Generated production build
 
 Add one `UpgradeDefinition` to `src/data/upgrades.ts`. Choose an existing effect type, cost curve, maximum level, and optional category-level requirement. The upgrade panel, purchase checks, save system, and derived economy values update automatically.
 
-## Adding a product
-
-Add a `ProductDefinition` to `src/data/products.ts`. Set its berry cost, production time, sale value, factory-level requirement, and optional machine requirement. The factory recipe picker and unlock logic update automatically.
-
 ## Rebalancing
 
 - Global timing and starter values: `src/data/balance.ts`
 - Upgrade costs and effect sizes: `src/data/upgrades.ts`
-- Product costs and values: `src/data/products.ts`
+- Package recipe and inventory limits: `src/data/balance.ts`
 - Customer behavior: `src/data/customerTypes.ts`
 - Goal thresholds and rewards: `src/data/quests.ts`
 
-Keep the first conveyor, first value upgrade, and first line expansion inexpensive. Test both a new save and a progressed save after economy changes.
+Keep the first conveyor, first value upgrade, and first line expansion inexpensive. Test a new save plus realistic Version 1 and Version 2 saves after economy changes.
+
+## Trailer capture mode
+
+Append `?capture=hub`, `factory`, `store`, `math`, or `victory` to `/bluemath/` to open a deterministic, save-safe trailer setup. Capture mode does not read or overwrite player progress.

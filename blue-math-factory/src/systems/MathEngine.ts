@@ -3,11 +3,9 @@ import type { MathQuestion, MathStats } from "../types";
 
 const RANGE_BY_STREAK = [
   [1, 3],
-  [1, 4],
   [2, 5],
   [3, 7],
-  [4, 8],
-  [5, 9],
+  [4, 9],
   [1, 10]
 ] as const;
 
@@ -38,7 +36,7 @@ export class MathEngine {
   }
 
   createQuestion(streak: number): MathQuestion {
-    const step = Math.min(streak, 6);
+    const step = Math.min(streak, 4);
     const [min, max] = RANGE_BY_STREAK[step];
     let a = randomInt(min, max, this.random);
     let b = randomInt(min, max, this.random);
@@ -61,7 +59,7 @@ export class MathEngine {
 
     const answer = a * b;
     const choices = this.makeChoices(answer, a, b);
-    const labels = ["Warm-up", "Growing", "Steady", "Tricky", "Expert", "Turbo", "Berry Legend"];
+    const labels = ["Warm-up", "Growing", "Steady", "Tricky", "Perfect Rush"];
     return {
       a,
       b,

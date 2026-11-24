@@ -1,4 +1,3 @@
-import { PRODUCTS } from "../data/products";
 import { ALL_UPGRADES } from "../data/upgrades";
 import { session } from "../systems/GameSession";
 import type { EconomySnapshot } from "../systems/EconomySystem";
@@ -8,7 +7,7 @@ import { compactNumber } from "./HUD";
 
 interface EffectCopy { current: string; next: string; difference: string; }
 
-const number = (value: number, digits = 2) => value.toFixed(digits).replace(/\.?0+$/, "");
+const number = (value: number, digits = 2) => digits === 0 ? String(Math.round(value)) : value.toFixed(digits).replace(/\.?0+$/, "");
 
 const visualChange = (upgrade: UpgradeDefinition): string => {
   const exact: Record<string, string> = {
@@ -17,6 +16,8 @@ const visualChange = (upgrade: UpgradeDefinition): string => {
     "berry-washer": "Adds a washer with animated bubbles",
     "smart-sorter": "Adds the sorter and moving scanner beam",
     "packing-machine": "Adds the orange packing machine",
+    "batch-hopper": "Adds a measured 10-berry hopper above the belt",
+    "warehouse-expansion": "Builds a visibly larger package warehouse",
     "extra-conveyor": "Adds a second moving conveyor with packages",
     "cold-storage": "Makes the visible cold-storage room larger",
     "quality-scanner": "Adds the pink quality scanner",
@@ -33,6 +34,8 @@ const visualChange = (upgrade: UpgradeDefinition): string => {
     "queue-ropes": "Adds gold-and-red queue barriers",
     "bigger-entrance": "Changes the entrance into a grand entrance",
     "hire-cashier": "Places a cashier behind the register",
+    "hire-janitor": "Adds an animated janitor-stocker and supply cart",
+    "backroom-expansion": "Builds a larger visible store backroom",
     "second-register": "Adds a second checkout counter",
     "third-register": "Adds a third checkout counter",
     "second-cashier": "Opens another staffed checkout station",
@@ -60,12 +63,15 @@ const effectCopy = (upgrade: UpgradeDefinition, current: EconomySnapshot, next: 
     difference: maxed ? "MAXIMUM LEVEL" : `${after >= before ? "+" : ""}${formatter(after - before)} ${label}`
   });
   if (upgrade.id === "extra-shelf" || upgrade.id === "better-display") return make(current.shelfCapacity, next.shelfCapacity, "shelf spaces", (value) => number(value, 0));
+  if (upgrade.id === "warehouse-expansion") return make(current.warehouseCapacity, next.warehouseCapacity, "warehouse packages", (value) => number(value, 0));
+  if (upgrade.id === "backroom-expansion") return make(current.backroomCapacity, next.backroomCapacity, "backroom packages", (value) => number(value, 0));
+  if (upgrade.id === "hire-janitor") return { current: "Manual $10 restocking", next: maxed ? "Janitor hired" : "Auto-restock at 25%", difference: maxed ? "JANITOR HIRED" : "ANIMATED AUTO-RESTOCK" };
   if (upgrade.id === "extra-conveyor") return make(current.processingRate, next.processingRate, "packages/min");
   if (upgrade.effect === "production") return make(current.productionRate, next.productionRate, "raw blueberries/sec");
   if (upgrade.effect === "processing") return make(current.processingRate, next.processingRate, "packages/min");
   if (upgrade.effect === "storage") return make(current.rawStorageCapacity, next.rawStorageCapacity, "raw-berry capacity", (value) => number(value, 0));
-  if (upgrade.effect === "value") return make(current.productValue, next.productValue, "per product", (value) => `$${number(value, 2)}`);
-  if (upgrade.effect === "delivery") return make(current.deliveryRate, next.deliveryRate, "products/min to store");
+  if (upgrade.effect === "value") return make(current.productValue, next.productValue, "per package", (value) => `$${number(value, 2)}`);
+  if (upgrade.effect === "delivery") return make(current.deliveryRate, next.deliveryRate, "packages/min to backroom");
   if (upgrade.effect === "queue") return make(current.queueCapacity, next.queueCapacity, "customer spaces", (value) => number(value, 0));
   if (upgrade.effect === "arrival") {
     return { current: `1 customer every ${number(current.arrivalSeconds)} sec`, next: maxed ? "Maximum level" : `1 customer every ${number(next.arrivalSeconds)} sec`, difference: maxed ? "MAXIMUM LEVEL" : `-${number(current.arrivalSeconds - next.arrivalSeconds)} sec between arrivals` };
@@ -115,13 +121,7 @@ export const upgradePanelMarkup = (data: GameSave, upgrades: UpgradeSystem, acti
 
   const productPicker = activeCategory === "factory" ? `
     <section class="product-picker">
-      <div><span class="eyebrow">PRODUCTION RECIPE</span><h3>Choose what the packing machines make</h3><p>Every package consumes real raw blueberries.</p></div>
-      <div class="product-grid">
-        ${PRODUCTS.map((product) => {
-          const unlocked = data.unlockedProducts.includes(product.id);
-          return `<button data-product="${product.id}" class="product-button ${data.selectedProduct === product.id ? "selected" : ""}" ${!unlocked ? "disabled" : ""}><span>${product.emoji}</span><strong>${product.name}</strong><small>${unlocked ? `${product.productionCost} raw → 1 · $${product.saleValue}` : `Factory LV ${product.unlockFactoryLevel}`}</small></button>`;
-        }).join("")}
-      </div>
+      <div><span class="eyebrow">CORE PRODUCTION RECIPE</span><h3>🫐 10 raw blueberries → 📦 1 Blueberry Package</h3><p>Base cycle: 8 seconds. Finished packages go to the warehouse, then the store backroom, then a real shelf.</p></div>
     </section>` : "";
 
   return `

@@ -7,7 +7,7 @@ import { BaseWorldScene } from "./BaseWorldScene";
 
 export class FactoryScene extends BaseWorldScene {
   private beltBerries: Phaser.GameObjects.Image[] = [];
-  private outputBoxes: Phaser.GameObjects.Container[] = [];
+  private outputBoxes: Phaser.GameObjects.Image[] = [];
   private purchased = false;
   private boostReady = true;
   private statusText!: Phaser.GameObjects.Text;
@@ -31,7 +31,7 @@ export class FactoryScene extends BaseWorldScene {
     super.update(time, delta);
     if (this.frozen) return;
     const snapshot = session.economy.snapshot();
-    const running = session.data.rawBlueberries >= 10 && session.data.processedProducts < snapshot.warehouseCapacity;
+    const running = session.data.rawBlueberries >= BALANCE.packageRecipeRaw && session.data.warehousePackages < snapshot.warehouseCapacity;
     const speed = running ? 38 + snapshot.processingRate * 3 : 0;
     for (const berry of this.beltBerries) {
       berry.x += delta / 1000 * speed;
@@ -42,11 +42,11 @@ export class FactoryScene extends BaseWorldScene {
     for (const box of this.outputBoxes) {
       box.x += delta / 1000 * (running ? 32 : 0);
       if (box.x > 1760) box.x = 1150;
-      box.setVisible(session.data.processedProducts > this.outputBoxes.indexOf(box));
+      box.setVisible(session.data.warehousePackages > this.outputBoxes.indexOf(box));
     }
     this.statusText.setText(session.economy.factory.bottleneck());
     this.statusText.setColor(session.economy.factory.bottleneck() === "PRODUCTION FLOWING" ? "#74efb4" : "#ffd36b");
-    this.resourceText.setText(`RAW  ${Math.floor(session.data.rawBlueberries)} / ${Math.floor(snapshot.rawStorageCapacity)}\nPACKAGED  ${Math.floor(session.data.processedProducts)} / ${Math.floor(snapshot.warehouseCapacity)}\nTO STORE  ${snapshot.deliveryRate.toFixed(1)} products/min`);
+    this.resourceText.setText(`RAW  ${Math.floor(session.data.rawBlueberries)} / ${Math.floor(snapshot.rawStorageCapacity)}\nWAREHOUSE PACKAGES  ${Math.floor(session.data.warehousePackages)} / ${Math.floor(snapshot.warehouseCapacity)}\nTO BACKROOM  ${snapshot.deliveryRate.toFixed(1)} packages/min`);
     this.powerText.setText(`MATH POWER  ${Math.floor(session.data.mathPower)}/100\nFACTORY SPEED  ${Math.round(snapshot.mathPowerSpeed * 100)}%\nPROCESSING  ${snapshot.processingRate.toFixed(1)} packs/min`);
     this.updateUpgradePlatform(delta / 1000);
   }
@@ -124,7 +124,7 @@ export class FactoryScene extends BaseWorldScene {
     {
       const count = 18;
       for (let index = 0; index < count; index += 1) this.beltBerries.push(this.add.image(310 + index * 74, 548, "berry").setScale(.8).setDepth(590));
-      for (let index = 0; index < 5; index += 1) this.outputBoxes.push(ArtFactory.crate(this, 1240 + index * 92, 580).setScale(.48).setDepth(600));
+      for (let index = 0; index < 5; index += 1) this.outputBoxes.push(this.add.image(1240 + index * 92, 562, "package-art").setScale(.25).setDepth(600));
     }
 
     const machines: Array<[string, string, number, number, number]> = [
@@ -148,7 +148,7 @@ export class FactoryScene extends BaseWorldScene {
       const second = this.add.graphics().setDepth(790);
       second.fillStyle(0x2e3159).fillRoundedRect(370, 760, 1020, 82, 18);
       second.fillStyle(0x94a9bd).fillRoundedRect(383, 772, 995, 32, 10);
-      for (let index = 0; index < 8; index += 1) this.outputBoxes.push(ArtFactory.crate(this, 410 + index * 125, 785).setScale(.55).setDepth(800));
+      for (let index = 0; index < 8; index += 1) this.outputBoxes.push(this.add.image(410 + index * 125, 775, "package-art").setScale(.27).setDepth(800));
     }
 
     const storageScale = 1 + Math.min(.5, session.economy.upgrades.level("cold-storage") * .08);
@@ -165,7 +165,7 @@ export class FactoryScene extends BaseWorldScene {
     warehouseG.fillStyle(0x9b6845).fillRoundedRect(-120, -105, 240, 125, 18);
     warehouseG.fillStyle(0xd79a59).fillRoundedRect(-108, -94, 216, 100, 12);
     warehouseG.lineStyle(6, 0x633b38).strokeRoundedRect(-120, -105, 240, 125, 18);
-    warehouse.add([warehouseG, this.add.text(0, -58, `PACKAGE WAREHOUSE\n${Math.floor(session.data.processedProducts)} / ${Math.floor(snapshot.warehouseCapacity)}\n📦  📦  📦`, { align: "center", fontFamily: "Trebuchet MS", fontSize: "16px", fontStyle: "bold", color: "#ffffff", stroke: "#4b2e42", strokeThickness: 5 }).setOrigin(.5)]);
+    warehouse.add([warehouseG, this.add.text(0, -58, `PACKAGE WAREHOUSE\n${Math.floor(session.data.warehousePackages)} / ${Math.floor(snapshot.warehouseCapacity)}\n📦  📦  📦`, { align: "center", fontFamily: "Trebuchet MS", fontSize: "16px", fontStyle: "bold", color: "#ffffff", stroke: "#4b2e42", strokeThickness: 5 }).setOrigin(.5)]);
     this.addBlocker(840, 875, 250, 135);
 
     const terminal = this.add.container(1660, 865).setDepth(905);
@@ -190,7 +190,8 @@ export class FactoryScene extends BaseWorldScene {
     exit.setDepth(980);
     const workers = Math.min(7, Math.floor(snapshot.factoryLevel / 4));
     for (let index = 0; index < workers; index += 1) {
-      const worker = this.add.sprite(410 + index * 185, 700 + (index % 2) * 140, session.economy.upgrades.has("factory-robots") && index % 2 ? "cashier" : "worker").setScale(.8).setDepth(760 + (index % 2) * 140);
+      const workerKey = index % 3 === 0 ? "packer" : index % 3 === 1 ? "operator" : "warehouse";
+      const worker = this.add.sprite(410 + index * 185, 700 + (index % 2) * 140, workerKey, 20).setScale(.66).setDepth(760 + (index % 2) * 140).play(`${workerKey}-work`);
       this.tweens.add({ targets: worker, x: worker.x + 45, duration: 900 + index * 120, yoyo: true, repeat: -1 });
     }
     if (session.economy.upgrades.has("solar-power")) {
@@ -228,6 +229,7 @@ export class FactoryScene extends BaseWorldScene {
       const crown = this.add.text(960, 250, "★ ULTIMATE BLUE FACTORY ★", { fontFamily: "Trebuchet MS", fontSize: "24px", fontStyle: "bold", color: "#fff19a", stroke: "#342078", strokeThickness: 8 }).setOrigin(.5).setDepth(100);
       this.tweens.add({ targets: crown, scale: 1.05, duration: 700, yoyo: true, repeat: -1 });
     }
+    this.add.text(960, 680, "10 RAW BLUEBERRIES  →  WASH  →  SORT  →  PACK  →  SEAL  →  1 PACKAGE", { fontFamily: "Trebuchet MS", fontSize: "18px", fontStyle: "bold", color: "#fff4b8", backgroundColor: "#29216d", padding: { x: 16, y: 9 }, stroke: "#16103f", strokeThickness: 4 }).setOrigin(.5).setDepth(850);
     this.statusText = this.add.text(960, 300, session.economy.factory.bottleneck(), { fontFamily: "Trebuchet MS", fontSize: "20px", fontStyle: "bold", color: "#74efb4", backgroundColor: "#241962", padding: { x: 16, y: 9 }, stroke: "#130c43", strokeThickness: 5 }).setOrigin(.5).setDepth(620);
     this.resourceText = this.add.text(690, 960, "", { fontFamily: "Trebuchet MS", fontSize: "15px", fontStyle: "bold", color: "#e7f4ff", backgroundColor: "#282168", padding: { x: 13, y: 9 }, stroke: "#151044", strokeThickness: 4 }).setOrigin(.5).setDepth(1000);
     this.powerText = this.add.text(1480, 955, "", { fontFamily: "Trebuchet MS", fontSize: "15px", fontStyle: "bold", color: "#fff1a0", backgroundColor: "#282168", padding: { x: 13, y: 9 }, stroke: "#151044", strokeThickness: 4 }).setOrigin(.5).setDepth(1000);

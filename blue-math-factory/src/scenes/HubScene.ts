@@ -41,7 +41,7 @@ export class HubScene extends BaseWorldScene {
     board.fillStyle(0x23175e, .96).fillRoundedRect(-345, -68, 690, 118, 22);
     board.fillStyle(0xffffff, .08).fillRoundedRect(-330, -54, 660, 25, 10);
     board.lineStyle(5, 0x80eaff, .65).strokeRoundedRect(-345, -68, 690, 118, 22);
-    const flow = this.add.text(0, -8, `🫐 ${Math.floor(session.data.rawBlueberries)} RAW   →   ⚙ ${Math.floor(session.data.processedProducts)} PACKAGED   →   🛒 ${Math.floor(session.data.storeInventory)} ON SHELVES   →   💰 $${Math.floor(session.data.money)}\nMATH POWER ${Math.floor(session.data.mathPower)}/100  ·  FACTORY ${Math.round(snapshot.mathPowerSpeed * 100)}% SPEED`, { align: "center", fontFamily: "Trebuchet MS", fontSize: "17px", fontStyle: "bold", color: "#ffffff", stroke: "#171044", strokeThickness: 5 }).setOrigin(.5);
+    const flow = this.add.text(0, -8, `🫐 ${Math.floor(session.data.rawBlueberries)} RAW   →   📦 ${Math.floor(session.data.warehousePackages)} WAREHOUSE   →   🚪 ${Math.floor(session.data.storeBackroomPackages)} BACKROOM   →   🛒 ${Math.floor(session.economy.inventory.totalShelfStock())} ON SHELVES   →   💰 $${Math.floor(session.data.money)}\nMATH POWER ${Math.floor(session.data.mathPower)}/100  ·  ${Math.floor(session.data.totals.totalPackagesSold)}/10,000 PACKAGES SOLD`, { align: "center", fontFamily: "Trebuchet MS", fontSize: "17px", fontStyle: "bold", color: "#ffffff", stroke: "#171044", strokeThickness: 5 }).setOrigin(.5);
     flowBoard.add([boardShadow, board, flow]);
 
     const water = this.add.graphics().setDepth(-29);
@@ -68,10 +68,15 @@ export class HubScene extends BaseWorldScene {
     ];
     for (const portal of portals) this.addInteraction(portal.x, portal.y + 35, `Enter ${portal === portals[0] ? "Blueberry Challenge" : portal === portals[1] ? "Factory" : "Store"}`, portal.action, 140);
 
-    ArtFactory.building(this, 960, 180, 360 + Math.min(180, snapshot.factoryLevel * 9), 205 + Math.min(80, snapshot.factoryLevel * 4), { color: 0x6351d3, roof: 0x32278d, label: snapshot.factoryLevel < 10 ? "TINY BERRY WORKSHOP" : "BLUEBERRY FACTORY", windows: Math.min(6, 2 + Math.floor(snapshot.factoryLevel / 5)), level: snapshot.factoryLevel });
+    ArtFactory.building(this, 960, 180, 360 + Math.min(180, snapshot.factoryLevel * 9), 205 + Math.min(80, snapshot.factoryLevel * 4), { color: session.data.victory.unlocked ? 0xd4a52e : 0x6351d3, roof: session.data.victory.unlocked ? 0x7e4d17 : 0x32278d, label: session.data.victory.unlocked ? "GOLDEN BLUE FACTORY" : snapshot.factoryLevel < 10 ? "TINY BERRY WORKSHOP" : "BLUEBERRY FACTORY", windows: Math.min(6, 2 + Math.floor(snapshot.factoryLevel / 5)), level: snapshot.factoryLevel });
     this.addBlocker(960, 192, 500, 215);
     ArtFactory.building(this, 1490, 235, 280 + Math.min(180, snapshot.storeLevel * 8), 170 + Math.min(80, snapshot.storeLevel * 4), { color: 0xec9177, roof: 0x59358e, label: snapshot.storeLevel < 10 ? "BERRY STAND" : "BLUEBERRY MARKET", windows: Math.min(5, 2 + Math.floor(snapshot.storeLevel / 6)), level: snapshot.storeLevel });
     this.addBlocker(1490, 250, 390, 180);
+    if (session.data.victory.trophyEarned) {
+      const trophy = this.add.text(720, 235, "🏆", { fontSize: "70px", stroke: "#4b2875", strokeThickness: 8 }).setOrigin(.5).setDepth(400);
+      this.add.text(720, 295, "FOUNDER TROPHY\n10,000 PACKAGES", { align: "center", fontFamily: "Trebuchet MS", fontSize: "14px", fontStyle: "bold", color: "#fff3a2", backgroundColor: "#4a317f", padding: { x: 9, y: 5 } }).setOrigin(.5).setDepth(401);
+      this.tweens.add({ targets: trophy, y: trophy.y - 6, duration: 850, yoyo: true, repeat: -1 });
+    }
 
     const signPositions = [[690, 925, "MATH MAKES\nBERRIES"], [1230, 925, "GROW YOUR\nBUSINESS"], [960, 920, "WELCOME!"]];
     for (const [x, y, label] of signPositions) {
@@ -87,7 +92,7 @@ export class HubScene extends BaseWorldScene {
 
     if (snapshot.factoryLevel >= 3) {
       for (let index = 0; index < Math.min(5, 1 + Math.floor(snapshot.factoryLevel / 6)); index += 1) {
-        const worker = this.add.sprite(760 + index * 95, 275 + (index % 2) * 45, "worker").setDepth(350).setScale(.75);
+        const worker = this.add.sprite(760 + index * 95, 275 + (index % 2) * 45, "worker", 20).setDepth(350).setScale(.6).play("worker-walk-right");
         this.tweens.add({ targets: worker, x: worker.x + 65, duration: 1600 + index * 230, yoyo: true, repeat: -1 });
       }
     }

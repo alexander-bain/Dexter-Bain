@@ -118,6 +118,18 @@ export abstract class BaseWorldScene extends Phaser.Scene {
     if (this.hudElapsed >= 400) {
       ui.updateHUD();
       for (const message of session.checkQuests()) ui.showToast(message);
+      if (session.data.victory.unlocked && !session.data.victory.celebrated) {
+        session.data.victory.celebrated = true;
+        this.frozen = true;
+        this.physics.world.pause();
+        session.save(this.sceneKey);
+        session.audio.play("upgrade");
+        ui.showVictory(() => {
+          this.frozen = false;
+          this.physics.world.resume();
+          ui.showHUD(this.sceneKey, () => this.pauseGame());
+        });
+      }
       this.hudElapsed = 0;
     }
   }

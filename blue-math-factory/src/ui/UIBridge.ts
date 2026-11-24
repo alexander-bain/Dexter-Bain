@@ -93,13 +93,15 @@ export class UIBridge {
   }
 
   updateHUD(): void {
+    const shelfStock = session.economy.inventory.totalShelfStock();
     const values = [
       Math.floor(session.data.rawBlueberries).toLocaleString(),
-      Math.floor(session.data.processedProducts).toLocaleString(),
-      Math.floor(session.data.storeInventory).toLocaleString(),
+      Math.floor(session.data.warehousePackages).toLocaleString(),
+      Math.floor(session.data.storeBackroomPackages).toLocaleString(),
+      Math.floor(shelfStock).toLocaleString(),
       `$${Math.floor(session.data.money).toLocaleString()}`,
       `${Math.floor(session.data.mathPower)}/100`,
-      `${session.economy.snapshot().processingRate.toFixed(1)}/m`
+      Math.floor(session.data.totals.totalPackagesSold).toLocaleString()
     ];
     this.root.querySelectorAll<HTMLElement>(".resource strong").forEach((element, index) => {
       if (values[index] !== undefined) element.textContent = values[index];
@@ -146,10 +148,11 @@ export class UIBridge {
         <header class="math-topbar">
           <button data-action="leave-math" class="back-button">‹ HUB</button>
           <div><span>STREAK</span><strong>🔥 ${streak}</strong></div>
+          <div><span>QUESTION</span><strong>${Math.min(5, streak + 1)} / 5</strong></div>
           <div><span>ROUND BERRIES</span><strong>🫐 ${roundBerries}</strong></div>
           <div><span>MATH POWER</span><strong>⚡ ${Math.floor(session.data.mathPower)}/100</strong></div>
           <div><span>DIFFICULTY</span><strong>${question.difficultyLabel}</strong></div>
-          <div class="timer-box"><span>TIME</span><strong id="math-time">${question.duration.toFixed(1)}</strong></div>
+          <div class="timer-box"><span>SECONDS LEFT</span><strong id="math-time">${question.duration.toFixed(1)}</strong></div>
         </header>
         <div class="math-card">
           <p class="math-callout">KEEP THE FACTORY POWERED!</p>
@@ -157,7 +160,7 @@ export class UIBridge {
           <div class="answer-grid">
             ${question.choices.map((answer, index) => `<button class="answer-button ${index === selectedIndex ? "selected" : ""}" data-answer="${answer}" data-index="${index}"><small>${index + 1}</small>${answer}</button>`).join("")}
           </div>
-          <div class="reward-ribbon">NEXT REWARD <strong>${question.reward} RAW BERRIES + MATH POWER</strong></div>
+          <div class="reward-ribbon">NEXT REWARD <strong>${question.reward} RAW BERRIES + MATH POWER${streak === 4 ? " · PERFECT RUSH +50" : ""}</strong></div>
           <p class="keyboard-hint">Use 1–4, arrow keys, or tap an answer</p>
         </div>
       </section>`;
@@ -196,6 +199,43 @@ export class UIBridge {
       </div>`;
     this.bindAction("retry", onRetry);
     this.bindAction("hub", onHub);
+  }
+
+  showPerfectRush(roundBerries: number, power: number, onAgain: Callback, onHub: Callback): void {
+    this.root.innerHTML = `
+      <div class="panel-backdrop perfect-rush-backdrop">
+        <section class="result-card perfect-rush-card" role="dialog" aria-modal="true">
+          <div class="perfect-rays">★</div><span class="eyebrow">5 OUT OF 5</span>
+          <h2>PERFECT RUSH!</h2>
+          <p>You solved every multiplication problem before time ran out.</p>
+          <div class="perfect-rewards">
+            <div><strong>+50</strong><span>Bonus raw blueberries</span></div>
+            <div><strong>+${power}</strong><span>Math Power</span></div>
+            <div><strong>2×</strong><span>Factory speed for 60 seconds</span></div>
+          </div>
+          <div class="round-haul"><span>Total round haul</span><strong>${Math.floor(roundBerries)} blueberries</strong></div>
+          <button class="primary-button" data-action="perfect-again">PLAY ANOTHER ROUND</button>
+          <button class="text-button" data-action="perfect-hub">RETURN TO FACTORY</button>
+        </section>
+      </div>`;
+    this.bindAction("perfect-again", onAgain);
+    this.bindAction("perfect-hub", onHub);
+    this.announce("Perfect Rush! Fifty bonus blueberries, Math Power, and double factory speed.");
+  }
+
+  showVictory(onContinue: Callback): void {
+    this.root.innerHTML += `
+      <div id="victory-layer" class="panel-backdrop victory-backdrop">
+        <section class="result-card victory-card" role="dialog" aria-modal="true">
+          <div class="victory-trophy">🏆</div><span class="eyebrow">10,000 PACKAGES SOLD</span>
+          <h2>BLUEBERRY TYCOON!</h2>
+          <p>Your tiny workshop became a golden BlueMath Factory. You earned the permanent Founder Trophy!</p>
+          <div class="perfect-rewards"><div><strong>10,000</strong><span>Packages sold</span></div><div><strong>GOLD</strong><span>Factory style</span></div><div><strong>∞</strong><span>Endless mode</span></div></div>
+          <button class="primary-button" data-action="victory-continue">KEEP BUILDING</button>
+        </section>
+      </div>`;
+    this.bindAction("victory-continue", () => { this.root.querySelector("#victory-layer")?.remove(); onContinue(); });
+    this.announce("Victory! Ten thousand blueberry packages sold. Golden factory and endless mode unlocked.");
   }
 
   showAwaySummary(report: StoreAwayReport): void {
@@ -335,6 +375,7 @@ export class UIBridge {
         <label><span>Sound effects</span><input id="sfx-volume" type="range" min="0" max="1" step="0.05" value="${settings.sfx}"></label>
         <label class="toggle-row"><span>Mute all sound</span><input id="mute-toggle" type="checkbox" ${settings.muted ? "checked" : ""}></label>
         <label class="toggle-row"><span>Reduced motion</span><input id="motion-toggle" type="checkbox" ${settings.reducedMotion ? "checked" : ""}></label>
+        <label class="toggle-row"><span>Janitor auto-restock shelves at 25%</span><input id="restock-toggle" type="checkbox" ${settings.autoRestock ? "checked" : ""}></label>
         <label><span>Graphics quality</span><select id="graphics-quality"><option value="low" ${settings.graphicsQuality === "low" ? "selected" : ""}>Low</option><option value="medium" ${settings.graphicsQuality === "medium" ? "selected" : ""}>Medium</option><option value="high" ${settings.graphicsQuality === "high" ? "selected" : ""}>High</option></select></label>
         <div class="danger-zone"><div><strong>Reset game</strong><span>Erases this device's BlueMath progress.</span></div><button data-action="reset-save">RESET SAVE</button></div>
       </section></div>`;
@@ -343,6 +384,7 @@ export class UIBridge {
     this.root.querySelector<HTMLInputElement>("#sfx-volume")?.addEventListener("input", (event) => { settings.sfx = Number((event.target as HTMLInputElement).value); saveSetting(); });
     this.root.querySelector<HTMLInputElement>("#mute-toggle")?.addEventListener("change", (event) => { settings.muted = (event.target as HTMLInputElement).checked; saveSetting(); });
     this.root.querySelector<HTMLInputElement>("#motion-toggle")?.addEventListener("change", (event) => { settings.reducedMotion = (event.target as HTMLInputElement).checked; saveSetting(); });
+    this.root.querySelector<HTMLInputElement>("#restock-toggle")?.addEventListener("change", (event) => { settings.autoRestock = (event.target as HTMLInputElement).checked; saveSetting(); });
     this.root.querySelector<HTMLSelectElement>("#graphics-quality")?.addEventListener("change", (event) => { settings.graphicsQuality = (event.target as HTMLSelectElement).value as typeof settings.graphicsQuality; saveSetting(); });
     this.bindAction("reset-save", () => {
       if (window.confirm("Reset every BlueMath Factory upgrade and math stat? This cannot be undone.")) {
@@ -360,8 +402,8 @@ export class UIBridge {
 
   private sceneStatusMarkup(scene: SceneKey): string {
     const snapshot = session.economy.snapshot();
-    if (scene === "FactoryScene") return `<aside id="scene-status-card" class="scene-status-card factory-status"><span>FACTORY STATUS</span><strong>${session.economy.factory.bottleneck()}</strong><small>Raw ${Math.floor(session.data.rawBlueberries)}/${Math.floor(snapshot.rawStorageCapacity)} · ${snapshot.processingRate.toFixed(1)} packs/min<br>Warehouse ${Math.floor(session.data.processedProducts)}/${Math.floor(snapshot.warehouseCapacity)} · Math Power ${Math.floor(session.data.mathPower)}/100</small></aside>`;
-    if (scene === "StoreScene") return `<aside id="scene-status-card" class="scene-status-card store-status"><span>STORE STATUS</span><strong>${session.economy.store.status()}</strong><small>Shelves ${Math.floor(session.data.storeInventory)}/${Math.floor(snapshot.shelfCapacity)} · Line ${session.data.storeState.customers.length}/${snapshot.queueCapacity}<br>${snapshot.activeCheckoutLanes || "No"} cashier lane${snapshot.activeCheckoutLanes === 1 ? "" : "s"} · about $${Math.floor(snapshot.expectedIncomePerMinute)}/min</small></aside>`;
+    if (scene === "FactoryScene") return `<aside id="scene-status-card" class="scene-status-card factory-status"><span>FACTORY STATUS</span><strong>${session.economy.factory.bottleneck()}</strong><small>10 raw → 1 package · ${snapshot.processingRate.toFixed(1)} packs/min<br>Warehouse ${Math.floor(session.data.warehousePackages)}/${Math.floor(snapshot.warehouseCapacity)} · Backroom ${Math.floor(session.data.storeBackroomPackages)}/${Math.floor(snapshot.backroomCapacity)}</small></aside>`;
+    if (scene === "StoreScene") return `<aside id="scene-status-card" class="scene-status-card store-status"><span>STORE STATUS</span><strong>${session.economy.store.status()}</strong><small>Shelves ${Math.floor(session.economy.inventory.totalShelfStock())}/${Math.floor(snapshot.shelfCapacity)} · Backroom ${Math.floor(session.data.storeBackroomPackages)}/${Math.floor(snapshot.backroomCapacity)}<br>Line ${session.data.storeState.customers.length}/${snapshot.queueCapacity} · ${snapshot.activeCheckoutLanes || "No"} cashier lane${snapshot.activeCheckoutLanes === 1 ? "" : "s"}</small></aside>`;
     return "";
   }
 
