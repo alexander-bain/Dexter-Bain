@@ -1,4 +1,5 @@
 import { BALANCE } from "../data/balance";
+import { CUSTOMER_TYPES } from "../data/customerTypes";
 import { PRODUCTS } from "../data/products";
 import type { CustomerType, GameSave, StoreAwayReport } from "../types";
 import { FactorySystem } from "./FactorySystem";
@@ -22,6 +23,7 @@ export interface EconomySnapshot {
   cashierLevel: number;
   registers: number;
   activeCheckoutLanes: number;
+  averageBasketSize: number;
   factoryLevel: number;
   storeLevel: number;
   mathPowerSpeed: number;
@@ -79,7 +81,9 @@ export class EconomySystem {
     const registers = 1 + Math.floor(effect("registers"));
     const activeCheckoutLanes = Math.min(cashierLevel, registers);
     const customerRate = Math.min(60 / arrivalSeconds, activeCheckoutLanes > 0 ? activeCheckoutLanes * 60 / checkoutSeconds : 0);
-    const averageBasket = 1 + Math.min(3, this.upgrades.categoryLevel("store") / 10);
+    const unlockedCustomers = CUSTOMER_TYPES.filter((type) => type.unlockStoreLevel <= this.upgrades.categoryLevel("store"));
+    const basketLevelBonus = Math.floor(this.upgrades.categoryLevel("store") / 5);
+    const averageBasket = (unlockedCustomers.reduce((sum, type) => sum + type.basketSize, 0) / Math.max(1, unlockedCustomers.length)) + basketLevelBonus;
     return {
       productionRate,
       processingRate,
@@ -96,6 +100,7 @@ export class EconomySystem {
       cashierLevel,
       registers,
       activeCheckoutLanes,
+      averageBasketSize: averageBasket,
       factoryLevel: this.upgrades.categoryLevel("factory"),
       storeLevel: this.upgrades.categoryLevel("store"),
       mathPowerSpeed,

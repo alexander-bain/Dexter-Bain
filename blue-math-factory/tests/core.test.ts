@@ -166,7 +166,32 @@ describe("persistent tycoon economy", () => {
     economy.tick(180);
     expect(data.money).toBe(0);
     expect(data.totals.productsSold).toBe(0);
+    expect(data.storeState.customers).toHaveLength(0);
     expect(economy.store.status()).toBe("STORE NEEDS MORE PRODUCTS");
+  });
+
+  it("sends waiting customers away when the shelves become empty", () => {
+    const data = SaveSystem.createNew();
+    data.storeState.customers.push({ id: 1, typeId: "parent", phase: "waiting", browseSeconds: 0, patienceSeconds: 30 });
+    data.storeState.nextCustomerId = 2;
+    const economy = new EconomySystem(data);
+    economy.tick(1);
+    expect(data.storeState.customers).toHaveLength(0);
+    expect(data.money).toBe(0);
+    expect(data.totals.productsSold).toBe(0);
+  });
+
+  it("has shoppers take larger baskets without selling more than shelf stock", () => {
+    const data = SaveSystem.createNew();
+    data.storeInventory = 20;
+    const economy = new EconomySystem(data);
+    const starterSale = economy.store.serveType(CUSTOMER_TYPES[0]);
+    expect(starterSale.sold).toBe(3);
+    expect(data.storeInventory).toBe(17);
+    const businessBuyer = CUSTOMER_TYPES.find((customer) => customer.id === "buyer")!;
+    const bulkSale = economy.store.serveType(businessBuyer);
+    expect(bulkSale.sold).toBe(17);
+    expect(data.storeInventory).toBe(0);
   });
 
   it("applies Math Power speed tiers and streak power/boost rewards", () => {

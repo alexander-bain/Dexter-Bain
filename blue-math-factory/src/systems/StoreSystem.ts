@@ -44,11 +44,17 @@ export class StoreSystem {
       if (customer.patienceSeconds <= 0) this.removeCustomer(customer, "left", away);
     }
 
-    state.arrivalProgress += seconds;
-    while (state.arrivalProgress >= snapshot.arrivalSeconds) {
-      state.arrivalProgress -= snapshot.arrivalSeconds;
-      if (state.customers.length < snapshot.queueCapacity) this.addCustomer(snapshot, away);
-      else this.recordLostCustomer(away);
+    if (this.data.storeInventory <= 0) {
+      for (const customer of [...state.customers]) this.removeCustomer(customer, "left", away);
+      state.arrivalProgress = 0;
+      state.checkoutProgress = 0;
+    } else {
+      state.arrivalProgress += seconds;
+      while (state.arrivalProgress >= snapshot.arrivalSeconds) {
+        state.arrivalProgress -= snapshot.arrivalSeconds;
+        if (state.customers.length < snapshot.queueCapacity) this.addCustomer(snapshot, away);
+        else this.recordLostCustomer(away);
+      }
     }
 
     const waiting = () => state.customers.find((customer) => customer.phase === "waiting");
@@ -138,11 +144,13 @@ export class StoreSystem {
 
   private sellCustomer(customer: StoreCustomerState, manual: boolean, away: boolean, remove = true): SaleResult {
     const type = CUSTOMER_TYPES.find((entry) => entry.id === customer.typeId) ?? CUSTOMER_TYPES[0];
-    const sold = Math.min(Math.max(0, Math.floor(this.data.storeInventory)), type.basketSize);
-    const product = this.snapshot().selectedProductName;
+    const snapshot = this.snapshot();
+    const basketLevelBonus = Math.floor(snapshot.storeLevel / 5);
+    const sold = Math.min(Math.max(0, Math.floor(this.data.storeInventory)), type.basketSize + basketLevelBonus);
+    const product = snapshot.selectedProductName;
     if (sold <= 0) return emptySale(product);
     this.inventory.consumeStore(sold);
-    const earned = Math.max(1, Math.round(sold * this.snapshot().productValue * type.valueMultiplier));
+    const earned = Math.max(1, Math.round(sold * snapshot.productValue * type.valueMultiplier));
     this.data.money += earned;
     this.data.totals.moneyEarned += earned;
     this.data.totals.productsSold += sold;
