@@ -36,7 +36,8 @@ export class StoreScene extends BaseWorldScene {
     this.shelfLabels = [];
     this.shelfDisplaySignature = "";
     this.drawStore();
-    this.setupWorld(960, 1125);
+    const captureY = new URLSearchParams(window.location.search).get("capture") === "store" ? 650 : 1125;
+    this.setupWorld(960, captureY);
     this.addInteraction(150, 1000, "Return to Hub", () => this.transitionTo("HubScene"), 120);
     this.addInteraction(960, 465, "Serve Next Customer", () => this.serveNext(), 150);
     this.addInteraction(1360, 940, "Open Special Order", () => this.openSpecialOrder(), 125);

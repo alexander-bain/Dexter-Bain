@@ -1,0 +1,34 @@
+1
+00:00:00,000 --> 00:00:05,000
+Welcome to BlueMath Factory:
+multiply, build, and grow!
+
+2
+00:00:05,000 --> 00:00:13,000
+Answer multiplication questions before time runs out
+to earn blueberries and power your factory.
+
+3
+00:00:13,000 --> 00:00:23,000
+Turn your blueberries into packages using
+animated machines, conveyors, and workers.
+
+4
+00:00:23,000 --> 00:00:34,000
+Stock your store, serve customers,
+and keep every shelf ready for business.
+
+5
+00:00:34,000 --> 00:00:44,000
+Use your earnings to expand your store, improve your machines,
+and produce more packages every minute.
+
+6
+00:00:44,000 --> 00:00:51,000
+Can you build the ultimate blueberry business
+and sell ten thousand packages?
+
+7
+00:00:51,000 --> 00:00:55,000
+Play BlueMath Factory at
+dexterbain.com/bluemath

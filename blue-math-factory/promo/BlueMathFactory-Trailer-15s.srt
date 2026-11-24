@@ -1,0 +1,16 @@
+1
+00:00:00,000 --> 00:00:04,000
+Multiply to earn blueberries.
+
+2
+00:00:04,000 --> 00:00:08,000
+Build a busy package factory.
+
+3
+00:00:08,000 --> 00:00:12,000
+Stock shelves and grow your store.
+
+4
+00:00:12,000 --> 00:00:15,000
+Can you sell ten thousand?
+Play BlueMath Factory!
