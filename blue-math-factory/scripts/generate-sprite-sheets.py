@@ -117,7 +117,11 @@ def draw_person(draw, frame_x, frame_y, shirt, accent, skin, direction, phase, s
         draw.rounded_rectangle((cx-23+swing,base_y-17,cx-3+swing,base_y-5),5,fill=shoe)
         draw.rounded_rectangle((cx+3-swing,base_y-17,cx+23-swing,base_y-5),5,fill=shoe)
 
-    torso_top, torso_bottom = base_y-89, base_y-43
+    # Keep the head, neck, shirt, and legs as four readable parts. The previous
+    # head fix kept hats inside the frame by moving the face into the shirt,
+    # which removed the character's neck entirely.
+    head_y = base_y-81
+    torso_top, torso_bottom = base_y-56, base_y-32
     shirt_rgba, accent_rgba, skin_rgba = rgba(shirt), rgba(accent), rgba(skin)
     draw.rounded_rectangle((cx-25,torso_top,cx+25,torso_bottom),13,fill=shade(shirt,.78),outline=(33,28,77,255),width=3)
     draw.rounded_rectangle((cx-22,torso_top-2,cx+22,torso_bottom-5),11,fill=shirt_rgba)
@@ -128,9 +132,17 @@ def draw_person(draw, frame_x, frame_y, shirt, accent, skin, direction, phase, s
     line(draw,[(cx-21,torso_top+10),(cx-30-arm_swing//2,torso_bottom-2)],skin_rgba,10)
     line(draw,[(cx+21,torso_top+10),(cx+30+arm_swing//2,torso_bottom-2)],skin_rgba,10)
 
-    # Keep the complete head, hair, and hats inside each frame. The old head
-    # center sat above the frame and let accessories leak into the prior row.
-    head_y = torso_top + 8
+    # Draw the neck over the shirt, then the head over the neck. This leaves a
+    # clear band of skin between the jaw and collar in every direction.
+    draw.rounded_rectangle(
+        (cx-8,head_y+14,cx+8,torso_top+2),
+        5,
+        fill=skin_rgba,
+        outline=(52,33,64,255),
+        width=2,
+    )
+
+    # The complete head, hair, and hats stay inside each isolated frame.
     if direction == "up":
         draw.ellipse((cx-21,head_y-22,cx+21,head_y+20),fill=(83,49,43,255),outline=(38,27,61,255),width=3)
         draw.ellipse((cx-18,head_y-17,cx+18,head_y+17),fill=skin_rgba)
@@ -150,11 +162,12 @@ def draw_person(draw, frame_x, frame_y, shirt, accent, skin, direction, phase, s
     if accessory_kind in ("backpack",) and direction != "up":
         side = -29 if direction == "left" else 18
         draw.rounded_rectangle((cx+side,torso_top+3,cx+side+18,torso_bottom-4),7,fill=shade(accent,.8),outline=(38,31,71,255),width=2)
-    if phase == "carry": package(draw,cx,torso_top+30,1.05)
+    if phase == "carry": package(draw,cx,torso_top+15,1.05)
     if phase in ("work","interact") and role_tool:
-        tool(draw,role_tool,cx+8,torso_top+27,phase)
+        tool_y = torso_top + (14 if role_tool == "broom" else 24)
+        tool(draw,role_tool,cx+8,tool_y,phase)
     elif phase == "interact" and accessory_kind in ("camera","cup","tote","briefcase"):
-        tool(draw,accessory_kind,cx+10,torso_top+25,phase)
+        tool(draw,accessory_kind,cx+10,torso_top+24,phase)
     if phase == "celebrate":
         line(draw,[(cx-20,torso_top+10),(cx-34,torso_top-18)],skin_rgba,9)
         line(draw,[(cx+20,torso_top+10),(cx+34,torso_top-18)],skin_rgba,9)
