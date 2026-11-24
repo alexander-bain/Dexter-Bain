@@ -3,8 +3,8 @@ import type { CustomerType } from "../types";
 
 export class Customer {
   readonly sprite: Phaser.GameObjects.Sprite;
-  private readonly packageSprite: Phaser.GameObjects.Image;
-  private readonly packageCount: Phaser.GameObjects.Text;
+  private readonly berrySprite: Phaser.GameObjects.Image;
+  private readonly berryCount: Phaser.GameObjects.Text;
   patience: number;
   state: "entering" | "waiting" | "leaving" = "entering";
   private readonly animationKey: string;
@@ -12,8 +12,8 @@ export class Customer {
   constructor(private readonly scene: Phaser.Scene, readonly type: CustomerType, x: number, y: number, patienceSeconds: number) {
     this.animationKey = `customer-${type.id}`;
     this.sprite = scene.add.sprite(x, y, this.animationKey, 20).setDepth(y).setScale(.7);
-    this.packageSprite = scene.add.image(x + 20, y - 13, "package-art").setScale(.16).setDepth(y + 2).setVisible(false);
-    this.packageCount = scene.add.text(x + 34, y - 36, "", { fontFamily: "Trebuchet MS", fontSize: "13px", fontStyle: "bold", color: "#ffffff", backgroundColor: "#342277", padding: { x: 4, y: 2 } }).setOrigin(.5).setDepth(y + 3).setVisible(false);
+    this.berrySprite = scene.add.image(x + 20, y - 13, "berry").setScale(.72).setDepth(y + 2).setVisible(false);
+    this.berryCount = scene.add.text(x + 34, y - 36, "", { fontFamily: "Trebuchet MS", fontSize: "13px", fontStyle: "bold", color: "#ffffff", backgroundColor: "#342277", padding: { x: 4, y: 2 } }).setOrigin(.5).setDepth(y + 3).setVisible(false);
     this.patience = patienceSeconds * type.patience;
   }
 
@@ -30,23 +30,23 @@ export class Customer {
       ease: "Sine.easeInOut",
       onUpdate: () => {
         this.sprite.setDepth(this.sprite.y);
-        this.packageSprite.setPosition(this.sprite.x + 20, this.sprite.y - 13).setDepth(this.sprite.y + 2);
-        this.packageCount.setPosition(this.sprite.x + 34, this.sprite.y - 36).setDepth(this.sprite.y + 3);
+        this.berrySprite.setPosition(this.sprite.x + 20, this.sprite.y - 13).setDepth(this.sprite.y + 2);
+        this.berryCount.setPosition(this.sprite.x + 34, this.sprite.y - 36).setDepth(this.sprite.y + 3);
       },
       onComplete: () => { this.sprite.stop().setFrame({ down: 20, left: 21, right: 22, up: 23 }[direction]); onComplete?.(); }
     });
   }
 
-  setPackageCount(count: number): void {
+  setBerryCount(count: number): void {
     const visible = count > 0;
-    this.packageSprite.setVisible(visible);
-    this.packageCount.setVisible(count > 1).setText(String(count));
+    this.berrySprite.setVisible(visible);
+    this.berryCount.setVisible(count > 1).setText(String(count));
   }
 
   destroy(): void {
     this.sprite.destroy();
-    this.packageSprite.destroy();
-    this.packageCount.destroy();
+    this.berrySprite.destroy();
+    this.berryCount.destroy();
   }
 
   leave(x: number, y: number, happy: boolean, onComplete: () => void): void {

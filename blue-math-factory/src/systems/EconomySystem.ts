@@ -72,7 +72,7 @@ export class EconomySystem {
     const warehouseCapacity = BALANCE.baseWarehouseCapacity + effect("warehouse") + level("packing-machine") * 8 + level("mega-packer") * 20 + level("giant-silo") * 25;
     const backroomCapacity = BALANCE.baseBackroomCapacity + level("backroom-expansion") * 50 + level("store-expansion") * 25;
     const shelfCount = BALANCE.baseShelfCount + level("extra-shelf") + level("store-expansion");
-    const shelfCapacityEach = BALANCE.baseShelfCapacity + level("better-display") * 5;
+    const shelfCapacityEach = BALANCE.baseShelfCapacity;
     const shelfCapacity = shelfCount * shelfCapacityEach;
     const deliveryRate = (BALANCE.baseDeliveryPerMinute + effect("delivery")) * global * mathPowerSpeed;
     const productValue = BALANCE.baseProductValue * (1 + effect("value")) * valueBoost;
@@ -112,7 +112,7 @@ export class EconomySystem {
       storeLevel: this.upgrades.categoryLevel("store"),
       mathPowerSpeed,
       expectedIncomePerMinute: this.inventory.totalShelfStock() > 0 ? customerRate * averageBasket * productValue : 0,
-      selectedProductName: "Blueberry Package",
+      selectedProductName: "Fresh Blueberries",
       productionBoost,
       valueBoost
     };

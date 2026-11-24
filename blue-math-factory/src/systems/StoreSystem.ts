@@ -24,6 +24,7 @@ export interface RestockResult {
   ok: boolean;
   moved: number;
   charged: number;
+  usedBerries: number;
   message: string;
 }
 
@@ -86,7 +87,7 @@ export class StoreSystem {
 
   manualServe(): SaleResult {
     const customer = this.data.storeState.customers.find((entry) => entry.phase === "waiting" && entry.carriedPackages > 0);
-    if (!customer) return emptySale("Blueberry Package");
+    if (!customer) return emptySale("Fresh Blueberries");
     return this.sellCustomer(customer, true, false);
   }
 
@@ -115,16 +116,18 @@ export class StoreSystem {
 
   restockShelf(shelfId: string, automatic = false): RestockResult {
     const shelf = this.inventory.shelf(shelfId);
-    if (!shelf) return { ok: false, moved: 0, charged: 0, message: "That shelf could not be found." };
-    if (shelf.currentItems >= shelf.capacity) return { ok: false, moved: 0, charged: 0, message: "That shelf is already full. No charge." };
-    if (this.data.storeBackroomPackages < 1) return { ok: false, moved: 0, charged: 0, message: "The backroom has no packages. No charge." };
-    if (this.data.money < shelf.restockCost) return { ok: false, moved: 0, charged: 0, message: `You need $${shelf.restockCost} to restock. No charge.` };
-    const moved = this.inventory.restockShelf(shelfId);
-    if (moved <= 0) return { ok: false, moved: 0, charged: 0, message: "Nothing moved. No charge." };
-    this.data.money -= shelf.restockCost;
+    if (!shelf) return { ok: false, moved: 0, charged: 0, usedBerries: 0, message: "That shelf could not be found." };
+    if (shelf.currentItems >= shelf.capacity) return { ok: false, moved: 0, charged: 0, usedBerries: 0, message: "That shelf already has all 10 blueberries." };
+    const needed = shelf.capacity - shelf.currentItems;
+    if (this.data.rawBlueberries < needed) {
+      const short = needed - Math.floor(this.data.rawBlueberries);
+      return { ok: false, moved: 0, charged: 0, usedBerries: 0, message: `Earn ${short} more ${short === 1 ? "blueberry" : "blueberries"} by answering multiplication questions.` };
+    }
+    const moved = this.inventory.restockShelf(shelfId, needed);
+    if (moved !== needed) return { ok: false, moved: 0, charged: 0, usedBerries: 0, message: "The shelf could not be filled yet." };
     this.data.totals.shelfRestockCount += 1;
     this.events.push({ type: "restocked", shelfId, moved, automatic });
-    return { ok: true, moved, charged: shelf.restockCost, message: `${automatic ? "Janitor" : "You"} stocked ${moved} package${moved === 1 ? "" : "s"} for $${shelf.restockCost}.` };
+    return { ok: true, moved, charged: 0, usedBerries: moved, message: `${automatic ? "Janitor" : "You"} filled the shelf to 10 with ${moved} ${moved === 1 ? "math blueberry" : "math blueberries"}.` };
   }
 
   completeSpecialOrder(answer: number): { ok: boolean; message: string; earned: number; correctAnswer: number } {
@@ -136,7 +139,7 @@ export class StoreSystem {
       return { ok: false, message: `Nice try! The answer was ${order.requiredProducts}.`, earned: 0, correctAnswer: order.requiredProducts };
     }
     if (this.inventory.totalShelfStock() < order.requiredProducts) {
-      return { ok: false, message: `Stock ${order.requiredProducts} packages on shelves first.`, earned: 0, correctAnswer: order.requiredProducts };
+      return { ok: false, message: `Stock ${order.requiredProducts} blueberries on the shelves first.`, earned: 0, correctAnswer: order.requiredProducts };
     }
     this.inventory.consumeFromShelves(order.requiredProducts);
     this.data.money += order.rewardMoney;
@@ -165,11 +168,11 @@ export class StoreSystem {
 
   status(): string {
     const stock = this.inventory.totalShelfStock();
-    if (stock <= 0 && this.data.storeBackroomPackages > 0) return "RESTOCK A SHELF FOR $10";
-    if (stock <= 0) return "STORE NEEDS BLUEBERRY PACKAGES";
+    if (stock <= 0 && this.data.rawBlueberries >= BALANCE.baseShelfCapacity) return "FILL A SHELF WITH 10 MATH BLUEBERRIES";
+    if (stock <= 0) return "ANSWER MULTIPLICATION TO EARN SHELF BLUEBERRIES";
     if (stock < Math.max(3, this.snapshot().shelfCapacity * 0.2)) return "SHELVES ARE NEARLY EMPTY";
     if (this.data.storeState.customers.length >= this.snapshot().queueCapacity) return "CUSTOMER LINE IS FULL";
-    return "CUSTOMERS ARE BUYING PACKAGES";
+    return "CUSTOMERS ARE BUYING FRESH BLUEBERRIES";
   }
 
   private shop(customer: StoreCustomerState, seconds: number, away: boolean): void {
@@ -202,7 +205,7 @@ export class StoreSystem {
     }
     if (janitor.phase === "idle") {
       const target = this.data.shelves.find((shelf) => shelf.currentItems / shelf.capacity <= BALANCE.shelfLowThreshold);
-      if (!target || this.data.storeBackroomPackages < 1 || this.data.money < BALANCE.shelfRestockCost) return;
+      if (!target || this.data.rawBlueberries < target.capacity - target.currentItems) return;
       janitor.phase = "to-backroom";
       janitor.targetShelfId = target.shelfId;
       janitor.progress = 0;
@@ -213,7 +216,7 @@ export class StoreSystem {
     janitor.progress = 0;
     if (janitor.phase === "to-backroom") {
       const shelf = janitor.targetShelfId ? this.inventory.shelf(janitor.targetShelfId) : undefined;
-      janitor.carryingPackages = shelf ? Math.min(this.data.storeBackroomPackages, shelf.capacity - shelf.currentItems) : 0;
+      janitor.carryingPackages = shelf ? shelf.capacity - shelf.currentItems : 0;
       janitor.phase = janitor.carryingPackages > 0 ? "to-shelf" : "returning";
     } else if (janitor.phase === "to-shelf") {
       janitor.phase = "restocking";
@@ -250,7 +253,7 @@ export class StoreSystem {
     const type = CUSTOMER_TYPES.find((entry) => entry.id === customer.typeId) ?? CUSTOMER_TYPES[0];
     const snapshot = this.snapshot();
     const sold = Math.max(0, Math.floor(customer.carriedPackages));
-    const product = "Blueberry Package";
+    const product = "Fresh Blueberries";
     if (sold <= 0) return emptySale(product);
     const earned = Math.max(1, Math.round(sold * snapshot.productValue * type.valueMultiplier));
     customer.carriedPackages = 0;
@@ -278,7 +281,10 @@ export class StoreSystem {
   }
 
   private removeCustomer(customer: StoreCustomerState, event: "left", away: boolean): void {
-    if (customer.carriedPackages > 0) this.data.storeBackroomPackages += customer.carriedPackages;
+    if (customer.carriedPackages > 0) {
+      const returned = this.inventory.returnToShelves(customer.carriedPackages);
+      if (returned < customer.carriedPackages) this.inventory.addRaw(customer.carriedPackages - returned, this.snapshot().rawStorageCapacity);
+    }
     customer.carriedPackages = 0;
     this.data.storeState.customers = this.data.storeState.customers.filter((entry) => entry.id !== customer.id);
     this.data.totals.customersLost += 1;

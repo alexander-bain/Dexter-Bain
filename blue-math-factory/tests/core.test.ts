@@ -123,7 +123,7 @@ describe("lossless Version 3 migration", () => {
     expect(migrated.warehousePackages).toBe(41);
     expect(migrated.shelves.reduce((sum, shelf) => sum + shelf.currentItems, 0)).toBe(30);
     expect(migrated.storeBackroomPackages).toBe(7);
-    expect(migrated.blueberryPackages).toBe(78);
+    expect(migrated.blueberryPackages).toBe(48);
     expect(migrated.upgradeLevels).toEqual(legacy.upgradeLevels);
     expect(migrated.mathStats).toMatchObject(legacy.mathStats);
     expect(migrated.settings.reducedMotion).toBe(true);
@@ -155,7 +155,7 @@ describe("lossless Version 3 migration", () => {
   });
 });
 
-describe("physical blueberry-package economy", () => {
+describe("factory packages and fresh-blueberry shelf economy", () => {
   it("spaces all twelve shelves into distinct tablet-friendly store positions", () => {
     const positions = Array.from({ length: 12 }, (_, index) => storeShelfPosition(index));
     expect(new Set(positions.map(({ x, y }) => `${x},${y}`)).size).toBe(12);
@@ -204,21 +204,33 @@ describe("physical blueberry-package economy", () => {
     expect(economy.inventory.totalShelfStock()).toBe(0);
   });
 
-  it("charges exactly $10 only if a manual restock moves packages", () => {
+  it("uses 10 math blueberries to fill an empty shelf without money or packages", () => {
     const data = SaveSystem.createNew();
+    data.rawBlueberries = 10;
     data.storeBackroomPackages = 8;
     data.money = 30;
     const economy = new EconomySystem(data);
     const stocked = economy.store.restockShelf("shelf-1");
-    expect(stocked).toMatchObject({ ok: true, moved: 8, charged: 10 });
-    expect(data.money).toBe(20);
-    expect(data.shelves[0].currentItems).toBe(8);
-    const noPackages = economy.store.restockShelf("shelf-2");
-    expect(noPackages).toMatchObject({ ok: false, moved: 0, charged: 0 });
-    expect(data.money).toBe(20);
+    expect(stocked).toMatchObject({ ok: true, moved: 10, charged: 0, usedBerries: 10 });
+    expect(data.rawBlueberries).toBe(0);
+    expect(data.money).toBe(30);
+    expect(data.storeBackroomPackages).toBe(8);
+    expect(data.shelves[0]).toMatchObject({ currentItems: 10, capacity: 10, productType: "fresh-blueberry" });
+    const notEnoughBerries = economy.store.restockShelf("shelf-2");
+    expect(notEnoughBerries).toMatchObject({ ok: false, moved: 0, charged: 0, usedBerries: 0 });
   });
 
-  it("removes one visible shelf package per shopping pick and pays only at checkout", () => {
+  it("fills a partially empty shelf completely using only the missing math blueberries", () => {
+    const data = SaveSystem.createNew();
+    data.shelves[0].currentItems = 4;
+    data.rawBlueberries = 6;
+    const economy = new EconomySystem(data);
+    expect(economy.store.restockShelf("shelf-1")).toMatchObject({ ok: true, moved: 6, usedBerries: 6 });
+    expect(data.shelves[0].currentItems).toBe(10);
+    expect(data.rawBlueberries).toBe(0);
+  });
+
+  it("removes one visible shelf blueberry per shopping pick and pays only at checkout", () => {
     const data = SaveSystem.createNew();
     data.shelves[0].currentItems = 10;
     data.storeState.customers.push(customerState());
@@ -260,19 +272,21 @@ describe("physical blueberry-package economy", () => {
     expect(data.totals.totalPackagesSold).toBe(0);
   });
 
-  it("janitor restocks shelves at 25% or lower and pays the same $10 cost", () => {
+  it("janitor fills low shelves using math blueberries without money or backroom packages", () => {
     const data = SaveSystem.createNew();
     data.upgradeLevels["hire-janitor"] = 1;
     data.settings.autoRestock = true;
     data.shelves[0].currentItems = 2;
     data.storeState.arrivalProgress = -1000;
-    data.storeBackroomPackages = 8;
+    data.rawBlueberries = 8;
+    data.storeBackroomPackages = 9;
     data.money = 20;
     const economy = new EconomySystem(data);
     economy.tick(20);
     expect(data.shelves[0].currentItems).toBe(10);
-    expect(data.storeBackroomPackages).toBe(0);
-    expect(data.money).toBe(10);
+    expect(data.rawBlueberries).toBe(0);
+    expect(data.storeBackroomPackages).toBe(9);
+    expect(data.money).toBe(20);
     expect(data.totals.shelfRestockCount).toBe(1);
   });
 

@@ -33,8 +33,7 @@ const starterShelves = (): ShelfInventory[] => Array.from({ length: BALANCE.base
   shelfId: `shelf-${index + 1}`,
   capacity: BALANCE.baseShelfCapacity,
   currentItems: 0,
-  productType: "blueberry-package",
-  restockCost: BALANCE.shelfRestockCost
+  productType: "fresh-blueberry"
 }));
 
 export class SaveSystem {
@@ -236,17 +235,14 @@ export class SaveSystem {
     data.storeState.nextCustomerId = Math.max(1, Math.floor(nonNegative(data.storeState.nextCustomerId, 1)));
     data.shelves = (Array.isArray(data.shelves) ? data.shelves : starterShelves()).map((shelf, index) => ({
       shelfId: typeof shelf.shelfId === "string" ? shelf.shelfId : `shelf-${index + 1}`,
-      capacity: Math.max(1, Math.floor(nonNegative(shelf.capacity, BALANCE.baseShelfCapacity))),
-      currentItems: Math.max(0, Math.min(Math.floor(nonNegative(shelf.currentItems)), Math.floor(nonNegative(shelf.capacity, BALANCE.baseShelfCapacity)))),
-      productType: "blueberry-package",
-      restockCost: BALANCE.shelfRestockCost
+      capacity: BALANCE.baseShelfCapacity,
+      currentItems: Math.max(0, Math.min(Math.floor(nonNegative(shelf.currentItems)), BALANCE.baseShelfCapacity)),
+      productType: "fresh-blueberry"
     }));
     data.storeState.customers = (Array.isArray(data.storeState.customers) ? data.storeState.customers : [])
       .filter((customer) => Number.isFinite(customer.id) && typeof customer.typeId === "string")
       .map((customer) => SaveSystem.normalizeCustomer(customer));
-    data.blueberryPackages = data.warehousePackages + data.storeBackroomPackages
-      + data.shelves.reduce((sum, shelf) => sum + shelf.currentItems, 0)
-      + data.storeState.customers.reduce((sum, customer) => sum + customer.carriedPackages, 0);
+    data.blueberryPackages = data.warehousePackages + data.storeBackroomPackages;
     for (const key of Object.keys(data.upgradeLevels)) data.upgradeLevels[key] = Math.max(0, Math.floor(nonNegative(data.upgradeLevels[key])));
   }
 

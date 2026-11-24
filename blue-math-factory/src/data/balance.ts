@@ -14,7 +14,6 @@ export const BALANCE = {
   baseProcessingPerMinute: 7.5,
   packageRecipeRaw: 10,
   packageCycleSeconds: 8,
-  shelfRestockCost: 10,
   shelfLowThreshold: 0.25,
   baseDeliveryPerMinute: 6,
   baseProductValue: 4,

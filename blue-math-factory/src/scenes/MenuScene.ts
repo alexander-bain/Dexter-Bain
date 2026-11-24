@@ -127,7 +127,7 @@ export class MenuScene extends Phaser.Scene {
     ArtFactory.tree(this, width * .93, height * .68, .72).setDepth(40);
     const shop = ArtFactory.building(this, width * .2, height * .75, Math.min(260, width * .28), 170, { color: 0xf09a78, roof: 0x5c3898, label: "BERRY MARKET", windows: 2 });
     shop.setScale(width < 700 ? .72 : 1);
-    this.add.text(width - 20, height - 18, "MAKE & SELL BLUEBERRY PACKAGES • v3.0", { fontFamily: "Trebuchet MS", fontSize: "10px", fontStyle: "bold", color: "#e6f6ff", stroke: "#244f60", strokeThickness: 3 }).setOrigin(1).setDepth(3000).setAlpha(.75);
+    this.add.text(width - 20, height - 18, "DO MATH • STOCK FRESH BLUEBERRIES • BUILD YOUR FACTORY", { fontFamily: "Trebuchet MS", fontSize: "10px", fontStyle: "bold", color: "#e6f6ff", stroke: "#244f60", strokeThickness: 3 }).setOrigin(1).setDepth(3000).setAlpha(.75);
     this.cameras.main.fadeIn(350, COLORS.ink >> 16, (COLORS.ink >> 8) & 255, COLORS.ink & 255);
   }
 }

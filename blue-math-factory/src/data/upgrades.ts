@@ -30,13 +30,13 @@ export const FACTORY_UPGRADES: UpgradeDefinition[] = [
 ];
 
 export const STORE_UPGRADES: UpgradeDefinition[] = [
-  store({ id: "extra-shelf", name: "Extra Shelf", emoji: "🗄️", description: "Adds one visible shelf with room for 10 blueberry packages.", effect: "shelf", amount: 10, baseCost: 14, growth: 1.55, maxLevel: 6, major: true }),
-  store({ id: "better-display", name: "Larger Shelf", emoji: "🫐", description: "Adds 5 real package spaces to every shelf.", effect: "shelf", amount: 5, baseCost: 25, growth: 1.6, maxLevel: 5 }),
+  store({ id: "extra-shelf", name: "Extra Shelf", emoji: "🗄️", description: "Adds one visible shelf with room for 10 fresh blueberries.", effect: "shelf", amount: 10, baseCost: 14, growth: 1.55, maxLevel: 6, major: true }),
+  store({ id: "better-display", name: "Better Berry Display", emoji: "🫐", description: "Makes each fresh blueberry display more valuable.", effect: "value", amount: 0.06, baseCost: 25, growth: 1.6, maxLevel: 5 }),
   store({ id: "queue-ropes", name: "Queue Ropes", emoji: "➰", description: "Makes space for another waiting customer.", effect: "queue", amount: 1, baseCost: 35, growth: 1.72, maxLevel: 5, major: true }),
   store({ id: "longer-line", name: "Longer Customer Line", emoji: "👥", description: "Adds more organized waiting space.", effect: "queue", amount: 1, baseCost: 70, growth: 1.78, maxLevel: 4, unlockAt: 2, major: true }),
   store({ id: "bigger-entrance", name: "Bigger Entrance", emoji: "🚪", description: "More customers notice and enter the store.", effect: "arrival", amount: 0.1, baseCost: 55, growth: 1.7, maxLevel: 5, unlockAt: 2, major: true }),
   store({ id: "hire-cashier", name: "Hire Cashier", emoji: "🧑‍💼", description: "Automatically serves the next customer.", effect: "cashier", amount: 1, baseCost: 85, growth: 2.4, maxLevel: 1, unlockAt: 3, major: true }),
-  store({ id: "hire-janitor", name: "Hire Janitor + Stocker", emoji: "🧹", description: "Walks to the backroom and restocks shelves at 25% or lower for $10 each trip.", effect: "decoration", amount: 1, baseCost: 120, growth: 2, maxLevel: 1, unlockAt: 4, major: true }),
+  store({ id: "hire-janitor", name: "Hire Janitor + Stocker", emoji: "🧹", description: "Uses your math blueberries to refill shelves that reach 25% or lower.", effect: "decoration", amount: 1, baseCost: 120, growth: 2, maxLevel: 1, unlockAt: 4, major: true }),
   store({ id: "backroom-expansion", name: "Backroom Expansion", emoji: "🚪", description: "Stores 50 more delivered packages behind the shop.", effect: "warehouse", amount: 50, baseCost: 165, growth: 1.72, maxLevel: 6, unlockAt: 5, major: true }),
   store({ id: "faster-cashier", name: "Faster Checkout", emoji: "⚡", description: "The cashier rings up orders more quickly.", effect: "checkout", amount: 0.12, baseCost: 110, growth: 1.65, maxLevel: 8, unlockAt: 4 }),
   store({ id: "friendly-service", name: "Friendly Service", emoji: "😊", description: "A warm welcome gives every customer more patience.", effect: "patience", amount: 0.1, baseCost: 145, growth: 1.62, maxLevel: 5, unlockAt: 5 }),

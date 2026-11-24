@@ -41,7 +41,7 @@ export class HubScene extends BaseWorldScene {
     board.fillStyle(0x23175e, .96).fillRoundedRect(-345, -68, 690, 118, 22);
     board.fillStyle(0xffffff, .08).fillRoundedRect(-330, -54, 660, 25, 10);
     board.lineStyle(5, 0x80eaff, .65).strokeRoundedRect(-345, -68, 690, 118, 22);
-    const flow = this.add.text(0, -8, `🫐 ${Math.floor(session.data.rawBlueberries)} RAW   →   📦 ${Math.floor(session.data.warehousePackages)} WAREHOUSE   →   🚪 ${Math.floor(session.data.storeBackroomPackages)} BACKROOM   →   🛒 ${Math.floor(session.economy.inventory.totalShelfStock())} ON SHELVES   →   💰 $${Math.floor(session.data.money)}\nMATH POWER ${Math.floor(session.data.mathPower)}/100  ·  ${Math.floor(session.data.totals.totalPackagesSold)}/10,000 PACKAGES SOLD`, { align: "center", fontFamily: "Trebuchet MS", fontSize: "17px", fontStyle: "bold", color: "#ffffff", stroke: "#171044", strokeThickness: 5 }).setOrigin(.5);
+    const flow = this.add.text(0, -8, `🫐 ${Math.floor(session.data.rawBlueberries)} MATH BERRIES   →   🛒 ${Math.floor(session.economy.inventory.totalShelfStock())} FRESH BERRIES ON SHELVES   →   💰 $${Math.floor(session.data.money)}\n📦 ${Math.floor(session.data.warehousePackages + session.data.storeBackroomPackages)} FACTORY PACKAGES STORED  ·  MATH POWER ${Math.floor(session.data.mathPower)}/100  ·  ${Math.floor(session.data.totals.totalPackagesSold)}/10,000 BLUEBERRIES SOLD`, { align: "center", fontFamily: "Trebuchet MS", fontSize: "17px", fontStyle: "bold", color: "#ffffff", stroke: "#171044", strokeThickness: 5 }).setOrigin(.5);
     flowBoard.add([boardShadow, board, flow]);
 
     const water = this.add.graphics().setDepth(-29);
@@ -74,7 +74,7 @@ export class HubScene extends BaseWorldScene {
     this.addBlocker(1490, 250, 390, 180);
     if (session.data.victory.trophyEarned) {
       const trophy = this.add.text(720, 235, "🏆", { fontSize: "70px", stroke: "#4b2875", strokeThickness: 8 }).setOrigin(.5).setDepth(400);
-      this.add.text(720, 295, "FOUNDER TROPHY\n10,000 PACKAGES", { align: "center", fontFamily: "Trebuchet MS", fontSize: "14px", fontStyle: "bold", color: "#fff3a2", backgroundColor: "#4a317f", padding: { x: 9, y: 5 } }).setOrigin(.5).setDepth(401);
+      this.add.text(720, 295, "FOUNDER TROPHY\n10,000 BLUEBERRIES", { align: "center", fontFamily: "Trebuchet MS", fontSize: "14px", fontStyle: "bold", color: "#fff3a2", backgroundColor: "#4a317f", padding: { x: 9, y: 5 } }).setOrigin(.5).setDepth(401);
       this.tweens.add({ targets: trophy, y: trophy.y - 6, duration: 850, yoyo: true, repeat: -1 });
     }
 

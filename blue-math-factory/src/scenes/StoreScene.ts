@@ -66,7 +66,7 @@ export class StoreScene extends BaseWorldScene {
   private serveNext(): void {
     const result = session.economy.store.manualServe();
     if (result.sold <= 0) {
-      ui.showToast(session.economy.inventory.totalShelfStock() <= 0 ? "STOCK A SHELF WITH BACKROOM PACKAGES" : "No customer is ready at checkout yet.", "info");
+      ui.showToast(session.economy.inventory.totalShelfStock() <= 0 ? "EARN BLUEBERRIES IN MATH, THEN FILL A SHELF" : "No customer is ready at checkout yet.", "info");
       return;
     }
     session.audio.play("checkout");
@@ -79,7 +79,7 @@ export class StoreScene extends BaseWorldScene {
       if (event.type === "arrival" || event.type === "picked") continue;
       if (event.type === "restocked") {
         session.audio.play("upgrade");
-        ui.showToast(`${event.automatic ? "Janitor" : "Shelf"} stocked ${event.moved} packages for $10.`, "good");
+        if (event.automatic) ui.showToast(`Janitor filled a shelf with ${event.moved} math blueberries.`, "good");
         continue;
       }
       if (!event.customer) continue;
@@ -124,7 +124,7 @@ export class StoreScene extends BaseWorldScene {
   private positionCustomer(state: StoreCustomerState, index: number, immediate: boolean): void {
     const customer = this.customers.get(state.id);
     if (!customer) return;
-    customer.setPackageCount(state.carriedPackages);
+    customer.setBerryCount(state.carriedPackages);
     let x: number;
     let y: number;
     if (state.phase === "browsing") {
@@ -147,7 +147,7 @@ export class StoreScene extends BaseWorldScene {
     const snapshot = session.economy.snapshot();
     const waiting = session.data.storeState.customers.filter((customer) => customer.phase === "waiting").length;
     this.queueLabel.setText(`CUSTOMER LINE  ${waiting}/${snapshot.queueCapacity}\n${snapshot.cashierLevel ? `${snapshot.activeCheckoutLanes} lane${snapshot.activeCheckoutLanes === 1 ? "" : "s"} · ${snapshot.checkoutSeconds.toFixed(1)} sec checkout` : "YOU ARE THE CASHIER"}`);
-    this.inventoryLabel.setText(`SHELVES  ${Math.floor(session.economy.inventory.totalShelfStock())} / ${Math.floor(snapshot.shelfCapacity)}\nBACKROOM  ${Math.floor(session.data.storeBackroomPackages)} / ${Math.floor(snapshot.backroomCapacity)}`);
+    this.inventoryLabel.setText(`SHELF BLUEBERRIES  ${Math.floor(session.economy.inventory.totalShelfStock())} / ${Math.floor(snapshot.shelfCapacity)}\nMATH BLUEBERRIES READY  ${Math.floor(session.data.rawBlueberries)}`);
     this.backroomLabel.setText(`STORE BACKROOM\n${Math.floor(session.data.storeBackroomPackages)} / ${Math.floor(snapshot.backroomCapacity)} PACKAGES`);
     this.statusLabel.setText(session.economy.store.status());
     this.statusLabel.setColor(session.economy.inventory.totalShelfStock() <= 0 ? "#ff8d8d" : "#79efbd");
@@ -165,14 +165,15 @@ export class StoreScene extends BaseWorldScene {
       layer.removeAll(true);
       const data = session.data.shelves[index];
       if (!data) return;
-      const visible = data.currentItems > 0 ? Math.min(10, Math.max(1, Math.ceil(data.currentItems / data.capacity * 10))) : 0;
+      const visible = Math.min(10, Math.max(0, Math.floor(data.currentItems)));
       for (let item = 0; item < visible; item += 1) {
-        layer.add(this.add.image(-112 + item % 5 * 56, item < 5 ? -48 : 11, "package-art").setScale(.15).setOrigin(.5));
+        layer.add(this.add.image(-112 + item % 5 * 56, item < 5 ? -48 : 11, "berry").setScale(.92).setOrigin(.5));
       }
       const label = this.shelfLabels[index];
-      label.setText(visible ? `${data.currentItems}/${data.capacity} PACKAGES · RESTOCK $10` : "OUT OF STOCK · RESTOCK $10");
-      label.setColor(visible ? "#ffffff" : "#ff8b8b");
-      label.setBackgroundColor(visible ? "#4c368f" : "#6f283d");
+      const missing = data.capacity - data.currentItems;
+      label.setText(missing <= 0 ? "10/10 BLUEBERRIES · FULL" : visible ? `${visible}/10 BLUEBERRIES · ADD ${missing} 🫐` : "EMPTY · ADD 10 MATH 🫐");
+      label.setColor(missing <= 0 ? "#c7ffe5" : visible ? "#ffffff" : "#ffb1b1");
+      label.setBackgroundColor(missing <= 0 ? "#276b58" : visible ? "#4c368f" : "#6f283d");
     });
   }
 
@@ -293,7 +294,7 @@ export class StoreScene extends BaseWorldScene {
       const angle = index / 8 * Math.PI * 2;
       this.tweens.add({ targets: coin, x: x + Math.cos(angle) * Phaser.Math.Between(50, 120), y: y + Math.sin(angle) * Phaser.Math.Between(40, 95), angle: 180, alpha: 0, duration: 650, onComplete: () => coin.destroy() });
     }
-    const amount = this.add.text(x, y - 60, sold > 0 ? `🛍 ${sold} ITEMS  +$${earned}` : `+$${earned}`, { fontFamily: "Trebuchet MS", fontSize: "28px", fontStyle: "bold", color: "#ffda59", stroke: "#26186d", strokeThickness: 7 }).setOrigin(.5).setDepth(3001);
+    const amount = this.add.text(x, y - 60, sold > 0 ? `🫐 ${sold} SOLD  +$${earned}` : `+$${earned}`, { fontFamily: "Trebuchet MS", fontSize: "28px", fontStyle: "bold", color: "#ffda59", stroke: "#26186d", strokeThickness: 7 }).setOrigin(.5).setDepth(3001);
     this.tweens.add({ targets: amount, y: y - 125, alpha: 0, duration: 950, onComplete: () => amount.destroy() });
   }
 
@@ -403,7 +404,7 @@ export class StoreScene extends BaseWorldScene {
       if (shelfId) {
         this.add.ellipse(aisleX, y + 45, 120, 48, 0x5de4aa, .24).setStrokeStyle(4, 0x5de4aa, .72).setDepth(y + 1);
         this.add.text(aisleX, y + 45, "RESTOCK", { fontFamily: "Trebuchet MS", fontSize: "11px", fontStyle: "bold", color: "#eafff6", stroke: "#25195f", strokeThickness: 4 }).setOrigin(.5).setDepth(y + 2);
-        this.addInteraction(aisleX, y + 30, `Restock Shelf ${index + 1} for $10`, () => this.restockShelf(shelfId), 145);
+        this.addInteraction(aisleX, y + 30, `Fill Shelf ${index + 1} with Math Blueberries`, () => this.restockShelf(shelfId), 145);
       }
     }
     this.refreshShelfDisplays(true);

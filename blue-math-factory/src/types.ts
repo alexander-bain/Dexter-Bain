@@ -122,8 +122,7 @@ export interface ShelfInventory {
   shelfId: string;
   capacity: number;
   currentItems: number;
-  productType: "blueberry-package";
-  restockCost: 10;
+  productType: "fresh-blueberry";
 }
 
 export interface StoreCustomerState {

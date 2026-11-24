@@ -30,7 +30,7 @@ const visualChange = (upgrade: UpgradeDefinition): string => {
     "giant-silo": "Adds a giant blueberry silo",
     "ultimate-factory": "Adds the Ultimate Blue Factory transformation",
     "extra-shelf": "Adds another fully visible product shelf",
-    "better-display": "Makes every visible shelf physically larger",
+    "better-display": "Adds a brighter blueberry display and raises each berry's sale value",
     "queue-ropes": "Adds gold-and-red queue barriers",
     "bigger-entrance": "Changes the entrance into a grand entrance",
     "hire-cashier": "Places a cashier behind the register",
@@ -62,10 +62,11 @@ const effectCopy = (upgrade: UpgradeDefinition, current: EconomySnapshot, next: 
     next: maxed ? "Maximum level" : `${formatter(after)} ${label}`,
     difference: maxed ? "MAXIMUM LEVEL" : `${after >= before ? "+" : ""}${formatter(after - before)} ${label}`
   });
-  if (upgrade.id === "extra-shelf" || upgrade.id === "better-display") return make(current.shelfCapacity, next.shelfCapacity, "shelf spaces", (value) => number(value, 0));
+  if (upgrade.id === "extra-shelf") return make(current.shelfCapacity, next.shelfCapacity, "shelf spaces", (value) => number(value, 0));
+  if (upgrade.id === "better-display") return make(current.productValue, next.productValue, "per blueberry", (value) => `$${number(value, 2)}`);
   if (upgrade.id === "warehouse-expansion") return make(current.warehouseCapacity, next.warehouseCapacity, "warehouse packages", (value) => number(value, 0));
   if (upgrade.id === "backroom-expansion") return make(current.backroomCapacity, next.backroomCapacity, "backroom packages", (value) => number(value, 0));
-  if (upgrade.id === "hire-janitor") return { current: "Manual $10 restocking", next: maxed ? "Janitor hired" : "Auto-restock at 25%", difference: maxed ? "JANITOR HIRED" : "ANIMATED AUTO-RESTOCK" };
+  if (upgrade.id === "hire-janitor") return { current: "Manual math-blueberry restocking", next: maxed ? "Janitor hired" : "Auto-restock at 25%", difference: maxed ? "JANITOR HIRED" : "ANIMATED AUTO-RESTOCK" };
   if (upgrade.id === "extra-conveyor") return make(current.processingRate, next.processingRate, "packages/min");
   if (upgrade.effect === "production") return make(current.productionRate, next.productionRate, "raw blueberries/sec");
   if (upgrade.effect === "processing") return make(current.processingRate, next.processingRate, "packages/min");
@@ -121,7 +122,7 @@ export const upgradePanelMarkup = (data: GameSave, upgrades: UpgradeSystem, acti
 
   const productPicker = activeCategory === "factory" ? `
     <section class="product-picker">
-      <div><span class="eyebrow">CORE PRODUCTION RECIPE</span><h3>🫐 10 raw blueberries → 📦 1 Blueberry Package</h3><p>Base cycle: 8 seconds. Finished packages go to the warehouse, then the store backroom, then a real shelf.</p></div>
+      <div><span class="eyebrow">TWO WAYS TO USE BLUEBERRIES</span><h3>🫐 Math blueberries fill store shelves directly</h3><p>Every shelf holds exactly 10 fresh blueberries. Factory packages stay in the warehouse and backroom while shelf berries come from your raw math-blueberry total.</p></div>
     </section>` : "";
 
   return `

@@ -45,13 +45,25 @@ export class InventorySystem {
     const limit = Number.isFinite(maximum) ? Math.floor(this.safe(maximum)) : Number.POSITIVE_INFINITY;
     const moved = Math.min(
       limit,
-      Math.floor(this.data.storeBackroomPackages),
+      Math.floor(this.data.rawBlueberries),
       Math.max(0, shelf.capacity - shelf.currentItems)
     );
     shelf.currentItems += moved;
-    this.data.storeBackroomPackages -= moved;
-    this.syncPackageTotal();
+    this.data.rawBlueberries -= moved;
     return moved;
+  }
+
+  returnToShelves(amount: number): number {
+    let remaining = Math.floor(this.safe(amount));
+    let returned = 0;
+    for (const shelf of this.data.shelves) {
+      const accepted = Math.min(remaining, Math.max(0, shelf.capacity - shelf.currentItems));
+      shelf.currentItems += accepted;
+      remaining -= accepted;
+      returned += accepted;
+      if (remaining <= 0) break;
+    }
+    return returned;
   }
 
   takeOneFromShelf(shelfId?: string | null): string | null {
@@ -85,19 +97,20 @@ export class InventorySystem {
         shelfId: `shelf-${this.data.shelves.length + 1}`,
         capacity: targetCapacity,
         currentItems: 0,
-        productType: "blueberry-package",
-        restockCost: BALANCE.shelfRestockCost
+        productType: "fresh-blueberry"
       });
     }
-    for (const shelf of this.data.shelves) shelf.capacity = Math.max(shelf.capacity, targetCapacity, shelf.currentItems);
+    for (const shelf of this.data.shelves) {
+      shelf.capacity = targetCapacity;
+      shelf.currentItems = Math.min(targetCapacity, shelf.currentItems);
+      shelf.productType = "fresh-blueberry";
+    }
     this.syncPackageTotal();
   }
 
   syncPackageTotal(): number {
     this.data.blueberryPackages = this.safe(this.data.warehousePackages)
-      + this.safe(this.data.storeBackroomPackages)
-      + this.totalShelfStock()
-      + this.data.storeState.customers.reduce((sum, customer) => sum + this.safe(customer.carriedPackages), 0);
+      + this.safe(this.data.storeBackroomPackages);
     return this.data.blueberryPackages;
   }
 
@@ -107,8 +120,9 @@ export class InventorySystem {
     this.data.storeBackroomPackages = this.safe(this.data.storeBackroomPackages);
     this.data.money = this.safe(this.data.money);
     for (const shelf of this.data.shelves) {
-      shelf.capacity = Math.max(1, Math.floor(this.safe(shelf.capacity)));
+      shelf.capacity = BALANCE.baseShelfCapacity;
       shelf.currentItems = Math.min(shelf.capacity, Math.floor(this.safe(shelf.currentItems)));
+      shelf.productType = "fresh-blueberry";
     }
     this.syncPackageTotal();
   }

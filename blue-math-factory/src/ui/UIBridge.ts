@@ -237,15 +237,15 @@ export class UIBridge {
     this.root.innerHTML += `
       <div id="victory-layer" class="panel-backdrop victory-backdrop">
         <section class="result-card victory-card" role="dialog" aria-modal="true">
-          <div class="victory-trophy">🏆</div><span class="eyebrow">10,000 PACKAGES SOLD</span>
+          <div class="victory-trophy">🏆</div><span class="eyebrow">10,000 BLUEBERRIES SOLD</span>
           <h2>BLUEBERRY TYCOON!</h2>
           <p>Your tiny workshop became a golden BlueMath Factory. You earned the permanent Founder Trophy!</p>
-          <div class="perfect-rewards"><div><strong>10,000</strong><span>Packages sold</span></div><div><strong>GOLD</strong><span>Factory style</span></div><div><strong>∞</strong><span>Endless mode</span></div></div>
+          <div class="perfect-rewards"><div><strong>10,000</strong><span>Blueberries sold</span></div><div><strong>GOLD</strong><span>Factory style</span></div><div><strong>∞</strong><span>Endless mode</span></div></div>
           <button class="primary-button" data-action="victory-continue">KEEP BUILDING</button>
         </section>
       </div>`;
     this.bindAction("victory-continue", () => { this.root.querySelector("#victory-layer")?.remove(); onContinue(); });
-    this.announce("Victory! Ten thousand blueberry packages sold. Golden factory and endless mode unlocked.");
+    this.announce("Victory! Ten thousand blueberries sold. Golden factory and endless mode unlocked.");
   }
 
   showAwaySummary(report: StoreAwayReport): void {
@@ -351,7 +351,7 @@ export class UIBridge {
         <header class="panel-header"><div><span class="eyebrow">QUICK TOUR</span><h2>How to Play</h2></div><button class="close-button" data-action="info-close">×</button></header>
         <div class="how-grid">
           <article><span>➊</span><div><h3>Power up with math</h3><p>Correct multiplication answers make raw blueberries and Math Power. Streaks earn 1.25×–2× factory boosts.</p></div></article>
-          <article><span>➋</span><div><h3>Process the berries</h3><p>The factory uses 10 raw blueberries for the starter pack. Packages move to the warehouse, then delivery workers refill store shelves.</p></div></article>
+          <article><span>➋</span><div><h3>Choose how to use berries</h3><p>Bring math blueberries straight to the store shelves, or let the factory turn groups of 10 into packages for the warehouse.</p></div></article>
           <article><span>➌</span><div><h3>Run the store</h3><p>Customers take real shelf inventory. Serve them yourself or hire a cashier who keeps selling in every scene.</p></div></article>
           <article><span>➍</span><div><h3>Build like a tycoon</h3><p>Stand on the glowing factory or store platform for 5 seconds. Every upgrade card shows its exact numbers and visible change.</p></div></article>
         </div>
@@ -413,7 +413,7 @@ export class UIBridge {
   private sceneStatusMarkup(scene: SceneKey): string {
     const snapshot = session.economy.snapshot();
     if (scene === "FactoryScene") return `<aside id="scene-status-card" class="scene-status-card factory-status"><span>FACTORY STATUS</span><strong>${session.economy.factory.bottleneck()}</strong><small>10 raw → 1 package · ${snapshot.processingRate.toFixed(1)} packs/min<br>Warehouse ${Math.floor(session.data.warehousePackages)}/${Math.floor(snapshot.warehouseCapacity)} · Backroom ${Math.floor(session.data.storeBackroomPackages)}/${Math.floor(snapshot.backroomCapacity)}</small></aside>`;
-    if (scene === "StoreScene") return `<aside id="scene-status-card" class="scene-status-card store-status"><span>STORE STATUS</span><strong>${session.economy.store.status()}</strong><small>Shelves ${Math.floor(session.economy.inventory.totalShelfStock())}/${Math.floor(snapshot.shelfCapacity)} · Backroom ${Math.floor(session.data.storeBackroomPackages)}/${Math.floor(snapshot.backroomCapacity)}<br>Line ${session.data.storeState.customers.length}/${snapshot.queueCapacity} · ${snapshot.activeCheckoutLanes || "No"} cashier lane${snapshot.activeCheckoutLanes === 1 ? "" : "s"}</small></aside>`;
+    if (scene === "StoreScene") return `<aside id="scene-status-card" class="scene-status-card store-status"><span>STORE STATUS</span><strong>${session.economy.store.status()}</strong><small>Shelf berries ${Math.floor(session.economy.inventory.totalShelfStock())}/${Math.floor(snapshot.shelfCapacity)} · Math berries ready ${Math.floor(session.data.rawBlueberries)}<br>Line ${session.data.storeState.customers.length}/${snapshot.queueCapacity} · ${snapshot.activeCheckoutLanes || "No"} cashier lane${snapshot.activeCheckoutLanes === 1 ? "" : "s"}</small></aside>`;
     return "";
   }
 
