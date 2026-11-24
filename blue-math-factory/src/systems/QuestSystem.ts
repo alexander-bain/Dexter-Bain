@@ -29,7 +29,7 @@ export class QuestSystem {
         this.economy.data.completedQuests.push(quest.id);
         this.economy.data.claimedQuests.push(quest.id);
         this.economy.data.money += quest.rewardMoney;
-        this.economy.data.blueberries += quest.rewardBerries;
+        this.economy.inventory.addRaw(quest.rewardBerries, this.economy.snapshot().rawStorageCapacity);
         newlyCompleted.push(quest);
       }
     }

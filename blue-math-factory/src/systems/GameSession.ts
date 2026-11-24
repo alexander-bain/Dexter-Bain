@@ -1,7 +1,7 @@
 import { BALANCE } from "../data/balance";
-import type { GameSave, SceneKey } from "../types";
+import type { GameSave, SceneKey, StoreAwayReport } from "../types";
 import { AudioSystem } from "./AudioSystem";
-import { EconomySystem } from "./EconomySystem";
+import { EconomySystem, type OfflineResult } from "./EconomySystem";
 import { QuestSystem } from "./QuestSystem";
 import { SaveSystem } from "./SaveSystem";
 
@@ -10,26 +10,39 @@ export class GameSession {
   economy = new EconomySystem(this.data);
   quests = new QuestSystem(this.economy);
   audio = new AudioSystem(this.data.settings);
-  productionBoostUntil = 0;
-  mathBoostUntil = 0;
-  customerBoostUntil = 0;
   private autosaveElapsed = 0;
+  private activeScene: SceneKey | "MenuScene" = "MenuScene";
+  private started = false;
 
   hasSave(): boolean {
     return SaveSystem.hasSave();
   }
 
+  migrationError(): string | null {
+    return SaveSystem.lastError;
+  }
+
   newGame(): void {
     this.bind(SaveSystem.createNew());
+    this.started = true;
     this.save();
   }
 
-  continueGame(): { seconds: number; berries: number } {
-    const loaded = SaveSystem.load() ?? SaveSystem.createNew();
+  continueGame(): OfflineResult | null {
+    const loaded = SaveSystem.load();
+    if (!loaded) return null;
     this.bind(loaded);
+    this.started = true;
     const offline = this.economy.applyOffline();
     this.save();
     return offline;
+  }
+
+  retryMigration(): boolean {
+    const loaded = SaveSystem.load();
+    if (!loaded) return false;
+    this.bind(loaded);
+    return true;
   }
 
   previewSavedData(): GameSave | null {
@@ -37,10 +50,14 @@ export class GameSession {
   }
 
   update(deltaSeconds: number): void {
-    const productionMultiplier = Date.now() < this.productionBoostUntil ? BALANCE.blueberryRushMultiplier : 1;
-    this.economy.tick(Math.min(deltaSeconds, 0.25), productionMultiplier);
-    this.audio.updateMusic(deltaSeconds);
-    this.autosaveElapsed += deltaSeconds * 1000;
+    const seconds = Math.min(Math.max(0, deltaSeconds), 0.5);
+    if (!this.started) {
+      this.audio.updateMusic(seconds);
+      return;
+    }
+    this.economy.tick(seconds);
+    this.audio.updateMusic(seconds);
+    this.autosaveElapsed += seconds * 1000;
     if (this.autosaveElapsed >= BALANCE.autosaveMs) {
       this.checkQuests();
       this.save();
@@ -48,24 +65,38 @@ export class GameSession {
     }
   }
 
+  enterScene(scene: SceneKey): StoreAwayReport | null {
+    this.started = true;
+    this.activeScene = scene;
+    this.data.lastScene = scene;
+    this.economy.setStoreVisible(scene === "StoreScene");
+    const report = scene === "StoreScene" ? this.economy.store.consumeAwayReport() : null;
+    this.save(scene);
+    return report;
+  }
+
+  leaveForMenu(): void {
+    this.activeScene = "MenuScene";
+    this.economy.setStoreVisible(false);
+  }
+
   mathMultiplier(): number {
-    return Date.now() < this.mathBoostUntil ? BALANCE.mathPowerMultiplier : 1;
+    return 1;
   }
 
   customerMultiplier(): number {
-    return Date.now() < this.customerBoostUntil ? 1.75 : 1;
+    return 1;
   }
 
   activateBoost(kind: "production" | "math" | "customers"): void {
-    const until = Date.now() + BALANCE.boostSeconds * 1000;
-    if (kind === "production") this.productionBoostUntil = until;
-    if (kind === "math") this.mathBoostUntil = until;
-    if (kind === "customers") this.customerBoostUntil = until;
+    if (kind === "production") this.economy.activateProductionBoost();
+    if (kind === "math") this.data.mathPower = Math.min(BALANCE.mathPowerMax, this.data.mathPower + 20);
+    if (kind === "customers") this.economy.activateCustomerBoost();
   }
 
   checkQuests(): string[] {
     const completed = this.quests.check();
-    return completed.map((quest) => `${quest.title}! +$${quest.rewardMoney} and +${quest.rewardBerries} berries`);
+    return completed.map((quest) => `${quest.title}! +$${quest.rewardMoney} and +${quest.rewardBerries} raw berries`);
   }
 
   save(scene?: SceneKey): void {
@@ -83,6 +114,7 @@ export class GameSession {
     this.economy = new EconomySystem(this.data);
     this.quests = new QuestSystem(this.economy);
     this.audio = new AudioSystem(this.data.settings);
+    this.economy.setStoreVisible(this.activeScene === "StoreScene");
     this.autosaveElapsed = 0;
   }
 }

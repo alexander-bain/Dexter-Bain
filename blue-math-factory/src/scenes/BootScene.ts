@@ -10,6 +10,7 @@ export class BootScene extends Phaser.Scene {
     const saved = session.previewSavedData();
     if (saved) session.data.settings = { ...session.data.settings, ...saved.settings };
     this.registry.set("reducedMotion", session.data.settings.reducedMotion);
+    this.registry.set("graphicsQuality", session.data.settings.graphicsQuality);
     this.scene.start("PreloadScene");
   }
 }

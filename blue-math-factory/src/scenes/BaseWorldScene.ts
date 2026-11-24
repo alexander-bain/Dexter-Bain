@@ -3,6 +3,7 @@ import { BALANCE } from "../data/balance";
 import { Player } from "../entities/Player";
 import { session } from "../systems/GameSession";
 import type { SceneKey } from "../types";
+import type { StoreAwayReport } from "../types";
 import { ui } from "../ui/UIBridge";
 
 interface InteractionZone {
@@ -23,6 +24,7 @@ export abstract class BaseWorldScene extends Phaser.Scene {
   private activeInteraction: InteractionZone | null = null;
   private hudElapsed = 0;
   private tapTarget: Phaser.Math.Vector2 | null = null;
+  protected entryReport: StoreAwayReport | null = null;
 
   protected constructor(readonly sceneKey: SceneKey) {
     super(sceneKey);
@@ -42,8 +44,8 @@ export abstract class BaseWorldScene extends Phaser.Scene {
       const point = this.cameras.main.getWorldPoint(pointer.x, pointer.y);
       this.tapTarget = new Phaser.Math.Vector2(point.x, point.y);
     });
+    this.entryReport = session.enterScene(this.sceneKey);
     ui.showHUD(this.sceneKey, () => this.pauseGame());
-    session.save(this.sceneKey);
   }
 
   protected prepareWorld(): void {
@@ -78,6 +80,7 @@ export abstract class BaseWorldScene extends Phaser.Scene {
     this.physics.world.pause();
     ui.showPause(this.sceneKey, () => this.resumeGame(), () => {
       session.save(this.sceneKey);
+      session.leaveForMenu();
       this.scene.start("MenuScene");
     });
   }
@@ -95,7 +98,6 @@ export abstract class BaseWorldScene extends Phaser.Scene {
       return;
     }
     if (this.frozen) return;
-    session.update(seconds);
     const touch = ui.touchVector();
     let x = (this.cursors.left.isDown || this.keys.left.isDown ? -1 : 0) + (this.cursors.right.isDown || this.keys.right.isDown ? 1 : 0) + touch.x;
     let y = (this.cursors.up.isDown || this.keys.up.isDown ? -1 : 0) + (this.cursors.down.isDown || this.keys.down.isDown ? 1 : 0) + touch.y;

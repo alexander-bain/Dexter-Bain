@@ -13,7 +13,7 @@ export class HubScene extends BaseWorldScene {
 
   create(): void {
     this.prepareWorld();
-    ArtFactory.drawWorldGround(this, BALANCE.worldWidth, BALANCE.worldHeight, 0x72c96d);
+    ArtFactory.drawWorldGround(this, BALANCE.worldWidth, BALANCE.worldHeight, 0x33246f);
     this.drawHub();
     this.setupWorld(960, 1030);
     const offline = this.registry.get("offlineMessage") as string | undefined;
@@ -34,6 +34,15 @@ export class HubScene extends BaseWorldScene {
     ArtFactory.path(this, [{ x: 960, y: 735 }, { x: 960, y: 425 }]);
     ArtFactory.path(this, [{ x: 960, y: 735 }, { x: 1490, y: 525 }]);
     const snapshot = session.economy.snapshot();
+
+    const flowBoard = this.add.container(960, 960).setDepth(980);
+    const boardShadow = this.add.ellipse(12, 38, 690, 72, 0x120c35, .28);
+    const board = this.add.graphics();
+    board.fillStyle(0x23175e, .96).fillRoundedRect(-345, -68, 690, 118, 22);
+    board.fillStyle(0xffffff, .08).fillRoundedRect(-330, -54, 660, 25, 10);
+    board.lineStyle(5, 0x80eaff, .65).strokeRoundedRect(-345, -68, 690, 118, 22);
+    const flow = this.add.text(0, -8, `🫐 ${Math.floor(session.data.rawBlueberries)} RAW   →   ⚙ ${Math.floor(session.data.processedProducts)} PACKAGED   →   🛒 ${Math.floor(session.data.storeInventory)} ON SHELVES   →   💰 $${Math.floor(session.data.money)}\nMATH POWER ${Math.floor(session.data.mathPower)}/100  ·  FACTORY ${Math.round(snapshot.mathPowerSpeed * 100)}% SPEED`, { align: "center", fontFamily: "Trebuchet MS", fontSize: "17px", fontStyle: "bold", color: "#ffffff", stroke: "#171044", strokeThickness: 5 }).setOrigin(.5);
+    flowBoard.add([boardShadow, board, flow]);
 
     const water = this.add.graphics().setDepth(-29);
     water.fillStyle(0x58cbe3).fillEllipse(960, 754, 310, 176);

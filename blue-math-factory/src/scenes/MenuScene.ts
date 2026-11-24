@@ -16,7 +16,6 @@ export class MenuScene extends Phaser.Scene {
   }
 
   update(_time: number, delta: number): void {
-    session.audio.updateMusic(delta / 1000);
     for (const berry of this.berryBelt) {
       berry.x += delta * .08;
       berry.angle += delta * .12;
@@ -33,8 +32,13 @@ export class MenuScene extends Phaser.Scene {
       },
       continueGame: () => {
         const offline = session.continueGame();
-        if (offline.berries >= 1) this.registry.set("offlineMessage", `Your factory made ${Math.floor(offline.berries)} berries while you were away!`);
+        if (!offline) { this.renderMenu(); return; }
+        if (offline.seconds >= 5) this.registry.set("offlineMessage", `While away: ${Math.max(0, Math.floor(offline.processedProducts))} products made, ${offline.customersServed} customers served, and $${offline.moneyEarned} earned.`);
         this.scene.start(session.data.lastScene === "MathChallengeScene" ? "HubScene" : session.data.lastScene);
+      },
+      retryMigration: () => {
+        session.retryMigration();
+        this.renderMenu();
       },
       how: () => ui.showHow(() => this.renderMenu()),
       stats: () => ui.showStats(() => this.renderMenu()),
@@ -90,7 +94,7 @@ export class MenuScene extends Phaser.Scene {
     ArtFactory.tree(this, width * .93, height * .68, .72).setDepth(40);
     const shop = ArtFactory.building(this, width * .2, height * .75, Math.min(260, width * .28), 170, { color: 0xf09a78, roof: 0x5c3898, label: "BERRY MARKET", windows: 2 });
     shop.setScale(width < 700 ? .72 : 1);
-    this.add.text(width - 20, height - 18, "ORIGINAL GAME ART • v1.0", { fontFamily: "Trebuchet MS", fontSize: "10px", fontStyle: "bold", color: "#e6f6ff", stroke: "#244f60", strokeThickness: 3 }).setOrigin(1).setDepth(3000).setAlpha(.75);
+    this.add.text(width - 20, height - 18, "BLUEBERRY PIPELINE UPDATE • v2.0", { fontFamily: "Trebuchet MS", fontSize: "10px", fontStyle: "bold", color: "#e6f6ff", stroke: "#244f60", strokeThickness: 3 }).setOrigin(1).setDepth(3000).setAlpha(.75);
     this.cameras.main.fadeIn(350, COLORS.ink >> 16, (COLORS.ink >> 8) & 255, COLORS.ink & 255);
   }
 }

@@ -22,7 +22,7 @@ export class MathChallengeScene extends Phaser.Scene {
   constructor() { super("MathChallengeScene"); }
 
   create(): void {
-    session.data.lastScene = "MathChallengeScene";
+    session.enterScene("MathChallengeScene");
     this.engine = new MathEngine(session.data.mathStats);
     this.drawArena();
     this.feedback = this.add.text(this.scale.width / 2, this.scale.height * .2, "", { fontFamily: "Trebuchet MS", fontSize: "34px", fontStyle: "bold", color: "#ffffff", stroke: "#26136d", strokeThickness: 8 }).setOrigin(.5).setDepth(2000);
@@ -43,7 +43,6 @@ export class MathChallengeScene extends Phaser.Scene {
   }
 
   update(_time: number, delta: number): void {
-    session.update(delta / 1000);
     for (const berry of this.beltBerries) {
       berry.x += delta * .09;
       berry.angle += delta * .1;
@@ -93,21 +92,15 @@ export class MathChallengeScene extends Phaser.Scene {
     ui.markAnswer(answer, this.question.answer);
     if (correct) {
       this.streak += 1;
-      const reward = this.question.reward * session.mathMultiplier();
-      session.economy.addMathBerries(reward);
-      this.roundBerries += reward;
+      const reward = this.question.reward;
+      const gains = session.economy.addMathBerries(reward, this.streak);
+      this.roundBerries += gains.berries;
       session.audio.play("correct");
       const messages = ["CORRECT!", "BERRY IMPRESSIVE!", "PERFECT!", "FACTORY POWER +!", "AWESOME MATH!"];
       this.showFeedback(messages[(this.streak - 1) % messages.length], 0x7af0b7);
       this.berryBurst();
-      if (this.streak === 3) {
-        session.activateBoost("math");
-        this.time.delayedCall(180, () => this.showFeedback("MATH POWER! DOUBLE BERRIES", COLORS.cyan));
-      }
-      if (this.streak === 5) {
-        session.activateBoost("production");
-        this.showFeedback("BLUEBERRY RUSH! 2× PRODUCTION", COLORS.gold);
-      }
+      const boost = session.economy.activateStreakBoost(this.streak);
+      if (boost) this.time.delayedCall(180, () => this.showFeedback(boost, this.streak >= 5 ? COLORS.gold : COLORS.cyan));
       session.save("MathChallengeScene");
       this.time.delayedCall(520, () => this.startQuestion());
     } else {

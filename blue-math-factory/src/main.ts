@@ -33,6 +33,7 @@ const game = new Phaser.Game({
 });
 
 ui.connect(game);
+game.events.on(Phaser.Core.Events.STEP, (_time: number, delta: number) => session.update(delta / 1000));
 window.addEventListener("beforeunload", () => {
   if (session.hasSave()) session.save();
 });
@@ -45,10 +46,18 @@ declare global {
     BlueMathDebug?: {
       session: typeof session;
       game: Phaser.Game;
+      setResources: (values: Partial<Pick<typeof session.data, "rawBlueberries" | "processedProducts" | "storeInventory" | "money" | "mathPower">>) => void;
     };
   }
 }
 
 // A small read-only-friendly hook makes automated browser QA possible without
 // changing the player experience.
-window.BlueMathDebug = { session, game };
+window.BlueMathDebug = {
+  session,
+  game,
+  setResources: (values) => {
+    Object.assign(session.data, values);
+    session.economy.inventory.clamp();
+  }
+};

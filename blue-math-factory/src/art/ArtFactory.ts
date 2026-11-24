@@ -35,14 +35,16 @@ export class ArtFactory {
   static drawWorldGround(scene: Phaser.Scene, width: number, height: number, color = 0x75c86d): void {
     const background = scene.add.graphics().setDepth(-50);
     background.fillStyle(color).fillRect(0, 0, width, height);
-    background.fillStyle(0x5aae62, 0.35);
-    for (let y = 0; y < height; y += 120) {
-      for (let x = (Math.floor(y / 120) % 2) * 60; x < width; x += 120) {
+    const quality = scene.registry.get("graphicsQuality") ?? "high";
+    const spacing = quality === "low" ? 190 : quality === "medium" ? 145 : 110;
+    background.fillStyle(0x7863c9, 0.28);
+    for (let y = 0; y < height; y += spacing) {
+      for (let x = (Math.floor(y / spacing) % 2) * (spacing / 2); x < width; x += spacing) {
         background.fillCircle(x, y, 3);
         background.fillCircle(x + 25, y + 18, 2);
       }
     }
-    background.lineStyle(2, 0xa4e588, 0.17);
+    background.lineStyle(2, 0xa99df2, quality === "low" ? .08 : .15);
     for (let x = -height; x < width; x += 96) background.lineBetween(x, 0, x + height, height);
     for (let x = 0; x < width + height; x += 96) background.lineBetween(x, 0, x - height, height);
   }
@@ -151,7 +153,8 @@ export class ArtFactory {
       scene.tweens.add({ targets: glow, scaleX: 1.15, scaleY: .92, alpha: .4, duration: 900, yoyo: true, repeat: -1, ease: "Sine.easeInOut" });
       scene.tweens.add({ targets: symbol, angle: label === "FACTORY" ? 360 : 4, duration: label === "FACTORY" ? 6000 : 900, yoyo: label !== "FACTORY", repeat: -1 });
     }
-    for (let index = 0; index < 6; index += 1) {
+    const particleCount = scene.registry.get("graphicsQuality") === "low" ? 2 : scene.registry.get("graphicsQuality") === "medium" ? 4 : 6;
+    for (let index = 0; index < particleCount; index += 1) {
       const particle = scene.add.image(Phaser.Math.Between(-48, 48), Phaser.Math.Between(-130, -10), "berry").setScale(.2 + Math.random() * .15).setAlpha(.75);
       container.add(particle);
       scene.tweens.add({ targets: particle, y: particle.y - 35, x: particle.x + Phaser.Math.Between(-16, 16), alpha: .15, duration: 1400 + index * 160, yoyo: true, repeat: -1, delay: index * 120 });

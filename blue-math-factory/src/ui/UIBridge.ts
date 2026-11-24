@@ -2,7 +2,7 @@ import type { Game } from "phaser";
 import { PRODUCTS } from "../data/products";
 import { session } from "../systems/GameSession";
 import { SaveSystem } from "../systems/SaveSystem";
-import type { MathQuestion, SceneKey, UpgradeDefinition } from "../types";
+import type { MathQuestion, SceneKey, SpecialOrder, StoreAwayReport, UpgradeDefinition } from "../types";
 import { hudMarkup } from "./HUD";
 import { upgradePanelMarkup } from "./UpgradePanel";
 
@@ -31,7 +31,7 @@ export class UIBridge {
     this.status.textContent = message;
   }
 
-  showMenu(callbacks: { newGame: Callback; continueGame: Callback; how: Callback; stats: Callback; settings: Callback }): void {
+  showMenu(callbacks: { newGame: Callback; continueGame: Callback; retryMigration: Callback; how: Callback; stats: Callback; settings: Callback }): void {
     this.root.innerHTML = `
       <section class="menu-overlay" aria-label="BlueMath Factory main menu">
         <div class="title-lockup">
@@ -41,6 +41,7 @@ export class UIBridge {
           <p class="subtitle">Multiply. Harvest. Build. Grow.</p>
         </div>
         <div class="menu-buttons">
+          ${session.migrationError() ? `<div class="save-error"><strong>Your old factory is safe.</strong><span>${session.migrationError()}</span><button data-action="retry-migration">RETRY SAVE UPDATE</button></div>` : ""}
           ${session.hasSave() ? '<button class="primary-button continue" data-action="continue">▶ CONTINUE</button>' : ""}
           <button class="primary-button" data-action="new">✦ NEW GAME</button>
           <div class="secondary-grid">
@@ -53,6 +54,7 @@ export class UIBridge {
       </section>`;
     this.bindAction("new", callbacks.newGame);
     this.bindAction("continue", callbacks.continueGame);
+    this.bindAction("retry-migration", callbacks.retryMigration);
     this.bindAction("how", callbacks.how);
     this.bindAction("stats", callbacks.stats);
     this.bindAction("settings", callbacks.settings);
@@ -63,6 +65,7 @@ export class UIBridge {
     const quest = session.quests.active();
     const questValue = quest ? session.quests.value(quest) : 0;
     this.root.innerHTML = hudMarkup(session.data, snapshot, quest, questValue) + `
+      ${this.sceneStatusMarkup(scene)}
       <div class="touch-controls" aria-label="Touch controls">
         <div class="joystick" id="joystick"><span></span></div>
         <button id="touch-interact" class="touch-interact">INTERACT</button>
@@ -82,7 +85,7 @@ export class UIBridge {
     const quest = session.quests.active();
     this.root.innerHTML = hudMarkup(session.data, snapshot, quest, quest ? session.quests.value(quest) : 0)
       .replace('<div id="interaction-prompt" class="interaction-prompt is-hidden"></div>', promptMarkup)
-      .replace('<div id="toast-stack" class="toast-stack"></div>', toast) + touch;
+      .replace('<div id="toast-stack" class="toast-stack"></div>', toast) + this.sceneStatusMarkup(scene) + touch;
     if (this.pauseCallback) this.bindAction("pause", this.pauseCallback);
     this.bindTouchControls();
     if (this.interactCallback) this.bindInteractionButton();
@@ -91,11 +94,12 @@ export class UIBridge {
 
   updateHUD(): void {
     const values = [
-      Math.floor(session.data.blueberries).toLocaleString(),
-      Math.floor(session.data.products).toLocaleString(),
+      Math.floor(session.data.rawBlueberries).toLocaleString(),
+      Math.floor(session.data.processedProducts).toLocaleString(),
+      Math.floor(session.data.storeInventory).toLocaleString(),
       `$${Math.floor(session.data.money).toLocaleString()}`,
-      `${session.economy.snapshot().productionRate.toFixed(1)}/s`,
-      String(session.economy.snapshot().factoryLevel)
+      `${Math.floor(session.data.mathPower)}/100`,
+      `${session.economy.snapshot().processingRate.toFixed(1)}/m`
     ];
     this.root.querySelectorAll<HTMLElement>(".resource strong").forEach((element, index) => {
       if (values[index] !== undefined) element.textContent = values[index];
@@ -103,6 +107,8 @@ export class UIBridge {
     const quest = session.quests.active();
     const track = this.root.querySelector<HTMLElement>(".objective-card .progress-track i");
     if (quest && track) track.style.width = `${Math.min(100, session.quests.value(quest) / quest.target * 100)}%`;
+    const status = this.root.querySelector<HTMLElement>("#scene-status-card");
+    if (status) status.outerHTML = this.sceneStatusMarkup(this.root.dataset.scene as SceneKey);
   }
 
   setInteraction(label: string | null, callback?: Callback): void {
@@ -141,6 +147,7 @@ export class UIBridge {
           <button data-action="leave-math" class="back-button">‹ HUB</button>
           <div><span>STREAK</span><strong>🔥 ${streak}</strong></div>
           <div><span>ROUND BERRIES</span><strong>🫐 ${roundBerries}</strong></div>
+          <div><span>MATH POWER</span><strong>⚡ ${Math.floor(session.data.mathPower)}/100</strong></div>
           <div><span>DIFFICULTY</span><strong>${question.difficultyLabel}</strong></div>
           <div class="timer-box"><span>TIME</span><strong id="math-time">${question.duration.toFixed(1)}</strong></div>
         </header>
@@ -150,7 +157,7 @@ export class UIBridge {
           <div class="answer-grid">
             ${question.choices.map((answer, index) => `<button class="answer-button ${index === selectedIndex ? "selected" : ""}" data-answer="${answer}" data-index="${index}"><small>${index + 1}</small>${answer}</button>`).join("")}
           </div>
-          <div class="reward-ribbon">NEXT REWARD <strong>${question.reward * session.mathMultiplier()} BLUEBERRIES</strong></div>
+          <div class="reward-ribbon">NEXT REWARD <strong>${question.reward} RAW BERRIES + MATH POWER</strong></div>
           <p class="keyboard-hint">Use 1–4, arrow keys, or tap an answer</p>
         </div>
       </section>`;
@@ -189,6 +196,54 @@ export class UIBridge {
       </div>`;
     this.bindAction("retry", onRetry);
     this.bindAction("hub", onHub);
+  }
+
+  showAwaySummary(report: StoreAwayReport): void {
+    this.root.innerHTML += `
+      <div id="away-layer" class="panel-backdrop away-backdrop">
+        <section class="result-card away-card" role="dialog" aria-modal="true" aria-label="While you were away">
+          <div class="result-icon">🏪</div><span class="eyebrow">WHILE YOU WERE AWAY</span>
+          <h2>Your cashier kept working!</h2>
+          <div class="away-grid">
+            <div><strong>${report.customersServed}</strong><span>Customers served</span></div>
+            <div><strong>${report.productsSold}</strong><span>Products sold</span></div>
+            <div><strong>$${Math.floor(report.moneyEarned)}</strong><span>Money earned</span></div>
+            <div><strong>${report.customersLeft}</strong><span>Customers left</span></div>
+          </div>
+          <button class="primary-button" data-action="close-away">BACK TO THE STORE</button>
+        </section>
+      </div>`;
+    this.bindAction("close-away", () => this.root.querySelector("#away-layer")?.remove());
+  }
+
+  showSpecialOrder(order: SpecialOrder, onAnswer: (answer: number) => void, onClose: Callback): void {
+    const optionSet = new Set([order.requiredProducts, Math.max(1, order.requiredProducts - order.a), order.requiredProducts + order.b, order.requiredProducts + 2]);
+    let offset = 3;
+    while (optionSet.size < 4) optionSet.add(order.requiredProducts + offset++);
+    const choices = Array.from(optionSet).slice(0, 4).sort(() => Math.random() - .5);
+    this.root.innerHTML = `
+      <div class="panel-backdrop special-order-backdrop">
+        <section class="special-order-card" role="dialog" aria-modal="true">
+          <button class="close-button" data-action="close-special" aria-label="Close">×</button>
+          <span class="eyebrow">⭐ SPECIAL CUSTOMER ORDER</span>
+          <h2>${order.a} boxes need ${order.b} packs each.</h2>
+          <div class="special-problem">${order.a} <b>×</b> ${order.b} <b>=</b> ?</div>
+          <p>How many products should we take from the shelves?</p>
+          <div class="special-choices">${choices.map((choice) => `<button data-special-answer="${choice}">${choice}</button>`).join("")}</div>
+          <strong class="special-reward">Correct answer: +$${order.rewardMoney} and +10 Math Power</strong>
+        </section>
+      </div>`;
+    this.bindAction("close-special", onClose);
+    this.root.querySelectorAll<HTMLButtonElement>("[data-special-answer]").forEach((button) => button.addEventListener("click", () => onAnswer(Number(button.dataset.specialAnswer)), { once: true }));
+  }
+
+  showPurchaseCelebration(message: string): void {
+    this.announce(message);
+    const layer = document.createElement("div");
+    layer.className = "purchase-celebration";
+    layer.innerHTML = `<span>✨</span><strong>UPGRADE BUILT!</strong><small>${message}</small>`;
+    this.root.append(layer);
+    window.setTimeout(() => layer.remove(), session.data.settings.reducedMotion ? 700 : 1700);
   }
 
   showUpgradePanel(defaultCategory: UpgradeDefinition["category"], onClose: Callback, onPurchase: (id: string) => void): void {
@@ -245,10 +300,10 @@ export class UIBridge {
       <div class="panel-backdrop info-backdrop"><section class="info-panel" role="dialog" aria-modal="true">
         <header class="panel-header"><div><span class="eyebrow">QUICK TOUR</span><h2>How to Play</h2></div><button class="close-button" data-action="info-close">×</button></header>
         <div class="how-grid">
-          <article><span>➊</span><div><h3>Power up with math</h3><p>Enter the Challenge portal. Every correct multiplication answer earns blueberries. Keep a streak to multiply the reward from 1 up to 64.</p></div></article>
-          <article><span>➋</span><div><h3>Build the factory</h3><p>Buy conveyors, pickers, washers, robots, and packing machines. Watch berries travel through the production line.</p></div></article>
-          <article><span>➌</span><div><h3>Run the store</h3><p>Walk to the register and press E or Interact to serve customers. Hire a cashier when you have enough money.</p></div></article>
-          <article><span>➍</span><div><h3>Grow the business</h3><p>Upgrade product value, expand the line, unlock recipes, finish goals, and turn the tiny workshop into a blueberry empire.</p></div></article>
+          <article><span>➊</span><div><h3>Power up with math</h3><p>Correct multiplication answers make raw blueberries and Math Power. Streaks earn 1.25×–2× factory boosts.</p></div></article>
+          <article><span>➋</span><div><h3>Process the berries</h3><p>The factory uses 10 raw blueberries for the starter pack. Packages move to the warehouse, then delivery workers refill store shelves.</p></div></article>
+          <article><span>➌</span><div><h3>Run the store</h3><p>Customers take real shelf inventory. Serve them yourself or hire a cashier who keeps selling in every scene.</p></div></article>
+          <article><span>➍</span><div><h3>Build like a tycoon</h3><p>Stand on the glowing factory or store platform for 5 seconds. Every upgrade card shows its exact numbers and visible change.</p></div></article>
         </div>
         <div class="controls-card"><strong>MOVE</strong><span>WASD / Arrow Keys / Touch Joystick</span><strong>INTERACT</strong><span>E / Space / Touch Button</span></div>
       </section></div>`;
@@ -280,6 +335,7 @@ export class UIBridge {
         <label><span>Sound effects</span><input id="sfx-volume" type="range" min="0" max="1" step="0.05" value="${settings.sfx}"></label>
         <label class="toggle-row"><span>Mute all sound</span><input id="mute-toggle" type="checkbox" ${settings.muted ? "checked" : ""}></label>
         <label class="toggle-row"><span>Reduced motion</span><input id="motion-toggle" type="checkbox" ${settings.reducedMotion ? "checked" : ""}></label>
+        <label><span>Graphics quality</span><select id="graphics-quality"><option value="low" ${settings.graphicsQuality === "low" ? "selected" : ""}>Low</option><option value="medium" ${settings.graphicsQuality === "medium" ? "selected" : ""}>Medium</option><option value="high" ${settings.graphicsQuality === "high" ? "selected" : ""}>High</option></select></label>
         <div class="danger-zone"><div><strong>Reset game</strong><span>Erases this device's BlueMath progress.</span></div><button data-action="reset-save">RESET SAVE</button></div>
       </section></div>`;
     const saveSetting = () => session.save();
@@ -287,6 +343,7 @@ export class UIBridge {
     this.root.querySelector<HTMLInputElement>("#sfx-volume")?.addEventListener("input", (event) => { settings.sfx = Number((event.target as HTMLInputElement).value); saveSetting(); });
     this.root.querySelector<HTMLInputElement>("#mute-toggle")?.addEventListener("change", (event) => { settings.muted = (event.target as HTMLInputElement).checked; saveSetting(); });
     this.root.querySelector<HTMLInputElement>("#motion-toggle")?.addEventListener("change", (event) => { settings.reducedMotion = (event.target as HTMLInputElement).checked; saveSetting(); });
+    this.root.querySelector<HTMLSelectElement>("#graphics-quality")?.addEventListener("change", (event) => { settings.graphicsQuality = (event.target as HTMLSelectElement).value as typeof settings.graphicsQuality; saveSetting(); });
     this.bindAction("reset-save", () => {
       if (window.confirm("Reset every BlueMath Factory upgrade and math stat? This cannot be undone.")) {
         session.resetSave();
@@ -299,6 +356,13 @@ export class UIBridge {
 
   selectedProductName(): string {
     return PRODUCTS.find((product) => product.id === session.data.selectedProduct)?.name ?? PRODUCTS[0].name;
+  }
+
+  private sceneStatusMarkup(scene: SceneKey): string {
+    const snapshot = session.economy.snapshot();
+    if (scene === "FactoryScene") return `<aside id="scene-status-card" class="scene-status-card factory-status"><span>FACTORY STATUS</span><strong>${session.economy.factory.bottleneck()}</strong><small>Raw ${Math.floor(session.data.rawBlueberries)}/${Math.floor(snapshot.rawStorageCapacity)} · ${snapshot.processingRate.toFixed(1)} packs/min<br>Warehouse ${Math.floor(session.data.processedProducts)}/${Math.floor(snapshot.warehouseCapacity)} · Math Power ${Math.floor(session.data.mathPower)}/100</small></aside>`;
+    if (scene === "StoreScene") return `<aside id="scene-status-card" class="scene-status-card store-status"><span>STORE STATUS</span><strong>${session.economy.store.status()}</strong><small>Shelves ${Math.floor(session.data.storeInventory)}/${Math.floor(snapshot.shelfCapacity)} · Line ${session.data.storeState.customers.length}/${snapshot.queueCapacity}<br>${snapshot.activeCheckoutLanes || "No"} cashier lane${snapshot.activeCheckoutLanes === 1 ? "" : "s"} · about $${Math.floor(snapshot.expectedIncomePerMinute)}/min</small></aside>`;
+    return "";
   }
 
   private bindAction(action: string, callback: Callback): void {

@@ -4,135 +4,150 @@ import { BALANCE, COLORS } from "../data/balance";
 import { CUSTOMER_TYPES } from "../data/customerTypes";
 import { Customer } from "../entities/Customer";
 import { session } from "../systems/GameSession";
+import type { StoreCustomerState } from "../types";
 import { ui } from "../ui/UIBridge";
 import { BaseWorldScene } from "./BaseWorldScene";
 
 export class StoreScene extends BaseWorldScene {
-  private queue: Customer[] = [];
-  private arrivalTimer = 1.4;
-  private checkoutTimer = 0;
+  private customers = new Map<number, Customer>();
   private purchased = false;
   private crazeReady = true;
   private queueLabel!: Phaser.GameObjects.Text;
+  private inventoryLabel!: Phaser.GameObjects.Text;
+  private statusLabel!: Phaser.GameObjects.Text;
+  private queueSignature = "";
+  private holdSeconds = 0;
+  private holdLabel!: Phaser.GameObjects.Text;
+  private lastSpecialOrderCreatedAt = 0;
 
   constructor() { super("StoreScene"); }
 
   create(): void {
     this.prepareWorld();
-    this.queue = [];
-    this.arrivalTimer = 1.4;
-    this.checkoutTimer = 0;
+    this.customers.clear();
     this.drawStore();
     this.setupWorld(960, 1010);
     this.addInteraction(150, 1000, "Return to Hub", () => this.transitionTo("HubScene"), 120);
-    this.addInteraction(960, 465, "Serve Next Customer", () => this.serveNext(true), 130);
-    this.addInteraction(1670, 890, "Open Store Upgrades", () => this.openUpgrades(), 130);
+    this.addInteraction(960, 465, "Serve Next Customer", () => this.serveNext(), 150);
+    this.addInteraction(1360, 940, "Open Special Order", () => this.openSpecialOrder(), 125);
     this.addInteraction(1280, 960, "Start Customer Craze", () => this.activateCraze(), 105);
-    this.time.delayedCall(8_000, () => {
-      if (Math.random() < .35) this.spawnGoldenBlueberry();
-    });
+    this.syncCustomers(true);
+    if (this.entryReport) this.time.delayedCall(280, () => ui.showAwaySummary(this.entryReport!));
+    this.time.delayedCall(8_000, () => { if (Math.random() < .35) this.spawnGoldenBlueberry(); });
     this.cameras.main.fadeIn(280, 28, 18, 77);
   }
 
   update(time: number, delta: number): void {
     super.update(time, delta);
     if (this.frozen) return;
-    const seconds = delta / 1000;
-    const snapshot = session.economy.snapshot();
-    this.arrivalTimer -= seconds;
-    if (this.arrivalTimer <= 0) {
-      this.spawnCustomer();
-      const waitingCount = this.queue.filter((customer) => customer.state === "waiting").length;
-      const socialProof = Math.min(BALANCE.maxSocialProof, waitingCount * BALANCE.socialProofPerCustomer);
-      this.arrivalTimer = snapshot.arrivalSeconds / ((1 + socialProof) * session.customerMultiplier());
+    this.handleStoreEvents();
+    this.syncCustomers(false);
+    this.updateLabels();
+    this.updateUpgradePlatform(delta / 1000);
+    const order = session.data.specialOrder;
+    if (order && order.createdAt !== this.lastSpecialOrderCreatedAt) {
+      this.lastSpecialOrderCreatedAt = order.createdAt;
+      ui.showToast("SPECIAL ORDER READY! Visit the gold order desk.", "info");
     }
-
-    for (const customer of [...this.queue]) {
-      if (customer.state !== "waiting") continue;
-      customer.patience -= seconds;
-      if (customer.patience <= 0) this.customerLeaves(customer);
-    }
-
-    if (snapshot.cashierLevel > 0 && this.queue.some((customer) => customer.state === "waiting")) {
-      this.checkoutTimer += seconds * snapshot.registers;
-      if (this.checkoutTimer >= snapshot.checkoutSeconds) {
-        this.checkoutTimer = 0;
-        this.serveNext(false);
-      }
-    }
-    this.updateQueueLabel();
   }
 
-  private spawnCustomer(): void {
-    const snapshot = session.economy.snapshot();
-    const activeCount = this.queue.filter((customer) => customer.state !== "leaving").length;
-    if (activeCount >= snapshot.queueCapacity) return;
-    const available = CUSTOMER_TYPES.filter((type) => type.unlockStoreLevel <= snapshot.storeLevel);
-    const type = Phaser.Utils.Array.GetRandom(available);
-    const customer = new Customer(this, type, 960, 1110, snapshot.patienceSeconds);
-    this.queue.push(customer);
-    const browseX = Math.random() < .5 ? 560 : 1360;
-    const browseY = Phaser.Math.Between(590, 820);
-    customer.moveTo(browseX, browseY, 650, () => {
-      const choices = ["🫐", "🧁", "🥤", "🫙"];
-      const thought = this.add.text(customer.sprite.x, customer.sprite.y - 72, choices[Phaser.Math.Between(0, choices.length - 1)], { fontSize: "24px", backgroundColor: "#ffffff", padding: { x: 6, y: 4 } }).setOrigin(.5).setDepth(3000);
-      this.tweens.add({ targets: thought, y: thought.y - 14, duration: 500, yoyo: true, onComplete: () => thought.destroy() });
-      this.time.delayedCall(650, () => {
-        if (!customer.sprite.active) return;
-        customer.state = "waiting";
-        this.repositionQueue();
-      });
-    });
-  }
-
-  private serveNext(manual: boolean): void {
-    const customer = this.queue.find((entry) => entry.state === "waiting");
-    if (!customer) {
-      ui.showToast("No one is at the register yet.", "info");
+  private serveNext(): void {
+    const result = session.economy.store.manualServe();
+    if (result.sold <= 0) {
+      ui.showToast(session.data.storeInventory <= 0 ? "STORE NEEDS MORE PRODUCTS" : "No customer is ready at checkout yet.", "info");
       return;
     }
-    this.queue = this.queue.filter((entry) => entry !== customer);
-    const sale = session.economy.serve(customer.type);
-    if (sale.sold <= 0) {
-      ui.showToast("Out of stock! Win berries in the Math Challenge.", "info");
-      customer.leave(1040, 1125, false, () => undefined);
-      this.repositionQueue();
-      return;
-    }
-    if (manual) session.data.totals.manualCheckouts += 1;
     session.audio.play("checkout");
     session.save("StoreScene");
-    this.coinBurst(customer.sprite.x, customer.sprite.y - 30, sale.earned);
-    customer.leave(1100, 1125, true, () => undefined);
-    this.repositionQueue();
     for (const message of session.checkQuests()) ui.showToast(message);
   }
 
-  private customerLeaves(customer: Customer): void {
-    this.queue = this.queue.filter((entry) => entry !== customer);
-    customer.leave(820, 1125, false, () => undefined);
-    ui.showToast(`${customer.type.name} ran out of patience. A faster checkout will help!`, "info");
-    this.repositionQueue();
+  private handleStoreEvents(): void {
+    for (const event of session.economy.store.consumeEvents()) {
+      if (event.type === "arrival") continue;
+      const customer = this.customers.get(event.customer.id);
+      if (!customer) continue;
+      this.customers.delete(event.customer.id);
+      if (event.type === "sale") {
+        session.audio.play("checkout");
+        this.coinBurst(customer.sprite.x, customer.sprite.y - 20, event.earned ?? 0);
+        customer.leave(1100, 1125, true, () => undefined);
+      } else {
+        customer.leave(820, 1125, false, () => undefined);
+      }
+    }
   }
 
-  private repositionQueue(): void {
-    this.queue.filter((customer) => customer.state === "waiting").forEach((customer, index) => {
-      const column = index % 2;
-      const row = Math.floor(index / 2);
-      const x = 900 + column * 120;
-      const y = 590 + row * 105;
-      customer.moveTo(x, y, 520 + index * 60, () => { customer.state = "waiting"; });
-    });
+  private syncCustomers(immediate: boolean): void {
+    const states = session.data.storeState.customers;
+    for (const state of states) {
+      if (!this.customers.has(state.id)) {
+        const type = CUSTOMER_TYPES.find((entry) => entry.id === state.typeId) ?? CUSTOMER_TYPES[0];
+        const customer = new Customer(this, type, 960, immediate ? 1010 : 1110, state.patienceSeconds);
+        this.customers.set(state.id, customer);
+        if (!immediate) {
+          const shelfX = state.id % 2 ? 350 : 1570;
+          customer.moveTo(shelfX, 545 + state.id % 3 * 150, 650);
+        }
+      }
+    }
+    for (const [id, customer] of this.customers) {
+      if (!states.some((state) => state.id === id)) {
+        customer.sprite.destroy();
+        this.customers.delete(id);
+      }
+    }
+    const signature = states.map((state) => `${state.id}:${state.phase}`).join("|");
+    if (signature === this.queueSignature) return;
+    this.queueSignature = signature;
+    states.forEach((state, index) => this.positionCustomer(state, index, immediate));
   }
 
-  private updateQueueLabel(): void {
+  private positionCustomer(state: StoreCustomerState, index: number, immediate: boolean): void {
+    const customer = this.customers.get(state.id);
+    if (!customer) return;
+    let x: number;
+    let y: number;
+    if (state.phase === "browsing") {
+      x = state.id % 2 ? 370 : 1550;
+      y = 440 + state.id % 3 * 220;
+    } else {
+      const waiting = session.data.storeState.customers.filter((entry) => entry.phase === "waiting");
+      const queueIndex = waiting.findIndex((entry) => entry.id === state.id);
+      x = 895 + queueIndex % 2 * 130;
+      y = 585 + Math.floor(queueIndex / 2) * 105;
+      customer.state = "waiting";
+    }
+    if (immediate) customer.sprite.setPosition(x, y).setDepth(y);
+    else customer.moveTo(x, y, 460 + index * 35, () => { customer.state = state.phase === "waiting" ? "waiting" : "entering"; });
+  }
+
+  private updateLabels(): void {
     const snapshot = session.economy.snapshot();
-    const waitingCount = this.queue.filter((customer) => customer.state === "waiting").length;
-    const socialProof = Math.min(BALANCE.maxSocialProof, waitingCount * BALANCE.socialProofPerCustomer);
-    this.queueLabel.setText(`CUSTOMER LINE  ${waitingCount}/${snapshot.queueCapacity}\nSOCIAL PROOF  +${Math.round(socialProof * 100)}% VISITS`);
+    const waiting = session.data.storeState.customers.filter((customer) => customer.phase === "waiting").length;
+    this.queueLabel.setText(`CUSTOMER LINE  ${waiting}/${snapshot.queueCapacity}\n${snapshot.cashierLevel ? `${snapshot.activeCheckoutLanes} lane${snapshot.activeCheckoutLanes === 1 ? "" : "s"} · ${snapshot.checkoutSeconds.toFixed(1)} sec checkout` : "YOU ARE THE CASHIER"}`);
+    this.inventoryLabel.setText(`SHELF STOCK  ${Math.floor(session.data.storeInventory)} / ${Math.floor(snapshot.shelfCapacity)}\n$${snapshot.productValue.toFixed(0)} each · about $${Math.floor(snapshot.expectedIncomePerMinute)}/min`);
+    this.statusLabel.setText(session.economy.store.status());
+    this.statusLabel.setColor(session.data.storeInventory <= 0 ? "#ff8d8d" : "#79efbd");
+  }
+
+  private updateUpgradePlatform(seconds: number): void {
+    const distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, 1670, 885);
+    if (distance <= 92) {
+      this.holdSeconds = Math.min(5, this.holdSeconds + seconds);
+      this.holdLabel.setText(`BUILDING MENU ${Math.ceil(5 - this.holdSeconds)}s\n${"●".repeat(Math.floor(this.holdSeconds))}${"○".repeat(5 - Math.floor(this.holdSeconds))}`);
+      if (this.holdSeconds >= 5) {
+        this.holdSeconds = 0;
+        this.openUpgrades();
+      }
+    } else {
+      this.holdSeconds = 0;
+      this.holdLabel.setText("STAND HERE 5 SECONDS\nTO UPGRADE STORE");
+    }
   }
 
   private openUpgrades(): void {
+    if (this.frozen) return;
     this.frozen = true;
     this.physics.world.pause();
     this.purchased = false;
@@ -146,7 +161,7 @@ export class StoreScene extends BaseWorldScene {
         this.purchased = true;
         session.audio.play("upgrade");
         session.save("StoreScene");
-        ui.announce(result.message);
+        ui.showPurchaseCelebration(result.message);
       } else {
         session.audio.play("wrong");
         ui.announce(result.message);
@@ -154,11 +169,31 @@ export class StoreScene extends BaseWorldScene {
     });
   }
 
-  private activateCraze(): void {
-    if (!this.crazeReady) {
-      ui.showToast("Customer Craze is recharging.", "info");
+  private openSpecialOrder(): void {
+    const order = session.data.specialOrder;
+    if (!order) {
+      ui.showToast("No special order yet. Keep the shelves stocked!", "info");
       return;
     }
+    this.frozen = true;
+    this.physics.world.pause();
+    ui.showSpecialOrder(order, (answer) => {
+      const result = session.economy.store.completeSpecialOrder(answer);
+      if (result.ok) session.audio.play("correct"); else session.audio.play("wrong");
+      session.save("StoreScene");
+      ui.showToast(result.message, result.ok ? "good" : "info");
+      this.frozen = false;
+      this.physics.world.resume();
+      ui.showHUD("StoreScene", () => this.pauseGame());
+    }, () => {
+      this.frozen = false;
+      this.physics.world.resume();
+      ui.showHUD("StoreScene", () => this.pauseGame());
+    });
+  }
+
+  private activateCraze(): void {
+    if (!this.crazeReady) { ui.showToast("Customer Craze is recharging.", "info"); return; }
     this.crazeReady = false;
     session.activateBoost("customers");
     session.audio.play("upgrade");
@@ -193,114 +228,146 @@ export class StoreScene extends BaseWorldScene {
       session.audio.play("coin");
       ui.showToast("Golden Blueberry! +$50");
       this.coinBurst(golden.x, golden.y, 50);
-      golden.destroy();
-      glow.destroy();
-      label.destroy();
-      session.save("StoreScene");
+      golden.destroy(); glow.destroy(); label.destroy(); session.save("StoreScene");
     });
-    this.time.delayedCall(9_000, () => {
-      if (golden.active) {
-        golden.destroy();
-        glow.destroy();
-        label.destroy();
-      }
-    });
+    this.time.delayedCall(9_000, () => { if (golden.active) { golden.destroy(); glow.destroy(); label.destroy(); } });
   }
 
   private drawStore(): void {
     const snapshot = session.economy.snapshot();
     const graphics = this.add.graphics().setDepth(-50);
-    graphics.fillStyle(0x383080).fillRect(0, 0, BALANCE.worldWidth, BALANCE.worldHeight);
-    graphics.fillStyle(0xf4dfbd).fillRoundedRect(70, 90, 1780, 1020, 30);
-    graphics.fillStyle(0xf9efd9).fillRoundedRect(95, 115, 1730, 960, 24);
-    graphics.fillStyle(0xd8c59e, .35);
-    for (let x = 95; x < 1825; x += 105) graphics.fillRect(x, 115, 4, 960);
-    for (let y = 115; y < 1075; y += 105) graphics.fillRect(95, y, 1730, 4);
-    graphics.fillStyle(0x5a3da6).fillRect(70, 90, 1780, 170);
-    graphics.fillStyle(0x77e8ff, .22).fillRoundedRect(150, 120, 420, 88, 18).fillRoundedRect(750, 120, 420, 88, 18).fillRoundedRect(1350, 120, 420, 88, 18);
-    this.add.text(960, 166, snapshot.storeLevel < 10 ? "THE LITTLE BLUEBERRY SHOP" : snapshot.storeLevel < 24 ? "BLUEBERRY MARKET" : "BLUEBERRY MEGASTORE", { fontFamily: "Trebuchet MS", fontSize: "35px", fontStyle: "bold", color: "#ffffff", stroke: "#2b1a70", strokeThickness: 8 }).setOrigin(.5).setDepth(20);
+    graphics.fillGradientStyle(0x2a2368, 0x2a2368, 0x4c3994, 0x4c3994).fillRect(0, 0, BALANCE.worldWidth, BALANCE.worldHeight);
+    graphics.fillStyle(0xead5ad).fillRoundedRect(55, 80, 1810, 1040, 34);
+    graphics.fillStyle(session.economy.upgrades.has("store-expansion") ? 0xfff5df : 0xf8ead0).fillRoundedRect(85, 110, 1750, 975, 27);
+    graphics.fillStyle(0xd2b98a, .24);
+    for (let x = 95; x < 1825; x += 88) for (let y = 275; y < 1080; y += 88) graphics.fillRect(x - 38, y - 18, 76, 36);
+    graphics.fillStyle(0x513596).fillRoundedRect(70, 90, 1780, 170, 25);
+    graphics.fillStyle(0x80eaff, .18).fillRoundedRect(130, 118, 470, 95, 18).fillRoundedRect(725, 118, 470, 95, 18).fillRoundedRect(1320, 118, 470, 95, 18);
+    this.add.text(960, 166, session.economy.upgrades.has("megastore") ? "BLUEBERRY MEGASTORE" : snapshot.storeLevel < 10 ? "THE LITTLE BLUEBERRY SHOP" : "BLUEBERRY MARKET", { fontFamily: "Trebuchet MS", fontSize: "35px", fontStyle: "bold", color: "#ffffff", stroke: "#281769", strokeThickness: 9 }).setOrigin(.5).setDepth(20);
 
-    // Checkout counter and register.
-    const counter = this.add.container(960, 420).setDepth(500);
-    const counterG = this.add.graphics();
-    counterG.fillStyle(0x6b4ac9).fillRoundedRect(-235, -70, 470, 110, 18);
-    counterG.fillStyle(0x8669e2).fillRoundedRect(-225, -82, 450, 30, 10);
-    counterG.lineStyle(5, 0x352471).strokeRoundedRect(-235, -70, 470, 110, 18);
-    const register = this.add.graphics();
-    register.fillStyle(0x323860).fillRoundedRect(-45, -135, 90, 75, 12);
-    register.fillStyle(0x7ce8ff).fillRoundedRect(-32, -123, 64, 36, 8);
-    counter.add([counterG, register, this.add.text(0, -104, "$", { fontFamily: "Trebuchet MS", fontSize: "24px", fontStyle: "bold", color: "#244c70" }).setOrigin(.5), this.add.text(0, -10, "CHECKOUT", { fontFamily: "Trebuchet MS", fontSize: "19px", fontStyle: "bold", color: "#ffffff", stroke: "#342074", strokeThickness: 5 }).setOrigin(.5)]);
-    this.addBlocker(960, 410, 480, 120);
-    if (snapshot.cashierLevel > 0) {
-      const count = Math.min(snapshot.registers, 3);
-      for (let index = 0; index < count; index += 1) {
-        const cashier = this.add.sprite(870 + index * 90, 322, "cashier").setScale(.85).setDepth(380);
-        this.tweens.add({ targets: cashier, y: cashier.y - 4, duration: 600 + index * 110, yoyo: true, repeat: -1 });
+    if (session.economy.upgrades.has("parking")) {
+      const parking = this.add.graphics().setDepth(40);
+      parking.fillStyle(0x4c4f68).fillRoundedRect(655, 1025, 610, 125, 16);
+      parking.lineStyle(4, 0xf7e7a7, .85);
+      for (let x = 700; x <= 1190; x += 120) parking.lineBetween(x, 1040, x - 30, 1135);
+      for (let index = 0; index < Math.min(3, session.economy.upgrades.level("parking")); index += 1) {
+        const car = this.add.container(760 + index * 170, 1090).setDepth(45);
+        car.add([this.add.rectangle(0, 0, 105, 42, [0x65d6e8,0xef7777,0xffc65d][index]).setStrokeStyle(4, 0x25234b), this.add.rectangle(0, -18, 58, 26, 0xbcefff).setStrokeStyle(3, 0x25234b), this.add.circle(-32, 24, 12, 0x222238), this.add.circle(32, 24, 12, 0x222238)]);
       }
-    } else {
-      this.add.text(960, 325, "YOU ARE THE CASHIER", { fontFamily: "Trebuchet MS", fontSize: "13px", fontStyle: "bold", color: "#5c3fae", backgroundColor: "#fff6dc", padding: { x: 10, y: 6 } }).setOrigin(.5).setDepth(390);
     }
 
-    // Queue ropes grow with capacity.
-    const capacity = snapshot.queueCapacity;
-    const queueRows = Math.ceil(capacity / 2);
-    const rope = this.add.graphics().setDepth(570);
-    rope.lineStyle(8, 0xd84c78).lineBetween(820, 535, 820, 535 + queueRows * 105).lineBetween(1100, 535, 1100, 535 + queueRows * 105);
-    for (let row = 0; row <= queueRows; row += 1) {
-      rope.fillStyle(0xffd15d).fillCircle(820, 535 + row * 105, 12).fillCircle(1100, 535 + row * 105, 12);
-      rope.fillStyle(0x4b327b).fillRect(814, 535 + row * 105, 12, 38).fillRect(1094, 535 + row * 105, 12, 38);
+    if (session.economy.upgrades.has("better-lighting")) {
+      for (let x = 260; x <= 1660; x += 280) {
+        this.add.ellipse(x, 278, 170, 34, 0xfff4bd, .3).setBlendMode(Phaser.BlendModes.ADD).setDepth(30);
+        this.add.rectangle(x, 245, 112, 16, 0xffe681).setStrokeStyle(3, 0xffffff, .6).setDepth(31);
+      }
     }
-    this.queueLabel = this.add.text(960, 515, "", { align: "center", fontFamily: "Trebuchet MS", fontSize: "13px", fontStyle: "bold", color: "#5c3b9f", backgroundColor: "#fff8e6", padding: { x: 12, y: 6 }, stroke: "#ffffff", strokeThickness: 2 }).setOrigin(.5).setDepth(580);
-    this.updateQueueLabel();
+    if (session.economy.upgrades.has("music-system")) {
+      [250, 1670].forEach((x) => this.add.text(x, 210, "🔊", { fontSize: "34px" }).setOrigin(.5).setDepth(35));
+    }
+    if (session.economy.upgrades.has("neon-sign")) {
+      const neon = this.add.text(960, 225, "🫐  FRESH • FUN • BLUE  🫐", { fontFamily: "Trebuchet MS", fontSize: "23px", fontStyle: "bold", color: "#92f4ff", stroke: "#3e28a0", strokeThickness: 7 }).setOrigin(.5).setDepth(42);
+      this.tweens.add({ targets: neon, alpha: .6, duration: 650, yoyo: true, repeat: -1 });
+    }
 
-    const shelfCount = Math.min(6, 1 + session.economy.upgrades.level("extra-shelf"));
+    const registerCount = Math.min(3, snapshot.registers);
+    for (let index = 0; index < registerCount; index += 1) {
+      const x = 960 + (index - (registerCount - 1) / 2) * 265;
+      const counter = this.add.container(x, 420).setDepth(500);
+      const counterG = this.add.graphics();
+      counterG.fillStyle(0x513aaf).fillRoundedRect(-112, -66, 224, 108, 18);
+      counterG.fillStyle(0x8b72e6).fillRoundedRect(-104, -80, 208, 28, 10);
+      counterG.lineStyle(5, 0x2d216b).strokeRoundedRect(-112, -66, 224, 108, 18);
+      const register = this.add.graphics();
+      register.fillStyle(0x2e355d).fillRoundedRect(-38, -130, 76, 68, 12);
+      register.fillStyle(0x7ce8ff).fillRoundedRect(-28, -119, 56, 31, 7);
+      counter.add([counterG, register, this.add.text(0, -103, `$${index + 1}`, { fontFamily: "Trebuchet MS", fontSize: "18px", fontStyle: "bold", color: "#244c70" }).setOrigin(.5), this.add.text(0, -8, "CHECKOUT", { fontFamily: "Trebuchet MS", fontSize: "15px", fontStyle: "bold", color: "#ffffff", stroke: "#342074", strokeThickness: 5 }).setOrigin(.5)]);
+      this.addBlocker(x, 410, 235, 120);
+      if (index < snapshot.activeCheckoutLanes) {
+        const cashier = this.add.sprite(x, 320, "cashier").setScale(.85).setDepth(380);
+        this.tweens.add({ targets: cashier, y: cashier.y - 4, duration: 620 + index * 100, yoyo: true, repeat: -1 });
+      }
+    }
+    if (!snapshot.cashierLevel) this.add.text(960, 325, "YOU ARE THE CASHIER", { fontFamily: "Trebuchet MS", fontSize: "13px", fontStyle: "bold", color: "#5c3fae", backgroundColor: "#fff6dc", padding: { x: 10, y: 6 } }).setOrigin(.5).setDepth(390);
+
+    if (session.economy.upgrades.has("queue-ropes")) {
+      const rows = Math.ceil(snapshot.queueCapacity / 2);
+      const rope = this.add.graphics().setDepth(570);
+      rope.lineStyle(8, 0xd84c78).lineBetween(805, 535, 805, 535 + rows * 105).lineBetween(1115, 535, 1115, 535 + rows * 105);
+      for (let row = 0; row <= rows; row += 1) {
+        rope.fillStyle(0xffd15d).fillCircle(805, 535 + row * 105, 12).fillCircle(1115, 535 + row * 105, 12);
+        rope.fillStyle(0x4b327b).fillRect(799, 535 + row * 105, 12, 38).fillRect(1109, 535 + row * 105, 12, 38);
+      }
+    }
+    this.queueLabel = this.add.text(960, 510, "", { align: "center", fontFamily: "Trebuchet MS", fontSize: "13px", fontStyle: "bold", color: "#5c3b9f", backgroundColor: "#fff8e6", padding: { x: 12, y: 6 }, stroke: "#ffffff", strokeThickness: 2 }).setOrigin(.5).setDepth(580);
+
+    const shelfCount = Math.min(8, 3 + session.economy.upgrades.level("extra-shelf"));
+    const fillRatio = snapshot.shelfCapacity ? session.data.storeInventory / snapshot.shelfCapacity : 0;
+    const totalVisibleProducts = Math.round(fillRatio * shelfCount * 8);
     for (let index = 0; index < shelfCount; index += 1) {
-      const left = index % 2 === 0;
-      const x = left ? 330 : 1590;
-      const y = 420 + Math.floor(index / 2) * 235;
-      const shelf = this.add.container(x, y).setDepth(y);
+      const column = index % 2;
+      const x = column ? 1580 : 340;
+      const y = 390 + Math.floor(index / 2) * 205;
+      const shelf = this.add.container(x, y).setDepth(y).setScale(1 + Math.min(.16, session.economy.upgrades.level("better-display") * .032));
       const shelfG = this.add.graphics();
-      shelfG.fillStyle(0x9a624c).fillRoundedRect(-150, -75, 300, 135, 18);
-      shelfG.fillStyle(0xe4b46f).fillRect(-140, -55, 280, 18).fillRect(-140, 5, 280, 18);
-      shelfG.lineStyle(5, 0x6f453c).strokeRoundedRect(-150, -75, 300, 135, 18);
+      shelfG.fillStyle(0x3b244e, .22).fillEllipse(12, 70, 330, 42);
+      shelfG.fillStyle(0x7d4d3e).fillRoundedRect(-155, -82, 310, 152, 18);
+      shelfG.fillStyle(0xd79b5d).fillRoundedRect(-145, -72, 290, 132, 12);
+      shelfG.fillStyle(0x704133).fillRect(-146, -18, 292, 14).fillRect(-146, 42, 292, 14);
+      shelfG.lineStyle(5, 0x5d3740).strokeRoundedRect(-155, -82, 310, 152, 18);
       shelf.add(shelfG);
-      const icons = ["🫐", "🧺", "🫙", "🧁", "🥤", "🥧"];
-      for (let item = 0; item < 4; item += 1) shelf.add(this.add.text(-105 + item * 70, item % 2 ? -35 : 25, icons[(index + item) % icons.length], { fontSize: "28px" }).setOrigin(.5));
-      this.addBlocker(x, y, 310, 150);
+      const visible = Math.max(0, Math.min(8, totalVisibleProducts - index * 8));
+      for (let item = 0; item < visible; item += 1) {
+        shelf.add(this.add.text(-112 + item % 4 * 74, item < 4 ? -49 : 12, ["🫐", "📦", "🧺", "🫙", "🧁", "🥤"][index % 6], { fontSize: "27px" }).setOrigin(.5));
+      }
+      const label = visible ? `${snapshot.selectedProductName.toUpperCase()}  $${snapshot.productValue.toFixed(0)}` : "OUT OF STOCK";
+      shelf.add(this.add.text(0, 88, label, { fontFamily: "Trebuchet MS", fontSize: "12px", fontStyle: "bold", color: visible ? "#ffffff" : "#ff8b8b", backgroundColor: visible ? "#4c368f" : "#6f283d", padding: { x: 8, y: 5 } }).setOrigin(.5));
+      this.addBlocker(x, y, 320, 160);
     }
 
+    if (session.economy.upgrades.has("premium-display")) {
+      const premium = this.add.container(610, 745).setDepth(760);
+      premium.add([this.add.ellipse(0, 44, 230, 50, 0x261947, .22), this.add.rectangle(0, 0, 210, 100, 0x5637a4).setStrokeStyle(6, 0xffd95e), this.add.text(0, -10, "✨ PREMIUM PICKS ✨\n🫙  🧁  🥤", { align: "center", fontFamily: "Trebuchet MS", fontSize: "17px", fontStyle: "bold", color: "#fff7c8" }).setOrigin(.5)]);
+      this.tweens.add({ targets: premium, scale: 1.03, duration: 900, yoyo: true, repeat: -1 });
+    }
     if (session.economy.upgrades.has("seating")) {
-      for (let index = 0; index < 3; index += 1) {
-        const bench = this.add.container(1300 + index * 120, 710).setDepth(710);
+      for (let index = 0; index < Math.min(3, session.economy.upgrades.level("seating")); index += 1) {
+        const bench = this.add.container(1240 + index * 125, 720).setDepth(730);
         bench.add([this.add.rectangle(0, 0, 105, 26, 0x81503e).setStrokeStyle(4, 0x593449), this.add.rectangle(-38, 30, 10, 55, 0x593449), this.add.rectangle(38, 30, 10, 55, 0x593449)]);
       }
     }
     if (session.economy.upgrades.has("decorations")) {
-      [[620,330],[1300,330],[560,930],[1380,930]].forEach(([x,y]) => {
+      [[600,340],[1320,340],[630,850],[1290,850]].forEach(([x,y]) => {
         const pot = this.add.container(x,y).setDepth(y);
         pot.add([this.add.rectangle(0,0,42,34,0xc76573), this.add.circle(-12,-30,18,0x61bd6f), this.add.circle(12,-34,20,0x76d87b)]);
       });
     }
-    if (session.economy.upgrades.has("neon-sign")) {
-      const neon = this.add.text(960, 230, "🫐  FRESH • FUN • BLUE  🫐", { fontFamily: "Trebuchet MS", fontSize: "24px", fontStyle: "bold", color: "#8df0ff", stroke: "#4b31b2", strokeThickness: 7 }).setOrigin(.5).setDepth(30);
-      this.tweens.add({ targets: neon, alpha: .65, duration: 650, yoyo: true, repeat: -1 });
+    if (session.economy.upgrades.has("cold-storage")) {
+      const fridge = this.add.container(620, 950).setDepth(960);
+      fridge.add([this.add.rectangle(0, 0, 190, 180, 0xbdefff).setStrokeStyle(7, 0x456bb0), this.add.rectangle(0, -5, 155, 135, 0x78c6e8, .55).setStrokeStyle(3, 0xffffff, .7), this.add.text(0, -78, "CHILLED", { fontFamily: "Trebuchet MS", fontSize: "14px", fontStyle: "bold", color: "#284c8d" }).setOrigin(.5), this.add.text(0, 12, "🥤  ❄️\n🧃  🫐", { align: "center", fontSize: "28px" }).setOrigin(.5)]);
+      this.addBlocker(620, 950, 205, 190);
     }
 
-    // Upgrade terminal, temporary boost pad, and hub portal.
-    const terminal = this.add.container(1670, 850).setDepth(900);
-    terminal.add([
-      this.add.rectangle(0, 0, 170, 180, 0x392b80).setStrokeStyle(6, 0x24185f),
-      this.add.rectangle(0, -35, 126, 75, 0x6be8ff).setStrokeStyle(4, 0xffffff, .5),
-      this.add.text(0, -36, "STORE\nUPGRADES", { align: "center", fontFamily: "Trebuchet MS", fontSize: "17px", fontStyle: "bold", color: "#25316c" }).setOrigin(.5),
-      this.add.text(0, 54, "BUILD!", { fontFamily: "Trebuchet MS", fontSize: "18px", fontStyle: "bold", color: "#ffe279" }).setOrigin(.5)
-    ]);
-    this.tweens.add({ targets: terminal, scale: 1.04, duration: 800, yoyo: true, repeat: -1 });
-    this.addBlocker(1670, 850, 180, 190);
-    const craze = this.add.container(1280, 960).setDepth(970);
+    this.inventoryLabel = this.add.text(1240, 315, "", { fontFamily: "Trebuchet MS", fontSize: "15px", fontStyle: "bold", color: "#fff8d8", backgroundColor: "#38277e", padding: { x: 14, y: 9 }, stroke: "#21145d", strokeThickness: 4 }).setOrigin(.5).setDepth(600);
+    this.statusLabel = this.add.text(680, 315, "", { fontFamily: "Trebuchet MS", fontSize: "16px", fontStyle: "bold", color: "#79efbd", backgroundColor: "#25195f", padding: { x: 14, y: 9 }, stroke: "#150d45", strokeThickness: 4 }).setOrigin(.5).setDepth(600);
+
+    const terminal = this.add.container(1670, 885).setDepth(900);
+    terminal.add([this.add.ellipse(0, 70, 210, 74, 0x392b80).setStrokeStyle(8, COLORS.mint), this.add.rectangle(0, -25, 170, 180, 0x392b80).setStrokeStyle(6, 0x24185f), this.add.rectangle(0, -50, 126, 75, 0x6be8ff).setStrokeStyle(4, 0xffffff, .5), this.add.text(0, -50, "STORE\nUPGRADES", { align: "center", fontFamily: "Trebuchet MS", fontSize: "17px", fontStyle: "bold", color: "#25316c" }).setOrigin(.5)]);
+    this.holdLabel = this.add.text(1670, 1010, "STAND HERE 5 SECONDS\nTO UPGRADE STORE", { align: "center", fontFamily: "Trebuchet MS", fontSize: "13px", fontStyle: "bold", color: "#eafff6", backgroundColor: "#2d246f", padding: { x: 10, y: 7 } }).setOrigin(.5).setDepth(1000);
+    this.addBlocker(1670, 830, 180, 160);
+
+    const orderDesk = this.add.container(1360, 920).setDepth(930);
+    orderDesk.add([this.add.rectangle(0, 0, 180, 95, 0x9a642c).setStrokeStyle(6, 0x5d3528), this.add.text(0, -58, "⭐ SPECIAL ORDER", { fontFamily: "Trebuchet MS", fontSize: "15px", fontStyle: "bold", color: "#fff1a6", stroke: "#3f246b", strokeThickness: 6 }).setOrigin(.5), this.add.text(0, 0, "MULTIPLY\nFOR A BONUS!", { align: "center", fontFamily: "Trebuchet MS", fontSize: "14px", fontStyle: "bold", color: "#ffffff" }).setOrigin(.5)]);
+    const craze = this.add.container(1180, 970).setDepth(970);
     craze.add([this.add.ellipse(0, 0, 188, 72, 0x4d3ab0).setStrokeStyle(8, COLORS.mint), this.add.text(0, -4, "CUSTOMER CRAZE", { fontFamily: "Trebuchet MS", fontSize: "17px", fontStyle: "bold", color: "#d6ffe9", stroke: "#2a1c72", strokeThickness: 5 }).setOrigin(.5)]);
     this.tweens.add({ targets: craze, alpha: .72, duration: 650, yoyo: true, repeat: -1 });
     ArtFactory.portal(this, 150, 955, "HUB", [0x75e6ff, 0x4b45c9]).setScale(.72).setDepth(990);
-
-    this.add.text(960, 1050, "ENTRANCE", { fontFamily: "Trebuchet MS", fontSize: "18px", fontStyle: "bold", color: "#6a4a95", backgroundColor: "#fff4cf", padding: { x: 16, y: 8 } }).setOrigin(.5).setDepth(1080);
+    this.add.text(960, 1050, session.economy.upgrades.has("bigger-entrance") ? "GRAND ENTRANCE" : "ENTRANCE", { fontFamily: "Trebuchet MS", fontSize: "18px", fontStyle: "bold", color: "#6a4a95", backgroundColor: "#fff4cf", padding: { x: 16, y: 8 } }).setOrigin(.5).setDepth(1080);
+    if (session.economy.upgrades.has("bigger-entrance")) {
+      this.add.rectangle(960, 1090, 360, 18, 0x6d4ec5).setStrokeStyle(4, 0xffe38b).setDepth(1075);
+      this.add.rectangle(790, 1038, 24, 112, 0x6d4ec5).setStrokeStyle(4, 0xffe38b).setDepth(1075);
+      this.add.rectangle(1130, 1038, 24, 112, 0x6d4ec5).setStrokeStyle(4, 0xffe38b).setDepth(1075);
+    }
+    this.updateLabels();
   }
 }

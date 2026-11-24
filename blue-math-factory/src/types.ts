@@ -13,7 +13,15 @@ export type UpgradeEffect =
   | "patience"
   | "cashier"
   | "registers"
+  | "shelf"
+  | "warehouse"
   | "decoration";
+
+export interface MathRequirement {
+  kind: "correctAnswers" | "masterFamily";
+  value: number;
+  family?: number;
+}
 
 export interface UpgradeDefinition {
   id: string;
@@ -28,6 +36,8 @@ export interface UpgradeDefinition {
   maxLevel: number;
   unlockAt?: number;
   major?: boolean;
+  visualChange?: string;
+  mathRequirement?: MathRequirement;
 }
 
 export interface ProductDefinition {
@@ -87,6 +97,11 @@ export interface GameTotals {
   manualCheckouts: number;
   upgradesBought: number;
   playtimeSeconds: number;
+  productsProcessed: number;
+  productsDelivered: number;
+  customersLost: number;
+  specialOrdersCompleted: number;
+  mathPowerEarned: number;
 }
 
 export interface GameSettings {
@@ -94,9 +109,79 @@ export interface GameSettings {
   sfx: number;
   muted: boolean;
   reducedMotion: boolean;
+  graphicsQuality: "low" | "medium" | "high";
+}
+
+export interface StoreCustomerState {
+  id: number;
+  typeId: string;
+  phase: "browsing" | "waiting";
+  browseSeconds: number;
+  patienceSeconds: number;
+}
+
+export interface StoreAwayReport {
+  customersServed: number;
+  productsSold: number;
+  moneyEarned: number;
+  customersLeft: number;
+}
+
+export interface SpecialOrder {
+  a: number;
+  b: number;
+  requiredProducts: number;
+  rewardMoney: number;
+  createdAt: number;
+}
+
+export interface ActiveBoosts {
+  productionMultiplier: number;
+  productValueMultiplier: number;
+  endsAt: number;
+  label: string;
+}
+
+export interface FactoryState {
+  processingProgress: number;
+  deliveryProgress: number;
+}
+
+export interface StoreState {
+  customers: StoreCustomerState[];
+  arrivalProgress: number;
+  checkoutProgress: number;
+  nextCustomerId: number;
 }
 
 export interface GameSave {
+  version: 2;
+  createdAt: number;
+  savedAt: number;
+  lastSimulationAt: number;
+  rawBlueberries: number;
+  processedProducts: number;
+  storeInventory: number;
+  money: number;
+  mathPower: number;
+  upgradeLevels: Record<string, number>;
+  unlockedProducts: string[];
+  selectedProduct: string;
+  mathStats: MathStats;
+  totals: GameTotals;
+  completedQuests: string[];
+  claimedQuests: string[];
+  settings: GameSettings;
+  lastScene: SceneKey;
+  factoryState: FactoryState;
+  storeState: StoreState;
+  awayReport: StoreAwayReport;
+  activeBoosts: ActiveBoosts;
+  specialOrder: SpecialOrder | null;
+  specialOrderCooldownSeconds: number;
+}
+
+export interface LegacyGameSaveV1 {
   version: 1;
   createdAt: number;
   savedAt: number;
@@ -107,10 +192,10 @@ export interface GameSave {
   unlockedProducts: string[];
   selectedProduct: string;
   mathStats: MathStats;
-  totals: GameTotals;
+  totals: Partial<GameTotals>;
   completedQuests: string[];
   claimedQuests: string[];
-  settings: GameSettings;
+  settings: Partial<GameSettings>;
   lastScene: SceneKey;
 }
 
